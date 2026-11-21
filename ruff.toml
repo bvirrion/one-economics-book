@@ -6,8 +6,9 @@ select = ["E", "F", "W", "B", "UP"]
 ignore = ["B905"]
 [lint.per-file-ignores]
 "**/tests/*.py" = ["E501"]
-# the shared tools are never printed
-"code/shared/**" = ["E501"]
+# the shared tools are never printed; the country generator names the national
+# accounts by their letters (C, I, G, X)
+"code/shared/**" = ["E501", "E741"]
 # Listings printed in the books may teach a pattern ruff would rewrite (a staged
 # bug, an older idiom shown to be replaced). Mark such a line with `# noqa: <code>`
 # and say why in the chapter, or list the file here with the rule and a reason.

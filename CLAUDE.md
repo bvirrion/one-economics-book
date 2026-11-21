@@ -24,6 +24,12 @@ and the family style in `../book_style.md`.
   writer of outputs; check with `tools/test_code.sh <year>`.
 - **Gates:** `tools/gates.sh <year>` covers prose (it bans schools of thought, the history of thought and prescriptive
   titles), boxes and charts, calibration, the ledger and code references. Then `tools/gates.sh --log <N>`.
+- **CI and releases:** `.github/workflows/release.yml` (added 2026-11-21) runs on a `v*` tag and on a manual run. One
+  `code` job per directory of `code/` runs `OCS_TESTS=fast tools/test_code.sh <year>` with Python 3.12 (outputs are not
+  rerun there); one `build` job per edition builds with texlive-full and checks the log 0/0/0. On a tag, when all are
+  green, the `release` job publishes the PDFs, each versioned and under its plain name. A manual run never releases.
+  `data/derived/` is not in git, so CI runs no figdata test, and without that directory `conftest.py` reports a test that
+  fails on econdata's "missing" message as skipped. A new edition is registered in `matrix.edition` only.
 - **Weekly limit:** the file `sources/PAUSE` stops the writers. For this run it is created at **97 %** of the week (user,
   2026-11-20).
 - **Never** commit; download a dataset without approval; name a curriculum or a university in print; print anything

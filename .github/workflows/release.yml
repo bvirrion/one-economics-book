@@ -1,0 +1,167 @@
+name: Build and Release PDFs
+
+# A v* tag tests the code, builds every book and publishes a GitHub release with
+# the PDFs. Three kinds of job:
+#
+#   code     one job per code root: tools/test_code.sh in its fast mode
+#   build    one job per edition, all in parallel: latexmk, then the log gate
+#   release  only on a tag, and only when every code and build job is green
+#
+# A manual run (Actions tab, or `gh workflow run release.yml --ref main`) runs
+# the tests and builds every edition, keeps the PDFs as run artifacts, and makes
+# no release: the way to test a build before tagging.
+#
+# A new edition (a translation) is registered in CI by adding its entry file to
+# `matrix.edition` below and nowhere else in this file.
+#
+# The chart tables (figdata/**/out/*.csv) are committed, so the build only runs
+# LaTeX. data/derived/ is not in git (tools/derive_data.py rebuilds it from the
+# approved downloads), so CI regenerates no chart table and runs no figdata
+# test, and a code test that reads real data is skipped here (conftest.py).
+
+on:
+  push:
+    tags:
+      - 'v*'            # triggers on tags like v0.0.1, v1.2.3
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  code:
+    name: code (${{ matrix.year }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      # Let every year finish: one run then names every failing year.
+      fail-fast: false
+      matrix:
+        # One entry per directory of code/ (the school books print no code).
+        year:
+          - bachelor-1
+          - bachelor-2
+          - bachelor-3
+          - shared
+    steps:
+      - uses: actions/checkout@v5
+
+      # The Python of the machine that wrote the books, with the pins of
+      # requirements.txt.
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - run: make venv
+
+      # Fast set: ruff, pytest, the listing ranges, and the existence of every
+      # printed output. The outputs are rerun byte for byte only on the machine
+      # that captured them (make test).
+      - name: Test the code
+        run: OCS_TESTS=fast bash tools/test_code.sh ${{ matrix.year }}
+
+  build:
+    name: build (${{ matrix.edition }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      # Let every edition finish: one run then reports all broken editions,
+      # instead of the first one hiding the rest.
+      fail-fast: false
+      matrix:
+        # One entry file per edition, without .tex, in latexmkrc's order.
+        edition:
+          - one_economics_book_1_middle_school
+          - one_economics_book_2_high_school
+          - one_economics_book_3_university_year_1
+          - one_economics_book_4_university_year_2
+          - one_economics_book_5_university_year_3
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0            # need the tag's metadata for its date
+
+      - name: Generate version info
+        run: |
+          DATE=$(git for-each-ref --format='%(creatordate:short)' "refs/tags/${GITHUB_REF_NAME}")
+          # A manual run is not on a tag: stamp the commit date instead.
+          DATE=${DATE:-$(git log -1 --format=%cs)}
+          printf '\\renewcommand{\\bookdate}{%s}\n'    "$DATE"            >  version.tex
+          printf '\\renewcommand{\\bookversion}{%s}\n' "$GITHUB_REF_NAME" >> version.tex
+
+      # texlive-full, the same TeX Live as the one the books are closed with.
+      - name: Compile LaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: ${{ matrix.edition }}.tex
+          latexmk_use_lualatex: false
+          # latexmkrc dispatches the engine per source file (pdflatex with
+          # raised memory limits for every edition so far).
+
+      # The series' closing standard: 0 errors, 0 undefined, 0 overfull.
+      - name: Check the build log
+        run: |
+          L="build/${{ matrix.edition }}.log"
+          e=$(grep -ac '^!' "$L" || true)
+          u=$(grep -aci 'undefined' "$L" || true)
+          o=$(grep -ac 'Overfull' "$L" || true)
+          echo "errors $e, undefined $u, overfull $o"
+          [ "$e" = 0 ] && [ "$u" = 0 ] && [ "$o" = 0 ]
+
+      - name: Keep the PDF for the release job
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.edition }}
+          path: build/${{ matrix.edition }}.pdf
+          if-no-files-found: error
+          compression-level: 0      # PDFs are already compressed
+          retention-days: 7
+
+  release:
+    needs: [code, build]
+    # Every test and every edition must pass: one failure means no release at all.
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write       # needed to create releases and upload assets
+    steps:
+      - name: Collect the PDFs
+        uses: actions/download-artifact@v4
+        with:
+          path: pdfs
+          pattern: one_economics_book_*
+          merge-multiple: true
+
+      - name: Name the PDFs with the version
+        run: |
+          # Glob, not a hardcoded slug list: a new edition is then picked up by
+          # registering it in matrix.edition above and nowhere else.
+          # Each PDF is attached twice: once versioned, once under its plain
+          # slug -- the plain name is what makes
+          # releases/latest/download/<slug>.pdf links permanent.
+          # Move + hard link, never copy: copying multiplies the disk footprint.
+          for pdf in pdfs/one_economics_book_*.pdf
+          do
+            slug="$(basename "$pdf" .pdf)"
+            mv "$pdf" "${slug}_${GITHUB_REF_NAME}.pdf"
+            ln "${slug}_${GITHUB_REF_NAME}.pdf" "${slug}.pdf"
+          done
+          ls -la one_economics_book_*.pdf
+
+      - name: Create release and attach PDFs
+        uses: softprops/action-gh-release@v2
+        with:
+          files: one_economics_book_*.pdf
+          generate_release_notes: true
+          body: |
+            The **One Economics Book** series compiled at `${{ github.ref_name }}`, in English.
+            Book 1 covers grades 6–9, Book 2 grades 10–12, and Books 3–5
+            the three university years.
+
+            - **Download**: pick the PDF for your book below.
+              Files without a version suffix are stable names — linking to
+              `releases/latest/download/<name>.pdf` always fetches the newest
+              edition.
+            - Found a mistake? [Open an issue](https://github.com/${{ github.repository }}/issues/new).
