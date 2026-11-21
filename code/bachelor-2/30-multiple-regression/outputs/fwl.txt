@@ -1,0 +1,6 @@
+$ python fwl.py
+long regression:               0.038343
+residual on residual:          0.038343
+y on residualised x:           0.038343
+education alone (no controls): 0.040973
+variance of x 8.101; of its residual 7.117

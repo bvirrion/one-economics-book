@@ -1,0 +1,3 @@
+$ python penalty_play.py
+kick left 0.3636, cover left 0.4545, scoring rate 0.7909
+pairs whose scoring rates differ at the 5% level: 0 of 20

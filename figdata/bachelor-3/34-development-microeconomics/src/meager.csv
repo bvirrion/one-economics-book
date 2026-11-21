@@ -1,0 +1,7 @@
+outcome,label,tau,lo,hi,control,ledger
+profit,Profit,6.81,-3.03,24.49,94.81,b3dm:meager.tab
+revenues,Revenues,14.45,-1.4,43.53,306.17,b3dm:meager.tab
+expenditures,Expenditures,6.72,-2.3,22.07,212.58,b3dm:meager.tab
+consumption,Consumption,3.44,-6.28,13.21,281.8,b3dm:meager.tab
+durables,Consumer durables,1.83,-3.9,8.29,274.31,b3dm:meager.tab
+temptation,Temptation goods,-0.79,-3.33,1.28,18.64,b3dm:meager.tab

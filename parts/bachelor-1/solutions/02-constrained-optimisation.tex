@@ -1,0 +1,224 @@
+\section*{Chapter \ref{ch:b1:constrained-optimisation} --- Optimisation under Constraint}
+% Numbers recomputed in code/bachelor-1/02-constrained-optimisation/exercises/solutions.py (tested,
+% with a numerical optimiser as a check).
+
+\begin{solution}{exo:b1:constrained-optimisation:read-chart}
+\begin{enumerate}
+  \item Pay differs by a factor of $49.48/2.20 = 22.5$. Hours differ by
+    $2064 - 1504 = 560$ a year, which is $560/2064 = 27\%$ fewer in the top
+    tenth.
+  \item $560/48 = 11.7$ hours a week fewer.
+  \item No: each point is a different country, with its own taxes, its own
+    mix of jobs and its own habits, not one worker facing two wages.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:constrained-optimisation:substitution}
+$y = (24 - 2x)/3$, so $xy = (24x - 2x^2)/3$, with derivative
+$(24 - 4x)/3 = 0$ at $x = 6$; the second derivative $-4/3$ is negative.
+Then $y = 4$ and $xy = 24$. Tangency: $f_x/f_y = y/x = 4/6 = 2/3$ and
+$g_x/g_y = 2/3$.
+\end{solution}
+
+\begin{solution}{exo:b1:constrained-optimisation:level-slope}
+$f_x = 2xy = 4$ and $f_y = x^2 = 1$ at $(1, 2)$, so the slope is $-4/1 = -4$.
+The level is $f(1, 2) = 2$, and the curve is $x^2y = 2$, that is $y = 2/x^2$
+(whose derivative $-4/x^3$ is indeed $-4$ at $x = 1$).
+\end{solution}
+
+\begin{solution}{exo:b1:constrained-optimisation:binding}
+At $(6, 3)$, $x + 2y = 12$ holds with equality: it binds. $x = 6 < 8$ and
+$y = 3 < 5$: both are slack, with \omterm{def:b1:constrained-optimisation:shadow-price}{shadow prices} of zero. With $x \le 4$, the
+point $(6, 3)$ is no longer allowed; the best point keeps $x$ as close as
+allowed to the old tangency, $x = 4$, and spends the rest on $y$:
+$y = (12 - 4)/2 = 4 \le 5$. The solution is $(4, 4)$, with $f = 4$, and now two
+constraints bind.
+\end{solution}
+
+\begin{solution}{exo:b1:constrained-optimisation:lagrange-log}
+$\mathcal L = \ln x + 2\ln y - \lambda(p_1x + p_2y - m)$. The conditions are
+$1/x = \lambda p_1$ and $2/y = \lambda p_2$. Dividing, $p_2 y = 2p_1 x$; the
+constraint gives $3p_1x = m$. So
+\[
+x^* = \frac{m}{3p_1}, \qquad y^* = \frac{2m}{3p_2}, \qquad \lambda^* = \frac{1}{p_1 x^*} = \frac{3}{m}.
+\]
+At $p_1 = 1$, $p_2 = 2$, $m = 30$: $x^* = 10$, $y^* = 10$, $\lambda^* = 0.1$.
+\end{solution}
+
+\begin{solution}{exo:b1:constrained-optimisation:lambda-units}
+\begin{enumerate}
+  \item Units of the objective per dalen: $\lambda^*$ is the increase in the
+    maximum value per extra dalen of $m$, the marginal value of income.
+  \item $\Delta V \approx \lambda^* \Delta m = 0.1 \times 10 = 1.0$.
+  \item $V(m) = \ln(m/3) + 2\ln(m/3) = 3\ln(m/3)$ at these prices, so
+    $V(40) - V(30) = 3\ln(40/30) = 0.863$. The prediction overshoots because
+    $\lambda^* = 3/m$ falls as $m$ rises: $V$ is concave, and a derivative
+    taken at $m = 30$ overstates the average slope up to 40.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:constrained-optimisation:corner}
+The conditions $1 = \lambda$ and $1/y = \lambda$ give $y = 1$ and
+$x = 0.5 - 1 = -0.5 < 0$: inadmissible. On the constraint,
+$h(x) = x + \ln(0.5 - x)$ has $h'(x) = 1 - 1/(0.5 - x) < 0$ for
+$0 \le x < 0.5$, so $h$ is largest at $x = 0$: the solution is the corner
+$(0, 0.5)$. There the marginal value of $y$ is $1/y = 2$ and that of $x$ is
+1: the ratio is 2, above the price ratio of 1, and the agent would like a
+negative $x$ if it could have one.
+\end{solution}
+
+\begin{solution}{exo:b1:constrained-optimisation:student-kinks}
+\begin{enumerate}
+  \item The grant starts falling at $15h = 100$, $h = 6.67$, where income is
+    $100 + 200 = \num{300}$~dalens. It is gone when $0.5(15h - 100) = 200$, that is
+    $15h = 500$, $h = 33.33$, where income is \dal{500}.
+  \item \dal{15}, then $15 \times (1 - 0.5) = \num{7.5}$~dalens, then \dal{15}.
+  \item At 20 hours: earnings \dal{300}, grant $200 - 0.5 \times 200 = \num{100}$~dalens,
+    income \dal{400}. At 40 hours: earnings \dal{600}, no grant, income \dal{600}.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:constrained-optimisation:withdrawal}
+With the rate 0.75 the grant is gone at $15h - 100 = 200/0.75 = 266.67$, that
+is $h = 24.44$, and the middle segment pays $15 \times 0.25 = \num{3.75}$~dalens an
+hour. Every point of the new constraint is on or below the old one, and the
+first segment and the points beyond 33.33 hours are unchanged. The student at
+5 hours chose that point when better points were available; it is still
+available and the others are worse, so the student stays at 5 hours. The same
+argument keeps the student at 40 hours (income there is still \dal{600}). The
+student at 20 hours sees the wage on the margin halve (substitution: fewer
+hours) and is poorer at 20 hours, \dal{350} instead of \dal{400} (income
+effect: more hours); the direction is not settled by the model alone, but a
+fall in hours down to the kink at 6.67 hours is the case the bunching
+evidence points to. Only that student can end up at a kink.
+\end{solution}
+
+\begin{solution}{exo:b1:constrained-optimisation:equivalence}
+\begin{enumerate}
+  \item $\nabla g \neq 0$, so ``parallel'' means $\nabla f = \lambda \nabla g$ for
+    some number $\lambda$: that is $f_x = \lambda g_x$, $f_y = \lambda g_y$, and
+    with $g = b$ the \omterm{thm:b1:constrained-optimisation:lagrange}{Lagrange conditions} hold.
+  \item The tangent lines at the point are perpendicular to $\nabla f$ and to
+    $\nabla g$; they coincide if and only if the gradients are parallel, if and
+    only if $f_x/f_y = g_x/g_y$, which is
+    \cref{prop:b1:constrained-optimisation:equivalence}.
+  \item Minimise $x^2 + y^2$ subject to $x + y = 2$: at $(1, 1)$,
+    $\nabla f = (2, 2) = 2\nabla g$. The circles $x^2 + y^2 = c$ touch the line
+    from the side of the origin; $(1, 1)$ is the point of the line closest to
+    the origin, a \omterm{def:b1:constrained-optimisation:constrained-max}{constrained minimum}, and the \omterm{thm:b1:constrained-optimisation:lagrange}{Lagrange conditions} do not tell
+    it from a maximum.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:constrained-optimisation:dual}
+\begin{enumerate}
+  \item $\mathcal L = x + 2y - \mu(\sqrt{xy} - u_0)$. The conditions
+    $1 = \tfrac{\mu}{2}\sqrt{y/x}$ and $2 = \tfrac{\mu}{2}\sqrt{x/y}$ give
+    $x = 2y$; then $\sqrt{2}\,y = u_0$, so $y = u_0/\sqrt 2$,
+    $x = \sqrt 2\, u_0$, $C(u_0) = 2\sqrt 2\, u_0$ and $\mu^* = 2\sqrt 2 = 2.828$.
+  \item $C'(u_0) = 2\sqrt2 = \mu^*$, in dalens per unit of $f$: the cost of
+    reaching one level higher.
+  \item With $u_0 = \sqrt{18}$: $x = \sqrt{36} = 6$, $y = 3$, $C = 12$. The
+    cheapest way to reach the level $\sqrt{18}$ costs exactly the budget whose
+    best use reaches $\sqrt{18}$, at the same point. And
+    $\mu^* = 2.828 = 1/0.354 = 1/\lambda^*$: one more unit of $f$ costs $1/\lambda^*$
+    dalens when one more dalen buys $\lambda^*$ units.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:constrained-optimisation:falsify}
+\begin{enumerate}
+  \item Nothing forces it to look different: the cloud compares countries, and
+    countries differ in more than the wage, so even with every worker's supply
+    rising in the wage the cloud could fall.
+  \item For example: tax rates and the transfers withdrawn as earnings rise
+    are higher in rich countries; their jobs are more often in offices with
+    set hours, and paid holidays are longer.
+  \item Hours of the same workers before and after a change in their wage
+    that has nothing to do with their own choices (a change in a tax rate
+    for one group only, say). If those workers' hours rose with the after-tax
+    wage, the reading would be contradicted for them.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{pb:b1:constrained-optimisation:farm}
+\textbf{1.} $\Pi(x) = 2400\sqrt x + 1200\sqrt{20 - x}$ for $0 \le x \le 20$.
+
+\textbf{2.} $\Pi'(x) = 1200/\sqrt x - 600/\sqrt{20 - x} = 0$ gives
+$\sqrt{20 - x} = \sqrt x/2$, so $20 - x = x/4$, $x = 16$ and $y = 4$.
+
+\textbf{3.} $\Pi''(x) = -600x^{-3/2} - 300(20 - x)^{-3/2} < 0$: $\Pi$ is
+concave, so the critical point is the maximum.
+
+\textbf{4.} $2400 \times 4 + 1200 \times 2 = \num{12000}$~dalens.
+
+\textbf{5.} All potatoes: $2400\sqrt{20} = 2400 \times 4.4721 = \num{10733}$~dalens.
+All barley: $1200 \times 4.4721 = \num{5367}$~dalens. Both are below \dal{12000}.
+
+\textbf{6.} Potatoes: $1200/\sqrt{16} = \num{300}$~dalens a hectare; barley:
+$600/\sqrt 4 = \num{300}$~dalens. If one were higher, moving a hectare to that crop
+would raise profit, so the optimum cannot have them differ.
+
+\textbf{7.} $\mathcal L = 2400\sqrt x + 1200\sqrt y - \lambda(x + y - 20)$.
+
+\textbf{8.} $1200/\sqrt x = \lambda$, $600/\sqrt y = \lambda$, $x + y = 20$.
+
+\textbf{9.} Dividing, $2\sqrt{y/x} = 1$, so $x/y = 4$.
+
+\textbf{10.} $x = 4y$ and $5y = 20$: $y = 4$, $x = 16$, $\lambda = 1200/4 = 300$.
+
+\textbf{11.} The level curve $2400\sqrt x + 1200\sqrt y = 12000$ is
+$y = (10 - 2\sqrt x)^2$, convex towards the origin, and touches the line
+$x + y = 20$ at $(16, 4)$, where both slopes are $-1$ ($-\Pi_x/\Pi_y = -300/300$).
+
+\textbf{12.} Both find the critical point of $\Pi$ along the constraint:
+substitution by solving the constraint, Lagrange by the \omterm{def:b1:constrained-optimisation:tangency}{tangency condition},
+which \cref{prop:b1:constrained-optimisation:equivalence} shows is the same
+condition. $\Pi$ is concave, so that point is the maximum.
+
+\textbf{13.} The \omterm{def:b1:constrained-optimisation:tangency}{tangency condition} still gives $x = 4y$, so $x = 4L/5$ and
+$y = L/5$. Then $V(L) = 2400 \times 2\sqrt{L/5} + 1200\sqrt{L/5} = 6000\sqrt{L/5}$.
+
+\textbf{14.} $V'(L) = 6000 \times \tfrac{1}{2\sqrt{L/5}} \times \tfrac15 =
+600/\sqrt{L/5}$; at $L = 20$, $600/2 = 300 = \lambda$
+(\cref{prop:b1:constrained-optimisation:shadow}).
+
+\textbf{15.} Dalens of profit per hectare for the season: what one more
+hectare is worth to this farm, the most it would pay to rent one.
+
+\textbf{16.} At \dal{250}, yes: the hectare is worth about \dal{300}. At
+\dal{350}, no.
+
+\textbf{17.} $V(21) - V(20) = 6000(\sqrt{4.2} - 2) = 6000 \times 0.04939 =
+\dal{296.34}$, a little below 300 because $V$ is concave: the shadow rent
+falls as the field grows.
+
+\textbf{18.} It falls: $V'(L) = 600/\sqrt{L/5}$ decreases in $L$. Each extra
+hectare goes to poorer soil.
+
+\textbf{19.} $16 \times 500 + 4 \times 100 = 8400$ cubic metres. With
+$W = 9000$ the water constraint is slack and its \omterm{def:b1:constrained-optimisation:shadow-price}{shadow price} is zero.
+
+\textbf{20.} The plan of Part II needs 8400 cubic metres, more than 6000, so
+water binds. If land were slack, the water constraint alone would give
+$1200/\sqrt x = 500\mu$ and $600/\sqrt y = 100\mu$, so $y = 6.25x$, and
+$1125x = 6000$ gives $y = 33.3 > 20$: land would be exceeded, so it binds
+too. From $x + y = 20$ and $500x + 100y = 6000$: $400x + 2000 = 6000$,
+$x = 10$, $y = 10$.
+
+\textbf{21.} $2400\sqrt{10} + 1200\sqrt{10} = 3600 \times 3.1623 = \num{11384}$~dalens;
+the water allowance costs $12000 - 11384 = \num{616}$~dalens.
+
+\textbf{22.} $\mathcal L = 2400\sqrt x + 1200\sqrt y - \lambda(x + y - 20) -
+\mu(500x + 100y - 6000)$, with conditions $1200/\sqrt x = \lambda + 500\mu$,
+$600/\sqrt y = \lambda + 100\mu$, and the two constraints.
+
+\textbf{23.} At $x = y = 10$: $379.47 = \lambda + 500\mu$ and
+$189.74 = \lambda + 100\mu$. Subtracting, $400\mu = 189.73$, so
+$\mu = 0.4743$; then $\lambda = 189.74 - 47.43 = 142.31$.
+
+\textbf{24.} With plentiful water, one more hectare is worth \dal{300} to the
+farm; with an allowance of 6000 cubic metres, about \dal{142}, because a new
+hectare must be planted mostly in barley to stay within the water. One more
+cubic metre of water is worth about \dal{0.47}.
+\end{solution}

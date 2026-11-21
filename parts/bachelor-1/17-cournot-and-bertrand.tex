@@ -1,0 +1,411 @@
+\chapter{Oligopoly: Cournot and Bertrand}\label{ch:b1:cournot-and-bertrand}
+
+An isolated town has one dentist. When the town grows, a second dentist
+opens, then a third. How does the price of a filling change as each one
+arrives, and how much larger must the town be to support a fourth? A
+monopoly and a competitive industry are the two ends; between them are
+markets with a few sellers, each of whom knows that its choices move the
+price the others get. This chapter studies two models of such markets ---
+sellers choosing quantities and sellers choosing prices --- and what the
+number of sellers does in each.
+
+\begin{openingchart}{Town population needed per firm to support $N$ firms,
+five professions in isolated US towns, with the Cournot benchmark for
+identical firms, scaled so that one firm needs 1 thousand people.}{Bresnahan and Reiss 1991, Table 5;
+Cournot benchmark computed}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xlabel={Number of firms $N$}, ylabel={Thousand people per firm}, xmin=0.8, xmax=5.6, ymin=0, ymax=2.2,
+  xtick={1,...,5}, width=0.7\linewidth, height=0.42\linewidth, legend style={font=\footnotesize, at={(0.5,-0.24)},
+  anchor=north, legend columns=3}]
+  \addplot+[thick] table[x=n, y=doctors, col sep=comma] {figdata/bachelor-1/17-cournot-and-bertrand/out/per_firm.csv};
+  \addplot+[thick] table[x=n, y=dentists, col sep=comma] {figdata/bachelor-1/17-cournot-and-bertrand/out/per_firm.csv};
+  \addplot+[thick] table[x=n, y=druggists, col sep=comma] {figdata/bachelor-1/17-cournot-and-bertrand/out/per_firm.csv};
+  \addplot+[thick] table[x=n, y=plumbers, col sep=comma] {figdata/bachelor-1/17-cournot-and-bertrand/out/per_firm.csv};
+  \addplot+[thick] table[x=n, y=tire_dealers, col sep=comma] {figdata/bachelor-1/17-cournot-and-bertrand/out/per_firm.csv};
+  \addplot[black, dashed, thick, mark=none] table[x=n, y=cournot, col sep=comma] {figdata/bachelor-1/17-cournot-and-bertrand/out/per_firm.csv};
+  \legend{Doctors, Dentists, Druggists, Plumbers, Tire dealers, Cournot}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+A monopoly dentist needed a town of $0.71$ thousand people; two dentists
+needed $2.54$ thousand, $1.27$ thousand per dentist. % ledger: b1:bresnahan1991-dentists
+If each new firm only split a fixed pie of profit, the population per firm
+would stay flat. It rises instead, and steeply from one firm to two: the
+per-firm threshold almost doubles for doctors ($1.98$ times), dentists
+($1.79$), druggists ($2.00$) and tire dealers ($1.82$). % figdata: ratios
+A second firm must cut margins, so each firm needs more customers to cover
+its fixed costs. After the third firm the lines are almost flat: the fourth
+and fifth firms change little. The dashed line shows what identical
+firms competing in quantities would give: from one firm to two its
+per-firm threshold rises by a factor of only 1.125, far less in proportion
+than the data's.
+
+\begin{recall}
+Oligopoly, the Nash \omterm{def:b1:models-and-data:equilibrium}{equilibrium} (a profile of strategies in which each
+player's strategy is a best reply to the others') and the prisoner's
+dilemma were met at school. Monopoly and the \omterm{def:b1:monopoly-pricing:lerner}{Lerner index} are in
+\cref{ch:b1:monopoly-pricing}.
+\end{recall}
+
+\section{Competition in quantities}\label{sec:b1:cournot-and-bertrand:cournot}
+
+Two firms make the same good at constant marginal cost $c$ and choose
+quantities $q_1$, $q_2$ at the same time; the price is then the one at which
+buyers take $Q = q_1 + q_2$, $p = a - bQ$.
+
+\begin{definition}[Best-response function]\label{def:b1:cournot-and-bertrand:best-response}
+\index{best-response function}
+A firm's \emph{best-response function} gives, for each choice of its rivals,
+the choice that maximises its own profit.
+\end{definition}
+
+Firm 1's profit is $(a - b(q_1 + q_2) - c)q_1$; setting its derivative to zero gives
+\[
+q_1 = \frac{a - c - bq_2}{2b},
+\]
+so firm 1 produces less when firm 2 produces more.
+
+\begin{definition}[Cournot equilibrium]\label{def:b1:cournot-and-bertrand:cournot}
+\index{Cournot equilibrium}
+A \emph{Cournot \omterm{def:b1:models-and-data:equilibrium}{equilibrium}} is a list of quantities, one per firm, each a
+best response to the others': a Nash \omterm{def:b1:models-and-data:equilibrium}{equilibrium} of the game in which
+firms choose quantities.
+\end{definition}
+
+\begin{proposition}[Cournot with $n$ firms]\label{prop:b1:cournot-and-bertrand:n-firms}
+With $n$ identical firms, linear demand $p = a - bQ$ and marginal cost $c$, the
+\omterm{def:b1:cournot-and-bertrand:cournot}{Cournot equilibrium} has $q_i = \dfrac{a - c}{b(n + 1)}$ and
+$p = c + \dfrac{a - c}{n + 1}$. Each firm's \omterm{def:b1:monopoly-pricing:lerner}{Lerner index} is $L = -1/(n\varepsilon)$, with $\varepsilon$
+the elasticity of \omterm{def:b1:consumer-choice:market-demand}{market demand}.
+\end{proposition}
+
+\begin{proof}
+Firm $i$'s condition is $a - bQ - bq_i - c = 0$. In a symmetric \omterm{def:b1:models-and-data:equilibrium}{equilibrium}
+$Q = nq_i$, so $a - c = b(n + 1)q_i$, and $p = a - bnq_i = c + (a - c)/(n + 1)$. More
+generally, firm $i$'s condition is $p + q_i\,\dd p/\dd Q = c$, so
+$(p - c)/p = -\frac{q_i}{Q}\frac Qp\frac{\dd p}{\dd Q} = -s_i/\varepsilon$, with $s_i = 1/n$ its share.
+\end{proof}
+
+\begin{proposition}[The competitive limit]\label{prop:b1:cournot-and-bertrand:limit}
+As $n \to \infty$, the Cournot price tends to marginal cost, and the margin
+$p - c = (a - c)/(n + 1)$ falls like $1/n$.
+\end{proposition}
+
+With one firm the margin is half of $a - c$; with two, a third; with nine, a
+tenth. The model gives the same result as monopoly at $n = 1$ and as
+competition in the limit.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={$q_1$}, ylabel={$q_2$}, xmin=0, xmax=95, ymin=0, ymax=95,
+  width=0.46\linewidth, height=0.44\linewidth]
+  \addplot[demand, domain=0:90] {90 - 2*x};
+  \addplot[supply, domain=0:90] {(90 - x)/2};
+  \addplot[only marks, mark=*, mark size=1.8pt] coordinates {(30,30)};
+  \addplot[only marks, mark=o, mark size=1.8pt] coordinates {(45,0) (0,45) (90,0) (0,90)};
+  \addplot[guide] coordinates {(45,0) (0,45)};
+  \addplot[guide] coordinates {(90,0) (0,90)};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:30,30) {Cournot};
+  \node[font=\footnotesize, anchor=west] at (axis cs:4,72) {firm 1's best response};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:74,11) {firm 2's};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:46,1) {monopoly};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:64,27) {competition};
+\end{axis}
+\end{tikzpicture}
+
+{\small Demand $p = 120 - Q$ and $c = 30$. The best responses
+$q_1 = (90 - q_2)/2$ (blue) and $q_2 = (90 - q_1)/2$ (red) cross at 30 each. The dotted lines
+are the outputs that sum to the monopoly total, 45, and the competitive
+total, 90.}
+\end{omfigure}
+
+\section{Competition in prices}\label{sec:b1:cournot-and-bertrand:bertrand}
+
+Now let the two firms choose prices. Buyers buy from the cheaper firm,
+and split equally at equal prices; each firm can serve the whole market.
+
+\begin{definition}[Bertrand equilibrium]\label{def:b1:cournot-and-bertrand:bertrand}
+\index{Bertrand equilibrium}
+A \emph{Bertrand \omterm{def:b1:models-and-data:equilibrium}{equilibrium}} is a list of prices, one per firm, each a best
+response to the others'.
+\end{definition}
+
+\begin{proposition}[Two are enough]\label{prop:b1:cournot-and-bertrand:bertrand}
+With two firms with the same marginal cost $c$, a homogeneous good and no
+limit on capacity, the only \omterm{def:b1:cournot-and-bertrand:bertrand}{Bertrand equilibrium} is $p_1 = p_2 = c$.
+\end{proposition}
+
+\begin{proof}
+At $p_1 = p_2 = c$ profits are zero; raising a price sells nothing, cutting it
+sells below cost: no firm gains. Any other profile has a profitable move.
+If the lower price exceeds $c$, the firm with the higher price (or either
+firm, if they are equal) can take the whole market by charging slightly
+less than the lower price, gaining almost the whole market's profit instead
+of half or nothing. If one price equals $c$ and the other is higher, the
+firm at $c$ earns nothing and gains by raising its price to just below the
+other's. If a price is below $c$, the firm charging it loses money on every
+unit and can raise it.
+\end{proof}
+
+\begin{remark}
+\index{Bertrand paradox}
+The \emph{Bertrand paradox} is the gap between this prediction and what is
+observed: two sellers are enough for marginal-cost pricing in the model,
+while in most real markets two sellers earn margins well above cost.
+\end{remark}
+
+With unequal costs $c_1 < c_2$, the low-cost firm prices just below $c_2$ and
+takes the market, earning $c_2 - c_1$ a unit: only a cost advantage brings a
+margin.
+
+\section{Capacities and differentiation}\label{sec:b1:cournot-and-bertrand:soften}
+
+Two things undo the paradox. The first is capacity. If firms first choose
+capacities and then set prices, a firm cannot take the whole market by
+undercutting, because it cannot serve it; under conditions studied in
+Year~2, the outcome is the Cournot one. Quantity competition is then a model
+of firms that commit to capacity --- seats on a ferry, rooms in a hotel ---
+and compete in prices afterwards.
+
+The second is differentiation. If the goods differ --- in location, in
+brand, in quality --- a firm that charges a little more keeps some of its
+buyers. With demands $q_i = \alpha - \beta p_i + \gamma p_j$, firm $i$'s best response to
+$p_j$ is $p_i = (\alpha + \beta c + \gamma p_j)/(2\beta)$: it raises its price when its rival does.
+
+\begin{definition}[Strategic substitutes and complements]\label{def:b1:cournot-and-bertrand:strategic}
+\index{strategic substitutes}\index{strategic complements}
+Choices are \emph{strategic substitutes} when a firm's best response falls
+as its rival's choice rises, as with Cournot quantities, and
+\emph{strategic complements} when it rises, as with differentiated Bertrand
+prices.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={$p_1$}, ylabel={$p_2$}, xmin=0, xmax=70, ymin=0, ymax=70,
+  width=0.46\linewidth, height=0.44\linewidth]
+  \addplot[demand, domain=30:47.5] {4*x - 120};
+  \addplot[supply, domain=0:70] {(120 + x)/4};
+  \addplot[only marks, mark=*, mark size=1.8pt] coordinates {(40,40)};
+  \node[font=\footnotesize, anchor=north west] at (axis cs:40,40) {equilibrium};
+  \node[font=\footnotesize, anchor=east] at (axis cs:44,62) {firm 1};
+  \node[font=\footnotesize, anchor=south] at (axis cs:60,46) {firm 2};
+\end{axis}
+\end{tikzpicture}
+
+{\small Differentiated price competition with $q_i = 100 - 2p_i + p_j$ and a
+marginal cost of 10: the best responses $p_i = (120 + p_j)/4$ slope up and cross at
+$p_1 = p_2 = 40$, well above cost.}
+\end{omfigure}
+
+\section{The leader and the follower}\label{sec:b1:cournot-and-bertrand:stackelberg}
+
+Suppose firm 1 chooses its quantity first, and firm 2 sees it before
+choosing. Firm 2 then plays its best response, and firm 1, knowing this,
+chooses its quantity with the response built in: the game is solved
+backwards.
+
+\begin{definition}[Stackelberg equilibrium]\label{def:b1:cournot-and-bertrand:stackelberg}
+\index{Stackelberg equilibrium}\index{leader--follower model}
+In a \emph{Stackelberg} (leader--follower) \emph{\omterm{def:b1:models-and-data:equilibrium}{equilibrium}} the leader
+chooses its quantity to maximise its profit given the follower's
+\omterm{def:b1:cournot-and-bertrand:best-response}{best-response function}, and the follower then plays its best response.
+\end{definition}
+
+\begin{proposition}[The leader's advantage]\label{prop:b1:cournot-and-bertrand:leader}
+With linear demand $p = a - bQ$ and a common marginal cost $c$, the leader
+produces $(a - c)/(2b)$, the monopoly quantity, the follower half as much, and
+the leader earns more than in the \omterm{def:b1:cournot-and-bertrand:cournot}{Cournot equilibrium}.
+\end{proposition}
+
+\begin{proof}
+Given $q_2 = (a - c - bq_1)/(2b)$, the leader's profit is
+$(a - b q_1 - b q_2 - c)q_1 = \tfrac12(a - c - bq_1)q_1$, which is largest at $q_1 = (a - c)/(2b)$; then
+$q_2 = (a - c)/(4b)$. The leader's profit is $(a - c)^2/(8b)$, against $(a - c)^2/(9b)$ in
+Cournot.
+\end{proof}
+
+The leader gains by committing: once its output is fixed, the follower
+must accommodate it. A capacity built before the rival arrives is such a
+commitment.
+
+\section{Margins and the number of competitors}\label{sec:b1:cournot-and-bertrand:entry}
+
+\begin{definition}[Entry threshold]\label{def:b1:cournot-and-bertrand:entry-threshold}
+\index{entry threshold}
+The \emph{entry threshold} $S_N$ is the smallest market size --- the number of
+buyers --- at which $N$ firms can each cover their fixed costs.
+\end{definition}
+
+With identical Cournot firms, demand $Q = S(a - p)$ for a market of $S$ people,
+marginal cost $c$ and fixed cost $F$, each of $N$ firms earns
+$S(a - c)^2/(N + 1)^2 - F$, so $S_N = F(N + 1)^2/(a - c)^2$. The per-firm threshold $S_N/N$ rises
+because margins fall as firms enter; if margins did not fall, it would be
+flat. Comparing towns of different sizes thus measures how fast
+competition erodes margins without observing a single price or cost.
+
+\begin{record}[Entry in isolated towns]
+Using towns in the United States far from any larger market, a study
+counted the doctors, dentists, druggists, plumbers and tire dealers in
+each and estimated the population needed for each number of firms. A
+monopoly tire dealer or druggist needs about 500 people, a doctor or
+dentist 700 to 900, a plumber about 1,400 (twice a dentist). % ledger: b1:bresnahan1991, b1:bresnahan1991-plumbers
+In markets with five or fewer firms almost all of the change in
+competitive conduct comes with the second and third firms (Bresnahan and
+Reiss 1991). % ledger: b1:bresnahan1991
+\end{record}
+
+\begin{record}[Two are few]
+Laboratory markets let the number of sellers be chosen. In Cournot
+markets with two to five sellers, two sellers colluded somewhat, three
+produced at the Cournot level, and four or five were never collusive, some
+close to the competitive outcome (Huck, Normann and Oechssler 2004). % ledger: b1:huck2004
+In Bertrand markets the prediction of marginal-cost pricing did poorly
+with two sellers but, after some learning, well with three or four
+(Dufwenberg and Gneezy 2000). % ledger: b1:dufwenberg2000
+\end{record}
+
+\begin{model}{Cournot oligopoly}
+\assumes $n$ identical firms choosing quantities (or capacities) at the
+same time; a homogeneous good.
+\predicts Margins above cost falling like $1/n$; a \omterm{def:b1:monopoly-pricing:lerner}{Lerner index} of $-s_i/\varepsilon$;
+\omterm{def:b1:cournot-and-bertrand:entry-threshold}{entry thresholds} per firm rising with $n$.
+\tested Per-firm \omterm{def:b1:cournot-and-bertrand:entry-threshold}{entry thresholds} rise with the number of firms in
+isolated towns, faster from one to two firms than Cournot with linear
+demand predicts (Bresnahan and Reiss 1991); % ledger: b1:bresnahan1991
+laboratory markets with three firms produce at the Cournot level (Huck,
+Normann and Oechssler 2004). % ledger: b1:huck2004
+\breaks When firms collude (Year~2); when they compete in prices with
+spare capacity.
+\end{model}
+
+\begin{model}{Bertrand competition}
+\assumes Firms setting prices, a homogeneous good, no limits on capacity,
+equal costs.
+\predicts Price equal to marginal cost with two firms or more, and no
+effect of further entry.
+\tested In the laboratory, prices near cost appear with three or four
+sellers but not with two (Dufwenberg and Gneezy 2000). % ledger: b1:dufwenberg2000
+\breaks In most real markets two sellers earn margins: products differ,
+capacities bind, and the game is repeated.
+\end{model}
+
+\section*{Exercises}\label{sec:b1:cournot-and-bertrand:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:cournot-and-bertrand:duo}
+Find the \omterm{def:b1:cournot-and-bertrand:cournot}{Cournot equilibrium} of two firms with $p = 120 - Q$ and $c = 30$: outputs,
+price and profits.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:cournot-and-bertrand:bert}
+Two firms with marginal cost 30 compete in prices for the same buyers.
+What is the \omterm{def:b1:models-and-data:equilibrium}{equilibrium} price and profit?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:cournot-and-bertrand:read}
+From Bresnahan and Reiss's Table 5, the source of the opening chart, a
+monopoly dentist needs a town of $0.71$
+thousand people and two dentists $2.54$ thousand. % ledger: b1:bresnahan1991-dentists
+Compute the per-firm thresholds and their ratio.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:cournot-and-bertrand:third}
+In the market of \cref{exo:b1:cournot-and-bertrand:duo}, predict the price
+when a third identical firm enters.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:cournot-and-bertrand:surplus}
+In the same market with $n$ Cournot firms, write the price and \omterm{def:b1:partial-equilibrium-welfare:surplus}{total
+surplus} as functions of $n$, and evaluate for $n = 1, 2, 3$ and the limit.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:cournot-and-bertrand:share}
+Show that a Cournot firm with market share $s$, possibly different from its
+rivals', has \omterm{def:b1:monopoly-pricing:lerner}{Lerner index} $s/|\varepsilon|$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:cournot-and-bertrand:unequal}
+Two firms with marginal costs 10 and 12 compete in prices for a market with
+demand $Q = 100 - p$. Find the \omterm{def:b1:models-and-data:equilibrium}{equilibrium} (prices in whole cents, or as a limit).
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:cournot-and-bertrand:stack}
+Solve the \omterm{def:b1:cournot-and-bertrand:stackelberg}{leader--follower model} for the market of
+\cref{exo:b1:cournot-and-bertrand:duo}, and compare outputs and profits
+with the Cournot outcome.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:cournot-and-bertrand:diff}
+Firms with marginal cost 10 face $q_i = 100 - 2p_i + p_j$. Find the \omterm{def:b1:cournot-and-bertrand:bertrand}{Bertrand
+equilibrium} prices, quantities and profits.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:cournot-and-bertrand:limit-ex}
+Prove that the Cournot price tends to marginal cost as $n \to \infty$, and that
+$n(p - c)$ tends to a limit; find it.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:cournot-and-bertrand:thresholds}
+With demand $Q = S(a - p)$, cost $c$ and fixed cost $F$, derive $S_N$ for Cournot
+firms and the ratios $S_{N+1}/S_N$ and $(S_{N+1}/(N + 1))/(S_N/N)$. What would
+Bertrand competition imply for $S_2$?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:cournot-and-bertrand:refute}
+What evidence would refute ``the second firm brings the price to marginal
+cost''? Say what the \omterm{def:b1:cournot-and-bertrand:entry-threshold}{entry thresholds} of the opening chart would look like
+if it were true.
+\end{exercise}
+
+\section{Problem: Ferries to the Islands}\label{sec:b1:cournot-and-bertrand:problem}
+
+\begin{problem}[{Weekend problem --- how big an island three ferries need}]\label{pb:b1:cournot-and-bertrand:ferries}
+Brenland's islands (invented) are served by ferries. An island of $S$
+thousand people demands $Q = S(60 - p)$ thousand trips a year at a fare of $p$
+dalens. A ferry's marginal cost is 20 a trip and its fixed cost 800 thousand
+dalens a year. Money below is in thousands of dalens a year.
+
+\medskip\noindent\textbf{Part I --- One ferry.} Island A has 4 thousand people.
+\begin{enumerate}
+  \item Write the inverse demand.
+  \item Find the monopoly fare and trips.
+  \item Compute the ferry's profit after its fixed cost.
+  \item Compute the \omterm{def:b1:monopoly-pricing:lerner}{Lerner index} and the elasticity of demand at that fare.
+  \item Compute \omterm{def:b1:consumer-welfare:consumer-surplus}{consumer surplus}.
+  \item Compute the \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss}.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- Two ferries choose capacities.} Island B has 9
+thousand people and two ferries, each choosing how many trips to offer.
+\begin{enumerate}[resume]
+  \item Write the inverse demand.
+  \item Find ferry 1's best response to ferry 2's trips.
+  \item Find the \omterm{def:b1:cournot-and-bertrand:cournot}{Cournot equilibrium}: trips per ferry, in all, and the fare.
+  \item Compute each ferry's profit.
+  \item Compute the \omterm{def:b1:monopoly-pricing:lerner}{Lerner index} and check it against $-1/(n\varepsilon)$.
+  \item Compute \omterm{def:b1:consumer-welfare:consumer-surplus}{consumer surplus}.
+  \item Compare with a single ferry on island B: fare and profit. Would the two ferries gain by merging?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- A price war.}
+\begin{enumerate}[resume]
+  \item If the two ferries had ample capacity and set fares, what fare would result?
+  \item What would each ferry's profit be, and what would happen next?
+  \item If one ferry left, what would the other earn?
+  \item At the Cournot fare each ferry runs full. Show that neither gains by cutting its fare, and that ferry 1 does not gain by offering fewer trips.
+  \item Ferry 1 chooses its capacity before ferry 2 arrives. Find both capacities, the fare and the profits.
+  \item What is ferry 1's commitment worth?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- How many ferries?}
+\begin{enumerate}[resume]
+  \item Write the profit of each of $n$ Cournot ferries on an island of $S$ thousand people.
+  \item Find the \omterm{def:b1:cournot-and-bertrand:entry-threshold}{entry thresholds} $S_1$, $S_2$ and $S_3$.
+  \item Compute the per-ferry thresholds and their ratios.
+  \item How many ferries can island A and island B support, and what is island B's fare then?
+  \item Compare the first per-ferry ratio with Bresnahan and Reiss's ratios for doctors and dentists, and say what it suggests.
+  \item What would $S_2$ be under Bertrand competition with ample capacity?
+  \item State the result: the island size that supports three ferries, as a multiple of the size that supports one.
+\end{enumerate}
+\end{problem}

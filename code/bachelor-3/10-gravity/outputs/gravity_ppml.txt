@@ -1,0 +1,7 @@
+$ python gravity_ppml.py
+pairs 30,446, converged True
+ln_dist       -0.648  (0.025)
+contig         0.537  (0.071)
+comlang_off   -0.030  (0.069)
+col45          0.569  (0.127)
+fta_wto        0.380  (0.053)

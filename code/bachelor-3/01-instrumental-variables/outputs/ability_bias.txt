@@ -1,0 +1,4 @@
+$ python ability_bias.py
+true return to a year      0.0800
+OLS slope                  0.1259
+0.08 + 0.10 * slope(a, s)  0.1266

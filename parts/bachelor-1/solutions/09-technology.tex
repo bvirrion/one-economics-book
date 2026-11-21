@@ -1,0 +1,165 @@
+\section*{Chapter \ref{ch:b1:technology} --- Technology}
+% Numbers recomputed in code/bachelor-1/09-technology/exercises/solutions.py (tested).
+
+\begin{solution}{exo:b1:technology:mrts-cd}
+$\mathrm{MRTS} = f_L/f_K = (0.7/0.3)(K/L) = 2.333 \times 8/27 = 0.6914$. At this
+bundle one more hour of labour replaces 0.69 units of capital with output
+unchanged.
+\end{solution}
+
+\begin{solution}{exo:b1:technology:three}
+$f_1$ is homogeneous of degree 1 (constant returns), $f_2$ of degree 1.2
+(increasing), and $f_3(tK, tL) = \bigl(t\min(K, 2L)\bigr)^{0.8} = t^{0.8}f_3$ (decreasing).
+\end{solution}
+
+\begin{solution}{exo:b1:technology:read}
+Capital per hour: $256.58/27.98 = 9.17$; pay per hour: $45.86/3.97 = 11.55$. With
+one Cobb--Douglas technology, cost minimisation gives
+$K/L = \bigl(\alpha/(1 - \alpha)\bigr)(w/r)$, so with one rental the two ratios would be
+equal: capital per hour 11.55 times as large, not 9.17.
+\end{solution}
+
+\begin{solution}{exo:b1:technology:shapes}
+(a) $KL = 9$ at all three: a Cobb--Douglas \omterm{def:b1:technology:isoquant}{isoquant}. (b) $K + L = 10$: \omterm{def:b1:preferences-and-utility:perfect}{perfect
+substitutes}. (c) Adding capital to $(2, 4)$, or labour, does not raise output:
+fixed proportions with the corner at $(2, 4)$, as for $\min(K/2, L/4)$.
+\end{solution}
+
+\begin{solution}{exo:b1:technology:ces-sigma}
+This is CES with $\rho = -1$ and $\alpha = 0.3$:
+$\mathrm{MRTS} = (0.7/0.3)(K/L)^{2}$, and $\sigma = 1/(1 - \rho) = 0.5$.
+\end{solution}
+
+\begin{solution}{exo:b1:technology:cd-limit}
+$\ln f = \ln\bigl(\alpha K^\rho + (1 - \alpha)L^\rho\bigr)/\rho$. As $\rho \to 0$ the numerator tends to
+$\ln 1 = 0$, as does the denominator. By l'H\^opital's rule the limit is that of
+the derivative of the numerator,
+$\bigl(\alpha K^\rho\ln K + (1 - \alpha)L^\rho\ln L\bigr)/\bigl(\alpha K^\rho + (1 - \alpha)L^\rho\bigr)$, which tends
+to $\alpha\ln K + (1 - \alpha)\ln L$. So $f \to K^\alpha L^{1-\alpha}$.
+\end{solution}
+
+\begin{solution}{exo:b1:technology:predict}
+$K/L$ is multiplied by $2^\sigma$: $2^{0.5} = 1.414$, a rise of $41.4\%$, for $\sigma = 0.5$;
+$2^1$, a rise of $100\%$, for $\sigma = 1$.
+\end{solution}
+
+\begin{solution}{exo:b1:technology:local}
+$Kf_K + Lf_L = \sqrt{KL}$, so the elasticity of scale is $\sqrt{KL}/(\sqrt{KL} - 2)$:
+$4/2 = 2$ at $(4, 4)$ and $16/14 = 1.143$ at $(16, 16)$. It exceeds one wherever
+output is positive, and falls towards one as the firm grows: the fixed loss
+of 2 matters less and less.
+\end{solution}
+
+\begin{solution}{exo:b1:technology:estimate}
+Korea: $\ln 12.872/\ln 15.61 = 2.555/2.748 = 0.93$. United States:
+$\ln 1.656/\ln 1.445 = 0.504/0.368 = 1.37$. Both assume a technology that did not
+change: labour-augmenting progress, for instance, moves $K/L$ and the
+measured $w/r$ without any substitution. The rental is not observed but
+backed out from the labour share, and capital is measured in money, with
+a mix of assets that changed over the period.
+\end{solution}
+
+\begin{solution}{exo:b1:technology:euler-proof}
+$g'(t) = -kt^{-k-1}f(tK, tL) + t^{-k}\bigl(Kf_K(tK, tL) + Lf_L(tK, tL)\bigr)
+= t^{-k-1}\bigl(-kf(tK, tL) + tKf_K(tK, tL) + tLf_L(tK, tL)\bigr)$. The hypothesis,
+applied at the point $(tK, tL)$, makes the bracket zero. So $g$ is constant,
+$g(t) = g(1) = f(K, L)$, which is $f(tK, tL) = t^kf(K, L)$.
+\end{solution}
+
+\begin{solution}{exo:b1:technology:augmenting}
+Write $E = bL$. Then $f_L = bf_E$ and $f_E/f_K = \bigl((1 - \alpha)/\alpha\bigr)(K/E)^{1-\rho}$. Cost
+minimisation sets $f_L/f_K = w/r$, so $(K/E)^{1-\rho} = \bigl(\alpha/(1 - \alpha)\bigr)\,w/(br)$ and
+$K/E = \bigl(\alpha/(1 - \alpha)\bigr)^\sigma\bigl(w/(br)\bigr)^\sigma$. The cost ratio is
+$rK/(wL) = \bigl(br/w\bigr)(K/E) = \bigl(\alpha/(1 - \alpha)\bigr)^\sigma\bigl(w/(br)\bigr)^{\sigma - 1}$. When $b$ rises,
+$w/(br)$ falls; with $\sigma < 1$ the exponent is negative, so the ratio rises: the
+capital share rises.
+\end{solution}
+
+\begin{solution}{exo:b1:technology:refute}
+With one Cobb--Douglas technology and one rental, $K/L = \bigl(\alpha/(1 - \alpha)\bigr)w/r$: all
+countries would lie on one line of slope exactly one, and the labour share
+would be $1 - \alpha$ in every country. A slope clearly different from one, a
+scatter about the line wider than measurement error can explain, or labour
+shares that differ systematically across countries would refute it. A
+slope of $0.94$ alone is not such evidence; the labour shares are: in the
+chart's data one country in ten has a labour share below 0.33 and one in ten
+above 0.63. % figdata: capital_wage_stats
+\end{solution}
+
+\begin{solution}{pb:b1:technology:bakeries}
+\textbf{1.} A: $100\bigl(\tfrac12 \cdot 2^{-2/3} + \tfrac12 \cdot 8^{-2/3}\bigr)^{-3/2} = 342.65$ loaves.
+B: with $K = L = 4$, $Y = 100 \times 4 = 400$.
+
+\textbf{2.} $f_L/f_K = (L^{\rho-1})/(K^{\rho-1}) = (K/L)^{1-\rho} = (K/L)^{5/3}$. A:
+$(1/4)^{5/3} = 0.0992$ ovens per baker; B: 1.
+
+\textbf{3.} $\tfrac12K^\rho + \tfrac12 \cdot 8^\rho = 4^\rho$, so $K^\rho = 2 \times 4^{-2/3} - 8^{-2/3} = 0.7937 - 0.25 = 0.5437$
+and $K = 0.5437^{-3/2} = 2.494$ ovens.
+
+\textbf{4.} $\tfrac12K^\rho = 4^\rho - \tfrac12L^\rho < 4^\rho$ since $L^\rho > 0$; with $\rho < 0$, raising
+to the power $1/\rho$ reverses the inequality: $K > (2 \times 4^\rho)^{1/\rho} = 4 \times 2^{-3/2} = 1.414$.
+The \omterm{def:b1:technology:isoquant}{isoquant} has an asymptote at $K = 1.414$ (and at $L = 1.414$); a
+Cobb--Douglas \omterm{def:b1:technology:isoquant}{isoquant} approaches the axes, so any amount of capital can be
+replaced by enough labour.
+
+\textbf{5.} $342.65/8 = 42.83$ loaves per baker and $342.65/2 = 171.32$ per oven.
+
+\textbf{6.} $100^{-2/3} = 0.04642$. $f_L = \tfrac12 \times 0.04642 \times 42.83^{5/3} = 12.17$ and
+$f_K = \tfrac12 \times 0.04642 \times 171.32^{5/3} = 122.65$; $12.17/122.65 = 0.0992$.
+
+\textbf{7.} $685.30 = 2 \times 342.65$: constant returns (the function is
+homogeneous of degree 1).
+
+\textbf{8.} $2 \times 122.65 + 8 \times 12.17 = 245.30 + 97.36 = 342.66$ with these
+rounded \omterm{def:b1:technology:marginal-product}{marginal products}, 342.65 unrounded: the output.
+
+\textbf{9.} $100 \times 4^{1.2} = 527.8$ loaves.
+
+\textbf{10.} $100 \times 2^{1.2} = 229.7$; two half-size bakeries make 459.4, less than
+527.8.
+
+\textbf{11.} The function is homogeneous of degree 1.2: scaling all inputs by
+$t$ scales output by $t^{1.2}$, so doubling multiplies it by $2.297$:
+increasing returns.
+
+\textbf{12.} With increasing returns at every size one bakery would bake for
+everyone. Fresh bread must be sold near the oven, so the market of one
+bakery is small; and beyond some size a bakery has decreasing returns
+(managing many bakers, the cost of delivery), which this function leaves
+out.
+
+\textbf{13.} $\sigma = 1/(1 + 2/3) = 0.6$.
+
+\textbf{14.} Cost minimisation sets $\mathrm{MRTS} = w/r$:
+$(K/L)^{5/3} = w/r$, so $K/L = (w/r)^{3/5}$.
+
+\textbf{15.} $\ln(1/0.25)/\ln(1/0.1) = \ln 4/\ln 10 = 1.386/2.303 = 0.602$.
+
+\textbf{16.} $0.1^{0.6} = 0.2512$, against the observed $0.25$.
+
+\textbf{17.} $1.1^{0.6} - 1 = 5.89\%$ more ovens per baker.
+
+\textbf{18.} Kestria: $2r/(2r + 8 \times 0.1r) = 2/2.8 = 0.714$ ($0.715$ at the exact
+optimum $K/L = 0.2512$). Brenland: $4/8 = 0.5$. Ovens are relatively dear in
+Kestria, and with $\sigma < 1$ the bakery cuts its ovens per baker by less than
+in proportion to their price, so ovens take the larger share of its costs.
+
+\textbf{19.} $100\bigl(\tfrac12 \cdot 3^{-2/3} + \tfrac12 \cdot 8^{-2/3}\bigr)^{-3/2} = 452.78$: $32.1\%$ more.
+
+\textbf{20.} $r/1.5$. The bakery chooses $bK/L = \bigl(w/(r/b)\bigr)^{0.6} = (bw/r)^{0.6}$:
+$0.15^{0.6} = 0.3204$ in Kestria and $1.5^{0.6} = 1.2754$ in Brenland.
+
+\textbf{21.} $0.3204/1.5 = 0.2136$ and $1.2754/1.5 = 0.8503$: both rent \emph{fewer}
+ovens per baker than before (0.2512 and 1).
+
+\textbf{22.} The oven share is $1/\bigl(1 + (bw/r)^{0.4}\bigr)$: $1/(1 + 0.4682) = 0.681$ in
+Kestria and $1/(1 + 1.1761) = 0.460$ in Brenland, down from 0.715 and 0.5.
+
+\textbf{23.} The price of an effective oven falls by a third. With $\sigma = 0.6$
+the bakeries raise effective ovens per baker by less than in proportion
+($1.5^{0.6} = 1.275$ times), so spending on ovens falls relative to spending on
+bakers. With $\sigma > 1$ it would rise.
+
+\textbf{24.} The two bakeries' choices reveal an \omterm{def:b1:technology:sigma}{elasticity of substitution} of
+$\ln 4/\ln 10 = 0.6$.
+\end{solution}

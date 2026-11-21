@@ -1,0 +1,321 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g11-10. Labour demand as the value of the marginal product,
+% labour supply, wage differences (human capital, compensating differences, decompositions), monopsony, the minimum wage.
+% Real numbers: figdata/grade-11/10-labour-market/ (BLS Table 5.1 for 2025, cited; WDI unemployment by education, 2024).
+% Ledger: Card and Krueger 1994, Neumark and Wascher 2006, Cengiz et al. 2019, Jardim et al. 2017, Ashenfelter and Krueger
+% 1994, Blau and Kahn 2017, UK and US minimum wages. Angrist and Krueger 1991 was not read and is not cited. The cafes
+% are invented.
+\chapter{The Labour Market}\label{ch:g11:labour-market}
+
+In the United States in 2025, a full-time worker aged 25 or over without a high-school diploma earned a median of 770 dollars a week; one with a bachelor's degree
+earned 1578, about twice as much; one with a doctorate, 2307. The less educated were also more often out of work: 6.1\,\% of those without a diploma were unemployed,
+against 2.8\,\% of those with a bachelor's degree.
+% ledger: g11:bls-edpays-lesshs, g11:bls-edpays-bachelors, g11:bls-edpays-doctoral; figdata: edpays
+
+Wages are prices: the price of an hour of work. This chapter applies demand and supply to that price. It explains why firms pay what they pay, why people work as much
+as they do, why wages differ between people, and what a \omterm{def:g11:labour-market:minimum-wage}{minimum wage} does, a question on which the evidence is still argued over.
+
+\begin{openingchart}{Median weekly earnings of full-time wage and salary workers, and unemployment rate, by highest level of education, United States, 2025, persons aged 25
+and over.}{US Bureau of Labor Statistics, Employment Projections, Table 5.1 (Current Population Survey)}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 1, horizontal sep=0.35cm, yticklabels at=edge left}, height=6.2cm, xbar, /pgf/bar width=7pt,
+  ytick={0,...,7}, yticklabels={less than high school, high school diploma, some college, associate's degree, bachelor's degree, master's degree,
+  professional degree, doctoral degree}, y tick label style={/tikz/font=\scriptsize}, enlarge y limits=0.08, xmin=0,
+  nodes near coords, every node near coord/.append style={font=\tiny}, x tick label style={/tikz/font=\scriptsize}]
+\nextgroupplot[width=0.44\linewidth, xmax=2900, xlabel={\small dollars a week}, scaled x ticks=false, xtick={0,1000,2000},
+  x tick label style={/pgf/number format/1000 sep={}}, nodes near coords={\pgfmathprintnumber[fixed, precision=0, 1000 sep={}]{\pgfplotspointmeta}}]
+\addplot[fill=omDef!60, draw=omDef] table[x=earnings, y=y] {figdata/grade-11/10-labour-market/out/edpays.csv};
+\nextgroupplot[width=0.36\linewidth, xmax=8, xlabel={\small unemployment (\%)}]
+\addplot[fill=omThm!60, draw=omThm] table[x=unemp, y=y] {figdata/grade-11/10-labour-market/out/edpays.csv};
+\end{groupplot}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: the unemployment rate and the participation rate, and the first reasons why wages differ. From \cref{ch:g11:production-and-costs}: the
+\omterm{def:g11:production-and-costs:marginal-product}{marginal product} of labour, which falls as more workers share the same equipment. From \cref{ch:g10:tax-incidence}: the side of the market that pays a tax need not be
+the side that bears it.
+\end{recall}
+
+\section{Labour demand}\label{sec:g11:labour-market:demand}
+
+\begin{definition}[Value of the marginal product of labour]\label{def:g11:labour-market:vmpl}
+The \emph{value of the marginal product of labour}\index{value of the marginal product of labour} is the \omterm{def:g11:production-and-costs:marginal-product}{marginal product} of labour times the price of the output:
+$\mathit{VMPL} = p \times \mathit{MPL}$.
+\end{definition}
+
+\begin{proposition}[Hiring rule]\label{prop:g11:labour-market:hiring}
+A firm that takes the wage $w$ and the output price $p$ as given, and whose \omterm{def:g11:production-and-costs:marginal-product}{marginal product} of labour falls as it hires, maximises its profit by hiring until
+$\mathit{VMPL} = w$.
+\end{proposition}
+\begin{proof}
+Hiring one more worker adds $p \times \mathit{MPL}$ to revenue and $w$ to cost. While $\mathit{VMPL} > w$, hiring raises profit; once $\mathit{VMPL} < w$, the last worker
+costs more than he brings, and letting him go raises profit. Since $\mathit{VMPL}$ falls as employment rises, profit is largest where the two are equal.
+\end{proof}
+
+\begin{definition}[Labour demand]\label{def:g11:labour-market:labour-demand}
+\emph{Labour demand}\index{labour demand} is the quantity of labour that employers want to hire at each wage. For a firm that takes prices as given, its labour demand
+curve is its $\mathit{VMPL}$ curve.
+\end{definition}
+
+\omterm{def:g11:labour-market:labour-demand}{Labour demand} shifts when the output price changes, or when the worker's \omterm{def:g11:production-and-costs:marginal-product}{marginal product} does: better machines, better organisation or more skill raise it.
+
+\section{Labour supply}\label{sec:g11:labour-market:supply}
+
+\begin{definition}[Labour supply and reservation wage]\label{def:g11:labour-market:labour-supply}
+\emph{Labour supply}\index{labour supply} is the quantity of labour that people offer at each wage. A person's \emph{reservation wage}\index{reservation
+wage}\phantomsection\label{def:g11:labour-market:reservation-wage} is the lowest wage at which she will take a job.
+\end{definition}
+
+Each hour of work is an hour of free time given up; its price is the wage. A higher wage makes free time dearer, which pushes people to work more, but also makes them
+richer, which lets them buy more free time. For the market as a whole, a higher wage draws in people whose \omterm{def:g11:labour-market:labour-supply}{reservation wage} it now exceeds, so the \omterm{def:g10:supply:market-supply}{market supply} curve
+rises. For one person already working long hours, the second effect can win, and her own supply curve can bend backwards.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.016cm, y=0.22cm]
+\fill[omThm!25] (275,15) -- (400,10) -- (275,7.5) -- cycle;
+\draw[econ axes] (0,27) node[left, font=\small] {wage $w$} |- (680,0) node[below left=12pt and 0pt, font=\small] {workers $L$};
+\draw[demand] (0,26) -- (650,0) node[above right, font=\scriptsize] {labour demand ($\mathit{VMPL}$)};
+\draw[supply] (0,2) -- (660,15.2) node[above right, font=\scriptsize] {labour supply};
+\draw[omThm, thick] (0,15) -- (650,15) node[below right, font=\scriptsize] {minimum wage 15};
+\node[eqpoint] at (400,10) {}; \node[eqpoint] at (275,15) {}; \node[eqpoint] at (650,15) {};
+\draw[guide] (0,10) -- (400,10) -- (400,0); \draw[guide] (275,15) -- (275,0); \draw[guide] (650,15) -- (650,0);
+\draw[<->, thin] (275,16.5) -- (650,16.5) node[midway, above, font=\scriptsize] {unemployed};
+\foreach \y in {10,15} \draw (0,\y) -- (-6,\y) node[left, font=\footnotesize] {\y};
+\foreach \x in {275,400,650} \node[below, font=\footnotesize] at (\x,0) {\x};
+\end{tikzpicture}
+
+{\small The competitive market for café workers of the weekend problem: demand $w = 26 - 0.04L$, supply $w = 2 + 0.02L$. Without a \omterm{def:g11:labour-market:minimum-wage}{minimum wage}, 400 work at 10 dalens an
+hour. A \omterm{def:g11:labour-market:minimum-wage}{minimum wage} of 15 cuts employment to 275, while 650 want to work: 375 are unemployed. The shaded triangle is the surplus lost.}
+\end{omfigure}
+
+\section{Why wages differ}\label{sec:g11:labour-market:differences}
+
+\begin{definition}[Human capital]\label{def:g11:labour-market:human-capital}
+\emph{Human capital}\index{human capital} is the knowledge and skill of a worker, built by schooling, training and experience, which raise his \omterm{def:g11:production-and-costs:marginal-product}{marginal product}.
+\end{definition}
+
+\begin{definition}[Return to schooling]\label{def:g11:labour-market:return-to-schooling}
+The \emph{return to schooling}\index{return to schooling} is the percentage by which one more year of schooling raises a person's wage.
+\end{definition}
+
+Educated workers earn more, but that alone does not show that schooling caused it: those who study longer may be abler, or come from families that help them in other
+ways. One test compares identical twins, who share their genes and their upbringing, but sometimes not their years of schooling. A survey of such twins found that each
+additional year of schooling raised wages by 12 to 16\,\%.
+% ledger: g11:ak1994
+
+\begin{definition}[Compensating differential]\label{def:g11:labour-market:compensating-differential}
+A \emph{compensating differential}\index{compensating differential} is a difference in wages that makes up for a difference in a job's other features: danger, night
+hours, dirt, or a remote place.
+\end{definition}
+
+\begin{measure}[How a pay gap is decomposed]
+A gap in average pay between two groups, such as men and women, is split in two. The \emph{explained} part is the part due to measured differences between the groups:
+years of schooling, experience, occupation, industry, hours. The \emph{unexplained} part is what remains between people alike on all those measures. The unexplained part
+is not a measure of discrimination: it also contains every relevant difference that was not measured. Nor is the explained part free of it, since discrimination can
+steer people into occupations. For the United States from 1980 to 2010, the gap between men's and women's pay narrowed considerably; by 2010 schooling and experience
+explained little of what was left, while occupation and industry still explained much, and experiments suggest that discrimination plays a part.
+\end{measure}
+% ledger: g11:bk2017
+
+\begin{omchart}{Unemployment rate by level of education, eight countries, 2024, in per cent of the labour force with that level. Basic: at most lower secondary;
+intermediate: upper secondary; advanced: higher education.}{World Bank, World Development Indicators}
+\begin{tikzpicture}
+\begin{axis}[width=0.9\linewidth, height=5.6cm, ybar, /pgf/bar width=5pt, xtick={0,...,7}, xticklabels={USA, GBR, DEU, FRA, ESP, ZAF, MEX, IND},
+  enlarge x limits=0.07, ymin=0, ymax=42, ylabel={per cent}, legend style={at={(0.02,0.97)}, anchor=north west, font=\scriptsize, draw=none},
+  legend columns=3, x tick label style={/tikz/font=\scriptsize}]
+\addplot[fill=omThm!60, draw=omThm] table[x=x, y=basic] {figdata/grade-11/10-labour-market/out/uneduc.csv};
+\addplot[fill=omProp!60, draw=omProp] table[x=x, y=intermediate] {figdata/grade-11/10-labour-market/out/uneduc.csv};
+\addplot[fill=omDef!60, draw=omDef] table[x=x, y=advanced] {figdata/grade-11/10-labour-market/out/uneduc.csv};
+\legend{basic, intermediate, advanced}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\section{One large employer}\label{sec:g11:labour-market:monopsony}
+
+\begin{definition}[Monopsony]\label{def:g11:labour-market:monopsony}
+A \emph{monopsony}\index{monopsony} is a market with a single buyer. In a labour market, it is an employer large enough that it must raise its wage to hire more workers.
+\end{definition}
+
+A monopsonist that pays every worker the same wage must raise the wage of all its workers to attract one more. Its \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} of labour is therefore above the wage:
+with supply $w = 2 + 0.02L$, the wage bill is $L(2 + 0.02L)$ and the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} of labour is $2 + 0.04L$. It hires where that \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} equals the value of the
+\omterm{def:g11:production-and-costs:marginal-product}{marginal product}, and pays the wage on the supply curve at that employment, below the value of what workers produce.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.016cm, y=0.22cm]
+\draw[econ axes] (0,27) node[left, font=\small] {wage $w$} |- (680,0) node[below left=12pt and 0pt, font=\small] {workers $L$};
+\draw[demand] (0,26) -- (650,0) node[above right, font=\scriptsize] {$\mathit{VMPL}$};
+\draw[supply] (0,2) -- (600,14) node[right, font=\scriptsize] {labour supply};
+\draw[omThm, thick] (0,2) -- (550,24) node[right, font=\scriptsize] {marginal cost of labour};
+\node[eqpoint] at (300,14) {}; \node[eqpoint] at (300,8) {}; \node[eqpoint] at (325,13) {};
+\draw[guide] (300,14) -- (300,0); \draw[guide] (0,8) -- (300,8); \draw[guide] (0,13) -- (325,13) -- (325,0);
+\foreach \y in {8,13} \draw (0,\y) -- (-6,\y) node[left, font=\footnotesize] {\y};
+\node[below, font=\footnotesize] at (290,0) {300}; \node[below, font=\footnotesize] at (340,0) {325};
+\end{tikzpicture}
+
+{\small The same café workers employed by a single owner. It hires 300, where the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} of labour meets $\mathit{VMPL}$ at 14, and pays 8. A \omterm{def:g11:labour-market:minimum-wage}{minimum wage} of 13
+makes the wage fixed up to 550 workers: the owner hires 325, where $\mathit{VMPL} = 13$, more than without it.}
+\end{omfigure}
+
+\begin{model}{The competitive labour market}
+\assumes Many employers and many workers, each taking the wage as given.
+\predicts Each worker is paid the value of his \omterm{def:g11:production-and-costs:marginal-product}{marginal product}; a \omterm{def:g11:labour-market:minimum-wage}{minimum wage} above the market wage lowers employment, the more so the steeper the fall of demand.
+\tested See the debate below: the prediction holds in some studies and not in others.
+\breaks When employers have power over wages: few employers in a town, workers who cannot easily move or search.
+\end{model}
+
+\begin{model}{Monopsony}
+\assumes One employer, or a few, facing the rising supply curve of the market.
+\predicts A wage below the value of the \omterm{def:g11:production-and-costs:marginal-product}{marginal product}, and employment below the competitive level; a \omterm{def:g11:labour-market:minimum-wage}{minimum wage} between the \omterm{def:g11:labour-market:monopsony}{monopsony} wage and the competitive
+  wage raises both wages and employment, highest at the competitive wage; above it, employment falls back, but stays above the \omterm{def:g11:labour-market:monopsony}{monopsony} level
+  until the minimum reaches the value of the \omterm{def:g11:production-and-costs:marginal-product}{marginal product} at the \omterm{def:g11:labour-market:monopsony}{monopsony} employment; a still higher one lowers employment below it.
+\tested Consistent with the studies that find no job loss after moderate rises (see the debate below), though a null effect does not show that
+  employers have power over wages. A test of \omterm{def:g11:labour-market:monopsony}{monopsony} itself measures how many workers an employer loses when it pays a little less; such
+  estimates are beyond this chapter.
+\breaks When workers can easily change employer, so that each employer faces a nearly flat supply curve.
+\end{model}
+
+\begin{definition}[Minimum wage]\label{def:g11:labour-market:minimum-wage}
+A \emph{minimum wage}\index{minimum wage} is the lowest wage per hour that employers may legally pay.
+\end{definition}
+
+\begin{dated}{2026}
+% ledger: g11:us-fmw, g11:uk-nlw-2026
+The United States federal \omterm{def:g11:labour-market:minimum-wage}{minimum wage} has been 7.25 dollars an hour since July 2009; many states set higher ones. In the United Kingdom the minimum for workers aged 21
+and over rose from 12.21 pounds an hour to 12.71 pounds on 1 April 2026.
+\end{dated}
+
+\begin{debate}[The employment effect of a minimum wage]
+% ledger: g11:ck1994, g11:nw2006, g11:cdlz2019, g11:jardim2017
+\emph{No loss of jobs.} When New Jersey raised its \omterm{def:g11:labour-market:minimum-wage}{minimum wage} from 4.25 to 5.05 dollars an hour in April 1992, a survey of 410 fast-food restaurants in New Jersey and
+next-door Pennsylvania, before and after, found no sign that employment fell. A study of 138 state increases from 1979 to 2016 found that the number of low-wage jobs was
+essentially unchanged over the five years after each. Weaknesses: one industry and one rise in the first; in both, the comparison regions may not show what would have
+happened without the rise.
+
+\emph{A loss of jobs or hours.} A review of the research published up to 2006 found that a sizable majority of studies show negative effects on employment, almost all
+of those it judged most credible, and stronger effects for the least skilled. In Seattle, the rise of the \omterm{def:g11:labour-market:minimum-wage}{minimum wage} to 13 dollars in 2016 cut hours worked in low-wage
+jobs by 6 to 7\,\% while raising their hourly wage by 3\,\%, so that pay in such jobs fell on average. Weaknesses: the review's judgement of credibility is its own; the
+Seattle study could not follow firms with several sites, which may have moved hours elsewhere.
+
+\emph{Where it stands.} Moderate rises have had small measured effects on employment; large ones, and effects on the least skilled, are less settled. The \omterm{def:g11:labour-market:monopsony}{monopsony} model
+and the competitive model agree that a high enough \omterm{def:g11:labour-market:minimum-wage}{minimum wage} costs jobs; they differ on where that point lies.
+\end{debate}
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g11:labour-market:1}
+A bakery sells bread at 3 dalens a loaf. Its 1st to 5th workers add 40, 34, 28, 22 and 16 loaves an hour. Compute the value of each worker's \omterm{def:g11:production-and-costs:marginal-product}{marginal product}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:labour-market:2}
+In \cref{exo:g11:labour-market:1}, how many workers does the bakery hire at a wage of 70 dalens an hour? At 50?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:labour-market:3}
+From the opening chart, compute the ratio of median earnings with a bachelor's degree to median earnings with a high-school diploma, and the difference in
+unemployment rates between the two.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:labour-market:4}
+Two jobs need the same skill. One is on a fishing boat at sea for months; the other is in a harbour office. Which would you expect to pay more, and why?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:labour-market:5}
+Mia would take a job for 14 dalens an hour but not for less. A job offers 12; another 16. Which does she accept? What is her \omterm{def:g11:labour-market:labour-supply}{reservation wage}?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:labour-market:6}
+A firm's output is $Q = 60\sqrt{L}$ and it sells at $p = 2$. Find its $\mathit{VMPL}$, and its \omterm{def:g11:labour-market:labour-demand}{labour demand} at a wage of 30 and of 15.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:labour-market:7}
+The output price in \cref{exo:g11:labour-market:6} rises to 3. How does \omterm{def:g11:labour-market:labour-demand}{labour demand} at a wage of 30 change? Explain why a rise in a good's price raises the demand for
+the workers who make it.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:labour-market:8}
+In the café market of the first diagram, a payroll tax of 3 dalens an hour is charged to employers. Find the new employment, the wage workers receive and the cost to
+employers. Who bears the tax?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:labour-market:9}
+Using the opening chart, a bachelor's degree takes four years beyond high school. Find the yearly return $r$ such that $(1 + r)^4$ equals the ratio of the two medians.
+Compare with the twins study, and say why the two may differ.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:labour-market:10}
+A \omterm{def:g11:labour-market:monopsony}{monopsony} faces supply $w = 4 + 0.05L$ and $\mathit{VMPL} = 28 - 0.1L$. Find its employment and wage, and the competitive employment and wage.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:labour-market:11}
+In the chart of unemployment by education, in which countries is unemployment highest among the least educated, and in which is it highest among the most educated?
+Suggest one reason for the second group.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:labour-market:12}
+What evidence contradicts the competitive model's prediction that a \omterm{def:g11:labour-market:minimum-wage}{minimum wage} lowers employment? What does each side of the debate answer about the New Jersey
+study?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:labour-market:13}
+In the \omterm{def:g11:labour-market:monopsony}{monopsony} of \cref{exo:g11:labour-market:10}, find the employment for a \omterm{def:g11:labour-market:minimum-wage}{minimum wage} of 11, 12 and 14. Prove that employment is highest at a \omterm{def:g11:labour-market:minimum-wage}{minimum wage} equal
+to the competitive wage.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:labour-market:14}
+Give two reasons why people with more schooling earn more that are not caused by the schooling. How does the twins comparison deal with them, and which does it not deal
+with?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:labour-market:15}
+A study finds a gap of 15\,\% in pay between two groups, of which 9 points are explained by occupation and hours and 6 are unexplained. A newspaper writes that
+discrimination accounts for 6\,\%. Explain why this may be too high, and why it may be too low.
+\end{exercise}
+
+\section{Problem: A Minimum Wage for the Cafés}
+
+\begin{problem}[{Weekend problem --- a minimum wage in two models}]
+\label{pb:g11:labour-market:1}
+In a town in Brenland, the demand for café workers is $w = 26 - 0.04L$ (the value of their \omterm{def:g11:production-and-costs:marginal-product}{marginal product}) and their supply is $w = 2 + 0.02L$, with $w$ in dalens an
+hour and $L$ in workers. The town considers \omterm{def:g11:labour-market:minimum-wage}{minimum wages} of 11, 13 and 15 dalens.
+
+\medskip
+\noindent\textbf{Part I --- Many cafés.}
+\begin{enumerate}
+\item Find the competitive wage and employment.
+\item For each \omterm{def:g11:labour-market:minimum-wage}{minimum wage}, find employment and the number who want to work.
+\item For each, compute the change in employment and the unemployment it creates.
+\item At 13, compute the total wage bill and compare it with the competitive one.
+\item At 13, compute the surplus lost.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- One owner.}
+\begin{enumerate}[resume]
+\item All the cafés belong to one owner. Write the wage bill and the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} of labour.
+\item Find the owner's employment and wage without a \omterm{def:g11:labour-market:minimum-wage}{minimum wage}.
+\item Compare with Part I: who loses from the \omterm{def:g11:labour-market:monopsony}{monopsony}, and how much does each worker earn below the value of his \omterm{def:g11:production-and-costs:marginal-product}{marginal product}?
+\item Under a \omterm{def:g11:labour-market:minimum-wage}{minimum wage} $m$, explain why the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} of labour equals $m$ as long as the owner hires fewer workers than supply offers at $m$.
+\item Find the employment at each \omterm{def:g11:labour-market:minimum-wage}{minimum wage}.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Comparing the predictions.}
+\begin{enumerate}[resume]
+\item For each \omterm{def:g11:labour-market:minimum-wage}{minimum wage}, give the change in employment under each model.
+\item Find the \omterm{def:g11:labour-market:minimum-wage}{minimum wage} that maximises employment under \omterm{def:g11:labour-market:monopsony}{monopsony}.
+\item Find the \omterm{def:g11:labour-market:minimum-wage}{minimum wage} above which employment under \omterm{def:g11:labour-market:monopsony}{monopsony} is lower than with no \omterm{def:g11:labour-market:minimum-wage}{minimum wage}.
+\item At 15, how many fewer workers does each model predict?
+\item Which \omterm{def:g11:labour-market:minimum-wage}{minimum wages} do the two models agree on, and which do they disagree on?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Evidence.}
+\begin{enumerate}[resume]
+\item A study finds that introducing a \omterm{def:g11:labour-market:minimum-wage}{minimum wage} of 11, where there was none, raised employment. Which model does this fit?
+\item What evidence would show which model fits the town's cafés, before any \omterm{def:g11:labour-market:minimum-wage}{minimum wage} is set?
+\item Why might a \omterm{def:g11:labour-market:minimum-wage}{minimum wage} raise employment in a small town and lower it in a large city?
+\item Why does the size of the rise matter in the debate box?
+\item State the result of the problem: the employment change under each model at each \omterm{def:g11:labour-market:minimum-wage}{minimum wage}, and the wage at which the \omterm{def:g11:labour-market:monopsony}{monopsony} prediction turns negative.
+\end{enumerate}
+\end{problem}

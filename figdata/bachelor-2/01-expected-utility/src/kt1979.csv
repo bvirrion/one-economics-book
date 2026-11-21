@@ -1,0 +1,5 @@
+problem,pair,version,safer,riskier,n,ledger
+P1,common_consequence,certain,82,18,72,b2:kt1979-p1
+P2,common_consequence,scaled,17,83,72,b2:kt1979-p2
+P3,common_ratio,certain,80,20,95,b2:kt1979-p3
+P4,common_ratio,scaled,35,65,95,b2:kt1979-p4

@@ -1,0 +1,287 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g10-12. Laspeyres and Paasche indices, substitution
+% bias, quality adjustment and new goods, CPI against the deflator, indexation, the real interest rate. Real
+% numbers: figdata/grade-10/12-price-indices/ (BLS CPI-U item indexes, annual averages). Ledger: the 1996
+% US commission's bias estimate. Brenland basket invented (code/shared/country basket.csv); the 2025
+% quantities of the weekend problem are invented in the problem itself.
+\chapter{Price Indices and the Cost of Living}\label{ch:g10:price-indices}
+
+Between 2000 and 2025, the prices that American consumers paid rose by 87\,\% on average. College tuition and fees rose by 188\,\%, and the price
+of clothes by 1.3\,\%. The price index for computers fell from 100 to 7.6: by this measure, computers cost 92\,\% less in 2025 than in 2000. That does not mean that
+the price tags in shops fell by 92\,\%. The index measures the price of computing power, not of a box: a computer of
+2025 does vastly more than one of 2000, and the index counts that as a fall in price.
+% figdata: us_summary (all 187.0, tuition 287.8, apparel 101.3, computers 7.6; 2000 = 100)
+
+A price index looks like a simple thing, a single number that says how much prices have risen. This chapter shows how it is built, why every way of
+building it involves a choice, which way each choice biases the result, and how the index is used to protect wages, pensions and loans from inflation.
+
+\begin{openingchart}{Consumer prices in the United States, 2000--2025, annual averages, 2000 = 100, on a times-ten scale: all items and three of the
+items in the index.}{US Bureau of Labor Statistics, consumer price index for all urban consumers (CPI-U), U.S. city average: all items; computers,
+peripherals and smart home assistants; college tuition and fees; apparel}
+\begin{tikzpicture}
+\begin{semilogyaxis}[omtimesten, width=0.72\linewidth, height=6.4cm, xmin=2000, xmax=2025, ymin=5, ymax=400, log basis y=10,
+  log ticks with fixed point, ytick={10,100}, ylabel={index, 2000 = 100}, xtick={2000,2005,...,2025},
+  legend style={at={(1.03,0.5)}, anchor=west, font=\scriptsize}]
+\addplot[black, thick] table[x=year, y=all] {figdata/grade-10/12-price-indices/out/us_items.csv}; \addlegendentry{all items}
+\addplot[omThm, thick] table[x=year, y=tuition] {figdata/grade-10/12-price-indices/out/us_items.csv}; \addlegendentry{college tuition}
+\addplot[omMeth, thick] table[x=year, y=apparel] {figdata/grade-10/12-price-indices/out/us_items.csv}; \addlegendentry{apparel}
+\addplot[omDef, thick] table[x=year, y=computers] {figdata/grade-10/12-price-indices/out/us_items.csv}; \addlegendentry{computers}
+\end{semilogyaxis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: a \emph{price index} compares the cost of a basket of goods with its cost in a base year set to 100; the \emph{inflation rate}
+is the yearly rate of change of a price index; the \emph{consumer price index} uses the basket bought by households; a \emph{real} value is a nominal value
+divided by a price index. From \cref{ch:g10:national-accounts}: the \omterm{def:g10:national-accounts:nominal-gdp}{GDP deflator}. From mathematics: weighted means.
+\end{recall}
+
+\section{A fixed basket and a current basket}\label{sec:g10:price-indices:baskets}
+
+Write $p_{0,i}$ and $q_{0,i}$ for the price and quantity of good $i$ in the base year, and $p_{t,i}$, $q_{t,i}$ for year $t$.
+
+\begin{definition}[Laspeyres and Paasche indices]\label{def:g10:price-indices:laspeyres}
+The \emph{Laspeyres index}\index{Laspeyres index} prices the base year's basket: $L_t = 100 \times \sum_i p_{t,i}\,q_{0,i} \big/ \sum_i p_{0,i}\,q_{0,i}$. The
+\emph{Paasche index}\index{Paasche index} prices the current year's basket: $P_t = 100 \times \sum_i p_{t,i}\,q_{t,i} \big/ \sum_i p_{0,i}\,q_{t,i}$.
+\end{definition}
+\phantomsection\label{def:g10:price-indices:paasche}
+
+\begin{example}[Apples and pears]\label{ex:g10:price-indices:two-goods}
+In the base year apples and pears both cost 1 dalen a kilogram, and a household buys 10 kilograms of each. A year later apples cost 2 and pears still 1;
+the household buys 6 kilograms of apples and 14 of pears. Then $L = 100 \times (2 \times 10 + 1 \times 10)/(10 + 10) = 150$, and $P = 100 \times (2 \times 6 + 1 \times
+14)/(6 + 14) = 130$. The two indices answer two different questions: how much more the old basket costs, and how much more the new basket costs than it
+would have.
+\end{example}
+
+A \omterm{def:g10:price-indices:laspeyres}{Laspeyres index} is a weighted mean of the price relatives $r_i = p_{t,i}/p_{0,i}$, with weights equal to each good's share of base-year spending:
+$\sum_i p_{t,i} q_{0,i} / \sum_i p_{0,i} q_{0,i} = \sum_i w_i\, r_i$ with $w_i = p_{0,i} q_{0,i} / \sum_j p_{0,j} q_{0,j}$. The \omterm{def:g10:price-indices:laspeyres}{Paasche index} is the same kind of mean,
+with weights $v_i = p_{0,i} q_{t,i} / \sum_j p_{0,j} q_{t,j}$ taken from the current basket valued at base prices.
+
+\begin{proposition}[Substitution pulls Paasche below Laspeyres]\label{prop:g10:price-indices:substitution}
+With two goods, suppose the price of good 1 rises relative to good 2 ($r_1 > r_2$), and buyers shift towards good 2, so that good 1's weight in the current
+basket at base prices is smaller than in the base basket ($v_1 < w_1$). Then $P_t < L_t$.
+\end{proposition}
+\begin{proof}
+$L_t/100 = w_1 r_1 + (1 - w_1) r_2 = r_2 + w_1 (r_1 - r_2)$ and, in the same way, $P_t/100 = r_2 + v_1 (r_1 - r_2)$. Since $r_1 - r_2 > 0$ and $v_1 < w_1$, $P_t < L_t$.
+\end{proof}
+
+\begin{definition}[Substitution bias]\label{def:g10:price-indices:substitution-bias}
+The \emph{substitution bias}\index{substitution bias} of a fixed-basket index is the amount by which it overstates the rise in the cost of living because it ignores
+that buyers switch towards goods whose prices have risen less.
+\end{definition}
+
+In the example, the household could have bought its old basket for 30 dalens; it chose another basket, costing 26, which it presumably liked at least as
+well at the new prices. The \omterm{def:g10:price-indices:laspeyres}{Laspeyres index}, 150, says the household needs 50\,\% more money to be as well off; it needs somewhat less, because it can switch.
+
+\begin{definition}[Chain-linked index]\label{def:g10:price-indices:chain-linked}
+A \emph{chain-linked index}\index{chain-linked index} updates the basket every year: it measures the change from each year to the next with that year's basket,
+and multiplies the yearly changes together.
+\end{definition}
+
+Chaining keeps the basket close to what people buy, so the \omterm{def:g10:price-indices:substitution-bias}{substitution bias} of each link is small.
+
+\begin{omchart}{Brenland: prices of the five goods of the consumer basket, 2000--2025, each with 2015 = 100.}{Brenland price survey (invented data)}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.84\linewidth, height=5.6cm, xmin=2000, xmax=2025, ymin=50, ymax=200, ylabel={2015 = 100}, xtick={2000,2005,...,2025},
+  legend pos=north west, legend columns=2, legend style={font=\scriptsize}]
+\addplot[omThm, thick] table[x=year, y=energy] {figdata/grade-10/12-price-indices/out/bren_goods.csv}; \addlegendentry{energy}
+\addplot[omDef, thick] table[x=year, y=rent] {figdata/grade-10/12-price-indices/out/bren_goods.csv}; \addlegendentry{rent}
+\addplot[omProp, thick] table[x=year, y=bread] {figdata/grade-10/12-price-indices/out/bren_goods.csv}; \addlegendentry{bread}
+\addplot[omMeth, thick] table[x=year, y=transport] {figdata/grade-10/12-price-indices/out/bren_goods.csv}; \addlegendentry{transport}
+\addplot[omExo, thick] table[x=year, y=clothing] {figdata/grade-10/12-price-indices/out/bren_goods.csv}; \addlegendentry{clothing}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+Brenland's consumer price index is the \omterm{def:g10:price-indices:laspeyres}{Laspeyres index} of the basket a household bought in 2015: 300 loaves of bread, 12 months of rent, 100 transport tickets,
+20 items of clothing and 3000 units of energy, which cost \dal{10850} at 2015 prices. In 2025 the same basket cost \dal{15565.68}, so the index stood at 143.46.
+Rent took 77.4\,\% of the 2015 budget, so the 42.9\,\% rise in rents does most of the work; energy, whose price rose by 84\,\%, weighs only 6.9\,\%.
+% figdata: bren_laspeyres (2015 cost 10850, 2025 cost 15565.7, cpi 143.46); bren_goods (rent 142.9, energy 184.0)
+
+\section{New goods and better goods}\label{sec:g10:price-indices:quality}
+
+Substitution is one reason a fixed-basket index can mislead. Two others concern the goods themselves.
+
+\begin{definition}[Quality adjustment]\label{def:g10:price-indices:quality-adjustment}
+\emph{Quality adjustment}\index{quality adjustment} removes from a price change the part due to a change in what the good does: when a new model replaces an
+old one, the statistician estimates how much of the price difference pays for the better features, and counts only the rest as a price change.
+\end{definition}
+
+A new phone costs 600 dalens and replaces a model that cost 500. If the faster processor and better camera are worth 80 dalens, by comparing the prices of
+models with and without them, the quality-adjusted price is $600 - 80 = 520$, a rise of 4\,\%, not 20\,\%. Estimating the value of each feature from the prices
+of many models at once, with a statistical regression, is the idea behind the computers line of the opening chart.
+
+New goods raise a harder problem. A good enters the basket only once enough people buy it, often after its price has fallen a long way. The gain to the first
+buyers, who could not buy it at all the year before, is never recorded as a fall in the cost of living.
+
+\begin{record}[The measured bias of a price index]
+% ledger: g10:boskin-1996
+In 1996 the Advisory Commission to Study the Consumer Price Index, in the United States, estimated that the index overstated inflation by about
+1.1 percentage points a year in 1996, and by about 1.3 points a year before. It named four sources: substitution between goods, substitution between shops,
+quality change and new products. Its final report is dated 4 December 1996. The estimate mattered because many payments were indexed on the CPI: a bias of one
+point a year, compounded over a decade, adds about a tenth to every indexed pension.
+\end{record}
+
+\begin{measure}[How a consumer price index is built]
+A statistical office first measures what households buy, from a survey of household budgets: this gives the weights. It then collects, every month, the prices
+of several hundred kinds of goods and services, in shops, online and from service providers, across the country, following the same products from month to
+month. When a product disappears, it is replaced by the closest one, and the \omterm{def:g10:price-indices:quality-adjustment}{quality adjustment} above decides how much of the price difference counts. Rents
+come from a survey of tenants. The prices are combined, first within each kind of good, then across goods with the budget weights.
+\end{measure}
+
+\section{The consumer price index and the deflator}\label{sec:g10:price-indices:cpi-deflator}
+
+Brenland's CPI stood at 143.5 in 2025 and its \omterm{def:g10:national-accounts:nominal-gdp}{GDP deflator} at 134.5, both with 2015 = 100. The two measure different things. The CPI prices what households buy,
+including imported goods, and leaves out investment goods and \omterm{def:g10:national-accounts:investment}{government purchases}. The deflator prices everything produced in the country, including exports
+and investment goods, and leaves out imports. The CPI uses a fixed basket; the deflator, built from real GDP, uses the current mix of output. When the prices of
+goods that households buy rise faster than those of the country's other output, the CPI runs ahead, as it did in Brenland.
+% figdata: code/shared/country accounts.csv (cpi 2025 143.5, deflator 134.5)
+
+\section{Indexation and the real interest rate}\label{sec:g10:price-indices:indexation}
+
+\begin{definition}[Indexation]\label{def:g10:price-indices:indexation}
+\emph{Indexation}\index{indexation} links a payment written in a contract or a law (a wage, a pension, a rent, a loan's repayments) to a price index, so that it
+rises in the same proportion as the index.
+\end{definition}
+
+A rent of \dal{700} a month fixed in 2015 and indexed on Brenland's CPI is $700 \times 143.46/100 \approx \text{\dal{1004}}$ in 2025: the tenant pays the same real rent.
+
+\begin{definition}[Real interest rate]\label{def:g10:price-indices:real-interest-rate}
+If a loan pays a nominal interest rate $i$ over a year in which prices rise at the rate $\pi$, the \emph{real interest rate}\index{real interest rate} is the rate at
+which the lender's purchasing power grows: $1 + r = (1 + i)/(1 + \pi)$, so $r \approx i - \pi$ when the rates are small.
+\end{definition}
+
+Lending 100 dalens at 5\,\% when prices rise by 3\,\% gives back 105 dalens, which buy what $105/1.03 \approx 101.94$ dalens bought a year earlier: a real return of
+1.94\,\%, close to $5 - 3 = 2$\,\%. When inflation is higher than the interest rate, the real rate is negative: the lender is paid back less, in goods, than she
+lent.
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g10:price-indices:1}
+A loaf of bread cost 2.00 dalens in 2015 and 2.71 in 2025. Compute its price index for 2025 with 2015 = 100.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:price-indices:2}
+A cinema ticket costs 8 dalens in the base year, 9 the next year and 10 the year after. Compute the index for each year and the inflation of each year.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:price-indices:3}
+Read the opening chart. Which item's price rose the most between 2000 and 2025, and which fell? By how much did the prices of all items rise?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:price-indices:4}
+A basket gives weights of 50\,\% to food, 30\,\% to housing and 20\,\% to transport. The price indices of the three are 120, 110 and 95. Compute the index of the
+basket.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:price-indices:5}
+A wage rises from \dal{2000} to \dal{2600} a month while the CPI rises from 100 to 120. Compute the real wage at base-year prices and its percentage rise.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:price-indices:6}
+In the base year, cheese costs 2 and wine 5; a household buys 10 cheeses and 4 bottles. Next year cheese costs 3 and wine 5, and the household buys 7 cheeses and 5
+bottles. Compute the Laspeyres and the \omterm{def:g10:price-indices:laspeyres}{Paasche index}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:price-indices:7}
+Using the 2015 budget shares of the Brenland basket (bread 5.53\,\%, rent 77.42\,\%, transport 2.76\,\%, clothing 7.37\,\%, energy 6.91\,\%) and the 2025 price relatives
+of the second chart (135.5, 142.9, 130.3, 122.5, 184.0), compute the \omterm{def:g10:price-indices:laspeyres}{Laspeyres index} as a weighted mean, and compare with 143.46.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:price-indices:8}
+A \omterm{def:g10:price-indices:chain-linked}{chain-linked index} rises by 2\,\% in the first year, 3\,\% in the second and 2.5\,\% in the third. Compute its value after three years, starting from 100.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:price-indices:9}
+The price of beef doubles while the price of chicken does not change, and households switch from beef to chicken. Which index, Laspeyres or Paasche, rises more?
+Which one overstates the rise in the cost of living, and why?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:price-indices:10}
+Compute the \omterm{def:g10:price-indices:real-interest-rate}{real interest rate} exactly and approximately: (a) $i = 6\,\%$, $\pi = 4\,\%$; (b) $i = 20\,\%$, $\pi = 15\,\%$. When is the approximation poor?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:price-indices:11}
+A lease signed in 2020 sets the rent at 800 dalens and indexes it on the CPI, which was 110 in 2020 and 132 in 2025. What is the rent in 2025?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:price-indices:12}
+Construct an example with two goods in which the \omterm{def:g10:price-indices:laspeyres}{Paasche index} exceeds the \omterm{def:g10:price-indices:laspeyres}{Laspeyres index}. What must buyers have done, and what could explain it?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:price-indices:13}
+A new laptop costs 1100 dalens and replaces a model that cost 1000. Comparing many models, the statistician estimates that the twice larger memory is worth 150
+dalens. Compute the quality-adjusted price change. What would the index record without adjustment?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:price-indices:14}
+Explain why a good that is new, and whose price falls quickly in its first years, causes a fixed-basket index to overstate the rise in the cost of living, even if the
+basket is updated every five years.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:price-indices:15}
+Brenland's \omterm{def:g10:national-accounts:nominal-gdp}{nominal GDP} grew from \num{248438} million dalens in 2015 to \num{393264} million in 2025. Deflate it once with the \omterm{def:g10:national-accounts:nominal-gdp}{GDP deflator} (134.5 in 2025) and once
+with the CPI (143.5). Which gives the real growth of production, and why is the other wrong for this purpose?
+\end{exercise}
+
+\section{Problem: Brenland's Basket, 2015--2025}
+
+\begin{problem}[{Weekend problem --- a fixed basket, a current basket and the substitution bias}]
+\label{pb:g10:price-indices:1}
+A Brenland household's purchases and prices, in 2015 and 2025 (prices in dalens per unit):
+\begin{center}
+\small
+\begin{tabular}{l r r r r}
+\toprule
+good & quantity 2015 & price 2015 & price 2025 & quantity 2025 \\
+\midrule
+bread (loaves) & 300 & 2.00 & 2.71 & 310 \\
+rent (months) & 12 & 700 & 1000.14 & 11 \\
+transport (tickets) & 100 & 3.00 & 3.91 & 105 \\
+clothing (items) & 20 & 40 & 49 & 22 \\
+energy (units) & 3000 & 0.25 & 0.46 & 2000 \\
+\bottomrule
+\end{tabular}
+\end{center}
+In 2025 the household rents a smaller flat, worth 11 months of the standard flat that the rent survey prices, and it has insulated its home.
+% figdata: bren_laspeyres; quantities 2025 invented for the problem
+
+\medskip
+\noindent\textbf{Part I --- The fixed basket.}
+\begin{enumerate}
+\item Compute the cost of the 2015 basket at 2015 prices.
+\item Compute its cost at 2025 prices.
+\item Compute the \omterm{def:g10:price-indices:laspeyres}{Laspeyres index} for 2025 and compare it with Brenland's published CPI, 143.5.
+\item Compute each good's share of the 2015 budget.
+\item Which good's price rose the most? Which rose the least?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The current basket.}
+\begin{enumerate}[resume]
+\item For each good, say whether the household bought more or less in 2025, and relate it to the price changes.
+\item Compute the cost of the 2025 basket at 2025 prices.
+\item Compute its cost at 2015 prices.
+\item Compute the \omterm{def:g10:price-indices:laspeyres}{Paasche index} for 2025.
+\item Compute the gap between the two indices, in index points.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Per year, and for a wage.}
+\begin{enumerate}[resume]
+\item Compute the average yearly inflation over the ten years by each index.
+\item Express the gap as percentage points of inflation per year.
+\item A wage of \dal{30000} a year in 2015 is indexed on the \omterm{def:g10:price-indices:laspeyres}{Laspeyres index}. What is it in 2025? What would it be if it were indexed on the \omterm{def:g10:price-indices:laspeyres}{Paasche index}?
+\item With the wage indexed on the \omterm{def:g10:price-indices:laspeyres}{Laspeyres index}, can the household still buy its 2015 basket in 2025? Is it better off than in 2015, as well off, or worse off?
+\item Compare the gap per year with the 1996 estimate of the total bias of the US index. Which of the four sources does the gap measure?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Prices and interest.}
+\begin{enumerate}[resume]
+\item Brenland's CPI was 140.0 in 2024 and 143.5 in 2025. Compute inflation in 2025.
+\item The central bank's interest rate was 4.62\,\% in 2025. Compute the \omterm{def:g10:price-indices:real-interest-rate}{real interest rate} exactly and approximately.
+\item The \omterm{def:g10:national-accounts:nominal-gdp}{GDP deflator} was 134.5 in 2025. Give one reason why it is below the CPI.
+\item The household's insulation cost money in 2020 and saves energy every year since. Does the CPI count this as a change in the cost of living? Explain.
+\item State the result of the problem: the \omterm{def:g10:price-indices:substitution-bias}{substitution bias} of the Brenland CPI over ten years, in index points and per year.
+\end{enumerate}
+\end{problem}

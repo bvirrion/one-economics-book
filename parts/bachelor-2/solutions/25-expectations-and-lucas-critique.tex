@@ -1,0 +1,111 @@
+\section*{Chapter \ref{ch:b2:expectations-and-lucas-critique} --- Expectations and the Lucas Critique}
+
+\begin{solution}{exo:b2:expectations-and-lucas-critique:1}
+% figdata: cbi, cbi_fit
+Highest Spain, 9.95 per cent; lowest Germany, 3.19 per cent (Switzerland 3.42). Across these countries, each extra point on the
+independence index goes with average inflation 1.83 percentage points lower.
+\end{solution}
+
+\begin{solution}{exo:b2:expectations-and-lucas-critique:2}
+% figdata: phillips_dec
+1960s: inflation 2.55 per cent and unemployment 4.78 on average, along a downward-sloping curve. 1970s: both higher, 7.22 and 6.22.
+1980s: inflation down to 4.91, unemployment up to 7.28. The curve shifted up in the 1970s and back down in the 1980s.
+\end{solution}
+
+\begin{solution}{exo:b2:expectations-and-lucas-critique:3}
+% figdata: it_summary
+8.56 per cent five years before, 6.37 at adoption, 3.03 ten years after. The chart has no comparison group: inflation was
+already falling before adoption and fell in many countries that did not adopt targets, and countries may have adopted
+targets when they expected inflation to fall.
+\end{solution}
+
+\begin{solution}{exo:b2:expectations-and-lucas-critique:4}
+The forecast $\pi_{t-1}$ falls short by one point every year: the error is $+1$ five years running. \omterm{def:b2:expectations-and-lucas-critique:rational-expectations}{Rational expectations} require
+errors of mean zero that cannot be predicted from what was known; an error of the same sign year after year is
+predictable, and a forecaster who noticed it would add a point.
+\end{solution}
+
+\begin{solution}{exo:b2:expectations-and-lucas-critique:5}
+% code: exercises/solutions.py bias, expected_loss
+Discretion: $\pi = 2 + 1 \times 0.5 \times 2 = 3$, $u = 5$ ($u^*$), loss $\tfrac12 \times 1^2 + \tfrac12 \times 2^2 = 2.5$. Commitment: $\pi = 2$, $u = u^*$, loss $\tfrac12 \times 2^2 = 2$. With $k = 1$ the bias is $1 \times 0.5 \times 1 = 0.5$.
+\end{solution}
+
+\begin{solution}{exo:b2:expectations-and-lucas-critique:6}
+% code: listings/lucas.py
+The intercept is $u^* + a\pi^{\mathrm T}$, so it rises by $a \times 2 = 4$. The listing's estimates rise from 8.92 to 13.25, by 4.33: close, the difference
+being sampling noise in forty years of data.
+\end{solution}
+
+\begin{solution}{exo:b2:expectations-and-lucas-critique:7}
+$E_{t-1}\pi_t = 2 - 0.5 \times (7 - 5) = 1$ per cent. With $\varepsilon_t = 1$, $\pi_t = 2$ and $u_t = 5 - 2 \times (2 - 1) = 3$. The systematic part of the rule (the response to $u_{t-1}$) moves expected and actual
+inflation together and has no effect on $u_t$; only the surprise does.
+\end{solution}
+
+\begin{solution}{exo:b2:expectations-and-lucas-critique:8}
+Under the 2 per cent target, $u_t = 5 - 2(\pi_t - \pi_{t-1})$ and, with surprises independent from year to year, the regression of $u$ on $\pi$ still has slope about $-2$ and intercept
+about $5 + 2 \times 2 = 9$, so it again promises unemployment of about 1 per cent at 4 per cent inflation. This time it is right for one
+year: in the first year of the new target inflation rises by about 2 points more than expected, and unemployment falls to
+about 1 per cent. From the second year expectations have caught up, and unemployment returns to about 5 per cent. Keeping it
+low would need inflation that rises every year.
+\end{solution}
+
+\begin{solution}{exo:b2:expectations-and-lucas-critique:9}
+% code: exercises/solutions.py decade_inflation
+Medians across the eighteen countries: 1950s 3.8 per cent, 1960s 3.6, 1970s 9.0, 1980s 7.1, 1990s 2.4, 2000s 2.1, 2010s 1.3. The highest country average was
+Portugal's in both the 1970s (18.9 per cent) and the 1980s (17.4).
+\end{solution}
+
+\begin{solution}{exo:b2:expectations-and-lucas-critique:10}
+Substituting $u - u^* = -a(\pi - \pi^e)$, the bank minimises $\tfrac12(\pi - \pi^{\mathrm T})^2 + \tfrac12w(k - a(\pi - \pi^e))^2$. The derivative is $(\pi - \pi^{\mathrm T}) - wa(k - a(\pi - \pi^e)) = 0$, so $\pi(1 + wa^2) = \pi^{\mathrm T} + wa^2\pi^e + wak$, which is \eqref{eq:b2:expectations-and-lucas-critique:reaction}.
+Setting $\pi^e = \pi$: $\pi - \pi^{\mathrm T} = wak$, and $u = u^*$. The derivative of the bias with respect to $a$ is $wk > 0$: when a surprise buys more unemployment, the
+temptation is greater, and so is the inflation that removes it.
+\end{solution}
+
+\begin{solution}{exo:b2:expectations-and-lucas-critique:11}
+Now $u - u^* + k = k + e - a(\pi - \pi^e)$, and the first-order condition gives $(\pi - \pi^{\mathrm T})(1 + wa^2) = wa^2(\pi^e - \pi^{\mathrm T}) + wa(k + e)$. Taking expectations, with $\pi^e = E\pi$: $\pi^e - \pi^{\mathrm T} = wak$. Substituting,
+$(\pi - \pi^{\mathrm T})(1 + wa^2) = wak(1 + wa^2) + wae$, so $\pi = \pi^{\mathrm T} + wak + \dfrac{wa}{1 + wa^2}e$. Then $\pi - \pi^e = \dfrac{wa}{1 + wa^2}e$ and $u = u^* + e - \dfrac{wa^2}{1 + wa^2}e = u^* + \dfrac{1}{1 + wa^2}e$.
+\end{solution}
+
+\begin{solution}{exo:b2:expectations-and-lucas-critique:12}
+With the rule known, $\pi^e = \pi^{\mathrm T}$ and $u = u^* + (1 - ac)e$. Society's expected loss is $\tfrac12c^2\sigma^2 + \tfrac12\lambda(k^2 + (1 - ac)^2\sigma^2)$. The derivative in $c$, $c\sigma^2 - \lambda a(1 - ac)\sigma^2 = 0$, gives $c = \lambda a/(1 + \lambda a^2)$, the
+same response as discretion with $w = \lambda$. The two policies therefore differ only in the bias, and the rule's loss is lower by $\tfrac12(\lambda ak)^2$.
+\end{solution}
+
+\begin{solution}{pb:b2:expectations-and-lucas-critique:1}
+% code: exercises/solutions.py BRENLAND, bias, responses, expected_loss, commitment_loss, best_weight
+\textbf{Part I.}
+1. $u^* = 5$, $a = 0.5$, $\pi^{\mathrm T} = 2$, $k = 5 - 3 = 2$, $\lambda = 1$.
+2. That the natural rate is higher than society would like, for instance because of taxes or market power; policy would
+like unemployment at 3 per cent.
+3. Small deviations cost little and large ones a lot, which gives the bank a reason to spread deviations across inflation
+and unemployment.
+4. $\tfrac12 \times 0 + \tfrac12 \times (5 - 3)^2 = 2$.
+5. No: with \omterm{def:b2:expectations-and-lucas-critique:rational-expectations}{rational expectations} unemployment is $u^*$ on average whatever the policy, so the best is to add no inflation; the loss
+2 is the minimum.
+\textbf{Part II.}
+6. $\pi = (2 + 0.25\pi^e + 1)/1.25 = 2.4 + 0.2\pi^e$.
+7. $\pi = 2.4 + 0.2\pi$, so $\pi = 3$.
+8. $u = 5$.
+9. $\tfrac12 \times 1 + \tfrac12 \times 4 = 2.5$.
+10. 2.0.
+11. If people expected 2, the bank's best choice would be $2.4 + 0.4 = 2.8$, not 2: the announcement is not in its interest once expectations are
+set, and people know it.
+\textbf{Part III.}
+12. $w \times 0.5 \times 2 = w$; 0.5 for $w = 0.5$.
+13. Inflation $\dfrac{0.5w}{1 + 0.25w}e$ and unemployment $\dfrac{1}{1 + 0.25w}e$: 0.4 and 0.8 times $e$ for $w = 1$; 0 and $1 \times e$ for $w = 0$.
+14. $\tfrac12(1 + 0.16 \times 4) + \tfrac12(4 + 0.64 \times 4) = 0.82 + 3.28 = 4.10$.
+15. $\tfrac12 \times 0.64 + 3.28 = 3.60$.
+16. $\tfrac12(0 + 0) + \tfrac12(4 + 4) = 4.00$: lower than with $w = 1$; removing the bias is worth more than the lost stabilisation here.
+17. Bias 0.5, responses 0.222 and 0.889: loss 3.804.
+\textbf{Part IV.}
+18. $\tfrac12\bigl(w^2 + 4\bigl(\tfrac{0.5w}{1 + 0.25w}\bigr)^2\bigr) + \tfrac12\bigl(4 + 4\bigl(\tfrac{1}{1 + 0.25w}\bigr)^2\bigr)$.
+19. $w = 0.425$.
+20. 3.798, which is 0.198 above the best commitment (3.60) and 0.302 below discretion with $w = 1$.
+21. Bias 0.42; responses 0.19 for inflation and 0.90 for unemployment.
+22. At $w = 0$ a small rise in $w$ improves stabilisation at first order and adds a bias whose cost, $\tfrac12w^2$, rises only at second order; at
+$w = 1$ the responses are the best ones, so a small cut in $w$ costs stabilisation only at second order and lowers the bias cost at
+first order.
+23. With $\sigma^2 = 16$ it rises to 0.71: stabilisation matters more. With $k = 4$ it falls to 0.18: the bias matters more.
+24. Under discretion inflation exceeds the target by $wak$, here 1 point with $w = 1$, with no gain in unemployment; the expected social loss is
+smallest with a bank that weighs unemployment at $w = 0.425$, between a pure inflation targeter and society's own weight.
+\end{solution}

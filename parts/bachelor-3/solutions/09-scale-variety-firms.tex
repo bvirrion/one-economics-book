@@ -1,0 +1,185 @@
+\section*{Chapter \ref{ch:b3:scale-variety-firms} --- Scale, Variety and Firms}
+
+\begin{solution}{exo:b3:scale-variety-firms:1}
+Largest: computers and electronics and electrical equipment, 38~\%; smallest:
+miscellaneous manufacturing, 2~\%. % figdata: exporters
+Above 18~\%: computers and electronics, electrical equipment, chemicals (36),
+machinery (33), primary metals (30), plastics and rubber and transport equipment
+(28), textile mills (25), leather and paper (24), beverages and tobacco (23);
+petroleum and coal equals it. Most are capital- or skill-intensive industries,
+in which a skill-abundant country such as the United States has a \omterm{def:b3:ricardian-trade:comparative-advantage}{comparative
+advantage}: endowments still matter for which industries export most.
+\end{solution}
+
+\begin{solution}{exo:b3:scale-variety-firms:2}
+Furniture $1 - 10/70 = 0.857$; machines $1 - 40/60 = 0.333$; grain $1 - 60/60 = 0$.
+Aggregate: $1 - (10 + 40 + 60)/(70 + 60 + 60) = 1 - 110/190 = 0.421$. Ricardo's model
+explains the one-way trade in grain; the two-way trade in furniture needs
+varieties.
+\end{solution}
+
+\begin{solution}{exo:b3:scale-variety-firms:3}
+$p = \sigma c/(\sigma - 1) = \tfrac43 c$; Lerner index $(p - c)/p = 1/\sigma = 0.25$. Closer
+substitutes mean a higher $\sigma$: the markup and the Lerner index fall toward 1 and 0,
+the competitive values.
+\end{solution}
+
+\begin{solution}{exo:b3:scale-variety-firms:4}
+A country with a larger home market for a differentiated, costly-to-ship good
+that is a net importer of it --- or whose share of the industry's production is
+smaller than its share of demand --- contradicts it. In the \omterm{def:b3:factor-endowments:ho}{Heckscher--Ohlin model},
+with production set by endowments and prices equalised by trade, a country whose
+consumers like a good more consumes more of it than it makes and imports it; in
+the Krugman model, demand draws firms in, and the country exports it.
+\end{solution}
+
+\begin{solution}{exo:b3:scale-variety-firms:5}
+$p = 5/4 = 1.25$; $\bar x = (\sigma - 1)F/c = 40$; employment per firm $\sigma F = 50$;
+$n = 1{,}000/50 = 20$. Real wage $1/P = n^{1/(\sigma-1)}/p = 20^{1/4}/1.25 = 2.115/1.25 =
+1.692$.
+\end{solution}
+
+\begin{solution}{exo:b3:scale-variety-firms:6}
+40 varieties, 20 from each country; price still 1.25. Real wage $40^{1/4}/1.25$, a
+factor $2^{1/4} = 1.189$: an 18.9~\% gain. With $\sigma = 3$ the factor is $2^{1/2} =
+1.414$, a 41.4~\% gain: when varieties are less alike, each new one is worth more.
+\end{solution}
+
+\begin{solution}{exo:b3:scale-variety-firms:7}
+The tested solution is \code{ex07_cutoff.py}, in the chapter's \code{exercises/}
+folder. The formula gives $\varphi^{*6} = 10 \times 2/(4 \times 1) = 5$, $\varphi^* = 5^{1/6} =
+1.3077$, and the bisection on a million draws gives 1.3065. A share $1/5 = 20~\%$ of
+entrants produce (20.1~\% in the sample). % output: ex07_cutoff
+\end{solution}
+
+\begin{solution}{exo:b3:scale-variety-firms:8}
+Entrants that produce: $1.5^{-3} = 0.296$. Producers that export: $\Pr(\varphi > 3 \mid
+\varphi > 1.5) = (1.5/3)^3 = 0.125$. With $k = 2$, $(1/2)^2 = 0.25$: a thicker tail of
+productive firms means more exporters.
+\end{solution}
+
+\begin{solution}{exo:b3:scale-variety-firms:9}
+Follow firms over time and compare the productivity of future exporters, in the
+years before they start exporting, with that of firms that never export, in the
+same industry. If future exporters were no more productive before they started,
+and became so only after, the data would contradict selection and support
+learning by exporting: firms gaining from contact with foreign buyers and
+technology.
+\end{solution}
+
+\begin{solution}{exo:b3:scale-variety-firms:10}
+Write $\rho = (\sigma - 1)/\sigma$ and maximise $\sum_i x_i^\rho$ subject to $\sum_i p_i x_i = E$.
+The first-order conditions $x_i^{\rho - 1} = \mu p_i$ give $x_i = (\mu p_i)^{-\sigma}$, so
+$x_i/x_j = (p_i/p_j)^{-\sigma}$. Substituting into the budget, $\mu^{-\sigma}\sum_j p_j^{1-\sigma} = E$,
+so $\mu^{-\sigma} = E/P^{1-\sigma}$ and $x_i = p_i^{-\sigma}E/P^{1-\sigma}$. Then $\sum_i x_i^\rho =
+(E/P^{1-\sigma})^\rho \sum_i p_i^{1-\sigma} = E^\rho P^{(1-\sigma)(1-\rho)}$, and since $(1-\sigma)(1-\rho) =
+(1-\sigma)/\sigma = -\rho$, $U = \bigl(E^\rho P^{-\rho}\bigr)^{1/\rho} = E/P$. With $P$ given, demand has
+constant elasticity $\sigma$, and the monopoly rule $(p - c)/p = 1/\sigma$ gives the
+markup.
+\end{solution}
+
+\begin{solution}{exo:b3:scale-variety-firms:11}
+The tested solution is \code{ex11_industry_productivity.py}, in the chapter's
+\code{exercises/} folder. Cut-offs: 1.246 closed, 1.293 open, 1.924 for exports.
+Industry productivity rises from 2.169 to 2.387, by 10.0~\%. Among the survivors
+alone, autarky productivity is 2.240: exit accounts for 33~\% of the rise, and the
+other 67~\% is market share moving to exporters. % output: ex11_industry_productivity
+\end{solution}
+
+\begin{solution}{exo:b3:scale-variety-firms:12}
+The term $\tau^{-4}f/f_x$ rises from $0.4823 \times 0.4444 = 0.2143$ to $0.6830 \times 0.4444
+= 0.3036$, so $\varphi^{*4} = 16 \times 1.3036 = 20.86$ and $\varphi^* = 2.137$. The \omterm{def:b3:scale-variety-firms:melitz}{export cut-off}
+is $1.1 \times 1.5 \times 2.137 = 3.526$, and the share of producers that export rises from
+9.5~\% to $(2.137/3.526)^4 = 13.5~\%$. The firm with $\varphi = 4$ exported $120 \times
+(4/2.0995)^2/1.44 = 302.5$; now $120 \times (4/2.137)^2/1.21 = 347.4$, 14.9~\% more. Both
+margins rise. When $f_x$ is cut instead (problem, question 18), the extensive
+margin rises but each existing exporter sells less abroad: the fixed cost does
+not enter the price, while the tougher competition from new exporters lowers
+everyone's sales.
+\end{solution}
+
+\begin{solution}{pb:b3:scale-variety-firms:furniture}
+\textbf{1.} $p = \tfrac{3}{2}\cdot\tfrac{1}{\varphi}$: a markup of 1.5. % figdata: furn_params, furn_results
+
+\textbf{2.} Profit $r/\sigma - f = 0$, so $r = \sigma f = 120$.
+
+\textbf{3.} $r(\varphi) = 120(\varphi/\varphi^*)^2$, so profit $r/3 - 40 = 40\bigl((\varphi/\varphi^*)^2 - 1\bigr)$.
+
+\textbf{4.} $40\varphi^{*-4} \times 2/2 = 2.5$, so $\varphi^{*4} = 16$ and $\varphi^* = 2$.
+
+\textbf{5.} $2^{-4} = 1/16 = 6.25~\%$. Average productivity $\tfrac43 \times 2 = 2.667$.
+
+\textbf{6.} Revenue $120 \times (4/2)^2 = 480$; profit $480/3 - 40 = 120$.
+
+\textbf{7.} Exports bring $\lambda r(\varphi)/3 - 90$ with $\lambda = 1.2^{-2}$; at the cut-off
+$1.2^{-2} \times 40(\varphi_x/\varphi^*)^2 = 90$, so $(\varphi_x/\varphi^*)^2 = 1.44 \times 2.25 = 3.24$ and
+$\varphi_x/\varphi^* = 1.8$.
+
+\textbf{8.} $\tau^{-4}f/f_x = 0.4823 \times 40/90 = 0.2143$; $\varphi^{*4} = 16 \times 1.2143 = 19.43$,
+$\varphi^* = 2.0995$; $\varphi_x = 1.8 \times 2.0995 = 3.779$.
+
+\textbf{9.} Those with $\varphi$ between 2 and 2.0995: $1 - 2^{-4}/2.0995^{-4} = 1 - 16/19.43 =
+17.6~\%$.
+
+\textbf{10.} $1.8^{-4} = 9.5~\%$, close to the 7~\% of United States furniture
+makers in the opening chart. % ledger: b3sv:bjrs.t2.337
+
+\textbf{11.} Domestic sales are $1.8^2 = 3.24$ times as large, and exports add a
+factor $1 + 1/1.44 = 1.694$: $3.24 \times 1.694 = 5.49$.
+
+\textbf{12.} Domestic sales $120 \times (4/2.0995)^2 = 435.6$; exports $435.6/1.44 = 302.5$;
+total 738.1, against 480 in autarky, 53.8~\% more.
+
+\textbf{13.} It still produces but does not export; its sales fall from $120 \times
+(3/2)^2 = 270$ to $120 \times (3/2.0995)^2 = 245.0$, by 9.3~\%, because Kestrian varieties
+now compete for Brenland's buyers.
+
+\textbf{14.} $(\varphi_x/\varphi^*)^2 = 1.44 \times 45/40 = 1.62$, ratio 1.273. $\tau^{-4}f/f_x$ doubles to
+0.4287: $\varphi^{*4} = 16 \times 1.4287 = 22.86$, $\varphi^* = 2.187$; $\varphi_x = 1.273 \times 2.187 = 2.783$.
+
+\textbf{15.} $1.273^{-4} = 38.1~\%$.
+
+\textbf{16.} $1 - 19.43/22.86 = 15.0~\%$.
+
+\textbf{17.} It becomes an exporter ($3 > 2.783$). Domestic sales $120 \times (3/2.187)^2 =
+225.9$, exports $225.9/1.44 = 156.9$, total 382.8, against 245.0: 56~\% more.
+
+\textbf{18.} $120 \times (4/2.187)^2/1.44 = 278.9$, against 302.5: 7.8~\% less. The fixed
+cost does not change the firm's price; but more Brenlandic and Kestrian firms now
+sell in each market, and the higher cut-off is the sign of tougher competition
+that lowers every incumbent's sales.
+
+\textbf{19.} Yes. The share of producers that export quadruples (38.1~\% against
+9.5~\%); producers themselves fall by 15~\%, so exporters per entrant rise 3.4 times,
+from $3.779^{-4} = 0.0049$ to $2.783^{-4} = 0.0167$. Export sales per entrant are
+$\sigma f \tau^{1-\sigma} (\varphi^*)^{1-\sigma}\, \tfrac{k}{k-\sigma+1}\,
+\varphi_x^{\sigma-1-k}$: 2.65 thousand dalens before, 4.50 after, a rise of 70~\%. The
+rise comes through the extensive margin, new exporters; the intensive margin, the
+average export sales per exporter, falls from 540 to 270.
+
+\textbf{20.} From $\tfrac43 \times 2.0995 = 2.799$ to $\tfrac43 \times 2.187 = 2.915$, by 4.1~\%
+($2.1866/2.0995 = 1.041$).
+
+\textbf{21.} From selection: the least productive firms exit and their workers
+and buyers go to more productive firms; exporters' market shares grow.
+
+\textbf{22.} Opening: $2.0995/2 = 1.050$, a 5.0~\% gain; the agreement: $1.041$, 4.1~\%;
+in all $2.187/2 = 1.093$, 9.3~\%.
+
+\textbf{23.} No change in productivity: identical firms all export, none exits,
+and the gains come only from more varieties
+(\cref{prop:b3:scale-variety-firms:krugman}).
+
+\textbf{24.} Plant exit and a rise in labour productivity in the most exposed
+industries, about half of it from turnover and efficiency, as the
+\omterm{def:b3:scale-variety-firms:melitz}{heterogeneous-firms model} predicts. % ledger: b3sv:tre.fta
+
+\textbf{25.} The owners of the 15~\% of firms that exit lose their entry costs and
+profits, and their workers lose their jobs and must find others; in this model
+they are re-employed at the same wage, while in the Canadian record employment in
+the most exposed industries fell by 15~\%.
+
+\textbf{26.} After the agreement, the average productivity of Brenland's furniture
+makers rises by 4.1~\%, while 15.0~\% of the firms producing before the agreement
+exit.
+\end{solution}

@@ -1,0 +1,3 @@
+$ python iterated.py
+E[E[Y|X]] = 21553.920778
+E[Y]      = 21553.920778

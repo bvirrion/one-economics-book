@@ -1,0 +1,5 @@
+$ python menu.py
+light plan: 2.00 units for 10.00
+heavy plan: 8.00 units for 40.00
+heavy user's rent 8.00; profit per user 12.00
+with full information: units 4 and 8

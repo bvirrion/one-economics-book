@@ -1,0 +1,4 @@
+method,pairs,gdp_o,gdp_d,dist,dist_se,union,union_se
+OLS,374,0.638621,0.68049,-0.904496,0.0540537,0.573729,0.0887878
+OLS with fixed effects,374,,,-0.978806,0.0626673,0.749509,0.173863
+PPML with fixed effects,380,,,-0.928467,0.054263,0.381553,0.169926

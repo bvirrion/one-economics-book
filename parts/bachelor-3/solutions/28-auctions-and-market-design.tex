@@ -1,0 +1,140 @@
+\section*{Chapter \ref{ch:b3:auctions-and-market-design} --- Auctions and Market Design}
+
+\begin{solution}{exo:b3:auctions-and-market-design:1}
+$650/20 = 32.5$; $650/170 = 3.8$. % figdata: spectrum
+\end{solution}
+
+\begin{solution}{exo:b3:auctions-and-market-design:2}
+The expected second-highest of three uniform values, $(3 - 1)/(3 + 1) = 0.5$.
+\end{solution}
+
+\begin{solution}{exo:b3:auctions-and-market-design:3}
+$b = 3 \times 0.6/4 = 0.45$.
+\end{solution}
+
+\begin{solution}{exo:b3:auctions-and-market-design:4}
+Different average revenue from two formats that the theory says are equivalent, with
+the same bidders and objects. The \omterm{def:b3:auctions-and-market-design:formats}{Dutch auction} of trading cards raised 30~\% more than
+the first-price auction.
+\end{solution}
+
+\begin{solution}{exo:b3:auctions-and-market-design:5}
+$2r - 1 = 0.2$: $r = 0.6$.
+\end{solution}
+
+\begin{solution}{exo:b3:auctions-and-market-design:6}
+The tested solution is \code{ex06_deferred.py}, in the chapter's \code{exercises/}
+folder. With the pupils proposing: p1--A, p2--B, p3--D, p4--C. With the schools proposing: p1--B,
+p2--A, p3--D, p4--C. Both are stable; p1 and p2 get their first choices in the first and their
+second choices in the second, the schools A and B the reverse. Each side does best
+when it proposes. % output: ex06_deferred
+\end{solution}
+
+\begin{solution}{exo:b3:auctions-and-market-design:7}
+In an \omterm{def:b3:auctions-and-market-design:formats}{English auction} the incumbent can always top the entrant's bid, so the entrant
+expects to lose and to bear its bidding costs for nothing. A sealed final stage makes
+the incumbent guess how much to bid; wanting a profit, it may bid less than it
+could, so the entrant has a chance and enters.
+\end{solution}
+
+\begin{solution}{exo:b3:auctions-and-market-design:8}
+Unconditionally $V$ is 90 or 110 with equal chance: 100. If $V = 90$, her signal is higher with probability
+$\tfrac12 + \tfrac12 \times \tfrac12 = \tfrac34$; if $V = 110$, with probability $\tfrac12 \times \tfrac12 = \tfrac14$. Given that it is higher, $V = 90$ with probability $3/4$:
+$E[V] = 0.75 \times 90 + 0.25 \times 110 = 95$.
+\end{solution}
+
+\begin{solution}{exo:b3:auctions-and-market-design:9}
+Reported rankings that depend on the reports or priorities of others --- for
+instance, applicants ranking a less popular school first when they have low
+priority at their preferred one --- and applicants who report truthfully doing
+worse than similar ones who do not.
+\end{solution}
+
+\begin{solution}{exo:b3:auctions-and-market-design:10}
+The proof is in the text. With $Q(v) = v^{n-1}$, $P(v) = v^n - v^n/n = (n - 1)v^n/n$.
+\end{solution}
+
+\begin{solution}{exo:b3:auctions-and-market-design:11}
+The tested solution is \code{ex11_risk.py}, in the chapter's \code{exercises/}
+folder. English and second-price: 0.600; Dutch and first-price: 0.686, against 0.601 with
+risk-neutral bidders. % output: ex11_risk
+Risk aversion leaves the first two unchanged and raises the revenue of the other two.
+\end{solution}
+
+\begin{solution}{exo:b3:auctions-and-market-design:12}
+A points to pair 2 (donor $b$), B to pair 1 ($a$), C to pair 4 ($d$) and D to pair 3 ($c$). Two cycles form at
+once: pairs 1 and 2 exchange, A receiving $b$ and B receiving $a$; pairs 3 and 4 exchange, C receiving $d$
+and D receiving $c$. All four patients receive a kidney.
+\end{solution}
+
+\begin{solution}{pb:b3:auctions-and-market-design:spectrum}
+% figdata: reserve, schools
+\textbf{1.} The expected second-highest value: $400 \times 3/5 = 240$ million dalens.
+
+\textbf{2.} $b(v) = 3v/4$; expected revenue $\tfrac34 \times 400 \times \tfrac45 = 240$ million, as revenue equivalence says.
+
+\textbf{3.} The expected highest value less the expected price: $320 - 240 = 80$ million.
+
+\textbf{4.} The first-price (or Dutch) auction.
+
+\textbf{5.} The \omterm{def:b3:auctions-and-market-design:formats}{English auction}: the incumbent can top any bid, so the others may not
+bid at all, and the price falls to their low values.
+
+\textbf{6.} $2r - 400 = 0$: $r = 200$ million.
+
+\textbf{7.} $400 \times (\tfrac35 + 0.5^4 - \tfrac85 \times 0.5^5) = 400 \times 0.6125 = 245$ million.
+
+\textbf{8.} All four values below 200: $0.5^4 = 6.25~\%$.
+
+\textbf{9.} No: the optimal reserve does not depend on the number of bidders; its gain shrinks.
+
+\textbf{10.} $2r - 400 = 100$: $r = 250$ million.
+
+\textbf{11.} Complements: the pair is worth 150, more than $50 + 50$.
+
+\textbf{12.} Winning both at 70 each costs 140, less than 150: staying in pays if it wins both, but
+it risks winning one alone at a price above its value of 50.
+
+\textbf{13.} $50 - 70 = -20$ million.
+
+\textbf{14.} The exposure problem. Package bidding, in which a bid for the pair is a single
+bid, removes it.
+
+\textbf{15.} Signal a division --- each bidding on one licence only --- and threaten to
+bid up the other's licence if it does not stay away.
+
+\textbf{16.} Round 1: Ana, Ben and Dee apply to North, which holds Dee; Cai applies to South.
+Round 2: Ana applies to South, which holds Ana and rejects Cai; Ben applies to West. Round 3:
+Cai applies to North, which holds Cai and rejects Dee. Round 4: Dee is rejected by South. Round 5:
+Dee applies to West. Result: Ana South, Ben West, Cai North, Dee West.
+
+\textbf{17.} Ana prefers only North, where Cai has priority over her; Ben prefers only North
+(Cai again); Cai prefers South, where Ana has priority; Dee prefers North and South, where
+Cai and Ana have priority over her. No blocking pair.
+
+\textbf{18.} Round 1: North takes Dee; South takes Cai. Round 2: South is full for Ana; West takes Ben.
+Round 3: West takes Ana. Result: Ana West, Ben West, Cai South, Dee North.
+
+\textbf{19.} Ana and South: she prefers South to West and has priority there over Cai.
+
+\textbf{20.} Ranking South first, Ana applies there in round 1 with Cai and wins on priority:
+she gets South, which she prefers to West.
+
+\textbf{21.} Ana (at South, preferring North) and Cai (at North, preferring South). After the
+swap Dee, at West, would have priority over Ana at North and over Cai at South: the swap
+breaks her priorities, so stability forbids it.
+
+\textbf{22.} \omterm{def:b3:auctions-and-market-design:ttc}{Top trading cycles} would make it, at the cost of leaving Dee with a justified
+complaint at two schools.
+
+\textbf{23.} Some parents strategised and others did not, and many unassigned pupils
+could have had a stated choice with a different ranking.
+
+\textbf{24.} Priorities often encode rules the city has promised (siblings, distance),
+and a family with higher priority that sees a lower-priority pupil take its seat has a
+legal and moral complaint.
+
+\textbf{25.} The revenue-maximising reserve is 200 million dalens and the expected revenue
+with it 245 million; deferred acceptance places Ana at South, Ben at West, Cai at North and Dee
+at West.
+\end{solution}

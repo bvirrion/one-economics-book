@@ -1,0 +1,181 @@
+\section*{Chapter \ref{ch:b1:consumer-welfare} --- Consumer Welfare}
+% Numbers recomputed in code/bachelor-1/07-consumer-welfare/exercises/solutions.py (tested).
+
+\begin{solution}{exo:b1:consumer-welfare:cs-linear}
+Quantities 80 at a price of 10 and 70 at 15. The surplus lost is the
+trapezium between the two prices: $5 \times (80 + 70)/2 = 375$.
+\end{solution}
+
+\begin{solution}{exo:b1:consumer-welfare:growth}
+CPI-U: $2.4001^{1/34} - 1 = 2.61\%$ a year. Deflator: $2.0689^{1/34} - 1 = 2.16\%$
+a year.
+\end{solution}
+
+\begin{solution}{exo:b1:consumer-welfare:lp}
+Laspeyres: $(2 \times 10 + 1 \times 10)/(1 \times 10 + 1 \times 10) = 30/20 = 1.5$.
+Paasche: $(2 \times 6 + 1 \times 12)/(1 \times 6 + 1 \times 12) = 24/18 = 1.333$.
+\end{solution}
+
+\begin{solution}{exo:b1:consumer-welfare:signs}
+Both are negative. $\mathrm{CV} < 0$: at the new, lower price the consumer
+could give up $|\mathrm{CV}|$ of income and be as well off as before.
+$\mathrm{EV} < 0$: at the old price she would need $|\mathrm{EV}|$ more income to
+be as well off as the price fall makes her.
+\end{solution}
+
+\begin{solution}{exo:b1:consumer-welfare:cv-ev}
+$e(p, u) = 2u\sqrt{p_1p_2}$, so doubling $p_1$ multiplies the cost of any
+utility by $\sqrt 2$. $\mathrm{CV} = e(p^1, u^0) - 1000 = 1000(\sqrt 2 - 1) = 414.21$.
+$\mathrm{EV} = 1000 - e(p^0, u^1) = 1000 - 1000/\sqrt 2 = 292.89$.
+\end{solution}
+
+\begin{solution}{exo:b1:consumer-welfare:between}
+$x_1 = 500/p_1$, so the loss is $\int_1^2 500/p\,\dd p = 500\ln 2 = 346.57$, and
+$292.89 < 346.57 < 414.21$.
+\end{solution}
+
+\begin{solution}{exo:b1:consumer-welfare:cd-index}
+With $u = \prod_i x_i^{s_i}$, the \omterm{def:b1:income-and-substitution-effects:expenditure}{expenditure function} is
+$e(p, u) = u\prod_i p_i^{s_i}/\prod_i s_i^{s_i}$ (solve $v(p, m) = u$ for $m$, as in
+\cref{ch:b1:income-and-substitution-effects}). In the ratio $e(p^1, u)/e(p^0, u)$
+the factor $u/\prod_i s_i^{s_i}$ cancels, leaving $\prod_i(p_i^1/p_i^0)^{s_i}$ for
+every $u$. For the figure's consumer, shares $\tfrac12$ and relatives 2 and 1:
+$I = 2^{1/2} = 1.4142$, against $L = (2 \times 50 + 1 \times 50)/100 = 1.5$: an error of
+$0.0858$, or 8.6 index points.
+\end{solution}
+
+\begin{solution}{exo:b1:consumer-welfare:basket}
+Laspeyres: $(600 \times 1.355 + 800 \times 1.225 + 750 \times 1.84 + 8400 \times 1.4288 + 300 \times 1.3033)/10850
+= 15565.68/10850 = 1.4346$, that is 143.46 (the products are the 2025 costs of the
+basket, 813, 980, 1380, 12001.68 and 391, using the 2025 prices). Geometric:
+the share-weighted logs are $0.0168 + 0.0150 + 0.0421 + 0.2763 + 0.0073 = 0.3575$,
+and $100e^{0.3575} = 142.98$ with these rounded terms (142.97 unrounded, as in
+the table). The chained index, 143.27, lies between them, closer to the
+Laspeyres index.
+\end{solution}
+
+\begin{solution}{exo:b1:consumer-welfare:spread}
+$r_i - \bar r = \pm 0.01$ in one year, so the bias is
+$\tfrac12(0.5 \times 0.0001 + 0.5 \times 0.0001) = 0.00005$: $0.005$ points. A basket fixed
+for ten years faces relatives of $\pm 0.10$, so the bias in the level is
+$\tfrac12 \times 0.01 = 0.005$, half a per cent after ten years, about $0.05$
+points a year: a fixed basket's bias grows with the square of the time
+since its base year.
+\end{solution}
+
+\begin{solution}{exo:b1:consumer-welfare:prove-bound}
+The proof is that of \cref{prop:b1:consumer-welfare:bounds}: $x^0$ reaches $u^0$,
+so $e(p^1, u^0) \le p^1\cdot x^0$ while $e(p^0, u^0) = p^0\cdot x^0$; and
+$e(p^0, u^1) \le p^0\cdot x^1$ while $e(p^1, u^1) = p^1\cdot x^1$. With
+$u = \min(x_1/a, x_2/b)$, the cheapest way to reach $u$ is $(au, bu)$ at any
+prices, so $e(p, u) = u(ap_1 + bp_2)$ and the basket never changes:
+$I = (ap_1^1 + bp_2^1)/(ap_1^0 + bp_2^0) = L$. With no substitution there is no
+substitution bias.
+\end{solution}
+
+\begin{solution}{exo:b1:consumer-welfare:quasi}
+$5/\sqrt{x_1} = p_1$ gives $x_1 = 25/p_1^2$: 25 at $p_1 = 1$ (cost 25) and 6.25 at
+$p_1 = 2$ (cost 12.5), both interior. The surplus loss is
+$\int_1^2 25/p^2\,\dd p = 25(1 - \tfrac12) = 12.5$. The \omterm{def:b1:income-and-substitution-effects:expenditure}{expenditure function} is
+$e(p, u) = p_1x_1 + u - 10\sqrt{x_1} = 25/p_1 + u - 50/p_1 = u - 25/p_1$, so
+$e(2, u) - e(1, u) = -12.5 + 25 = 12.5$ for every $u$: $\mathrm{CV} = \mathrm{EV} = 12.5$.
+\end{solution}
+
+\begin{solution}{exo:b1:consumer-welfare:low-income}
+A price index built on the baskets of low-income households, with their own
+shares, that rose faster than the CPI by more than the CPI's estimated
+upward bias would refute the statement for them. Their true index can rise
+faster if they spend larger shares on goods whose prices rose faster than
+average (rent, food, energy in some periods), or if they can substitute
+less, for instance because they cannot buy in bulk or travel to cheaper
+outlets.
+\end{solution}
+
+\begin{solution}{pb:b1:consumer-welfare:cpi}
+\textbf{1.} $600 + 800 + 750 + 8400 + 300 = 10850$. Rent $8400/10850 = 0.7742$;
+energy $750/10850 = 0.0691$.
+
+\textbf{2.} $300 \times 2.71 + 20 \times 49 + 3000 \times 0.46 + 12 \times 1000.14 + 100 \times 3.91 = 813 + 980 + 1380 + 12001.68 + 391 = 15565.68$;
+$L = 100 \times 15565.68/10850 = 143.46$.
+
+\textbf{3.} $p^1\cdot x^0/p^0\cdot x^0 = \sum_i (p_i^0x_i^0/p^0\cdot x^0)(p_i^1/p_i^0) = \sum_i s_ir_i$
+with $r_i = p_i^1/p_i^0$.
+
+\textbf{4.} Cobb--Douglas demand spends the share $s_i$ of income $m^1$ on good $i$:
+$x_i^1 = s_im^1/p_i^1$. Then $p^1\cdot x^1 = m^1$ and
+$p^0\cdot x^1 = m^1\sum_i s_ip_i^0/p_i^1$, so $P = 1/\sum_i s_i/r_i$.
+
+\textbf{5.} $\sum_i s_i/r_i = (600/1.355 + 800/1.225 + 750/1.84 + 8400/1.4288 + 300/1.3033)/10850
+= (442.80 + 653.06 + 407.61 + 5879.06 + 230.18)/10850 = 7612.71/10850$, so
+$P = 100 \times 10850/7612.71 = 142.52$.
+
+\textbf{6.} $\ln G = \sum_i s_i\ln r_i = 0.0168 + 0.0150 + 0.0421 + 0.2763 + 0.0073 = 0.3575$
+and $G = 100e^{0.3575} = 142.98$ with these rounded terms; the script's
+unrounded value is 142.97.
+
+\textbf{7.} $L = 143.46 > G = 142.97 > P = 142.52$: the share-weighted arithmetic,
+geometric and harmonic means of the price relatives, in the order that holds
+for any set of unequal numbers.
+
+\textbf{8.} The Cobb--Douglas \omterm{def:b1:income-and-substitution-effects:expenditure}{expenditure function} is proportional to
+$\prod_i p_i^{s_i}$ at every utility, so $e(p^1, u)/e(p^0, u) = \prod_i r_i^{s_i} = G$
+for every reference utility (\cref{exo:b1:consumer-welfare:cd-index}).
+
+\textbf{9.} $143.46 - 142.97 = 0.49$ index points.
+
+\textbf{10.} $1.4346^{0.1} - 1 = 3.67\%$ and $1.4297^{0.1} - 1 = 3.64\%$: $0.03$ points
+a year with these rounded rates ($0.035$ unrounded), under $0.04$ points a year.
+
+\textbf{11.} Rent takes $77\%$ of the basket and its relative, 1.4288, is close to
+the mean; substitution matters only when relative prices move apart, and
+only energy, with $7\%$ of the basket, moved far (1.84).
+
+\textbf{12.} Energy prices jumped in 2022. The relatives spread out, and the
+bias of a fixed basket grows with the spread
+(\cref{exo:b1:consumer-welfare:spread}).
+
+\textbf{13.} The chained index, 143.27, lies between the Laspeyres and the
+geometric index. Each yearly link is still an arithmetic mean of that year's
+relatives, so it carries a small bias every year, and the 2022 link a large
+one; chaining stops the bias from compounding on an old basket but does not
+remove it.
+
+\textbf{14.} 30 dalens per gigabyte, where $60 - 2p = 0$.
+
+\textbf{15.} 2020: $q = 20$, $\mathrm{CS} = (30 - 20) \times 20/2 = 100$. 2025: $q = 40$,
+$\mathrm{CS} = (30 - 10) \times 40/2 = 400$ dalens a year.
+
+\textbf{16.} With \omterm{def:b1:preferences-and-utility:quasi-linear}{quasi-linear utility} the surplus is exact
+(\cref{prop:b1:consumer-welfare:quasi}): reaching the 2015 utility costs 400
+dalens less, $400/15565.68 = 2.57\%$ of the 2025 cost of the 2015 basket.
+
+\textbf{17.} $10850 \times 142.97/100 = 15512.25$; with the phone,
+$15512.25 - 400 = 15112.25$, an index of $100 \times 15112.25/10850 = 139.28$.
+
+\textbf{18.} $1.3928^{0.1} - 1 = 3.37\%$ against $3.64\%$: an index that leaves the
+phone out overstates by $0.27$ points a year, several times the substitution
+bias.
+
+\textbf{19.} The whole value of the new good: the price fall from the \omterm{def:b1:consumer-welfare:virtual-price}{virtual
+price}, 30, to 20 when it arrived, and from 20 to 10 since. Adding it in 2025
+at 10 records neither.
+
+\textbf{20.} $15000 \times 1.4346 = 21519$ and $15000 \times 1.4297 = 21445.50$.
+
+\textbf{21.} $21519 - 21445.50 = 73.50$ dalens in 2025, and
+$15000 \times 1.81/100 = 271.50$ dalens over 2016--2025.
+
+\textbf{22.} $15000 \times 1.4327 = 21490.50$; the switch would cost her
+$21519 - 21490.50 = 28.50$ dalens in 2025.
+
+\textbf{23.} The geometric index, 142.97: it is the true index for a household
+with these preferences and shares that does not use the new good.
+
+\textbf{24.} It understates hers. Energy's relative, 1.84, is the largest, and her
+true index weights it more, so her geometric index is higher than the
+average one.
+
+\textbf{25.} The substitution bias of Brenland's CPI over 2015--2025 is 0.49
+index points in all, under $0.04$ points a year; leaving out the new good
+costs far more, $0.27$ points a year.
+\end{solution}

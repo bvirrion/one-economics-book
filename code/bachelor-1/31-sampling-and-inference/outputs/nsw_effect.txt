@@ -1,0 +1,8 @@
+$ python nsw_effect.py
+treated 185, mean 6,349; controls 260, mean 4,555
+difference 1,794.3, standard error 671.0, t 2.674
+p-value (normal) 0.0075
+scipy (Welch):   t 2.674, p-value 0.0079
+95% interval: 479 to 3,109
+re74: treated 2,096, controls 2,107, p 0.98
+re75: treated 1,532, controls 1,267, p 0.39

@@ -1,0 +1,401 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g10-06. Equilibrium as a linear system,
+% excess demand and supply, comparative statics, linked markets. Real numbers:
+% figdata/grade-10/06-market-equilibrium/ (EIA world and US oil production; BLS pump price and
+% CPI-U as the price, since the crude price has no approved source). Brenland and Kestria invented.
+\chapter{Market Equilibrium}\label{ch:g10:market-equilibrium}
+
+Each point of the opening chart is one year of the world oil market: how many barrels the world produced a day, and what
+a gallon of gasoline cost an American driver, in today's money. The points are joined in the order of the years. Some
+steps go up and to the right: more oil and a higher price, as from 2020 to 2021. Others go down and to the right: more oil
+and a lower price, as from 2014 to 2015. Others go down and to the left, as in 2009 and in 2020, when the world produced
+less oil and paid less for it.
+% figdata: world_oil (2014 93.95, 4.46; 2015 96.65, 3.24; 2019 100.5, 3.23; 2020 94.01, 2.64; 2021 95.72, 3.53)
+
+These directions are not random. Every point is where that year's demand met that year's supply, and the direction of each
+step says which of the two curves moved. This chapter puts the two curves of the last two chapters together, solves for the
+point where they meet, and works out how that point moves when either curve does.
+
+\begin{openingchart}{The world oil market, 2005--2024: world production of oil and other liquid fuels, in millions of barrels a
+day, against the price of regular gasoline in the United States, in 2024 dollars per gallon. Points are joined in the order of the
+years. The pump price stands in for the price of crude oil, which it follows.}{US Energy Information Administration,
+international energy statistics; US Bureau of Labor Statistics, average retail prices and CPI-U all items}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.86\linewidth, height=7.2cm, xmin=83, xmax=105, ymin=2.4, ymax=5.2,
+  xlabel={world production (million barrels a day)}, ylabel={dollars per gallon (2024 prices)}]
+\addplot[omDef, thick, mark=*, mark size=1.4pt] table[x=q, y=price] {figdata/grade-10/06-market-equilibrium/out/world_oil.csv};
+\addplot[draw=none, nodes near coords, point meta=explicit symbolic,
+  nodes near coords style={font=\scriptsize, anchor=south west, inner sep=1.5pt}]
+  table[x=q, y=price, meta=year] {figdata/grade-10/06-market-equilibrium/out/world_labels.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: at the \emph{equilibrium price} the quantity demanded equals the quantity supplied; below it there is a
+\emph{shortage}, above it a \emph{surplus}, and the price tends to move towards equilibrium. From mathematics: two straight lines
+with different slopes cross at exactly one point, found by solving a system of two linear equations. The grades 6--9
+volume also solved $a - bp = c + dp$ for $p^* = (a - c)/(b + d)$, and showed that a shift of demand by $k$ moves the price by
+$k/(b + d)$; this chapter restates both and builds on them. From \cref{ch:g10:demand} and
+\cref{ch:g10:supply}: \omterm{def:g10:demand:market-demand}{market demand} slopes down, \omterm{def:g10:supply:market-supply}{market supply} slopes up, and each shifts when something other than the price changes.
+\end{recall}
+
+\section{Equilibrium as a pair of equations}\label{sec:g10:market-equilibrium:system}
+
+The model of this chapter describes a market in which no buyer and no seller is large enough to move the price.
+
+\begin{definition}[Price taker]\label{def:g10:market-equilibrium:price-taker}
+A buyer or seller is a \emph{price taker}\index{price taker} when it buys or sells so small a share of the market that it takes the
+market price as given: it can buy or sell as much as it wants at that price, and it cannot change the price by changing its own
+quantity.
+\end{definition}
+
+Write the \omterm{def:g10:demand:market-demand}{market demand} and supply as straight lines, $Q^d = a - b\,p$ and $Q^s = c + d\,p$, with $b > 0$ and $d > 0$. The equilibrium
+price $p^*$ is the price at which $Q^d = Q^s$.
+
+\begin{proposition}[The equilibrium of a linear market, recalled]\label{prop:g10:market-equilibrium:solution}
+If $b > 0$, $d > 0$ and $a > c$, the market has exactly one equilibrium,
+\[
+  p^* = \frac{a - c}{b + d}, \qquad Q^* = \frac{a\,d + b\,c}{b + d},
+\]
+and $p^* > 0$.
+\end{proposition}
+\begin{proof}
+As in the grades 6--9 volume: $(b + d)\,p = a - c$ has exactly one solution since $b + d > 0$, positive because $a > c$; then
+$Q^* = a - b\,p^* = (ad + bc)/(b + d)$.
+\end{proof}
+
+The condition $a > c$ says that at a price of zero, buyers want more than sellers offer; without it, the good would be free, like air.
+
+\begin{example}[Bread in a Brenland town]\label{ex:g10:market-equilibrium:bread}
+The \omterm{def:g10:demand:market-demand}{market demand} for bread is $Q^d = 50 - 3p$ and its supply $Q^s = 2p - 10$, in hundreds of loaves a day, with $p$ in dalens. Then $50 -
+3p = 2p - 10$, so $5p = 60$ and $p^* = 12$ dalens; $Q^* = 50 - 36 = 14$ hundred loaves (check: $24 - 10 = 14$).
+\end{example}
+
+\section{Excess demand, excess supply and how the price moves}\label{sec:g10:market-equilibrium:excess}
+
+\begin{definition}[Excess demand and excess supply]\label{def:g10:market-equilibrium:excess-demand}
+At a price $p$, \emph{excess demand}\index{excess demand} is the quantity $Q^d(p) - Q^s(p)$ when it is positive; \emph{excess
+supply}\index{excess supply} is the quantity $Q^s(p) - Q^d(p)$ when it is positive.
+\end{definition}
+\phantomsection\label{def:g10:market-equilibrium:excess-supply}
+
+The shortage and surplus of the grades 6--9 volume are now measured: in the bread market at 10 dalens, $Q^d = 20$ and $Q^s = 10$, an
+\omterm{def:g10:market-equilibrium:excess-demand}{excess demand} of 10 hundred loaves; at 14 dalens, $Q^d = 8$ and $Q^s = 18$, an \omterm{def:g10:market-equilibrium:excess-demand}{excess supply} of 10.
+
+\begin{proposition}[Excess demand falls as the price rises]\label{prop:g10:market-equilibrium:excess}
+In a linear market, $Q^d(p) - Q^s(p) = (a - c) - (b + d)\,p$. It is positive below $p^*$, zero at $p^*$ and negative above $p^*$, and
+every dalen of price reduces it by $b + d$.
+\end{proposition}
+\begin{proof}
+$Q^d - Q^s = a - bp - c - dp = (a - c) - (b + d)p$, a straight line of slope $-(b + d) < 0$ in $p$, equal to zero at $p = (a - c)/(b +
+d) = p^*$. A decreasing line is positive before its zero and negative after.
+\end{proof}
+
+How does a market find $p^*$? Nobody computes it. When there is \omterm{def:g10:market-equilibrium:excess-demand}{excess demand}, buyers find the shelves empty and some offer more; sellers
+notice that they sell out early and raise their price. When there is \omterm{def:g10:market-equilibrium:excess-demand}{excess supply}, unsold stock piles up and sellers cut prices to clear
+it. Each step moves the price towards $p^*$, and \cref{prop:g10:market-equilibrium:excess} says why: on the side of $p^*$ where the price is,
+the gap always pushes it the right way. How fast this happens differs from market to market: in an auction of fish it takes minutes, in the
+market for flats it can take years.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.28cm, y=0.5cm, yshift=-2cm]
+% vertical coordinate = p - 4 (the axis starts at a price of 4 dalens)
+\draw[econ axes] (0,13.5) node[left, font=\small] {$p$} |- (31,0) node[below left=12pt and 0pt, font=\small] {$Q$ (hundreds of loaves)};
+\draw[demand] (5,11) -- (29,3);
+\draw[supply] (0,1) -- (24,13);
+\draw[guide] (0,8) -- (14,8) -- (14,0);
+\node[eqpoint] at (14,8) {};
+\draw[guide] (0,6) -- (10,6);
+\draw[|<->|, omThm!80!black] (10,6) -- (20,6);
+\node[font=\footnotesize, anchor=north] at (15,5.8) {excess demand 10};
+\draw[guide] (0,10) -- (8,10);
+\draw[|<->|, omDef!80!black] (8,10) -- (18,10);
+\node[font=\footnotesize, anchor=south] at (13,10.2) {excess supply 10};
+\foreach \p in {6,8,10,12,14,16} \draw (0,\p-4) -- (-0.3,\p-4) node[left, font=\footnotesize] {\p};
+\foreach \x in {8,10,14,18,20} \draw (\x,0) -- (\x,-0.2) node[below, font=\footnotesize] {\x};
+\node[font=\footnotesize, text=omDef!80!black, anchor=north east] at (29,2.6) {$Q^d = 50 - 3p$};
+\node[font=\footnotesize, text=omThm!80!black, anchor=north west] at (24.3,13) {$Q^s = 2p - 10$};
+\end{tikzpicture}
+
+{\small The bread market. At 12 dalens the market clears with 14 hundred loaves. At 10 dalens buyers want 20 and sellers offer 10; at 14
+dalens sellers offer 18 and buyers want 8.}
+\end{omfigure}
+
+\section{Comparative statics}\label{sec:g10:market-equilibrium:statics}
+
+\begin{definition}[Comparative statics]\label{def:g10:market-equilibrium:comparative-statics}
+\emph{Comparative statics}\index{comparative statics} compares the equilibrium before and after a change in an \omterm{def:g10:economic-models:endogenous}{exogenous variable}, \omterm{def:g10:economic-models:other-things-equal}{other
+things equal}, without describing the path from one to the other.
+\end{definition}
+
+\begin{proposition}[One shift; the price part recalled]\label{prop:g10:market-equilibrium:one-shift}
+If demand shifts right by $\Delta > 0$ at every price ($a$ becomes $a + \Delta$), the equilibrium price rises by $\Delta/(b + d)$ and the
+quantity by $d\,\Delta/(b + d)$. If supply shifts right by $\Sigma > 0$ ($c$ becomes $c + \Sigma$), the price falls by $\Sigma/(b + d)$ and
+the quantity rises by $b\,\Sigma/(b + d)$.
+\end{proposition}
+\begin{proof}
+By \cref{prop:g10:market-equilibrium:solution}, replacing $a$ by $a + \Delta$ changes $p^*$ by $\Delta/(b + d)$ and $Q^*$ by $d\Delta/(b+d)$.
+Replacing $c$ by $c + \Sigma$ changes $p^*$ by $-\Sigma/(b + d)$ and $Q^*$ by $b\Sigma/(b + d)$.
+\end{proof}
+
+A rise in demand raises both the price and the quantity; a rise in supply raises the quantity and lowers the price. A fall in either does
+the reverse. This gives a rule for reading data: when price and quantity move the same way, the demand shift dominated; when they move in
+opposite ways, the supply shift dominated.
+
+\begin{example}[More bread buyers]\label{ex:g10:market-equilibrium:more-buyers}
+A new school opens in the town and the demand for bread becomes $Q^d = 60 - 3p$: $\Delta = 10$. The price rises by $10/5 = 2$ dalens, to 14,
+and the quantity by $2 \times 10/5 = 4$, to 18 hundred loaves (check: $60 - 42 = 18$ and $28 - 10 = 18$). Of the 10 extra hundred loaves
+wanted at the old price, only 4 are bought: the higher price discourages part of the new demand and draws out more supply.
+\end{example}
+
+When both curves move at once, the two effects add.
+
+\begin{proposition}[Two shifts at once]\label{prop:g10:market-equilibrium:two-shifts}
+If demand shifts right by $\Delta > 0$ and supply right by $\Sigma > 0$, the equilibrium quantity rises, and the price changes by
+$(\Delta - \Sigma)/(b + d)$: it rises if $\Delta > \Sigma$, falls if $\Delta < \Sigma$, and does not change if $\Delta = \Sigma$.
+\end{proposition}
+\begin{proof}
+Adding the two changes of \cref{prop:g10:market-equilibrium:one-shift}: the price changes by $\Delta/(b+d) - \Sigma/(b+d)$ and the quantity
+by $(d\Delta + b\Sigma)/(b+d)$, which is positive since every term is.
+\end{proof}
+
+The sign of one of the two changes is always known and the other depends on the sizes of the shifts. The four cases are drawn below.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.42cm, y=0.38cm]
+\foreach \col/\row/\dd/\ss/\title in {0/0/1/1/{demand $\uparrow$, supply $\uparrow$: $Q \uparrow$, $p$ ?},
+                                       1/0/1/-1/{demand $\uparrow$, supply $\downarrow$: $p \uparrow$, $Q$ ?},
+                                       0/1/-1/1/{demand $\downarrow$, supply $\uparrow$: $p \downarrow$, $Q$ ?},
+                                       1/1/-1/-1/{demand $\downarrow$, supply $\downarrow$: $Q \downarrow$, $p$ ?}} {
+  \begin{scope}[shift={(\col*16,-\row*12)}]
+    \draw[econ axes] (0,9.5) node[left, font=\scriptsize] {$p$} |- (12,0) node[below, font=\scriptsize] {$Q$};
+    \draw[demand] (1,8.5) -- (9,1.5);
+    \draw[supply] (1,1.5) -- (9,8.5);
+    \draw[demand, shifted] (1+2*\dd,8.5) -- (9+2*\dd,1.5);
+    \draw[supply, shifted] (1+2*\ss,1.5) -- (9+2*\ss,8.5);
+    \node[eqpoint] at (5,5) {};
+    \node[font=\scriptsize, align=center] at (6,-1.6) {\title};
+  \end{scope}}
+\end{tikzpicture}
+
+{\small The four cases of two shifts at once (dashed: the new curves). In each case one change is certain and the other depends on which
+shift is larger.}
+\end{omfigure}
+
+The opening chart can now be read. From 2014 to 2015, world production rose from 93.95 to 96.65 million barrels a day while the price fell
+from \usd{4.46} to \usd{3.24} a gallon: a supply-led move. The second chart shows where the supply came from: of the world's rise of 9.75
+million barrels a day between 2008 and 2015, 6.59 million came from the United States, about two-thirds. From 2019 to 2020, production fell
+from 100.50 to 94.01 million barrels a day and the price from \usd{3.23} to \usd{2.64}: a demand-led move, as travel stopped in the first
+year of the pandemic. Of the 19 yearly steps of the chart, 13 moved price and quantity the same way. Demand moves this market most years;
+the large supply moves are rarer.
+% figdata: world_oil (2008 q 86.90, us 8.56; 2015 q 96.65, us 15.15); world_moves (13 of 19 same-direction)
+
+\begin{omchart}{Production of oil and other liquid fuels, United States and the rest of the world, 2005--2024, in millions of barrels a
+day. Both panels span 25 million barrels a day.}{US Energy Information Administration, international energy statistics}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 1, horizontal sep=1.6cm},
+  omtime, width=0.48\linewidth, height=5.4cm, xmin=2004, xmax=2025, xtick={2005,2010,...,2020}]
+\nextgroupplot[width=0.48\linewidth, title={\small United States}, ymin=0, ymax=25]
+\addplot[omThm, thick] table[x=year, y=us] {figdata/grade-10/06-market-equilibrium/out/world_oil.csv};
+\nextgroupplot[width=0.48\linewidth, title={\small rest of the world}, ymin=60, ymax=85]
+\addplot[omDef, thick] table[x=year, y=row] {figdata/grade-10/06-market-equilibrium/out/world_oil.csv};
+\end{groupplot}
+\end{tikzpicture}
+\end{omchart}
+
+\section{Linked markets}\label{sec:g10:market-equilibrium:linked}
+
+Markets do not stand alone. When the price of one good changes, the demand for its \omterm{def:g10:demand:substitutes}{substitutes} and \omterm{def:g10:demand:substitutes}{complements} shifts, and the supply of
+goods that use it as an input shifts. A shock in one market spreads.
+
+\begin{example}[A frost and two fruits]\label{ex:g10:market-equilibrium:frost}
+A spring frost destroys part of the apple blossom. In the apple market, supply shifts left: the price of apples rises and fewer are sold.
+Pears are a substitute for apples, so the dearer apples shift the demand for pears right: the price of pears rises and more pears are sold,
+although nothing happened to pear trees. Apple juice uses apples as an input: its supply shifts left. And the dearer pears in turn shift the
+demand for apples a little to the right, which raises the price of apples a little further. The weekend problem computes all of this.
+\end{example}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.42cm, y=0.38cm]
+\begin{scope}
+\draw[econ axes] (0,9.5) node[left, font=\small] {$p$} |- (12,0) node[below, font=\small] {apples};
+\draw[demand] (1,8.5) -- (9,1.5);
+\draw[supply] (1,1.5) -- (9,8.5);
+\draw[supply, shifted] (0.3,3.08) -- (6.5,8.5);
+\node[eqpoint] at (5,5) {};
+\node[eqpoint, fill=omThm] at (3.75,6.09) {};
+\draw[phase arrow] (7.1,7) -- (5.0,7);
+\node[font=\scriptsize, anchor=west] at (7.3,7) {frost};
+\end{scope}
+\begin{scope}[xshift=7.4cm]
+\draw[econ axes] (0,9.5) node[left, font=\small] {$p$} |- (12,0) node[below, font=\small] {pears};
+\draw[demand] (1,8.5) -- (9,1.5);
+\draw[supply] (1,1.5) -- (9,8.5);
+\draw[demand, shifted] (2.5,8.5) -- (10.5,1.5);
+\node[eqpoint] at (5,5) {};
+\node[eqpoint, fill=omDef] at (5.75,5.53) {};
+\draw[phase arrow] (5.7,4.5) -- (6.95,4.5);
+\node[font=\scriptsize, anchor=west] at (7.4,4.5) {dearer apples};
+\end{scope}
+\end{tikzpicture}
+
+{\small A frost shifts the supply of apples left (left panel): the apple price rises and fewer apples are sold. Dearer apples shift the
+demand for pears, a substitute, right (right panel): the pear price and quantity rise.}
+\end{omfigure}
+
+\begin{model}{The competitive market}
+\assumes Many price-taking buyers and sellers of one good of known quality; the price is free to move and moves towards the level at which
+  the quantities demanded and supplied are equal.
+\predicts The equilibrium price and quantity; after one shift, the direction of both and their size, from the slopes; after two shifts, the
+  direction of one of them.
+\tested Markets run in laboratories, with buyers and sellers given private values and costs, trade after a few rounds at prices and
+  quantities close to the predicted equilibrium (Smith 1962). Consistent with it: the directions of the world oil market's yearly steps fit
+  the shifts known from outside the market, a supply-led step in 2015 after the rise of US output, demand-led falls in the recession of 2009
+  and in 2020, a demand-led rise in 2021.% ledger: g10:smith-1962
+
+\breaks When there are few buyers or sellers (grade 11), when a rule fixes the price (\cref{ch:g10:what-prices-do}), when prices move
+  slowly (the market for flats, wages), and when buyers cannot see the quality of the good (grade 11).
+\end{model}
+
+\begin{record}[The oil market, 2014--2016 and 2020--2022]
+% figdata: world_oil (2014 93.95, 4.46; 2016 97.09, 2.80; 2020 94.01, 2.64; 2022 100.47, 4.39)
+Between 2014 and 2016, world production rose from 93.95 to 97.09 million barrels a day and the price at the pump fell from \usd{4.46} to
+\usd{2.80}. Supply had shifted right: American output, which had grown by 5.6 million barrels a day since 2008 with the new wells of
+\cref{ch:g10:supply}, rose by 0.7 million more, and other producers raised theirs by 2.5 million as the price fell. The model predicts what
+was seen, more oil at a lower price.
+% figdata: world_oil (us 2008 8.56, 2014 14.16, 2016 14.85; row 2014 79.79, 2016 82.24) Between 2020 and 2022, production rose from 94.01 to 100.47 million barrels a day and the
+price from \usd{2.64} to \usd{4.39}: demand recovered after the first year of the pandemic, and the model predicts a rise of both. The record
+also shows the model's limit: it says in which direction each curve moved, given the directions of price and quantity, but it cannot say by
+how much each moved when both moved at once, as they surely did in 2022.
+\end{record}
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g10:market-equilibrium:1}
+Find the equilibrium price and quantity when $Q^d = 120 - 4p$ and $Q^s = 6p - 30$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:market-equilibrium:2}
+Find the equilibrium when $Q^d = 90 - p$ and $Q^s = 2p$. Check your answer in both equations.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:market-equilibrium:3}
+In the bread market of \cref{ex:g10:market-equilibrium:bread}, compute the \omterm{def:g10:market-equilibrium:excess-demand}{excess demand} or \omterm{def:g10:market-equilibrium:excess-demand}{excess supply} at 8, 11 and 13 dalens.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:market-equilibrium:4}
+Read the opening chart. In which two years was the price highest? Between 2016 and 2018, did the price and the quantity move the same way?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:market-equilibrium:5}
+For each change, say which curve of the market for hotel rooms in a seaside town shifts, and in which direction: (a) a new hotel opens;
+(b) a heat wave inland; (c) the wages of hotel staff rise; (d) a new motorway halves the journey from the capital.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:market-equilibrium:6}
+In the bread market, a rise in the price of flour shifts supply to $Q^s = 2p - 20$. Find the new equilibrium, and check it against
+\cref{prop:g10:market-equilibrium:one-shift}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:market-equilibrium:7}
+In the bread market, demand shifts right by 15 and supply right by 5 at the same time. Use \cref{prop:g10:market-equilibrium:two-shifts} to
+find the changes in price and quantity, then check by solving the new system.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:market-equilibrium:8}
+Coffee and tea are \omterm{def:g10:demand:substitutes}{substitutes}. A disease destroys part of the coffee harvest. Predict the direction of the change in the price and quantity of
+coffee, and in the price and quantity of tea. Draw the two markets.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:market-equilibrium:9}
+Read the second chart. By how many million barrels a day did US production rise between 2008 and 2015, and by how many the rest of the world's?
+What share of the world's rise came from the United States?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:market-equilibrium:10}
+The demand for a good is $Q^d = 48 - 2p$. Three sellers have the supplies $q_1 = p$, $q_2 = p - 4$ (for $p \ge 4$) and $q_3 = 2p - 20$ (for $p \ge
+10$). Find the equilibrium price and quantity. (Try first the piece of the \omterm{def:g10:supply:market-supply}{market supply} on which it lies.)
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:market-equilibrium:11}
+In \cref{ex:g10:market-equilibrium:more-buyers}, 10 hundred loaves more were wanted at the old price, but only 4 more were bought. Explain how the
+\omterm{def:g10:market-equilibrium:excess-demand}{excess demand} of 10 at the old price is closed: how much by buyers who give up because of the higher price, and how much by sellers who offer
+more?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:market-equilibrium:12}
+Over one year, the price of a good rose and the quantity sold rose. Someone concludes that ``supply did not change''. Explain why this is not a
+valid conclusion, and what the observation does show.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:market-equilibrium:13}
+Prove that if demand shifts left by $\Delta$ and supply shifts right by $\Sigma$, the price falls, and find the condition under which the quantity
+rises.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:market-equilibrium:14}
+In the bread market, the town fixes the price of bread at 10 dalens and forbids any other price. How many loaves are sold? Who gets them, if bakers
+sell to the first customers to arrive? What would you expect to see in the shops in the morning?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:market-equilibrium:15}
+Suppose that, in some market, the supply curve sloped down, $Q^s = c - d\,p$ with $d > 0$, as steeply as or more steeply than demand. Show that
+if $d = b$ the system $Q^d = Q^s$ has no solution or infinitely many, and that if $d > b$ and $a > c$ its only solution is a negative
+price. Which step of the proof of \cref{prop:g10:market-equilibrium:solution} fails?
+\end{exercise}
+
+\section{Problem: A Frost in Kestria's Orchards}
+
+\begin{problem}[{Weekend problem --- apples, pears and a four-unknown system}]
+\label{pb:g10:market-equilibrium:1}
+In Kestria, apples and pears are \omterm{def:g10:demand:substitutes}{substitutes}. With $p_A$ and $p_P$ the prices of apples and pears in kests per kilogram, and quantities in
+tonnes a week, the markets are:
+\[
+\begin{aligned}
+  \text{apples:}\quad & Q^d_A = 100 - 2p_A + p_P, & Q^s_A &= 3p_A - 20, \\
+  \text{pears:}\quad  & Q^d_P = 80 - 2p_P + p_A,  & Q^s_P &= 2p_P - 10 .
+\end{aligned}
+\]
+
+\medskip
+\noindent\textbf{Part I --- The two markets before the frost.}
+\begin{enumerate}
+\item What happens to the demand for pears when the price of apples rises by one kest? Why does this make them \omterm{def:g10:demand:substitutes}{substitutes}?
+\item Write the apple market's equilibrium condition as an equation in $p_A$ and $p_P$.
+\item Do the same for the pear market.
+\item Solve the system: find $p_A$ and $p_P$.
+\item Find the quantities of apples and pears sold.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The frost.}
+\begin{enumerate}[resume]
+\item A frost destroys blossom, and the supply of apples becomes $Q^s_A = 3p_A - 58$. By how much has the supply of apples fallen at every price?
+\item If the price of pears stayed at its old value, what would the new apple price and quantity be?
+\item At that apple price, what would happen in the pear market at the old pear price: \omterm{def:g10:market-equilibrium:excess-demand}{excess demand} or \omterm{def:g10:market-equilibrium:excess-demand}{excess supply}, and how much?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- The new equilibrium.}
+\begin{enumerate}[resume]
+\item Write the two equilibrium conditions after the frost.
+\item Solve for the new prices.
+\item Find the new quantities, and check each in its demand and its supply.
+\item By how much did the price of apples rise? How much of the rise is due to the pear market's response?
+\item The frost did not touch a single pear tree. Explain why pear growers sold more, at a higher price.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- What the shoppers and growers see.}
+\begin{enumerate}[resume]
+\item Compute the apple growers' takings before and after the frost (price times quantity, in kests per week, with prices per kilogram and
+  quantities in tonnes).
+\item Compute the pear growers' takings before and after.
+\item Which group of growers gained from the frost? Can apple growers as a whole gain from a frost? What does it depend on?
+\item By what percentage did each price rise, and each quantity change?
+\item In the apple market, was the fall in the quantity sold a move along the demand curve, a shift of it, or both? And in the pear market?
+\item Suppose instead that apples and pears were not linked (the price of each fruit did not enter the demand for the other) and that, before the
+  frost, the two markets had the same equilibria as in question 4. What would the frost have done to the price of pears?
+\item State the result of the problem: the new equilibrium prices and quantities in both markets, compared with those before the frost.
+\end{enumerate}
+\end{problem}

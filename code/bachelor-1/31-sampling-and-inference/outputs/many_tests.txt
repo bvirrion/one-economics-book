@@ -1,0 +1,4 @@
+$ python many_tests.py
+smallest p-values: [0.0397 0.0581 0.0795]
+rejections at 5%: 1 of 20; expected 1
+Bonferroni threshold 0.05/20 = 0.0025; rejections: 0

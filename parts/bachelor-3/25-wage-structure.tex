@@ -1,0 +1,428 @@
+\chapter{The Wage Structure}\label{ch:b3:wage-structure}
+
+Wages differ between people with the same skills, and between people with
+different ones. Some differences pay for unpleasant or risky work; some reward
+skills that are scarce; some reflect who the worker is rather than what she can do;
+some come from bargaining power. This chapter takes the four in turn and asks of
+each how it is measured: the market for skills over a century, discrimination by
+experiment and by decomposition, the union premium, and the effect of immigrants
+on the wages of those already there.
+
+\begin{openingchart}{The race between education and technology, United States,
+1914--2017: annual changes in the college wage premium, in the relative supply of
+college-educated workers and in their relative demand, by period (100 $\times$ annual log
+change; demand computed with an elasticity of substitution of 1.62).}{Autor, Goldin
+and Katz (2020), NBER Working Paper 26705, Table A2}
+\begin{tikzpicture}
+\begin{axis}[omrecord, ybar, bar width=7pt, width=0.74\linewidth,
+  height=0.42\linewidth, xmin=-0.6, xmax=4.6, ymin=-1, ymax=4.5,
+  xtick={0,...,4}, xticklabels from table={figdata/bachelor-3/25-wage-structure/out/race.csv}{period},
+  x tick label style={font=\scriptsize}, ylabel={100 $\times$ log change a year},
+  legend pos=north west, legend style={font=\footnotesize}]
+  \addplot[fill=omThm, draw=omThm, area legend] table[x=pos, y=wage] {figdata/bachelor-3/25-wage-structure/out/race.csv};
+  \addplot[fill=omDef!60, draw=omDef, area legend] table[x=pos, y=supply] {figdata/bachelor-3/25-wage-structure/out/race.csv};
+  \addplot[fill=black!35, draw=black, area legend] table[x=pos, y=demand] {figdata/bachelor-3/25-wage-structure/out/race.csv};
+  \legend{Premium, Relative supply, Relative demand}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% ledger: b3ws:agk.a2
+The supply of college-educated workers relative to others grew by 2.57~\% a year from 1914 to
+1939 and by 3.51~\% from 1959 to 1979, and the premium fell or stood still. From 1979 to 1999
+supply growth slowed to 2.28~\% while demand grew 4.21~\% a year, and the premium rose by 1.19
+log points a year. After 1999 demand growth slowed too. Over the whole century demand
+and supply grew at almost the same pace, and the premium ended near where it
+began. A model with two kinds of workers and one parameter accounts for most of this.
+
+\begin{recall}
+The grades 10--12 volume defined the compensating differential and decomposed a
+wage gap by hand; the Lorenz curve and Gini coefficient are also its. The
+elasticity of substitution is the Year 1 volume's, and the human-capital model
+\cref{ch:b3:human-capital}'s. Instruments and difference in differences are
+chapters 1 and 3.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:wage-structure:symbols}
+$S$ and $U$ are the numbers of skilled and unskilled workers, $w_s$ and $w_u$ their wages; $\sigma$
+the elasticity of substitution between them; $D_t$ the log relative demand for skill;
+$\bar x_g$ and $\beta_g$ group $g$'s mean characteristics and coefficients.
+\end{notation}
+
+\section{Compensating differences}\label{sec:b3:wage-structure:compensating}
+
+\begin{definition}[Compensating wage differential]\label{def:b3:wage-structure:compensating}
+\index{compensating wage differential}\index{hedonic wage}
+A \emph{compensating wage differential} is the part of a wage that pays for a job's
+non-wage features --- risk, effort, hours, place --- and makes the marginal worker
+indifferent between jobs; across jobs the wage traces a hedonic locus, as house
+prices did in \cref{ch:b3:cost-benefit-analysis}.
+\end{definition}
+
+A job with an extra fatality risk of 1 in 10{,}000 a year that pays 600 dalens more than a
+safe one, to the marginal worker, implies a \omterm{def:b3:cost-benefit-analysis:vsl}{value of a statistical life} of 6 million
+dalens: the \omterm{def:b3:cost-benefit-analysis:vsl}{value of a
+statistical life} of \cref{ch:b3:cost-benefit-analysis} is estimated in exactly this way.
+The danger is that the jobs differ in other ways too, and that workers who accept
+risk are those who mind it least.
+
+\section{The skill premium}\label{sec:b3:wage-structure:premium}
+
+\begin{definition}[Skill premium; skill-biased technical change]\label{def:b3:wage-structure:skill-premium}
+\index{skill premium}\index{college wage premium}\index{skill-biased technical change}
+The \emph{skill premium} is the ratio of the wage of skilled to unskilled workers,
+usually measured as the log wage gap between college graduates and those who
+finished only high school (the \emph{college wage premium}). \emph{Skill-biased
+technical change} is technical change that raises the relative demand for
+skilled workers at given wages.
+\end{definition}
+
+\begin{definition}[Canonical model of the skill premium]\label{def:b3:wage-structure:canonical}
+\index{canonical model of the skill premium}
+The \emph{canonical model} of the \omterm{def:b3:wage-structure:skill-premium}{skill premium} has two kinds of labour, combined
+in a constant-elasticity-of-substitution production function, each paid its
+marginal product, with the relative demand for skill shifting over time.
+\end{definition}
+
+\begin{proposition}[The premium as supply and demand]\label{prop:b3:wage-structure:katz-murphy}
+If $Y = [\alpha(A_sS)^\rho + (1 - \alpha)(A_uU)^\rho]^{1/\rho}$ with $\sigma = 1/(1 - \rho)$ and wages equal marginal products, then
+$\ln(w_s/w_u) = \tfrac1\sigma[D_t - \ln(S/U)]$, with $D_t = \sigma\ln\tfrac{\alpha}{1-\alpha} + (\sigma - 1)\ln(A_s/A_u)$.
+\end{proposition}
+
+\begin{proof}
+Differentiating, $\partial Y/\partial S = \alpha A_s^\rho S^{\rho-1}Y^{1-\rho}$ and $\partial Y/\partial U = (1 - \alpha)A_u^\rho U^{\rho-1}Y^{1-\rho}$, so $\ln(w_s/w_u) =
+\ln\tfrac{\alpha}{1-\alpha} + \rho\ln(A_s/A_u) + (\rho - 1)\ln(S/U)$. Since $\rho - 1 = -1/\sigma$ and $\rho = (\sigma - 1)/\sigma$, this is $\tfrac1\sigma[\sigma\ln\tfrac{\alpha}{1-\alpha}
++ (\sigma - 1)\ln(A_s/A_u) - \ln(S/U)]$.
+\end{proof}
+
+\begin{model}{The race between education and technology}
+\assumes Two kinds of workers, a CES production function, and a relative demand
+for skill that grows smoothly.
+\predicts The premium falls when the supply of skills outpaces demand, and rises
+when it lags.
+\tested Over 1914--2017 in the United States, a 10~\% rise in the relative supply of
+college-educated workers lowers the premium by about 6~\%, implying $\sigma \approx 1.62$, within the
+range of 1 to 2.5 found elsewhere; a model with smooth demand trends tracks the premium
+closely. % ledger: b3ws:agk.a1
+\breaks The fitted demand trend slows after 1992; the returns to education have
+become convex, rising most for postgraduate degrees; and wage differences within
+education groups, which the model leaves out, grew too. Education differences
+explain 75~\% of the rise in wage inequality from 1980 to 2000 but only 38~\% from 2000 to 2017.
+\end{model}
+
+\section{Discrimination}\label{sec:b3:wage-structure:discrimination}
+
+\begin{definition}[Taste-based and statistical discrimination]\label{def:b3:wage-structure:discrimination}
+\index{taste-based discrimination}\index{statistical discrimination}
+\emph{Taste-based discrimination} is unequal treatment arising because employers,
+co-workers or customers dislike dealing with members of a group. \emph{Statistical
+discrimination} is unequal treatment arising because a group characteristic is
+used as a signal of unobserved productivity.
+\end{definition}
+
+\begin{proposition}[Competition against taste]\label{prop:b3:wage-structure:becker}
+Let all workers have the same productivity, and let prejudiced employers act as if
+hiring a worker of group $B$ cost $(1 + d)w_B$. If unprejudiced employers can enter freely
+with constant returns, the wage gap $w_A - w_B$ disappears in the long run.
+\end{proposition}
+
+\begin{proof}
+Suppose $w_B < w_A$. An unprejudiced employer hiring only group $B$ has the same productivity
+at a lower wage cost and earns a profit of $w_A - w_B$ per worker above that of an employer
+hiring group $A$. With free entry and constant returns, such employers expand, raising
+the demand for group $B$ until $w_B = w_A$. With productivity 20 an hour and wages of 20 and 16,
+each worker of group $B$ earns the unprejudiced employer 4 an hour: entry continues as long
+as any gap remains.
+\end{proof}
+
+\begin{model}{Taste-based discrimination}
+\assumes Some employers dislike hiring a group and are willing to pay for it.
+\predicts Gaps shrink where competition is strong; discriminating firms earn less.
+\tested Large firms' racial contact gaps are negatively correlated with their
+profitability. % ledger: b3ws:krw
+\breaks Gaps persist in correspondence experiments long after any reasonable
+time for entry; customers' or co-workers' prejudice, unlike the employer's, is not
+competed away.
+\end{model}
+
+\begin{definition}[Correspondence (audit) study]\label{def:b3:wage-structure:audit}
+\index{correspondence study}\index{audit study}
+A \emph{correspondence study} sends fictitious applications, identical except for a
+signal of group membership, to real job openings and compares the rates of reply.
+\end{definition}
+
+\begin{record}[Names on résumés]
+Fictitious résumés sent to help-wanted advertisements in Boston and Chicago with
+distinctively white names received 50~\% more callbacks than the same résumés with
+distinctively African-American names; a better résumé raised callbacks by 30~\% for
+white names and far less for African-American ones. % ledger: b3ws:bm
+A later experiment sent more than 83{,}000 applications to 108 of the largest U.S.
+employers: distinctively Black names lowered the probability of contact by 2.1
+percentage points, with a standard deviation across firms of 1.9 points; firms in the top
+fifth accounted for nearly half of the lost contacts. % ledger: b3ws:krw
+\end{record}
+
+\begin{definition}[Oaxaca--Blinder decomposition]\label{def:b3:wage-structure:oaxaca}
+\index{Oaxaca--Blinder decomposition}
+The \emph{Oaxaca--Blinder decomposition} splits the gap in mean log wages between two
+groups into a part explained by differences in their measured characteristics and
+an unexplained part due to differences in the coefficients.
+\end{definition}
+
+\begin{proposition}[The decomposition]\label{prop:b3:wage-structure:oaxaca}
+If $y = x'\beta_g + u$ is fitted by OLS with an intercept in each group, then $\bar y_A - \bar y_B = (\bar x_A - \bar x_B)'\beta_A +
+\bar x_B'(\beta_A - \beta_B)$. Using $\beta_B$ for the first term instead gives another, generally different, split.
+\end{proposition}
+
+\begin{proof}
+OLS residuals average zero with an intercept, so $\bar y_g = \bar x_g'\hat\beta_g$. Adding and subtracting $\bar x_B'\hat\beta_A$ gives
+the first form; adding and subtracting $\bar x_A'\hat\beta_B$ gives $(\bar x_A - \bar x_B)'\hat\beta_B + \bar x_A'(\hat\beta_A - \hat\beta_B)$. The two differ
+unless $\hat\beta_A = \hat\beta_B$: which group's prices value the characteristics is a choice, the
+index-number problem.
+\end{proof}
+
+\begin{omchart}{Oaxaca--Blinder decomposition of the gap in log 1978 earnings between
+white and black men (CPS comparison sample, positive earnings; characteristics:
+schooling, age, age squared, married), with white and with black coefficients as
+the reference.}{Dehejia--Wahba / LaLonde data (cps\_controls); our regressions}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xbar stacked, bar width=12pt, width=0.6\linewidth,
+  height=0.3\linewidth, xmin=0, xmax=0.36, ymin=-0.6, ymax=1.6, ytick={0,1},
+  yticklabels={White coefficients, Black coefficients}, xlabel={Log points},
+  x tick label style={/pgf/number format/fixed, /pgf/number format/precision=2},
+  scaled x ticks=false, legend columns=2,
+  legend style={font=\footnotesize, at={(0.5,-0.32)}, anchor=north}]
+  \addplot[fill=omDef!60, draw=omDef, area legend] table[x=explained, y=pos] {figdata/bachelor-3/25-wage-structure/out/oaxaca.csv};
+  \addplot[fill=omThm!60, draw=omThm, area legend] table[x=unexplained, y=pos] {figdata/bachelor-3/25-wage-structure/out/oaxaca.csv};
+  \legend{Explained, Unexplained}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: oaxaca, oaxaca_stats
+Among 11{,}845 white and 977 black men, the gap in mean log earnings is 0.31. Differences in
+schooling (12.3 against 11.0 years), age and marriage explain 0.09 of it with white
+coefficients and 0.11 with black ones; 0.20 to 0.22 remains. The unexplained part is not a
+measure of discrimination: it contains everything the four characteristics miss,
+and the characteristics themselves --- schooling among them --- may carry the effects
+of earlier discrimination.
+
+\begin{record}[The gender wage gap, 1980--2010]
+In the Panel Study of Income Dynamics, women's mean hourly wage rose from 62.1~\% of
+men's in 1980 to 79.3~\% in 2010, nearly all of the gain in the 1980s. Blau and Kahn's
+decomposition, with male coefficients, shows how the explanation changed. Schooling
+and experience accounted for 27~\% of the gap in 1980 and 8~\% in 2010: women had
+overtaken men in schooling and nearly closed the gap in experience. Occupation and
+industry accounted for 0.117 log points, half the 2010 gap. With all the
+characteristics held equal, the ratio rose from 79.4~\% to 91.6~\%, and the
+unexplained part fell from 49~\% of the gap to 38~\%. % ledger: b3ws:bk.gap
+The occupation share is the same kind of number as the chart's explained part: it
+counts differences that may themselves be choices, constraints or the result of
+discrimination.
+\end{record}
+
+\section{Unions}\label{sec:b3:wage-structure:unions}
+
+\begin{definition}[Union wage premium]\label{def:b3:wage-structure:union}
+\index{union wage premium}
+The \emph{union wage premium} is the difference between the wage of a unionised
+worker and the wage the same worker would earn without a union.
+\end{definition}
+
+\begin{measure}[The union premium across the distribution]
+Across workers, the measured union wage gap ranges from over 30~\% for lower-paid
+workers to 10~\% for higher-paid ones. Following the same workers as they move into and
+out of union jobs, and correcting for errors in reported union status, shows that
+part of this is a truly larger effect for the lower paid, and part is selection.
+The decline of unions among lower-paid workers accounts for a fifth of the rise in the
+variance of adult men's wages from 1973 to 1987. % ledger: b3ws:card96
+\end{measure}
+
+\section{Migration and local wages}\label{sec:b3:wage-structure:migration}
+
+\begin{definition}[Immigration surplus]\label{def:b3:wage-structure:immigration-surplus}
+\index{immigration surplus}
+The \emph{immigration surplus} is the net gain to natives from immigration: the
+rise in the income of native-owned capital and complementary factors less the
+fall in the wages of natives who compete with the immigrants.
+\end{definition}
+
+\begin{proposition}[The surplus triangle]\label{prop:b3:wage-structure:surplus}
+With labour demand $w = a - bL$, $N$ natives and $M$ immigrants who are perfect substitutes,
+all supplying one unit, the \omterm{def:b3:wage-structure:immigration-surplus}{immigration surplus} is $\tfrac12bM^2$; as a share of national income
+it is about $\tfrac12 s e m^2$, with $s$ labour's share, $e$ the elasticity of the wage with respect to
+employment in absolute value and $m = M/L$ the immigrant share.
+\end{proposition}
+
+\begin{proof}
+The wage falls from $a - bN$ to $a - b(N + M)$, by $bM$. Natives lose $bMN$ in wages. Output rises by the
+area under demand from $N$ to $N + M$; immigrants are paid $(a - b(N + M))M$; the rest of the area, $\tfrac12bM^2$,
+and the natives' wage loss $bMN$ go to the owners of the other factors, who are natives.
+The net gain is $\tfrac12bM^2$. With $e = bL/w$, $\tfrac12bM^2 = \tfrac12 e(wL)(M/L)^2 = \tfrac12 s e m^2\,Y$.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.55cm, y=0.55cm]
+  \draw[econ axes] (0,0) -- (11,0) node[right, font=\scriptsize] {$L$};
+  \draw[econ axes] (0,0) -- (0,8) node[above, font=\scriptsize] {wage};
+  \draw[curve, omDef] (0,7.5) -- (10,1.5) node[right, font=\scriptsize] {labour demand};
+  \fill[omDef!15] (0,3.9) rectangle (5,4.5);
+  \fill[omThm!45] (5,4.5) -- (6,3.9) -- (5,3.9) -- cycle;
+  \draw[guide] (5,0) -- (5,4.5); \draw[guide] (6,0) -- (6,3.9);
+  \draw[guide] (0,4.5) -- (5,4.5); \draw[guide] (0,3.9) -- (6,3.9);
+  \node[below, font=\scriptsize] at (5,0) {$N$};
+  \node[below, font=\scriptsize, xshift=7pt] at (6,0) {$N + M$};
+  \node[font=\scriptsize] at (2.5,4.2) {transfer};
+  \node[font=\scriptsize, anchor=west] (sp) at (7.2,5.4) {surplus};
+  \draw[->, thin] (sp.west) -- (5.35,4.12);
+\end{tikzpicture}
+\par\smallskip{\small Immigration lowers the wage by $bM$: the rectangle passes from native
+workers to native owners of other factors; the triangle is the natives' net gain.}
+\end{omfigure}
+
+\begin{debate}[Immigration and local wages]
+In 1980 the Mariel boatlift raised Miami's labour force by 7~\%, mostly with
+less-skilled workers; the wages of non-Cuban workers over 1979--85 showed virtually no
+effect, and less-skilled black workers' unemployment did not rise (\emph{Grade 2}:
+difference in differences against comparison cities). % ledger: b3ws:card90
+A reappraisal focused on high-school dropouts, at least 60~\% of the arrivals, and found
+their wages in Miami fell by 10 to 30~\% (\emph{Grade 2--3}: small cells). % ledger: b3ws:borjas
+The difference was traced to a large change, unrelated to the boatlift, in the racial
+composition of the small survey samples in Miami (\emph{Grade 2}). % ledger: b3ws:ch
+A \omterm{def:b3:difference-in-differences:synthetic-control}{synthetic control} built from cities that matched Miami's trends before the
+boatlift finds no significant wage difference for non-Cuban dropouts (\emph{Grade
+2}). % ledger: b3ws:py
+The reappraisal's author replied that, with the samples adjusted for race, the
+low-skill wage in Miami still fell significantly after 1980 against other cities,
+and recovered fully by 1990 (\emph{Grade 2--3}: the same small cells). % ledger: b3ws:bor17
+Beyond Mariel, national comparisons across cells of education and experience
+disagree in the same way: treating immigrants and natives in a cell as perfect
+substitutes, a 10~\% rise in a cell's labour supply lowers its wage by 3 to 4~\%
+(\emph{Grade 3}); allowing them to be imperfect substitutes, the immigration of
+1990--2004 raised the average wage of U.S.-born workers and lowered slightly that of
+those without a high-school diploma (\emph{Grade 3}). % ledger: b3ws:bor03, b3ws:op
+The Mariel estimates rest on a few dozen workers a year in the Miami survey
+samples, and on comparison cities chosen after the fact; the national estimates rest
+on assumptions about substitution that the data identify only weakly. Neither says
+much about displacement, which can occur without a fall in wages.
+\end{debate}
+
+\section{Exercises}\label{sec:b3:wage-structure:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:wage-structure:1}
+In the opening chart, in which period did the premium rise fastest? Was supply
+growth or demand growth more responsible?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:wage-structure:2}
+A job carries an extra annual fatality risk of 2 in 10{,}000 and pays 1{,}200 dalens a year more.
+Find the implied \omterm{def:b3:cost-benefit-analysis:vsl}{value of a statistical life}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:wage-structure:3}
+Group A has mean schooling 14, group B 12; the return is 0.08 in both. The gap in mean log
+wages is 0.25. Decompose it.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:wage-structure:4}
+What callback data would contradict \omterm{def:b3:wage-structure:discrimination}{statistical discrimination} by race?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:wage-structure:5}
+Between two decades the relative supply of graduates rose by 0.30 log points and the
+premium fell by 0.05, while relative demand rose by 0.20. Find the implied $\sigma$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:wage-structure:6}
+Decompose the white--black earnings gap of the chart variable by variable, with each
+group's coefficients. Which characteristic explains most?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:wage-structure:7}
+A surge of graduates raises the relative supply by 10~\% at given demand. With $\sigma = 1.5$, by how
+much does the premium change?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:wage-structure:8}
+Immigrants make up 10~\% of employment; labour's share is 0.6 and the wage elasticity 0.3. Find the
+surplus as a share of national income, and the transfer from native workers.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:wage-structure:9}
+What evidence would show that the union premium is selection rather than a causal
+effect?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:wage-structure:10}
+Derive the canonical-model equation from the CES production function, and show that
+\omterm{def:b3:wage-structure:skill-premium}{skill-biased technical change} ($A_s/A_u$ rising) raises the relative demand for skill if and
+only if $\sigma > 1$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:wage-structure:11}
+A prejudiced employer with $d = 0.25$ hires only group A at 20 an hour; group B's wage is 16;
+productivity is 20 for both. Compare his profit per worker with an unprejudiced rival's,
+and explain why entry closes the gap.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:wage-structure:12}
+In an invented two-city panel the true effect of a shock on wages is zero, but the
+treated city's survey sample shifts toward lower-paid workers after the shock.
+Compare the difference in differences on raw means with the one within kinds of
+worker.
+\end{exercise}
+
+\section{Problem: Brenland's Graduates}\label{sec:b3:wage-structure:problem}
+
+\begin{problem}[{Weekend problem --- Brenland's graduates}]\label{pb:b3:wage-structure:graduates}
+Brenland's statistical office publishes, for 1990--2025, the log relative supply of
+graduates to non-graduates and the log graduate premium (invented series, in the
+chapter's \code{brenland_series} table). % figdata: brenland_series, brenland_stats
+
+\medskip\noindent\textbf{Part I --- the premium and supply.}
+\begin{enumerate}
+\item Report the premium in 1990, 2005 and 2025.
+\item Report the log relative supply in the same years.
+\item Compute its average annual growth before and after 2005.
+\item Describe the premium's path, and say why supply alone cannot explain it.
+\item What would a constant premium with rising supply imply about demand?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- estimating the model.} Regress the premium on a
+time trend and the log relative supply.
+\begin{enumerate}[resume]
+\item Report the coefficient on supply and its standard error.
+\item Derive $\sigma$.
+\item Derive the annual growth of relative demand.
+\item Compare $\sigma$ with the U.S. estimate.
+\item Why does the regression need the time trend?
+\item What would bias the coefficient on supply toward zero?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- the forecast.} Graduate supply grows 2~\% a year
+from 2025 to 2035; demand keeps its trend.
+\begin{enumerate}[resume]
+\item Compute the relative supply in 2035.
+\item Forecast the premium in 2035.
+\item Express it as a ratio of wages.
+\item How fast would supply need to grow to hold the premium constant?
+\item Name a reason the forecast could be too high.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- a gap between two groups.} Group A's mean schooling
+and experience are 13 and 18 years, group B's 12 and 20; A's coefficients are 0.08 and
+0.02; the gap in mean log wages is 0.15.
+\begin{enumerate}[resume]
+\item Compute the explained part.
+\item Compute the unexplained part.
+\item Why does B's longer experience reduce the explained part?
+\item What would using B's coefficients require?
+\item Name one omitted characteristic that would shrink the unexplained part.
+\item Why is the unexplained part not a measure of discrimination?
+\item What experiment would measure discrimination directly?
+\item Part of the gap may be a graduate premium if A has more graduates. How would you
+check?
+\item State the result: Brenland's elasticity of substitution between graduates and
+non-graduates, and the forecast premium in 2035.
+\end{enumerate}
+\end{problem}

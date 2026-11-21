@@ -1,0 +1,115 @@
+\section*{Chapter \ref{ch:b2:regression-inference} --- Inference in Regression}
+
+\begin{solution}{exo:b2:regression-inference:1}
+% figdata: se
+More than 20 per cent larger: poor health (1.55), chronic diseases (1.29) and physical limitation (1.25). Smaller: good
+health (0.92), log coinsurance (0.93), the \omterm{def:b2:insurance-and-risk-sharing:deductible}{deductible} plan (0.95), log maximum expense (0.98) and log incentive (0.99).
+\end{solution}
+
+\begin{solution}{exo:b2:regression-inference:2}
+% code: listings/robust_se.py, listings/t_and_f.py
+A person with a physical limitation has 1.07 more visits than one without, with the plan variables, chronic diseases and
+self-rated health fixed. The classical $t$ is 10.32; the robust one is $1.0658/0.1293 = 8.24$. Both reject a zero
+coefficient by far; the robust interval is a quarter wider.
+\end{solution}
+
+\begin{solution}{exo:b2:regression-inference:3}
+A ``significant'' result would appear in a quarter of samples even if the coefficient were zero, five times the stated
+risk: the reported $p$-values are much too small, and many of the findings would be false.
+\end{solution}
+
+\begin{solution}{exo:b2:regression-inference:4}
+% code: exercises/solutions.py moulton
+$\sqrt{1 + 24 \times 0.1} = \sqrt{3.4} = 1.84$. The variance is 3.4 times the classical one, so a class of 25 carries the
+information of about $25/3.4 = 7.4$ independent pupils.
+\end{solution}
+
+\begin{solution}{exo:b2:regression-inference:5}
+% code: exercises/solutions.py f_from_ssr
+$F = \dfrac{(382{,}137.5 - 381{,}469.6)/3}{381{,}469.6/20{,}180} = \dfrac{222.6}{18.90} = 11.78$.
+\end{solution}
+
+\begin{solution}{exo:b2:regression-inference:6}
+% code: exercises/solutions.py randhie_tests
+Health dummies: 11.78 classical, 5.40 robust; the 5 per cent critical value of $F(3, 20{,}180)$ is 2.605, so both reject.
+Plan variables: 82.26 classical, 80.80 robust, against a critical value of 2.372 for $F(4, 20{,}180)$: both reject by far.
+The robust test changes the health statistic much more, as the opening chart suggests.
+\end{solution}
+
+\begin{solution}{exo:b2:regression-inference:7}
+% code: exercises/solutions.py grouping_variance
+With quarters the gap between the group means of $x$ widens from 5.128 to 7.692, but each group has 10 observations
+instead of 20: the variance is $4 \times (1/10 + 1/10)/7.692^2 = 0.01352$, smaller than 0.01521 with halves but still
+above least squares, 0.01141.
+\end{solution}
+
+\begin{solution}{exo:b2:regression-inference:8}
+% code: exercises/solutions.py size_rates
+Both should be close to 5 per cent: the classical test is exact in that case up to normality, and the robust one is
+valid in large samples. The simulation gives 0.054 and 0.056.
+\end{solution}
+
+\begin{solution}{exo:b2:regression-inference:9}
+With $\rho = 0$ the factor is $\sqrt{1} = 1$. More generally the factor is $\sqrt{1 + (m - 1)\rho_x\rho}$, with $\rho_x$
+the correlation of the regressor within groups; with $\rho_x = 0$ it is 1 again: correlated errors matter only when the
+regressor is correlated within groups too.
+\end{solution}
+
+\begin{solution}{exo:b2:regression-inference:10}
+$\hat\beta_1 = \sum_iw_iy_i$ with $w_i = (x_i - \bar x)/\sum_j(x_j - \bar x)^2$; $\sum_iw_i = 0$ and $\sum_iw_ix_i = 1$.
+A linear estimator $\sum_ic_iy_i$ has expectation $\beta_0\sum c_i + \beta_1\sum c_ix_i$, so it is unbiased for every
+$\beta$ if and only if $\sum c_i = 0$ and $\sum c_ix_i = 1$. Write $c_i = w_i + d_i$: then $\sum d_i = 0$ and $\sum
+d_ix_i = 0$, so $\sum w_id_i = 0$ since $w_i$ is linear in $x_i$. The variance is $\sigma^2\sum c_i^2 = \sigma^2(\sum
+w_i^2 + \sum d_i^2) \geq \sigma^2\sum w_i^2$, with equality only if every $d_i = 0$.
+\end{solution}
+
+\begin{solution}{exo:b2:regression-inference:11}
+With $A = (X'X)^{-1}X'$, $\operatorname{Var}(\hat\beta \mid X) = A\operatorname{Var}(u \mid X)A'$. With independent
+errors $\operatorname{Var}(u \mid X) = \operatorname{diag}(\sigma_i^2)$ and $X'\operatorname{diag}(\sigma_i^2)X =
+\sum_i\sigma_i^2x_ix_i'$, which gives the sandwich. If $\sigma_i^2 = \sigma^2$, the middle is $\sigma^2X'X$ and the
+product is $\sigma^2(X'X)^{-1}$.
+\end{solution}
+
+\begin{solution}{exo:b2:regression-inference:12}
+With one regressor, $\hat\beta_1 - \beta_1 = \sum_i(x_i - \bar x)u_i/S$, $S = \sum_i(x_i - \bar x)^2$. Let $x_g$ be the
+value in group $g$. Then $\sum_i(x_i - \bar x)u_i = \sum_g(x_g - \bar x)\sum_{i \in g}u_i$, and the group sums are
+independent with variance $m\sigma^2 + m(m - 1)\rho\sigma^2$. So the variance is $\sum_g(x_g - \bar x)^2m\sigma^2(1 + (m -
+1)\rho)/S^2$; since $S = m\sum_g(x_g - \bar x)^2$, this is $\sigma^2(1 + (m - 1)\rho)/S$.
+\end{solution}
+
+\begin{solution}{pb:b2:regression-inference:1}
+% code: exercises/solutions.py firms_results; tests/test_solutions.py test_firms_by_hand
+\textbf{Part I.}
+1. A Cobb--Douglas function $Y = AL^{\beta_l}K^{\beta_k}e^u$.
+2. Elasticities: the per cent change in output for a 1 per cent change in workers, or in capital, the other fixed.
+3. $\hat\beta_0 = 2.777$, $\hat\beta_l = 0.650$, $\hat\beta_k = 0.352$; $R^2 = 0.982$.
+4. Returns to scale: 1.0014 here, close to one.
+5. A firm that knows it is productive hires more; $l$ is then correlated with $u$, and $\hat\beta_l$ is biased upward.
+\textbf{Part II.}
+6. 0.0124.
+7. 0.0120; interval $0.352 \pm 1.96 \times 0.0120$, from 0.328 to 0.375.
+8. 0.0044.
+9. The $t$ distribution with $G - 1 = 2$ degrees of freedom: 4.303.
+10. $0.352 \pm 4.303 \times 0.0044$, from 0.333 to 0.371.
+11. The clustered one is the smallest, about a third of the others. It should not reassure: with three clusters the middle of the
+sandwich is a sum of three terms, and can be far too small by chance.
+\textbf{Part III.}
+12. $\beta_l + \beta_k = 1$.
+13. $y - l = \beta_0 + \beta_k(k - l) + u$: log output per worker on log capital per worker.
+14. 11.0341 restricted, 11.0329 unrestricted.
+15. $F = (11.0341 - 11.0329)/(11.0329/497) = 0.054$ from the rounded sums, 0.053 from the unrounded ones: about 0.05.
+16. Far below 3.86.
+17. 0.055.
+18. Constant returns are not rejected: the estimated sum is 1.0014.
+\textbf{Part IV.}
+19. The cluster-robust variance is an average over clusters; with three it rests on three numbers.
+20. Two.
+21. Three sums of $e_ix_i$ can happen to be small, or to cancel, so the estimate of the middle can fall below the robust one.
+22. Robust standard errors with sector indicators in the regression, which remove anything shared by a sector from the
+error.
+23. Yes, if errors are correlated within villages: 300 clusters are enough for the large-sample results.
+24. No: drawing whole sectors with replacement from three sectors still gives only a handful of distinct samples.
+25. Brenland's capital elasticity is 0.352, with a robust 95 per cent interval of 0.328 to 0.375 and a sector-clustered
+one of 0.333 to 0.371 that should not be trusted with three clusters; constant returns to scale are not rejected ($F =
+0.055$).
+\end{solution}

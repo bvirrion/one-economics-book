@@ -1,0 +1,4 @@
+$ python cps_cap.py
+psid_controls  n   2204  slope 0.0885  share at the maximum 0.000
+cps_controls   n  13820  slope 0.0433  share at the maximum 0.300
+PSID capped at 25,564.70: slope 0.0621, share capped 0.407

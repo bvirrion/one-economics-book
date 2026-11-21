@@ -1,0 +1,4 @@
+$ python random_walks.py
+levels:      |t| > 1.96 in 0.839 of samples
+             median R2 0.174
+differences: |t| > 1.96 in 0.059 of samples

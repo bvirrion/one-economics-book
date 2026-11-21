@@ -1,0 +1,2 @@
+n,excluded,corr,slope,intercept,fisher_n,fisher_slope,fisher_int,fisher_corr,fisher60_n,fisher60_slope,fisher60_int,fisher60_corr,low30_n,low30_slope,low30_corr,gm15_n,gm15_slope,gm15_corr,since1950_n,since1950_slope,since1950_corr
+228,0,0.848,0.931,-3.24,214,0.223,3.98,0.367,105,0.871,1.91,0.761,226,0.758,0.804,206,0.605,0.732,123,0.559,0.741

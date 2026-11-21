@@ -1,0 +1,5 @@
+$ python engel.py
+log-log: elasticity 0.856 (s.e. 0.020), R2 0.884
+levels: 0.485 francs of food per franc; elasticity at means 0.764
+budget share on log income: slope -0.086
+mean budget share 0.656

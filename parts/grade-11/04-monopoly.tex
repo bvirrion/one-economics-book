@@ -1,0 +1,372 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g11-04. Marginal revenue below price, the monopoly
+% output, the Lerner index, deadweight loss, sources of market power (natural monopoly recalled from Book 1),
+% price discrimination, contestable markets, competition law. Real numbers: figdata/grade-11/04-monopoly/
+% (FDA 2019 technical appendix, a cited table). Ledger: FDA2019 rows, Sherman Act section 2, Article 102 TFEU.
+% The brief's merger-retrospective estimate is not used (no source read); the merger exercise is worked on a
+% model only. The ferry of the problem and every Brenland number are invented.
+\chapter{Monopoly}\label{ch:g11:monopoly}
+
+When a medicine's patent runs out, other firms may sell copies of it, called generics. In the United States, for drugs whose first generic copy
+reached the market between 2015 and 2017, the median price of the generic, when a single firm made it, was 61.4\,\% of the brand's price before the
+copy arrived. With two generic makers it was 46.5\,\%, with four 21.2\,\%, and with ten or more, 1.0\,\%: one hundredth of the price that the patent
+holder had charged.
+% figdata: generics (amp_median 0.614, 0.465, 0.212, 0.010)
+
+A patent gives one firm the right to be the only seller of a product for some years. This chapter asks what price such a firm charges, why that
+price is above its \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost}, what that costs buyers and the economy, and what brings the price down: competitors, the threat of them, and the law.
+
+\begin{openingchart}{Price of generic medicines relative to the brand's price before generic entry, by number of generic producers: median (bars) and middle half
+of the drugs (lines), at average manufacturer prices; and the median at invoice prices paid by pharmacies (dots). US drugs with a first generic in 2015--2017.}{Conrad and
+Lutter (2019), US Food and Drug Administration, technical appendix}
+\begin{tikzpicture}
+\begin{axis}[omtime, ybar, width=0.86\linewidth, height=6.2cm, ymin=0, ymax=85, xmin=0.4, xmax=10.6, bar width=12pt, xtick={1,...,10},
+  xticklabels={1,2,3,4,5,6,7,8,9,10+}, xlabel={number of generic producers}, ylabel={percent of brand price},
+  legend pos=north east, legend style={font=\scriptsize}, xmajorgrids=false]
+\addplot[fill=omDef!60, draw=omDef, error bars/.cd, y dir=both, y explicit, error bar style={black}]
+  table[x=producers, y=pct, y error plus=err_hi, y error minus=err_lo] {figdata/grade-11/04-monopoly/out/generics.csv};
+\addlegendentry{manufacturer price}
+\addplot[only marks, mark=*, mark size=1.8pt, omThm] table[x=producers, y expr=100*\thisrow{invoice_median}]
+  {figdata/grade-11/04-monopoly/out/generics.csv};
+\addlegendentry{pharmacy invoice price}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: a \emph{monopoly} is a market with a single seller; a \emph{barrier to entry} keeps other sellers out; a \emph{patent} gives an inventor
+the sole right to sell an invention for some years; a \emph{natural monopoly} is a market in which one firm can supply everything more cheaply than several. From
+\cref{ch:g11:marginal-reasoning}: \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal revenue} and the marginal rule. From \cref{ch:g10:elasticities}: the price elasticity of demand. From
+\cref{ch:g10:what-prices-do}: the \omterm{def:g10:what-prices-do:dwl}{deadweight loss}.
+\end{recall}
+
+\section{Marginal revenue below the price}\label{sec:g11:monopoly:mr}
+
+\begin{definition}[Market power]\label{def:g11:monopoly:market-power}
+A firm has \emph{market power}\index{market power} when it can raise its price above its \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} without losing all its buyers.
+\end{definition}
+
+A price-taking firm has none: if it asked more than the market price, it would sell nothing. A monopoly faces the whole demand curve. To sell one more unit it
+must lower its price, and not only on that unit: on all the units it was already selling.
+
+\begin{proposition}[Marginal revenue of a demand line]\label{prop:g11:monopoly:mr-line}
+If the inverse demand is $p = a - bQ$ with $a, b > 0$, the revenue is $R(Q) = aQ - bQ^2$ and the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal revenue} is $R'(Q) = a - 2bQ$: a line with the same
+intercept and twice the slope. For $Q > 0$, \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal revenue} is below the price.
+\end{proposition}
+\begin{proof}
+$R(Q) = pQ = (a - bQ)Q = aQ - bQ^2$, so $R'(Q) = a - 2bQ = p - bQ$, which is less than $p$ when $Q > 0$.
+\end{proof}
+
+The gap $bQ$ is the price cut on the units already sold. Selling the 41st unit with demand $p = 100 - Q$ brings in its price, 59, but costs 1 dalen on each of the
+first 40: \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal revenue} is $59 - 40 = 19$, close to $R'(40) = 20$.
+
+\section{The monopoly's price}\label{sec:g11:monopoly:price}
+
+\begin{definition}[Monopoly output]\label{def:g11:monopoly:monopoly-output}
+The \emph{monopoly output}\index{monopoly output} is the quantity at which the monopoly's \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal revenue} equals its \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost}; the monopoly price is the price
+at which buyers take that quantity.
+\end{definition}
+
+\begin{example}[A monopoly with a demand line]\label{ex:g11:monopoly:line}
+With demand $p = 100 - Q$ and a \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} of 20, \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal revenue} $100 - 2Q$ equals 20 at $Q = 40$, and the price is $100 - 40 = 60$. The profit, with no fixed
+cost, is $(60 - 20) \times 40 = 1600$. A competitive industry with the same \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} would sell where price equals 20, that is 80 units.
+\end{example}
+
+\begin{definition}[Markup and Lerner index]\label{def:g11:monopoly:markup}
+A firm's \emph{markup}\index{markup} is the ratio of its price to its \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost}, $p/\mathit{MC}$. Its \emph{Lerner index}\index{Lerner
+index}\phantomsection\label{def:g11:monopoly:lerner} is the share of the price above \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost}, $L = (p - \mathit{MC})/p$.
+\end{definition}
+
+\begin{proposition}[The markup and the elasticity]\label{prop:g11:monopoly:lerner}
+Let $\varepsilon < 0$ be the price elasticity of demand at the \omterm{def:g11:monopoly:monopoly-output}{monopoly output}. Then $\mathit{MR} = p\,(1 - 1/|\varepsilon|)$, and at the \omterm{def:g11:monopoly:monopoly-output}{monopoly output} $L = (p - \mathit{MC})/p =
+1/|\varepsilon|$.
+\end{proposition}
+\begin{proof}
+$R'(Q) = p + Q\,\dfrac{dp}{dQ} = p\left(1 + \dfrac{Q}{p}\dfrac{dp}{dQ}\right) = p\left(1 + \dfrac{1}{\varepsilon}\right) = p\left(1 - \dfrac{1}{|\varepsilon|}\right)$, since $\varepsilon = \dfrac{dQ}{dp}\dfrac{p}{Q}$.
+At the \omterm{def:g11:monopoly:monopoly-output}{monopoly output} $R' = \mathit{MC}$, so $p - \mathit{MC} = p/|\varepsilon|$.
+\end{proof}
+
+In the example, at $Q = 40$ and $p = 60$, $\varepsilon = -1 \times 60/40 = -1.5$, and $L = 40/60 = 1/1.5$. The fewer good \omterm{def:g10:demand:substitutes}{substitutes} buyers have, the less elastic the
+demand and the higher the \omterm{def:g11:monopoly:markup}{markup}. A monopoly never sells where demand is inelastic: there \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal revenue} is negative, and selling less would raise its revenue
+and cut its costs.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.055cm, y=0.042cm]
+\begin{scope}
+\draw[econ axes] (0,108) node[left, font=\small] {dalens} |- (108,0) node[below left=12pt and 0pt, font=\small] {$Q$};
+\fill[omProp!25] (0,20) rectangle (40,60);
+\fill[omThm!25] (40,60) -- (80,20) -- (40,20) -- cycle;
+\draw[demand] (0,100) -- (100,0) node[above right, font=\scriptsize] {demand};
+\draw[omMeth, thick] (0,100) -- (50,0) node[above right, font=\scriptsize] {MR};
+\draw[supply] (0,20) -- (100,20) node[above, font=\scriptsize] {MC};
+\draw[guide] (0,60) -- (40,60) -- (40,0);
+\node[eqpoint] at (40,60) {};
+\node[font=\scriptsize] at (20,40) {profit 1600};
+\node[font=\scriptsize] at (50,28) {DWL 800};
+\foreach \y in {20,60,100} \draw (0,\y) -- (-1.5,\y) node[left, font=\footnotesize] {\y};
+\node[below, font=\footnotesize] at (40,0) {40}; \node[below, font=\footnotesize] at (80,0) {80};
+\end{scope}
+\begin{scope}[xshift=7.4cm, y=0.0016cm]
+\draw[econ axes] (0,2700) node[left, font=\small] {dalens} |- (108,0) node[below left=12pt and 0pt, font=\small] {$Q$};
+\draw[demand, domain=0:100, samples=60] plot (\x, {100*\x - \x*\x});
+\node[font=\scriptsize, anchor=west] at (76,2250) {revenue};
+\draw[omThm, thick, domain=0:80, samples=60] plot (\x, {80*\x - \x*\x});
+\node[font=\scriptsize, anchor=west] at (66,1150) {profit};
+\draw[guide] (40,1600) -- (40,0); \draw[guide] (50,2500) -- (50,0);
+\node[eqpoint] at (40,1600) {}; \node[eqpoint] at (50,2500) {};
+\foreach \y in {1600,2500} \draw (0,\y) -- (-1.5,\y) node[left, font=\footnotesize] {\y};
+\node[below, font=\footnotesize] at (38,0) {40}; \node[below, font=\footnotesize] at (52,0) {50};
+\end{scope}
+\end{tikzpicture}
+
+{\small Left: a monopoly with demand $p = 100 - Q$ and \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} 20 sells 40 units at 60. The rectangle is its profit; the triangle is the \omterm{def:g10:what-prices-do:dwl}{deadweight loss}.
+Right: revenue is largest at 50 units, where \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal revenue} is zero; profit is largest at 40, where \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal revenue} equals \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost}.}
+\end{omfigure}
+
+\section{What a monopoly costs}\label{sec:g11:monopoly:dwl}
+
+In the example, the units from 40 to 80 are worth more to buyers than they cost to make (their demand price runs from 60 down to 20), yet they are not produced.
+The lost surplus is the triangle $\tfrac12 \times (80 - 40) \times (60 - 20) = 800$: the \omterm{def:g10:what-prices-do:dwl}{deadweight loss} of the monopoly. The profit of 1600 is not a loss to the
+economy: it is surplus moved from buyers to the firm's owners. The loss is the 800 that nobody gets.
+
+\section{Where market power comes from}\label{sec:g11:monopoly:sources}
+
+\omterm{def:g11:monopoly:market-power}{Market power} lasts only as long as something keeps rivals out. Patents and copyrights do it by law, for a time; so do licences that limit the number of
+sellers. Control of a scarce input does it, and so do network effects, when each buyer wants the product that most others use. Costs can do it too.
+
+\begin{proposition}[One firm is cheaper than two]\label{prop:g11:monopoly:natural}
+If every firm has the cost $C(q) = F + cq$ with $F > 0$, then for any total output $Q$ and any split $Q = q_1 + q_2$ between two producing firms, $C(Q) < C(q_1) +
+C(q_2)$.
+\end{proposition}
+\begin{proof}
+$C(q_1) + C(q_2) = 2F + c(q_1 + q_2) = 2F + cQ > F + cQ = C(Q)$.
+\end{proof}
+
+Water pipes, power lines and railway tracks fit this: most of the cost is the network, built once. Such a natural monopoly poses a dilemma. Priced at \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost},
+it loses its fixed cost, and someone must pay for it; priced at average cost, it covers its costs, and only a small \omterm{def:g10:what-prices-do:dwl}{deadweight loss} remains; left alone, it charges
+the monopoly price. Many countries regulate such firms' prices, or own them. Both answers have their own problems: a regulator does not know
+the firm's costs as well as the firm does; a price set at average cost leaves the firm little reason to cut its costs, and some reason to pad
+them; and a regulator can come to serve the firm it regulates (\cref{ch:g11:public-choice-first-look}).
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.0028cm, y=0.22cm]
+\draw[econ axes] (0,24) node[left, font=\small] {dalens} |- (2500,0) node[below left=12pt and 0pt, font=\small] {$Q$};
+\draw[demand] (0,22) -- (2200,0);
+\node[font=\scriptsize, anchor=south west] at (600,16.2) {demand};
+\draw[omMeth, thick, domain=200:2400, samples=60] plot (\x, {3600/\x + 2});
+\node[font=\scriptsize, anchor=west] at (240,19.5) {average cost};
+\draw[supply] (0,2) -- (2400,2) node[above, font=\scriptsize] {MC};
+\node[eqpoint] at (1800,4) {}; \node[eqpoint] at (2000,2) {}; \node[eqpoint] at (1000,12) {};
+\draw[guide] (0,4) -- (1800,4) -- (1800,0); \draw[guide] (2000,2) -- (2000,0); \draw[guide] (0,12) -- (1000,12) -- (1000,0);
+\foreach \y in {2,4,12} \draw (0,\y) -- (-20,\y) node[left, font=\footnotesize] {\y};
+\node[below, font=\footnotesize] at (1000,0) {1000}; \node[below, font=\footnotesize] at (1800,0) {1800}; \node[below, font=\footnotesize, yshift=-9pt] at (2000,0) {2000};
+\node[font=\scriptsize, anchor=south west] at (1010,12.3) {monopoly price};
+\node[font=\scriptsize, anchor=west] at (1830,6) {price at average cost};
+\end{tikzpicture}
+
+{\small A natural monopoly with a fixed cost of 3600 dalens a day, a \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} of 2 and demand $p = 22 - Q/100$ (\cref{exo:g11:monopoly:10}). Left alone it sells
+1000 units at 12. Priced at average cost it sells 1800 at 4 and breaks even; priced at \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost}, 2000 at 2, and it loses its fixed cost.}
+\end{omfigure}
+
+\section{Different prices for different buyers}\label{sec:g11:monopoly:discrimination}
+
+\begin{definition}[Price discrimination]\label{def:g11:monopoly:price-discrimination}
+\emph{Price discrimination}\index{price discrimination} is selling the same product at different prices to different buyers, for reasons other than differences in
+the cost of serving them.
+\end{definition}
+
+A firm that can tell two groups of buyers apart, and stop them reselling to each other, sets \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal revenue} equal to \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} in each group. By
+\cref{prop:g11:monopoly:lerner}, the group with the less elastic demand pays the higher price. Students' and pensioners' discounts, cheaper tickets booked early,
+and drugs sold for less in poorer countries are all cases. Discrimination can raise output compared with a single price, when the low price brings in buyers who
+would not buy at all at the single price.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.12cm, y=0.12cm]
+\begin{scope}
+\draw[econ axes] (0,44) node[left, font=\small] {dalens} |- (42,0) node[below left=12pt and 0pt, font=\small] {$Q_A$};
+\draw[demand] (0,40) -- (40,0); \draw[omMeth, thick] (0,40) -- (20,0);
+\draw[supply] (0,8) -- (40,8);
+\draw[guide] (0,24) -- (16,24) -- (16,0); \node[eqpoint] at (16,24) {};
+\foreach \y in {8,24,40} \draw (0,\y) -- (-0.8,\y) node[left, font=\footnotesize] {\y};
+\node[below, font=\footnotesize] at (16,0) {16};
+\node[font=\scriptsize] at (26,30) {market A};
+\end{scope}
+\begin{scope}[xshift=6.8cm]
+\draw[econ axes] (0,44) |- (42,0) node[below left=12pt and 0pt, font=\small] {$Q_B$};
+\draw[demand] (0,24) -- (24,0); \draw[omMeth, thick] (0,24) -- (12,0);
+\draw[supply] (0,8) -- (40,8);
+\draw[guide] (0,16) -- (8,16) -- (8,0); \node[eqpoint] at (8,16) {};
+\foreach \y in {8,16,24} \draw (0,\y) -- (-0.8,\y) node[left, font=\footnotesize] {\y};
+\node[below, font=\footnotesize] at (8,0) {8};
+\node[font=\scriptsize] at (26,30) {market B};
+\end{scope}
+\end{tikzpicture}
+
+{\small \omterm{def:g11:monopoly:price-discrimination}{Price discrimination} between two markets with demands $p = 40 - Q_A$ and $p = 24 - Q_B$ and a \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} of 8 (\cref{exo:g11:monopoly:9}). The firm sells 16
+units at 24 in market A and 8 units at 16 in market B.}
+\end{omfigure}
+
+\section{What erodes a monopoly}\label{sec:g11:monopoly:erosion}
+
+\begin{model}{Monopoly}
+\assumes One seller faces the whole \omterm{def:g10:demand:market-demand}{market demand} and no other firm can enter; it knows the demand and chooses its price to maximise profit.
+\predicts A price above \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost}, by a share equal to one over the elasticity of demand; a lower output than a competitive industry with the same costs; a
+  \omterm{def:g10:what-prices-do:dwl}{deadweight loss}; and a fall in price when rivals enter.
+\tested Consistent with it: when the patent on a medicine expires and generic makers enter, prices fall, and the more makers, the lower the price (opening
+  chart). Markets with more makers may differ in other ways; a test would follow the same medicines as makers enter.
+\breaks When rivals can enter quickly, the threat alone holds the price down; when the price is regulated; when the good lasts and buyers can wait for the price to fall,
+  the firm competes with its own future sales.
+\end{model}
+% figdata: generics
+
+\begin{record}[Generic entry and the price of a medicine]
+% ledger: g11:fda2019-summary, g11:fda2019-n1, g11:fda2019-n2, g11:fda2019-n4, g11:fda2019-n10
+A study by the United States Food and Drug Administration followed 181 drugs whose first generic version came to market between 2015 and 2017. Across all of them, the
+median generic price, at the prices manufacturers charge, was 40\,\% of the brand's price before entry, and 49\,\% at the prices pharmacies pay. The fall was steepest at
+the first few entrants. The study measured prices before the discounts paid by manufacturers to insurers, and in the prices charged to pharmacies, not those paid by
+patients. Its sample was limited to the first years after generic entry.
+\end{record}
+
+\begin{definition}[Contestable market]\label{def:g11:monopoly:contestable}
+A market is \emph{contestable}\index{contestable market} when a rival could enter quickly and leave without loss, so that even a single seller cannot keep its price above
+average cost without inviting entry.
+\end{definition}
+
+Where entry is slow or blocked, competition law steps in. It does not forbid being a monopoly; it forbids certain ways of getting or keeping one.
+
+\begin{definition}[Abuse of a dominant position]\label{def:g11:monopoly:abuse-of-dominance}
+An \emph{abuse of a dominant position}\index{abuse of a dominant position} is conduct by a firm with a dominant position in a market that exploits buyers or shuts out
+rivals: unfair prices, limits on production or on technical development, different terms for equivalent deals, or making a sale conditional on buying something else.
+\end{definition}
+
+In the European Union, Article 102 of the Treaty on the Functioning of the European Union prohibits such abuse where it may affect trade between member states. In the
+United States, section 2 of the Sherman Act makes it a felony to monopolise, or attempt to monopolise, trade among the states, punishable by fines of up to 100 million
+dollars for a corporation and up to ten years in prison for a person. Authorities also review large mergers before they happen. Each tool can err both ways: blocking a
+merger that would have cut costs, or clearing one that raises prices; condemning a low price as an attempt to exclude rivals, or missing one that was.
+% ledger: g11:tfeu-102, g11:sherman-2
+
+\begin{measure}[How a market's concentration is measured]
+The \emph{concentration ratio} of a market adds up the market shares of its largest firms, often the largest four. The \emph{Herfindahl index} adds up the squares of
+all the firms' market shares in percent: a monopoly scores $100^2 = 10000$, and four firms with shares of 40, 30, 20 and 10\,\% score $1600 + 900 + 400 + 100 = 3000$.
+Both need a definition of the market first, which is often the hardest part: are buses in the same market as trains? A high score does not prove \omterm{def:g11:monopoly:market-power}{market power}, if
+entry is easy; a low one does not rule it out, if each firm's product is different.
+\end{measure}
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g11:monopoly:1}
+The inverse demand is $p = 50 - 2Q$. Write the revenue and \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal revenue}, and compute \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal revenue} at $Q = 5$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:monopoly:2}
+A firm can sell 1, 2, 3, 4 or 5 units at prices of 10, 9, 8, 7 and 6 dalens. Compute its revenue and the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal revenue} of each unit.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:monopoly:3}
+A monopoly faces $p = 60 - Q$ and has a \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} of 10 and no fixed cost. Find its output, price and profit.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:monopoly:4}
+Read the opening chart. What is the median generic price with one, two, four and six producers? How much lower is it, at each, than with one producer fewer?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:monopoly:5}
+A firm sells at 50 dalens with a \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} of 30. Compute its \omterm{def:g11:monopoly:markup}{markup} and \omterm{def:g11:monopoly:markup}{Lerner index}. If it maximises profit, what is the elasticity of the demand it faces?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:monopoly:6}
+Compute the \omterm{def:g10:what-prices-do:dwl}{deadweight loss} of the monopoly of \cref{exo:g11:monopoly:3}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:monopoly:7}
+A monopoly faces $p = 100 - 2Q$ with a \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} of 20. Find its output and price, the competitive output and the \omterm{def:g10:what-prices-do:dwl}{deadweight loss}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:monopoly:8}
+With $p = 100 - Q$, the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} rises from 20 to 30. By how much does the monopoly price rise? Show that, with any demand line $p = a - bQ$ and a constant \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal
+cost} $c$, the monopoly price is $(a + c)/2$, so it passes on half of any cost rise.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:monopoly:9}
+A firm sells in two markets with $p = 40 - Q_A$ and $p = 24 - Q_B$, at a \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} of 8. Find its prices and quantities if it can charge different prices, and if it
+must charge one price. Compare its profits.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:monopoly:10}
+A water company has $C(Q) = 3600 + 2Q$ dalens a day, and demand is $p = 22 - Q/100$. Find its output and profit if regulated to price at \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost}, and the price at
+which it just covers its costs.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:monopoly:11}
+In the table behind the opening chart, the median generic price at manufacturer prices falls from 0.614 to 0.465 of the brand's price as a second producer enters, and at
+pharmacy invoice prices from 0.696 to 0.562. Compute the fall in percent in each case. Why can the two kinds of price differ?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:monopoly:12}
+What observations in a market for a patented medicine would contradict the monopoly model? Think of the price set, of the elasticity of demand at that price, and of what
+happens when the patent expires.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:monopoly:13}
+A single airline flies a route, but other airlines could move planes onto it within weeks and take them off again at no loss. What does the theory of \omterm{def:g11:monopoly:contestable}{contestable markets}
+predict for its fares? What would weaken that prediction?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:monopoly:14}
+Prove that a monopoly with a positive \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} never chooses a quantity at which demand is inelastic ($|\varepsilon| < 1$).
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:monopoly:15}
+A market with demand $p = 100 - Q$ is served by competitive firms with \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} 20. A merger would create a monopoly with a \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} of 10. Compare \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus}
+and \omterm{def:g10:surplus-and-efficiency:consumer-surplus}{consumer surplus} before and after. Does the merger pass a total-surplus test? A consumer-surplus test?
+\end{exercise}
+
+\section{Problem: Brenland's Only Ferry}
+
+\begin{problem}[{Weekend problem --- a monopoly, its deadweight loss and its regulation}]
+\label{pb:g11:monopoly:1}
+A single ferry company carries cars across a lake in Brenland. Demand is $Q = 2400 - 100p$ crossings a day, where $p$ is the fare in dalens. Each crossing costs 4 dalens,
+and the boats, crew and docks cost 3600 dalens a day whatever the number of crossings.
+
+\medskip
+\noindent\textbf{Part I --- The monopoly.}
+\begin{enumerate}
+\item Write the inverse demand $p(Q)$.
+\item Write the revenue and the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal revenue}.
+\item Find the \omterm{def:g11:monopoly:monopoly-output}{monopoly output} and fare.
+\item Compute the profit.
+\item Compute the elasticity of demand and the \omterm{def:g11:monopoly:markup}{Lerner index} at the monopoly fare, and check \cref{prop:g11:monopoly:lerner}.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- What the monopoly costs.}
+\begin{enumerate}[resume]
+\item Find the number of crossings at which the fare equals \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost}.
+\item Compute the \omterm{def:g10:what-prices-do:dwl}{deadweight loss} of the monopoly.
+\item Compute the travellers' surplus under the monopoly and at a fare of 4.
+\item How is the surplus that a fare of 4 would create split under the monopoly?
+\item Why would the company refuse to charge 4 on its own?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Regulating the fare.}
+\begin{enumerate}[resume]
+\item A regulator sets the fare at 4. What is the company's profit?
+\item Find the fare at which the company just covers its costs, and the number of crossings.
+\item Compute the \omterm{def:g10:what-prices-do:dwl}{deadweight loss} at that fare.
+\item What share of the monopoly's \omterm{def:g10:what-prices-do:dwl}{deadweight loss} does the regulated fare recover?
+\item Instead, 1200 local households each pay a pass of 3 dalens a day, and every crossing costs 4. If all of them keep buying the pass, what are the profit and the
+\omterm{def:g10:what-prices-do:dwl}{deadweight loss}?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- A bridge.}
+\begin{enumerate}[resume]
+\item Without regulation, a bridge opens, charging 8 dalens a crossing for the same trip. What fare does the ferry charge, how many crossings does it make, and what is its
+profit? (Assume travellers take the ferry when its fare is not above the bridge's.)
+\item Compute the \omterm{def:g10:what-prices-do:dwl}{deadweight loss} of the crossing market at a price of 8, leaving the bridge's own costs aside.
+\item Before the bridge is built, the ferry company knows that a bridge would be built if its fare stayed above 8. What does the theory of \omterm{def:g11:monopoly:contestable}{contestable markets} suggest?
+\item The bridge company and the ferry company propose to merge. What price would the merged firm charge if it kept the same costs? What would have to be true for the
+merger to benefit travellers?
+\item State the result of the problem: the \omterm{def:g10:what-prices-do:dwl}{deadweight loss} of the ferry monopoly and the share recovered by the regulated fare.
+\end{enumerate}
+\end{problem}

@@ -1,0 +1,347 @@
+\chapter{Overlapping Generations}\label{ch:b2:overlapping-generations}
+
+Every economy holds several generations at once: people who work, people who have retired, and children. The balance
+between them is changing fast. The chart shows the number of people aged 65 and over for every 100 people of working age.
+
+\begin{openingchart}{People aged 65 and over per 100 people aged 15--64, 1960--2025: Japan, Italy, Korea, United States,
+  Nigeria and the world.}{World Bank, World Development Indicators (SP.POP.DPND.OL)}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.84\linewidth, height=0.44\linewidth, xmin=1960, xmax=2025, ymin=0, ymax=55,
+    xlabel={Year}, ylabel={Per 100 of working age}, xtick={1960,1970,1980,1990,2000,2010,2020},
+    xticklabel style={/pgf/number format/1000 sep=}, legend style={at={(0.5,-0.3)}, anchor=north,
+    legend columns=3, /tikz/every even column/.append style={column sep=8pt}}]
+  \addplot[omDef, thick] table[x=year, y=JPN] {figdata/bachelor-2/22-overlapping-generations/out/oadr.csv};
+  \addplot[omThm, thick, dashed] table[x=year, y=ITA] {figdata/bachelor-2/22-overlapping-generations/out/oadr.csv};
+  \addplot[omMeth, thick, dotted] table[x=year, y=KOR] {figdata/bachelor-2/22-overlapping-generations/out/oadr.csv};
+  \addplot[black!70, thick, dashdotted] table[x=year, y=USA] {figdata/bachelor-2/22-overlapping-generations/out/oadr.csv};
+  \addplot[omProp, thick] table[x=year, y=NGA] {figdata/bachelor-2/22-overlapping-generations/out/oadr.csv};
+  \addplot[black, very thick] table[x=year, y=WLD] {figdata/bachelor-2/22-overlapping-generations/out/oadr.csv};
+  \legend{Japan, Italy, Korea, United States, Nigeria, World}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: oadr_summary (JPN 8.9 -> 51; ITA 14.5 -> 39.7; KOR 5.6 -> 29.3; USA 14.7 -> 28.5; NGA 6 -> 5.4; WLD 8.6 -> 16)
+In 1960 Japan had 8.9 people of 65 and over for every 100 of working age; in 2025 it had 51.0. Korea went from 5.6 to 29.3, the world from 8.6 to 16.0, while
+Nigeria stayed near 5. Who pays for the old, and how saving for old age shapes the capital stock, are the questions of
+this chapter. The model that answers them has people who live two periods, young then old, with a new generation born
+each period.
+
+\begin{recall}
+From the Year 1 volume: the Solow model, its steady state and the golden rule. From \cref{ch:b2:intertemporal-choice}: the two-period
+consumption choice. From \cref{ch:b2:government-debt}: debt dynamics and the role of $i - \gamma$.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:overlapping-generations:symbols}
+A period is a generation, about thirty years. $L_t$ is the number of young people in period $t$, growing at rate $n$ per period; $k_t$
+capital per young person; $w_t$ the wage and $R_t$ the gross return on capital; $c_{1t}$, $c_{2t+1}$ consumption when young and old; $d$ a pension contribution.
+\end{notation}
+
+\section{The two-period model}\label{sec:b2:overlapping-generations:model}
+
+\begin{definition}[Overlapping-generations model]\label{def:b2:overlapping-generations:olg}
+An \emph{overlapping-generations model}\index{overlapping-generations model} is a model in which each person lives a
+finite number of periods and a new generation is born every period, so that in each period generations of different ages
+live side by side and trade.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=2.9cm, y=0.75cm]
+  \foreach \t/\lab in {0/{$t-1$}, 1/{$t$}, 2/{$t+1$}, 3/{$t+2$}} {\node[font=\footnotesize] at (\t+0.5,4.6) {period \lab};}
+  \foreach \g/\y in {0/3.5, 1/2.5, 2/1.5} {
+    \draw[fill=omDef!15, draw=omDef] (\g,\y-0.35) rectangle (\g+1,\y+0.35);
+    \node[font=\scriptsize] at (\g+0.5,\y) {young: works, saves};
+    \draw[fill=omThm!15, draw=omThm] (\g+1,\y-0.35) rectangle (\g+2,\y+0.35);
+    \node[font=\scriptsize] at (\g+1.5,\y) {old: consumes};
+  }
+  \node[font=\footnotesize, anchor=east] at (-0.05,3.5) {born $t-1$};
+  \node[font=\footnotesize, anchor=east] at (-0.05,2.5) {born $t$};
+  \node[font=\footnotesize, anchor=east] at (0.95,1.5) {born $t+1$};
+  \draw[guide] (1,0.8) -- (1,4.3);
+  \draw[guide] (2,0.8) -- (2,4.3);
+\end{tikzpicture}
+
+{\small Generations overlap. In period $t$ the generation born at $t$ works and saves, while the generation born at $t - 1$ lives on its savings. The capital
+of period $t + 1$ is what the young of period $t$ saved.}
+\end{omfigure}
+
+A person born at $t$ works when young, earns $w_t$, consumes $c_{1t}$ and saves $s_t = w_t - c_{1t}$; when old she consumes $c_{2t+1} = R_{t+1}s_t$. With $u = \ln c_1 + \beta\ln c_2$, the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} of \cref{ch:b2:intertemporal-choice} gives
+$c_{2t+1} = \beta R_{t+1}c_{1t}$, and so $s_t = \frac{\beta}{1 + \beta}w_t$: with logarithmic utility, saving is a fixed share of the wage. Firms produce $Y = AK^\alpha L^{1-\alpha}$, so per young person $y = Ak^\alpha$, the wage is $w = (1 - \alpha)Ak^\alpha$ and the
+gross return is $R = \alpha Ak^{\alpha - 1}$; capital lasts one period. Next period's capital is this period's saving, shared among $1 + n$ times as many young:
+\begin{equation}\label{eq:b2:overlapping-generations:k}
+k_{t+1} = \frac{s_t}{1 + n} = \frac{\beta(1 - \alpha)A}{(1 + \beta)(1 + n)}\,k_t^\alpha.
+\end{equation}
+
+\section{The steady state and its stability}\label{sec:b2:overlapping-generations:steady}
+
+Setting $k_{t+1} = k_t = k^*$ in \eqref{eq:b2:overlapping-generations:k} gives $k^* = \left(\frac{\beta(1 - \alpha)A}{(1 + \beta)(1 + n)}\right)^{1/(1-\alpha)}$. Take $\alpha = 0.3$, $\beta = 0.6$, $n = 0.2$ and $A = 10$, an economy whose population grows 20 per cent a
+generation. The coefficient is $0.6 \times 0.7 \times 10/(1.6 \times 1.2) = 2.1875$, and $k^* = 2.1875^{1/0.7} = 3.06$.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=5, ymin=0, ymax=5, width=0.5\linewidth, height=0.5\linewidth,
+    xlabel={$k_t$}, ylabel={$k_{t+1}$}, xtick={0.5,3.059}, xticklabels={$k_0$,$k^*$}, ytick=\empty]
+  \addplot[black!50, domain=0:5, samples=2] {x};
+  \addplot[omDef, very thick, domain=0.001:5, samples=100] {2.1875*x^0.3};
+  \addplot[omThm, thick, const plot] coordinates {(0.5,0) (0.5,1.777) (1.777,1.777) (1.777,2.599) (2.599,2.599) (2.599,2.913) (2.913,2.913) (2.913,3.014)};
+  \node[eqpoint] at (axis cs:3.059,3.059) {};
+  \node[anchor=west, font=\footnotesize] at (axis cs:4.2,4.0) {$45^\circ$};
+\end{axis}
+\end{tikzpicture}
+
+{\small Capital per young person next period against this period. The curve is concave and starts steep, so it crosses the
+$45^\circ$ line once at a positive $k^*$; from any positive start, capital climbs (or falls) toward $k^*$.}
+\end{omfigure}
+
+The steady state is stable: the slope of \eqref{eq:b2:overlapping-generations:k} at $k^*$ is $\alpha < 1$, so deviations shrink by the factor $\alpha$ each generation.
+
+\begin{model}{The overlapping-generations model}
+\assumes Finitely lived households that save for their own old age, no bequests, competitive firms and markets; here two
+periods of life, logarithmic utility and Cobb--Douglas production.
+\predicts Saving and capital depend on the wage of the young and on the age structure; capital may exceed the golden-rule
+level; \omterm{def:b2:overlapping-generations:payg}{pay-as-you-go pensions} and government debt lower the capital stock.
+\tested The test of dynamic efficiency: in the United States and other large economies, capital earns more than is
+invested (Abel, Mankiw, Summers and Zeckhauser 1989), and so they do not have too much capital.
+\breaks Two periods of life are a coarse picture of saving over a lifetime, and households that leave bequests link the
+generations, which the model leaves out.
+\end{model}
+
+\section{Too much capital is possible}\label{sec:b2:overlapping-generations:inefficiency}
+
+In the Solow model of the Year 1 volume, the golden rule maximises steady-state consumption; with capital that lasts one
+period, consumption per young person in the steady state is $Ak^\alpha - (1 + n)k$, maximised where $R = \alpha Ak^{\alpha - 1} = 1 + n$. In the example, the golden-rule stock is $(3/1.2)^{1/0.7} = 3.70$, above the steady
+state, and the return $R^* = 1.371$ exceeds $1 + n = 1.2$.
+
+\begin{definition}[Dynamic inefficiency]\label{def:b2:overlapping-generations:dynamic-inefficiency}
+An economy is \emph{dynamically inefficient}\index{dynamic inefficiency} if its capital stock exceeds the golden-rule
+level, so that consuming some of the capital and investing less would raise consumption in every period.
+\end{definition}
+
+In the competitive overlapping-generations economy nothing rules this out. In the steady state $R^*/(1 + n) = \alpha(1 + \beta)/(\beta(1 - \alpha))$, which is below 1 when households are
+patient enough: with $\alpha = 0.3$ and $\beta = 1$ it is $0.6/0.7 = 0.857$. The young must save for their old age, and the only asset is capital, so they may accumulate too much of
+it. Then a transfer from each young generation to the old one makes every generation better off.
+
+\begin{record}[Is the capital stock too large?]
+% ledger: b2:abel1989
+% figdata: eff_summary (n 129, n_above 128, below CHN; median cap 47.8, inv 23.0; CHN 42.2 vs 42.7; USA 40.8 vs 21.7)
+Interest rates are a poor guide, because they differ across assets and include risk. Abel, Mankiw, Summers and Zeckhauser
+(1989) proposed a test that needs only the national accounts: an economy is efficient if the income capital generates
+exceeds what is invested in it, year after year, so that capital is a source of resources for consumption rather than a
+drain. They found the United States and the other large economies they studied to be efficient. The chart applies the
+test, in one year, to 129 economies: capital income exceeds gross investment in 128 of them. China, which invested 42.7 per
+cent of its output against capital income of 42.2 per cent, is the one exception.
+\end{record}
+
+\begin{omchart}{Capital income (one minus the labour share) against gross investment, per cent of GDP, both at current
+  national prices, 129 economies, 2019; the $45^\circ$ line marks equality. For some countries the Penn World Table
+  estimates the labour share from incomplete data.}{Penn World Table (labsh); World Bank, World Development Indicators
+  (NE.GDI.TOTL.ZS); our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.6\linewidth, height=0.52\linewidth, xmin=0, xmax=70, ymin=0, ymax=100,
+    xlabel={Gross investment, per cent of GDP}, ylabel={Capital income, per cent of GDP}]
+  \addplot[only marks, mark=*, mark size=1.3pt, omDef, fill opacity=0.6]
+    table[x=inv, y=cap] {figdata/bachelor-2/22-overlapping-generations/out/efficiency.csv};
+  \addplot[black!60, dashed, domain=0:70, samples=2] {x};
+  \node[font=\footnotesize, anchor=west] at (axis cs:44,40) {CHN};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\section{Pay-as-you-go and funded pensions}\label{sec:b2:overlapping-generations:pensions}
+
+\begin{definition}[Pay-as-you-go pension]\label{def:b2:overlapping-generations:payg}
+A \emph{pay-as-you-go pension}\index{pay-as-you-go pension} system pays the pensions of the old out of the contributions
+of the young in the same period.
+\end{definition}
+
+\begin{definition}[Funded pension]\label{def:b2:overlapping-generations:funded}
+A \emph{funded pension}\index{funded pension} system invests each generation's contributions in assets and pays each
+generation's pensions out of those assets and their returns.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+  \draw[fill=omDef!15, draw=omDef] (0,0) rectangle (3,1.2);
+  \node[align=center, font=\footnotesize] at (1.5,0.6) {$L_t$ young\\each pays $d$};
+  \draw[fill=black!5] (4,0) rectangle (7.2,1.2);
+  \node[align=center, font=\footnotesize] at (5.6,0.6) {pension system\\$dL_t$ in, $dL_t$ out};
+  \draw[fill=omThm!15, draw=omThm] (8.2,0) rectangle (12.2,1.2);
+  \node[align=center, font=\footnotesize] at (10.2,0.6) {$L_{t-1} = L_t/(1 + n)$ old\\each gets $(1 + n)d$};
+  \draw[->, thick] (3,0.6) -- (4,0.6);
+  \draw[->, thick] (7.2,0.6) -- (8.2,0.6);
+\end{tikzpicture}
+
+{\small The budget of a pay-as-you-go system in one period. What the young pay in, the old take out the same period; since
+there are $1 + n$ young people for each old one, each pensioner receives $(1 + n)d$. If the wage per worker also grows, and contributions
+with it, the return is $1 + n$ times the growth factor of the wage.}
+\end{omfigure}
+
+A pay-as-you-go system pays a return of $1 + n$ on each contribution, a funded system the return on capital $R$. In a dynamically efficient economy $R > 1 + n$, so later
+generations do better with a funded system. But the first old generation of a pay-as-you-go system receives pensions without
+having contributed: a windfall that every later generation pays for. And because the young save less for their old age,
+the capital stock falls. The listing finds the steady state of the example with and without a contribution of 1 (thousand
+dalens per young person, against a wage of 9.79).
+
+\omcode{code/bachelor-2/22-overlapping-generations/listings/olg.py}{1}{38}{The steady state of the \omterm{def:b2:overlapping-generations:olg}{overlapping-generations
+model} with and without a pay-as-you-go contribution.}\label{lst:b2:overlapping-generations:olg}
+
+\omoutput{code/bachelor-2/22-overlapping-generations/outputs/olg.txt}{A contribution of about a tenth of the wage lowers
+capital per young person by a third.}\label{out:b2:overlapping-generations:olg}
+
+% code: listings/olg.py
+The contribution cuts capital per young person from 3.06 to 2.06, lowers the wage from 9.79 to 8.69 and raises the return on capital from 1.37 to 1.81. A funded system of the same size leaves
+capital unchanged: what the young pay in is invested in capital, and households reduce their own saving one for one.
+Moving from a pay-as-you-go system to a funded one is not free either: the generation in the middle must pay for the
+pensions of its parents and save for its own, so the switch gives up the first generation's windfall only by charging
+some later generation for it.
+
+\section{The arithmetic of ageing}\label{sec:b2:overlapping-generations:ageing}
+
+\begin{definition}[Replacement rate]\label{def:b2:overlapping-generations:replacement-rate}
+The \emph{replacement rate}\index{replacement rate} of a pension system is the average pension divided by the average
+wage.
+\end{definition}
+
+\begin{definition}[Old-age dependency ratio]\label{def:b2:overlapping-generations:oadr}
+The \emph{old-age dependency ratio}\index{old-age dependency ratio} is the number of people above a retirement age,
+usually 65, per person of working age, usually 15 to 64.
+\end{definition}
+
+In a pay-as-you-go system that balances, contributions equal pensions: $\tau \times \text{wage} \times \text{workers} = \text{pension} \times \text{pensioners}$, so
+\begin{equation}\label{eq:b2:overlapping-generations:payg}
+\tau = \frac{\text{pensioners}}{\text{workers}} \times \frac{\text{pension}}{\text{wage}},
+\end{equation}
+the contribution rate equals the dependency ratio times the \omterm{def:b2:overlapping-generations:replacement-rate}{replacement rate}. With 30 pensioners per 100 workers and a \omterm{def:b2:overlapping-generations:replacement-rate}{replacement rate} of one half, contributions take 15 per cent of wages. When the ratio rises to 45 per 100, either the contribution rises to 22.5 per cent, or the \omterm{def:b2:overlapping-generations:replacement-rate}{replacement rate} falls to one third,
+or people retire later, which moves people from the numerator to the denominator.
+
+\begin{measure}[The old-age dependency ratio]
+The ratio in the opening chart counts people, not workers and pensioners. Not everyone aged 15 to 64 works, some people
+work past 65, and many people under 65 receive pensions. A pension system's own ratio of pensioners to contributors can
+differ much from the demographic ratio, and moves with employment and the retirement age as well as with births and
+deaths. The demographic ratio is still the force behind it: it is set by birth rates decades ago and by how long people
+now live, and policy cannot change it quickly.
+\end{measure}
+
+\section{Debt across generations}\label{sec:b2:overlapping-generations:debt}
+
+Government debt in this model works like a \omterm{def:b2:overlapping-generations:payg}{pay-as-you-go pension}. A government that borrows from the young and pays the
+old, and then rolls the debt over, hands the first old generation a gift and makes the young hold government bonds in
+place of capital, so the capital stock falls. If the economy is \omterm{def:b2:overlapping-generations:dynamic-inefficiency}{dynamically inefficient}, with $R < 1 + n$, the debt ratio shrinks of its
+own accord as the economy grows, as \cref{ch:b2:government-debt} showed for $i < \gamma$: the debt can be rolled over for ever, and the crowding out of capital
+moves the economy toward the golden rule, making every generation better off. In an efficient economy, with $R > 1 + n$, the
+debt must eventually be serviced by taxes, and the gift to the first generation is paid for by those that follow.
+
+\section{Exercises}\label{sec:b2:overlapping-generations:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:overlapping-generations:1}
+Read the opening chart. Which country's ratio rose most since 1960, and which did not rise at all? What drives the
+difference?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:overlapping-generations:2}
+A balanced pay-as-you-go system has 40 pensioners per 100 workers and a \omterm{def:b2:overlapping-generations:replacement-rate}{replacement rate} of one half. What is the
+contribution rate?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:overlapping-generations:3}
+Read the efficiency chart. What does a point above the $45^\circ$ line mean, and what fraction of economies lie above it?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:overlapping-generations:4}
+What observation in an economy's accounts, sustained over many years, would indicate that it is \omterm{def:b2:overlapping-generations:dynamic-inefficiency}{dynamically
+inefficient}?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:overlapping-generations:5}
+With $\alpha = 1/3$, $\beta = 1$, $n = 0$ and $A = 1$, compute $k^*$ and show that the economy is exactly at the golden rule.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:overlapping-generations:6}
+Predict, then compute: with $\alpha = 0.3$, is the steady state dynamically efficient when $\beta = 1$? When $\beta = 0.6$? In the inefficient case, who gains from introducing a
+small pay-as-you-go system?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:overlapping-generations:7}
+\textbf{(D)} Using the 2025 dependency ratios of the opening chart and a \omterm{def:b2:overlapping-generations:replacement-rate}{replacement rate} of one half, compute the
+contribution rate a balanced pay-as-you-go system would need in Japan, Italy, Korea, the United States and Nigeria. What
+does the calculation leave out?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:overlapping-generations:8}
+Population grows 1 per cent a year and wages per worker 1.5 per cent. What annual return does a pay-as-you-go system pay? Compare
+it with a return on capital of 4 per cent.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:overlapping-generations:9}
+Show that the slope of \eqref{eq:b2:overlapping-generations:k} at the steady state is $\alpha$, and explain what this implies for the speed of convergence.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:overlapping-generations:10}
+Derive \eqref{eq:b2:overlapping-generations:k} from the young person's problem and the firm's first-order conditions.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:overlapping-generations:11}
+Show that in the steady state $R^*/(1 + n) = \alpha(1 + \beta)/(\beta(1 - \alpha))$, and find the condition on $\alpha$ and $\beta$ for \omterm{def:b2:overlapping-generations:dynamic-inefficiency}{dynamic inefficiency}.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:overlapping-generations:12}
+Show that a \omterm{def:b2:overlapping-generations:funded}{funded pension}, with contributions $d$ invested in capital at the return $R$, leaves the capital stock unchanged if
+$d \le s_t$.
+\end{exercise}
+
+\section{Problem: Brenland's pension reform}\label{sec:b2:overlapping-generations:problem}
+
+\begin{problem}[{Weekend problem --- Brenland's pension reform: the economy without pensions, a pay-as-you-go system, the
+generation that gains and the generations that pay}]
+\label{pb:b2:overlapping-generations:1}
+Brenland is the economy of the text: $\alpha = 0.3$, $\beta = 0.6$, $n = 0.2$, $A = 10$, one period a generation of thirty years; amounts are thousands of dalens per
+young person.
+
+\medskip
+\noindent\textbf{Part I --- The model.}
+\begin{enumerate}
+  \item Write the wage as a function of $k$.
+  \item Write the gross return on capital.
+  \item What share of the wage do the young save?
+  \item Write the law of motion of $k$.
+  \item Why does the young's saving get divided by $1 + n$?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- No pensions.}
+\begin{enumerate}[resume]
+  \item Find $k^*$.
+  \item Find the wage and the gross return.
+  \item What return per year does $R^*$ represent over thirty years?
+  \item Find saving, consumption when young and consumption when old.
+  \item Find the golden-rule capital stock. Is Brenland dynamically efficient?
+  \item Compare the annual return on capital with the annual growth of population.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- A pay-as-you-go system.} Each young person pays $d = 1$.
+\begin{enumerate}[resume]
+  \item What does each old person receive?
+  \item What gross return does a contribution earn?
+  \item Using the listing, find the new $k^*$.
+  \item Find the new wage and gross return.
+  \item Why does capital fall?
+  \item Would a funded system with $d = 1$ change $k^*$?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Who gains and who pays.}
+\begin{enumerate}[resume]
+  \item What does the old generation alive when the system starts receive, and what did it pay?
+  \item In the new steady state, how much is a young person's contribution worth to her, net, compared with saving it at the return on
+    capital?
+  \item Why cannot the system be ended without loss to some generation?
+  \item Brenland's actual system has 30 pensioners per 100 workers and a \omterm{def:b2:overlapping-generations:replacement-rate}{replacement rate} of one half. What contribution rate balances
+    it?
+  \item In 2050 there will be 45 pensioners per 100 workers. What contribution rate is needed?
+  \item What \omterm{def:b2:overlapping-generations:replacement-rate}{replacement rate} keeps the contribution rate unchanged?
+  \item If a later retirement age brought the ratio down to 35 per 100, what contribution rate would balance the system?
+  \item State the result: capital per young person with and without the pay-as-you-go system, and the windfall of the first
+    old generation, in dalens.
+\end{enumerate}
+\end{problem}

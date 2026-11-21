@@ -1,0 +1,406 @@
+\chapter{Oligopoly and Collusion}\label{ch:b3:oligopoly-and-collusion}
+
+Most markets are served by a few firms selling products that differ: a handful of
+brands of motor oil, three bakeries in a town, two airlines on a route. Their prices
+depend on how close their products are, on how many firms the market can support and
+on whether they compete or coordinate. This chapter builds the models used to answer
+those questions with data --- differentiated demand, \omterm{def:b3:oligopoly-and-collusion:entry-threshold}{entry thresholds}, markup
+estimators, collusion conditions --- and holds them against the record of mergers
+whose effects were measured after the fact.
+
+\begin{openingchart}{Estimated price changes after two completed U.S. consumer-product
+mergers, by product: Pennzoil/Quaker State (motor oil) and Procter \& Gamble/Tambrands
+(feminine hygiene), each measured against the prices of private-label products and of
+other branded products over the same period (percent).}{Ashenfelter and Hosken (2008),
+NBER Working Paper 13859, section 5}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xbar, bar width=4pt, width=0.62\linewidth,
+  height=0.42\linewidth, xmin=-2, xmax=10, ymin=-0.6, ymax=5.6,
+  ytick={0,...,5}, yticklabels from table={figdata/bachelor-3/27-oligopoly-and-collusion/out/mergers.csv}{product},
+  y tick label style={font=\scriptsize}, xlabel={Price change (\%)},
+  legend pos=south east, legend style={font=\footnotesize}]
+  \addplot[fill=omThm, draw=omThm, area legend] table[x=private, y=pos] {figdata/bachelor-3/27-oligopoly-and-collusion/out/mergers.csv};
+  \addplot[fill=omDef!60, draw=omDef, area legend] table[x=branded, y=pos] {figdata/bachelor-3/27-oligopoly-and-collusion/out/mergers.csv};
+  \legend{Private-label control, Branded control}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% ledger: b3oc:ah.pqs
+% ledger: b3oc:ah.pgt
+% ledger: b3oc:ah
+Against private-label products, every one of the six products rose in price by 4 to
+8~\%; against other brands, the rises are smaller and one is negative. The two mergers
+are among five that the authors chose because the agencies had found them most
+problematic, so they bound the typical effect from above; four of the five raised
+some prices, typically by 3 to 7~\%. The chart shows what a \omterm{def:b3:oligopoly-and-collusion:mergers}{merger retrospective}
+measures and how much the answer depends on the control group.
+
+\begin{recall}
+Cournot and Bertrand competition and the Lerner index are the Year 1 volume's;
+repeated games, the folk theorem and the collusion condition are the Year 2 volume's,
+which also owns \emph{collusion} and \emph{tacit collusion}. The \omterm{def:b3:binary-outcomes:random-utility}{multinomial logit} is
+\cref{ch:b3:binary-outcomes}'s, and difference in differences \cref{ch:b3:difference-in-differences}'s.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:oligopoly-and-collusion:symbols}
+$s_j$ is product $j$'s market share and $s_0$ that of the outside option; $\delta_j$ its mean
+utility; $\alpha$ the price sensitivity; $t$ a transport cost; $D_{12}$ the diversion ratio from
+product 1 to product 2; $\mu$ a markup, price over marginal cost; $\beta$ the discount factor
+of a repeated game (the Year 2 volume writes $\delta$, used here for mean utility).
+\end{notation}
+
+\section{Differentiated products}\label{sec:b3:oligopoly-and-collusion:differentiation}
+
+\begin{definition}[Hotelling model; horizontal and vertical differentiation]\label{def:b3:oligopoly-and-collusion:hotelling}
+\index{Hotelling model}\index{horizontal differentiation}\index{vertical differentiation}
+In the \emph{Hotelling model}, or linear city, consumers are spread uniformly on a
+segment, firms choose locations on it and then prices, and a consumer at distance $d$ from
+a firm pays its price plus a transport cost. Products are \emph{horizontally
+differentiated} when consumers at equal prices disagree on which they prefer, and
+\emph{vertically differentiated} when all prefer the same one.
+\end{definition}
+
+\begin{proposition}[Hotelling with quadratic transport costs]\label{prop:b3:oligopoly-and-collusion:hotelling}
+Let a unit mass of consumers lie on $[0, 1]$, two firms with marginal cost $c$ locate at $a$ and $1 - b$
+($a, b \ge 0$, $a + b < 1$) and then set prices, and transport cost be $t d^2$. At the ends ($a = b = 0$) the
+equilibrium prices are $c + t$; and each firm, choosing its location first, moves as far
+from the other as it can.
+\end{proposition}
+
+\begin{proof}
+The consumer indifferent between the firms is at
+$\hat x = a + \tfrac{1}{2}(1 - a - b) + (p_2 - p_1)/(2t(1 - a - b))$. Firm 1 maximises $(p_1 - c)\hat x$; the first-order
+conditions of the two firms solve to $p_1 = c + t(1 - a - b)(1 + (a - b)/3)$ and the symmetric $p_2$, which at
+$a = b = 0$ give $c + t$. At these prices $\hat x = (3 + a - b)/6$ and firm 1's profit is
+$\pi_1 = t(1 - a - b)(3 + a - b)^2/18$, so $\partial \pi_1/\partial a = t(3 + a - b)(-1 - 3a - b)/18 < 0$: moving towards the centre lowers profit,
+because the price competition it provokes outweighs the demand it gains.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=8cm, y=1cm]
+  \draw[econ axes] (0,0) -- (1,0);
+  \draw (0,0.08) -- (0,-0.08) node[below, font=\scriptsize] {0};
+  \draw (1,0.08) -- (1,-0.08) node[below, font=\scriptsize] {1};
+  \fill[omDef] (0,0) circle (2pt) node[above, font=\scriptsize] {firm 1, price $p_1$};
+  \fill[omThm] (1,0) circle (2pt) node[above, font=\scriptsize] {firm 2, price $p_2$};
+  \draw[curve, omDef] (0,0.5) parabola (0.62,1.65);
+  \draw[curve, omThm] (1,0.75) parabola (0.38,1.9);
+  \draw[guide] (0.54,0) -- (0.54,1.38);
+  \node[below, font=\scriptsize] at (0.54,0) {$\hat x$};
+  \node[font=\scriptsize, omDef] at (0.2,1.3) {$p_1 + t x^2$};
+  \node[font=\scriptsize, omThm] at (0.82,1.4) {$p_2 + t(1 - x)^2$};
+\end{tikzpicture}
+\par\smallskip{\small The linear city. Each curve is the full price of buying from one
+firm, for a consumer at $x$. Consumers left of $\hat x$ buy from firm 1, the rest from firm 2;
+a lower $p_1$ shifts firm 1's curve down and moves $\hat x$ right.}
+\end{omfigure}
+
+\begin{proposition}[Bertrand with logit demand]\label{prop:b3:oligopoly-and-collusion:logit}
+With logit demand $s_j = e^{\delta_j - \alpha p_j}/(1 + \sum_k e^{\delta_k - \alpha p_k})$, a firm selling product $j$ alone sets the
+markup $p_j - c_j = 1/(\alpha(1 - s_j))$. A firm selling a set $J$ of products sets the same markup on
+each, $1/(\alpha(1 - s_J))$, where $s_J$ is the share of the whole set.
+\end{proposition}
+
+\begin{proof}
+Differentiating, $\partial s_j/\partial p_j = -\alpha s_j(1 - s_j)$ and $\partial s_j/\partial p_k = \alpha s_j s_k$ for $k \ne j$. For a single
+product the first-order condition of $(p_j - c_j)s_j$ is $s_j - (p_j - c_j)\alpha s_j(1 - s_j) = 0$. For a set, the
+condition for $k \in J$ is $s_k + \sum_{j \in J}(p_j - c_j)\,\partial s_j/\partial p_k = 0$. Try a common markup $m$: the sum is
+$m\alpha s_k(-(1 - s_k) + \sum_{j \in J, j \ne k} s_j) = -m\alpha s_k(1 - s_J)$, so the condition holds at $m = 1/(\alpha(1 - s_J))$.
+\end{proof}
+
+Prices are strategic complements: a rival's higher price raises a firm's share and
+so its markup. The proposition is the engine of a \omterm{def:b3:oligopoly-and-collusion:mergers}{merger simulation}. Owning both
+products raises the share in the denominator from $s_j$ to $s_J$, and with it the markup; the
+rivals then raise their prices too.
+
+\begin{model}{Price competition with differentiated products}
+\assumes Firms set prices simultaneously (Bertrand); demand comes from a
+discrete-choice model; costs do not change with ownership.
+\predicts Markups fall with the price sensitivity and with the complement of the
+owner's share; a merger of close substitutes raises the prices of both and,
+by less, of rivals.
+\tested Simulations of five U.S. airline mergers of the 1980s, compared with the
+prices observed afterwards, did not generally forecast accurately; most of the
+unexplained change came from supply-side effects and from conduct other than the
+assumed one. % ledger: b3oc:peters
+\breaks When firms do not price as Bertrand competitors --- when they coordinate,
+or set prices with an eye on the future --- or when the merger changes costs.
+\end{model}
+
+\section{Entry and market structure}\label{sec:b3:oligopoly-and-collusion:entry}
+
+\begin{definition}[Entry threshold]\label{def:b3:oligopoly-and-collusion:entry-threshold}
+\index{entry threshold}
+The \emph{entry threshold} $S_N$ is the smallest market size, in customers, at which $N$
+firms can each cover their fixed cost.
+\end{definition}
+
+\begin{proposition}[Thresholds per firm]\label{prop:b3:oligopoly-and-collusion:thresholds}
+If each of $N$ firms earns variable profit $v_N$ per customer on a share $1/N$ of a market of size
+$S$ and pays a fixed cost $F$, then $S_N = NF/v_N$. The threshold per firm, $S_N/N$, rises with $N$ exactly as long
+as entry lowers the variable profit per customer; it stops rising once an extra firm
+no longer changes conduct.
+\end{proposition}
+
+\begin{proof}
+Each firm earns $(S/N)v_N - F$, which is zero at $S = NF/v_N$. Then $S_N/N = F/v_N$, which rises with $N$ if and
+only if $v_N$ falls.
+\end{proof}
+
+\begin{model}{Entry and market structure}
+\assumes Isolated markets differ in size; firms are alike and enter while profitable.
+\predicts The number of firms grows with market size; the ratios $S_{N+1}/S_N$ reveal how fast
+competition intensifies with $N$.
+\tested In geographically isolated U.S. towns with one, two or a few doctors,
+dentists, druggists, plumbers and tyre dealers, competitive conduct changed quickly as
+the number of incumbents increased: the per-firm thresholds settle after the first
+few entrants. % ledger: b3oc:br
+\breaks When firms compete on quality or variety, so that an entrant changes the
+products rather than the prices.
+\end{model}
+
+\section{Estimating market power}\label{sec:b3:oligopoly-and-collusion:markups}
+
+Two routes lead to a markup. The demand route estimates demand, as in
+\cref{ch:b3:binary-outcomes}, assumes a form of conduct and reads the markup off the
+first-order conditions. The production route needs no demand and no conduct.
+
+\begin{definition}[Production-approach markup estimator]\label{def:b3:oligopoly-and-collusion:markup-estimator}
+\index{production-approach markup estimator}
+The \emph{production-approach markup estimator} sets a firm's markup equal to the
+output elasticity of a variable input divided by that input's share of revenue.
+\end{definition}
+
+\begin{proposition}[Markup from a variable input]\label{prop:b3:oligopoly-and-collusion:production}
+If a firm minimises cost and can adjust input $V$ freely at price $P_V$, its markup $\mu = P/\lambda$, with $\lambda$
+its marginal cost, equals $\theta_V/\alpha_V$, where $\theta_V = (\partial Q/\partial V)(V/Q)$ is the output elasticity of $V$ and
+$\alpha_V = P_V V/(PQ)$ its share of revenue.
+\end{proposition}
+
+\begin{proof}
+Cost minimisation sets $P_V = \lambda\,\partial Q/\partial V$, so $\theta_V = P_V V/(\lambda Q)$. Multiplying by $P/P$:
+$\theta_V = (P/\lambda)\,P_V V/(PQ) = \mu\,\alpha_V$.
+\end{proof}
+
+The estimator needs an output elasticity, from an estimated production function, and
+a decision about which costs are variable. That decision drives the result.
+
+\begin{record}[Rising markups?]
+With firm-level accounts for U.S. listed firms since 1950, and the cost of goods sold
+as the variable input, average markups were stable until 1980 and then rose from 18~\%
+above marginal cost to 67~\%, mostly within industries and through a sharp rise in
+high-markup firms. % ledger: b3oc:de
+With the same accounts and operating expenses as the variable input --- adding
+marketing and management, a rising share of costs --- the rise since the 1980s is
+modest and within historical variation, and calibrations that correct for listed
+firms being unrepresentative give a flat or falling aggregate markup. % ledger: b3oc:traina
+The two estimates use the same proposition. They differ in which costs they treat as
+variable, which the accounts do not settle.
+\end{record}
+
+\section{Tacit collusion}\label{sec:b3:oligopoly-and-collusion:collusion}
+
+\begin{proposition}[The collusion condition]\label{prop:b3:oligopoly-and-collusion:collusion}
+In a repeated Bertrand market with $n$ identical firms and discount factor $\beta$, collusion at the
+monopoly price, enforced by reverting forever to marginal-cost pricing after a
+deviation, is sustainable if and only if $\beta \ge 1 - 1/n$.
+\end{proposition}
+
+\begin{proof}
+Colluding gives $\pi^m/n$ each period, worth $\pi^m/(n(1 - \beta))$. Undercutting slightly takes the whole
+monopoly profit $\pi^m$ once and zero after. Collusion holds iff $\pi^m/(n(1 - \beta)) \ge \pi^m$, that is $\beta \ge 1 - 1/n$.
+\end{proof}
+
+\begin{omchart}{The smallest discount factor at which collusion is sustainable in a
+repeated Bertrand market, by the number of firms.}{The collusion condition of this
+section}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.6\linewidth, height=0.34\linewidth, xmin=1, xmax=21,
+  ymin=0.4, ymax=1, xlabel={Number of firms $n$}, ylabel={$1 - 1/n$}]
+  \addplot[omThm, mark=*, mark size=1.2pt] table[x=n, y=delta] {figdata/bachelor-3/27-oligopoly-and-collusion/out/collusion.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: collusion
+
+The condition extends in two directions that matter for detection. When demand is
+temporarily high, the gain from deviating is larger relative to the future, so
+collusive prices must fall in booms to hold the agreement together. When capacities
+are unequal, the firm with the most spare capacity gains most from deviating, so
+mergers that make capacities more equal can make collusion easier.
+
+\begin{definition}[Cartel; leniency programme]\label{def:b3:oligopoly-and-collusion:cartel}
+\index{cartel}\index{leniency programme}
+A \emph{cartel} is an explicit agreement among competitors to fix prices, share
+markets or rig bids. A \emph{leniency programme} grants immunity from, or a reduction
+of, the penalty to the first cartel member that reports the cartel to the authority
+and cooperates.
+\end{definition}
+
+\section{Detecting cartels}\label{sec:b3:oligopoly-and-collusion:detection}
+
+\begin{measure}[A variance screen]
+Collusion often shows in the movement of prices rather than their level. Around the
+collapse of a bid-rigging conspiracy, the mean price fell by 16~\% while its standard
+deviation rose by more than 200~\%. % ledger: b3oc:afgt
+A screen searches data for pockets of unusually stable prices. Applied to retail
+gasoline around Louisville from 1996 to 2002, it found none. A screen is a first
+filter: stable prices can also come from stable costs, and a \omterm{def:b3:oligopoly-and-collusion:cartel}{cartel} that knows the
+screen can add noise.
+\end{measure}
+
+\section{Mergers and what retrospectives found}\label{sec:b3:oligopoly-and-collusion:mergers}
+
+\begin{definition}[Merger simulation; upward pricing pressure; merger retrospective]\label{def:b3:oligopoly-and-collusion:mergers}
+\index{merger simulation}\index{upward pricing pressure}\index{merger retrospective}
+A \emph{merger simulation} computes the post-merger equilibrium of an estimated
+demand-and-conduct model with the new ownership. \emph{Upward pricing pressure} is
+the net incentive of a merged firm to raise the price of one product, at pre-merger
+prices. A \emph{merger retrospective} measures a completed merger's effect on prices
+against a control.
+\end{definition}
+
+\begin{proposition}[Upward pricing pressure]\label{prop:b3:oligopoly-and-collusion:upp}
+Let $D_{12} = -(\partial q_2/\partial p_1)/(\partial q_1/\partial p_1)$ be the share of the sales that product 1 loses when its price
+rises which go to product 2. After a merger that cuts product 1's marginal cost by a share $E$, the merged firm wants
+to raise $p_1$ at pre-merger prices if and only if $D_{12}(p_2 - c_2) > Ec_1$.
+\end{proposition}
+
+\begin{proof}
+The merged firm's first-order condition for $p_1$ is $q_1 + (p_1 - c_1')\,\partial q_1/\partial p_1 + (p_2 - c_2)\,\partial q_2/\partial p_1 = 0$, with
+$c_1' = (1 - E)c_1$. Dividing by $-\partial q_1/\partial p_1$, it reads as the pre-merger condition with marginal cost
+$c_1' + D_{12}(p_2 - c_2)$: each unit lost by product 1 now costs the margin on the $D_{12}$ units it sends to
+product 2. That effective cost exceeds $c_1$, and the pre-merger price is too low, iff
+$D_{12}(p_2 - c_2) > Ec_1$.
+\end{proof}
+
+The test needs only a diversion ratio and a margin, not a full model; it is a
+first-order screen, holding the rivals' prices fixed and ignoring how much of a cost
+change the firm passes on. A full simulation, as in the weekend problem, gives the
+equilibrium.
+
+% ledger: b3oc:ahw
+Retrospectives of mergers in concentrated markets have repeatedly found price rises.
+The record supports the model's direction: mergers in oligopolistic markets can raise
+consumer prices. The magnitudes depend on the control group, as the opening chart
+shows, and simulations made before the merger have missed them in both directions.
+
+\section{Exercises}\label{sec:b3:oligopoly-and-collusion:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:oligopoly-and-collusion:1}
+In the opening chart, find the median price change against each control group, and
+the number of negative estimates.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:oligopoly-and-collusion:2}
+In the \omterm{def:b3:oligopoly-and-collusion:hotelling}{Hotelling model} with firms at the ends, $c = 10$ and $t = 4$, find the prices and each firm's
+profit.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:oligopoly-and-collusion:3}
+With logit demand, $\alpha = 0.5$ per dollar and a share of 20~\%, what is a single-product firm's markup?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:oligopoly-and-collusion:4}
+What pattern of prices over time would contradict tacit collusion in a market?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:oligopoly-and-collusion:5}
+Find the collusion threshold for 2 and for 5 firms. By how much may the interest rate
+per period rise, from 0, before collusion among 5 firms breaks down?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:oligopoly-and-collusion:6}
+Three symmetric logit firms with $\alpha = 1$ each have a share of 0.25. Two merge. Holding shares fixed
+at 0.25, what markup does the merged firm want? Why does the true equilibrium markup
+differ?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:oligopoly-and-collusion:7}
+The diversion ratio from product 1 to product 2 is 0.3, product 2's margin is 4 dollars and
+product 1's marginal cost 10. Compute the \omterm{def:b3:oligopoly-and-collusion:mergers}{upward pricing pressure} on product 1, and the
+cost saving that offsets it.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:oligopoly-and-collusion:8}
+An invented table of 400 isolated towns gives population and the number of dentists.
+Estimate the \omterm{def:b3:oligopoly-and-collusion:entry-threshold}{entry thresholds} and the thresholds per dentist. After how many dentists
+does entry stop changing conduct?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:oligopoly-and-collusion:9}
+What evidence would show that a measured rise in markups is an artefact of how costs
+are classified?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:oligopoly-and-collusion:10}
+Prove the logit markup formula for a single product and for a set of products.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:oligopoly-and-collusion:11}
+Four products have logit demand with $\alpha = 1$, cost 1 and mean utilities 3.0, 2.8, 2.0 and 1.0. Simulate
+the merger of products 1 and 2, and of products 1 and 4. Compare the price rises of product
+1 with the \omterm{def:b3:oligopoly-and-collusion:mergers}{upward pricing pressure}.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:oligopoly-and-collusion:12}
+Two \omterm{def:b3:oligopoly-and-collusion:cartel}{cartel} members each choose to stay silent or report. If neither reports, each
+pays a fine $F$ with probability $q$; a sole reporter pays nothing and the other pays $F$; if both report,
+each pays $F/2$. Show that reporting is a dominant strategy for any $q > 0$, and explain why a
+\omterm{def:b3:oligopoly-and-collusion:cartel}{leniency programme} destabilises \omterm{def:b3:oligopoly-and-collusion:cartel}{cartels}.
+\end{exercise}
+
+\section{Problem: Three Bakeries in Brenmoor}\label{sec:b3:oligopoly-and-collusion:problem}
+
+\begin{problem}[{Weekend problem --- three bakeries in Brenmoor}]\label{pb:b3:oligopoly-and-collusion:bakeries}
+Brenmoor's 3{,}000 loaves a day are sold by three bakeries, or not bought at all. Demand
+is logit with $\alpha = 0.8$ per dalen and mean utilities 2.5, 2.5 and 2.1; each bakery's marginal cost is
+2 dalens a loaf. Bakeries 1 and 2 propose to merge. % figdata: bakeries_stats
+
+\medskip\noindent\textbf{Part I --- the market before the merger.}
+\begin{enumerate}
+\item Write each bakery's share as a function of the three prices.
+\item State the markup each bakery sets.
+\item Find the equilibrium prices (iterate the markup formula).
+\item Find the shares and the share of residents who buy no loaf.
+\item Check the markup formula for bakery 1.
+\item Find bakery 1's daily profit.
+\item Find consumer surplus, $\ln(1 + \sum_j e^{\delta_j - \alpha p_j})/\alpha$ per resident, for the market.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- simulating the merger.}
+\begin{enumerate}[resume]
+\item Why does the merged firm raise both its prices?
+\item Find the post-merger prices.
+\item Find the shares.
+\item By how much do the merged bakeries' prices rise, and bakery 3's?
+\item Find the loss of consumer surplus per day.
+\item Compare the merged firm's profit with the sum of the two bakeries' profits before.
+\item Why does bakery 3 raise its price, although nothing changed for it directly?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- efficiencies.}
+\begin{enumerate}[resume]
+\item Find the diversion ratio from bakery 1 to bakery 2 at pre-merger prices.
+\item Find bakery 2's margin.
+\item Compute the \omterm{def:b3:oligopoly-and-collusion:mergers}{upward pricing pressure} on bakery 1.
+\item What cost saving, as a share of marginal cost, would offset it by this test?
+\item The full simulation says the merged bakeries' prices stay at the pre-merger level
+only if their marginal cost falls to 1.27 dalens. What saving is that?
+\item Why do the two answers differ?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- a retrospective.} The merger goes ahead. Two years later
+the share-weighted mean price of a loaf in Brenmoor is 0.40 dalens above its pre-merger
+level; in a comparison town it has gone from 3.90 to 4.05.
+\begin{enumerate}[resume]
+\item Compute the difference-in-differences estimate.
+\item Compute the simulation's prediction for the share-weighted mean price.
+\item Compare the two.
+\item Name two threats to the comparison.
+\item What could explain a measured effect below the predicted one?
+\item State the result: the merger's predicted and measured price effects, and the cost
+saving that would have made it neutral.
+\end{enumerate}
+\end{problem}

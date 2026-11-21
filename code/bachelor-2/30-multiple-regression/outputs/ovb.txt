@@ -1,0 +1,7 @@
+$ python ovb.py
+short regression (no 1975 earnings): 0.038343
+long regression:                     0.020429
+gamma, effect of log 1975 earnings:  0.399801
+delta, 1975 earnings on education:   0.044806
+long + gamma * delta:                0.038343
+equal to 1e-12: True

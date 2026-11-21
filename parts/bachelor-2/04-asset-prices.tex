@@ -1,0 +1,656 @@
+\chapter{Asset Prices: A First Model}\label{ch:b2:asset-prices}
+
+A unit of wealth put into American shares at the end of 1949, with every dividend reinvested, was
+% figdata: summary (usa_eq_final 177.6, usa_bill_final 2.37)
+worth 177.6 units of the same purchasing power in 2020. Put into short-term government bills, it was
+worth 2.37. The four panels below tell the same story in four countries: shares far ahead, government
+bonds second, bills last. Investors who saw these returns coming would have bought shares until the gap
+closed. This chapter asks why it did not close: what an asset's price should be, what return it should
+pay for its risk, and how much of the gap a model of risk-averse savers can explain.
+
+\begin{openingchart}{Cumulated real total returns, 1950--2020, in four countries: the value of one unit
+  of real wealth invested at the end of 1949, all income reinvested, for equities, long-term government
+  bonds and short-term bills. Times-ten vertical scale.}{Jord\`a--Schularick--Taylor Macrohistory
+  Database: equity and bond total returns, bill rates, consumer prices}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 2, horizontal sep=1.2cm, vertical sep=1.3cm},
+    omrecord, ymode=log, log basis y=10, log ticks with fixed point, ymin=0.3, ymax=300,
+    ytick={1,10,100}, xmin=1949, xmax=2020, xtick={1950,1985,2020},
+    x tick label style={/pgf/number format/1000 sep=}, width=0.5\linewidth, height=0.4\linewidth,
+    title style={font=\small, yshift=-1ex}]
+  \nextgroupplot[title={United States}, legend to name=b2assetlegend, legend columns=3]
+    \addplot[omDef, very thick] table[x=year, y=USA_equity]
+      {figdata/bachelor-2/04-asset-prices/out/cumulative.csv};
+    \addplot[omThm, thick] table[x=year, y=USA_bond]
+      {figdata/bachelor-2/04-asset-prices/out/cumulative.csv};
+    \addplot[black!60, thick, densely dashed] table[x=year, y=USA_bill]
+      {figdata/bachelor-2/04-asset-prices/out/cumulative.csv};
+    \legend{Equities, Bonds, Bills}
+  \nextgroupplot[title={United Kingdom}]
+    \addplot[omDef, very thick] table[x=year, y=GBR_equity]
+      {figdata/bachelor-2/04-asset-prices/out/cumulative.csv};
+    \addplot[omThm, thick] table[x=year, y=GBR_bond]
+      {figdata/bachelor-2/04-asset-prices/out/cumulative.csv};
+    \addplot[black!60, thick, densely dashed] table[x=year, y=GBR_bill]
+      {figdata/bachelor-2/04-asset-prices/out/cumulative.csv};
+  \nextgroupplot[title={France}]
+    \addplot[omDef, very thick] table[x=year, y=FRA_equity]
+      {figdata/bachelor-2/04-asset-prices/out/cumulative.csv};
+    \addplot[omThm, thick] table[x=year, y=FRA_bond]
+      {figdata/bachelor-2/04-asset-prices/out/cumulative.csv};
+    \addplot[black!60, thick, densely dashed] table[x=year, y=FRA_bill]
+      {figdata/bachelor-2/04-asset-prices/out/cumulative.csv};
+  \nextgroupplot[title={Japan}]
+    \addplot[omDef, very thick] table[x=year, y=JPN_equity]
+      {figdata/bachelor-2/04-asset-prices/out/cumulative.csv};
+    \addplot[omThm, thick] table[x=year, y=JPN_bond]
+      {figdata/bachelor-2/04-asset-prices/out/cumulative.csv};
+    \addplot[black!60, thick, densely dashed] table[x=year, y=JPN_bill]
+      {figdata/bachelor-2/04-asset-prices/out/cumulative.csv};
+\end{groupplot}
+\node[anchor=north] at ($(group c1r2.south)!0.5!(group c2r2.south) + (0,-0.9cm)$)
+  {\pgfplotslegendfromname{b2assetlegend}};
+\end{tikzpicture}
+\end{openingchart}
+
+The gap is no accident of four countries. Across the 15 countries of the database with complete
+% figdata: summary (n_countries 15, median_eq_mean 8.74, median_bill_mean 0.97, median_premium 7.75)
+series, the median country's equities returned 8.74 per cent a year after inflation on average, its
+bills 0.97 per cent: a median gap of 7.75 percentage points. But equities also lost a quarter or more of
+their value in some years, which bills never did. The theory of this chapter prices that difference in
+risk, and finds it far too small to account for the gap.
+
+\begin{recall}
+From \cref{ch:b2:intertemporal-choice}: the \omterm{def:b2:intertemporal-choice:discount-factor}{discount factor} $\beta$ and the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation}, $u'(c_0) =
+\beta(1 + r)u'(c_1)$. From \cref{ch:b2:insurance-and-risk-sharing}: states of the world, contingent
+goods and Arrow securities; the \omterm{def:b2:insurance-and-risk-sharing:portfolio-share}{portfolio share} of a risky asset. From the Year 1 volume: arbitrage,
+buying cheap in one place and selling dear in another. From the school volumes: present value.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:asset-prices:symbols}
+States $s$ have probabilities $\mu_s$. Security $j$ costs $p_j$ today and pays $x_j(s)$ in state $s$; a
+portfolio holds $h_j$ units of security $j$. $\psi_s$ is the \omterm{def:b2:asset-prices:state-price}{state price} of state $s$ and
+$\tilde\zeta$ the \omterm{def:b2:asset-prices:sdf}{stochastic discount factor}. Gross returns are $\tilde R = \tilde x/p$; $R_f$ is the
+gross risk-free return, $\tilde\xi = \tilde R - R_f$ an \omterm{def:b2:asset-prices:excess-return}{excess return}. $\beta$ is the \omterm{def:b2:intertemporal-choice:discount-factor}{discount factor};
+with an asset subscript, $\beta_i$ is the asset's \omterm{def:b2:asset-prices:beta}{beta} (\cref{def:b2:asset-prices:beta}), a regression
+coefficient. $\theta$ is a \omterm{def:b2:insurance-and-risk-sharing:portfolio-share}{portfolio share}, $\gamma$ the CRRA coefficient, $g$ gross consumption growth.
+\end{notation}
+
+\section{No arbitrage}\label{sec:b2:asset-prices:no-arbitrage}
+
+Take two dates and two states of the world tomorrow, $s = 1, 2$. A security is a list of payoffs, one
+per state, with a price today. A portfolio $(h_1, \dots, h_J)$ costs $\sum_j h_j p_j$ and pays $\sum_j
+h_j x_j(s)$ in state $s$; a negative $h_j$ is a short sale.
+
+\begin{definition}[No-arbitrage pricing]\label{def:b2:asset-prices:no-arbitrage}
+An \emph{arbitrage} is a portfolio that costs nothing or less today and pays nothing or more in every
+state, with a strict gain somewhere: a negative price, or a positive payoff in some state. Prices satisfy
+\emph{no-arbitrage pricing}\index{no-arbitrage pricing} when no portfolio is an arbitrage.
+\end{definition}
+
+\begin{definition}[Law of one price]\label{def:b2:asset-prices:law-of-one-price}
+Prices obey the \emph{law of one price}\index{law of one price} if any two portfolios with the same
+payoff in every state have the same price.
+\end{definition}
+
+A violation of the \omterm{def:b2:asset-prices:law-of-one-price}{law of one price} is an arbitrage: buy the cheaper portfolio, sell the dearer one,
+pocket the difference today and owe nothing tomorrow. So no arbitrage implies the \omterm{def:b2:asset-prices:law-of-one-price}{law of one price}. The
+converse fails: a security that pays one in every state and costs $-1$ obeys the \omterm{def:b2:asset-prices:law-of-one-price}{law of one price} on
+its own and is still an arbitrage.
+
+\begin{definition}[State price]\label{def:b2:asset-prices:state-price}
+The \emph{state price}\index{state price} $\psi_s$ of state $s$ is the price today of the \omterm{def:b2:insurance-and-risk-sharing:arrow-security}{Arrow security}
+for state $s$: one unit of money in state $s$, nothing in the others.
+\end{definition}
+
+\begin{proposition}[State prices]\label{prop:b2:asset-prices:state-prices}
+Let two securities have payoffs that are not proportional. Under the \omterm{def:b2:asset-prices:law-of-one-price}{law of one price} there are unique
+numbers $\psi_1, \psi_2$ such that every portfolio's price is
+\[
+p = \psi_1 x(1) + \psi_2 x(2).
+\]
+Prices admit no arbitrage if and only if $\psi_1 > 0$ and $\psi_2 > 0$.
+\end{proposition}
+
+\begin{proof}
+The two payoff vectors are linearly independent, so every payoff, in particular each \omterm{def:b2:insurance-and-risk-sharing:arrow-security}{Arrow security},
+is a portfolio of the two; by the \omterm{def:b2:asset-prices:law-of-one-price}{law of one price} each has a single price, $\psi_1$ and $\psi_2$.
+Every payoff $x$ is the portfolio of $x(1)$ units of the first \omterm{def:b2:insurance-and-risk-sharing:arrow-security}{Arrow security} and $x(2)$ of the second,
+so its price is $\psi_1x(1) + \psi_2x(2)$. If both \omterm{def:b2:asset-prices:state-price}{state prices} are positive, a payoff that is never
+negative and positive somewhere has a positive price, and a payoff of zero costs zero: there is no
+arbitrage. The converse is \cref{exo:b2:asset-prices:10}.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=180, ymin=0, ymax=180, xtick={80,105,130},
+    ytick={80,105,130}, xlabel={Payoff in a boom, $x(1)$}, ylabel={Payoff in a slump, $x(2)$},
+    width=0.6\linewidth, height=0.6\linewidth]
+  \addplot[guide, domain=0:180, samples=2] {x};
+  \addplot[omDef, thick, domain=0:180, samples=2] {(100 - 0.37619*x)/0.57619};
+  \addplot[omThm, thick, domain=0:180, samples=2] {(95 - 0.37619*x)/0.57619};
+  \node[eqpoint] at (axis cs:105,105) {};
+  \node[anchor=south west, font=\footnotesize] at (axis cs:105,105) {bond};
+  \node[eqpoint] at (axis cs:130,80) {};
+  \node[anchor=south west, font=\footnotesize] at (axis cs:130,80) {equity};
+  \node[anchor=south west, font=\footnotesize, omDef] at (axis cs:62,136) {price 100};
+  \node[anchor=north east, font=\footnotesize, omThm] at (axis cs:56,126) {price 95};
+  \node[anchor=south east, font=\footnotesize, black!60, rotate=45] at (axis cs:170,170) {riskless};
+\end{axis}
+\end{tikzpicture}
+
+{\small \omterm{def:b2:asset-prices:state-price}{State prices} in the payoff plane. A bond pays 105 in both states and costs 100; an equity pays
+130 in a boom and 80 in a slump and costs 95 (the weekend problem's two securities). The lines join the
+payoffs that cost the same; their slope is $-\psi_1/\psi_2 = -0.653$. No arbitrage means that every line
+of equal price slopes down: a payoff larger in both states must cost more.}
+\end{omfigure}
+
+\section{A price as an expected discounted payoff}\label{sec:b2:asset-prices:sdf}
+
+Divide each \omterm{def:b2:asset-prices:state-price}{state price} by the probability of its state: $\zeta_s = \psi_s/\mu_s$. Then
+\[
+p = \sum_s \psi_s x(s) = \sum_s \mu_s\,\zeta_s\,x(s) = \mathbb{E}[\tilde\zeta\,\tilde x].
+\]
+
+\begin{definition}[Stochastic discount factor]\label{def:b2:asset-prices:sdf}
+A \emph{stochastic discount factor}\index{stochastic discount factor} is a random variable
+$\tilde\zeta$, one value per state, such that every asset's price is $p = \mathbb{E}[\tilde\zeta\,\tilde
+x]$; equivalently, every gross return satisfies $\mathbb{E}[\tilde\zeta\,\tilde R] = 1$. It is positive
+in every state exactly when there is no arbitrage.
+\end{definition}
+
+The \omterm{def:b2:intertemporal-choice:discount-factor}{discount factor} is ``stochastic'' because a unit of money is worth more in some states than in
+others. The saver of \cref{ch:b2:intertemporal-choice} says which.
+
+\begin{proposition}[The consumption discount factor]\label{prop:b2:asset-prices:consumption-sdf}
+A saver with expected utility $u(c_0) + \beta\,\mathbb{E}[u(\tilde c_1)]$ who can buy any amount of an
+asset at price $p$ holds it, at an interior optimum, only if
+\[
+p = \mathbb{E}\Bigl[\beta\,\frac{u'(\tilde c_1)}{u'(c_0)}\,\tilde x\Bigr]:
+\]
+$\tilde\zeta = \beta u'(\tilde c_1)/u'(c_0)$ is a \omterm{def:b2:asset-prices:sdf}{stochastic discount factor}. The gross risk-free return
+is $R_f = 1/\mathbb{E}[\tilde\zeta]$; with CRRA utility and certain growth $g$, $R_f = g^{\gamma}/\beta$.
+\end{proposition}
+
+\begin{proof}
+Buying $\varepsilon$ more units costs $\varepsilon p\,u'(c_0)$ in utility today and adds
+$\varepsilon\beta\,\mathbb{E}[u'(\tilde c_1)\tilde x]$ tomorrow, to first order; at an optimum the
+difference is zero for small $\varepsilon$ of either sign. A risk-free asset pays $1$ in every state, so
+its price is $\mathbb{E}[\tilde\zeta]$ and its gross return $1/\mathbb{E}[\tilde\zeta]$. With $u'(c) =
+c^{-\gamma}$ and $\tilde c_1 = gc_0$, $\tilde\zeta = \beta g^{-\gamma}$.
+\end{proof}
+
+This is the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} again, one asset at a time. A unit of money is worth most in the states where
+consumption is low, so $\tilde\zeta$ is high in bad times. With certain growth, the formula for $R_f$
+already contains a first puzzle: with $\beta$ near one and growth of two per cent a year, a $\gamma$ of 5
+asks for a real safe rate near 10 per cent, while bills have paid about one per cent
+(\cref{exo:b2:asset-prices:2}).
+
+The same formula prices bonds of every maturity. A bond paying one unit in $n$ years costs $p^{(n)} =
+\mathbb{E}[\tilde\zeta_1\tilde\zeta_2\cdots\tilde\zeta_n]$, and its yield is $(p^{(n)})^{-1/n} - 1$.
+If the \omterm{def:b2:intertemporal-choice:discount-factor}{discount factors} of successive years were independent, the $n$-year yield would be close to the
+average of the one-year rates expected over the $n$ years: this is the \emph{expectations hypothesis}
+of the term structure. It ignores any premium that a long bond pays for the risk that its price falls
+when rates rise; tests of the hypothesis ask whether such a premium exists and whether it changes over
+time. \Cref{ch:b2:three-equation-model} returns to yields as the channel of monetary policy.
+
+\section{A risk premium from covariance}\label{sec:b2:asset-prices:premium}
+
+\begin{definition}[Excess return]\label{def:b2:asset-prices:excess-return}
+The \emph{excess return}\index{excess return} of an asset is its return minus the risk-free return,
+$\tilde\xi_i = \tilde R_i - R_f$; its mean $\mathbb{E}[\tilde\xi_i]$ is the asset's \omterm{def:b2:expected-utility:risk-premium}{risk premium}.
+\end{definition}
+
+\begin{proposition}[Risk premium]\label{prop:b2:asset-prices:covariance}
+For every asset,
+\[
+\mathbb{E}[\tilde R_i] - R_f = -R_f\,\mathrm{cov}(\tilde\zeta, \tilde R_i).
+\]
+An asset that pays well when the \omterm{def:b2:intertemporal-choice:discount-factor}{discount factor} is high, in bad times, has a return below the
+risk-free return; one that pays well in good times must offer more.
+\end{proposition}
+
+\begin{proof}
+$1 = \mathbb{E}[\tilde\zeta\tilde R_i] = \mathbb{E}[\tilde\zeta]\,\mathbb{E}[\tilde R_i] +
+\mathrm{cov}(\tilde\zeta, \tilde R_i)$, and $\mathbb{E}[\tilde\zeta] = 1/R_f$. Multiply by $R_f$ and
+rearrange.
+\end{proof}
+
+Only covariance with the \omterm{def:b2:intertemporal-choice:discount-factor}{discount factor} is priced. An asset whose return is risky but unrelated to
+$\tilde\zeta$ earns the risk-free return, however volatile it is: its risk can be diversified away and
+asks for no reward. With CRRA utility and small changes, $\tilde\zeta = \beta\tilde g^{-\gamma} \approx
+\beta(1 - \gamma(\tilde g - 1))$, so
+\[
+\mathbb{E}[\tilde R_i] - R_f \approx \gamma\,\mathrm{cov}(\tilde g, \tilde R_i):
+\]
+the premium is the \omterm{def:b2:expected-utility:rra}{coefficient of relative risk aversion} times the covariance of the asset's return with
+consumption growth. \Cref{exo:b2:asset-prices:11} derives the exact version with lognormal consumption.
+
+\begin{definition}[Equity premium]\label{def:b2:asset-prices:equity-premium}
+The \emph{equity premium}\index{equity premium} is the mean \omterm{def:b2:asset-prices:excess-return}{excess return} of a broad index of shares
+over a risk-free asset, usually short-term government bills.
+\end{definition}
+
+\begin{record}[The equity premium puzzle]
+Mehra and Prescott (1985) put American data for 1889--1978 into the consumption model. Over those
+% ledger: b2:mehra-prescott1985
+years the mean gross return on equity was $1.0698$, the gross risk-free return $1.008$, and the \omterm{def:b2:asset-prices:equity-premium}{equity
+premium} $0.0618$, while consumption grew by a factor of $1.018$ a year on average with a standard
+deviation of only $0.036$. Consumption that smooth makes the covariance in the premium formula small.
+Taking the evidence to put the \omterm{def:b2:expected-utility:rra}{coefficient of relative risk aversion} below 10, they set it at that
+% ledger: b2:mehra2003-calib
+bound with $\beta = 0.99$: the model then gives a risk-free rate of 12.7 per cent and a premium of 1.4
+points, against 0.8 per cent and 6.18 points in the data (as restated in Mehra 2003). Updated to 2000,
+% ledger: b2:mehra2003-us
+the American premium over the relatively riskless asset was 6.9 percentage points.
+\end{record}
+
+The listing below repeats the calculation on the JST data for the United States, 1950--2020. It
+computes the premium, the covariance of equity returns with consumption growth, and the \omterm{def:b2:expected-utility:rra}{coefficient of
+relative risk aversion} that would make the two match. It also computes the smallest $\gamma$ that could
+match them if returns and consumption were perfectly correlated: since a correlation cannot exceed one,
+$\mathrm{cov}(\tilde g, \tilde R) \le \sigma_g\sigma_R$, and $\gamma \ge (\mathbb{E}[\tilde\xi]/\sigma_R)/
+\sigma_g$.
+
+\omcode{code/bachelor-2/04-asset-prices/listings/puzzle.py}{1}{30}{The \omterm{def:b2:asset-prices:equity-premium}{equity premium} and the \omterm{def:b2:expected-utility:risk-aversion}{risk
+aversion} it needs, United States, 1950--2020.}\label{lst:b2:asset-prices:puzzle}
+
+\omoutput{code/bachelor-2/04-asset-prices/outputs/puzzle.txt}{A premium of 7.6 points against a
+consumption growth with a standard deviation under 2 per cent.}\label{out:b2:asset-prices:puzzle}
+
+A premium of 7.6 points needs a \omterm{def:b2:expected-utility:rra}{coefficient of relative risk aversion} of 312 at the measured
+% code: listings/puzzle.py
+correlation of 0.08, and at least 25 even if the correlation were one. A household with $\gamma = 25$
+would pay almost a fifth of its wealth to avoid a fifty-fifty gamble of losing or gaining a fifth
+(\cref{exo:b2:asset-prices:12}). The measured premium is large, the risk in aggregate consumption is
+small, and the model ties the two through a single $\gamma$ that must also fit the risk-free rate.
+
+\begin{model}{Consumption-based asset pricing}
+\assumes A representative saver with time-separable CRRA utility prices every asset by its \omterm{def:b2:intertemporal-choice:euler-equation}{Euler
+equation}; returns and consumption are measured without error.
+\predicts Premiums proportional to the covariance of returns with consumption growth, with a factor
+$\gamma$ that also fixes the risk-free rate and the saver's attitude to gambles.
+\tested Mehra and Prescott (1985) on American data; the JST data for 1950--2020 (this chapter's
+listing).
+\breaks The \omterm{def:b2:asset-prices:equity-premium}{equity premium} needs a $\gamma$ of 25 or more (the \omterm{def:b2:asset-prices:equity-premium}{equity premium} puzzle), and such a
+$\gamma$ predicts a risk-free rate far above the one observed. Models that change the utility
+function, add rare disasters or drop the representative saver are the subject of the quant series and
+of graduate courses.
+\end{model}
+
+\begin{measure}[How a total-return index is built]
+A total-return index assumes that every dividend or coupon is reinvested in the same asset on receipt.
+Its annual nominal return is the price change plus the income, $(p_t + d_t)/p_{t-1} - 1$; the real
+return divides by inflation, $(1 + \text{nominal})/(1 + \pi_t) - 1$, with $\pi_t$ the change in the
+consumer price index; and the index chains the returns, $V_t = V_{t-1}(1 + r_t)$. Three cautions. The
+index ignores taxes and trading costs, which no investor escapes. Its composition follows the shares
+the compilers could find, which tilts long histories towards companies that survived. And annual data
+hide the path within the year: the worst year in the index is milder than the worst twelve months.
+\end{measure}
+
+\section{Mean--variance}\label{sec:b2:asset-prices:mean-variance}
+
+A second route to \omterm{def:b2:expected-utility:risk-premium}{risk premiums} starts from the investor's portfolio instead of consumption. Suppose
+investors care only about the mean and the variance of their portfolio's return. With two risky assets
+in shares $\theta$ and $1 - \theta$, the mean is linear in $\theta$ and the variance quadratic:
+\[
+\mathbb{E}[\tilde R_\theta] = \theta\,\mathbb{E}[\tilde R_1] + (1 - \theta)\,\mathbb{E}[\tilde R_2], \quad
+\sigma^2_\theta = \theta^2\sigma_1^2 + (1 - \theta)^2\sigma_2^2 + 2\theta(1 - \theta)\sigma_{12}.
+\]
+
+\begin{definition}[Mean--variance frontier]\label{def:b2:asset-prices:frontier}
+The \emph{mean--variance frontier}\index{mean--variance frontier} is the set of portfolios with the
+smallest variance for each mean return. Its upper branch, above the portfolio of minimum variance, is
+the set an investor who likes mean and dislikes variance can choose from.
+\end{definition}
+
+Add a risk-free asset. Any mix of $R_f$ and a risky portfolio $t$ lies on the straight line from $(0,
+R_f)$ through $(\sigma_t, \mathbb{E}[\tilde R_t])$ in the plane of standard deviation and mean, with
+slope $(\mathbb{E}[\tilde R_t] - R_f)/\sigma_t$, the portfolio's \emph{Sharpe ratio}. The steepest such
+line touches the frontier at the \emph{tangency portfolio}; every mean--variance investor holds the
+safe asset and the tangency portfolio, in proportions set by its aversion to variance.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=20, ymin=0, ymax=8.5, xlabel={Standard deviation
+    (per cent)}, ylabel={Mean return (per cent)}, width=0.66\linewidth, height=0.5\linewidth]
+  \addplot[black, very thick, domain=-0.25:1.15, samples=80, variable=\t]
+    ({100*sqrt(\t^2*0.0324 + (1-\t)^2*0.0036 + 2*\t*(1-\t)*0.00216)}, {100*(0.07*\t + 0.03*(1-\t))});
+  \addplot[omDef, thick, domain=0:18, samples=2] {2 + 0.30003*x};
+  \node[eqpoint] at (axis cs:18,7) {};
+  \node[anchor=north west, font=\footnotesize] at (axis cs:18,7) {equity};
+  \node[eqpoint] at (axis cs:6,3) {};
+  \node[anchor=north west, font=\footnotesize] at (axis cs:6,3) {bonds};
+  \node[eqpoint] at (axis cs:8.973,4.692) {};
+  \node[anchor=north west, font=\footnotesize] at (axis cs:8.973,4.692) {tangency $t$};
+  \node[eqpoint] at (axis cs:0,2) {};
+  \node[anchor=west, font=\footnotesize] at (axis cs:0.3,1.6) {$R_f$};
+  \node[anchor=south east, font=\footnotesize, omDef] at (axis cs:15,6.8) {capital line, slope 0.30};
+\end{axis}
+\end{tikzpicture}
+
+{\small The \omterm{def:b2:asset-prices:frontier}{mean--variance frontier} of equity (mean 7, standard deviation 18) and bonds (3 and 6),
+correlation 0.2, with a safe rate of 2 per cent: the weekend problem's numbers. The tangency portfolio
+holds 42.3 per cent equity; the capital line through it has the highest Sharpe ratio, $0.300$.}
+\end{omfigure}
+
+\begin{definition}[Beta of an asset]\label{def:b2:asset-prices:beta}
+The \emph{beta}\index{beta (of an asset)} of asset $i$ with respect to a portfolio $t$ is
+$\beta_i = \mathrm{cov}(\tilde R_i, \tilde R_t)/\sigma_t^2$: the slope of a regression of the asset's
+return on the portfolio's.
+\end{definition}
+
+\begin{proposition}[Expected returns on the frontier]\label{prop:b2:asset-prices:beta-pricing}
+If $t$ is the tangency portfolio, every asset satisfies
+\[
+\mathbb{E}[\tilde R_i] - R_f = \beta_i\,\bigl(\mathbb{E}[\tilde R_t] - R_f\bigr).
+\]
+\end{proposition}
+
+\begin{proof}
+The tangency portfolio maximises the Sharpe ratio over all portfolios of risky assets. Move a small
+weight $\varepsilon$ from $t$ into asset $i$, financed at $R_f$: the mean \omterm{def:b2:asset-prices:excess-return}{excess return} changes by
+$\varepsilon(\mathbb{E}[\tilde R_i] - R_f)$ and the variance by $2\varepsilon\,\mathrm{cov}(\tilde R_i,
+\tilde R_t)$, to first order, so the standard deviation by $\varepsilon\,\mathrm{cov}(\tilde R_i, \tilde
+R_t)/\sigma_t$. At a maximum of the Sharpe ratio the ratio of the two changes equals the ratio itself:
+$(\mathbb{E}[\tilde R_i] - R_f)\sigma_t/\mathrm{cov}(\tilde R_i, \tilde R_t) = (\mathbb{E}[\tilde R_t]
+- R_f)/\sigma_t$. Rearranging gives the formula.
+\end{proof}
+
+\begin{definition}[Capital asset pricing model]\label{def:b2:asset-prices:capm}
+The \emph{capital asset pricing model}\index{capital asset pricing model} (CAPM) adds that the tangency
+portfolio is the market portfolio of all risky assets, as it is when every investor chooses by mean and
+variance with the same beliefs: then $\mathbb{E}[\tilde R_i] - R_f = \beta_i(\mathbb{E}[\tilde R_m] -
+R_f)$, with \omterm{def:b2:asset-prices:beta}{betas} measured against the market. Plotted against \omterm{def:b2:asset-prices:beta}{beta}, expected returns lie on a line,
+the \emph{security market line}.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=2, ymin=0, ymax=14, xtick={0,1,2},
+    ytick={2,8}, yticklabels={$R_f$, $\mathbb{E}[\tilde R_m]$}, xlabel={Beta},
+    ylabel={Mean return}, width=0.6\linewidth, height=0.45\linewidth]
+  \addplot[omDef, very thick, domain=0:2, samples=2] {2 + 6*x};
+  \addplot[omThm, thick, dashed, domain=0:2, samples=2] {6.5 + 1.5*x};
+  \draw[guide] (axis cs:1,0) -- (axis cs:1,8) -- (axis cs:0,8);
+  \node[eqpoint] at (axis cs:1,8) {};
+  \node[anchor=south east, font=\footnotesize, omDef] at (axis cs:1.5,11) {CAPM};
+  \node[anchor=north west, font=\footnotesize, omThm] at (axis cs:1.3,8.2) {a flatter line};
+\end{axis}
+\end{tikzpicture}
+
+{\small The security market line of the CAPM (solid) and a flatter line of the kind the tests report
+(dashed): \omterm{def:b2:asset-prices:beta}{low-beta} assets earn more, and \omterm{def:b2:asset-prices:beta}{high-beta} assets less, than the CAPM predicts. An illustration
+with round numbers, not data.}
+\end{omfigure}
+
+\begin{model}{Capital asset pricing model}
+\assumes Investors choose portfolios by the mean and variance of one period's return, agree on the
+distribution of returns, and borrow and lend at one safe rate.
+\predicts Expected \omterm{def:b2:asset-prices:excess-return}{excess returns} proportional to market \omterm{def:b2:asset-prices:beta}{betas}: a security market line through $R_f$
+with slope equal to the market's premium; nothing else priced.
+\tested The cross-section of average returns on American shares sorted by \omterm{def:b2:asset-prices:beta}{beta} and by size (Fama and
+French 1992).
+\breaks Once \omterm{def:b2:asset-prices:beta}{beta} is allowed to vary apart from size, the relation between \omterm{def:b2:asset-prices:beta}{beta} and average return is
+% ledger: b2:ff1992-beta
+flat, even with \omterm{def:b2:asset-prices:beta}{beta} as the only regressor; size and book-to-market capture the cross-section of
+average returns (Fama and French 1992).
+\end{model}
+
+The chart below sets each country's three assets in the plane of standard deviation and mean, over
+1950--2020. Within every country, the asset with the more volatile return paid more on average. Across
+countries, a more volatile stock market did not pay more: the correlation between the standard
+% figdata: summary (eq_sd_mean_corr 0.01)
+deviation and the mean of the 15 equity markets is 0.01. By \cref{prop:b2:asset-prices:covariance}
+that is no surprise, since what is priced is covariance with what investors fear, not volatility.
+
+\begin{omchart}{Mean against standard deviation of annual real returns, 1950--2020, in per cent: one
+  point per country and asset, 15 countries with complete series.}{Jord\`a--Schularick--Taylor
+  Macrohistory Database}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xmin=0, xmax=35, ymin=-2, ymax=14, xlabel={Standard deviation (per cent)},
+    ylabel={Mean real return (per cent)}, legend pos=north west, height=0.5\linewidth,
+    width=0.75\linewidth]
+  \addplot+[only marks, mark=*, omDef, mark size=1.6pt]
+    table[x=equity_sd, y=equity_mean] {figdata/bachelor-2/04-asset-prices/out/riskreturn_wide.csv};
+  \addplot+[only marks, mark=square*, omThm, mark size=1.6pt]
+    table[x=bond_sd, y=bond_mean] {figdata/bachelor-2/04-asset-prices/out/riskreturn_wide.csv};
+  \addplot+[only marks, mark=triangle*, black!60, mark size=1.8pt]
+    table[x=bill_sd, y=bill_mean] {figdata/bachelor-2/04-asset-prices/out/riskreturn_wide.csv};
+  \legend{Equities, Bonds, Bills}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\section{Efficient markets}\label{sec:b2:asset-prices:efficient}
+
+\begin{definition}[Efficient-markets hypothesis]\label{def:b2:asset-prices:emh}
+The \emph{efficient-markets hypothesis}\index{efficient-markets hypothesis} says that prices reflect a
+given set of information fully, so that no strategy based on that information earns more than the
+return that compensates its risk. Its \emph{weak form} takes the information to be past prices; the
+\emph{semi-strong form}, all public information; the \emph{strong form}, all information, private
+included.
+\end{definition}
+
+\begin{proposition}[Unpredictable excess returns]\label{prop:b2:asset-prices:unpredictable}
+If expected returns are constant and prices reflect past returns, the \omterm{def:b2:asset-prices:excess-return}{excess return} of a year is
+uncorrelated with every past return; in particular its first-order autocorrelation is zero.
+\end{proposition}
+
+\begin{proof}
+If $\mathbb{E}[\tilde R_{t+1} \mid \text{past returns}] = \bar R$, a constant, then
+$\mathrm{cov}(\tilde R_{t+1}, R_{t-k}) = \mathbb{E}[(R_{t-k} - \mathbb{E}R)(\mathbb{E}[\tilde R_{t+1}
+\mid \text{past}] - \bar R)] = 0$ for every $k \ge 0$, by the law of iterated expectations.
+\end{proof}
+
+The weak form is easy to test with the JST data. A sample autocorrelation from $n$ independent years
+has a standard error of about $1/\sqrt n$; with 71 years, values beyond $2/\sqrt{71} = 0.237$ are
+% figdata: summary (band 0.237, n_outside_band 2)
+unlikely if there is no predictability. Two of the 15 countries lie beyond the band, Japan and
+Portugal, against about one expected by chance at that level.
+
+\begin{omchart}{First-order autocorrelation of annual real equity returns, 1950--2020, by country. The
+  dotted lines are $\pm 2/\sqrt{71}$, the band within which about 95 per cent of sample
+  autocorrelations fall when returns are unpredictable.}{Jord\`a--Schularick--Taylor Macrohistory
+  Database}
+\begin{tikzpicture}
+\begin{axis}[omrecord, ybar, bar width=9pt, xmin=0.3, xmax=15.7, ymin=-0.35, ymax=0.35,
+    xtick=data, xticklabels from table={figdata/bachelor-2/04-asset-prices/out/autocorr.csv}{iso3},
+    x tick label style={font=\scriptsize, rotate=90}, ylabel={Autocorrelation}, grid=none,
+    ymajorgrids, height=0.42\linewidth, width=0.85\linewidth]
+  \addplot[fill=omDef!70, draw=omDef] table[x=pos, y=rho1]
+    {figdata/bachelor-2/04-asset-prices/out/autocorr.csv};
+  \draw[black!70, densely dotted, thick] (axis cs:0.3,0.237) -- (axis cs:15.7,0.237);
+  \draw[black!70, densely dotted, thick] (axis cs:0.3,-0.237) -- (axis cs:15.7,-0.237);
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+The semi-strong form is tested by \emph{event studies}: around a public announcement (a merger, an
+earnings report, a change in a dividend), the share price should jump once, at the announcement, and
+drift neither before (unless information leaked) nor after. The test measures the \emph{abnormal
+return}, the return minus what a pricing model predicts, day by day around the event.
+
+\begin{definition}[Anomaly]\label{def:b2:asset-prices:anomaly}
+An \emph{anomaly}\index{anomaly (asset pricing)} is a pattern in average returns that a given pricing
+model does not explain: a characteristic of assets, known in advance, that predicts their returns once
+their risk, as the model measures it, is accounted for.
+\end{definition}
+
+Every test of efficiency needs a model of the return that compensates risk, so it tests the two
+together: the \emph{joint-hypothesis problem}. An \omterm{def:b2:asset-prices:anomaly}{anomaly} may reveal prices that ignore information, or
+a model that measures risk badly. Size and book-to-market (Fama and French 1992) are anomalies for the
+CAPM; added to the pricing model as risk factors, they stop being anomalies for the new model. The
+sharpest test of an \omterm{def:b2:asset-prices:anomaly}{anomaly} uses data collected after it was reported: a pattern found by searching many
+candidates on one sample should vanish there, and one that reflects risk or a lasting feature of
+markets should not. The quant series of this collection treats the factor models and their tests at
+length.
+
+\begin{debate}[Are stock prices too volatile?]
+If a share's price is the expected present value of its dividends at a constant discount rate, the
+price must vary less than the realised present value of the dividends that followed, since a forecast
+varies less than the thing forecast. Shiller (1981) derived such bounds and compared them with American
+% ledger: b2:shiller1981, b2:mm1986, b2:cs1988
+data: prices moved much more than the dividends that followed seemed to justify. Marsh and Merton
+(1986) showed that the bounds can be violated by efficient prices if managers smooth dividends. Campbell
+and Shiller (1988) linked the dividend--price ratio to future dividend growth and future discount rates,
+so that the question became how much of the movement in prices comes from changing discount rates,
+that is from changing expected returns. The evidence is clear that the dividend--price ratio moves; it
+is still open how much of its movement reflects rational changes in required returns and how much
+reflects prices straying from fundamentals.
+\end{debate}
+
+\begin{model}{Efficient markets}
+\assumes Prices reflect all information of a given kind; expected returns are those that compensate
+risk, as measured by a pricing model.
+\predicts No strategy based on past prices (weak form) or public information (semi-strong form) beats
+the risk-adjusted return; prices jump at news and do not drift after it.
+\tested Autocorrelations of annual returns (this chapter's chart: close to zero in most countries);
+event studies.
+\breaks Every test is joint with a pricing model, and the pricing model of the day leaves anomalies
+(size and book-to-market for the CAPM, Fama and French 1992); whether prices vary more than
+fundamentals allow is still debated (above).
+\end{model}
+
+\section{Exercises}\label{sec:b2:asset-prices:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:asset-prices:1}
+Two states. A bond pays $1$ in both and costs $0.96$; a share pays $2$ in the first state and $0.5$ in
+the second and costs $1.1$. Find the \omterm{def:b2:asset-prices:state-price}{state prices}. Is there an arbitrage?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:asset-prices:2}
+A saver has $\beta = 0.98$, CRRA utility with $\gamma = 2$, and expects consumption to grow by 2 per
+cent with certainty. Find the gross risk-free return. Compare it with the mean real return on bills in
+the JST data (about 1 per cent).
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:asset-prices:3}
+Read the opening chart: which asset did best in each country, and roughly by what factor did an
+investment in equities grow in France and in the United States? The final values are 11.0 and 177.6;
+convert each into an average annual real return over the 71 years.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:asset-prices:4}
+Name an observation that would refute the weak form of the \omterm{def:b2:asset-prices:emh}{efficient-markets hypothesis}, and say why
+a single year in which a trading rule beat the market would not.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:asset-prices:5}
+A share's return has a covariance of $0.024$ with the market's, whose variance is $0.04$. The safe rate
+is 1 per cent and the market's expected return 7 per cent. Find the share's \omterm{def:b2:asset-prices:beta}{beta} and its expected
+return under the CAPM.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:asset-prices:6}
+Consumption growth has a standard deviation of 2 per cent, an equity index 16 per cent, and their
+correlation is $0.5$. Using $\mathbb{E}[\tilde R] - R_f \approx \gamma\,\mathrm{cov}(\tilde g, \tilde R)$,
+predict the premium for $\gamma = 2$ and $\gamma = 10$. What $\gamma$ gives a premium of 6 per cent?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:asset-prices:7}
+Data and Python. With \texttt{jst(isos=["USA"], since=1899, until=2020, cols=["eq\_tr", "cpi"])} from
+\texttt{econdata}, compute the real equity return of each year 1900--2020 for the United States and the
+United Kingdom, then the arithmetic mean and the geometric mean. Why is the geometric mean smaller, and
+which one tells an investor what a unit invested in 1899 became?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:asset-prices:8}
+Two uncorrelated assets have standard deviations of 20 and 10 per cent. Find the share of the first in
+the portfolio of minimum variance, and its standard deviation.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:asset-prices:9}
+A study finds that shares of small firms earned 3 points a year more than the CAPM predicts. Give two
+explanations that the joint-hypothesis problem leaves open, and an observation that would favour each.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:asset-prices:10}
+Prove the converse in \cref{prop:b2:asset-prices:state-prices}: if there is no arbitrage, both \omterm{def:b2:asset-prices:state-price}{state
+prices} are positive. Then show by an example with a single security, paying $1$ in state 1 and $0$ in
+state 2 at price $0.5$, that without a second security the \omterm{def:b2:asset-prices:state-price}{state price} of state 2 is not determined.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:asset-prices:11}
+Let $\tilde\zeta = \beta\tilde g^{-\gamma}$, with $\ln\tilde g$ and $\ln\tilde R$ jointly normal. Using
+$\mathbb{E}[e^{\tilde y}] = e^{\mathbb{E}\tilde y + \mathrm{var}(\tilde y)/2}$ for a normal $\tilde y$,
+show that $\ln\mathbb{E}[\tilde R] - \ln R_f = \gamma\,\mathrm{cov}(\ln\tilde g, \ln\tilde R)$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:asset-prices:12}
+Using the listing's output: (a) explain why $\gamma \ge (\mathbb{E}[\tilde\xi]/\sigma_R)/\sigma_g$ and
+check the value 25.1. (b) A household with CRRA utility and $\gamma = 25$ faces a fifty-fifty gamble of
+losing or gaining 20 per cent of its wealth. Find its \omterm{def:b2:expected-utility:risk-premium}{risk premium} as a share of wealth. (c) What does
+the answer say about the size of $\gamma$ the puzzle needs?
+\end{exercise}
+
+\section{Problem: The Brenmoor pension fund}\label{sec:b2:asset-prices:problem}
+
+\begin{problem}[{Weekend problem --- the pension fund of Brenmoor's municipal workers, in Brenland, an
+invented economy, prices its assets, finds the discount factor its members' consumption implies,
+chooses a mix of equities and bonds, and tests whether past returns predict future ones}]
+\label{pb:b2:asset-prices:1}
+Next year the Brenland economy is in a boom or a slump, each with probability $0.5$. A Brenland
+government bond costs 100 dalens and pays 105 in both states; a unit of the Brenland equity index costs
+95 and pays 130 in a boom and 80 in a slump. Round \omterm{def:b2:asset-prices:state-price}{state prices} and \omterm{def:b2:intertemporal-choice:discount-factor}{discount factors} to four decimals,
+returns to two decimals of a per cent.
+
+\medskip
+\noindent\textbf{Part I --- No arbitrage and state prices.}
+\begin{enumerate}
+  \item Write the payoff table. Are the two payoffs proportional?
+  \item Find the \omterm{def:b2:asset-prices:state-price}{state prices} $\psi_1$ (boom) and $\psi_2$ (slump).
+  \item Do these prices admit an arbitrage?
+  \item Find the gross risk-free return.
+  \item An option pays 30 in a boom and nothing in a slump. Find its no-arbitrage price.
+  \item A dealer sells the option at 10. Build a portfolio of equity and bonds with the option's
+        payoffs, and an arbitrage that exploits the dealer's price. What does it earn today?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The discount factor.}
+\begin{enumerate}[resume]
+  \item Find the \omterm{def:b2:asset-prices:sdf}{stochastic discount factor} in each state.
+  \item Check that $\mathbb{E}[\tilde\zeta\tilde R] = 1$ for the equity.
+  \item Find the equity's expected gross return and its premium over the bond.
+  \item Compute $\mathrm{cov}(\tilde\zeta, \tilde R)$ and check \cref{prop:b2:asset-prices:covariance}.
+  \item The fund's members consume 4 per cent more next year in a boom and 2 per cent less in a slump.
+        Find the $\gamma$ and $\beta$ for which $\tilde\zeta = \beta\tilde g^{-\gamma}$.
+  \item Is the $\gamma$ of question 11 plausible? Compare with \cref{exo:b2:asset-prices:12}.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Mean--variance choice.} Over many years, the fund expects equity to
+return 7 per cent with a standard deviation of 18, and bonds 3 per cent with a standard deviation of
+6; the correlation is $0.2$. The fund chooses its equity share $\theta$ to maximise
+$\mathbb{E}[\tilde R_\theta] - \tfrac{\gamma}{2}\sigma^2_\theta$.
+\begin{enumerate}[resume]
+  \item Find the mean and the standard deviation of a 60/40 portfolio (60 per cent equity).
+  \item Find the portfolio of minimum variance and its standard deviation.
+  \item Find the optimal equity share as a function of $\gamma$, and its value for $\gamma = 2$, $3$ and
+        $5$.
+  \item Which $\gamma$ makes the 60/40 portfolio optimal?
+  \item A safe asset now returns 2 per cent. Find the tangency portfolio, its mean, standard deviation
+        and Sharpe ratio.
+  \item Compare the Sharpe ratio of the 60/40 portfolio with the tangency portfolio's.
+  \item With the safe asset, how much should a fund with $\gamma = 3$ put in the tangency portfolio,
+        and what is its equity share overall?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Do past returns predict?} The fund's analyst has 60 years of Brenland
+equity returns (\texttt{brenland\_returns.csv}, invented).
+\begin{enumerate}[resume]
+  \item The mean equity return is 5.91 per cent and the standard deviation 17.55. How precise is the
+        mean (its standard error)?
+  \item The first-order autocorrelation is $-0.153$. Test whether it is zero at the 5 per cent level.
+  \item In the 38 years after a rise, equity returned 6.28 per cent on average; in the 21 years after a
+        fall, 5.12. Test whether the difference is zero.
+  \item The returns were drawn independently, year by year. If the analyst had tried twenty different
+        rules on these data, how many would you expect to look significant at the 5 per cent level?
+  \item Why does efficiency not require returns to be unpredictable when expected returns change over
+        time?
+  \item State the result: the fund's optimal equity share for $\gamma = 3$ without a safe asset, the
+        $\gamma$ that justifies a 60/40 portfolio, and what the predictability test finds.
+\end{enumerate}
+\end{problem}

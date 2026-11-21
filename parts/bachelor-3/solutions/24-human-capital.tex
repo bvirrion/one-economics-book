@@ -1,0 +1,131 @@
+\section*{Chapter \ref{ch:b3:human-capital} --- Human Capital and the Returns to Schooling}
+
+\begin{solution}{exo:b3:human-capital:1}
+Lemieux and Card's Canadian estimate: 16.4~\% by IV against 7.0~\% by OLS, a gap of 9.4 points,
+just above Harmon and Walker's 15.3 against 6.1. Duflo's Indonesian estimate is the only
+one below: 6.4 against 7.8. % figdata: estimates
+\end{solution}
+
+\begin{solution}{exo:b3:human-capital:2}
+$1{,}500/20{,}000 = 7.5~\%$: the rate at which a perpetuity of 1{,}500 is worth 20{,}000.
+\end{solution}
+
+\begin{solution}{exo:b3:human-capital:3}
+$e^{0.11} - 1 = 11.6~\%$.
+\end{solution}
+
+\begin{solution}{exo:b3:human-capital:4}
+A return within pairs of identical twins, corrected for reporting error, clearly
+below the OLS return across people.
+\end{solution}
+
+\begin{solution}{exo:b3:human-capital:5}
+The tested solution is \code{ex05_mincer.py}, in the chapter's \code{exercises/}
+folder. The coefficient falls from 0.0632 (s.e.\ 0.0032) to 0.0552 (0.0033): a premium of 6.5 and
+then 5.7~\% a year. % output: ex05_mincer
+The added indicators are correlated with both schooling and earnings, and absorb part
+of what the first regression credited to schooling.
+\end{solution}
+
+\begin{solution}{exo:b3:human-capital:6}
+Twins' schooling is highly correlated, so the true variance of the difference is small,
+while the variance of the reporting error is doubled by differencing: the share of
+noise in the measured difference, and so the bias toward zero, is larger.
+\end{solution}
+
+\begin{solution}{exo:b3:human-capital:7}
+$0.024/0.3 = 0.08$: 8~\% per year.
+\end{solution}
+
+\begin{solution}{exo:b3:human-capital:8}
+A forklift licence is general: every warehouse values it, so the worker pays,
+directly or through a lower wage while she trains. Training in the firm's own
+software is specific: the firm can recover its cost and shares it.
+\end{solution}
+
+\begin{solution}{exo:b3:human-capital:9}
+A coefficient on the diploma indicator of zero: each year adds the same, whether it
+completes a diploma or not.
+\end{solution}
+
+\begin{solution}{exo:b3:human-capital:10}
+The proof is in the text. With tuition $c$ paid at the start of year $S + 1$, equal value requires
+$Y(S+1)e^{-r(S+1)}/r = Y(S)e^{-rS}/r + ce^{-rS}$, so $Y(S+1)e^{-r} = Y(S) + rc$ and $\ln Y(S+1) - \ln Y(S) = r + \ln(1 + rc/Y(S)) \approx r(1 + c/Y(S))$.
+\end{solution}
+
+\begin{solution}{exo:b3:human-capital:11}
+The tested solution is \code{ex11_profiles.py}, in the chapter's \code{exercises/}
+folder. The fitted profiles peak at 43.6 years for men with fewer than 12 years of
+school, 41.0 with 12, 40.6 with 13--15 and 39.7 with 16 or more. % output: ex11_profiles
+Top-coding caps the earnings of older, more educated men, flattening their profiles
+where they would still rise and pulling the fitted peak earlier.
+\end{solution}
+
+\begin{solution}{exo:b3:human-capital:12}
+IV estimates the return of the \omterm{def:b3:instrumental-variables:compliance}{compliers} --- those whose schooling the instrument
+moves. If they are people kept from school by its cost or distance, their marginal
+return can be well above the average, and above the OLS estimate even when ability
+biases OLS upward.
+\end{solution}
+
+\begin{solution}{pb:b3:human-capital:school}
+% figdata: brenland_stats
+\textbf{1.} 1{,}439 heads; mean schooling 12.58 years.
+
+\textbf{2.} 0.083.
+
+\textbf{3.} 0.081 (s.e.\ 0.004).
+
+\textbf{4.} $e^{0.081} - 1 = 8.4~\%$.
+
+\textbf{5.} Upward, if the able both study longer and earn more.
+
+\textbf{6.} The survey gives the head's gross income, not an hourly wage; the slope then
+includes any effect of schooling on hours and on income from savings.
+
+\textbf{7.} 20.4~\%.
+
+\textbf{8.} 8.99 years; the reform adds $11 - 8.99 = 2.01$ years to each.
+
+\textbf{9.} $0.204 \times 2.01 = 0.411$ years.
+
+\textbf{10.} $0.029/0.411 = 7.06~\%$.
+
+\textbf{11.} It is below the least-squares 8.1~\%, as upward \omterm{def:b3:human-capital:ability-bias}{ability bias} would make it --- or
+the \omterm{def:b3:instrumental-variables:compliance}{compliers}' return is lower than the average.
+
+\textbf{12.} The reform changes earnings only through schooling. It fails if the
+reformed cohorts entered a different labour market, or if the reform came with
+other changes to schools.
+
+\textbf{13.} Those who would have left with 10 years or fewer.
+
+\textbf{14.} They are the least schooled: their return may be lower (less interest or
+preparation) or higher (kept out by the cost of staying).
+
+\textbf{15.} That they were held back by constraints rather than by a low return.
+
+\textbf{16.} It moves only the schooling of those at the 10--11 margin.
+
+\textbf{17.} Distance to a university as an instrument, or a regression discontinuity
+at an admission threshold.
+
+\textbf{18.} After tax, earnings are $(1 - t)Y$ in both streams and the cost is $(1 - t)Y$ given up: the
+log gain and the ratio of gain to cost are unchanged, so the return is 7.06~\%.
+
+\textbf{19.} $0.75 \times 7.06 = 5.30~\%$.
+
+\textbf{20.} $5.30/1.3 = 4.07~\%$.
+
+\textbf{21.} Taxes move income between the pupil and the state; output is counted
+before tax.
+
+\textbf{22.} Yes: the year costs the same and adds less output.
+
+\textbf{23.} Gains to others: less crime, more informed voters, colleagues who learn
+from the better educated.
+
+\textbf{24.} 4.07~\% exceeds 3~\%: at that discount rate the year is worth its cost to society.
+
+\textbf{25.} The private return is 7.1~\% and the social return 4.1~\%.
+\end{solution}

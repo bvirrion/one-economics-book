@@ -1,0 +1,447 @@
+\chapter{Platforms and Innovation}\label{ch:b3:platforms-and-innovation}
+
+Two features of modern markets strain the models of the earlier chapters. Some
+goods are worth more the more people use them: a telephone network, a payment card,
+a ride platform. And much of what firms sell is the result of research, whose
+reward depends on how long others can be kept from copying it. This chapter builds
+the models of \omterm{def:b3:platforms-and-innovation:network}{network effects}, of platforms that serve two groups at once, of
+\omterm{def:b3:platforms-and-innovation:switching}{switching costs} and of \omterm{def:b3:platforms-and-innovation:patent}{patents}, and ends with the evidence that much of an economy's
+productivity growth comes from firms entering and leaving, not from firms improving.
+
+\begin{openingchart}{Research and development spending as a share of GDP,
+1996--2023, six economies (India to 2020).}{World Bank, World Development Indicators,
+GB.XPD.RSDV.GD.ZS}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.7\linewidth, height=0.42\linewidth, xmin=1996, xmax=2023,
+  ymin=0, ymax=7, xtick distance=5, ylabel={Percent of GDP}, legend pos=north west,
+  legend style={font=\footnotesize}, legend columns=2]
+  \addplot[omDef, thick] table[x=year, y=ISR] {figdata/bachelor-3/29-platforms-and-innovation/out/rnd.csv};
+  \addplot[omThm, thick] table[x=year, y=KOR] {figdata/bachelor-3/29-platforms-and-innovation/out/rnd.csv};
+  \addplot[black, thick] table[x=year, y=USA] {figdata/bachelor-3/29-platforms-and-innovation/out/rnd.csv};
+  \addplot[omDef, dashed, thick] table[x=year, y=DEU] {figdata/bachelor-3/29-platforms-and-innovation/out/rnd.csv};
+  \addplot[omThm, dashed, thick] table[x=year, y=CHN] {figdata/bachelor-3/29-platforms-and-innovation/out/rnd.csv};
+  \addplot[black, dotted, thick] table[x=year, y=IND] {figdata/bachelor-3/29-platforms-and-innovation/out/rnd.csv};
+  \legend{Israel, Korea, United States, Germany, China, India}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: rnd_points
+Israel spent 2.5~\% of GDP on research in 1996 and 6.3~\% in 2023; Korea went from 2.1 to 4.9~\%, China
+from 0.6 to 2.6~\%. The United States rose from 2.5 to 3.4~\% and Germany from 2.1 to 3.2~\%, while India stayed near
+0.6~\%. (The United Kingdom is left out: its series jumps by more than half a point
+between 2013 and 2014, a change of measurement.) What economies buy with this
+spending, and how its rewards are protected, are the subject of half this chapter.
+
+\begin{recall}
+Growth through new ideas and the replacement of incumbents are the Year 2 volume's;
+the deadweight loss of monopoly is the Year 1 volume's, and dynamic games the Year 2
+volume's. Panel regressions are \cref{ch:b3:panel-data}'s.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:platforms-and-innovation:symbols}
+$n$ is a share or number of participants; $\alpha_i$ the value a member of side $i$ of a platform
+places on each member of the other side; $f_i$ the platform's cost per member of side $i$;
+$s$ a \omterm{def:b3:platforms-and-innovation:switching}{switching cost} and $\beta$ a discount factor; $s_{it}$ firm $i$'s share of employment in year $t$, used in
+the decomposition only.
+\end{notation}
+
+\section{Network effects and tipping}\label{sec:b3:platforms-and-innovation:network}
+
+\begin{definition}[Network effect; critical mass; tipping]\label{def:b3:platforms-and-innovation:network}
+\index{network effect}\index{critical mass}\index{tipping}
+A good has a \emph{network effect} when its value to a user rises with the number of
+users --- directly, as with a telephone, or indirectly through complementary
+goods, as with the software written for a computer. The \emph{critical mass} is the
+smallest number of users beyond which use grows on its own. A market \emph{tips} when
+small early advantages make one network take most of it.
+\end{definition}
+
+\begin{proposition}[Network demand has several equilibria]\label{prop:b3:platforms-and-innovation:rohlfs}
+Let consumers' tastes $\theta$ be uniform on $[0, 1]$, and let a consumer value the service at $V\theta n$ when a share $n$ of
+consumers uses it. At price $p$, a share $n > 0$ is an equilibrium if and only if $Vn(1 - n) = p$. For $0 < p < V/4$ there are two
+such shares and the share 0 is also an equilibrium; the lower one is the \omterm{def:b3:platforms-and-innovation:network}{critical mass}.
+\end{proposition}
+
+\begin{proof}
+If a share $n$ uses the service, a consumer joins iff $V\theta n \ge p$; the joiners are those with $\theta \ge p/(Vn)$, a
+share $1 - p/(Vn)$. Consistency requires $n = 1 - p/(Vn)$, that is $Vn(1 - n) = p$, whose left side peaks at $V/4$ when $n = \tfrac12$; below
+that peak the equation has two roots. With no users, no one gains by joining, so 0 is
+an equilibrium. Between the roots $Vn(1 - n) > p$: more consumers want to join than use it, and
+use grows towards the upper root; below the lower root use shrinks to zero.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=7cm, y=1.2cm]
+  \draw[econ axes] (0,0) -- (1.08,0) node[right, font=\scriptsize] {$n$};
+  \draw[econ axes] (0,0) -- (0,2.9) node[above, font=\scriptsize] {willingness to pay};
+  \draw[curve, omDef, domain=0:1, samples=60] plot (\x, {10*\x*(1-\x)});
+  \draw[curve, omThm] (0,1.6) -- (1,1.6) node[right, font=\scriptsize] {price};
+  \draw[guide] (0.2,0) -- (0.2,1.6);
+  \draw[guide] (0.8,0) -- (0.8,1.6);
+  \node[below, font=\scriptsize] at (0.2,0) {critical mass};
+  \node[below, font=\scriptsize] at (0.8,0) {stable};
+  \draw[->, thick] (0.35,2.05) -- (0.6,2.05);
+  \draw[<-, thick] (0.03,0.7) -- (0.15,0.7);
+\end{tikzpicture}
+\par\smallskip{\small The willingness to pay of the marginal user, $Vn(1 - n)$, with $V = 10$ and price 1.6.
+Between the two equilibria use grows; below the \omterm{def:b3:platforms-and-innovation:network}{critical mass} it collapses.}
+\end{omfigure}
+
+The model explains why new networks give access away: a platform that cannot reach
+its \omterm{def:b3:platforms-and-innovation:network}{critical mass} at a positive price must subsidise early users until it does.
+
+\section{Pricing on two sides}\label{sec:b3:platforms-and-innovation:two-sided}
+
+\begin{definition}[Two-sided platform]\label{def:b3:platforms-and-innovation:two-sided}
+\index{two-sided platform}
+A \emph{two-sided platform} serves two groups of users who interact through it, where
+each group's value depends on the participation of the other: players and game
+developers, card holders and merchants, riders and drivers.
+\end{definition}
+
+\begin{proposition}[Two-sided pricing]\label{prop:b3:platforms-and-innovation:two-sided}
+Let a monopoly platform face participation $n_i = a_i + \alpha_i n_j - p_i$ on side $i$, where $j$ is the other side, at cost $f_i$
+per member. At the profit-maximising prices, $p_i = f_i + n_i - \alpha_j n_j$: each side pays its cost plus a
+markup, less the value its members bring to the other side.
+\end{proposition}
+
+\begin{proof}
+Choose participation instead of prices: $p_i = a_i + \alpha_i n_j - n_i$, so profit is $\sum_i (a_i + \alpha_i n_j - n_i - f_i)n_i$. Its
+derivative in $n_1$ is $a_1 + \alpha_1 n_2 - 2n_1 - f_1 + \alpha_2 n_2 = 0$. Since $p_1 = a_1 + \alpha_1 n_2 - n_1$, the condition reads $p_1 - n_1 - f_1 + \alpha_2 n_2 = 0$; side 2
+is symmetric.
+\end{proof}
+
+The side whose members the other side values most is charged least, and may be
+paid to join: its price can fall below cost, or below zero.
+
+\begin{model}{Two-sided platforms}
+\assumes A platform sets the price on each side; each side values the other's
+participation; users join one platform.
+\predicts Prices on each side depend on the other side's valuation; one side can pay
+less than its cost.
+\tested The markets the model describes are many --- game consoles with players and
+developers, payment cards with consumers and merchants, search and advertiser-funded
+media, where consumers may dislike the other side --- and a survey of them finds
+pricing strategies the model explains alongside outcomes it finds puzzling. % ledger: b3pi:rysman
+The model's premise has been tested in one market: estimating consumers' use of
+Yellow Pages directories, advertisers' demand and publishers' pricing jointly,
+Rysman (2004) found that each side values the other's participation, as the
+model assumes. % ledger: b3pi:rys04
+Its pricing prediction, that the side valued more pays less, has been described
+across markets more than tested.
+\breaks When users join several platforms at once (multi-homing), competition moves
+to the side that does not, and the price structure changes.
+\end{model}
+
+\section{Switching costs}\label{sec:b3:platforms-and-innovation:switching}
+
+\begin{definition}[Switching cost]\label{def:b3:platforms-and-innovation:switching}
+\index{switching cost}
+A \emph{switching cost} is a cost a buyer bears to move from one supplier to another:
+learning a new system, transferring data, breaking a contract.
+\end{definition}
+
+\begin{proposition}[Bargains, then rip-offs]\label{prop:b3:platforms-and-innovation:switching}
+Two firms with marginal cost $c$ sell a homogeneous good over two periods to buyers who buy
+once in each period and bear a \omterm{def:b3:platforms-and-innovation:switching}{switching cost} $s$ to change supplier in the second. In
+equilibrium each firm charges its own customers $c + s$ in the second period, and the first-period
+price is $c - \beta s$.
+\end{proposition}
+
+\begin{proof}
+In the second period a rival cannot profitably price below $c$, so a firm can charge its
+customers up to $c + s$ without losing them, and charges exactly that. A first-period customer is
+therefore worth $p_1 - c + \beta s$ to the firm that wins her. Competition for her drives this to zero, as in
+Bertrand: $p_1 = c - \beta s$.
+\end{proof}
+
+\omterm{def:b3:platforms-and-innovation:switching}{Switching costs} do not raise lifetime profit here; they shift it, from rip-offs
+later to bargains now. The bargain is what hands the profit back, so \omterm{def:b3:platforms-and-innovation:switching}{switching costs}
+raise profit only when competition for new buyers cannot hand it back: when firms
+cannot price below cost to win them, or when new buyers keep arriving and a firm must
+set one price for the customers it has locked in and those it is courting. Buyers who
+do not foresee the rip-off are not enough: firms still compete for them, as
+\cref{exo:b3:platforms-and-innovation:6} shows.
+
+\section{Patents: the incentive and the deadweight loss}\label{sec:b3:platforms-and-innovation:patents}
+
+\begin{definition}[Patent; patent race; optimal patent length]\label{def:b3:platforms-and-innovation:patent}
+\index{patent}\index{patent race}\index{optimal patent length}
+A \emph{patent} gives its holder the exclusive right to use an invention for a fixed
+term, in exchange for publishing it; its \emph{breadth} is the range of products it
+covers. In a \emph{patent race} firms compete to make the same invention first,
+since only the first is rewarded. The \emph{optimal patent length} balances the
+incentive to invent, which rises with the term, against the deadweight loss of
+monopoly during it.
+\end{definition}
+
+A longer term raises the reward and so the research effort; it also prolongs the
+monopoly. Exercise 11 solves the trade-off in a small model. A \omterm{def:b3:platforms-and-innovation:patent}{patent race} adds a
+second distortion: each firm's chance of winning takes rivals' prizes, so firms
+together can spend more on the race than the invention is worth to society.
+
+\begin{definition}[Replacement effect]\label{def:b3:platforms-and-innovation:replacement}
+\index{replacement effect}
+The \emph{replacement effect} is the smaller gain an incumbent monopolist draws from an
+innovation, compared with an entrant, because it replaces its own profit.
+\end{definition}
+
+\begin{proposition}[The replacement effect]\label{prop:b3:platforms-and-innovation:arrow}
+In an industry of price-taking firms with cost $c$, an innovation lowers cost to $c' < c$ without
+making the monopoly price at $c'$ fall below $c$. The innovation is worth more to an entrant
+holding it than to a monopolist who already serves the market at cost $c$.
+\end{proposition}
+
+\begin{proof}
+The entrant prices just below $c$ and earns $(c - c')Q(c)$. The monopolist's profit $\pi_m(x)$ at cost $x$ has $\pi_m'(x) = -Q_m(x)$ by
+the envelope theorem, so its gain is $\int_{c'}^{c} Q_m(x)\,dx$. For $x \le c$, the monopoly price at $x$ is at least the one at $c'$,
+which is at least $c$, so $Q_m(x) \le Q(c)$; the gain is at most $(c - c')Q(c)$.
+\end{proof}
+
+\begin{record}[Intellectual property and follow-on research]
+The human genome was sequenced twice: by a public project and by a private firm,
+whose rights on the genes it sequenced first lasted up to two years, until the
+public effort re-sequenced them. Genes held under the firm's rights saw 20 to 30~\% less
+later research and product development. % ledger: b3pi:williams
+Gene \emph{\omterm{def:b3:platforms-and-innovation:patent}{patents}} gave a different answer. Comparing genes in \omterm{def:b3:platforms-and-innovation:patent}{patent} applications
+that were granted with those that were rejected, and using the leniency of the
+examiner assigned as an instrument, two designs found no quantitatively important
+effect on follow-on research or investment. Patented genes had looked more valuable
+before they were patented, which is why a simple comparison misleads. % ledger: b3pi:sw
+The two studies differ in the right studied --- a contract-based restriction on
+data in one, a published \omterm{def:b3:platforms-and-innovation:patent}{patent} in the other --- and their difference is part of
+the evidence.
+\end{record}
+
+\begin{omchart}{Patent applications by residents per million people against GDP
+per person (PPP, constant 2021 dollars), 2019, 111 countries, both on logarithmic
+scales.}{World Bank, World Development Indicators, IP.PAT.RESD, SP.POP.TOTL and
+NY.GDP.PCAP.PP.KD}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.6\linewidth, height=0.4\linewidth,
+  xlabel={GDP per person, dollars}, ylabel={Patents per million},
+  xtick={3,4,5}, xticklabels={1{,}000, 10{,}000, 100{,}000},
+  ytick={-2,-1,0,1,2,3}, yticklabels={0.01, 0.1, 1, 10, 100, 1{,}000}]
+  \addplot table[x=lx, y=ly] {figdata/bachelor-3/29-platforms-and-innovation/out/patents.csv};
+  \addplot[omThm, thick, no marks, sharp plot] table[x=lx, y=ly] {figdata/bachelor-3/29-platforms-and-innovation/out/patents_fit.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: patents_stats
+
+Patenting rises steeply with income: across countries, 1~\% more income per person goes
+with 1.56~\% more resident \omterm{def:b3:platforms-and-innovation:patent}{patent} applications per head, and income accounts for 48~\% of
+the variation. The relation says nothing about cause; exercise 8 asks how much research
+spending adds.
+
+\section{Competition and innovation}\label{sec:b3:platforms-and-innovation:competition}
+
+\begin{model}{Competition and innovation, the inverted U}
+\assumes Firms in an industry are either neck and neck or leader and laggard;
+innovation lets a firm escape competition or catch up.
+\predicts Competition raises the gain from innovating for neck-and-neck firms and
+lowers it for laggards, so innovation first rises and then falls with competition.
+\tested U.K. firms' \omterm{def:b3:platforms-and-innovation:patent}{patents} at the U.S. \omterm{def:b3:platforms-and-innovation:patent}{patent} office follow the predicted inverted U
+and its other predictions. % ledger: b3pi:abbgh
+\breaks The shape depends on how competition is measured --- an inverse of the
+price--cost margin is itself shaped by innovation --- and on which firms are
+pooled.
+\end{model}
+
+\section{Entry, exit and productivity growth}\label{sec:b3:platforms-and-innovation:reallocation}
+
+\begin{definition}[Reallocation decomposition; business dynamism]\label{def:b3:platforms-and-innovation:reallocation}
+\index{reallocation decomposition}\index{business dynamism}
+A \emph{reallocation decomposition} splits the change in an industry's
+share-weighted productivity into the growth of continuing firms (within), the shift
+of shares among them (between and cross), and the entry and exit of firms.
+\emph{Business dynamism} is the pace of that turnover, measured by entry and exit
+rates of firms and of jobs.
+\end{definition}
+
+\begin{omchart}{Enterprise birth and death rates, business economy, 32 European
+countries, 2022 (percent of active enterprises; Eurostat country codes; values
+marked provisional left out).}{Eurostat, business demography (bd\_size), B--S except
+public administration and holding companies}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.62\linewidth, height=0.78\linewidth, xmin=0, xmax=20,
+  ymin=-0.8, ymax=31.8, ytick=data,
+  yticklabels from table={figdata/bachelor-3/29-platforms-and-innovation/out/dynamism.csv}{geo},
+  y tick label style={font=\scriptsize}, xlabel={Percent of active enterprises},
+  grid=none, xmajorgrids, legend columns=2,
+  legend style={font=\footnotesize, at={(0.5,1.02)}, anchor=south}]
+  \addplot[only marks, mark=*, omDef] table[x=birth, y=pos] {figdata/bachelor-3/29-platforms-and-innovation/out/dynamism.csv};
+  \addplot[only marks, mark=o, omThm, thick] table[x=death, y=pos] {figdata/bachelor-3/29-platforms-and-innovation/out/dynamism.csv};
+  \legend{births, deaths}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: dynamism, dynamism_stats
+Across these countries, between 6 and 18~\% of enterprises were born in 2022 (median
+10.9~\%) and a median of 8.0~\% died; countries with more births also had more deaths
+(correlation 0.57), so high entry goes with high turnover, not only with growth. Most
+of the churn is among the smallest firms: in the European Union in 2023, the 10.5~\%
+of enterprises that were born employed 2.3~\% of all workers, about one person each,
+and the 8.1~\% that died employed 1.7~\%. Four out of five newborn enterprises were
+still active a year later and two out of three after two years; those that survived
+five years had raised their employment by 77~\% since birth. Entry is thus mostly a
+stream of very small trials, of which a few grow; the decomposition below asks how
+much of productivity growth they carry.
+
+\begin{proposition}[The FHK decomposition]\label{prop:b3:platforms-and-innovation:fhk}
+With shares $s_{it}$ and productivities $p_{it}$, industry productivity $P_t = \sum_i s_{it}p_{it}$ changes by
+\[
+\Delta P = \sum_{C} s_{i0}\Delta p_i + \sum_{C}\Delta s_i (p_{i0} - P_0) + \sum_{C}\Delta s_i\Delta p_i
+  + \sum_{N} s_{i1}(p_{i1} - P_0) - \sum_{X} s_{i0}(p_{i0} - P_0),
+\]
+where $C$, $N$ and $X$ are continuing, entering and exiting firms.
+\end{proposition}
+
+\begin{proof}
+Write $P_1 - P_0 = \sum_{C\cup N} s_{i1}p_{i1} - \sum_{C\cup X} s_{i0}p_{i0}$. Since the shares in each year sum to one, $P_0 = P_0\sum_{C\cup N}s_{i1} = P_0\sum_{C\cup X}s_{i0}$,
+so $P_1 - P_0 = \sum_{C\cup N}s_{i1}(p_{i1} - P_0) - \sum_{C\cup X}s_{i0}(p_{i0} - P_0)$. For continuing firms, $s_{i1}(p_{i1} - P_0) - s_{i0}(p_{i0} - P_0)$ expands
+into $s_{i0}\Delta p_i + \Delta s_i(p_{i0} - P_0) + \Delta s_i \Delta p_i$.
+\end{proof}
+
+\begin{measure}[How productivity growth is decomposed]
+The decomposition needs establishment data that follow units over time, a
+productivity measure (output per worker, or total factor productivity), shares
+(of employment or output) and a horizon. Each choice moves the answer: over longer
+horizons entrants have had time to learn and exiters to decline, so net entry counts
+for more; and the result is cyclical and sensitive to the method. % ledger: b3pi:fhk
+Reallocation to more productive units --- among continuing establishments and
+through entry and exit --- accounts for a significant share of U.S. manufacturing
+productivity growth, and in the services studied net entry dominates.
+\end{measure}
+
+\begin{record}[Entry, exit and productivity]
+In U.S. retail trade in the 1990s, virtually all productivity growth came from more
+productive new establishments displacing much less productive ones that closed. % ledger: b3pi:fhk.retail
+In U.K. manufacturing from 1980 to 1992, entry, exit and changes in market shares accounted for
+50~\% of establishment labour-productivity growth and 80 to 90~\% of total factor productivity
+growth, much of it by firms with several plants closing their poor ones and opening
+better ones. % ledger: b3pi:dhh
+\end{record}
+
+\section{Exercises}\label{sec:b3:platforms-and-innovation:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:platforms-and-innovation:1}
+From the opening chart, by how many points of GDP did Korea's research spending rise
+from 1996 to 2023? By what factor did China's?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:platforms-and-innovation:2}
+Three firms have employment shares 0.5, 0.3 and 0.2 and productivities 10, 20 and 5. The third exits;
+the first's productivity rises to 11; an entrant takes a share of 0.2 at productivity 30, and the
+others keep their shares. Decompose the change.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:platforms-and-innovation:3}
+With $V = 8$ and price 1.5, find the equilibrium shares of users and the \omterm{def:b3:platforms-and-innovation:network}{critical mass}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:platforms-and-innovation:4}
+Two platforms compete in a market said to tip. What data would contradict \omterm{def:b3:platforms-and-innovation:network}{tipping}?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:platforms-and-innovation:5}
+A platform faces $n_1 = 3 + n_2 - p_1$ and $n_2 = 3 - p_2$ (side 2 does not care about side 1), with costs of 1 on each
+side. Find the profit-maximising participation and prices.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:platforms-and-innovation:6}
+In the switching-cost model, $c = 10$, $s = 4$ and $\beta = 0.9$. Find the prices in both periods and the lifetime
+profit per customer. What changes if buyers ignore the second period?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:platforms-and-innovation:7}
+Demand is $Q = 100 - P$ and the industry's cost is 40; an innovation lowers it to 20. Compare the
+gain of a monopolist with that of an entrant.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:platforms-and-innovation:8}
+Regress the log of resident \omterm{def:b3:platforms-and-innovation:patent}{patent} applications per million people on research
+spending as a share of GDP across countries in 2019, then add log income. What happens to
+the research coefficient?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:platforms-and-innovation:9}
+What shape of the relation between competition and innovation in a panel of
+industries would refute the inverted U?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:platforms-and-innovation:10}
+Prove the two-sided pricing rule, and show that a side can be paid to join.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:platforms-and-innovation:11}
+An invention saves $\sqrt R$ million dalens a year if $R$ is spent on research. While patented, its holder
+earns half the saving and the other half is lost; after expiry users get it all. With
+discount rate 5~\% and $A(T) = (1 - e^{-0.05T})/0.05$, the inventor chooses $R$ to maximise $\tfrac12\sqrt R\,A(T) - R$. Find the
+\omterm{def:b3:platforms-and-innovation:patent}{patent} length that maximises welfare.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:platforms-and-innovation:12}
+On an invented two-year panel built from Brenland's manufacturing firms, compute the
+decomposition of the change in output per worker.
+\end{exercise}
+
+\section{Problem: Brenmoor's Ride Platform}\label{sec:b3:platforms-and-innovation:problem}
+
+\begin{problem}[{Weekend problem --- Brenmoor's ride platform}]\label{pb:b3:platforms-and-innovation:ride}
+A ride platform starts in Brenmoor. % figdata: ride_stats
+
+\medskip\noindent\textbf{Part I --- reaching riders.} Of Brenmoor's 10{,}000 residents, one
+with taste $\theta$ (uniform on $[0, 1]$) values a month of the service at $10\theta n$ dalens when a share $n$ of residents
+uses it. The monthly price is 1.6.
+\begin{enumerate}
+\item Find the equilibrium shares of users.
+\item Which is the \omterm{def:b3:platforms-and-innovation:network}{critical mass}, in residents?
+\item The platform launches with 1{,}000 users. What happens?
+\item What is the highest price at which any positive share can be an equilibrium?
+\item How many free months of service would you need to give, and to how many, to
+pass the \omterm{def:b3:platforms-and-innovation:network}{critical mass}?
+\item Why is the share 0 an equilibrium at any positive price?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- two sides.} With $n_R$ and $n_D$ the riders and drivers (hundreds),
+$n_R = 4 + 1.2n_D - p_R$ and $n_D = 2 + 0.4n_R - p_D$, where $p_R$ and $p_D$ are the platform's monthly fees (a negative fee is
+a payment); the platform's cost is 1 per member on each side.
+\begin{enumerate}[resume]
+\item Write the platform's profit as a function of $n_R$ and $n_D$.
+\item Derive the two first-order conditions.
+\item Solve for $n_R$ and $n_D$.
+\item Find the fees.
+\item Check the pricing rule of the chapter on each side.
+\item Which side is subsidised, and why?
+\item Find the platform's profit.
+\item If riders valued drivers less, at $\alpha_R = 0.8$, would the drivers' fee rise or fall?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- a rival.}
+\begin{enumerate}[resume]
+\item A rival platform enters, and drivers sign up with both. On which side will the
+platforms compete hardest?
+\item What does multi-homing by drivers do to the drivers' fee?
+\item Why does multi-homing by drivers make \omterm{def:b3:platforms-and-innovation:network}{tipping} less likely?
+\item If drivers could not multi-home, how much would a rival have to give each rider, per month,
+to offset the incumbent's network of drivers?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- the services sector.} Take Brenland's services firms
+in the 2025 census (\code{load("firms")}) as year 0, with output per worker as productivity and
+employment shares. Two years later the tenth with the lowest productivity have
+exited, continuing firms are 2~\% more productive with the same workers, and 30 entrants
+each have the median workforce and productivity 10~\% above the year-0 mean.
+\begin{enumerate}[resume]
+\item Find industry productivity in both years and its growth.
+\item Decompose the change into within, between, cross, entry and exit.
+\item What share of the change comes from entry and exit together?
+\item Why is the exit term so large though the exiters are only a tenth of firms?
+\item Compare with the evidence of the record box.
+\item State the result: the platform's fees on each side, and the share of the
+sector's productivity growth that comes from entry and exit.
+\end{enumerate}
+\end{problem}

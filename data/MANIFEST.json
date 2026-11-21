@@ -1,0 +1,683 @@
+{
+ "bls_ap": {
+  "date": "2026-11-20",
+  "files": [
+   {
+    "bytes": 6309474,
+    "hops": [
+     "https://download.bls.gov/pub/time.series/ap/ap.data.3.Food"
+    ],
+    "name": "ap.data.3.Food",
+    "sha256": "ba3399c4411c7f4bb4c3a4f264d0f5c0fffc97adab77ff0cfe468f5f7278b2b0",
+    "url": "https://download.bls.gov/pub/time.series/ap/ap.data.3.Food"
+   },
+   {
+    "bytes": 4189000,
+    "hops": [
+     "https://download.bls.gov/pub/time.series/ap/ap.data.2.Gasoline"
+    ],
+    "name": "ap.data.2.Gasoline",
+    "sha256": "5cf56fc943778d90acc0ef03a844dda9c8da5c0c55fc797db1af33cb1072111b",
+    "url": "https://download.bls.gov/pub/time.series/ap/ap.data.2.Gasoline"
+   },
+   {
+    "bytes": 231046,
+    "hops": [
+     "https://download.bls.gov/pub/time.series/ap/ap.series"
+    ],
+    "name": "ap.series",
+    "sha256": "ec0423959bd95f7254dc28a3442fffbb780390ba0660dd99df7e5a9f11941542",
+    "url": "https://download.bls.gov/pub/time.series/ap/ap.series"
+   },
+   {
+    "bytes": 9242,
+    "hops": [
+     "https://download.bls.gov/pub/time.series/ap/ap.item"
+    ],
+    "name": "ap.item",
+    "sha256": "4e96f3bca741f65692971fdec8053a44f7ee20f47a02eace4c4d3d9a1dd148f6",
+    "url": "https://download.bls.gov/pub/time.series/ap/ap.item"
+   },
+   {
+    "bytes": 2114,
+    "hops": [
+     "https://download.bls.gov/pub/time.series/ap/ap.area"
+    ],
+    "name": "ap.area",
+    "sha256": "1137036146970cc9320065ed0f94902f710709b6693ca0abf82c9fda3cf51042",
+    "url": "https://download.bls.gov/pub/time.series/ap/ap.area"
+   }
+  ],
+  "key": "bls_ap"
+ },
+ "bls_cex": {
+  "date": "2026-11-20",
+  "files": [
+   {
+    "bytes": 41922,
+    "hops": [
+     "https://www.bls.gov/cex/tables/calendar-year/mean-item-share-average-standard-error/cu-income-quintiles-before-taxes-2012.xlsx"
+    ],
+    "name": "mean-item-share-average-standard-error-2012.xlsx",
+    "sha256": "492b25fd7c7a7f4b862f811594fb490054b4ac53b082c472588add3f3b5c81f4",
+    "url": "https://www.bls.gov/cex/tables/calendar-year/mean-item-share-average-standard-error/cu-income-quintiles-before-taxes-2012.xlsx"
+   },
+   {
+    "bytes": 30839,
+    "hops": [
+     "https://www.bls.gov/cex/tables/calendar-year/mean-item-share-average-standard-error/cu-income-quintiles-before-taxes-2015.xlsx"
+    ],
+    "name": "mean-item-share-average-standard-error-2015.xlsx",
+    "sha256": "a11c3cbd0d61ec8b8abd7a9d75e867a8718784b909d3fb8e03ca883439db7398",
+    "url": "https://www.bls.gov/cex/tables/calendar-year/mean-item-share-average-standard-error/cu-income-quintiles-before-taxes-2015.xlsx"
+   },
+   {
+    "bytes": 26539,
+    "hops": [
+     "https://www.bls.gov/cex/tables/calendar-year/mean-item-share-average-standard-error/cu-income-quintiles-before-taxes-2025.xlsx"
+    ],
+    "name": "mean-item-share-average-standard-error-2025.xlsx",
+    "sha256": "0840fc77d70ecbf348b11c86cb107c4286255f51814740f34f008cfc2c1b1796",
+    "url": "https://www.bls.gov/cex/tables/calendar-year/mean-item-share-average-standard-error/cu-income-quintiles-before-taxes-2025.xlsx"
+   },
+   {
+    "bytes": 12190,
+    "hops": [
+     "https://www.bls.gov/cex/tables/calendar-year/aggregate-group-share/cu-income-quintiles-before-taxes-2015.xlsx"
+    ],
+    "name": "aggregate-group-share-2015.xlsx",
+    "sha256": "df8f52d5b56296d5902543244bb1fac6e449ebf7e2d900484afbd3c5e73c4351",
+    "url": "https://www.bls.gov/cex/tables/calendar-year/aggregate-group-share/cu-income-quintiles-before-taxes-2015.xlsx"
+   },
+   {
+    "bytes": 12286,
+    "hops": [
+     "https://www.bls.gov/cex/tables/calendar-year/aggregate-group-share/cu-income-quintiles-before-taxes-2025.xlsx"
+    ],
+    "name": "aggregate-group-share-2025.xlsx",
+    "sha256": "02cb0acf29cf6777f36c68a4679d339b113425b216b8eb2afa2f3b010f015ec3",
+    "url": "https://www.bls.gov/cex/tables/calendar-year/aggregate-group-share/cu-income-quintiles-before-taxes-2025.xlsx"
+   }
+  ],
+  "key": "bls_cex"
+ },
+ "bls_cpi": {
+  "date": "2026-11-20",
+  "files": [
+   {
+    "bytes": 2693413,
+    "hops": [
+     "https://download.bls.gov/pub/time.series/cu/cu.data.1.AllItems"
+    ],
+    "name": "cu.data.1.AllItems",
+    "sha256": "e0ddb3c117125d0134d16600c158aaeb1040a32c3e97fd8c11487c8f392eeab5",
+    "url": "https://download.bls.gov/pub/time.series/cu/cu.data.1.AllItems"
+   },
+   {
+    "bytes": 1339447,
+    "hops": [
+     "https://download.bls.gov/pub/time.series/cu/cu.series"
+    ],
+    "name": "cu.series",
+    "sha256": "7085e772dc0b773e4521eb258b42d6237d427385cbb6058285b32ed202c084a6",
+    "url": "https://download.bls.gov/pub/time.series/cu/cu.series"
+   },
+   {
+    "bytes": 16554,
+    "hops": [
+     "https://download.bls.gov/pub/time.series/cu/cu.item"
+    ],
+    "name": "cu.item",
+    "sha256": "376f2a9dd2cc7bb358118e6c0e031a404941cfe158b82612e807e44eabcec8fa",
+    "url": "https://download.bls.gov/pub/time.series/cu/cu.item"
+   },
+   {
+    "bytes": 2185,
+    "hops": [
+     "https://download.bls.gov/pub/time.series/cu/cu.area"
+    ],
+    "name": "cu.area",
+    "sha256": "f4d0442e38dd4c4909a98b9fc8f8bc5fc8146ca4e87e4d9b947461f78af8abeb",
+    "url": "https://download.bls.gov/pub/time.series/cu/cu.area"
+   },
+   {
+    "bytes": 100,
+    "hops": [
+     "https://download.bls.gov/pub/time.series/cu/cu.footnote"
+    ],
+    "name": "cu.footnote",
+    "sha256": "d92c2f0b60f9a52f9184f366f9d5b61fc6659181959be718fa332e43f9983903",
+    "url": "https://download.bls.gov/pub/time.series/cu/cu.footnote"
+   },
+   {
+    "bytes": 12086202,
+    "hops": [
+     "https://download.bls.gov/pub/time.series/cu/cu.data.2.Summaries"
+    ],
+    "name": "cu.data.2.Summaries",
+    "sha256": "907acb015b99e81c9b10505bf19f8e5057044875ab52d1eff4b7a4dfc9845a4d",
+    "url": "https://download.bls.gov/pub/time.series/cu/cu.data.2.Summaries"
+   },
+   {
+    "bytes": 6695380,
+    "hops": [
+     "https://download.bls.gov/pub/time.series/cu/cu.data.11.USFoodBeverage"
+    ],
+    "name": "cu.data.11.USFoodBeverage",
+    "sha256": "85231910b1a1e8f643e104632b20c9ce566ea1e97b9632f2430f41fa16aea08f",
+    "url": "https://download.bls.gov/pub/time.series/cu/cu.data.11.USFoodBeverage"
+   },
+   {
+    "bytes": 2246988,
+    "hops": [
+     "https://download.bls.gov/pub/time.series/cu/cu.data.14.USTransportation"
+    ],
+    "name": "cu.data.14.USTransportation",
+    "sha256": "e61a38936ef7b0d21a3b6483d328bf1958c9a5f71181f847127a26b2dd6a10e4",
+    "url": "https://download.bls.gov/pub/time.series/cu/cu.data.14.USTransportation"
+   },
+   {
+    "bytes": 920876,
+    "hops": [
+     "https://download.bls.gov/pub/time.series/cu/cu.data.17.USEducationAndCommunication"
+    ],
+    "name": "cu.data.17.USEducationAndCommunication",
+    "sha256": "f8164153d632cc7a9d46ba52659826608071d09d3170e94dd68f9d3cb47c471a",
+    "url": "https://download.bls.gov/pub/time.series/cu/cu.data.17.USEducationAndCommunication"
+   },
+   {
+    "bytes": 3641407,
+    "hops": [
+     "https://download.bls.gov/pub/time.series/cu/cu.data.20.USCommoditiesServicesSpecial"
+    ],
+    "name": "cu.data.20.USCommoditiesServicesSpecial",
+    "sha256": "3464a58c9d5405c9700f0b635a8c837120cce4e6caf182d82364b73d7b218a88",
+    "url": "https://download.bls.gov/pub/time.series/cu/cu.data.20.USCommoditiesServicesSpecial"
+   }
+  ],
+  "key": "bls_cpi"
+ },
+ "bls_jolts": {
+  "date": "2026-11-20",
+  "files": [
+   {
+    "bytes": 34577394,
+    "hops": [
+     "https://download.bls.gov/pub/time.series/jt/jt.data.1.AllItems"
+    ],
+    "name": "jt.data.1.AllItems",
+    "sha256": "37d8650b0486d6a67895ca1996c26d98a15eb0ab15391ebbaaa4ea6c389703a1",
+    "url": "https://download.bls.gov/pub/time.series/jt/jt.data.1.AllItems"
+   },
+   {
+    "bytes": 158802,
+    "hops": [
+     "https://download.bls.gov/pub/time.series/jt/jt.series"
+    ],
+    "name": "jt.series",
+    "sha256": "f5715f0142c9dc37c5a39164e3b58cf0fe24d550025aafd43732ed0899ac300a",
+    "url": "https://download.bls.gov/pub/time.series/jt/jt.series"
+   },
+   {
+    "bytes": 375,
+    "hops": [
+     "https://download.bls.gov/pub/time.series/jt/jt.dataelement"
+    ],
+    "name": "jt.dataelement",
+    "sha256": "32e1f1a79b1d207e70aff5988d574d40930d38f30dbab2b5a8e3f52d68890e59",
+    "url": "https://download.bls.gov/pub/time.series/jt/jt.dataelement"
+   },
+   {
+    "bytes": 1174,
+    "hops": [
+     "https://download.bls.gov/pub/time.series/jt/jt.industry"
+    ],
+    "name": "jt.industry",
+    "sha256": "94c0c48daa6c3e93d898367a944c8357faba6be22c4bf034d99ad587713d3b50",
+    "url": "https://download.bls.gov/pub/time.series/jt/jt.industry"
+   },
+   {
+    "bytes": 114,
+    "hops": [
+     "https://download.bls.gov/pub/time.series/jt/jt.ratelevel"
+    ],
+    "name": "jt.ratelevel",
+    "sha256": "f2a945018a56d5e5b8940a076fbf50242e1d942d0faee93f9a6cf2e0092952e1",
+    "url": "https://download.bls.gov/pub/time.series/jt/jt.ratelevel"
+   },
+   {
+    "bytes": 283,
+    "hops": [
+     "https://download.bls.gov/pub/time.series/jt/jt.sizeclass"
+    ],
+    "name": "jt.sizeclass",
+    "sha256": "f7a4904fb45d2f7c5f9e3978a1e2207e7b7ada9d04325a2284ae95c0a2cbd348",
+    "url": "https://download.bls.gov/pub/time.series/jt/jt.sizeclass"
+   },
+   {
+    "bytes": 1228,
+    "hops": [
+     "https://download.bls.gov/pub/time.series/jt/jt.state"
+    ],
+    "name": "jt.state",
+    "sha256": "9abe706a9638003324046af1525eaebc2bdda9c9da715b1a9dd9700beefabecb",
+    "url": "https://download.bls.gov/pub/time.series/jt/jt.state"
+   },
+   {
+    "bytes": 83,
+    "hops": [
+     "https://download.bls.gov/pub/time.series/jt/jt.area"
+    ],
+    "name": "jt.area",
+    "sha256": "3e5194de6be507a9f7096adb94df6a1816413584713aa5c8da6c37a72e9e2a2a",
+    "url": "https://download.bls.gov/pub/time.series/jt/jt.area"
+   }
+  ],
+  "key": "bls_jolts"
+ },
+ "ceds_2025": {
+  "date": "2026-11-20",
+  "files": [
+   {
+    "bytes": 62726328,
+    "hops": [
+     "https://zenodo.org/records/15059443/files/CEDS_v_2025_03_18_aggregate.zip?download=1"
+    ],
+    "name": "CEDS_v_2025_03_18_aggregate.zip",
+    "sha256": "b55f0dddb4eb8e14435b13d835f99497b789cb3378eee391d1c78af58c5e8095",
+    "url": "https://zenodo.org/records/15059443/files/CEDS_v_2025_03_18_aggregate.zip?download=1"
+   }
+  ],
+  "key": "ceds_2025"
+ },
+ "cepii_gravity": {
+  "date": "2026-11-20",
+  "files": [
+   {
+    "bytes": 206707748,
+    "hops": [
+     "https://www.cepii.fr/DATA_DOWNLOAD/gravity/data/Gravity_csv_V202211.zip"
+    ],
+    "name": "Gravity_csv_V202211.zip",
+    "sha256": "7ffea0510a536587f2f9295bbafef4a312a36b366acc256eb6d9770fe35e44b1",
+    "url": "https://www.cepii.fr/DATA_DOWNLOAD/gravity/data/Gravity_csv_V202211.zip"
+   }
+  ],
+  "key": "cepii_gravity"
+ },
+ "ecb_ilm": {
+  "date": "2026-11-20",
+  "files": [
+   {
+    "bytes": 438049,
+    "hops": [
+     "https://data-api.ecb.europa.eu/service/data/ILM/W.U2.C.T000000.Z5.Z01?format=csvdata"
+    ],
+    "name": "ILM_W_U2_C_T000000_Z5_Z01.csv",
+    "sha256": "5621c01735fc08e7c4c6aff9569c63b75e0123c9d04f85ab311b1ed1f34a44f3",
+    "url": "https://data-api.ecb.europa.eu/service/data/ILM/W.U2.C.T000000.Z5.Z01?format=csvdata"
+   }
+  ],
+  "key": "ecb_ilm"
+ },
+ "eia_intl": {
+  "date": "2026-11-20",
+  "files": [
+   {
+    "bytes": 24714575,
+    "hops": [
+     "https://www.eia.gov/opendata/bulk/INTL.zip"
+    ],
+    "name": "INTL.zip",
+    "sha256": "2a79be689b8d93787745b129630b1a5a97365ecb4528381d02da490264628857",
+    "url": "https://www.eia.gov/opendata/bulk/INTL.zip"
+   }
+  ],
+  "key": "eia_intl"
+ },
+ "eurostat": {
+  "date": "2026-11-20",
+  "files": [
+   {
+    "bytes": 1331295,
+    "hops": [
+     "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/prc_hicp_aind/?format=TSV&compressed=true"
+    ],
+    "name": "prc_hicp_aind.tsv.gz",
+    "sha256": "33dd456097291515422f36e5851e893a6e4433cb79b90270afb42a32bfac8bc3",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/prc_hicp_aind/?format=TSV&compressed=true"
+   },
+   {
+    "bytes": 4415053,
+    "hops": [
+     "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/prc_hicp_manr/?format=TSV&compressed=true"
+    ],
+    "name": "prc_hicp_manr.tsv.gz",
+    "sha256": "a4f410418b5a8479098d4c13fd00147a85bd7148a32d79f45e08ad320e93c054",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/prc_hicp_manr/?format=TSV&compressed=true"
+   },
+   {
+    "bytes": 70787,
+    "hops": [
+     "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/une_rt_a/?format=TSV&compressed=true"
+    ],
+    "name": "une_rt_a.tsv.gz",
+    "sha256": "ab5b2f0130752cafbea78fe4ed9e6fd140f0ab7b5abdc68b15dbd8339b8524d0",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/une_rt_a/?format=TSV&compressed=true"
+   },
+   {
+    "bytes": 152492,
+    "hops": [
+     "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/gov_10dd_edpt1/?format=TSV&compressed=true"
+    ],
+    "name": "gov_10dd_edpt1.tsv.gz",
+    "sha256": "05fae388b7e9547336390bf1fa5070d783a8b71f7ef77ae51056a1ade7c9850b",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/gov_10dd_edpt1/?format=TSV&compressed=true"
+   },
+   {
+    "bytes": 3443909,
+    "hops": [
+     "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/nama_10_gdp/?format=TSV&compressed=true"
+    ],
+    "name": "nama_10_gdp.tsv.gz",
+    "sha256": "3ba60b8fdc91e95207a099689baf5b997953cfc0d8aa6bd4c663eecd2155f419",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/nama_10_gdp/?format=TSV&compressed=true"
+   }
+  ],
+  "key": "eurostat"
+ },
+ "eurostat2": {
+  "date": "2026-11-20",
+  "files": [
+   {
+    "bytes": 1513807,
+    "hops": [
+     "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/jvs_q_nace2/?format=TSV&compressed=true"
+    ],
+    "name": "jvs_q_nace2.tsv.gz",
+    "sha256": "c9929c4964ca3eb38faf2895d44d3bef9f0036b72eb0f516626b6e37231ca894",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/jvs_q_nace2/?format=TSV&compressed=true"
+   },
+   {
+    "bytes": 674074,
+    "hops": [
+     "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/une_rt_q/?format=TSV&compressed=true"
+    ],
+    "name": "une_rt_q.tsv.gz",
+    "sha256": "958b3bb8341156bd998506ff10fc87b387a70099f3fab5ef3429e4731e517777",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/une_rt_q/?format=TSV&compressed=true"
+   },
+   {
+    "bytes": 3125,
+    "hops": [
+     "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/ilc_di12/?format=TSV&compressed=true"
+    ],
+    "name": "ilc_di12.tsv.gz",
+    "sha256": "59ca5822e2f775b4598aa6eeb31bca300f11455eb24d19f8b187741d5c2c5f43",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/ilc_di12/?format=TSV&compressed=true"
+   },
+   {
+    "bytes": 1846,
+    "hops": [
+     "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/ilc_di12b/?format=TSV&compressed=true"
+    ],
+    "name": "ilc_di12b.tsv.gz",
+    "sha256": "0cae6421c33d3c10ca50bbc9d4baf635150c5aa81c5491b7ac8ecfc3996e0882",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/ilc_di12b/?format=TSV&compressed=true"
+   },
+   {
+    "bytes": 1791,
+    "hops": [
+     "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/ilc_di12c/?format=TSV&compressed=true"
+    ],
+    "name": "ilc_di12c.tsv.gz",
+    "sha256": "a9b515d85f384482832a6caba27f2f073979f7a885e96922b51224186004e299",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/ilc_di12c/?format=TSV&compressed=true"
+   },
+   {
+    "bytes": 64547,
+    "hops": [
+     "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/ilc_pw01/?format=TSV&compressed=true"
+    ],
+    "name": "ilc_pw01.tsv.gz",
+    "sha256": "62c487ec9b371aa16aed2ad0b242723975ce030812f49ba7573ad7a4fd934db9",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/ilc_pw01/?format=TSV&compressed=true"
+   },
+   {
+    "bytes": 19828056,
+    "hops": [
+     "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/bd_size/?format=TSV&compressed=true"
+    ],
+    "name": "bd_size.tsv.gz",
+    "sha256": "0affdd67209376d8d44bdfe54c5196577a1be4795b2e92ea0d93893f42491622",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/bd_size/?format=TSV&compressed=true"
+   }
+  ],
+  "key": "eurostat2"
+ },
+ "faostat_qcl": {
+  "date": "2026-11-20",
+  "files": [
+   {
+    "bytes": 33921825,
+    "hops": [
+     "https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_All_Data_(Normalized).zip"
+    ],
+    "name": "Production_Crops_Livestock_E_All_Data_Normalized.zip",
+    "sha256": "c5835418c18f9322e7decbd6800f93a216eaae3cdfa31acb08f0518c0c6d6853",
+    "url": "https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_All_Data_(Normalized).zip"
+   }
+  ],
+  "key": "faostat_qcl"
+ },
+ "fed_h15": {
+  "date": "2026-11-20",
+  "files": [
+   {
+    "bytes": 4289217,
+    "hops": [
+     "https://www.federalreserve.gov/releases/h15/data/FRB_h15_xml.zip"
+    ],
+    "name": "FRB_h15_xml.zip",
+    "sha256": "380b4549f6ebf8734f67c37442e28e4ed3dadf1058a07fbc11efd4d4c5106c61",
+    "url": "https://www.federalreserve.gov/releases/h15/data/FRB_h15_xml.zip"
+   }
+  ],
+  "key": "fed_h15"
+ },
+ "fed_h41": {
+  "date": "2026-11-20",
+  "files": [
+   {
+    "bytes": 9113202,
+    "hops": [
+     "https://www.federalreserve.gov/releases/h41/data/FRB_h41_xml.zip"
+    ],
+    "name": "FRB_h41_xml.zip",
+    "sha256": "df8d6303f5fcab7a8e618b6e8bb56effbf727e068fe007b07ceb61e96515a125",
+    "url": "https://www.federalreserve.gov/releases/h41/data/FRB_h41_xml.zip"
+   }
+  ],
+  "key": "fed_h41"
+ },
+ "gapminder_fasttrack": {
+  "date": "2026-11-20",
+  "files": [
+   {
+    "bytes": 827323,
+    "hops": [
+     "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--fasttrack/master/countries_etc_datapoints/ddf--datapoints--lex--by--country--time.csv"
+    ],
+    "name": "lex.csv",
+    "sha256": "c1223d486d43908bb1a8c1a55e5108f222159614edc3f951d53eb6afefa2484b",
+    "url": "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--fasttrack/master/countries_etc_datapoints/ddf--datapoints--lex--by--country--time.csv"
+   },
+   {
+    "bytes": 873425,
+    "hops": [
+     "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--fasttrack/master/countries_etc_datapoints/ddf--datapoints--child_mortality_0_5_year_olds_dying_per_1000_born--by--country--time.csv"
+    ],
+    "name": "child_mortality_0_5_year_olds_dying_per_1000_born.csv",
+    "sha256": "4dfc53d1c139401af9b0522127a814195c0754a6b394c5969900c437785ce378",
+    "url": "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--fasttrack/master/countries_etc_datapoints/ddf--datapoints--child_mortality_0_5_year_olds_dying_per_1000_born--by--country--time.csv"
+   },
+   {
+    "bytes": 820668,
+    "hops": [
+     "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--fasttrack/master/countries_etc_datapoints/ddf--datapoints--children_per_woman_total_fertility--by--country--time.csv"
+    ],
+    "name": "children_per_woman_total_fertility.csv",
+    "sha256": "0062e845671a178bb3d41be89dd62f20a7e33cc26efe284f432c435a7fd92a5a",
+    "url": "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--fasttrack/master/countries_etc_datapoints/ddf--datapoints--children_per_woman_total_fertility--by--country--time.csv"
+   },
+   {
+    "bytes": 994825,
+    "hops": [
+     "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--fasttrack/master/countries_etc_datapoints/ddf--datapoints--pop--by--country--time.csv"
+    ],
+    "name": "pop.csv",
+    "sha256": "87e96a3555f00437e1fcd85c715f8be029de64ac100d2c32085f97d25aa4f491",
+    "url": "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--fasttrack/master/countries_etc_datapoints/ddf--datapoints--pop--by--country--time.csv"
+   },
+   {
+    "bytes": 1177038,
+    "hops": [
+     "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--fasttrack/master/countries_etc_datapoints/ddf--datapoints--gdp_pcap--by--country--time.csv"
+    ],
+    "name": "gdp_pcap.csv",
+    "sha256": "0474f3fe4e77035308f66d59c82dc27e4ed1138109a58e6aed85fae5a39cd764",
+    "url": "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--fasttrack/master/countries_etc_datapoints/ddf--datapoints--gdp_pcap--by--country--time.csv"
+   },
+   {
+    "bytes": 52934,
+    "hops": [
+     "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--fasttrack/master/ddf--entities--geo--country.csv"
+    ],
+    "name": "geo_country.csv",
+    "sha256": "0b24dc8a3bc6c35991f695fb8ede4c4bb1c63af822554b7683fb1f510c1654da",
+    "url": "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--fasttrack/master/ddf--entities--geo--country.csv"
+   }
+  ],
+  "key": "gapminder_fasttrack"
+ },
+ "jst_r6": {
+  "date": "2026-11-20",
+  "files": [
+   {
+    "bytes": 1408158,
+    "hops": [
+     "https://www.macrohistory.net/app/download/9834512569/JSTdatasetR6.xlsx?t=1763503850",
+     "https://sfff5b3ac9317c4be.jimcontent.com/download/version/1763503850/module/9834512569/name/JSTdatasetR6.xlsx"
+    ],
+    "name": "JSTdatasetR6.xlsx",
+    "sha256": "c1bb91fe56ea50d4f27af5c0fc897d481e89ae38ce41eaecab62134c9354981d",
+    "url": "https://www.macrohistory.net/app/download/9834512569/JSTdatasetR6.xlsx?t=1763503850"
+   }
+  ],
+  "key": "jst_r6"
+ },
+ "maddison2023": {
+  "date": "2026-11-20",
+  "files": [
+   {
+    "bytes": 4903804,
+    "hops": [
+     "https://dataverse.nl/api/access/datafile/421302?format=original",
+     "https://objectstore.surf.nl/store/10.34894/INZBF2/18f1947b695-c2971390baa0?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27mpd2023_web.xlsx&response-content-type=application%2Fvnd.openxmlformats-officedocument.spreadsheetml.sheet&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20261120T131459Z&X-Amz-SignedHeaders=host&X-Amz-Credential=bf79a78ef3bb4505a9f98459f8a454ad%2F20261120%2Fdataverse%2Fs3%2Faws4_request&X-Amz-Expires=3600&X-Amz-Signature=40fd197a0d68ea7b54d7d85c6ae568c05a92a3c37a6f9fe8d269d2dfe3c5b659"
+    ],
+    "name": "mpd2023_web.xlsx",
+    "sha256": "ecc5916ca12789b983fc4be437f8a354bbf4291323605324ac3e0aea4c57cbb6",
+    "url": "https://dataverse.nl/api/access/datafile/421302?format=original"
+   }
+  ],
+  "key": "maddison2023"
+ },
+ "nsw_dehejia": {
+  "date": "2026-11-20",
+  "files": [
+   {
+    "bytes": 22674,
+    "hops": [
+     "https://users.nber.org/~rdehejia/data/nsw.dta"
+    ],
+    "name": "nsw.dta",
+    "sha256": "3ee014cb0010e2e7fb990ac497f4217968733e2c9abfa4de84e83f524898c24e",
+    "url": "https://users.nber.org/~rdehejia/data/nsw.dta"
+   },
+   {
+    "bytes": 28598,
+    "hops": [
+     "https://users.nber.org/~rdehejia/data/nsw_dw.dta"
+    ],
+    "name": "nsw_dw.dta",
+    "sha256": "d1bd2680a1c6f799f1c6d2455bf29633fdf19be01cb19490621c20a560b4e072",
+    "url": "https://users.nber.org/~rdehejia/data/nsw_dw.dta"
+   },
+   {
+    "bytes": 705546,
+    "hops": [
+     "https://users.nber.org/~rdehejia/data/cps_controls.dta"
+    ],
+    "name": "cps_controls.dta",
+    "sha256": "80f0123eaf723870bd060ba9f8569617a7cb519a462dc20badbfb3443cd8374b",
+    "url": "https://users.nber.org/~rdehejia/data/cps_controls.dta"
+   },
+   {
+    "bytes": 111458,
+    "hops": [
+     "https://users.nber.org/~rdehejia/data/psid_controls.dta"
+    ],
+    "name": "psid_controls.dta",
+    "sha256": "7beebae8928035d6abf662b994ce77a4fbea7ae6575037ff94e92fe099b43e14",
+    "url": "https://users.nber.org/~rdehejia/data/psid_controls.dta"
+   }
+  ],
+  "key": "nsw_dehejia"
+ },
+ "pip_percentiles": {
+  "date": "2026-11-20",
+  "files": [
+   {
+    "bytes": 25998833,
+    "hops": [
+     "https://datacatalogfiles.worldbank.org/ddh-published/0063646/DR0090357/world_100bin.csv"
+    ],
+    "name": "world_100bin_2021ppp.csv",
+    "sha256": "6d35e14b8cbbb3effe53d52127d874d593eb0960810841368a9f6e83ce3943d1",
+    "url": "https://datacatalogfiles.worldbank.org/ddh-published/0063646/DR0090357/world_100bin.csv"
+   }
+  ],
+  "key": "pip_percentiles"
+ },
+ "pwt110": {
+  "date": "2026-11-20",
+  "files": [
+   {
+    "bytes": 5839841,
+    "hops": [
+     "https://dataverse.nl/api/access/datafile/554105?format=original",
+     "https://objectstore.surf.nl/store/10.34894/FABVLR/199cdf3a603-c9d3bdd554b0?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27pwt110.xlsx&response-content-type=application%2Fvnd.openxmlformats-officedocument.spreadsheetml.sheet&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20261120T131503Z&X-Amz-SignedHeaders=host&X-Amz-Credential=bf79a78ef3bb4505a9f98459f8a454ad%2F20261120%2Fdataverse%2Fs3%2Faws4_request&X-Amz-Expires=3600&X-Amz-Signature=c576a7263f65000db853416b18327f62dcc79f36bf9bc8ca59155dd3300120a9"
+    ],
+    "name": "pwt110.xlsx",
+    "sha256": "7b337e94f39dfe304bc459e433f8ce0624496c812707ae0c924888f5142b3ab3",
+    "url": "https://dataverse.nl/api/access/datafile/554105?format=original"
+   }
+  ],
+  "key": "pwt110"
+ },
+ "wdi": {
+  "date": "2026-11-20",
+  "files": [
+   {
+    "bytes": 282495540,
+    "hops": [
+     "https://datacatalogfiles.worldbank.org/ddh-published/0037712/DR0095335/WDI_CSV_2026_11_11.zip"
+    ],
+    "name": "WDI_CSV_2026_11_11.zip",
+    "sha256": "dba33648d6f453a635b076a62b91db5939f5e640c8dcfeabd094219210533100",
+    "url": "https://datacatalogfiles.worldbank.org/ddh-published/0037712/DR0095335/WDI_CSV_2026_11_11.zip"
+   }
+  ],
+  "key": "wdi"
+ }
+}

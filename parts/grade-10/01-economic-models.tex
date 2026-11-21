@@ -1,0 +1,625 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g10-01. Data and models; statements of fact
+% and of value; correlation and cause. Every number about a real country comes from
+% figdata/grade-10/01-economic-models/ (Maddison Project Database 2023, WDI); Brenland is invented.
+\chapter{Economic Models}\label{ch:g10:economic-models}
+
+Imagine a clerk in 1929 with a ruler, a sheet of paper ruled on a times-ten scale and sixty
+years of figures. Asked to guess the income of an average American and of an average
+Argentine in 2022, ninety-three years later, the clerk does the simplest thing possible: plot
+income per person year by year since 1870, lay the ruler along the points, and extend the line.
+In 1929 that was not a silly bet. Argentina was then one of the richer countries of the world,
+with an income per person of about 58\,\% of the American one, and over the sixty years before,
+it had grown a little faster.
+% figdata: trend_points (ARG 6961 / USA 11954 = 0.582, 1929); trend_fit (rates 1.64 and 1.53 % a year)
+
+The opening chart shows what happened to the clerk's two lines. For the United States, the value
+observed in 2022 was about 17\,\% above the line: on the scale of the chart, close. For
+Argentina, what was observed in 2022 was a little more than half of the line's value. The same
+method, the same years, two very different results. This chapter is about the method: what a
+model of the economy is, how it is stated, how it is tested against what was then observed, and
+where it breaks. It ends with the question that the opening chart raises and does not answer:
+when two things move together, how can we tell whether one causes the other?
+% figdata: trend_fit (USA pct 117: observed / line = 1.17; ARG pct 56)
+
+\begin{openingchart}{Income per person in the United States and Argentina, 1870--2022 (solid),
+and the constant-growth line fitted to each country's points of 1870--1929 and then extended to
+2022 (dashed), on a times-ten scale. The line is the straight line that passes closest to the
+points of 1870--1929; nothing after 1929 was used to draw it. Maddison has no estimates for
+Argentina in 1871--1874.}{Maddison Project Database 2023; GDP per person in 2011 dollars at purchasing-power parity}
+\begin{tikzpicture}
+\begin{semilogyaxis}[omtimesten, width=0.94\linewidth, height=7.4cm, xmin=1865, xmax=2028,
+  ymin=1000, ymax=100000, xlabel={year}, ylabel={dollars per person (2011 prices)},
+  xtick={1870,1890,...,2010}, legend pos=north west]
+\addplot[omDef, thick] table[x=year, y=gdppc] {figdata/grade-10/01-economic-models/out/obs_usa.csv};
+\addlegendentry{United States, observed}
+\addplot[omThm, thick] table[x=year, y=gdppc] {figdata/grade-10/01-economic-models/out/obs_arg.csv};
+\addlegendentry{Argentina, observed}
+\addplot[omDef, thick, dashed] table[x=year, y=usa] {figdata/grade-10/01-economic-models/out/trend_lines.csv};
+\addlegendentry{United States, line of 1870--1929}
+\addplot[omThm, thick, dashed] table[x=year, y=arg] {figdata/grade-10/01-economic-models/out/trend_lines.csv};
+\addlegendentry{Argentina, line of 1870--1929}
+\draw[black!55, line width=0.6pt] (axis cs:1929.5,1000) -- (axis cs:1929.5,100000);
+\node[font=\footnotesize, anchor=south east, text=black!70] at (axis cs:1928,1150) {fitted on these years};
+\node[font=\footnotesize, anchor=south west, text=black!70] at (axis cs:1931,1150) {judged on these years};
+\end{semilogyaxis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: the \emph{growth rate} of a quantity is its change over a year as a
+percentage of its starting value; growth at the same rate year after year is \emph{compound
+growth}, which multiplies the quantity by the same factor $1+g$ every year. On a
+\emph{times-ten scale}, each step of the axis multiplies by ten, so compound growth at a fixed rate
+draws a straight line. That volume also boxed small models in four parts, and said that a
+\emph{correlation} across countries is not yet a cause.
+\end{recall}
+
+\section{What a model is}\label{sec:g10:economic-models:what}
+
+A street map leaves out almost everything about a city: the colour of the houses, the people,
+the weather, the height of the trees. That is why it is useful. A map drawn at full size, with
+every detail, would be as large as the city and of no help in finding the station. A model of the
+economy does the same: it keeps a few quantities, states how they are linked, and leaves the rest
+out on purpose. What it leaves out is a choice, and the choice is stated.
+
+\begin{definition}[Economic model]\label{def:g10:economic-models:model}
+An \emph{economic model}\index{economic model} is a simplified description of part of the economy,
+built on stated assumptions, from which predictions about quantities that can be observed are
+derived.
+\end{definition}
+
+The clerk's ruler is a model. Write $y_t$ for income per person $t$ years after a starting year,
+$y_0$ for its value in the starting year, and $g$ for the growth rate, written as a decimal ($g =
+0.02$ for 2\,\% a year). The assumption is that $g$ is the same every year. Then each year
+multiplies income by $1+g$, and after $t$ years
+\begin{equation}\label{eq:g10:economic-models:growth}
+  y_t = y_0\,(1+g)^t .
+\end{equation}
+The model takes $y_0$ and $g$ as given: it does not say where they come from. It explains $y_t$,
+for every $t$. Economists name the two roles.
+
+\begin{definition}[Endogenous and exogenous variables]\label{def:g10:economic-models:endogenous}
+An \emph{endogenous variable}\index{endogenous variable} is a quantity whose value a model
+explains: the model's equations give it once the other quantities are known. An \emph{exogenous
+variable}\index{exogenous variable} is a quantity that the model takes as given from outside: the
+model uses its value but does not explain it.
+\end{definition}
+\phantomsection\label{def:g10:economic-models:exogenous}
+
+In \eqref{eq:g10:economic-models:growth}, $y_t$ is endogenous; $y_0$, $g$ and the number of years
+$t$ are exogenous. The same quantity can play either role in different models. A model of a
+country's saving and investment, met in grade 12, will try to explain the growth rate $g$ that
+this one takes as given. No model explains everything; each one draws a line between what it
+explains and what it takes from outside, and a good model draws the line where the outside
+quantities are either known or can be measured.
+
+\begin{example}[A bakery in Brenland]\label{ex:g10:economic-models:bakery}
+Brenland is an invented economy that this series uses for exercises; its currency is the dalen. A
+bakery in Brenland sells $q$ loaves a day at a price of $p$ dalens each, and its takings are $R =
+p\,q$ dalens a day. In this tiny model $R$ is endogenous, $p$ and $q$ are exogenous. A larger model
+of the same bakery might add that fewer loaves are sold when the price is higher; then $q$ becomes
+endogenous, explained by $p$, and only $p$ (and whatever else moves the number of buyers) is
+exogenous.
+\end{example}
+
+A model also needs a clause that ordinary speech leaves implicit. ``A higher price of bread means
+fewer loaves sold'' is not true if, in the same week, a heat wave closes the bakery's rival or a
+holiday brings visitors to town: the number of loaves sold changes for several reasons at once.
+The statement means that the price alone has changed.
+
+\begin{definition}[Other things equal]\label{def:g10:economic-models:other-things-equal}
+A prediction holds \emph{other things equal}\index{other things equal} when it describes the effect
+of a change in one \omterm{def:g10:economic-models:endogenous}{exogenous variable} while every other \omterm{def:g10:economic-models:endogenous}{exogenous variable} of the model keeps its
+value.
+\end{definition}
+
+``\omterm{def:g10:economic-models:other-things-equal}{Other things equal}'' is not a way to escape a test. It tells the tester what to look for: a case
+where the one variable changed and the others did not, or a way to take the change in the others
+into account. Much of this book, and all of the econometrics of the university volumes, is about
+finding such cases.
+
+\section{The four-point frame}\label{sec:g10:economic-models:frame}
+
+Every model in this book is summed up in a box with four fields, always in the same order. The
+grades 6--9 volume used the same boxes; this section says what each field must contain.
+
+\begin{itemize}
+\item \textbf{Assumes.} The assumptions, stated so that one can check whether a real case meets
+  them. ``The growth rate is the same every year'' can be checked; ``the economy behaves normally''
+  cannot.
+\item \textbf{Predicts.} An observable quantity, a direction and, whenever possible, a size. ``Income
+  per person will be higher'' is a weak prediction; ``income per person will be about
+  \usd{50000} in 2022'' is a strong one, because many observations would contradict it.
+\item \textbf{Tested.} Where the prediction was compared with data that were \emph{not} used to
+  build the model. A line fitted to the years 1870--1929 always passes close to the points of
+  1870--1929: that is how it was drawn, and it proves nothing. The test is what the line says about
+  1930--2022, before anyone has seen those years.
+\item \textbf{Breaks.} The real cases in which an assumption fails and the prediction with it. A
+  model that is never said to break has not been tested.
+\end{itemize}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, node distance=4mm and 9mm,
+  box/.style={draw=omModel!75!black, fill=omModel!6, rounded corners=1.5mm, minimum width=31mm,
+    minimum height=15mm, align=center, text width=29mm, font=\small}]
+\node[box] (a) {\textbf{Assumes}\\[1pt] what the model takes as true};
+\node[box, right=of a] (p) {\textbf{Predicts}\\[1pt] a quantity, a direction, a size};
+\node[box, below=of p] (t) {\textbf{Tested}\\[1pt] against data not used to build it};
+\node[box, below=of a] (b) {\textbf{Breaks}\\[1pt] where an assumption fails};
+\draw[->, thick, omModel!75!black] (a) -- (p);
+\draw[->, thick, omModel!75!black] (p) -- (t);
+\draw[->, thick, omModel!75!black] (t) -- (b);
+\draw[->, thick, omModel!75!black, dashed] (b) -- node[left, font=\footnotesize, align=right]
+  {revise the\\assumptions} (a);
+\end{tikzpicture}
+
+{\small The four-point frame. A model is stated by its assumptions, judged by its predictions on data
+it was not built from, and known by where it fails; a failure sends the modeller back to the
+assumptions.}
+\end{omfigure}
+
+To fit the clerk's line by hand, two points are enough: the first and the last year of the fitting
+period. If income goes from $y_0$ to $y_T$ in $T$ years at a constant rate, then $y_T = y_0(1+g)^T$,
+so $(1+g)^T = y_T/y_0$, and $1+g$ is the number that, multiplied by itself $T$ times, gives the
+ratio $y_T/y_0$. A calculator finds it as the power $(y_T/y_0)^{1/T}$.
+
+\begin{method}[A constant-growth forecast from two points]\label{met:g10:economic-models:two-points}
+To fit the constant-growth model to the values $y_0$ and $y_T$, $T$ years apart, and project it $s$
+years beyond the last one:
+\begin{enumerate}
+\item compute the ratio $y_T / y_0$;
+\item compute the yearly factor $1 + g = (y_T/y_0)^{1/T}$, and the growth rate $g$;
+\item project: $y_{T+s} = y_T\,(1+g)^s$.
+\end{enumerate}
+\end{method}
+
+\begin{example}[The United States, fitted on 1870 and 1929]\label{ex:g10:economic-models:us}
+% figdata: trend_points (USA 4803, 11954, 58488)
+Income per person in the United States was \usd{4803} in 1870 and \usd{11954} in 1929, 59 years
+later (2011 dollars).
+\begin{enumerate}
+\item The ratio is $11954 / 4803 \approx 2.489$.
+\item The yearly factor is $2.489^{1/59} \approx 1.0156$: a growth rate of about 1.56\,\% a year.
+\item From 1929 to 2022 there are 93 years, so the forecast for 2022 is $11954 \times 1.0156^{93}
+  \approx 11954 \times 4.219 \approx \usd{50434}$.
+\end{enumerate}
+The value observed in 2022 was \usd{58488}, so the observation was $58488 / 50434 \approx 1.16$
+times the forecast: 16\,\% above it. The computer's line on the opening chart, which uses all sixty
+points of 1870--1929 rather than two, gives 17\,\%.
+% figdata: trend_fit (USA pct 117)
+\end{example}
+
+\begin{measure}[How a trend line is drawn on a times-ten scale]
+A \emph{trend line} sums up a stretch of years by one straight line on a times-ten scale, that is,
+by one constant growth rate. By hand, it is drawn through the first and last points of the
+stretch, as in \cref{met:g10:economic-models:two-points}. That uses two numbers out of sixty, and
+if either year was unusual (a war, a bad harvest) the line tilts with it. A computer instead
+chooses the straight line that passes as close as possible to all the points at once; on the
+opening chart, for the United States, it gives 1.53\,\% a year instead of the two-point 1.56\,\%, and for Canada 2.01\,\% instead of 1.87\,\%, enough to turn a near-perfect forecast into a miss of 13\,\%.
+Two rules matter more than the method. First, say which years the line was fitted on. Second, judge
+it only on other years.
+% figdata: trend_fit (USA rate 1.53); trend_misses (CAN 2.01, pct 87); trend_points (CAN two-point 1.87)
+\end{measure}
+
+The model of the clerk's ruler can now be put in its box.
+
+\begin{model}{Constant growth of income per person}
+\assumes Income per person grows at the same yearly rate $g$ in every year; the rate of a past
+  stretch of years carries on into the future.
+\predicts On a times-ten scale, income per person follows a straight line; from the values of
+  1870 and 1929, it gives a value for every later year, for example \usd{50434} for the United
+  States in 2022.
+\tested On 21 countries with long Maddison series, a line fitted on 1870--1929 lands within 25\,\%
+  of the value observed in 2022 for four of them: Canada, Chile, the United States and
+  Switzerland.
+\breaks Through wars and depressions (the United States in the 1930s), in long stagnations
+  (Argentina after 1930), and in fast catch-up, when a country grows much faster than before
+  (Western Europe after 1950: most countries ended far above their line).
+\end{model}
+% figdata: trend_misses (CAN 87, CHL 88, USA 117, CHE 122; 21 countries)
+
+\begin{omchart}{What the line of 1870--1929 missed: income per person observed in 2022, as a
+percentage of the value the constant-growth line fitted on 1870--1929 predicted for 2022. At 100\,\%
+the prediction was exact. Countries with at least 50 of the 60 years of 1870--1929 in the
+database.}{Maddison Project Database 2023; GDP per person in 2011 dollars at purchasing-power parity}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xbar, width=0.82\linewidth, height=10.5cm, xmin=0, xmax=1050,
+  ymin=0.3, ymax=21.7, y dir=reverse, ytick=data, grid=none, xmajorgrids,
+  yticklabels from table={figdata/grade-10/01-economic-models/out/trend_misses.csv}{name},
+  xlabel={observed in 2022, as \% of the line's prediction}, bar width=2.6mm,
+  y tick label style={font=\footnotesize}, xtick={0,100,200,...,1000},
+  nodes near coords, nodes near coords style={font=\scriptsize}, point meta=x]
+\addplot[fill=omDef!55, draw=omDef!80!black] table[x=pct, y=pos] {figdata/grade-10/01-economic-models/out/trend_misses.csv};
+\draw[omThm!85!black, thick] (axis cs:100,0.3) -- (axis cs:100,21.7);
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+The chart of misses is as instructive as the opening chart. The four countries near 100\,\% did
+not grow at the same rate all the time: the United States lost a third of its income per person
+between 1929 and 1933 ($8048 / 11954 \approx 0.67$). They came back near their line. Most other countries did not: sixteen of
+the twenty-one ended at more than one and a half times the value their line predicted, and one,
+Argentina, at about half of it.
+% figdata: obs_usa (1929 11954, 1933 8048: a fall of 33 %); trend_misses (16 at >= 153 %; ARG 56)
+A fall of a third in four years, then a return to the line, is exactly what the constant-growth
+model cannot describe and does not try to.
+
+\begin{record}[A forecast that held, and one that did not]
+% figdata: trend_points (ARG 6961 and USA 11954 in 1929; 18292 and 58488 in 2022)
+In 1929, income per person in Argentina was \usd{6961} and in the United States \usd{11954}:
+Argentina had 58\,\% of the American level. Both countries had grown at a little more than
+1.5\,\% a year since 1870, and the constant-growth model predicted that the two would stay in
+roughly the same proportion. In 2022, Argentina's income per person was \usd{18292} and the
+American one \usd{58488}: Argentina had 31\,\% of the American level. The model held for one
+country and broke for the other. What the record shows is \emph{that} it broke and \emph{when}:
+the Argentine curve leaves its line in the 1930s and never comes back. It does not show
+\emph{why}. A model that extends a line contains no cause at all, and so it cannot tell us what
+changed in Argentina; that question needs a different kind of model, about institutions,
+investment and policy, met in grade 12.
+\end{record}
+
+The constant-growth model gives a useful property that later chapters use often, when two
+countries are compared.
+
+\begin{proposition}[The ratio of two constant-growth paths]\label{prop:g10:economic-models:ratio}
+If income per person grows at the constant rate $g_1$ in one country and $g_2$ in another, the
+ratio of the first income to the second is multiplied by $(1+g_1)/(1+g_2)$ every year. It is
+constant when $g_1 = g_2$, rises when $g_1 > g_2$ and falls when $g_1 < g_2$.
+\end{proposition}
+\begin{proof}
+After $t$ years the two incomes are $a(1+g_1)^t$ and $b(1+g_2)^t$, where $a$ and $b$ are the
+starting values. Their ratio is
+\[
+  \frac{a(1+g_1)^t}{b(1+g_2)^t} = \frac{a}{b}\left(\frac{1+g_1}{1+g_2}\right)^{t},
+\]
+so each extra year multiplies it by $(1+g_1)/(1+g_2)$. This factor equals 1 when $g_1 = g_2$, is
+greater than 1 when $g_1 > g_2$, and smaller than 1 when $g_1 < g_2$.
+\end{proof}
+
+With the lines of the opening chart, the United States at 1.53\,\% and Argentina at 1.64\,\%, the
+factor is $1.0153/1.0164 \approx 0.9989$: the model predicted that Argentina would very slowly
+gain on the United States. It lost ground instead, which is what makes the Argentine line a clear
+failure rather than a near miss.
+% figdata: trend_fit (rates 1.53 and 1.64)
+
+\section{Facts and values}\label{sec:g10:economic-models:facts-values}
+
+``Argentina's income per person grew more slowly than Canada's after 1929'' and ``Argentina ought
+to have grown faster'' are both sentences about Argentina, but they are of different kinds. The
+first can be checked against the record; the second cannot, because it says what would be good,
+and the record only says what happened.
+
+\begin{definition}[Positive and normative statements]\label{def:g10:economic-models:positive}
+A \emph{positive statement}\index{positive statement} says what is, was or would be; observation
+can, at least in principle, show it true or false. A \emph{normative statement}\index{normative
+statement} says what ought to be, or what is better or worse; it rests on values, and no
+observation alone can settle it.
+\end{definition}
+\phantomsection\label{def:g10:economic-models:normative}
+
+Three remarks keep the distinction useful.
+\begin{itemize}
+\item A \omterm{def:g10:economic-models:positive}{positive statement} can be false. ``Raising the price of a bus ticket by 10\,\% would halve
+  the number of passengers'' is positive, and probably wrong; its kind is fixed by the fact that
+  data could decide it.
+\item A \omterm{def:g10:economic-models:positive}{positive statement} about a policy is still positive. ``A tax of one dalen per litre on
+  petrol would reduce the petrol sold in Brenland by about 3\,\%'' is a prediction. Whether the tax
+  is worth that reduction is normative.
+\item Words can carry a verdict without saying so. ``Prices are too high'', ``a fair wage'' and
+  ``an excessive profit'' each contain a normative judgment folded into what looks like a
+  description. Written without the verdict, they become checkable: ``prices rose by 8\,\% while
+  wages rose by 3\,\%''.
+\end{itemize}
+
+\begin{remark}[What this book does with values]\label{rem:g10:economic-models:values}
+This book states models and tests them: its sentences are positive. When a choice depends on
+values --- how much a gain to one group is worth against a loss to another --- the book says what
+each option does, to whom and by how much, and leaves the weighing to the reader. Positive
+economics does not make such choices for anyone; it makes them better informed.
+\end{remark}
+
+\section{Correlation and cause}\label{sec:g10:economic-models:cause}
+
+The chart below puts a fact about farming beside a question. Countries whose farmers spread more
+fertiliser on each hectare of land harvest more grain from each hectare. In the sixteen countries
+that use less than \qty{10}{kg} of fertiliser per hectare, the middle (median) country harvests
+about \qty{920}{kg} of cereals per hectare; in the fifty-six that use \qty{100}{kg} or more, about
+\qty{4900}{kg}, more than five times as much.
+% figdata: yield_groups (n 16, 57, 56; median 920, 2250, 4900)
+
+\begin{omchart}{Cereal yield against fertiliser use, 129 countries with at least 100\,000 hectares
+under cereals, averages of 2018--2020, both on times-ten scales. Fertiliser is measured in kilograms
+of nutrients per hectare of arable land.}{World Bank, World Development Indicators (from FAO): cereal yield and fertiliser consumption}
+\begin{tikzpicture}
+\begin{loglogaxis}[omscatter, log basis x=10, log basis y=10, log ticks with fixed point,
+  xtickten={0,...,3}, ytickten={2,...,5}, width=0.82\linewidth, height=7cm, xmin=1, xmax=1000,
+  ymin=300, ymax=20000, xlabel={fertiliser (kg per hectare)}, ylabel={cereal yield (kg per hectare)}]
+\addplot[omDef, only marks, mark=*, mark size=1.3pt, fill opacity=0.7]
+  table[x=fert, y=yld] {figdata/grade-10/01-economic-models/out/yield_fert.csv};
+\end{loglogaxis}
+\end{tikzpicture}
+\end{omchart}
+
+The points rise from left to right: the two quantities are correlated. Does that mean that the
+fertiliser \emph{causes} the higher yield, and by how much?
+
+\begin{definition}[Causal effect]\label{def:g10:economic-models:causal-effect}
+The \emph{causal effect}\index{causal effect} of a change in one variable on another is the change
+in the second variable that the first change produces, \omterm{def:g10:economic-models:other-things-equal}{other things equal}.
+\end{definition}
+
+A correlation is what we see; a \omterm{def:g10:economic-models:causal-effect}{causal effect} is what we want to know, because only a \omterm{def:g10:economic-models:causal-effect}{causal effect}
+says what would happen if someone changed the first variable. The scatter plot cannot give it, for
+two reasons.
+
+The first reason is a third variable. Countries that use a lot of fertiliser are, on the whole,
+richer: their farmers also have tractors, irrigation, better seed, roads to the market and the
+advice of agronomists. Each of these raises yields by itself. Part of the rise of the cloud of
+points --- perhaps most of it, perhaps little --- comes from these other differences, which move
+together with fertiliser.
+
+\begin{definition}[Confounding factor]\label{def:g10:economic-models:confounder}
+A \emph{confounding factor}\index{confounding factor} of the link between two variables is a third
+variable that affects both of them. It creates a correlation between them even where neither causes
+the other, and it makes a real \omterm{def:g10:economic-models:causal-effect}{causal effect} look larger or smaller than it is.
+\end{definition}
+
+The second reason is that the cause may run the other way. Where the soil is deep and the rain
+reliable, a sack of fertiliser pays for itself several times over, so farmers buy more of it. High
+yields then cause high fertiliser use, not the reverse.
+
+\begin{definition}[Reverse causation]\label{def:g10:economic-models:reverse}
+There is \emph{reverse causation}\index{reverse causation} when the variable thought of as the
+effect causes, at least in part, the variable thought of as the cause.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, v/.style={draw, rounded corners=1mm, minimum width=20mm, minimum
+  height=7mm, font=\small, fill=white}, c/.style={->, very thick, omDef!80!black},
+  k/.style={<->, thick, dashed, black!55}]
+\begin{scope}
+\node[v] (f1) at (0,0) {fertiliser}; \node[v] (y1) at (3.2,0) {yield};
+\draw[c] (f1) -- (y1);
+\node[font=\small\bfseries] at (1.6,-1.2) {(a) a cause};
+\end{scope}
+\begin{scope}[xshift=6.4cm]
+\node[v] (z2) at (1.6,1.5) {farm wealth}; \node[v] (f2) at (0,0) {fertiliser}; \node[v] (y2) at (3.2,0) {yield};
+\draw[c] (z2) -- (f2); \draw[c] (z2) -- (y2); \draw[k] (f2) -- (y2);
+\node[font=\small\bfseries] at (1.6,-1.2) {(b) a confounding factor};
+\end{scope}
+\begin{scope}[yshift=-3.0cm, xshift=1.6cm]
+\node[v] (f3) at (0,0) {fertiliser}; \node[v] (y3) at (3.2,0) {yield}; \node[v] (s3) at (6.4,0) {good soil};
+\draw[c] (y3) -- (f3); \draw[c] (s3) -- (y3);
+\node[font=\small\bfseries] at (3.2,-1.2) {(c) reverse causation};
+\end{scope}
+\end{tikzpicture}
+
+{\small Three ways to get the same correlation. A solid arrow is a \omterm{def:g10:economic-models:causal-effect}{causal effect}; the dashed line in
+(b) is a correlation without a direct cause. The scatter plot cannot tell the three apart; in
+practice all three may be at work at once.}
+\end{omfigure}
+
+How, then, can a \omterm{def:g10:economic-models:causal-effect}{causal effect} be measured? The answer of agronomists is older than economics: take
+a field, divide it into plots, and let chance decide which plots receive fertiliser.
+
+\begin{definition}[Randomised experiment]\label{def:g10:economic-models:randomised-experiment}
+A \emph{randomised experiment}\index{randomised experiment} is a comparison in which chance --- a
+lottery, a coin, a table of random numbers --- decides which units (plots, people, firms, schools)
+receive a treatment and which do not. The units that receive it form the \emph{treated group}, the
+others the \emph{control group}.
+\end{definition}
+
+\begin{proposition}[What a lottery buys]\label{prop:g10:economic-models:lottery}
+In a \omterm{def:g10:economic-models:randomised-experiment}{randomised experiment} with many units, the treated and control groups differ, on average, only
+by the treatment. The difference between the average outcome of the treated group and the average
+outcome of the control group then estimates the average \omterm{def:g10:economic-models:causal-effect}{causal effect} of the treatment, and the
+estimate gets closer to it as the number of units grows.
+\end{proposition}
+\admitted
+
+The proposition is proved in the university volumes, with the tools of probability. The idea can be
+seen without them. When a coin decides, soil quality, the farmer's skill and the slope of the land
+cannot influence who is treated, so they end up spread over the two groups in roughly the same way,
+and the more plots there are, the closer the two groups are. Only the fertiliser is put on one group
+and not the other. A \omterm{def:g10:economic-models:confounder}{confounding factor} has nothing to work with, and \omterm{def:g10:economic-models:reverse}{reverse causation} is ruled out:
+the yield cannot decide who gets the fertiliser, because the coin did. Field trials of this kind
+exist for fertiliser and many other farming practices, and a grade 11 chapter uses one.
+
+\omterm{def:g10:economic-models:randomised-experiment}{Randomised experiments} are not always possible: no one can draw lots to decide which countries
+get secure property rights. The grades 6--9 volume met the \emph{natural experiment}, in which
+history or nature, not the researcher, splits a population in two, as the division of Korea did.
+A natural experiment is only as good as one assumption: that, without the treatment, the two parts
+would have moved in the same way. That assumption cannot be checked directly, since only one of the
+two paths is ever seen for each part. What can be checked is the period before the split: if the
+two parts were already moving apart, the assumption is in doubt.
+
+\begin{remark}[Why the constant-growth model escapes all this]\label{rem:g10:economic-models:no-cause}
+The model of the opening chart predicts without claiming any cause: it says ``if the past rate
+carries on, then\ldots'', and nothing about why the rate is what it is. That makes it easy to test
+and impossible to use for a decision, because it cannot say what would change if a country did
+something differently. The models of the coming chapters are causal: they say what happens to
+quantities when a price, a tax or a technology changes, \omterm{def:g10:economic-models:other-things-equal}{other things equal}. They are harder to
+test, and the four-point frame is how this book keeps them honest.
+\end{remark}
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g10:economic-models:1}
+Read the opening chart. About how large was income per person in the United States and in Argentina
+in 1929, and in 2022? In which country did the observed curve stay closer to its line?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:economic-models:2}
+Say whether each statement is positive or normative.
+\begin{enumerate}
+\item In 2022, income per person in Canada was higher than in Chile.
+\item Brenland ought to spend more on its railways.
+\item If bus fares were free, the number of bus journeys would double.
+\item A minimum wage is unfair to employers.
+\item Income per person in Argentina grew more slowly after 1929 than before.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:economic-models:3}
+In the model $y_t = y_0\,(1+g)^t$, which variables are endogenous and which are exogenous? In the
+bakery model $R = p\,q$ of \cref{ex:g10:economic-models:bakery}, which variable is endogenous?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:economic-models:4}
+Read the chart of misses. How many countries ended between 75\,\% and 125\,\% of their line's
+prediction? Which country ended furthest below its line, and which furthest above?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:economic-models:5}
+``When the price of ice cream rises, fewer ice creams are sold.'' In July, the price of ice cream
+rose in Brenland and more ice creams were sold than in May. Does this contradict the statement?
+Use the phrase \emph{\omterm{def:g10:economic-models:other-things-equal}{other things equal}} in your answer.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:economic-models:6}
+A country's income per person is \usd{20000} and grows at a constant 2\,\% a year. Compute it after
+10 years and after 35 years. Roughly how many years does it take to double?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:economic-models:7}
+% figdata: trend_points (CAN 2702, 8074, 45530)
+Income per person in Canada was \usd{2702} in 1870 and \usd{8074} in 1929. Use
+\cref{met:g10:economic-models:two-points} to find the growth rate of 1870--1929, rounded to two
+decimal places in per cent, and the forecast for 2022. The value observed in 2022 was \usd{45530}.
+By what percentage did the forecast miss?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:economic-models:8}
+Two countries start with the same income per person. One grows at 2\,\% a year, the other at 1\,\%.
+Use \cref{prop:g10:economic-models:ratio} to predict the ratio of their incomes after 70 years.
+On the opening chart the lines grow at 1.53\,\% (United States) and 1.64\,\% (Argentina) a year.
+By what factor does the model multiply the ratio of Argentine to American income over the 93 years
+from 1929 to 2022? In 1929 that ratio was 0.582: what does the model predict for 2022?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:economic-models:9}
+Read the scatter plot of fertiliser and yield. How many times larger is the median yield of the
+countries using \qty{100}{kg} or more of fertiliser per hectare than that of the countries using
+less than \qty{10}{kg}? Explain why this number is not the \omterm{def:g10:economic-models:causal-effect}{causal effect} of fertiliser on yield.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:economic-models:10}
+Across countries, the number of mobile phones per hundred people is positively correlated with life
+expectancy. Name a \omterm{def:g10:economic-models:confounder}{confounding factor}, and explain in two sentences how it creates the correlation.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:economic-models:11}
+Firms that spend more on advertising have larger sales. Explain how causation could run, at least in
+part, from sales to advertising. Then name one observation that would point to an effect of
+advertising on sales.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:economic-models:12}
+Give two observations, each of a kind that could be found in the data of a single country, that
+would contradict the constant-growth model of income per person. For each, say which assumption of
+the model it contradicts.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:economic-models:13}
+A farming office in Brenland wants to know how much \qty{50}{kg} of fertiliser per hectare raises
+the maize yield. It can work with 200 farms. Describe a \omterm{def:g10:economic-models:randomised-experiment}{randomised experiment}: how the farms are
+chosen for the treatment, what is measured, and what number estimates the effect. Explain why
+letting farmers volunteer for the fertiliser would give a misleading answer, and in which direction
+it would most likely err.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:economic-models:14}
+% figdata: trend_fit (pred2022 50167 and 32520; act2022 58488 and 18292); trend_points (1929)
+The computer's lines of the opening chart predicted \usd{50167} for the United States and
+\usd{32520} for Argentina in 2022; the observed values were \usd{58488} and \usd{18292}. In 1929
+the values were \usd{11954} and \usd{6961}. Compute the ratio of American to Argentine income in
+1929, the ratio the lines predicted for 2022, and the ratio observed in 2022. Which of the two
+countries' forecasts contributed more to the error in the ratio? Explain why this observation
+contradicts the model even though both countries grew.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:economic-models:15}
+In 2019 a flood destroyed the harvest in the eastern half of a valley in Brenland, but not in the
+western half. A researcher compares the incomes of eastern and western farm families in 2020 to
+measure the effect of the flood. What must the researcher assume for this comparison to measure the
+\omterm{def:g10:economic-models:causal-effect}{causal effect} of the flood? Which data from before 2019 would make the assumption more believable,
+and which would cast doubt on it?
+\end{exercise}
+
+\section{Problem: Brenland's Trend}
+
+\begin{problem}[{Weekend problem --- a forecast made in 2007, judged in 2025}]
+\label{pb:g10:economic-models:1}
+% figdata: brenland_gdppc (2000 24675, 2007 27027, 2009 25840, 2010 26170, 2014 27905,
+% 2019 29997, 2020 28371, 2025 31470; Brenland is invented, code/shared/country)
+At the end of 2007, an economist in Brenland is asked to forecast real GDP per person for 2025. The
+statistics office publishes the series in dalens of 2015 per person. Some of its values, including
+those published later, are:
+
+\begin{center}
+\small
+\begin{tabular}{lrrrrrrrr}
+\toprule
+year & 2000 & 2007 & 2009 & 2010 & 2014 & 2019 & 2020 & 2025 \\
+\midrule
+dalens per person & 24\,675 & 27\,027 & 25\,840 & 26\,170 & 27\,905 & 29\,997 & 28\,371 & 31\,470 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The economist uses the constant-growth model, fitted on 2000 and 2007 by
+\cref{met:g10:economic-models:two-points}. Round growth rates to two decimal places in per cent and
+yearly factors to four decimal places.
+
+\medskip
+\noindent\textbf{Part I --- The data.}
+\begin{enumerate}
+\item By what percentage did real GDP per person rise from 2000 to 2007?
+\item By what percentage did it change from 2007 to 2009?
+\item By what percentage did it change from 2019 to 2020?
+\item In the economist's model, is real GDP per person of 2025 an endogenous or an \omterm{def:g10:economic-models:endogenous}{exogenous
+  variable}? And the growth rate?
+\item ``Brenland grew too slowly after 2008.'' Is this statement positive or normative? Rewrite it
+  as a \omterm{def:g10:economic-models:positive}{positive statement} that the table can check.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The fitted rate.}
+\begin{enumerate}[resume]
+\item Compute the ratio of 2007 to 2000 and the yearly growth rate $g$ of 2000--2007.
+\item Check the fit: starting from the value of 2000, what does the model give for 2007?
+\item At this rate, roughly how many years does real GDP per person take to double?
+\item What does the model assume about the years after 2007? Name one event that, if it happened,
+  would break that assumption.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- The projection.}
+\begin{enumerate}[resume]
+\item What does the model predict for 2009? By what percentage was the observed value of 2009 below
+  this prediction?
+\item What does the model predict for 2025?
+\item Compute the forecast error in 2025: the observed value minus the forecast, as a percentage of
+  the forecast.
+\item The gap between forecast and observation in 2025 equals how many years of growth at the rate
+  $g$, roughly? Compare $(1+g)^6$ with the ratio of the forecast to the observed value.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- What broke.}
+\begin{enumerate}[resume]
+\item Compute the growth rate of 2010--2019 from the two endpoints. Compare it with $g$.
+\item Suppose the economist had restarted the forecast from the observed value of 2009, keeping the
+  rate $g$. What would the forecast for 2025 have been, and what would the error have been?
+\item Compare the errors of questions 12 and 15. Which assumption of the model failed more: that the
+  rate stays the same, or that nothing interrupts the path?
+\item The fall of 2020 was followed by a recovery. Does one year of falling income, by itself,
+  contradict the model? What pattern over several years would?
+\item A second economist forecasts in 2014, fitting the model on 2000 and 2014. Compute the rate and
+  the forecast for 2025, and its error.
+\item The 2014 forecast missed by less than the 2007 one. Does that show that its method was better?
+  Explain.
+\item State the result of the problem in one sentence: the forecast error of the 2007 forecast in
+  2025, in per cent, and the event to which most of it is due.
+\end{enumerate}
+\end{problem}

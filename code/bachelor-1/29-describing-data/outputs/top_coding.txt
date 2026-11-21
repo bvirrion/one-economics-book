@@ -1,0 +1,6 @@
+$ python top_coding.py
+cap 25,564.70; men at the cap 4145 of 15992 (0.259)
+mean as recorded           14,847
+mean without the capped     11,097
+median                     16,422
+the true mean is at least 14,847

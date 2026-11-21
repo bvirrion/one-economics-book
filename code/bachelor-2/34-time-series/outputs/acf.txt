@@ -1,0 +1,4 @@
+$ python acf.py
+infl   lags 1-4: [0.642 0.595 0.616 0.493]   lag 1 by hand 0.642
+unemp  lags 1-4: [0.956 0.88  0.793 0.706]   lag 1 by hand 0.956
+band for white noise: +/- 0.138

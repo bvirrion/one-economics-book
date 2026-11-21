@@ -1,0 +1,11 @@
+$ python unravelling.py
+year 1: premium  500.0, share insured 0.800
+year 2: premium  560.0, share insured 0.680
+year 3: premium  596.0, share insured 0.608
+year 4: premium  617.6, share insured 0.565
+year 5: premium  630.6, share insured 0.539
+year 6: premium  638.3, share insured 0.523
+year 7: premium  643.0, share insured 0.514
+year 8: premium  645.8, share insured 0.508
+equilibrium: premium 650.0, share insured 0.500
+welfare lost per person 87.50 dalens a year

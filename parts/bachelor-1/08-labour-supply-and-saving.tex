@@ -1,0 +1,505 @@
+\chapter{Labour Supply and Saving}\label{ch:b1:labour-supply-and-saving}
+
+In 1950 a worker in France worked 2,351 hours in the year, and one in
+Germany 2,427. By 2019 the figures were 1,504 and 1,372. Over the same
+seventy years real pay per hour rose about eightfold in France; in Germany,
+where the record of pay starts in 1980, it doubled from 1980 to
+2019. % figdata: hours_points, hours_first
+People who could earn far more per hour chose to work fewer hours. The
+model of \cref{ch:b1:income-and-substitution-effects} explains how: a wage
+is the price of free time, and its rise has an \omterm{def:b1:income-and-substitution-effects:effects}{income effect} that can
+outweigh its \omterm{def:b1:income-and-substitution-effects:effects}{substitution effect}. This chapter applies the consumer's model
+to the two choices that a household sells rather than buys --- its time,
+and its income today against income tomorrow.
+
+\begin{openingchart}{Average annual hours per worker against real labour
+compensation per hour, 1950--2023, six countries, one path per country
+(compensation per hour on a logarithmic axis, 2021 US dollars at constant
+national prices, so levels are comparable over time within a country, less
+so between countries). A path starts in the first year with an observed
+labour share: 1950 for France and the United States, 1970 for Japan, the
+Netherlands and the United Kingdom, 1980 for Germany.}{Penn World Table 11.0: average annual hours worked
+by persons engaged; labour share times real GDP at constant national prices
+divided by total hours}
+\begin{tikzpicture}
+\begin{semilogxaxis}[omrecord, log basis x=10, xtick={2,5,10,20,50}, xticklabels={2,5,10,20,50},
+  xmin=1.5, xmax=70, ymin=1200, ymax=2500, xlabel={Real compensation per hour (2021 dollars)},
+  ylabel={Hours per worker per year}, width=0.72\linewidth, height=0.5\linewidth,
+  legend pos=outer north east]
+  \addplot+[no marks, thick] table[x=wage_fra, y=avh_fra] {figdata/bachelor-1/08-labour-supply-and-saving/out/hours_paths.csv};
+  \addplot+[no marks, thick] table[x=wage_deu, y=avh_deu] {figdata/bachelor-1/08-labour-supply-and-saving/out/hours_paths.csv};
+  \addplot+[no marks, thick] table[x=wage_jpn, y=avh_jpn] {figdata/bachelor-1/08-labour-supply-and-saving/out/hours_paths.csv};
+  \addplot+[no marks, thick] table[x=wage_nld, y=avh_nld] {figdata/bachelor-1/08-labour-supply-and-saving/out/hours_paths.csv};
+  \addplot+[no marks, thick] table[x=wage_gbr, y=avh_gbr] {figdata/bachelor-1/08-labour-supply-and-saving/out/hours_paths.csv};
+  \addplot+[no marks, thick] table[x=wage_usa, y=avh_usa] {figdata/bachelor-1/08-labour-supply-and-saving/out/hours_paths.csv};
+  \legend{France, Germany, Japan, Netherlands, United Kingdom, United States}
+\end{semilogxaxis}
+\end{tikzpicture}
+\end{openingchart}
+
+Every path runs from the upper left to the lower right: in all six
+countries hours per worker in 2019 were below their first value, and pay
+per hour at least twice as high. % figdata: hours_points, hours_first
+From 1950 to 2019 the fall in hours was steep in Germany, France and the
+Netherlands and slow in the United States, where hours went from 2,022 to
+1,797. % figdata: hours_points
+The chart shows hours per person with a job, the \emph{intensive}
+side of labour supply; who has a job at all is the other side, and the
+section on margins returns to it.
+
+\begin{recall}
+Hours worked are counted per person employed, over a year
+(\cref{ch:b1:constrained-optimisation}'s opening chart). The present value
+of an amount $y$ received a period later, at interest rate $r$, is
+$y/(1 + r)$. The \omterm{thm:b1:income-and-substitution-effects:slutsky}{Slutsky equation}
+(\cref{thm:b1:income-and-substitution-effects:slutsky}) splits a price
+effect into a substitution and an \omterm{def:b1:income-and-substitution-effects:effects}{income effect}; with an \omterm{def:b1:consumer-choice:endowment}{endowment}, the
+\omterm{def:b1:income-and-substitution-effects:effects}{income effect} is weighted by what the consumer sells.
+\end{recall}
+
+\section{Consumption and free time}\label{sec:b1:labour-supply-and-saving:leisure}
+
+A worker has $T$ hours a year to divide between work $h$ and everything
+else, called \emph{leisure} $\ell = T - h$ for short (it includes sleep,
+care and study). She earns a wage $w$ per hour, receives a non-labour
+income $y$, and buys consumption $c$ at a price of 1.
+
+\begin{definition}[Time endowment and full income]\label{def:b1:labour-supply-and-saving:full-income}
+\index{time endowment}\index{full income}
+The \emph{time \omterm{def:b1:consumer-choice:endowment}{endowment}} is the number of hours $T$ the worker can divide
+between work and leisure. Her budget is $c = w(T - \ell) + y$, or
+$c + w\ell = wT + y$: she spends her \emph{full income} $wT + y$ on
+consumption and on leisure, whose price is the wage she gives up.
+\end{definition}
+
+With preferences $u(c, \ell)$, this is the consumer's problem of
+\cref{ch:b1:consumer-choice} with an \omterm{def:b1:consumer-choice:endowment}{endowment} of $T$ hours of leisure and
+$y$ of consumption. At an interior optimum the \omterm{def:b1:preferences-and-utility:mrs}{MRS} of leisure for
+consumption equals the wage.
+
+\begin{definition}[Reservation wage]\label{def:b1:labour-supply-and-saving:reservation-wage}
+\index{reservation wage}
+The \emph{reservation wage} is the \omterm{def:b1:preferences-and-utility:mrs}{MRS} at the point of no work, $(c, \ell) = (y, T)$:
+the lowest wage at which the worker chooses to work a positive number of
+hours. Below it she does not work.
+\end{definition}
+
+\begin{definition}[Labour supply function]\label{def:b1:labour-supply-and-saving:labour-supply}
+\index{labour supply function}
+The \emph{labour supply function} $h(w, y) = T - \ell(w, y)$ gives the hours the
+worker chooses at each wage and non-labour income; it is zero at wages
+below the \omterm{def:b1:labour-supply-and-saving:reservation-wage}{reservation wage}.
+\end{definition}
+
+For $u = (1 - a)\ln c + a\ln\ell$, Cobb--Douglas demand for leisure from \omterm{def:b1:labour-supply-and-saving:full-income}{full
+income} gives $\ell = a(wT + y)/w$, so
+\[
+h(w, y) = (1 - a)T - \frac{ay}{w},
+\qquad\text{and the reservation wage is}\qquad \frac{a}{1 - a}\,\frac{y}{T}.
+\]
+Without non-labour income, $h = (1 - a)T$ whatever the wage: the income and
+\omterm{def:b1:income-and-substitution-effects:effects}{substitution effects} of a wage change cancel exactly. With $y > 0$, hours
+rise with the wage.
+
+\section{The wage: income and substitution effects}\label{sec:b1:labour-supply-and-saving:wage}
+
+A rise in the wage is a rise in the price of leisure, for a consumer who
+owns $T$ hours of it. The \omterm{thm:b1:income-and-substitution-effects:slutsky}{Slutsky equation} with an \omterm{def:b1:consumer-choice:endowment}{endowment}
+(\cref{sec:b1:income-and-substitution-effects:slutsky}) applied to leisure
+gives
+\[
+\frac{\partial\ell}{\partial w} = \frac{\partial\ell^{c}}{\partial w} + (T - \ell)\,\frac{\partial\ell}{\partial m},
+\]
+where $\ell^{c}$ is \omterm{def:b1:income-and-substitution-effects:compensated}{compensated demand} for leisure and $m$ is \omterm{def:b1:labour-supply-and-saving:full-income}{full income}. The
+first term is negative: leisure is dearer. The second is positive if
+leisure is a \omterm{def:b1:consumer-choice:normal-inferior}{normal good}, and large for someone who works many hours,
+since $T - \ell = h$. In terms of hours,
+\[
+\frac{\partial h}{\partial w} = \underbrace{-\frac{\partial\ell^{c}}{\partial w}}_{> 0}\;-\;\underbrace{h\,\frac{\partial\ell}{\partial m}}_{> 0}:
+\]
+a wage rise pushes hours up by substitution and down by the \omterm{def:b1:income-and-substitution-effects:effects}{income effect}.
+Which wins is an empirical matter. The opening chart says that over
+seventy years of rising wages the \omterm{def:b1:income-and-substitution-effects:effects}{income effect} won. The \omterm{def:b1:income-and-substitution-effects:effects}{substitution effect}
+alone is measured by the \emph{compensated} (Hicksian) elasticity of hours,
+the response to a wage change with income held at its utility; the total by
+the uncompensated (Marshallian) one.
+
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 1, horizontal sep=20mm},
+  omrecord, grid=none, width=0.46\linewidth, height=0.4\linewidth, samples=80]
+\nextgroupplot[xlabel={Leisure $\ell$ (hours)}, ylabel={Consumption $c$ (thousands)}, xmin=0, xmax=3300,
+  ymin=0, ymax=45, title={\small The budget and a wage rise}, width=0.46\linewidth]
+  \addplot[supply] coordinates {(0,30) (3000,6)};
+  \addplot[supply, dashed] coordinates {(0,42) (3000,6)};
+  \addplot[guide] coordinates {(3000,0) (3000,6)};
+  \addplot[demand, domain=700:3300] {28125/x};
+  \addplot[demand, domain=900:3300] {36750/x};
+  \addplot[only marks, mark=*, black] coordinates {(1875,15) (1750,21) (3000,6)};
+  \node[font=\footnotesize, anchor=north east] at (axis cs:1875,15) {$A$};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:1750,21) {$B$};
+  \node[font=\footnotesize, anchor=north east] at (axis cs:2950,5.5) {$(T, y)$};
+\nextgroupplot[xlabel={Wage $w$}, ylabel={Hours of work $h$}, xmin=0, xmax=30, ymin=0, ymax=1600,
+  title={\small Labour supply}, width=0.46\linewidth]
+  \addplot[demand, domain=2:30] {1500 - 3000/x};
+  \addplot[demand] coordinates {(0,0) (2,0)};
+  \addplot[only marks, mark=*, black] coordinates {(8,1125) (12,1250)};
+  \node[font=\footnotesize, anchor=west] at (axis cs:2.5,120) {reservation wage 2};
+\end{groupplot}
+\end{tikzpicture}
+
+{\small $u = \tfrac12\ln c + \tfrac12\ln\ell$, $T = 3000$ hours, $y = 6000$. Left: the
+budget at a wage of 8 (solid) and of 12 (dashed) pivots about the \omterm{def:b1:consumer-choice:endowment}{endowment}
+point $(T, y)$; the optimum moves from $A = (1875, 15000)$ to
+$B = (1750, 21000)$. Right: the labour supply $h = 1500 - 3000/w$, zero below
+the \omterm{def:b1:labour-supply-and-saving:reservation-wage}{reservation wage} of 2.}
+\end{omfigure}
+
+With these preferences and $y = 6000$, at a wage of 8 \omterm{def:b1:labour-supply-and-saving:full-income}{full income} is
+$8 \times 3000 + 6000 = 30000$, half is spent on leisure, $\ell = 15000/8 = 1875$, and
+$h = 1125$. At a wage of 12, \omterm{def:b1:labour-supply-and-saving:full-income}{full income} is 42,000, $\ell = 21000/12 = 1750$ and
+$h = 1250$. Hours rise, but less than in proportion: the elasticity of hours
+between the two wages is $\ln(1250/1125)/\ln(12/8) = 0.105/0.405 = 0.26$.
+Preferences with a subsistence level of consumption,
+$u = \ln(c - c_0) + \ln\ell$ with $y = 0$, give $h = T/2 + c_0/(2w)$: hours that
+\emph{fall} as the wage rises, the backward-bending part of a supply curve
+that the opening chart suggests.
+
+\section{Taxes and transfers bend the budget line}\label{sec:b1:labour-supply-and-saving:taxes}
+
+A proportional income tax at rate $t$ turns the budget into
+$c = (1 - t)w h + y$: it is a cut in the net wage, with both effects of a wage
+cut. Benefits withdrawn as earnings rise have the same effect over the
+range where they are withdrawn, and the two can stack.
+
+\begin{definition}[Implicit marginal tax rate]\label{def:b1:labour-supply-and-saving:implicit-rate}
+\index{implicit marginal tax rate}\index{marginal tax rate!implicit}
+The \emph{implicit marginal tax rate} at an earnings level is the share of an
+extra dalen of earnings that the worker does not keep, adding the income tax,
+social contributions and the withdrawal of benefits:
+$1 - \dd c/\dd E$, where $E = wh$ is earnings and $c$ disposable income.
+\end{definition}
+
+Brenland (invented) pays a benefit of 9,000 dalens a year, withdrawn at
+$48\%$ of earnings, and taxes income at $20\%$ above 12,000 dalens. A worker
+earning between 12,000 and 18,750 dalens, where the benefit runs out, keeps
+$1 - 0.48 - 0.20 = 32\%$ of an extra dalen: her implicit marginal rate is $68\%$,
+higher than the $45\%$ marginal rate of a worker earning over 100,000
+(Brenland taxes income at $35\%$ from 40,000 dalens and $45\%$ from 100,000). The \omterm{def:b1:consumer-choice:budget}{budget
+line} has kinks where a rate changes; where the rate falls, as at 18,750, the
+\omterm{def:b1:consumer-choice:budget}{budget set} is not convex, and the optimum may jump across it.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Hours of work $h$}, ylabel={Disposable income $c$ (dalens)},
+  xmin=0, xmax=2500, ymin=0, ymax=34000, width=0.62\linewidth, height=0.44\linewidth,
+  scaled y ticks=false, yticklabel style={/pgf/number format/.cd, fixed, 1000 sep={\,}},
+  legend pos=north west]
+  \addplot[demand] coordinates {(0,9000) (800,15240) (1250,17400) (2500,32400)};
+  \addplot[shifted] coordinates {(0,9000) (800,17400) (2000,26400) (2500,32400)};
+  \addplot[only marks, mark=*, black] coordinates {(507.7,12960) (685.7,16200)};
+  \node[font=\footnotesize, anchor=north west] at (axis cs:507.7,12960) {old};
+  \node[font=\footnotesize, anchor=south east] at (axis cs:685.7,16200) {new};
+  \legend{Withdrawal $48\%$, Withdrawal $30\%$}
+\end{axis}
+\end{tikzpicture}
+
+{\small Brenland's budget for a worker paid 15 dalens an hour: benefit 9,000
+withdrawn at $48\%$ (solid; kinks at 800 hours, where the tax starts, and
+1,250, where the benefit runs out) or at $30\%$ (dashed). The points are the
+weekend problem's worker before and after the reform.}
+\end{omfigure}
+
+\begin{definition}[Intensive and extensive margins]\label{def:b1:labour-supply-and-saving:margins}
+\index{intensive margin}\index{extensive margin}\index{participation}
+The \emph{extensive margin} of labour supply is the choice whether to work
+at all (participation); the \emph{intensive margin} is the choice of how
+many hours to work, given that one works.
+\end{definition}
+
+A benefit withdrawn at a high rate acts on both. A worker who could earn
+less than her \omterm{def:b1:labour-supply-and-saving:reservation-wage}{reservation wage} net of the withdrawal does not participate;
+a worker on the withdrawal range faces a low net wage and, by the
+\omterm{def:b1:income-and-substitution-effects:effects}{substitution effect}, works fewer hours. Taxes on the first hours of work
+matter most for the \omterm{def:b1:labour-supply-and-saving:margins}{extensive margin}, taxes on extra hours for the
+intensive one. Bunching at a kink (\cref{ch:b1:constrained-optimisation},
+the record box on a kink) is intensive-margin evidence.
+
+\begin{omchart}{Labour-force participation of women aged 15--64, 1991--2024, six
+countries, per cent (modelled estimates).}{World Bank, World Development
+Indicators, labour force \omterm{def:b1:labour-supply-and-saving:margins}{participation} rate, female (modelled ILO
+estimate)}
+\begin{tikzpicture}
+\begin{axis}[omtime, xlabel={Year}, ylabel={Participation (\%)}, xmin=1991, xmax=2024,
+  ymin=50, ymax=90, width=0.72\linewidth, height=0.42\linewidth, legend pos=outer north east]
+  \addplot+[no marks, thick] table[x=year, y=women_fra] {figdata/bachelor-1/08-labour-supply-and-saving/out/participation.csv};
+  \addplot+[no marks, thick] table[x=year, y=women_deu] {figdata/bachelor-1/08-labour-supply-and-saving/out/participation.csv};
+  \addplot+[no marks, thick] table[x=year, y=women_jpn] {figdata/bachelor-1/08-labour-supply-and-saving/out/participation.csv};
+  \addplot+[no marks, thick] table[x=year, y=women_nld] {figdata/bachelor-1/08-labour-supply-and-saving/out/participation.csv};
+  \addplot+[no marks, thick] table[x=year, y=women_gbr] {figdata/bachelor-1/08-labour-supply-and-saving/out/participation.csv};
+  \addplot+[no marks, thick] table[x=year, y=women_usa] {figdata/bachelor-1/08-labour-supply-and-saving/out/participation.csv};
+  \legend{France, Germany, Japan, Netherlands, United Kingdom, United States}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+The \omterm{def:b1:labour-supply-and-saving:margins}{extensive margin} moved a long way. Women's \omterm{def:b1:labour-supply-and-saving:margins}{participation} rose from
+$58.0\%$ to $76.5\%$ in Japan, from $61.4\%$ to $75.9\%$ in Germany and from
+$68.0\%$ to $82.0\%$ in the Netherlands, while in the United States it rose
+only from $66.5\%$ to $68.9\%$; men's rates moved by a few points either
+way. % figdata: participation_points
+Part of the fall in hours per worker in the opening chart is composition:
+more of the people at work are women working part time, whose shorter hours
+pull the average down even if nobody changes their hours.
+
+\begin{measure}[Hours per worker]
+The Penn World Table's hours are annual hours per person employed,
+assembled from national labour-force surveys and national accounts. They
+fall when people take longer holidays or work shorter weeks, but also
+when part-time jobs become more common, so a falling average is not the
+same as everyone working less. \omterm{def:b1:labour-supply-and-saving:margins}{Participation} rates are a separate
+measure: the share of the population aged 15--64 working or looking for
+work.
+\end{measure}
+
+\begin{model}{The labour--leisure choice}
+\assumes A worker free to choose her hours at a given wage, with leisure a
+\omterm{def:b1:consumer-choice:normal-inferior}{normal good}.
+\predicts \omterm{def:b1:labour-supply-and-saving:margins}{Participation} rises with the net wage; hours may rise or fall
+with it; a benefit withdrawn at a high rate lowers \omterm{def:b1:labour-supply-and-saving:margins}{participation} and hours
+on the withdrawal range; workers bunch at kinks where the marginal rate
+jumps up.
+\tested The opening chart is consistent with it but cannot test it: hours
+per worker fell as real wages rose for seventy years in the rich
+countries, and the model allows either sign. % figdata: hours_points
+The tests are quasi-experimental: a synthesis of quasi-experimental studies puts the compensated (Hicksian)
+elasticity at about $0.3$ on the \omterm{def:b1:labour-supply-and-saving:margins}{intensive margin} and $0.25$ on the \omterm{def:b1:labour-supply-and-saving:margins}{extensive
+margin} (Chetty, Guren, Manoli and Weber 2011). % ledger: b1:chetty2011
+\breaks Many employers set hours, so workers choose among a few
+hours-and-wage packages rather than along a line; the long fall in average
+hours also reflects composition (more part-time workers), not only choice.
+\end{model}
+
+\begin{debate}[How elastic is labour supply?]
+In the early 2000s Americans worked about $50\%$ more than Germans, French
+and Italians, on Prescott's measure of labour supply (per worker, the
+opening chart's measure, the American--German gap was $31\%$ in
+2019), % figdata: hours_points
+though in the early 1970s Western Europeans had worked
+more. Prescott (2004) found that differences in the
+effective marginal tax rate on labour income account for most of the gap,
+in a model whose labour supply responds strongly to the net
+wage. % ledger: b1:prescott2004
+Quasi-experimental studies of individual workers find much smaller
+responses. Regressing log hours on log tax rates in Prescott's data gives a
+compensated elasticity of about $0.7$, against about $0.3$ on the intensive
+and $0.25$ on the \omterm{def:b1:labour-supply-and-saving:margins}{extensive margin} in the micro
+studies. % ledger: b1:chetty2011
+The cross-country estimate has the weakness that countries with high taxes
+differ in other ways that affect hours (holidays set by law, unions,
+family policy); the micro estimates have the weakness that a single
+reform may be too small or too short to move hours that are hard to adjust.
+The two can be closer than they look: an elasticity of 0.55 adding both
+margins of the micro studies is not far from 0.7.
+\end{debate}
+
+\section{Consumption over two periods}\label{sec:b1:labour-supply-and-saving:two-periods}
+
+The same model divides income between today and tomorrow. A household
+earns $y_1$ now and $y_2$ next period, can lend or borrow at the interest rate
+$r$, and consumes $c_1$ and $c_2$.
+
+\begin{definition}[Intertemporal budget constraint]\label{def:b1:labour-supply-and-saving:intertemporal-budget}
+\index{intertemporal budget constraint}
+With perfect capital markets, the household's two-period budget is
+\[
+c_1 + \frac{c_2}{1 + r} = y_1 + \frac{y_2}{1 + r}:
+\]
+the present value of consumption equals the present value of income, its
+\emph{wealth} $W$. The price of $c_2$ in units of $c_1$ is $1/(1 + r)$.
+\end{definition}
+
+\begin{definition}[Household saving]\label{def:b1:labour-supply-and-saving:household-saving}
+\index{household saving}\index{saving (household)}
+In the two-period model, \emph{household saving} is $s = y_1 - c_1$: positive
+for a lender, negative for a borrower.
+\end{definition}
+
+With $u = \ln c_1 + \beta\ln c_2$, $0 < \beta < 1$, the household spends the share
+$1/(1 + \beta)$ of its wealth on $c_1$: $c_1 = W/(1 + \beta)$ and
+$c_2 = \beta(1 + r)c_1$. Consumption depends on wealth, not on when the income
+arrives. A rise in $r$ makes future consumption cheaper (substitution:
+save more) and changes wealth: it makes a lender richer and a borrower
+poorer. For a lender the two effects pull saving in opposite directions;
+for a borrower both push towards saving more (borrowing less). With
+logarithmic utility the effects on $c_1$ of the price change cancel, and $r$
+acts on $c_1$ only through the present value of $y_2$.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={$c_1$ (thousands of dalens)}, ylabel={$c_2$ (thousands)},
+  xmin=0, xmax=42, ymin=0, ymax=42, width=0.52\linewidth, height=0.45\linewidth, samples=60]
+  \addplot[supply] coordinates {(0,29.81) (28.66,0)};
+  \addplot[demand] coordinates {(0,39.36) (37.85,0)};
+  \addplot[only marks, mark=*, black] coordinates {(16.2,12.96) (14.62,14.6) (9,30) (19.31,19.28)};
+  \node[font=\footnotesize, anchor=north east] at (axis cs:16.2,12.96) {$y$};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:14.62,14.6) {lender};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:9,30) {$y'$};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:19.31,19.28) {borrower};
+\end{axis}
+\end{tikzpicture}
+
+{\small $u = \ln c_1 + 0.96\ln c_2$, $r = 4\%$. A household with incomes
+$y = (16200, 12960)$ (red) consumes $(14623, 14600)$ and lends 1,577; one with
+$y' = (9000, 30000)$ (blue) consumes $(19309, 19278)$ and borrows 10,309.}
+\end{omfigure}
+
+\begin{model}{Two-period saving}
+\assumes Perfect capital markets (lend and borrow at the same rate, without
+limit), known future incomes, stable preferences over consumption in the
+two periods.
+\predicts Consumption depends on wealth, the present value of income, not on
+current income; a change in income that is expected and already counted in
+wealth does not move consumption when it arrives; the response of saving to
+the interest rate has an ambiguous sign for lenders.
+\tested The prediction about expected income has been tested and fails
+for many households: the timing of the 2001 American tax rebates was set at
+random, and households spent $20$--$40\%$ of the rebate on non-durable goods
+in the three months it arrived, a test of the prediction that an expected
+payment does not move consumption when it comes (Johnson, Parker and
+Souleles 2006). % ledger: b1:jps2006
+\breaks When households cannot borrow against future income (the borrower
+of the figure would be stuck at a corner, consuming her current income): in
+the same study the response was larger for households with little liquid
+wealth or low income. % ledger: b1:jps2006
+\end{model}
+
+\section*{Exercises}\label{sec:b1:labour-supply-and-saving:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:labour-supply-and-saving:reservation}
+For $u = \ln c + \ln\ell$, $T = 3000$ hours and non-labour income $y = 6000$,
+compute the \omterm{def:b1:labour-supply-and-saving:reservation-wage}{reservation wage}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:labour-supply-and-saving:read}
+From the opening chart's table, hours per worker were 2,351 in 1950 and
+1,504 in 2019 in France, and 2,022 and 1,797 in the United States; real
+compensation per hour went from 6.39 to 51.17 and from 13.48 to 45.86
+dollars. % figdata: hours_points
+Compute the percentage change in hours and the ratio of pay for each
+country.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:labour-supply-and-saving:tax}
+Write the \omterm{def:b1:consumer-choice:budget}{budget line} of a worker with $T = 3000$, wage 20 and $y = 2000$, before
+and after a proportional income tax of $30\%$ on earnings.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:labour-supply-and-saving:income-sign}
+If leisure is a \omterm{def:b1:consumer-choice:normal-inferior}{normal good}, what is the sign of the \omterm{def:b1:income-and-substitution-effects:effects}{income effect} of a wage
+rise on hours of work? Why is it larger for someone who works long hours?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:labour-supply-and-saving:log}
+Derive the labour supply of $u = \ln c + \ln\ell$ with non-labour income $y$, and
+evaluate it at $w = 20$, $y = 6000$, $T = 3000$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:labour-supply-and-saving:implicit}
+A benefit is withdrawn at $60\%$ of earnings and earnings are taxed at $20\%$
+over the same range. What is the implicit marginal rate? How much of 1,000
+extra dalens of earnings does the worker keep?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:labour-supply-and-saving:withdrawal}
+The rate at which a benefit is withdrawn rises from $40\%$ to $60\%$. Predict
+the effect on \omterm{def:b1:labour-supply-and-saving:margins}{participation}, and on hours of workers on the withdrawal
+range and above it.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:labour-supply-and-saving:two-period}
+With $u = \ln c_1 + 0.9\ln c_2$, $y_1 = 30000$, $y_2 = 20000$ and $r = 5\%$, compute
+wealth, $c_1$, $c_2$ and saving.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:labour-supply-and-saving:women}
+From the second chart's table, women's \omterm{def:b1:labour-supply-and-saving:margins}{participation} rose from 58.0 to 76.5
+per cent in Japan and from 66.5 to 68.9 in the United States between 1991
+and 2024. % figdata: participation_points
+Compute both changes in points. Can the labour--leisure model alone explain
+the difference? What would you need to know?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:labour-supply-and-saving:slutsky}
+Write the \omterm{thm:b1:income-and-substitution-effects:slutsky}{Slutsky equation} for leisure with the \omterm{def:b1:labour-supply-and-saving:full-income}{time endowment} in
+elasticity form, and show that the uncompensated elasticity of hours
+equals the compensated one minus the income elasticity of leisure times
+the share of leisure, $w\ell/m$, in \omterm{def:b1:labour-supply-and-saving:full-income}{full income} $m$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:labour-supply-and-saving:borrower}
+For $u = \ln c_1 + \beta\ln c_2$, compute $\partial s/\partial r$ and show that
+saving rises with $r$ for every household with $y_2 > 0$. When could a
+lender save less when $r$ rises, with other preferences?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:labour-supply-and-saving:refute}
+``Europeans work fewer hours than Americans because their marginal tax
+rates are higher.'' What cross-country evidence would refute this? Name
+one pattern within Europe that would count against it.
+\end{exercise}
+
+\section{Problem: A Benefit, a Tax and a Second Job}\label{sec:b1:labour-supply-and-saving:problem}
+
+\begin{problem}[{Weekend problem --- the implicit marginal rate on a second job}]\label{pb:b1:labour-supply-and-saving:second-job}
+A Brenland worker (invented) earns 15 dalens an hour and has $T = 3000$ hours
+a year to divide between work $h$ and leisure $\ell$. She receives a benefit
+of 9,000 dalens a year, reduced by $48\%$ of her earnings $E = 15h$ until it
+reaches zero. Income tax is $0\%$ on income up to 12,000 dalens and $20\%$
+from 12,000 to 40,000 (the benefit is not taxed). Her preferences are
+$u = (1 - a)\ln c + a\ln\ell$.
+
+\medskip\noindent\textbf{Part I --- The budget.}
+\begin{enumerate}
+  \item Write disposable income $c$ as a function of $E$ for $E \le 12000$.
+  \item Write it for $12000 \le E \le 18750$, and explain why the benefit runs out at 18,750.
+  \item Write it for $18750 \le E \le 40000$.
+  \item Give the implicit marginal rate on each of the three ranges.
+  \item Give the hours at the two kinks and the disposable income there.
+  \item She works 800 hours in her main job and is offered a second job of 400 hours at the same wage. How much of the extra earnings does she keep? What is her implicit marginal rate on the second job?
+  \item Is her \omterm{def:b1:consumer-choice:budget}{budget set} convex? Where does it fail to be?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- Two workers.} Ana has $a = 0.6$, Ben $a = 0.5$.
+\begin{enumerate}[resume]
+  \item On the first range, compute Ana's \omterm{def:b1:labour-supply-and-saving:full-income}{full income}, leisure, hours and consumption, as if the line went on.
+  \item Check that her optimum lies on the first range, and compare her utility with that at the kink of 1,250 hours, the best point of the third range for her.
+  \item For Ben, compute the hours that each range's line would give, as if it went on. Which lie on their own range?
+  \item Compare Ben's utility at the kink of 800 hours with that at his third-range optimum. Where does he work?
+  \item Compute both workers' \omterm{def:b1:labour-supply-and-saving:reservation-wage}{reservation wages}.
+  \item Many workers are like Ben. What would the distribution of earnings show at 12,000 dalens?
+  \item Ana's wage rises to 18. Compute her hours on the first range.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- A reform.} The withdrawal rate falls to $30\%$.
+\begin{enumerate}[resume]
+  \item Give the new ranges and implicit marginal rates.
+  \item Compute Ana's new optimum, which stays on the first range.
+  \item Explain the change in her hours with the income and \omterm{def:b1:income-and-substitution-effects:effects}{substitution effects} of the change in her net wage.
+  \item Compute the benefit paid to Ana before and after the reform, and the government's net cost.
+  \item Ben still works 800 hours. What does the reform cost for him?
+  \item What does this say about who the reform's cost goes to?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- Saving.} After the reform Ana's income is
+16,200 this year and will be 12,960 next year; $u = \ln c_1 + 0.96\ln c_2$.
+\begin{enumerate}[resume]
+  \item Write her intertemporal budget with $r = 4\%$.
+  \item Compute her wealth, $c_1$, $c_2$ and saving.
+  \item The interest rate rises to $8\%$. Compute her saving again, and explain the change.
+  \item Show that if all her income came this year, $c_1$ would not depend on $r$.
+  \item A colleague earns 9,000 this year and 30,000 next year. Compute his desired $c_1$, and his $c_1$ if he cannot borrow.
+  \item State the result: the implicit marginal rate on the second job.
+\end{enumerate}
+\end{problem}

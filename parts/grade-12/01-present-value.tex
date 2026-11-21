@@ -1,0 +1,314 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g12-01. Compounding, yearly and continuous; discounting and the
+% present value of a stream; perpetuity and annuity; bond prices and yields; net present value; real and nominal rates.
+% Real numbers: figdata/grade-12/01-present-value/ (JST ltrate, bond_tr and cpi, USA and GBR 1980-2020; the perpetuity
+% price is computed as 100 / ltrate). Ledger: UK Debt Management Office notice of 27 March 2015 (undated gilts). The
+% bridge of the weekend problem is invented (a town in Brenland).
+\chapter{Present Value}\label{ch:g12:present-value}
+
+In 1981 the American government could borrow for the long term only by promising 13.9\,\% a year. In 2020 it paid 0.9\,\%. A promise of one dollar a year for ever, priced
+at those yields, was worth 7.2 dollars in 1981 and 111.8 dollars in 2020: more than fifteen times as much, for the same promise.
+% figdata: yields (USA 1981 13.91, 7.2; 2020 0.89, 111.8)
+
+A dollar to be received in the future is worth less than a dollar today, because a dollar today can be lent out at interest. How much less depends on the interest rate,
+and on how far away the payment is. This chapter turns that idea into a tool, the \omterm{def:g12:present-value:present-value}{present value}, with which one can price a \omterm{def:g12:present-value:bond}{bond}, compare a payment now with payments
+later, and decide whether an investment is worth its cost.
+
+\begin{openingchart}{United States and United Kingdom, 1980--2020. Left: yield on long-term government bonds, per cent a year. Right: the price of a promise to pay 1 a year
+for ever, computed from that yield as $1/\text{yield}$ (a computation, not a market price).}{Jordà--Schularick--Taylor Macrohistory Database; price computed}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 1, horizontal sep=1.5cm}, omtime, height=5.0cm, xmin=1980, xmax=2020, xtick={1980,1990,...,2020}]
+\nextgroupplot[omtime, width=0.47\linewidth, ymin=0, ymax=16, ylabel={per cent a year}]
+\addplot[omDef, thick] table[x=year, y=usa_lt] {figdata/grade-12/01-present-value/out/yields.csv};
+\addplot[omThm, thick] table[x=year, y=gbr_lt] {figdata/grade-12/01-present-value/out/yields.csv};
+\node[omDef, font=\scriptsize, anchor=west] at (axis cs:1984,15.2) {United States};
+\node[omThm, font=\scriptsize, anchor=west] at (axis cs:1995,11.5) {United Kingdom};
+\nextgroupplot[omtime, width=0.47\linewidth, ymin=0, ymax=140, ylabel={price of 1 a year for ever}]
+\addplot[omDef, thick] table[x=year, y=usa_perp] {figdata/grade-12/01-present-value/out/yields.csv};
+\addplot[omThm, thick] table[x=year, y=gbr_perp] {figdata/grade-12/01-present-value/out/yields.csv};
+\end{groupplot}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: compound interest and doubling time. From \cref{ch:g10:price-indices}: the \omterm{def:g10:price-indices:real-interest-rate}{real interest rate}, close to the nominal rate minus inflation. From
+the mathematics volumes: the sum of a finite geometric series, $1 + q + \dots + q^{n-1} = (1 - q^n)/(1 - q)$ for $q \ne 1$; the exponential and the logarithm; limits of
+sequences.
+\end{recall}
+
+\section{Compounding}\label{sec:g12:present-value:compounding}
+
+A sum $V$ lent at the rate $r$ a year, with interest added once a year, is worth $V(1 + r)^t$ after $t$ years. If interest is added $n$ times a year at the rate $r/n$
+each time, it is worth $V(1 + r/n)^{nt}$; the more often, the more it earns, but there is a ceiling.
+
+\begin{proposition}[The limit of compounding]\label{prop:g12:present-value:limit}
+For every real $r$, $(1 + r/n)^n \to e^r$ as $n \to \infty$.
+\end{proposition}
+\begin{proof}
+For $n > |r|$, $(1 + r/n)^n = \exp\bigl(n \ln(1 + r/n)\bigr)$. With $x = r/n$, $n \ln(1 + r/n) = r \cdot \ln(1 + x)/x$ when $r \ne 0$, and $\ln(1 + x)/x \to 1$ as
+$x \to 0$, because this is the derivative of $\ln$ at 1. So the exponent tends to $r$, and since $\exp$ is continuous the result follows. (For $r = 0$ both sides are 1.)
+\end{proof}
+
+\begin{definition}[Continuous compounding]\label{def:g12:present-value:continuous-compounding}
+\emph{Continuous compounding}\index{continuous compounding} at the rate $r$ is the limit of compounding ever more often: a sum $V$ grows to $Ve^{rt}$ after $t$ years.
+\end{definition}
+
+At 5\,\% a year, 1000 grows in ten years to 1628.89 with yearly compounding and to $1000e^{0.5} \approx 1648.72$ with \omterm{def:g12:present-value:continuous-compounding}{continuous compounding}: the difference is small at low
+rates.
+
+\section{Discounting and present value}\label{sec:g12:present-value:discounting}
+
+\begin{definition}[Present value and discount rate]\label{def:g12:present-value:present-value}
+The \emph{present value}\index{present value} of a payment $C$ due in $t$ years, at the yearly rate $r$, is $C/(1 + r)^t$: the sum that, lent today at $r$, would grow to
+$C$ in $t$ years. The rate $r$ used is the \emph{discount rate}\index{discount rate}%
+\phantomsection\label{def:g12:present-value:discount-rate}, and computing present values is \emph{discounting}\index{discounting}%
+\phantomsection\label{def:g12:present-value:discounting}.
+\end{definition}
+
+The \omterm{def:g12:present-value:present-value}{present value} of a stream of payments $C_1, C_2, \dots, C_T$, one at the end of each year, is the sum of their \omterm{def:g12:present-value:present-value}{present values}:
+\[ PV = \frac{C_1}{1 + r} + \frac{C_2}{(1 + r)^2} + \dots + \frac{C_T}{(1 + r)^T}. \]
+
+\begin{omfigure}
+\begin{tikzpicture}[font=\small, x=2.2cm]
+\draw[->, thick] (0,0) -- (5.4,0) node[right] {years};
+\foreach \t/\lab in {0/0, 1/1, 2/2, 3/3, 5/T} {\draw (\t,0.1) -- (\t,-0.1) node[below] {$\lab$};}
+\node at (4,-0.3) {$\cdots$};
+\foreach \t/\c in {1/C_1, 2/C_2, 3/C_3, 5/C_T} {\draw[->, omThm] (\t,0.9) -- (\t,0.15); \node[omThm, above] at (\t,0.9) {$\c$};}
+\foreach \t/\f in {1/{\frac{1}{1+r}}, 2/{\frac{1}{(1+r)^2}}, 3/{\frac{1}{(1+r)^3}}, 5/{\frac{1}{(1+r)^T}}} {\draw[->, omDef, dashed] (\t,1.7) to[bend right=20] (0.05,0.25);
+  \node[omDef, above, font=\scriptsize] at (\t,1.75) {$\times\,\f$};}
+\end{tikzpicture}
+
+{\small A time line of payments. Each payment $C_t$, due at the end of year $t$, is brought back to today by multiplying it by its discount factor $1/(1 + r)^t$; the
+\omterm{def:g12:present-value:present-value}{present value} is the sum of the results.}
+\end{omfigure}
+
+\begin{definition}[Annuity and perpetuity]\label{def:g12:present-value:annuity}
+An \emph{annuity}\index{annuity} pays the same sum at the end of each year for a fixed number of years. A \emph{perpetuity}\index{perpetuity}%
+\phantomsection\label{def:g12:present-value:perpetuity} pays the same sum at the end of each year for ever.
+\end{definition}
+
+\begin{proposition}[Annuity and perpetuity]\label{prop:g12:present-value:annuity}
+At a rate $r > 0$, an \omterm{def:g12:present-value:annuity}{annuity} paying $C$ a year for $T$ years has \omterm{def:g12:present-value:present-value}{present value} $C\,\dfrac{1 - (1 + r)^{-T}}{r}$, and a \omterm{def:g12:present-value:annuity}{perpetuity} paying $C$ a year has \omterm{def:g12:present-value:present-value}{present value}
+$C/r$.
+\end{proposition}
+\begin{proof}
+With $q = 1/(1 + r)$, the \omterm{def:g12:present-value:annuity}{annuity} is worth $Cq(1 + q + \dots + q^{T-1}) = Cq\,(1 - q^T)/(1 - q)$. Since $1 - q = r/(1 + r)$, we have $q/(1 - q) = 1/r$, which gives
+$C(1 - q^T)/r$. As $T \to \infty$, $q^T \to 0$ because $0 < q < 1$, and the value tends to $C/r$.
+\end{proof}
+
+At 4\,\%, 7 a year for 30 years is worth $7 \times 17.292 \approx 121.0$ today, against $7/0.04 = 175$ for 7 a year for ever: the payments after year 30 are worth only 54
+today.
+
+\section{Bonds and their yields}\label{sec:g12:present-value:bonds}
+
+\begin{definition}[Bond and coupon]\label{def:g12:present-value:bond}
+A \emph{bond}\index{bond} is a loan in the form of a security that can be sold: the borrower promises fixed payments on fixed dates. Most bonds pay a \emph{coupon}%
+\index{coupon}\phantomsection\label{def:g12:present-value:coupon}, a fixed sum each year, and repay their face value at maturity.
+\end{definition}
+
+\begin{definition}[Yield to maturity]\label{def:g12:present-value:yield}
+A \omterm{def:g12:present-value:bond}{bond}'s \emph{yield to maturity}\index{yield to maturity} is the \omterm{def:g12:present-value:present-value}{discount rate} at which the \omterm{def:g12:present-value:present-value}{present value} of its payments equals its price.
+\end{definition}
+
+\begin{measure}[What a bond's yield is]
+A \omterm{def:g12:present-value:bond}{bond}'s price is observed in the market; its yield is computed from that price and the promised payments. When the yield of long-term government \omterm{def:g12:present-value:bond}{bonds} is quoted, as
+in the opening chart, it is this rate for \omterm{def:g12:present-value:bond}{bonds} of one long maturity, often ten years. A yield is a promise kept, if the payments are made and the \omterm{def:g12:present-value:bond}{bond} is held to maturity;
+it says nothing of the inflation that will erode those payments.
+\end{measure}
+
+\begin{proposition}[Price and yield move in opposite directions]\label{prop:g12:present-value:price-yield}
+The price of a \omterm{def:g12:present-value:annuity}{perpetuity} paying $C$ falls when its yield rises, and so does the price of a two-year \omterm{def:g12:present-value:bond}{bond} paying a \omterm{def:g12:present-value:bond}{coupon} $C$ and then $C + F$.
+\end{proposition}
+\begin{proof}
+The \omterm{def:g12:present-value:annuity}{perpetuity}'s price is $C/y$, decreasing in $y > 0$. The two-year \omterm{def:g12:present-value:bond}{bond}'s price is $C/(1 + y) + (C + F)/(1 + y)^2$, a sum of two terms each of which decreases as $y$
+rises, since $C$ and $C + F$ are positive.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[width=0.7\linewidth, height=5.2cm, xmin=2, xmax=10, ymin=0, ymax=260, xlabel={yield, per cent a year}, ylabel={price per 100 of face value},
+  grid=major, grid style={gray!20}]
+\addplot[omThm, thick, domain=2:10, samples=60] {500/x} node[pos=0.12, right, font=\scriptsize] {perpetuity, 5 a year};
+\addplot[omDef, thick, domain=2:10, samples=60] {5*(1-(1+x/100)^(-10))/(x/100) + 100*(1+x/100)^(-10)}
+  node[pos=0.72, above, font=\scriptsize] {ten-year bond, coupon 5};
+\draw[dashed, gray] (axis cs:5,0) -- (axis cs:5,100) -- (axis cs:2,100);
+\end{axis}
+\end{tikzpicture}
+
+{\small Price against yield for two \omterm{def:g12:present-value:bond}{bonds} paying 5 a year per 100 of face value: a \omterm{def:g12:present-value:annuity}{perpetuity}, and a \omterm{def:g12:present-value:bond}{bond} that repays its 100 after ten years. Both are worth 100 at a 5\,\%
+yield; the \omterm{def:g12:present-value:annuity}{perpetuity}'s price moves much more when the yield changes, because more of its payments lie far in the future.}
+\end{omfigure}
+
+\begin{model}{Bond price by present value}
+\assumes The promised payments are certain; the price is their \omterm{def:g12:present-value:present-value}{present value} at the market's yield.
+\predicts A \omterm{def:g12:present-value:bond}{bond}'s price falls when yields rise and rises when they fall, more for long \omterm{def:g12:present-value:bond}{bonds} than for short ones.
+\tested Consistent with it: from 1981 to 2020 long yields in the United States fell from 13.9\,\% to 0.9\,\%; an index of the total return on American
+  government \omterm{def:g12:present-value:bond}{bonds}, prices plus \omterm{def:g12:present-value:bond}{coupons}, went from 100 at the end of 1979 to 2396 in 2020, and to 718 after inflation (the chart below). Most of
+  that rise is reinvested \omterm{def:g12:present-value:bond}{coupons}, so the index does not isolate the price effect; a test would follow the prices of long and short \omterm{def:g12:present-value:bond}{bonds}
+  through the same changes of yield.
+\breaks When payments are not certain: a borrower that may default sees its \omterm{def:g12:present-value:bond}{bonds} fall even as safe yields fall; and when inflation is higher than expected, the fixed
+  payments buy less, which the nominal yield does not show.
+\end{model}
+% figdata: yields (USA 1981 13.91, 2020 0.89); bond_index (USA 2020 2396, real 718)
+
+\begin{omchart}{Total return on long-term government bonds, coupons reinvested, United States and United Kingdom, 1980--2020, index end of 1979 = 100, logarithmic scale;
+nominal (solid) and after consumer price inflation (dashed).}{Jordà--Schularick--Taylor Macrohistory Database}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.82\linewidth, height=5.4cm, xmin=1979, xmax=2020, ymode=log, ymin=70, ymax=5000, log ticks with fixed point,
+  ytick={100,200,500,1000,2000,5000}, ylabel={index}, xtick={1980,1990,...,2020}]
+\addplot[omDef, thick] table[x=year, y=usa_nom] {figdata/grade-12/01-present-value/out/bond_index.csv};
+\addplot[omThm, thick] table[x=year, y=gbr_nom] {figdata/grade-12/01-present-value/out/bond_index.csv};
+\addplot[omDef, thick, dashed] table[x=year, y=usa_real] {figdata/grade-12/01-present-value/out/bond_index.csv};
+\addplot[omThm, thick, dashed] table[x=year, y=gbr_real] {figdata/grade-12/01-present-value/out/bond_index.csv};
+\node[omThm, font=\scriptsize, anchor=east] at (axis cs:2004,2600) {United Kingdom};
+\node[omDef, font=\scriptsize, anchor=west] at (axis cs:1998,150) {United States};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\begin{record}[Britain's perpetual bonds]
+% ledger: g12:consols-2015
+A perpetual \omterm{def:g12:present-value:bond}{bond} pays its \omterm{def:g12:present-value:bond}{coupon} for ever and repays nothing unless the borrower chooses to buy it back. On 5 July 2015 the British government repaid at their face value
+the last four perpetual \omterm{def:g12:present-value:bond}{bonds} in its debt, among them 161.2 million pounds of a stock paying 2.5\,\% a year, 2.50 for each 100 of face value; the repayment completed the
+removal of all such \omterm{def:g12:present-value:bond}{bonds} from its debt.
+\end{record}
+
+\section{Net present value}\label{sec:g12:present-value:npv}
+
+\begin{definition}[Net present value]\label{def:g12:present-value:npv}
+The \emph{net present value}\index{net present value} of an investment is the \omterm{def:g12:present-value:present-value}{present value} of all its payments and receipts, with costs counted as negative: an investment
+with a positive net \omterm{def:g12:present-value:present-value}{present value} at the \omterm{def:g12:present-value:present-value}{discount rate} earns more than lending the money at that rate.
+\end{definition}
+
+A bridge that costs 100 now (the chart below) and brings a net 7 a year for 30 years has a \omterm{def:g12:present-value:npv}{net present value} of $-100 + 121.0 = 21.0$ at 4\,\%, and of $-100 + 96.4 = -3.6$ at 6\,\%. The same
+project is worth undertaking or not depending on the rate: the higher the rate, the less the distant receipts count.
+
+\begin{omchart}{Net present value of the bridge against the discount rate (invented; the weekend problem).}{invented data}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.72\linewidth, height=5.0cm, xmin=0, xmax=8, ymin=-30, ymax=120, xlabel={discount rate, per cent a year},
+  ylabel={millions of dalens}, xtick={0,1,...,8}]
+\addplot[omDef, thick] table[x=r, y=npv] {figdata/grade-12/01-present-value/out/bridge_npv.csv};
+\draw[gray] (axis cs:0,0) -- (axis cs:8,0);
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+Two rules keep the calculation honest. Payments in money of the day are discounted at a nominal rate; payments in today's prices, at a real rate, close to the nominal rate
+minus expected inflation. Mixing them, \omterm{def:g12:present-value:present-value}{discounting} payments that grow with prices at a nominal rate, or fixed payments at a real rate, gives the wrong answer. And the rate
+must be the return the money could earn elsewhere at a similar risk.
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g12:present-value:1}
+Compute the value of 1000 lent at 3\,\% a year for 10 years, with yearly compounding.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:present-value:2}
+Compute the value of 500 lent at 6\,\% a year for 12 years. Compare with the doubling time given by the rule of 70 of the grades 6--9 volume.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:present-value:3}
+Find the \omterm{def:g12:present-value:present-value}{present value} of 1000 due in 5 years at 4\,\%.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:present-value:4}
+Find the \omterm{def:g12:present-value:present-value}{present value} of 200 due in one year and 200 due in two years, at 5\,\%.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:present-value:5}
+From the opening chart, give the American long-term yield and the computed price of 1 a year for ever in 1981 and in 2020. By what factor did the price rise?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:present-value:6}
+Find the \omterm{def:g12:present-value:present-value}{present value} of 1000 a year for 20 years at 3\,\%.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:present-value:7}
+A loan of 10\,000 at 5\,\% is repaid by equal payments at the end of each of 10 years. Find the yearly payment.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:present-value:8}
+Find the price of a \omterm{def:g12:present-value:annuity}{perpetuity} paying 50 a year at a yield of 4\,\% and at 5\,\%. By what percentage does it fall?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:present-value:9}
+Two \omterm{def:g12:present-value:bond}{bonds} each pay 100 once, one in one year and one in ten years, and nothing else. Find their prices at yields of 3\,\% and 4\,\%, and the percentage fall of each.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:present-value:10}
+A machine costs 1000 and earns 300 a year, in today's prices, for 4 years. The nominal interest rate is 5\,\% and expected inflation 2\,\%. Using the approximate real rate,
+find the \omterm{def:g12:present-value:npv}{net present value}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:present-value:11}
+Find the value of 1000 after 10 years at 5\,\% with \omterm{def:g12:present-value:continuous-compounding}{continuous compounding}, and with yearly compounding.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:present-value:12}
+A government's \omterm{def:g12:present-value:bond}{bond} prices fall while the yields of safe \omterm{def:g12:present-value:bond}{bonds} of the same maturity fall too. Does this contradict the model of \omterm{def:g12:present-value:bond}{bond} prices? What does it suggest?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:present-value:13}
+A two-year \omterm{def:g12:present-value:bond}{bond} pays a \omterm{def:g12:present-value:bond}{coupon} of 5 after one year and 105 after two, and sells for 96.38. Find its \omterm{def:g12:present-value:yield}{yield to maturity}, by solving a quadratic equation in $x = 1/(1 + y)$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:present-value:14}
+Prove that $(1 + r/n)^{nt} \to e^{rt}$ for $t > 0$, using the proposition on the limit of compounding.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:present-value:15}
+Project A costs 100 and pays 150 in ten years. Project B costs 100 and pays 30 a year for 4 years. Compute both \omterm{def:g12:present-value:npv}{net present values} at 2\,\% and at 5\,\%, and explain why
+the ranking changes.
+\end{exercise}
+
+\section{Problem: Financing a Bridge}
+
+\begin{problem}[{Weekend problem --- a bridge, its value and its bond}]
+\label{pb:g12:present-value:1}
+A town in Brenland can build a bridge for 100 million dalens, paid now. The tolls will bring 8 a year and the maintenance cost 1 a year, both at the end of each of the next
+30 years, after which the bridge is worn out.
+
+\medskip
+\noindent\textbf{Part I --- Present values.}
+\begin{enumerate}
+\item Compute the discount factors for years 1, 10 and 30 at 4\,\%.
+\item Compute the \omterm{def:g12:present-value:present-value}{present value} at 4\,\% of the net receipts of 7 a year, using the \omterm{def:g12:present-value:annuity}{annuity} formula.
+\item Find the bridge's \omterm{def:g12:present-value:npv}{net present value} at 4\,\%.
+\item Find it at 2\,\%.
+\item Find it at 6\,\%.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The break-even rate.}
+\begin{enumerate}[resume]
+\item Explain why the \omterm{def:g12:present-value:npv}{net present value} falls as the rate rises.
+\item Compute it at 5\,\%. Between which two of the rates computed does it reach zero?
+\item Bisect: compute it at 5.5\,\%.
+\item Compute it at 5.75\,\%, and give the interval that now contains the break-even rate.
+\item Starting from an interval of 2 points (4 to 6\,\%), how many halvings give the rate to within 0.01 point? The chart of the bridge's \omterm{def:g12:present-value:npv}{net present value} in this
+  chapter shows the curve; read the break-even rate from it.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- A perpetual bond.}
+\begin{enumerate}[resume]
+\item The town borrows the 100 by selling a perpetual \omterm{def:g12:present-value:bond}{bond} at a yield of 4\,\%. What \omterm{def:g12:present-value:bond}{coupon} must it pay each year?
+\item Each year for 30 years the town pays the \omterm{def:g12:present-value:bond}{coupon} from the net tolls. Find the \omterm{def:g12:present-value:present-value}{present value} at 4\,\% of what is left over.
+\item After year 30 the \omterm{def:g12:present-value:bond}{coupons} must be paid from taxes. Find the \omterm{def:g12:present-value:present-value}{present value} today of those \omterm{def:g12:present-value:bond}{coupons}, and check that Questions 12 and 13 together give the \omterm{def:g12:present-value:npv}{net present
+  value} of Question 3.
+\item A year after the issue, yields on such \omterm{def:g12:present-value:bond}{bonds} rise to 5\,\%. Find the \omterm{def:g12:present-value:bond}{bond}'s new price per 100. Who loses?
+\item What would a two-year \omterm{def:g12:present-value:bond}{bond} paying a \omterm{def:g12:present-value:bond}{coupon} of 4 and then 104 be worth at 5\,\%? Why does the perpetual \omterm{def:g12:present-value:bond}{bond} fall more?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Interpretation.}
+\begin{enumerate}[resume]
+\item The tolls and the maintenance cost rise with prices, so that the 7 is in today's prices; the nominal rate is 6\,\% and expected inflation 2\,\%. Which rate should
+  be used, and what is the \omterm{def:g12:present-value:npv}{net present value}?
+\item Traffic disappoints, and the net receipts are only 5 a year. Find the \omterm{def:g12:present-value:npv}{net present value} at 4\,\%.
+\item Find the net yearly receipts at which the \omterm{def:g12:present-value:npv}{net present value} at 4\,\% is zero.
+\item Give two reasons why the right \omterm{def:g12:present-value:present-value}{discount rate} for the bridge might differ from the rate on the town's \omterm{def:g12:present-value:bond}{bonds}.
+\item State the result of the problem: the \omterm{def:g12:present-value:npv}{net present value} at 4\,\% and the break-even \omterm{def:g12:present-value:present-value}{discount rate}.
+\end{enumerate}
+\end{problem}
+
+% figdata: bridge_key (npv2 56.8, npv4 21.0, npv6 -3.6, irr 5.66, bis5 7.6, bis55 1.7, bis575 -1.0)

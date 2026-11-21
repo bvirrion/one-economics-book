@@ -1,0 +1,519 @@
+\chapter{Cost Minimisation}\label{ch:b1:cost-minimisation}
+
+In 1980 a solar module cost about 29 dollars per watt of capacity to make,
+in 2015 dollars; in 2012 it cost 1.08. % figdata: pv_costs
+That is a fall of $96.3\%$, close to $10\%$ a year for thirty-two
+years. % figdata: pv_falls
+Was it the same technology made more cheaply, as factor prices fell, or a
+technology that changed? A cost is the result of a choice: the firm picks,
+among all the input bundles that make its output, the cheapest at the
+prices it faces. This chapter derives that choice and the \omterm{def:b1:cost-minimisation:cost-function}{cost function} it
+defines, separates the short run from the long run, and then asks how much
+of a falling cost comes from experience.
+
+\begin{openingchart}{The cost of making a solar module, 1980, 2001 and 2012:
+left, the total in 2015 dollars per watt (logarithmic axis); right, the
+shares of three components.}{Kavlak, McNerney and Trancik (2018), Table 2}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 1, horizontal sep=18mm}, omrecord, grid=none,
+  width=0.42\linewidth, height=0.42\linewidth, symbolic x coords={1980,2001,2012}, xtick=data,
+  enlarge x limits=0.25]
+\nextgroupplot[ymode=log, log origin=infty, log ticks with fixed point, ymin=0.5, ymax=60, ybar, bar width=14pt,
+  ylabel={Dollars per watt (2015)}, title={\small Total cost}, width=0.42\linewidth,
+  nodes near coords, nodes near coords style={font=\footnotesize}, point meta=explicit symbolic]
+  \addplot[fill=omDef!60, draw=omDef] table[x=year, y=total, meta=total, col sep=comma]
+    {figdata/bachelor-1/10-cost-minimisation/out/pv_costs.csv};
+\nextgroupplot[ybar stacked, bar width=14pt, ymin=0, ymax=100, ylabel={Share of cost (\%)},
+  title={\small Components}, width=0.42\linewidth, legend style={font=\footnotesize, at={(0.5,-0.2)},
+  anchor=north}, reverse legend]
+  \addplot[fill=omDef!70, draw=omDef] table[x=year, y=silicon_pct, col sep=comma]
+    {figdata/bachelor-1/10-cost-minimisation/out/pv_costs.csv};
+  \addplot[fill=omThm!50, draw=omThm] table[x=year, y=nonsilicon_pct, col sep=comma]
+    {figdata/bachelor-1/10-cost-minimisation/out/pv_costs.csv};
+  \addplot[fill=omProp!50, draw=omProp] table[x=year, y=scale_pct, col sep=comma]
+    {figdata/bachelor-1/10-cost-minimisation/out/pv_costs.csv};
+  \legend{Silicon, Other materials, Plant-size dependent}
+\end{groupplot}
+\end{tikzpicture}
+\end{openingchart}
+
+The cost fell by a factor of seven from 1980 to 2001 and by almost four
+more by 2012, and its make-up changed: silicon was $37.4\%$ of the cost in
+1980 and $13.0\%$ in 2012; the costs that depend on the size of the plant
+rose to $57.1\%$ in 2001 before falling back to $35.2\%$. % figdata: pv_costs
+The study that built these numbers attributes almost a quarter of the fall
+to more efficient modules, and finds that after 2001 larger plants ---
+\omterm{def:b1:cost-minimisation:economies-of-scale}{economies of scale} --- became nearly as important as research. % ledger: b1:kavlak2018-causes
+Each of these causes has a place in the theory of cost.
+
+\begin{recall}
+Total, average and marginal cost, fixed and variable cost, the short and the
+long run and \omterm{def:b1:cost-minimisation:economies-of-scale}{economies of scale} were met at school; marginal cost is the
+derivative of total cost. The \omterm{thm:b1:constrained-optimisation:lagrange}{Lagrange conditions}
+(\cref{thm:b1:constrained-optimisation:lagrange}) and the envelope theorem
+(\cref{thm:b1:comparative-statics:envelope}) are used below, and the
+\omterm{def:b1:technology:production-function}{production function}, \omterm{def:b1:technology:isoquant}{isoquants} and the \omterm{def:b1:technology:mrts}{MRTS} come from
+\cref{ch:b1:technology}.
+\end{recall}
+
+\section{The cheapest way to make a given output}\label{sec:b1:cost-minimisation:isocost}
+
+A firm hires labour at the wage $w$ and capital at the rental $r$, both
+given. To make the output $q$ it chooses $(K, L)$ to
+\[
+\min_{K, L}\ wL + rK \quad\text{subject to}\quad f(K, L) = q.
+\]
+
+\begin{definition}[Isocost line]\label{def:b1:cost-minimisation:isocost}
+\index{isocost line}
+An \emph{isocost line} is the set of input bundles of the same cost $C$:
+$wL + rK = C$. In the $(L, K)$ plane it is a straight line of slope $-w/r$.
+\end{definition}
+
+The firm moves to the lowest \omterm{def:b1:cost-minimisation:isocost}{isocost line} that still touches the \omterm{def:b1:technology:isoquant}{isoquant}
+of $q$. At an interior optimum the two are tangent:
+\[
+\mathrm{MRTS} = \frac{f_L}{f_K} = \frac{w}{r}, \qquad\text{equivalently}\qquad \frac{f_L}{w} = \frac{f_K}{r}:
+\]
+the last dalen spent on each input adds the same output. These are the
+\omterm{thm:b1:constrained-optimisation:lagrange}{Lagrange conditions} of the problem, with multiplier $\lambda$ equal to
+$w/f_L = r/f_K$, the cost of one more unit of output.
+
+\begin{definition}[Conditional factor demand]\label{def:b1:cost-minimisation:conditional-demand}
+\index{conditional factor demand}\index{factor demand!conditional}
+The \emph{conditional factor demands} $L^*(w, r, q)$ and $K^*(w, r, q)$ are the
+input quantities that minimise the cost of making $q$ at the prices
+$(w, r)$: conditional on the output.
+\end{definition}
+
+For $f = 2K^{1/2}L^{1/2}$ the tangency gives $K/L = w/r$, and the \omterm{def:b1:technology:isoquant}{isoquant}
+$2\sqrt{KL} = q$ then gives
+\[
+L^* = \frac q2\sqrt{\frac rw},\qquad K^* = \frac q2\sqrt{\frac wr},\qquad C = wL^* + rK^* = q\sqrt{wr}.
+\]
+At $w = 50$ and $r = 200$, making 1,000 units takes 1,000 hours of labour and
+250 machine hours and costs 100,000 dalens. As output grows at fixed prices
+the optimal bundles trace the \emph{expansion path}, here the ray
+$K = L/4$. With fixed proportions $\min(K/a, L/b)$ there is no choice to make:
+$K^* = aq$, $L^* = bq$ at any prices, and $C = (ar + bw)q$.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Labour $L$ (hours)}, ylabel={Capital $K$ (machine hours)},
+  xmin=0, xmax=3200, ymin=0, ymax=800, width=0.6\linewidth, height=0.44\linewidth, samples=80,
+  scaled x ticks=false, xticklabel style={/pgf/number format/.cd, fixed, 1000 sep={\,}}]
+  \addplot[demand, domain=330:3200] {250000/x};
+  \addplot[demand, domain=720:3200] {562500/x};
+  \addplot[supply, domain=0:2000] {500 - x/4};
+  \addplot[supply, domain=0:3000] {750 - x/4};
+  \addplot[shifted, domain=0:3200] {x/4};
+  \addplot[only marks, mark=*, black] coordinates {(1000,250) (1500,375)};
+  \node[font=\footnotesize, anchor=south east] at (axis cs:1000,250) {$q = 1000$};
+  \node[font=\footnotesize, anchor=south east] at (axis cs:1500,375) {$q = 1500$};
+  \node[font=\footnotesize, anchor=north west] at (axis cs:2000,520) {expansion path};
+\end{axis}
+\end{tikzpicture}
+
+{\small $f = 2\sqrt{KL}$, $w = 50$, $r = 200$. The \omterm{def:b1:technology:isoquant}{isoquants} of 1,000 and 1,500 units
+(blue) touch the \omterm{def:b1:cost-minimisation:isocost}{isocost lines} of 100,000 and 150,000 dalens (red, slope
+$-w/r = -1/4$); the tangency points lie on the expansion path $K = L/4$ (dashed).}
+\end{omfigure}
+
+\section{The cost function}\label{sec:b1:cost-minimisation:cost-function}
+
+\begin{definition}[Cost function]\label{def:b1:cost-minimisation:cost-function}
+\index{cost function}
+The \emph{cost function} $C(w, r, q)$ is the lowest cost of making $q$ at the
+input prices $(w, r)$:
+$C(w, r, q) = wL^*(w, r, q) + rK^*(w, r, q)$.
+\end{definition}
+
+The \omterm{def:b1:cost-minimisation:cost-function}{cost function} has the properties of the \omterm{def:b1:income-and-substitution-effects:expenditure}{expenditure function} of
+\cref{ch:b1:income-and-substitution-effects}, for the same reasons. It is
+nondecreasing in each price and in $q$; it is homogeneous of degree one in
+$(w, r)$, since doubling both prices leaves the cheapest bundle unchanged
+and doubles its cost; and it is concave in $(w, r)$.
+
+\begin{proposition}[Concavity]\label{prop:b1:cost-minimisation:concave}
+For fixed $q$, $C(w, r, q)$ is concave in $(w, r)$.
+\end{proposition}
+
+\begin{proof}
+Let $p = tp^1 + (1 - t)p^2$ be a weighted mean of two price vectors, with
+$0 \le t \le 1$, and let $x$ be the cheapest bundle at $p$. It still makes $q$,
+so it costs at least the minimum at each of the other prices:
+$C(p) = p\cdot x = t\,p^1\cdot x + (1 - t)\,p^2\cdot x \ge tC(p^1) + (1 - t)C(p^2)$.
+\end{proof}
+
+Concavity has an economic content: if the wage rises and the firm kept its
+old bundle, its cost would rise in proportion to its labour; by changing
+the bundle it does better, so the cost rises less than linearly.
+
+\begin{theorem}[Shephard's lemma]\label{thm:b1:cost-minimisation:shephard}
+\index{Shephard's lemma}
+Where the \omterm{def:b1:cost-minimisation:conditional-demand}{conditional factor demands} are differentiable,
+\[
+\frac{\partial C}{\partial w} = L^*(w, r, q),\qquad \frac{\partial C}{\partial r} = K^*(w, r, q).
+\]
+\end{theorem}
+
+\begin{proof}
+$C$ is the value of the minimum of $wL + rK$ under the constraint $f = q$. By
+the envelope theorem (\cref{thm:b1:comparative-statics:envelope}), its
+derivative with respect to the parameter $w$ is the partial derivative of
+the \omterm{def:b1:constrained-optimisation:lagrangian}{Lagrangian} $wL + rK - \lambda(f(K, L) - q)$ with respect to $w$, at the
+optimum: $L^*$.
+\end{proof}
+
+A rise of one dalen in the hourly wage raises the cost by the number of
+hours the firm uses: to first order, the change in the mix does not matter.
+With concavity, Shephard's lemma gives the law of factor demand:
+$\partial L^*/\partial w = \partial^2C/\partial w^2 \le 0$
+(\cref{exo:b1:cost-minimisation:law}).
+
+For the Cobb--Douglas technology with constant returns, $q = AK^\alpha L^{1-\alpha}$,
+the same steps give
+\[
+C(w, r, q) = \frac qA\Bigl(\frac r\alpha\Bigr)^\alpha\Bigl(\frac w{1 - \alpha}\Bigr)^{1-\alpha},
+\]
+and Shephard's lemma gives $wL^*/C = 1 - \alpha$: labour's share of cost is
+$1 - \alpha$ whatever the prices, the prediction of \cref{ch:b1:technology}.
+
+\begin{model}{The cost-minimising firm}
+\assumes A firm chooses its inputs to make each output at the lowest cost,
+at input prices it cannot change.
+\predicts \omterm{def:b1:cost-minimisation:conditional-demand}{Conditional factor demands} that fall with their own price;
+Shephard's lemma; marginal and average cost equal at the \omterm{def:b1:cost-minimisation:mes}{minimum efficient
+scale}; an input mix that moves with relative prices.
+\tested Consistent with it, but not tested here: capital per hour rises
+with the wage across countries (\cref{ch:b1:technology}, opening chart), and
+the mix of components in the opening chart moved as materials became
+cheaper, % figdata: pv_costs
+a change that technology alone could also produce. A test needs the same
+plants facing an input-price change they did not choose, and their input
+mix measured before and after.
+\breaks When managers do not minimise cost: firms with the same technology
+and prices can differ widely in productivity
+(\cref{ch:b1:profit-maximisation}).
+\end{model}
+
+\section{Short run and long run}\label{sec:b1:cost-minimisation:short-run}
+
+Some inputs cannot be changed quickly: a production line takes a year to
+build. In the short run capital is fixed at $\bar K$ and only labour moves.
+
+\begin{definition}[Short-run and long-run cost functions]\label{def:b1:cost-minimisation:sr-lr}
+\index{short-run cost function}\index{long-run cost function}
+The \emph{short-run \omterm{def:b1:cost-minimisation:cost-function}{cost function}} is $C_s(q; \bar K) = r\bar K + wL$, where $L$
+is the labour needed to make $q$ with $\bar K$; $r\bar K$ is fixed cost. The
+\emph{long-run \omterm{def:b1:cost-minimisation:cost-function}{cost function}} $C(q)$ lets every input vary:
+$C(q) = \min_{\bar K} C_s(q; \bar K)$.
+\end{definition}
+
+For $f = 2\sqrt{KL}$, $L = q^2/(4\bar K)$, so
+$C_s = r\bar K + wq^2/(4\bar K)$. With $\bar K = 250$ and the prices above,
+$C_s = 50000 + 0.05q^2$, and short-run average cost $50000/q + 0.05q$ is lowest
+at $q = 1000$, where it equals the long-run average cost of 100.
+
+\begin{proposition}[The envelope]\label{prop:b1:cost-minimisation:envelope}
+$C(q) \le C_s(q; \bar K)$ for every $\bar K$, with equality at the $q$ for which
+$\bar K$ is the long-run optimal capital. Where the two touch, they have the
+same slope: short-run and long-run marginal cost are equal.
+\end{proposition}
+
+\begin{proof}
+The inequality holds because the long run minimises over a larger set. At
+$q_0$ with $\bar K = K^*(q_0)$, equality holds; $C_s(q; \bar K) - C(q)$ is then
+nonnegative with a minimum of zero at $q_0$, so its derivative there is
+zero.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Output $q$}, ylabel={Average cost (dalens)},
+  xmin=0, xmax=2600, ymin=80, ymax=160, width=0.6\linewidth, height=0.42\linewidth, samples=100,
+  scaled x ticks=false, xticklabel style={/pgf/number format/.cd, fixed, 1000 sep={\,}}]
+  \addplot[supply, domain=200:2600] {25000/x + 0.1*x};
+  \addplot[supply, domain=330:2600] {50000/x + 0.05*x};
+  \addplot[supply, domain=500:2600] {75000/x + 0.0333*x};
+  \addplot[demand, domain=0:2600] {100};
+  \addplot[only marks, mark=*, black] coordinates {(500,100) (1000,100) (1500,100)};
+  \node[font=\footnotesize, anchor=north] at (axis cs:2200,100) {long run};
+\end{axis}
+\end{tikzpicture}
+
+{\small Short-run average cost with 125, 250 and 375 machine hours (red) and the
+long-run average cost (blue) of $f = 2\sqrt{KL}$ at $w = 50$, $r = 200$. With constant
+returns the long-run curve is flat and touches each short-run curve at its
+minimum.}
+\end{omfigure}
+
+\begin{definition}[Economies of scale]\label{def:b1:cost-minimisation:economies-of-scale}
+\index{economies of scale}\index{diseconomies of scale}
+A firm has \emph{economies of scale} at $q$ if long-run average cost
+$C(q)/q$ falls as output rises there, and \emph{diseconomies of scale} if it
+rises.
+\end{definition}
+
+\begin{proposition}[Returns and economies of scale]\label{prop:b1:cost-minimisation:scale}
+If $f$ is homogeneous of degree $k$, then $C(w, r, q) = q^{1/k}C(w, r, 1)$:
+increasing returns ($k > 1$) give falling average cost, constant returns a
+flat one, decreasing returns a rising one.
+\end{proposition}
+
+\begin{proof}
+If $(K, L)$ makes one unit, $(q^{1/k}K, q^{1/k}L)$ makes $q$ and costs $q^{1/k}$
+times as much; conversely, scaling down a bundle that makes $q$ by $q^{-1/k}$
+makes one unit. So the cheapest way of making $q$ is the cheapest way of
+making one unit scaled by $q^{1/k}$, and $C(q)/q = q^{1/k - 1}C(1)$.
+\end{proof}
+
+\omterm{def:b1:cost-minimisation:economies-of-scale}{Economies of scale} can also come from things the \omterm{def:b1:technology:production-function}{production function} does
+not show: a fixed cost of design, or of a factory building, spread over more
+units; buying inputs in bulk; and the geometry of tanks and pipes, whose
+capacity grows faster than their surface. The opening chart's
+plant-size-dependent costs are of this kind.
+
+\section{Average and marginal cost}\label{sec:b1:cost-minimisation:marginal}
+
+Marginal cost $C'(q)$ is the cost of the last unit; average cost $C(q)/q$ is
+the cost per unit. Since
+\[
+\frac{\dd}{\dd q}\Bigl(\frac{C(q)}q\Bigr) = \frac{C'(q) - C(q)/q}q,
+\]
+average cost falls while marginal cost is below it and rises once marginal
+cost is above it: marginal cost crosses average cost at its minimum. The
+same holds for average variable cost.
+
+\begin{definition}[Minimum efficient scale]\label{def:b1:cost-minimisation:mes}
+\index{minimum efficient scale}
+The \emph{minimum efficient scale} is the smallest output at which long-run
+average cost reaches its minimum.
+\end{definition}
+
+The \omterm{def:b1:cost-minimisation:mes}{minimum efficient scale}, measured against the size of the market, says
+how many firms the market can hold at low cost: many bakeries, few
+aircraft makers (\cref{ch:b1:competitive-industry}).
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Output $q$}, ylabel={Dalens per unit},
+  xmin=0, xmax=25, ymin=0, ymax=14, width=0.56\linewidth, height=0.42\linewidth, samples=100,
+  legend style={at={(0.02,0.6)}, anchor=north west}]
+  \addplot[demand, domain=4:25] {50/x + 4 - 0.4*x + 0.02*x^2};
+  \addplot[shifted, domain=0:25] {4 - 0.4*x + 0.02*x^2};
+  \addplot[supply, domain=0:25] {4 - 0.8*x + 0.06*x^2};
+  \addplot[only marks, mark=*, black, forget plot] coordinates {(10,2) (15.32,5.83)};
+  \legend{$AC$, $AVC$, $MC$}
+\end{axis}
+\end{tikzpicture}
+
+{\small $C(q) = 50 + 4q - 0.4q^2 + 0.02q^3$. Marginal cost crosses average variable
+cost at its minimum, $(10, 2)$, and average cost at its minimum, about
+$(15.3, 5.83)$.}
+\end{omfigure}
+
+\section{Learning by doing}\label{sec:b1:cost-minimisation:learning}
+
+A \omterm{def:b1:cost-minimisation:cost-function}{cost function} takes the \omterm{def:b1:technology:production-function}{production function} as given. In many
+industries the cost of a unit falls as the firm, or the industry,
+accumulates experience: workers find shortcuts, engineers remove
+bottlenecks, suppliers improve their parts.
+
+\begin{definition}[Learning curve]\label{def:b1:cost-minimisation:learning-curve}
+\index{learning curve}\index{learning rate}\index{learning by doing}
+A \emph{learning curve} relates unit cost to cumulative output $X$, the
+total produced so far: $c(X) = c_0X^{-b}$ with $b > 0$. Each doubling of
+cumulative output multiplies unit cost by $2^{-b}$; the \emph{learning rate}
+is $1 - 2^{-b}$, the percentage fall in cost per doubling.
+\end{definition}
+
+On log--log axes a \omterm{def:b1:cost-minimisation:learning-curve}{learning curve} is a straight line of slope $-b$. A
+\omterm{def:b1:cost-minimisation:learning-curve}{learning rate} of $20\%$, $b = 0.32$, means that the 2,000th unit costs $80\%$ of
+the 1,000th, and the 4,000th $64\%$. Learning makes cost depend on the past,
+not only on current output: a firm that produces more today lowers its cost
+tomorrow, which changes how it should price (\cref{ch:b1:monopoly-pricing}).
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 1, horizontal sep=18mm}, omrecord, grid=none,
+  width=0.44\linewidth, height=0.38\linewidth, samples=80,
+  xlabel={Cumulative output (thousands)}, ylabel={Unit cost}]
+\nextgroupplot[xmin=0, xmax=66, ymin=0, ymax=110, title={\small Linear axes}, width=0.44\linewidth]
+  \addplot[demand, domain=1:64] {100*x^(-0.2863)};
+  \addplot[only marks, mark=*, black] coordinates {(1,100) (2,82) (4,67.24) (8,55.14) (16,45.21) (32,37.07) (64,30.4)};
+\nextgroupplot[xmode=log, ymode=log, log ticks with fixed point, xmin=0.8, xmax=80, ymin=20, ymax=120,
+  xtick={1,2,4,8,16,32,64}, ytick={30,50,100}, title={\small Logarithmic axes}, width=0.44\linewidth]
+  \addplot[demand, domain=1:64] {100*x^(-0.2863)};
+  \addplot[only marks, mark=*, black] coordinates {(1,100) (2,82) (4,67.24) (8,55.14) (16,45.21) (32,37.07) (64,30.4)};
+\end{groupplot}
+\end{tikzpicture}
+
+{\small A \omterm{def:b1:cost-minimisation:learning-curve}{learning curve} with a \omterm{def:b1:cost-minimisation:learning-curve}{learning rate} of $18\%$ ($b = 0.2863$): unit cost
+falls by $18\%$ at each doubling of cumulative output, a curve on linear axes
+and a straight line on logarithmic ones. The points are the weekend
+problem's battery plant.}
+\end{omfigure}
+
+\begin{record}[Liberty ships]
+During the Second World War American yards built standard cargo ships, the
+Liberty ships, to one design. Labour productivity in the programme rose
+about $40\%$ a year over three years, and early studies found that each
+doubling of a yard's cumulative output cut the labour hours per ship by 12
+to $24\%$: the classic evidence for \omterm{def:b1:cost-minimisation:learning-curve}{learning by doing}. A study of the
+records of one large yard found that the gains came mostly from elsewhere.
+Investment in capital at the yard accounted for a $70\%$ cut in the labour
+needed per ship, larger employment raised labour hours by $30\%$, and a
+decline in quality (ships that developed fractures) also played a part;
+on average about $5\%$ of the reduction was left unexplained
+(Thompson 2001). % ledger: b1:thompson2001
+A \omterm{def:b1:cost-minimisation:learning-curve}{learning curve} fitted to cumulative output picks up everything that
+grows with it.
+\end{record}
+
+\begin{model}{Learning by doing}
+\assumes Unit cost falls with cumulative output, $c = c_0X^{-b}$, with a \omterm{def:b1:cost-minimisation:learning-curve}{learning
+rate} that does not change.
+\predicts A fixed percentage fall in cost per doubling of cumulative
+output; costs that fall fast while output grows fast and slowly when it
+stops growing.
+\tested Solar module costs fell by about $20\%$ with each doubling of
+cumulative capacity since the 1970s (as cited by Kavlak, McNerney and
+Trancik 2018). % ledger: b1:kavlak2018-causes
+The costs of solar power, wind power and batteries fell by close to $10\%$ a
+year for decades; from 2010 to 2020 solar costs fell $15\%$ a year, while
+nine modelling teams had projected an average of $2.6\%$, all below
+$6\%$ (Way, Ives, Mealy and Farmer 2022). % ledger: b1:way2022
+\breaks Costs also fall with research, with the size of plants and with
+cheaper inputs, all of which grow with cumulative output: the opening
+chart's decline owes much to research and to scale
+(Kavlak, McNerney and Trancik 2018), % ledger: b1:kavlak2018-causes
+and the Liberty ships' to capital.
+\end{model}
+
+\section*{Exercises}\label{sec:b1:cost-minimisation:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:cost-minimisation:cd}
+For $f = K^{1/2}L^{1/2}$, derive the \omterm{def:b1:cost-minimisation:conditional-demand}{conditional factor demands}, and evaluate them
+and the cost at $w = 4$, $r = 1$, $q = 10$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:cost-minimisation:leontief}
+With $f = \min(K/2, L/3)$, $w = 10$ and $r = 5$, what does it cost to make 100
+units? Does the answer change if $r$ doubles?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:cost-minimisation:census}
+In Brenland's census of firms (invented), the smallest manufacturing firm
+makes 68 thousand dalens of output at a cost of 62, and the largest makes
+14,971 at a cost of 10,648. % figdata: census_extremes
+Compute the cost per dalen of output of each. Is this evidence of
+\omterm{def:b1:cost-minimisation:economies-of-scale}{economies of scale}?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:cost-minimisation:shift}
+Which of these shifts a firm's \omterm{def:b1:cost-minimisation:cost-function}{cost function}, and which moves it along it:
+a rise in the wage; a rise in the demand for its product; a new machine
+that does the work of two?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:cost-minimisation:cd-cost}
+For $q = K^{1/3}L^{2/3}$, derive the \omterm{def:b1:cost-minimisation:cost-function}{cost function}, evaluate the unit cost at
+$w = 8$, $r = 1$, and check Shephard's lemma for labour.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:cost-minimisation:short}
+For $f = K^{1/2}L^{1/2}$ with $w = r = 1$ and capital fixed at 4, write the
+\omterm{def:b1:cost-minimisation:sr-lr}{short-run cost function} and the long-run one. Compare them at $q = 4$ and
+$q = 6$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:cost-minimisation:mes-calc}
+Find the \omterm{def:b1:cost-minimisation:mes}{minimum efficient scale} and the minimum average cost for
+$C(q) = 100 + 2q + 0.01q^2$, and check that marginal cost equals average cost
+there.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:cost-minimisation:three-doublings}
+With a \omterm{def:b1:cost-minimisation:learning-curve}{learning rate} of $20\%$, by what percentage does unit cost fall after
+three doublings of cumulative output?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:cost-minimisation:estimate}
+A firm's unit cost was 200 when its cumulative output was 50 and 120 when it
+was 400. Estimate its \omterm{def:b1:cost-minimisation:learning-curve}{learning rate}.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:cost-minimisation:law}
+Use Shephard's lemma and the concavity of the \omterm{def:b1:cost-minimisation:cost-function}{cost function} to show that a
+\omterm{def:b1:cost-minimisation:conditional-demand}{conditional factor demand} never rises with its own price, and that
+$\partial L^*/\partial r = \partial K^*/\partial w$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:cost-minimisation:u-shape}
+Draw the long-run average cost as the lower envelope of short-run
+average cost curves when it is U-shaped. Show that where long-run average
+cost is falling, the short-run curve touches it to the left of its own
+minimum.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:cost-minimisation:separate}
+``Solar costs fell because of \omterm{def:b1:cost-minimisation:learning-curve}{learning by doing}.'' What data would separate
+\omterm{def:b1:cost-minimisation:learning-curve}{learning by doing} from \omterm{def:b1:cost-minimisation:economies-of-scale}{economies of scale} and from research? Describe a
+pattern that would count against \omterm{def:b1:cost-minimisation:learning-curve}{learning by doing}.
+\end{exercise}
+
+\section{Problem: A Battery Plant}\label{sec:b1:cost-minimisation:problem}
+
+\begin{problem}[{Weekend problem --- the plant's learning rate}]\label{pb:b1:cost-minimisation:battery}
+A Brenland battery plant (invented) makes $q$ kilowatt-hours of cells a year
+with $q = 2K^{1/2}L^{1/2}$, where $L$ is hours of labour and $K$ machine hours on its
+production lines. The wage is $w = 50$ dalens an hour and a machine hour rents
+for $r = 200$.
+
+\medskip\noindent\textbf{Part I --- The cost function.}
+\begin{enumerate}
+  \item Write the \omterm{def:b1:constrained-optimisation:tangency}{tangency condition} and the expansion path.
+  \item Derive the \omterm{def:b1:cost-minimisation:conditional-demand}{conditional factor demands} and evaluate them for $q = 1000$.
+  \item Derive the \omterm{def:b1:cost-minimisation:cost-function}{cost function} and evaluate it for $q = 1000$.
+  \item Compute long-run average and marginal cost. What are the \omterm{def:b1:technology:returns-to-scale}{returns to scale}?
+  \item Check Shephard's lemma for labour.
+  \item The wage rises to 72. Compute the new cost and input mix per unit.
+  \item Both $w$ and $r$ double. What happens to the cost and to the input mix?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- The short run.} The plant has built lines for
+250 machine hours, at the old prices.
+\begin{enumerate}[resume]
+  \item Write the \omterm{def:b1:cost-minimisation:sr-lr}{short-run cost function}.
+  \item Write short-run average and marginal cost.
+  \item Find the output that minimises short-run average cost, and the minimum.
+  \item Compute short-run average cost, marginal cost and long-run average cost at $q = 1200$.
+  \item Compute short-run average cost at $q = 800$.
+  \item Explain why short-run average cost is never below the long-run one, and where they touch.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- Learning.} The plant's unit cost depends on
+its cumulative output $X$ before each year (1,000 from a pilot line before
+year 1). Its output was 1,000, 2,000, 4,000 and 8,000 in years 1--4, and its
+unit costs in years 1--5 were 100, 82.0, 67.24, 55.14 and 45.21 dalens.
+\begin{enumerate}[resume]
+  \item Compute the cumulative output before each of years 1--5.
+  \item Compute the ratio of each year's unit cost to the year before. What is the \omterm{def:b1:cost-minimisation:learning-curve}{learning rate}?
+  \item Compute $b$.
+  \item Estimate the \omterm{def:b1:cost-minimisation:learning-curve}{learning rate} from years 1 and 5 alone.
+  \item Unit cost also fell by $18\%$ a year. Why can these five years not tell \omterm{def:b1:cost-minimisation:learning-curve}{learning by doing} from a steady yearly fall?
+  \item If the learning comes through the factor $A$ of $q = A\sqrt{KL}$, what is $A$ in year 5?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- Year 8.} The plant makes 16,000 a year in years
+5, 6 and 7.
+\begin{enumerate}[resume]
+  \item Compute the cumulative output before year 8.
+  \item Predict the unit cost in year 8 with the \omterm{def:b1:cost-minimisation:learning-curve}{learning curve}.
+  \item Predict it by extending the fall of $18\%$ a year.
+  \item Which prediction should a buyer trust, and why?
+  \item The plant prices at unit cost plus $10\%$. What price can a buyer expect in year 8?
+  \item State the result: the plant's \omterm{def:b1:cost-minimisation:learning-curve}{learning rate}, and its unit cost in year 8.
+\end{enumerate}
+\end{problem}

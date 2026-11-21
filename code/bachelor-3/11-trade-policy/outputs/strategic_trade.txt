@@ -1,0 +1,4 @@
+$ python strategic_trade.py
+Cournot: best s = +2.000; Home welfare 7.111 -> 8.000; Foreign profit 7.111 -> 4.000
+Bertrand: best s = -0.357; Home welfare 14.222 -> 14.286; Foreign profit 14.222 -> 14.734
+Cournot at s = 2: Home sells 4.000, Foreign 2.000

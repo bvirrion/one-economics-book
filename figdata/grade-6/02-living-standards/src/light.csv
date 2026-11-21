@@ -1,0 +1,10 @@
+year,hours,device,ledger
+1800,5.37,candle,g6:light-candle-1800
+1827,7.398,gas lamp,g6:light-gas-1827
+1855,0.2306,kerosene lamp,g6:light-kerosene-1855
+1883,0.750239,early electric lamp,g6:light-edison-1883
+1900,0.220431,electric lamp,g6:light-filament-1900
+1920,0.013538,electric lamp,g6:light-filament-1920
+1950,0.001883,electric lamp,g6:light-filament-1950
+1970,0.000551,electric lamp,g6:light-filament-1970
+1992,0.000119,low-energy lamp,g6:light-fluorescent-1992

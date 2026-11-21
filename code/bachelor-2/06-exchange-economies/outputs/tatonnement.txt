@@ -1,0 +1,8 @@
+$ python tatonnement.py
+start 0.30  ->  price 0.5000
+start 0.90  ->  price 0.5000
+start 0.99  ->  price 0.5000
+start 1.00  ->  price 1.0000
+start 1.01  ->  price 2.0000
+start 1.10  ->  price 2.0000
+start 3.00  ->  price 2.0000

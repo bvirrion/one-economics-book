@@ -1,0 +1,336 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g11-11. Lorenz curve and Gini, interdecile ratio and top shares,
+% before and after taxes and transfers, income and wealth, skills and technical change, mobility, what the measures miss.
+% Real numbers: figdata/grade-11/11-inequality/ (Eurostat ilc_di12 and ilc_di12b, 2025; PIP percentiles; Brenland's
+% household survey, invented). Ledger: Piketty and Saez 2003 (Table II), Autor 2014, Chetty et al. 2014, Eurostat
+% equivalence scale. The third chart (Gini against income across countries) was not drawn (page budget).
+\chapter{Inequality}\label{ch:g11:inequality}
+
+In 2025, before pensions and other social transfers, the \omterm{def:g11:inequality:gini}{Gini coefficient} of income in France was 53.7 on a scale from 0 to 100; after them it was 30.4. In
+Slovakia the figures were 39.9 and 23.0. Every European country in the chart below is far less unequal after its transfers than before, in the accounts; the gap ranges from 13.8 points
+in Spain to 23.3 in France.
+% figdata: eu_gini (FR 53.7 -> 30.4, cut 23.3; SK 39.9 -> 23.0; ES cut 13.8)
+
+How unequal a country is depends on what is measured, among whom, and before or after the state's taxes and transfers. This chapter builds the standard measures, the
+\omterm{def:g11:inequality:lorenz}{Lorenz curve} and the \omterm{def:g11:inequality:gini}{Gini coefficient} above all, shows how they are computed and what they leave out, and looks at two questions the evidence can answer: why the pay
+of the educated pulled away from the rest, and how far children's incomes follow their parents'.
+
+\begin{openingchart}{Gini coefficient of equivalised disposable income, before social transfers (pensions counted as transfers) and after, twelve European countries and
+the European Union, survey year 2025. Scale 0 (all equal) to 100.}{Eurostat, EU statistics on income and living conditions (ilc\_di12, ilc\_di12b)}
+\begin{tikzpicture}
+\begin{axis}[width=0.92\linewidth, height=5.8cm, ybar, /pgf/bar width=5pt, xtick={0,...,12}, xticklabels={SK, BE, SI, PL, NL, SE, DE, FR, IT, ES, LT, BG, EU},
+  enlarge x limits=0.05, ymin=0, ymax=62, ylabel={Gini (0--100)}, legend style={at={(0.02,0.98)}, anchor=north west, font=\scriptsize, draw=none},
+  legend columns=2, x tick label style={/tikz/font=\scriptsize}]
+\addplot[fill=omThm!60, draw=omThm] table[x=x, y=before] {figdata/grade-11/11-inequality/out/eu_gini.csv};
+\addplot[fill=omDef!60, draw=omDef] table[x=x, y=after] {figdata/grade-11/11-inequality/out/eu_gini.csv};
+\legend{before social transfers, after}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: mean and median income, the shares of income received by each fifth of households, disposable income, the world distribution of income,
+and the poverty line. From the mathematics volumes: quartiles and percentiles. From \cref{ch:g11:marginal-reasoning}: marginal and average tax rates.
+\end{recall}
+
+\section{The Lorenz curve and the Gini coefficient}\label{sec:g11:inequality:lorenz}
+
+\begin{definition}[Lorenz curve]\label{def:g11:inequality:lorenz}
+Rank households from the poorest to the richest. The \emph{Lorenz curve}\index{Lorenz curve} gives, for each share $x$ of households counted from the bottom, the
+share $L(x)$ of total income they receive.
+\end{definition}
+
+\begin{definition}[Gini coefficient]\label{def:g11:inequality:gini}
+The \emph{Gini coefficient}\index{Gini coefficient} is the area between the diagonal and the \omterm{def:g11:inequality:lorenz}{Lorenz curve}, divided by the whole area under the diagonal:
+$G = 1 - 2B$, where $B$ is the area under the \omterm{def:g11:inequality:lorenz}{Lorenz curve}.
+\end{definition}
+
+\begin{proposition}[Properties of the Lorenz curve and the Gini]\label{prop:g11:inequality:properties}
+The \omterm{def:g11:inequality:lorenz}{Lorenz curve} runs from $(0,0)$ to $(1,1)$, is convex, and lies on or below the diagonal; $0 \le G < 1$, and $G = 0$ exactly when all incomes are equal.
+\end{proposition}
+\begin{proof}
+The slope of the curve between two points is the income of the households added, divided by their number, relative to the mean: their average income over the mean
+income. Since households are ranked from the poorest, this slope never falls as $x$ rises, so the curve is convex. A convex curve from $(0,0)$ to $(1,1)$ lies on or below
+the straight line joining them, so $B \le \tfrac12$ and $G \ge 0$. If all incomes are equal, every slope is 1, the curve is the diagonal, $B = \tfrac12$ and $G = 0$.
+Otherwise the poorest have a slope below 1 at the start and the curve dips below the diagonal, so $G > 0$. Since incomes are not negative, $L \ge 0$, and $B > 0$ when
+some income is positive, so $G < 1$.
+\end{proof}
+
+\begin{measure}[How a Gini coefficient is computed from a survey]
+With incomes grouped into fifths, the \omterm{def:g11:inequality:lorenz}{Lorenz curve} is known at $x = 0, 0.2, \dots, 1$, with cumulative shares $L_0 = 0, L_1, \dots, L_5 = 1$. Join the points by straight
+lines; the area under them is a sum of trapezoids, $B = \sum_{k=1}^{5} 0.2 \times (L_{k-1} + L_k)/2$, and
+\[ G = 1 - \sum_{k=1}^{5} 0.2 \times (L_{k-1} + L_k). \]
+Straight lines lie above the true curve between the points, since the curve is convex, so grouping hides the inequality inside each group and gives a Gini slightly
+too low. Statistical offices compute it from each household's income.
+\end{measure}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[width=0.46\linewidth, height=0.46\linewidth, xmin=0, xmax=100, ymin=0, ymax=100, xtick={0,20,...,100}, ytick={0,20,...,100},
+  xlabel={households, poorest first (\%)}, ylabel={share of income (\%)}, grid=major, grid style={black!10}, tick label style={/tikz/font=\scriptsize},
+  legend style={at={(0.03,0.97)}, anchor=north west, font=\scriptsize, draw=none, fill=none}, legend cell align=left]
+\addplot[name path=diag, black, thin, forget plot] coordinates {(0,0) (100,100)};
+\addplot[name path=mkt, omThm, thick, mark=*, mark size=1.2pt] table[x=pop, y=market] {figdata/grade-11/11-inequality/out/bren_lorenz.csv};
+\addplot[omDef, thick, mark=*, mark size=1.2pt] table[x=pop, y=disposable] {figdata/grade-11/11-inequality/out/bren_lorenz.csv};
+\addplot[omThm!20, forget plot] fill between[of=diag and mkt];
+\legend{market income, disposable income}
+\end{axis}
+\end{tikzpicture}
+
+{\small \omterm{def:g11:inequality:lorenz}{Lorenz curves} of Brenland's household survey (invented), income divided by the square root of household size, by fifths. The shaded area between the diagonal
+and the market-income curve, divided by $\tfrac12$, is its \omterm{def:g11:inequality:gini}{Gini coefficient}, 0.30; for disposable income it is 0.24.}
+\end{omfigure}
+
+\begin{definition}[Interdecile ratio and top income share]\label{def:g11:inequality:interdecile}
+The \emph{interdecile ratio}\index{interdecile ratio} is the income at the 90th percentile divided by the income at the 10th. A \emph{top income share}\index{top income
+share}\phantomsection\label{def:g11:inequality:top-share} is the share of total income received by the richest group, such as the top tenth or the top 1\,\%.
+\end{definition}
+
+The Gini summarises the whole curve in one number, and different curves can give the same Gini. The \omterm{def:g11:inequality:interdecile}{interdecile ratio} ignores the very top and the very bottom; top
+shares look only at the top, where household surveys capture incomes badly and tax records do better.
+
+\begin{record}[Top income shares in the twentieth century]
+% ledger: g11:ps2003-top1, g11:ps2003-top10, g11:autor2014-top1
+Tax returns of the United States show the share of income, excluding capital gains, received by the top 1\,\% of tax units: 18.0\,\% in 1913, 19.6\,\% in 1928, 10.5\,\%
+in 1944, 7.8\,\% in 1970 and 14.6\,\% in 1998. The share of the top tenth stood at 40 to 45\,\% between the wars, fell to about 30\,\% during the Second World War, stayed at
+31 to 32\,\% until the 1970s, and was above 40\,\% again by the mid-1990s. A household measure of the top 1\,\% share went from 10.0\,\% in 1979 to 22.5\,\% in 2012. The
+pattern is a U: high, then low for three decades, then high again.
+\end{record}
+
+\section{Before and after taxes and transfers}\label{sec:g11:inequality:redistribution}
+
+\begin{definition}[Market income]\label{def:g11:inequality:market-income}
+A household's \emph{market income}\index{market income} is its income from work, property and business, before taxes and before transfers from the state.
+\end{definition}
+
+\begin{definition}[Progressive and regressive taxes]\label{def:g11:inequality:progressive}
+A tax is a \emph{progressive tax}\index{progressive tax} when its average rate rises with income, and a \emph{regressive tax}\index{regressive
+tax}\phantomsection\label{def:g11:inequality:regressive} when its average rate falls as income rises.
+\end{definition}
+
+\begin{definition}[Equivalence scale]\label{def:g11:inequality:equivalence-scale}
+An \emph{equivalence scale}\index{equivalence scale} is the number by which a household's income is divided to compare households of different sizes; it is smaller than
+the number of members because people living together share costs.
+\end{definition}
+
+\begin{measure}[Equivalence scales]
+% ledger: g11:eurostat-equiv
+Eurostat divides a household's income by its size on the modified OECD scale: 1 for the first adult, 0.5 for each other person aged 14 or over, 0.3 for each child under 14.
+A couple with two young children counts as $1 + 0.5 + 0.3 + 0.3 = 2.1$. Brenland's survey uses the square root of the number of members, 2 for a household of four. The
+choice matters: a scale that gives children less weight makes large families look richer.
+\end{measure}
+
+The measured effect of taxes and transfers depends on what is counted. Eurostat's \emph{before} figure in the opening chart removes pensions and other social transfers
+but not income taxes; in Brenland's survey, \emph{market} income is before both. Pensions do much of the work in the European figures: a retired household has almost no
+\omterm{def:g11:inequality:market-income}{market income} and a pension that replaces it. The \emph{before} figure is an accounting one: it is not the inequality the country
+would have without its transfers, since people would then save and work differently, and retired households would not live on nothing.
+
+\section{Income, wealth and skills}\label{sec:g11:inequality:wealth}
+
+\begin{definition}[Wealth]\label{def:g11:inequality:wealth}
+A household's \emph{wealth}\index{wealth} is the value of what it owns (a house, savings, shares, a business) minus its debts, at a date.
+\end{definition}
+
+Income is a flow over a year; \omterm{def:g11:inequality:wealth}{wealth} is a stock at a date. \omterm{def:g11:inequality:wealth}{Wealth} can be far more unequal than income, because it accumulates over a lifetime and is inherited, and
+because many households own little more than they owe.
+
+\begin{omchart}{Lorenz curves of income or consumption per person, latest survey year, four countries: Sweden (2023), the United States (2024), Brazil (2024), South Africa
+(2022, consumption). The Gini coefficients from these percentiles are 0.29, 0.42, 0.50 and 0.54.}{World Bank, Poverty and Inequality Platform, percentiles (2021 PPP)}
+\begin{tikzpicture}
+\begin{axis}[width=0.5\linewidth, height=0.5\linewidth, xmin=0, xmax=100, ymin=0, ymax=100, xtick={0,20,...,100}, ytick={0,20,...,100},
+  xlabel={people, poorest first (\%)}, ylabel={share (\%)}, grid=major, grid style={black!10}, tick label style={/tikz/font=\scriptsize},
+  legend style={at={(0.03,0.97)}, anchor=north west, font=\scriptsize, draw=none, fill=none}, legend cell align=left]
+\addplot[black, thin, domain=0:100, samples=2, forget plot] {x};
+\addplot[omDef, thick] table[x=pop, y=cum] {figdata/grade-11/11-inequality/out/lorenz_SWE.csv};
+\addplot[omProp, thick] table[x=pop, y=cum] {figdata/grade-11/11-inequality/out/lorenz_USA.csv};
+\addplot[omMeth, thick] table[x=pop, y=cum] {figdata/grade-11/11-inequality/out/lorenz_BRA.csv};
+\addplot[omThm, thick] table[x=pop, y=cum] {figdata/grade-11/11-inequality/out/lorenz_ZAF.csv};
+\legend{Sweden, United States, Brazil, South Africa}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: lorenz_gini (SWE 2023 0.29, USA 2024 0.42, BRA 2024 0.50, ZAF 2022 consumption 0.54)
+
+\begin{model}{Supply and demand for skills}
+\assumes Two kinds of labour, with and without a college degree; technical change raises the demand for the first relative to the second; the supply of graduates grows
+  as people study longer.
+\predicts The graduates' wage premium rises when demand grows faster than supply, and stops rising when supply catches up.
+\tested Consistent with it: in the United States the average college graduate earned 48\,\% more a week than the average high-school graduate in 1981, when the growth of the supply of
+  graduates had slowed; 72\,\% more in 1990, 90\,\% in 2000 and 97\,\% in 2005. When the supply of new graduates rose fast between 2004 and 2012, the premium stopped
+  rising (Autor 2014).
+\breaks It explains the gap between graduates and the rest, not the rise of the top 1\,\% share, which concerns a few very high incomes rather than the two broad
+  groups the model compares.
+\end{model}
+% ledger: g11:autor2014-premium
+
+\section{From one generation to the next}\label{sec:g11:inequality:mobility}
+
+\begin{definition}[Intergenerational mobility]\label{def:g11:inequality:mobility}
+\emph{Intergenerational mobility}\index{intergenerational mobility} is the degree to which children's positions in the income distribution differ from their parents'.
+\end{definition}
+
+\begin{definition}[Mobility table]\label{def:g11:inequality:mobility-table}
+A \emph{mobility table}\index{mobility table} counts families by the parents' position (rows) and the child's position (columns). Divided by the row totals, it gives
+\emph{outflow} shares: where children of a given origin end up. Divided by the column totals, it gives \emph{inflow} shares: where people in a given position came from.
+\end{definition}
+
+\begin{omfigure}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{lrrrr}
+\toprule
+Parents' third $\backslash$ child's third & bottom & middle & top & total \\
+\midrule
+bottom & 50 & 30 & 20 & 100 \\
+middle & 30 & 40 & 30 & 100 \\
+top & 20 & 30 & 50 & 100 \\
+\midrule
+total & 100 & 100 & 100 & 300 \\
+\bottomrule
+\end{tabular}
+
+{\small An invented \omterm{def:g11:inequality:mobility-table}{mobility table} of 300 families. Outflow: of the 100 children of bottom-third parents, $20/100 = 20\,\%$ reach the top third. Inflow: of the 100
+people in the top third, 20\,\% have bottom-third parents and 50\,\% top-third parents.}
+\end{omfigure}
+
+Large studies use tax records. In the United States, records of more than 40 million children and their parents show that a rise of 10 percentiles in the parents' income
+goes with a rise of about 3.4 percentiles in the child's, on average. The chance that a child born in the bottom fifth reaches the top fifth varied from 4.4\,\% in
+Charlotte to 12.9\,\% in San Jose. These are correlations: they say how much position is passed on, not by what means.
+% ledger: g11:chks2014
+
+\section{What the measures miss}\label{sec:g11:inequality:limits}
+
+Income measures miss what governments provide in kind, such as schooling and health care, and taxes on spending that surveys do not record. A household's income in one
+year is a snapshot: students and the retired have low incomes but may be well off over their lives, so inequality of consumption, which people smooth by saving and
+borrowing, can be lower than inequality of yearly income. Surveys miss the richest, whom tax records catch. And a household measure says nothing of how income is shared
+inside the household.
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g11:inequality:1}
+The fifths of a country's households receive 5, 10, 15, 25 and 45\,\% of income, poorest first. Give the points of its \omterm{def:g11:inequality:lorenz}{Lorenz curve}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:inequality:2}
+Same question for shares of 8, 12, 18, 24 and 38\,\%.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:inequality:3}
+From the opening chart, which country has the highest Gini after transfers, and which has the largest fall from before to after? What are the figures for the EU as a
+whole?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:inequality:4}
+The 10th percentile of income is 15\,000 dalens and the 90th is 60\,000. Compute the \omterm{def:g11:inequality:interdecile}{interdecile ratio}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:inequality:5}
+In the invented \omterm{def:g11:inequality:mobility-table}{mobility table}, what share of the children of top-third parents end in the bottom third? What share of the bottom third have bottom-third parents?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:inequality:6}
+Compute the \omterm{def:g11:inequality:gini}{Gini coefficient} of \cref{exo:g11:inequality:1} by trapezoids.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:inequality:7}
+Compute the \omterm{def:g11:inequality:gini}{Gini coefficient} of \cref{exo:g11:inequality:2} by trapezoids. Which country is more equal?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:inequality:8}
+Three Brenland households have \omterm{def:g11:inequality:market-income}{market incomes} of 8000, 30\,000 and 90\,000 dalens. They pay taxes of 0, 3000 and 21\,000 and receive transfers of 6000, 1000 and 0.
+Compute their disposable incomes, and the ratio of the richest to the poorest before and after.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:inequality:9}
+Households with incomes of 10\,000, 30\,000 and 100\,000 dalens pay an income tax of 500, 3000 and 15\,000, and a tax on purchases of 900, 1800 and 4000. Is each tax
+progressive or regressive?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:inequality:10}
+A \omterm{def:g11:inequality:mobility-table}{mobility table} of 300 families has rows (parents bottom, middle, top) of 50, 30, 20; 30, 45, 25; 20, 25, 55 (children bottom, middle, top). Compute the outflow shares of
+the bottom row and the inflow shares of the top column.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:inequality:11}
+Five households have incomes of 1000, 2000, 3000, 4000 and 10\,000. Compute the Gini by trapezoids (each household is a fifth). Then every household receives 1000 more:
+compute it again.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:inequality:12}
+What evidence would contradict the supply-and-demand-for-skills model? Is the halt of the college premium after 2004 such evidence? Is the rise of the top 1\,\% share?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:inequality:13}
+Five households have incomes of 10, 20, 30, 40 and 100. After a reform they have 9, 25, 35, 41 and 90. Show that the Gini falls although the poorest household loses.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:inequality:14}
+Household A is one adult with 20\,000 dalens; household B is a couple with two children under 14 and 36\,000. Rank them by total income, by income per person, by income on
+the square-root scale and on the modified OECD scale.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:inequality:15}
+Explain why the inequality of consumption is usually lower than the inequality of yearly income, and why South Africa's curve in the chart of four countries is not
+strictly comparable with the others.
+\end{exercise}
+
+\section{Problem: Brenland's Household Survey}
+
+\begin{problem}[{Weekend problem --- how much do taxes and transfers reduce inequality?}]
+\label{pb:g11:inequality:1}
+Brenland's survey of 2000 households records each household's \omterm{def:g11:inequality:market-income}{market income} and its disposable income. Divided by the square root of household size and ranked, the
+fifths of households receive these shares (\%):
+
+\medskip
+\begin{center}
+\begin{tabular}{lrrrrr}
+\toprule
+fifth & 1 & 2 & 3 & 4 & 5 \\
+\midrule
+\omterm{def:g11:inequality:market-income}{market income} & 6.9 & 12.8 & 17.5 & 23.6 & 39.2 \\
+disposable income & 10.0 & 13.9 & 17.7 & 22.9 & 35.5 \\
+\bottomrule
+\end{tabular}
+\end{center}
+The 10th and 90th percentiles are 7800 and 33\,900 dalens for \omterm{def:g11:inequality:market-income}{market income} and 9300 and 28\,600 for disposable income; the top tenth receives 23.6\,\% of \omterm{def:g11:inequality:market-income}{market income} and
+20.8\,\% of disposable income.
+% figdata: bren_fifths, bren_key
+
+\medskip
+\noindent\textbf{Part I --- Comparing households.}
+\begin{enumerate}
+\item A household of four has 36\,000 dalens. What is its income on the square-root scale? Compare with a single person with 18\,000.
+\item Why divide by the square root of the size rather than by the size itself?
+\item What is the four-person household's income on the modified OECD scale, if two of them are children under 14?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Market income.}
+\begin{enumerate}[resume]
+\item Give the points of the \omterm{def:g11:inequality:lorenz}{Lorenz curve} of \omterm{def:g11:inequality:market-income}{market income}.
+\item Compute the area under it by trapezoids.
+\item Compute the \omterm{def:g11:inequality:gini}{Gini coefficient} of \omterm{def:g11:inequality:market-income}{market income}.
+\item How many times the bottom fifth's share is the top fifth's?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Disposable income.}
+\begin{enumerate}[resume]
+\item Give the points of the \omterm{def:g11:inequality:lorenz}{Lorenz curve} of disposable income.
+\item Compute its \omterm{def:g11:inequality:gini}{Gini coefficient}.
+\item By how many points do taxes and transfers lower the Gini?
+\item Which fifths gain share, and which lose?
+\item Compare the fall with the falls in the opening chart, and say why the two are not measured the same way.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Other measures.}
+\begin{enumerate}[resume]
+\item Compute the \omterm{def:g11:inequality:interdecile}{interdecile ratio} before and after.
+\item By how much does the top tenth's share fall?
+\item Compute the fall of each measure (Gini, \omterm{def:g11:inequality:interdecile}{interdecile ratio}, top tenth's share) in per cent of its value before. Which falls most?
+\item Why is a Gini computed over fifths lower than one computed from each household's income?
+\item Name two things the survey's disposable income leaves out.
+\item A flat payment of the same amount to every household, paid for by a tax at the same rate on every income, is added. Does the Gini of disposable income rise or fall?
+\item Can the Gini fall while the poorest households lose? Refer to the exercises.
+\item State the result of the problem: the \omterm{def:g11:inequality:gini}{Gini coefficient} before and after taxes and transfers, and the reduction in points.
+\end{enumerate}
+\end{problem}

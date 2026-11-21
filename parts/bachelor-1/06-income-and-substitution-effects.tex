@@ -1,0 +1,508 @@
+\chapter{Income and Substitution Effects}\label{ch:b1:income-and-substitution-effects}
+
+In 1991 Sweden began to tax the carbon in fuels, at 250 kronor a tonne of
+carbon dioxide, about 30 dollars. % ledger: b1:sweden-co2-tax
+The tax was part of a wider reform that cut the top marginal rate of income
+tax from $80\%$ to $50\%$. % ledger: b1:sweden-1991-reform
+Fuel became dearer and, for many households, take-home pay rose. If the
+money comes back, why would anyone drive less? The answer splits every
+price change in two: a change in what the goods cost relative to each
+other, and a change in what the consumer's income can buy. The first
+survives any cheque in the post.
+
+\begin{openingchart}{Carbon dioxide from road transport per person, Sweden
+and the unweighted mean of ten western European countries (Austria,
+Belgium, Denmark, Finland, France, Germany, the Netherlands, Norway,
+Switzerland, the United Kingdom), 1960--2022, tonnes per person. The
+vertical line marks 1991.}{Community Emissions Data System (CEDS),
+emissions by country and sector, road transport; World Bank, World
+Development Indicators, population}
+\begin{tikzpicture}
+\begin{axis}[omtime, xlabel={Year}, ylabel={Tonnes of CO$_2$ per person},
+  xmin=1960, xmax=2022, ymin=0, ymax=2.6, width=0.72\linewidth,
+  height=0.48\linewidth, legend pos=south east]
+  \addplot+[omDef, very thick, no marks] table[x=year, y=sweden] {figdata/bachelor-1/06-income-and-substitution-effects/out/road_co2.csv};
+  \addplot+[omThm, thick, dashed, no marks] table[x=year, y=peers] {figdata/bachelor-1/06-income-and-substitution-effects/out/road_co2.csv};
+  \draw[guide] (axis cs:1991,0) -- (axis cs:1991,2.6);
+  \legend{Sweden, Mean of ten countries}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+Before 1991 Sweden's road emissions per person were higher than its
+neighbours', though theirs grew faster (from 1960 to 1990 Sweden's rose
+from 0.84 to 2.15 tonnes, the neighbours' mean from 0.51 to 1.93); % figdata: road_co2
+from 1990 to 2005 Sweden's stayed near 2.2 tonnes while the
+neighbours' mean rose from 1.93 to 2.23; by 2019 Sweden was at 1.55 tonnes
+against 1.93. % figdata: road_co2_points
+The chart alone cannot say how much of this the tax did. Fuel prices,
+cars, biofuels and incomes all changed over sixty years; the record box
+reports a study that builds a comparison for Sweden out of other
+countries.
+
+\begin{recall}
+The consumer of \cref{ch:b1:consumer-choice} chooses the best bundle in her
+\omterm{def:b1:consumer-choice:budget}{budget set}; her demand $x(p, m)$ is homogeneous of degree zero, and her
+indirect utility is $v(p, m)$. By the envelope theorem
+(\cref{thm:b1:comparative-statics:envelope}), the derivative of a \omterm{def:b1:constrained-optimisation:value-function}{value
+function} with respect to a parameter is the partial derivative of the
+\omterm{def:b1:constrained-optimisation:lagrangian}{Lagrangian}. A good is normal if $\partial x_i/\partial m > 0$ and inferior if
+$\partial x_i/\partial m < 0$.
+\end{recall}
+
+\section{A price change split in two}\label{sec:b1:income-and-substitution-effects:split}
+
+Take $u = x_1x_2$, income 100 and prices $(1, 1)$. The consumer buys
+$(50, 50)$. The price of good 1 rises to 2, and she buys $(25, 50)$
+(\cref{prop:b1:consumer-choice:cd-demand}). Her purchases of good 1 halve
+for two reasons: good 1 is now dear relative to good 2, and her income of
+100 buys less than before.
+
+\begin{definition}[Substitution and income effects]\label{def:b1:income-and-substitution-effects:effects}
+\index{substitution effect}\index{income effect}\index{compensation (Slutsky, Hicks)}
+Let the price of good $i$ change from $p_i$ to $p_i'$. Give the consumer, at
+the new prices, a \emph{compensated} income $m^c$, and let $x^c$ be her choice
+then. The \emph{substitution effect} is $x^c - x(p, m)$ and the \emph{income
+effect} is $x(p', m) - x^c$; they add up to the total change. With
+\emph{Slutsky compensation}, $m^c$ makes the old bundle just affordable:
+$m^c = m + (p_i' - p_i)x_i(p, m)$. With \emph{Hicks compensation}, $m^c$ is
+the income that gives the old utility at the new prices.
+\end{definition}
+
+In the example, Slutsky compensation is $100 + (2 - 1) \times 50 = 150$, and at
+prices $(2, 1)$ with income 150 she buys $x_1 = 150/4 = 37.5$. The
+\omterm{def:b1:income-and-substitution-effects:effects}{substitution effect} is $37.5 - 50 = -12.5$, the \omterm{def:b1:income-and-substitution-effects:effects}{income effect}
+$25 - 37.5 = -12.5$. Hicks compensation keeps utility at $50 \times 50 = 2500$:
+at prices $(2, 1)$ that costs $2\sqrt{2500 \times 2} = 141.42$ (the
+\omterm{def:b1:income-and-substitution-effects:expenditure}{expenditure function} below), and she buys $x_1 = 141.42/4 = 35.36$. The
+\omterm{def:b1:income-and-substitution-effects:effects}{substitution effect} is then $-14.64$ and the \omterm{def:b1:income-and-substitution-effects:effects}{income effect} $-10.36$.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 1, horizontal sep=16mm},
+  omrecord, grid=none, width=0.47\linewidth, height=0.42\linewidth,
+  xmin=0, xmax=80, ymin=0, ymax=110, samples=80, xlabel={$x_1$}, ylabel={$x_2$}]
+\nextgroupplot[title={\small Slutsky: old bundle affordable}, width=0.47\linewidth]
+  \addplot[supply] coordinates {(0,100) (80,20)};
+  \addplot[supply] coordinates {(0,100) (50,0)};
+  \addplot[shifted] coordinates {(20,110) (75,0)};
+  \addplot[demand, domain=23:80] {2500/x};
+  \addplot[demand, domain=25.6:80] {2812.5/x};
+  \addplot[demand, domain=11.4:80] {1250/x};
+  \addplot[only marks, mark=*, black] coordinates {(50,50) (37.5,75) (25,50)};
+  \node[font=\footnotesize, anchor=north east] at (axis cs:50,50) {$A$};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:37.5,75) {$B$};
+  \node[font=\footnotesize, anchor=north east] at (axis cs:25,50) {$C$};
+\nextgroupplot[title={\small Hicks: old utility reachable}, width=0.47\linewidth]
+  \addplot[supply] coordinates {(0,100) (80,20)};
+  \addplot[supply] coordinates {(0,100) (50,0)};
+  \addplot[shifted] coordinates {(15.71,110) (70.71,0)};
+  \addplot[demand, domain=23:80] {2500/x};
+  \addplot[demand, domain=11.4:80] {1250/x};
+  \addplot[only marks, mark=*, black] coordinates {(50,50) (35.36,70.71) (25,50)};
+  \node[font=\footnotesize, anchor=north west] at (axis cs:50,50) {$A$};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:35.36,70.71) {$B'$};
+  \node[font=\footnotesize, anchor=north east] at (axis cs:25,50) {$C$};
+\end{groupplot}
+\end{tikzpicture}
+
+{\small $u = x_1x_2$, income 100, $p_1$ from 1 to 2, $p_2 = 1$ (red lines).
+Left: the dashed line has the new slope and passes through the old bundle
+$A = (50, 50)$; the consumer would choose $B = (37.5, 75)$ on it, then $C = (25, 50)$
+when the compensation is taken away. Right: the dashed line has the new
+slope and touches the old \omterm{def:b1:preferences-and-utility:indifference-curve}{indifference curve}, at $B' = (35.36, 70.71)$.}
+\end{omfigure}
+
+The two compensations differ by a little: the Slutsky consumer can buy her
+old bundle and, by moving along the new line, do better than before, so
+she gets slightly more than the Hicks consumer, who is held to her old
+utility. For small price changes the two effects agree to first order; the
+calculus below uses the Hicks form, the data often use the Slutsky one,
+since it needs only the old bundle and the prices.
+
+\section{Compensated demand and the expenditure function}\label{sec:b1:income-and-substitution-effects:dual}
+
+The Hicks experiment holds utility fixed and asks what it costs to reach
+it. That is a problem of its own.
+
+\begin{definition}[Expenditure function]\label{def:b1:income-and-substitution-effects:expenditure}
+\index{expenditure function}
+The \emph{expenditure function} is the least cost of reaching utility $u$ at
+prices $p$:
+\[
+e(p, u) = \min_{x \ge 0}\; p_1x_1 + p_2x_2 \quad\text{subject to}\quad u(x_1, x_2) \ge u .
+\]
+\end{definition}
+
+\begin{definition}[Compensated demand]\label{def:b1:income-and-substitution-effects:compensated}
+\index{compensated demand}\index{Hicksian demand}
+The bundle $h(p, u)$ that solves the expenditure problem is the
+\emph{compensated demand}, or \emph{Hicksian demand}: what the consumer buys
+at prices $p$ if her income is always adjusted to keep her at utility $u$.
+\end{definition}
+
+For $u(x) = x_1x_2$, the tangency $x_2/x_1 = p_1/p_2$ with $x_1x_2 = u$ gives
+$h_1 = \sqrt{u\,p_2/p_1}$, $h_2 = \sqrt{u\,p_1/p_2}$ and
+$e(p, u) = p_1h_1 + p_2h_2 = 2\sqrt{u\,p_1p_2}$. With $u = 2500$ and prices
+$(2, 1)$, $e = 2\sqrt{5000} = 141.42$, the Hicks compensation of the first
+section.
+
+The two problems --- the most utility for a given income, the least
+income for a given utility --- are two views of one choice. Under the
+conditions of \cref{ch:b1:consumer-choice} (continuous, monotone
+preferences),
+\begin{equation}\label{eq:b1:income-and-substitution-effects:duality}
+e\bigl(p, v(p, m)\bigr) = m,\qquad v\bigl(p, e(p, u)\bigr) = u,\qquad
+h\bigl(p, v(p, m)\bigr) = x(p, m),\qquad x\bigl(p, e(p, u)\bigr) = h(p, u):
+\end{equation}
+the cheapest way to reach the utility that income $m$ buys costs $m$, and
+the bundle is the same.
+
+\begin{proposition}[Shephard's lemma, for the consumer]\label{prop:b1:income-and-substitution-effects:shephard}
+\index{Shephard's lemma!for the consumer}
+If $e$ is differentiable, $\partial e(p, u)/\partial p_i = h_i(p, u)$.
+\end{proposition}
+
+\begin{proof}
+Apply the envelope theorem (\cref{thm:b1:comparative-statics:envelope},
+part 2) to the minimisation, with the \omterm{def:b1:constrained-optimisation:lagrangian}{Lagrangian}
+$\mathcal L = p_1x_1 + p_2x_2 - \mu\bigl(u(x) - u\bigr)$ and the parameter $p_i$:
+$\partial e/\partial p_i = \partial\mathcal L/\partial p_i = x_i$, evaluated at
+the solution $h(p, u)$. (A minimum is the negative of the maximum of the
+negative, so the theorem applies.)
+\end{proof}
+
+The lemma says that a small rise in $p_i$ raises the cost of keeping the
+consumer as well off as before by the amount she buys, $h_i\,\dd p_i$: to
+first order she does not have time to substitute. On the example,
+$\partial(2\sqrt{u p_1p_2})/\partial p_1 = \sqrt{u p_2/p_1} = h_1$. The producer
+version, for costs, is in \cref{ch:b1:cost-minimisation}.
+
+\begin{proposition}[Compensated demand slopes down]\label{prop:b1:income-and-substitution-effects:negative}
+\index{compensated demand!slope}
+$e(\cdot, u)$ is concave in $p$. Consequently, where $h$ is differentiable,
+$\partial h_i/\partial p_i \le 0$.
+\end{proposition}
+
+\begin{proof}
+Let $p = tp' + (1 - t)p''$ with $0 \le t \le 1$, and let $x^*$ be the cheapest
+bundle reaching $u$ at $p$. Then
+$e(p, u) = p\cdot x^* = t\,p'\cdot x^* + (1 - t)\,p''\cdot x^*$. Since $x^*$
+reaches $u$, it costs at least $e(p', u)$ at $p'$ and at least $e(p'', u)$ at
+$p''$, so $e(p, u) \ge t\,e(p', u) + (1 - t)\,e(p'', u)$: $e$ is concave in $p$.
+A concave function of $p_i$ has a non-positive second derivative, and by
+Shephard's lemma that derivative is $\partial h_i/\partial p_i$.
+\end{proof}
+
+\section{The Slutsky equation}\label{sec:b1:income-and-substitution-effects:slutsky}
+
+\begin{theorem}[Slutsky equation]\label{thm:b1:income-and-substitution-effects:slutsky}
+\index{Slutsky equation}
+At $(p, m)$, with $u = v(p, m)$ and all functions differentiable,
+\[
+\frac{\partial x_i}{\partial p_j}(p, m) = \frac{\partial h_i}{\partial p_j}(p, u) - x_j(p, m)\,\frac{\partial x_i}{\partial m}(p, m).
+\]
+The first term is the \omterm{def:b1:income-and-substitution-effects:effects}{substitution effect}, the second the \omterm{def:b1:income-and-substitution-effects:effects}{income effect}.
+\end{theorem}
+
+\begin{proof}
+By \eqref{eq:b1:income-and-substitution-effects:duality},
+$h_i(p, u) = x_i\bigl(p, e(p, u)\bigr)$ for all $p$. Differentiate with respect
+to $p_j$ by the chain rule:
+$\partial h_i/\partial p_j = \partial x_i/\partial p_j + (\partial x_i/\partial m)(\partial e/\partial p_j)$.
+By Shephard's lemma $\partial e/\partial p_j = h_j(p, u) = x_j(p, m)$. Rearrange.
+\end{proof}
+
+For the own price ($j = i$), the substitution term is negative
+(\cref{prop:b1:income-and-substitution-effects:negative}). If good $i$ is
+normal, the income term $-x_i\,\partial x_i/\partial m$ is negative too, and
+demand slopes down: the law of demand holds for every \omterm{def:b1:consumer-choice:normal-inferior}{normal good}. The
+income term is large only if the good takes a large part of the budget,
+since it is weighted by $x_i$. In elasticities, with budget shares
+$s_j = p_jx_j/m$ and income elasticity $\eta_i$,
+\[
+\varepsilon_{ij} = \varepsilon^{c}_{ij} - s_j\,\eta_i ,
+\]
+where $\varepsilon_{ij}$ is the elasticity of $x_i$ with respect to $p_j$ and
+$\varepsilon^{c}_{ij}$ that of $h_i$ (\cref{exo:b1:income-and-substitution-effects:elasticity}).
+For fuel with a budget share of $6\%$ and an income elasticity of $0.8$,
+compensation changes the own-price elasticity by only
+$0.06 \times 0.8 = 0.048$.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Quantity of good 1}, ylabel={Price $p_1$},
+  xmin=0, xmax=110, ymin=0, ymax=4, width=0.55\linewidth, height=0.42\linewidth, samples=80]
+  \addplot[demand, domain=12.5:100] {50/x};
+  \addplot[shifted, domain=25:100] {2500/x^2};
+  \addplot[only marks, mark=*, black] coordinates {(50,1)};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:50,1) {$(50, 1)$};
+  \node[font=\footnotesize, omDef, anchor=west] at (axis cs:3,1.4) {$x_1 = 50/p_1$};
+  \node[font=\footnotesize, anchor=west] at (axis cs:36,2.5) {$h_1 = 50/\sqrt{p_1}$};
+\end{axis}
+\end{tikzpicture}
+
+{\small Demand for good 1 with $u = x_1x_2$, $p_2 = 1$: uncompensated, income 100
+(solid), and compensated at the utility 2500 that income buys at
+$p_1 = 1$ (dashed). Both pass through $(50, 1)$; the compensated curve is
+steeper, because it leaves out the \omterm{def:b1:income-and-substitution-effects:effects}{income effect} of a \omterm{def:b1:consumer-choice:normal-inferior}{normal good}.}
+\end{omfigure}
+
+\begin{definition}[Net substitutes and net complements]\label{def:b1:income-and-substitution-effects:net}
+\index{net substitutes}\index{net complements}
+Goods $i \neq j$ are \emph{net substitutes} if $\partial h_i/\partial p_j > 0$
+and \emph{net complements} if $\partial h_i/\partial p_j < 0$.
+\end{definition}
+
+The definition uses \omterm{def:b1:income-and-substitution-effects:compensated}{compensated demand} on purpose. The uncompensated cross
+effect $\partial x_i/\partial p_j$ mixes in the \omterm{def:b1:income-and-substitution-effects:effects}{income effect}, and can have
+the opposite sign for $(i, j)$ and $(j, i)$; the compensated one cannot,
+because by Shephard's lemma
+$\partial h_i/\partial p_j = \partial^2e/\partial p_j\partial p_i = \partial h_j/\partial p_i$
+(Young's theorem). With two goods, the two goods are always \omterm{def:b1:income-and-substitution-effects:net}{net
+substitutes}: $h(p, u)$ is homogeneous of degree zero in $p$, so
+$p_1\,\partial h_1/\partial p_1 + p_2\,\partial h_1/\partial p_2 = 0$, and the
+own term is negative.
+
+A seller of a good, such as the farm household of
+\cref{ch:b1:consumer-choice} with its \omterm{def:b1:consumer-choice:endowment}{endowment} $\omega$, sees the income term
+turn round. Her income is $p\cdot\omega$, so a rise in $p_j$ also raises it,
+and the same argument gives
+$\partial x_i/\partial p_j = \partial h_i/\partial p_j + (\omega_j - x_j)\,\partial x_i/\partial m$:
+a net seller of good $j$ gets richer when its price rises.
+
+\section{Giffen goods}\label{sec:b1:income-and-substitution-effects:giffen}
+
+\begin{definition}[Giffen good]\label{def:b1:income-and-substitution-effects:giffen}
+\index{Giffen good}
+A good is a \emph{Giffen good} at $(p, m)$ if $\partial x_i/\partial p_i > 0$:
+the consumer buys more of it when its price rises.
+\end{definition}
+
+By the \omterm{thm:b1:income-and-substitution-effects:slutsky}{Slutsky equation}, $\partial x_i/\partial p_i > 0$ needs
+$-x_i\,\partial x_i/\partial m > -\partial h_i/\partial p_i \ge 0$: the good
+must be inferior, and the \omterm{def:b1:income-and-substitution-effects:effects}{income effect}, weighted by the quantity bought,
+must beat the \omterm{def:b1:income-and-substitution-effects:effects}{substitution effect}. In elasticities,
+$s_i\,|\eta_i| > |\varepsilon^{c}_{ii}|$: the good must take a large share of
+the budget. A very poor household that lives mostly on a cheap staple,
+with a little of a dearer food, fits: when the staple becomes dearer, the
+household can no longer afford the dearer food, and buys more of the
+staple to keep its calories.
+
+\begin{record}[Rice in Hunan]
+Jensen and Miller (2008) gave randomly chosen, extremely poor households in
+two Chinese provinces vouchers that lowered the price of their staple:
+rice in Hunan, wheat in Gansu. They found strong evidence of Giffen
+behaviour for rice in Hunan, and weaker evidence for wheat in Gansu; how
+households responded depended, non-linearly, on how poor they
+were. % ledger: b1:jensen2008
+The prediction of the \omterm{thm:b1:income-and-substitution-effects:slutsky}{Slutsky equation} is that Giffen behaviour is
+possible only where the staple is a large share of spending and is
+inferior. The design --- a price change assigned at random --- answers the
+\omterm{def:b1:models-and-data:identification}{identification problem} of \cref{ch:b1:models-and-data}: the subsidy moves the
+price and nothing else.
+\end{record}
+
+\section{Adding up}\label{sec:b1:income-and-substitution-effects:adding-up}
+
+The budget constraint, which holds at every price and income, restricts
+how demand can respond.
+
+\begin{proposition}[Engel and Cournot aggregation]\label{prop:b1:income-and-substitution-effects:aggregation}
+\index{Engel aggregation}\index{Cournot aggregation}
+With budget shares $s_i = p_ix_i/m$, income elasticities $\eta_i$ and price
+elasticities $\varepsilon_{ij}$,
+\[
+\sum_i s_i\,\eta_i = 1\quad\text{(Engel aggregation)},\qquad
+\sum_i s_i\,\varepsilon_{ij} = -s_j\quad\text{(Cournot aggregation)}.
+\]
+\end{proposition}
+
+\begin{proof}
+Differentiate $\sum_i p_ix_i(p, m) = m$ with respect to $m$:
+$\sum_i p_i\,\partial x_i/\partial m = 1$; write
+$p_i\,\partial x_i/\partial m = s_i\eta_i$. Differentiate it with respect to $p_j$:
+$x_j + \sum_i p_i\,\partial x_i/\partial p_j = 0$; multiply by $p_j/m$ and write
+$p_ip_j(\partial x_i/\partial p_j)/m = s_i\varepsilon_{ij}$.
+\end{proof}
+
+\omterm{prop:b1:income-and-substitution-effects:aggregation}{Engel aggregation} says that income elasticities average to one, weighted
+by budget shares: if food is a necessity, something else must be a luxury.
+A complete demand system --- one equation per good, estimated on household
+data --- can be tested against these restrictions, against homogeneity and
+against symmetry of the compensated cross effects. Adding up holds by
+construction when the data satisfy the budget. Symmetry, a consequence of
+utility maximisation alone, is often rejected in estimated systems, which
+is evidence either against the model or against fitting one consumer to
+many.
+
+\begin{model}{The Slutsky decomposition}
+\assumes The consumer of \cref{ch:b1:consumer-choice}, with smooth
+preferences, so that demand and the \omterm{def:b1:income-and-substitution-effects:expenditure}{expenditure function} are
+differentiable.
+\predicts A non-positive own compensated slope; symmetric compensated cross
+effects; for a \omterm{def:b1:consumer-choice:normal-inferior}{normal good}, an uncompensated demand that slopes down more
+than the compensated one; a price rise handed back as income still lowers
+the quantity bought, by the \omterm{def:b1:income-and-substitution-effects:effects}{substitution effect}.
+\tested Consistent with it, though not a test of its listed predictions:
+after Sweden's carbon tax and the VAT on transport fuel, emissions from
+transport fell by almost $11\%$ against a comparison built from other
+countries, the largest share due to the carbon tax, which came with lower
+income taxes. % ledger: b1:andersson2019
+Giffen behaviour, which the model allows only for an inferior staple, has
+been found where it predicts: for a staple among very poor households
+(Jensen and Miller 2008). % ledger: b1:jensen2008
+Tests of symmetry and of the negative compensated slope need estimated
+demand systems, which the second university year takes up.
+\breaks When a price change is noticed differently according to its
+source: in the same Swedish study, the carbon tax drew three times the
+response that an equal change in the pump price would
+have. % ledger: b1:andersson2019
+When goods are lumpy (a household owns one car or none, and cannot
+substitute at the margin).
+\end{model}
+
+\begin{record}[A carbon tax handed back]
+Sweden introduced its carbon tax in 1991 at 250 kronor a tonne of carbon
+dioxide, about 30 dollars; a year earlier, in March 1990, it had applied
+VAT of $25\%$ to petrol and diesel. % ledger: b1:sweden-co2-tax
+Both were part of a tax reform that lowered the top marginal rate of
+income tax from $80\%$ to $50\%$. % ledger: b1:sweden-1991-reform
+Andersson (2019) built a synthetic Sweden: a weighted average of comparable
+countries that tracked Swedish transport emissions before 1990. After the
+reform, the real Sweden's emissions from transport were almost $11\%$ below
+the synthetic one, and the response to the carbon tax was three times
+what the ordinary price elasticity of petrol demand would
+predict. % ledger: b1:andersson2019
+The model's prediction concerns the \omterm{def:b1:income-and-substitution-effects:effects}{substitution effect}, which the
+compensation leaves in place; the size of the response is a separate
+question, and the study suggests that a tax may be noticed more than an
+equal change in the pump price.
+\end{record}
+
+\section*{Exercises}\label{sec:b1:income-and-substitution-effects:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:income-and-substitution-effects:slutsky-cd}
+For $u = x_1x_2$, income 100 and prices $(1, 1)$, the price of good 1 rises to
+2. Compute the Slutsky compensation, the compensated choice of good 1, and
+the substitution and \omterm{def:b1:income-and-substitution-effects:effects}{income effects}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:income-and-substitution-effects:inferior}
+For an \omterm{def:b1:consumer-choice:normal-inferior}{inferior good}, what are the signs of the \omterm{def:b1:income-and-substitution-effects:effects}{substitution effect} and of
+the \omterm{def:b1:income-and-substitution-effects:effects}{income effect} of a price rise? Can the total effect be zero?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:income-and-substitution-effects:read}
+From the opening chart's table: Sweden emitted 2.149 tonnes per person from
+road transport in 1990 and 1.554 in 2019; the mean of the ten other
+countries was 1.926 and 1.928. % figdata: road_co2_points
+Compute both percentage changes. Does the difference measure the effect of
+the carbon tax?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:income-and-substitution-effects:expenditure-cd}
+Derive the \omterm{def:b1:income-and-substitution-effects:compensated}{compensated demands} and the \omterm{def:b1:income-and-substitution-effects:expenditure}{expenditure function} of $u = x_1x_2$,
+and check that $e\bigl(p, v(p, m)\bigr) = m$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:income-and-substitution-effects:hicks}
+On the numbers of the first exercise, compute the Hicks compensation, the
+compensated choice of good 1 and the two effects. Why is the Hicks
+\omterm{def:b1:income-and-substitution-effects:effects}{substitution effect} larger in size than the Slutsky one here?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:income-and-substitution-effects:shephard}
+For $e(p, u) = 2\sqrt{u\,p_1p_2}$, verify Shephard's lemma for good 2 and the
+symmetry $\partial h_1/\partial p_2 = \partial h_2/\partial p_1$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:income-and-substitution-effects:fuel}
+Fuel takes $6\%$ of a household's budget; its uncompensated own-price
+elasticity is $-0.35$ and its income elasticity $0.8$ (invented values). The
+fuel price rises by $20\%$ and the household receives a cheque that
+compensates it. Predict, to first order, the fall in its fuel use.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:income-and-substitution-effects:cournot}
+For Cobb--Douglas demand with share $a$ on good 1, compute $\varepsilon_{11}$,
+$\varepsilon_{21}$, $\eta_1$ and $\eta_2$, and check Engel and \omterm{prop:b1:income-and-substitution-effects:aggregation}{Cournot
+aggregation}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:income-and-substitution-effects:chart}
+Give three reasons why the opening chart alone cannot measure the effect
+of Sweden's carbon tax on road emissions, and describe what a comparison
+would need to do to measure it.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:income-and-substitution-effects:elasticity}
+Derive the \omterm{thm:b1:income-and-substitution-effects:slutsky}{Slutsky equation} in elasticity form,
+$\varepsilon_{ij} = \varepsilon^{c}_{ij} - s_j\eta_i$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:income-and-substitution-effects:giffen-share}
+Show that a \omterm{def:b1:income-and-substitution-effects:giffen}{Giffen good} must be inferior and must satisfy
+$s_i|\eta_i| > |\varepsilon^c_{ii}|$. Use \omterm{prop:b1:income-and-substitution-effects:aggregation}{Engel aggregation} to show that the
+other goods' income elasticities, weighted by their shares, then sum to more
+than one. Why is a \omterm{def:b1:income-and-substitution-effects:giffen}{Giffen good} hard to find among goods with a small budget
+share?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:income-and-substitution-effects:hunan}
+In the Hunan study, households received vouchers that lowered the price of
+rice. What result for rice consumption would have refuted Giffen
+behaviour? Why was it essential that the vouchers were given at random?
+\end{exercise}
+
+\section{Problem: A Fuel Levy with a Cheque in the Post}\label{sec:b1:income-and-substitution-effects:problem}
+
+\begin{problem}[{Weekend problem --- the fall in fuel use that survives the cheque}]\label{pb:b1:income-and-substitution-effects:levy}
+Brenland (invented) has three kinds of household, in equal numbers, each
+with preferences $u = f^{a}o^{1-a}$ over fuel $f$ (litres a year) and other
+spending $o$ (dalens, price 1). Household A has income 20,000 dalens and
+$a = 0.10$; B has 30,000 and $a = 0.08$; C has 50,000 and $a = 0.06$. Fuel costs
+2 dalens a litre. The government adds a levy of 0.5 dalens a litre.
+Quantities are given to one decimal.
+
+\medskip\noindent\textbf{Part I --- One household, two decompositions.}
+\begin{enumerate}
+  \item Compute A's fuel use and other spending before the levy.
+  \item Compute A's fuel use after the levy, with no compensation.
+  \item Compute A's Slutsky compensated income and fuel use.
+  \item Give the Slutsky substitution and \omterm{def:b1:income-and-substitution-effects:effects}{income effects}, and check that they add up.
+  \item A's Hicks compensated income is $20000 \times 1.25^{0.1}$. Explain why, then compute it with A's fuel use and the two Hicks effects.
+  \item Why are the Slutsky and Hicks effects so close here?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- Exact compensation.}
+\begin{enumerate}[resume]
+  \item Show that $e(p, u) = u\,p_f^{a}/\bigl(a^a(1 - a)^{1-a}\bigr)$ for these preferences, with $p_o = 1$, and that $e\bigl(p, v(p, m)\bigr) = m$.
+  \item Deduce that the exact (Hicks) compensation for a levy that raises $p_f$ by the factor $1.25$ is $m(1.25^{a} - 1)$, and compute it for A, B and C.
+  \item The first-order compensation is the levy times the fuel bought before it. Compute it for A, B and C and explain why it exceeds the exact one.
+  \item Verify Shephard's lemma on A: $\partial e/\partial p_f = a\,e/p_f$ equals A's compensated fuel use.
+  \item Compute the levy revenue from one household of each kind if no cheque is paid, and compare it with the sum of their exact compensations.
+  \item Interpret the difference.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- The cheque.} The revenue is returned as
+the same cheque $c$ to every household.
+\begin{enumerate}[resume]
+  \item Without the cheque, compute total fuel use of one household of each kind before and after the levy, and the fall in per cent.
+  \item With the cheque, write each household's fuel demand and the condition that the cheques add up to the revenue: $3c = 0.5F$, where $F$ is total fuel use.
+  \item Solve for $F$ and $c$.
+  \item Compute the fall in fuel use with the cheque.
+  \item If instead each household were given its exact compensation, what would total fuel use be? Compare.
+  \item Explain, with the \omterm{thm:b1:income-and-substitution-effects:slutsky}{Slutsky equation}, why the cheque changes the fall so little.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- Who gains.}
+\begin{enumerate}[resume]
+  \item Compare the cheque with each household's exact compensation. Who is better off than before the levy, and by how many dalens?
+  \item Which household uses the least fuel, and which has the highest fuel share? Which of the two characteristics decides who gains?
+  \item Sum the gains and losses. What does the total measure?
+  \item Brenland's fuel users are told: ``the cheque gives you your money back.'' For which households is that true?
+  \item Would a cheque proportional to income have changed the fall in fuel use? Use the \omterm{def:b1:consumer-choice:demand-function}{demand functions}.
+  \item State the result: by how much fuel use falls with the cheque.
+\end{enumerate}
+\end{problem}

@@ -1,0 +1,8 @@
+$ python leontief_leamer.py
+capital per worker in exports: 3.25
+capital per worker in imports: 4.0
+net exports of factor services: capital 140.0  labour 50.0
+capital per worker in production:  2.16
+capital per worker in consumption: 2.0
+capital per worker in the world:   2.0
+consumption share s: [0.2 0.2]

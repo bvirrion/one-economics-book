@@ -1,0 +1,17 @@
+$ python seasonal_by_hand.py
+seasonal factors by month:
+month
+1     0.9956
+2     0.9979
+3     1.0000
+4     1.0011
+5     1.0025
+6     1.0043
+7     1.0034
+8     1.0021
+9     1.0015
+10    1.0006
+11    0.9972
+12    0.9937
+months: 120
+correlation of monthly changes: 0.975

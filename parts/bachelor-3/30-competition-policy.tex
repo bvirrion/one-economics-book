@@ -1,0 +1,348 @@
+\chapter{Competition Policy and Regulation}\label{ch:b3:competition-policy}
+
+Competition authorities decide which mergers may go ahead and which contracts
+between firms are allowed; regulators set the prices of firms that face no
+competition at all. Both need tools that turn the models of the last chapters into
+decisions: a way to define a market and measure its concentration, a test for
+when a contract between a supplier and its retailers harms buyers, a rule for the
+price of a natural monopoly. This chapter builds those tools, shows how firms respond
+to the rules, and ends with the errors any enforcer makes.
+
+\begin{openingchart}{U.S. domestic airlines: annual rates of change of the average
+real yield (revenue per passenger-mile) and of traffic (revenue passenger-miles), in
+three periods as the source splits them: 1966--76, before the 1978 deregulation;
+1976--86, the decade around it; and the two decades that followed.}{Borenstein and Rose (2007), NBER Working Paper 13452, section on
+price levels}
+\begin{tikzpicture}
+\begin{axis}[omrecord, ybar, bar width=9pt, width=0.6\linewidth,
+  height=0.4\linewidth, xmin=-0.6, xmax=2.6, ymin=-5, ymax=10,
+  xtick={0,1,2}, xticklabels from table={figdata/bachelor-3/30-competition-policy/out/yields.csv}{period},
+  x tick label style={font=\scriptsize}, ylabel={Percent a year},
+  legend pos=north east, legend style={font=\footnotesize}]
+  \addplot[fill=omThm, draw=omThm, area legend] table[x=pos, y=yield] {figdata/bachelor-3/30-competition-policy/out/yields.csv};
+  \addplot[fill=omDef!60, draw=omDef, area legend] table[x=pos, y=traffic] {figdata/bachelor-3/30-competition-policy/out/yields.csv};
+  \legend{Real yield, Traffic}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% ledger: b3cp:br.yield
+In 1976--86, the decade around deregulation, real fares per mile fell 3.4~\% a year and traffic grew
+8.2~\% a year. Such figures are often quoted as the success of deregulation. But in the
+regulated decade before, real yields already fell 2.2~\% a year and traffic grew faster,
+9.1~\% a year. The chart's lesson is the chapter's: judging a policy needs a
+counterfactual, not a before and after.
+
+\begin{recall}
+Natural monopoly and the average-cost and price-cap rules, the Lerner index and
+Cournot competition are the Year 1 volume's. Capture by regulated firms is
+\cref{ch:b3:interest-groups-and-regulation}'s; mergers and their simulation are
+\cref{ch:b3:oligopoly-and-collusion}'s.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:competition-policy:symbols}
+$s_i$ is firm $i$'s market share, as a fraction; $\varepsilon$ the market elasticity of demand; $X$ a
+price rise or a price-cap offset, as a fraction; $m$ a margin $(P - c)/P$; $s$ the allowed rate of return
+on capital and $r$ its cost.
+\end{notation}
+
+\section{Markets and concentration}\label{sec:b3:competition-policy:markets}
+
+\begin{definition}[Relevant market; hypothetical monopolist test]\label{def:b3:competition-policy:market}
+\index{relevant market}\index{hypothetical monopolist test}
+A \emph{relevant market} is the smallest group of products and places over which a
+hypothetical monopolist would find it profitable to impose a small but significant
+and non-transitory increase in price (SSNIP), typically 5~\%. The \emph{hypothetical
+monopolist test} widens a candidate group until that rise pays.
+\end{definition}
+
+\begin{proposition}[Critical loss]\label{prop:b3:competition-policy:critical-loss}
+A monopolist with margin $m$ that raises its price by the fraction $X$ breaks even if it loses the
+share $X/(X + m)$ of its sales. The rise pays if the actual loss is smaller.
+\end{proposition}
+
+\begin{proof}
+Profit per unit rises from $mP$ to $(m + X)P$. With a loss $\ell$ of sales, profit is unchanged when
+$(1 - \ell)(m + X) = m$, that is $\ell = X/(X + m)$.
+\end{proof}
+
+\begin{omchart}{Critical loss of a hypothetical monopolist's price rise against its
+margin, for rises of 5~\% and 10~\%.}{The formula of the proposition}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.58\linewidth, height=0.36\linewidth, xmin=5, xmax=80,
+  ymin=0, ymax=70, xlabel={Margin (\% of price)}, ylabel={Critical loss (\%)},
+  legend pos=north east, legend style={font=\footnotesize}]
+  \addplot[omDef, thick] table[x=m, y=x5] {figdata/bachelor-3/30-competition-policy/out/critical_loss.csv};
+  \addplot[omThm, thick] table[x=m, y=x10] {figdata/bachelor-3/30-competition-policy/out/critical_loss.csv};
+  \legend{5~\% rise, 10~\% rise}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: critical_loss
+
+High margins make the critical loss small: a firm with a large margin loses much
+from each lost sale. High margins also suggest that demand facing each firm is
+inelastic, so the actual loss may be small too; the test needs both numbers.
+
+\begin{measure}[The SSNIP test]
+Start from the merging firms' products and region. Estimate how much of their sales a
+5~\% rise would lose --- from switching surveys, diversion ratios, past responses to
+price changes. Compare with the critical loss. If the loss is larger, add the closest
+substitute and repeat. The group at which the rise first pays is the market.
+\end{measure}
+
+\begin{definition}[Herfindahl--Hirschman index]\label{def:b3:competition-policy:hhi}
+\index{Herfindahl--Hirschman index}
+The \emph{Herfindahl--Hirschman index} (HHI) is the sum of the squared market shares of
+the firms in a market, with shares in percent, so that it runs from near 0 to 10{,}000.
+\end{definition}
+
+\begin{proposition}[Concentration and markups]\label{prop:b3:competition-policy:hhi-lerner}
+In a Cournot equilibrium with constant marginal costs, the share-weighted average
+Lerner index equals $\sum_i s_i^2/\varepsilon$: the HHI, with shares as fractions, divided by the elasticity of demand.
+\end{proposition}
+
+\begin{proof}
+Firm $i$ chooses $q_i$ to maximise $P(Q)q_i - c_i q_i$: $P + P'(Q)q_i = c_i$, so $(P - c_i)/P = -P'(Q)q_i/P = s_i/\varepsilon$. Weighting by $s_i$ and summing,
+$\sum_i s_i(P - c_i)/P = \sum_i s_i^2/\varepsilon$.
+\end{proof}
+
+\begin{dated}{2026}
+The U.S. merger guidelines of 18 December 2023 treat a market with an HHI above 1{,}800 as
+highly concentrated and an increase of more than 100 as significant. A merger that
+produces a highly concentrated market with an increase above 100 is presumed to
+lessen competition substantially, and so is one that creates a firm with a share
+above 30~\% with an increase above 100. Five equal firms give an HHI of 2{,}000. % ledger: b3cp:doj2023
+\end{dated}
+
+\section{Vertical restraints}\label{sec:b3:competition-policy:vertical}
+
+\begin{definition}[Vertical restraint; resale price maintenance; exclusive dealing; foreclosure]\label{def:b3:competition-policy:vertical}
+\index{vertical restraint}\index{resale price maintenance}\index{exclusive dealing}\index{foreclosure}
+A \emph{vertical restraint} is a contract term a supplier imposes on its buyers or
+retailers. Under \emph{resale price maintenance} the supplier sets the retail price, or
+a minimum for it; under \emph{exclusive dealing} a retailer may not sell rivals'
+products. \emph{Foreclosure} is the denial of access to inputs or customers that rivals
+need.
+\end{definition}
+
+\begin{definition}[Double marginalisation]\label{def:b3:competition-policy:double-marginalisation}
+\index{double marginalisation}
+\emph{Double marginalisation} is the setting of a markup by each of two firms with
+market power in a chain of production, so that the final price carries two markups.
+\end{definition}
+
+\begin{proposition}[Vertical integration and the retail price]\label{prop:b3:competition-policy:double-marginalisation}
+With retail demand $Q = a - P$, a supplier with cost $c$ that sells at wholesale price $w$ to a monopoly
+retailer leads to the retail price $(3a + c)/4$; an integrated firm charges $(a + c)/2$, which is lower, and
+earns more.
+\end{proposition}
+
+\begin{proof}
+The retailer maximises $(P - w)(a - P)$: $P = (a + w)/2$ and $Q = (a - w)/2$. The supplier maximises $(w - c)(a - w)/2$: $w = (a + c)/2$, so
+$P = (3a + c)/4$. The integrated firm maximises $(P - c)(a - P)$: $P = (a + c)/2 < (3a + c)/4$, since $a > c$. Its profit, $(a - c)^2/4$, exceeds the two
+firms' total, $(a - c)^2/8 + (a - c)^2/16 = 3(a - c)^2/16$.
+\end{proof}
+
+\omterm{def:b3:competition-policy:vertical}{Vertical restraints} can therefore help buyers: a maximum resale price, or
+integration, removes the second markup. Minimum resale prices can protect
+retailers' service from free riding, or can support a retailers' \omterm{def:b3:oligopoly-and-collusion:cartel}{cartel}; \omterm{def:b3:competition-policy:vertical}{exclusive
+dealing} can protect a supplier's investment in its retailers, or can foreclose
+rivals. Which story holds is an empirical question for each case: the
+anticompetitive version predicts higher prices and lower quantities, the efficiency
+version higher prices with higher quantities.
+
+\section{Regulating a natural monopoly}\label{sec:b3:competition-policy:regulation}
+
+\begin{definition}[Rate-of-return regulation; Averch--Johnson effect; yardstick competition]\label{def:b3:competition-policy:regulation}
+\index{rate-of-return regulation}\index{Averch--Johnson effect}\index{yardstick competition}
+Under \emph{rate-of-return regulation} a firm's prices are set so that its revenue
+covers its costs plus an allowed return on its capital. The \emph{Averch--Johnson
+effect} is the use of more capital per unit of output than cost minimisation
+requires, which such a rule induces when the allowed return exceeds the cost of
+capital. Under \emph{yardstick competition} each regulated firm's allowed price
+depends on the costs of comparable firms, not on its own.
+\end{definition}
+
+\begin{proposition}[Averch--Johnson]\label{prop:b3:competition-policy:aj}
+A firm maximising profit $R(K, L) - wL - rK$ under the binding constraint $R(K, L) - wL \le sK$ with $s > r$ uses capital and
+labour as a cost-minimising firm would if capital cost $r - \lambda(s - r)/(1 - \lambda) < r$, where $0 < \lambda < 1$ is the
+constraint's multiplier: it uses more capital per unit of labour than cost
+minimisation requires.
+\end{proposition}
+
+\begin{proof}
+The Lagrangian is $R - wL - rK - \lambda(R - wL - sK)$. Its derivatives give $(1 - \lambda)R_L = (1 - \lambda)w$ and $(1 - \lambda)R_K = r - \lambda s$, so
+$R_L = w$ and $R_K = r - \lambda(s - r)/(1 - \lambda)$. The firm equates the ratio of marginal products to $w$ over a capital
+price below $r$, which with convex isoquants means a higher ratio of capital to
+labour.
+\end{proof}
+
+\begin{model}{Rate-of-return regulation}
+\assumes The regulator enforces the allowed return continuously; the allowed
+return exceeds the cost of capital.
+\predicts Over-capitalisation: costs above the minimum for the output produced.
+\tested Several studies of U.S. electric utilities in the 1970s found
+over-capitalisation; another view holds that regulators enforced the allowed
+return only when nominal prices rose; seven Ohio electric utilities from 1965 to 1982
+produced less efficiently in the years when the constraint bound more, and
+regulation slowed their adoption of new technology. % ledger: b3cp:ik
+\breaks When prices are reset only at intervals (regulatory lag), the firm keeps
+savings between reviews and the rule works like a price cap.
+\end{model}
+
+Under a price cap the price may rise each year by inflation less an offset $X$,
+whatever the firm's own costs. A firm that cuts costs keeps the saving until the
+next review; under rate of return, the next price falls with its costs and the
+saving goes to consumers at once, so there is little reason to make it. The weekend
+problem works through both.
+
+\section{The record of deregulation}\label{sec:b3:competition-policy:deregulation}
+
+\begin{record}[Airline deregulation, 1978]
+One counterfactual for deregulated fares is the cost-based fare formula the
+regulator used just before deregulation, still updated for input costs and
+productivity. In 2005 actual fares were about 30~\% below the formula's, a consumer gain of
+about 28 billion dollars that year with a demand elasticity of $-1.5$; but about 26~\% of economy
+passengers paid more than the formula fare for their route, and planes flew 77~\% full
+against the formula's 55~\%, which changes what the formula should be. % ledger: b3cp:br.sifl
+An airline's share of passengers on a route and at its end airports significantly
+raises its markup, and smaller rivals on the same routes gain little from it. % ledger: b3cp:bor89
+\end{record}
+
+\section{Errors of both kinds}\label{sec:b3:competition-policy:errors}
+
+\begin{definition}[Type I and type II errors of enforcement]\label{def:b3:competition-policy:errors}
+\index{type I error of enforcement}\index{type II error of enforcement}
+A \emph{type I error of enforcement} condemns conduct that does not harm buyers; a
+\emph{type II error of enforcement} clears conduct that does.
+\end{definition}
+
+An authority that sees evidence $e$ and believes the conduct harmful with probability
+$\pi(e)$ should condemn it when the expected cost of clearing exceeds that of condemning:
+$\pi(e)C_{II} > (1 - \pi(e))C_I$, that is $\pi(e) > C_I/(C_I + C_{II})$. A rule that condemns some conduct outright (a
+per se rule) is the limit in which the evidence is assumed to point one way; a
+case-by-case review lowers both errors at the cost of the review. Neither error is
+observed directly, which is why retrospectives such as those of
+\cref{ch:b3:oligopoly-and-collusion} matter.
+
+\section{Exercises}\label{sec:b3:competition-policy:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:competition-policy:1}
+From the opening chart, how much faster did real yields fall in the decade after
+deregulation than in the decade before? What happened to traffic growth?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:competition-policy:2}
+Five firms have shares of 30, 25, 20, 15 and 10~\%. Compute the HHI, and the HHI after the two
+smallest merge. Does the 2023 presumption apply?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:competition-policy:3}
+With $Q = 100 - P$ and supplier cost 20, find the wholesale price, the retail price and output with a
+separate retailer, and with an integrated firm.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:competition-policy:4}
+What price and quantity data would show that minimum resale prices serve a
+retailers' \omterm{def:b3:oligopoly-and-collusion:cartel}{cartel} rather than retail service?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:competition-policy:5}
+Find the critical loss of a 5~\% rise for a margin of 40~\%.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:competition-policy:6}
+A Cournot market has the HHI of exercise 2 before the merger and demand elasticity 2.
+What is the average Lerner index?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:competition-policy:7}
+A regulated firm has $Q = \sqrt{KL}$, $w = r = 10$, allowed return $s = 12$ and multiplier $\lambda = 0.5$. What capital price does it act on, and
+what ratio of capital to labour does it choose, against the cost-minimising one?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:competition-policy:8}
+For four invented mergers, compute the HHI before and after, the change, the merged
+share, and whether the 2023 presumption applies.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:competition-policy:9}
+What evidence would refute the claim that deregulation lowered fares on a
+particular route?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:competition-policy:10}
+Prove that the average Lerner index of a Cournot market is the HHI over the
+elasticity, and explain why a merger that raises the HHI can still lower the price if
+it lowers the merged firm's cost.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:competition-policy:11}
+A price cap starts at 100 and rises each year by inflation, 2~\%, less $X = 3~\%$. Unit cost starts at 90 and
+falls 4~\% a year; output is 1{,}000 a year. Compute price and profit for five years, and compare
+with a price reset each year to cost plus 10.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:competition-policy:12}
+Wrongly condemning a contract costs 1 and wrongly clearing it costs 3. Above what
+probability of harm should the authority condemn? If 20~\% of such contracts are
+harmful and the evidence doubles the odds of harm, what should it do?
+\end{exercise}
+
+\section{Problem: Brenland's Water Company}\label{sec:b3:competition-policy:problem}
+
+\begin{problem}[{Weekend problem --- Brenland's water company}]\label{pb:b3:competition-policy:water}
+One firm supplies Brenland's capital with water. Daily demand is $Q = 100 - P$, in thousand
+cubic metres, with $P$ in dalens per cubic metre. Output is $Q = \sqrt{KL}$; capital and labour each cost 10
+a unit, so marginal cost is 20; the network's fixed cost is 600 (thousand dalens a day). % figdata: water_stats
+
+\medskip\noindent\textbf{Part I --- no regulation.}
+\begin{enumerate}
+\item Show that marginal cost is 20, by minimising the cost of producing $Q$.
+\item Why is this a natural monopoly?
+\item Find the monopoly price, output and profit.
+\item Find consumer surplus.
+\item Find the deadweight loss against marginal-cost pricing.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- marginal and average cost.}
+\begin{enumerate}[resume]
+\item With price at marginal cost, find output, consumer surplus and the firm's loss.
+\item Find the average-cost price and output.
+\item Find consumer surplus and the deadweight loss at the average-cost price.
+\item Who pays the fixed cost under each rule?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- rate of return.} The regulator requires 60 a day at the price
+consumers pay for it, and allows revenue to cover labour and fixed costs plus 12 per unit
+of capital.
+\begin{enumerate}[resume]
+\item Find the price, and the cost-minimising inputs and cost for 60.
+\item What profit would the cost-minimising plan earn, and what does the regulator
+allow it?
+\item Show that the firm's allowed profit is $2K$.
+\item Find the capital, labour and ratio of capital to labour the firm chooses.
+\item Find its cost, and the excess over the minimum.
+\item Why would the regulator have trouble seeing the excess?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- a price cap.} Instead, the price is capped at the
+average-cost price less $X$; the firm can cut its marginal cost from 20 to 16 by an effort that
+costs 150 a day.
+\begin{enumerate}[resume]
+\item With $X = 0$, find the firm's profit if it makes the effort. Does it?
+\item Under cost-based pricing, the price would fall to average cost with the new
+marginal cost. Find it, and the firm's profit after the effort. Does it make it?
+\item Find the $X$ at which consumers and the firm gain equally from the effort.
+\item Find the price, consumer surplus and profit at that $X$.
+\item Why must $X$ be set before the effort, and kept?
+\item What happens at the next review if the regulator resets the price to the new
+average cost?
+\item How would \omterm{def:b3:competition-policy:regulation}{yardstick competition} help here?
+\item Compare consumer surplus across monopoly, average cost and the cap.
+\item Which regime gives the highest consumer surplus, and why is it not chosen?
+\item State the result: consumer surplus and the firm's profit under each regime, and
+the $X$ that shares the cost saving equally.
+\end{enumerate}
+\end{problem}

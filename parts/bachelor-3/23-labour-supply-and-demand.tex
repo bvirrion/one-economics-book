@@ -1,0 +1,375 @@
+\chapter{Labour Supply and Demand in the Data}\label{ch:b3:labour-supply-and-demand}
+
+Labour is most of what most people sell, and its price is most of what most firms
+pay. The Year 1 volume built the supply of hours from the choice between
+consumption and leisure, and the demand for labour as a demand derived from the
+demand for output. This chapter takes both to the data: who works and how much,
+how the answer has changed over a century, how strongly firms respond to the cost
+of labour, and how technology changes which tasks people do.
+
+\begin{openingchart}{Women's labour-force participation rate, 1990--2025, six economies
+(percent of women aged 15 and over; modelled estimates of the International Labour
+Organization).}{World Bank, World Development Indicators (SL.TLF.CACT.FE.ZS)}
+\begin{tikzpicture}
+\begin{axis}[omtimesten, width=0.72\linewidth, height=0.42\linewidth, xmin=1989,
+  xmax=2026, ymin=30, ymax=70, ylabel={Percent}, legend columns=3,
+  legend style={font=\footnotesize, at={(0.5,1.03)}, anchor=south}]
+  \addplot[omDef, thick, mark=none] table[x=year, y=USA] {figdata/bachelor-3/23-labour-supply-and-demand/out/women.csv};
+  \addplot[omThm, thick, mark=none] table[x=year, y=SWE] {figdata/bachelor-3/23-labour-supply-and-demand/out/women.csv};
+  \addplot[black, thick, mark=none] table[x=year, y=DEU] {figdata/bachelor-3/23-labour-supply-and-demand/out/women.csv};
+  \addplot[omDef, thick, dashed, mark=none] table[x=year, y=JPN] {figdata/bachelor-3/23-labour-supply-and-demand/out/women.csv};
+  \addplot[omThm, thick, dashed, mark=none] table[x=year, y=KOR] {figdata/bachelor-3/23-labour-supply-and-demand/out/women.csv};
+  \addplot[black, thick, dotted, mark=none] table[x=year, y=ITA] {figdata/bachelor-3/23-labour-supply-and-demand/out/women.csv};
+  \legend{United States, Sweden, Germany, Japan, Korea, Italy}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: women_points
+Between 1990 and 2025 the participation of women rose from 45.2 to 55.3~\% in Germany, from
+50.1 to 55.9~\% in Japan, from 47.2 to 56.8~\% in Korea and from 35.0 to 40.8~\% in Italy, while it
+stayed near 56~\% in the United States and fell slightly in Sweden, from 62.8 to 61.5~\%. The
+rate counts all women aged 15 and over, so an ageing population pulls it down even
+when women of working age work more; the flat American line hides both movements.
+The models of this chapter separate the decision to work from the decision of how
+much to work, and ask what moves each.
+
+\begin{recall}
+The Year 1 volume derived the supply of hours from the choice between consumption
+and leisure, with the income and substitution effects of a wage change and the
+labour-supply elasticity; it derived labour demand from production, with factor
+shares and the elasticity of substitution. Difference in differences is chapter 3's;
+the incidence of a tax wedge is the Year 1 volume's.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:labour-supply-and-demand:symbols}
+$h$ is hours; $F$ a fixed cost of working; $s$ labour's share of cost; $\sigma$ the elasticity
+of substitution between labour and other inputs; $\eta$ the price elasticity of
+product demand (positive); $\varepsilon$ a supply elasticity.
+\end{notation}
+
+\section{Two margins of labour supply}\label{sec:b3:labour-supply-and-demand:margins}
+
+\begin{definition}[Intensive and extensive margins; Frisch elasticity]\label{def:b3:labour-supply-and-demand:frisch}
+\index{intensive margin}\index{extensive margin}\index{Frisch elasticity}
+The \emph{intensive margin} of labour supply is the number of hours a worker
+supplies; the \emph{extensive margin} is the decision to work at all. The
+\emph{Frisch elasticity} is the elasticity of hours with respect to the wage holding
+the marginal utility of wealth constant: the response to a wage change expected to
+be temporary. The Hicksian (compensated) and Marshallian (uncompensated)
+elasticities are the Year 1 volume's.
+\end{definition}
+
+\begin{proposition}[A fixed cost makes participation jump]\label{prop:b3:labour-supply-and-demand:fixed-cost}
+Let utility be $c - h^2/(2a)$, with $a > 0$, and let a worker earn $wh$ but pay a fixed cost $F > 0$
+if $h > 0$. She works $h = aw$ if $w \ge w_R = \sqrt{2F/a}$ and not at all if $w < w_R$; at $w_R$ hours jump from zero to
+$\sqrt{2aF}$.
+\end{proposition}
+
+\begin{proof}
+If she works, she maximises $wh - F - h^2/(2a)$, so $h = aw$ and her net gain is $aw^2/2 - F$. If she does not
+work, her gain is zero. She works when $aw^2/2 \ge F$, that is $w \ge \sqrt{2F/a}$. Hours at that wage are $a\sqrt{2F/a}
+= \sqrt{2aF} > 0$, and below it zero: no worker chooses a few hours, because the fixed cost
+has to be repaid by enough of them.
+\end{proof}
+
+Childcare, commuting and the loss of a means-tested benefit are such fixed costs;
+\cref{ch:b3:transfers-and-incentives} measured the last. A tax change that raises
+take-home pay therefore acts on two margins: those already working may work
+longer, and those near the threshold start.
+
+\begin{measure}[Elasticities: what a synthesis finds]
+Small frictions --- the cost of noticing a tax change and adjusting hours --- matter
+far more on the \omterm{def:b3:labour-supply-and-demand:frisch}{intensive margin} than on the extensive one: the utility cost of
+ignoring the tax changes used to estimate hours responses is typically less than
+1~\% of earnings. Pooling studies and allowing for such frictions gives Hicksian
+elasticities of 0.33 on the \omterm{def:b3:labour-supply-and-demand:frisch}{intensive margin} and 0.25 on the extensive one. % ledger: b3ls:chetty
+The frictions can explain why estimates from small, local tax changes are smaller
+than those from large, lasting ones.
+\end{measure}
+
+\section{Hours over the long run}\label{sec:b3:labour-supply-and-demand:hours}
+
+\begin{omchart}{Average annual hours worked per person employed, 1950--2023, six
+economies. Years in which the source's series grows at the same rate year after
+year --- interpolated or back-cast, not observed --- are left out: Germany before
+1960, Japan before 1953, Korea before 1963 and in 1971--79.}{Penn World Table 11.0
+(avh); our screen for constant-growth stretches}
+\begin{tikzpicture}
+\begin{axis}[omtimesten, width=0.72\linewidth, height=0.42\linewidth, xmin=1948,
+  xmax=2025, ymin=1200, ymax=3100, ylabel={Hours a year}, legend columns=3,
+  unbounded coords=jump,
+  legend style={font=\footnotesize, at={(0.5,1.03)}, anchor=south},
+  y tick label style={/pgf/number format/1000 sep={,}}]
+  \addplot[omDef, thick, mark=none] table[x=year, y=USA] {figdata/bachelor-3/23-labour-supply-and-demand/out/hours.csv};
+  \addplot[black, thick, mark=none] table[x=year, y=DEU] {figdata/bachelor-3/23-labour-supply-and-demand/out/hours.csv};
+  \addplot[omThm, thick, mark=none] table[x=year, y=FRA] {figdata/bachelor-3/23-labour-supply-and-demand/out/hours.csv};
+  \addplot[omDef, thick, dashed, mark=none] table[x=year, y=GBR] {figdata/bachelor-3/23-labour-supply-and-demand/out/hours.csv};
+  \addplot[omThm, thick, dashed, mark=none] table[x=year, y=JPN] {figdata/bachelor-3/23-labour-supply-and-demand/out/hours.csv};
+  \addplot[black, thick, dotted, mark=none] table[x=year, y=KOR] {figdata/bachelor-3/23-labour-supply-and-demand/out/hours.csv};
+  \legend{United States, Germany, France, United Kingdom, Japan, Korea}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: hours_points
+A French worker put in 2{,}351 hours in 1950 and 1{,}487 in 2023; a German one 2{,}181 in 1960,
+the first year the source observes, and 1{,}335 in 2023. American hours fell much less,
+from 2{,}022 to 1{,}789, and Korean hours rose from 2{,}871 in 1963 to 3{,}040 in 1969 before
+falling to 1{,}910. Output per hour worked was multiplied by 10.0 in France and 3.9 in the
+United States from 1950, by 7.4 in Germany from 1960 and by 28.5 in Korea from 1963.
+% figdata: hours_growth, hours_masked
+If hours fall as hourly pay rises, the income effect of the wage has outweighed the
+substitution effect: richer workers have bought more leisure. The United States, where
+output per hour grew least, cut its hours least --- but Japan, whose output per hour was
+multiplied by 11.6 from 1953, cut its hours by a fifth, against two-fifths in France, so
+taxes, institutions and preferences matter too.
+
+\section{Women's participation and its causes}\label{sec:b3:labour-supply-and-demand:women}
+
+\begin{omchart}{Ratio of female to male labour-force participation against GDP per
+person (PPP, constant dollars, logarithmic scale), 177 countries, 2019, with a
+quadratic fit in log income.}{World Bank, World Development Indicators
+(SL.TLF.CACT.FM.ZS, NY.GDP.PCAP.PP.KD); our fit}
+\begin{tikzpicture}
+\begin{semilogxaxis}[omscatter, log ticks with fixed point, width=0.6\linewidth,
+  height=0.4\linewidth, xmin=600, xmax=150000, ymin=0, ymax=110,
+  xlabel={GDP per person (dollars)}, ylabel={Female/male ratio (\%)}]
+  \addplot table[x=y, y=r] {figdata/bachelor-3/23-labour-supply-and-demand/out/ushape.csv};
+  \addplot[omThm, thick, no marks, sharp plot] table[x=y, y=r] {figdata/bachelor-3/23-labour-supply-and-demand/out/ushape_fit.csv};
+\end{semilogxaxis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: ushape_stats
+% ledger: b3ls:goldin
+The participation of married women first falls and then rises as countries grow
+richer, across countries and in the histories of today's rich ones. As production
+moves from the farm and the family business into factories, women's work at home
+is no longer counted as work and higher family incomes let them leave the labour
+force; once women are educated enough to enter clerical and professional work,
+the substitution effect of their own wage dominates. Across countries in 2019 the
+fitted U reaches its minimum near 11{,}000 dollars a person, but income explains only
+9~\% of the variation ($R^2$ 0.09): the shape is there, and most of the differences
+lie elsewhere.
+
+\begin{record}[The pill and women's careers]
+The share of American women graduates entering professional programmes ---
+law, medicine, business --- rose substantially around 1970, and their age at first
+marriage soared just after 1972. The pill, approved in 1960, spread fast among married
+women but reached young single women only in the late 1960s, when a series of state
+laws lowered the age of majority. The timing, and the variation across states in
+when young women gained access, connect the pill to the delay of marriage and to
+longer professional training: a lower cost of a long education raised women's
+investment in careers. % ledger: b3ls:gk
+\end{record}
+
+\section{The elasticity of labour demand}\label{sec:b3:labour-supply-and-demand:demand}
+
+\begin{definition}[Hicks--Marshall rules; scale and substitution effects]\label{def:b3:labour-supply-and-demand:hicks-marshall}
+\index{Hicks--Marshall rules}\index{scale effect}\index{substitution effect (labour demand)}
+The \emph{Hicks--Marshall rules} state that labour demand is more elastic the easier
+it is to substitute other inputs for labour, the more elastic the demand for the
+product, the larger labour's share of cost (when product demand is more elastic
+than substitution) and the more elastic the supply of other inputs. The
+\emph{substitution effect} of a wage rise is the fall in labour at constant output;
+the \emph{scale effect} is the fall from the lower output that higher costs bring.
+\end{definition}
+
+\begin{proposition}[Hicks--Marshall]\label{prop:b3:labour-supply-and-demand:hm}
+With constant returns to scale in labour and one other input, both hired in
+competitive markets with the other input's price fixed, and a competitive industry,
+the own-wage elasticity of labour demand is $-(1 - s)\sigma - s\eta$.
+\end{proposition}
+
+\begin{proof}
+Let $K$ be the other input, with price $r$ fixed. Cost minimisation gives $d\ln(L/K) = -\sigma\, d\ln w$. At
+constant output, the isoquant gives $s\,d\ln L + (1 - s)\,d\ln K = 0$, with $s$ labour's share of cost;
+solving the two equations, $d\ln L = -(1 - s)\sigma\, d\ln w$: the substitution effect. With constant
+returns, marginal cost rises by $s\,d\ln w$ and so does the competitive price; output falls
+by $\eta s\,d\ln w$, and at a given input ratio labour falls in proportion: the \omterm{def:b3:labour-supply-and-demand:hicks-marshall}{scale effect},
+$-s\eta\, d\ln w$. Adding the two gives the result.
+\end{proof}
+
+\begin{measure}[How large is the elasticity?]
+A \omterm{def:b3:credible-empirical-work:meta-analysis}{meta-analysis} of 942 estimates of the own-wage elasticity of labour demand, from
+105 studies, finds that the specification of the model, the data, the sector and the
+country explain more than 80~\% of the variation among them, and that publication
+favours larger estimates. % ledger: b3ls:lps
+There is no single number to quote; there are the \omterm{def:b3:labour-supply-and-demand:hicks-marshall}{Hicks--Marshall rules}, which say
+when the number should be large.
+\end{measure}
+
+\section{Technology and tasks}\label{sec:b3:labour-supply-and-demand:tasks}
+
+\begin{definition}[Task-based model; routine task; job polarisation]\label{def:b3:labour-supply-and-demand:tasks}
+\index{task-based model}\index{routine task}\index{job polarisation}
+In a \emph{task-based model}, production uses tasks, each performed by workers of
+some skill group or by capital, assigned by \omterm{def:b3:ricardian-trade:comparative-advantage}{comparative advantage}. A \emph{routine
+task} follows explicit rules that can be written into a program. \emph{Job
+polarisation} is the fall in the employment share of middle-wage occupations
+relative to those at the top and the bottom.
+\end{definition}
+
+\begin{proposition}[Automating the middle task]\label{prop:b3:labour-supply-and-demand:automation}
+Let output be $(y_1y_2y_3)^{1/3}$ over a low, a middle and a high task, each produced one for one by
+one unit of a matching group of workers, so that each wage is $1/3$. If capital at price
+$\rho$ per unit can perform the middle task and the middle workers move to the low task,
+the low and middle groups earn $\sqrt{2/(3\rho)}/6$ and the high group $\sqrt{2/(3\rho)}/3$; with $\rho = 1/4$, wages are
+0.272 and 0.544.
+\end{proposition}
+
+\begin{proof}
+With two workers in the low task and $K$ units of capital, $Y = (2K)^{1/3}$. Each task receives a third
+of output, so $\rho K = Y/3$, and $Y^3 = 2Y/(3\rho)$, or $Y = \sqrt{2/(3\rho)}$. The low task's third of output is shared by two
+workers: $Y/6$ each; the high group earns $Y/3$. With $\rho = 1/4$, $Y = \sqrt{8/3} = 1.633$, so the low and middle
+groups earn 0.272 --- below 1/3 --- and the high group 0.544. The middle workers prefer the
+low task's 0.272 to keeping the middle task at capital's price of 0.25.
+\end{proof}
+
+\begin{model}{The task-based model of technology}
+\assumes Tasks are allocated between capital and groups of workers by \omterm{def:b3:ricardian-trade:comparative-advantage}{comparative
+advantage}, and the price of computing power falls steadily.
+\predicts Routine middle-wage tasks are automated first; employment moves out of
+them toward the top and the bottom; the wages of the top rise.
+\tested In the United States, 1980--2005, local labour markets specialised in routine
+work adopted information technology more, moved low-skill workers into service
+occupations and saw earnings grow at both tails; % ledger: b3ls:ad
+in 16 Western European countries, 1993--2010, polarisation was pervasive, and
+routine-biased technology together with offshoring explains much of it. % ledger: b3ls:gms
+\breaks The wage gains at the bottom need demand for services that cannot be
+automated, which the three-task example of the proposition leaves out --- in it the
+low wage falls --- and offshoring moves the same tasks abroad for a different reason.
+\end{model}
+
+\section{Retirement}\label{sec:b3:labour-supply-and-demand:retirement}
+
+Retirement is the \omterm{def:b3:labour-supply-and-demand:frisch}{extensive margin} at the end of working life. The fixed-cost
+proposition applies with a twist: a pension that is withdrawn as earnings rise
+raises the implicit tax on working past the pension age, and the \omterm{def:b3:labour-supply-and-demand:frisch}{extensive margin}
+responds to it. \Cref{ch:b3:social-insurance} built the pension and its incentives;
+in Brenland's survey, no household head aged 65 or over works at all, while 94.9~\% of
+those under 65 do (the weekend problem). % figdata: brenland_stats
+
+\section{Exercises}\label{sec:b3:labour-supply-and-demand:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:labour-supply-and-demand:1}
+In the opening chart, which economy's participation rate rose most between 1990 and
+2025? Why can an ageing population lower the rate even when women of every age
+work more?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:labour-supply-and-demand:2}
+A worker's Hicksian intensive elasticity is 0.33. Her take-home wage rises by 10~\%,
+holding utility constant. By how much do her hours change?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:labour-supply-and-demand:3}
+Compute the Hicks--Marshall elasticity with $s = 0.3$, $\sigma = 1$ and $\eta = 2$. Split it into the
+substitution and \omterm{def:b3:labour-supply-and-demand:hicks-marshall}{scale effects}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:labour-supply-and-demand:4}
+What pattern in a table of occupation shares by decade would contradict the task
+model?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:labour-supply-and-demand:5}
+With the Penn World Table, compute the average annual change in hours per worker
+from 1950, or from the first year the second chart shows, to 2023 in its six economies.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:labour-supply-and-demand:6}
+In the fixed-cost proposition, free childcare lowers $F$. Who enters the labour force,
+and what happens to the average hours of those who work?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:labour-supply-and-demand:7}
+With $a = 100$ and $F = 3{,}200$ dalens a year, find the reservation wage and
+the hours worked at it.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:labour-supply-and-demand:8}
+Fit the U shape of the third chart for 2000 and for 2019. Has the minimum moved?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:labour-supply-and-demand:9}
+What evidence would contradict a large extensive-margin elasticity among older
+workers?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:labour-supply-and-demand:10}
+Derive the Hicks--Marshall formula, and show that a larger labour share makes demand
+more elastic if and only if $\eta > \sigma$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:labour-supply-and-demand:11}
+A payroll-tax cut lowers the wedge between labour cost and take-home pay by 4~\% of
+the wage for low-wage workers. Labour demand for them has elasticity 1.0 and supply
+0.5. Find the change in take-home pay, in labour cost and in hours.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:labour-supply-and-demand:12}
+In the automation proposition, let $\rho = 1/8$. Compute the wages of the three groups.
+Above what price of capital would the middle workers rather keep the middle task at
+capital's price than move to the low task?
+\end{exercise}
+
+\section{Problem: Brenland's Working Hours}\label{sec:b3:labour-supply-and-demand:problem}
+
+\begin{problem}[{Weekend problem --- Brenland's working hours}]\label{pb:b3:labour-supply-and-demand:hours}
+Brenland's household survey (\code{load("households")}) records the hours and gross
+income of each household's head; its firm census (\code{load("firms")}) records output
+and the wage bill. Brenland employed 4{,}366 thousand people in 2025 (\code{load("accounts")}).
+Take the elasticity of substitution between labour and other inputs as 0.7, the
+elasticity of product demand as 1.5, and the Hicksian supply elasticities as 0.33 for
+hours and 0.25 for participation. % figdata: brenland_stats
+
+\medskip\noindent\textbf{Part I --- hours and wages in the survey.}
+\begin{enumerate}
+\item What share of heads work no hours? What share of heads under 65?
+\item Compute the mean annual hours of those who work.
+\item Compute each worker's hourly wage as gross income over hours; find the median.
+\item Regress log hours on log wage among workers. Report the slope and its standard
+error.
+\item Why is this slope not the elasticity of labour supply? Give three reasons.
+\item Why does dividing income by hours bias the slope downward?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- two margins.} A reform raises every worker's
+take-home wage by 4~\%, holding utility constant.
+\begin{enumerate}[resume]
+\item Predict the change in hours of those already working.
+\item Predict the change in the number of workers, in percent and in thousands.
+\item Which margin adds more hours?
+\item Why might the intensive response in the first year be smaller than predicted?
+\item How would you test the prediction with a reform that applied in some regions
+only?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- labour demand.}
+\begin{enumerate}[resume]
+\item Compute labour's share of output in the firm census.
+\item Using it as the share of cost, compute the Hicks--Marshall elasticity.
+\item Split it into substitution and \omterm{def:b3:labour-supply-and-demand:hicks-marshall}{scale effects}.
+\item Which effect would be larger in a sector that exports into a competitive world
+market?
+\item What does the \omterm{def:b3:credible-empirical-work:meta-analysis}{meta-analysis} of the chapter say about using any single value?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- a payroll-tax cut.} Brenland cuts the \omterm{def:b3:efficiency-cost-of-taxation:payroll-tax}{payroll tax}
+by 5~\% of the wage. Use the total supply elasticity, intensive plus extensive, and
+the Hicksian elasticities as an approximation.
+\begin{enumerate}[resume]
+\item Compute the rise in take-home pay.
+\item Compute the fall in labour cost.
+\item Who gains more from the cut, workers or firms, and why?
+\item Compute the rise in total hours.
+\item Split it into the extensive and intensive parts.
+\item Convert the extensive part into thousands of workers.
+\item Convert the intensive part into thousands of full-time equivalents.
+\item What would change if the cut were temporary?
+\item State the result: the employment effect of the payroll-tax cut, intensive plus
+extensive, in thousands of workers.
+\end{enumerate}
+\end{problem}

@@ -1,0 +1,300 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g11-08. Hidden quality (the lemons model), hidden action (moral
+% hazard, principal and agent), answers on each side, compulsory and voluntary cover. Real numbers:
+% figdata/grade-11/08-asymmetric-information/ (RAND experiment, cited from Aron-Dine, Einav and Finkelstein 2012, Table 2;
+% a seeded lemons simulation, invented). Ledger: HIE design (Wikipedia, RAND R-3476 abstract, AEF 2012), Bond 1982. No
+% certification or warranty study was read, so none is cited; the signalling diagram is replaced by a worked example.
+% All Brenland numbers are invented.
+\chapter{Asymmetric Information}\label{ch:g11:asymmetric-information}
+
+From 1974 to 1982, several thousand Americans took part in an experiment in which their health insurance was chosen by lot. Some paid nothing for their care; others
+paid 25, 50 or 95 per cent of each bill, up to a yearly limit. Those whose care was free spent 2170 dollars a year each (in 2011 dollars); those who paid 95 per cent
+spent 1325, 39 per cent less. Because the plans were drawn by lot, the groups were alike in health on average; what differed was what they
+paid at the counter.
+% ledger: g11:hie-design, g11:hie-free, g11:hie-95; figdata: hie (free 2170, c95 1325)
+
+Insurance changes what people do, and an insurer cannot watch them. A seller knows more about the car he sells than the buyer does. When one side of a deal knows
+something the other does not, markets can work badly, or not at all. This chapter shows how, and the answers that markets and governments have found.
+
+\begin{openingchart}{The RAND Health Insurance Experiment: mean annual medical spending per person (2011 dollars) and share of people with any medical spending in the year,
+by the share of each bill the family paid. Each plan's figure is the free plan's mean plus the estimated difference from it; the gap between the 25\,\% and 50\,\% plans is
+within the estimates' margin of error.}{Aron-Dine, Einav and Finkelstein (2012), Table 2, from the RAND Health Insurance Experiment}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 1, horizontal sep=1.6cm}, width=0.47\linewidth, height=5.0cm, ybar, /pgf/bar width=14pt,
+  xtick={0,1,2,3}, xticklabels={free, 25\,\%, 50\,\%, 95\,\%}, enlarge x limits=0.2, ymin=0, xlabel={share of the bill paid},
+  nodes near coords, every node near coord/.append style={font=\scriptsize}, x tick label style={/tikz/font=\scriptsize}]
+\nextgroupplot[width=0.47\linewidth, ymax=2600, ylabel={dollars a year}, title={\small spending per person},
+  nodes near coords={\pgfmathprintnumber[fixed, precision=0, 1000 sep={}]{\pgfplotspointmeta}}, scaled y ticks=false,
+  y tick label style={/pgf/number format/1000 sep={}}]
+\addplot[fill=omDef!60, draw=omDef] table[x=x, y=spend] {figdata/grade-11/08-asymmetric-information/out/hie.csv};
+\nextgroupplot[width=0.47\linewidth, ymax=110, ylabel={per cent}, title={\small with any spending}]
+\addplot[fill=omThm!60, draw=omThm] table[x=x, y=anyuse_pct] {figdata/grade-11/08-asymmetric-information/out/hie.csv};
+\end{groupplot}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: a market brings together buyers and sellers who agree on a price. From \cref{ch:g10:surplus-and-efficiency}: \omterm{def:g10:surplus-and-efficiency:wtp}{willingness to pay}, and
+the surplus lost when trades worth making are not made.
+\end{recall}
+
+\begin{definition}[Asymmetric information]\label{def:g11:asymmetric-information:asymmetric-information}
+There is \emph{asymmetric information}\index{asymmetric information} in a deal when one party knows something relevant to it that the other does not.
+\end{definition}
+
+\section{Hidden quality}\label{sec:g11:asymmetric-information:lemons}
+
+\begin{definition}[Adverse selection]\label{def:g11:asymmetric-information:adverse-selection}
+\emph{Adverse selection}\index{adverse selection} occurs when the hidden characteristics of those who choose to trade make the deal worse for the uninformed side:
+the cars offered for sale are the worse ones, the people who buy insurance are the riskier ones.
+\end{definition}
+
+\begin{example}[Used cars in Brenland]\label{ex:g11:asymmetric-information:cars}
+The qualities of a town's used cars are spread evenly between 2000 and 10\,000 dalens; a seller values his car at its quality $q$, a buyer at $1.5q$. Every car is worth
+more to a buyer than to its seller, so all would be sold if buyers could see quality. They cannot. At a price $p$, only the owners of cars with $q \le p$ sell; the
+average quality offered is $(2000 + p)/2$, which a buyer values at $1.5 \times (2000 + p)/2 = 1500 + 0.75p$. Buyers pay $p$ only if that is at least $p$, that is
+$p \le 6000$. At 6000, the cars between 6000 and 10\,000 stay with their owners: half the cars, and the better half, are never sold.
+\end{example}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.0009cm, y=0.0005cm]
+\draw[econ axes] (2000,10500) node[left, font=\small] {dalens} |- (11000,2000) node[below left=12pt and 0pt, font=\small] {price $p$};
+\draw[supply] (2000,2000) -- (10000,10000) node[right, font=\scriptsize] {price $p$};
+\draw[demand] (2000,3000) -- (10000,9000) node[right, font=\scriptsize] {buyers' value of the average car offered};
+\node[eqpoint] at (6000,6000) {}; \draw[guide] (6000,2000) -- (6000,6000) -- (2000,6000);
+\node[below, font=\footnotesize] at (2000,2000) {2000}; \node[below, font=\footnotesize] at (6000,2000) {6000}; \node[below, font=\footnotesize] at (10000,2000) {10\,000};
+\foreach \y in {3000,6000,9000} \draw (2000,\y) -- (1900,\y) node[left, font=\footnotesize] {\y};
+\end{tikzpicture}
+
+{\small The Brenland market. Above a price of 6000, buyers value the average car offered at less than its price, and they do not buy; the price settles at 6000.}
+\end{omfigure}
+
+\begin{model}{The lemons model}
+\assumes Sellers know their good's quality; buyers know only the average quality of what is offered; no one can check quality before buying.
+\predicts The best goods are withdrawn, the price falls with the average quality, and the market may shrink to the worst goods or vanish.
+\tested Little support in the one test cited: in a 1977 survey of American pickup trucks, trucks bought used needed no more maintenance than trucks of
+  the same age and mileage that had never changed hands (Bond 1982). The existence of inspections, warranties and dealers' guarantees is consistent with the
+  problem biting elsewhere, since sellers and buyers pay to get round it.
+\breaks When quality can be checked (inspection, a known history), when sellers have a reputation to lose, or when they offer a warranty.
+\end{model}
+% ledger: g11:bond1982
+
+\begin{omchart}{An invented used-car market, simulated: 1000 cars with qualities drawn at random (fixed seed), sellers valuing a car at its quality, buyers at 1.5 times
+it. Each round, buyers offer 1.5 times the average quality of the cars offered at the last round's price. With qualities between 2000 and 10\,000 dalens the price
+settles near 6000; with qualities between 0 and 10\,000 the market unravels.}{invented data, seeded simulation}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.84\linewidth, height=5.2cm, xmin=0, xmax=15, ymin=0, ymax=10000, xlabel={round}, ylabel={price (dalens)}, scaled y ticks=false,
+  y tick label style={/pgf/number format/1000 sep={\,}}]
+\addplot[omDef, thick, mark=*, mark size=1pt] table[x=round, y=floor] {figdata/grade-11/08-asymmetric-information/out/lemons.csv}
+  node[pos=0.8, above, font=\scriptsize] {qualities 2000 to 10\,000};
+\addplot[omThm, thick, mark=*, mark size=1pt] table[x=round, y=nofloor] {figdata/grade-11/08-asymmetric-information/out/lemons.csv}
+  node[pos=0.4, anchor=south west, font=\scriptsize] {qualities 0 to 10\,000};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: lemons, lemons_end (5927, 0.514; 221, 0.02)
+
+\section{Hidden action}\label{sec:g11:asymmetric-information:moral-hazard}
+
+\begin{definition}[Moral hazard]\label{def:g11:asymmetric-information:moral-hazard}
+\emph{Moral hazard}\index{moral hazard} occurs when a party whose actions cannot be observed takes less care, or more risk, because someone else bears part of the cost.
+\end{definition}
+
+\begin{example}[Care and insurance]\label{ex:g11:asymmetric-information:care}
+A cyclist's bicycle, worth 10\,000 dalens, is stolen with probability 10\,\% a year if he leaves it unlocked and 4\,\% if he always locks it, which costs him trouble worth
+300 dalens a year. Uninsured, locking cuts his expected loss by $0.06 \times 10\,000 = 600 > 300$: he locks. Fully insured, locking saves him nothing: he does not lock,
+and the insurer's expected payout rises from 400 to 1000 dalens a year. If he must pay the first $D$ dalens of any loss, locking saves him $0.06D$, and he locks when
+$0.06D \ge 300$, that is when $D \ge 5000$.
+\end{example}
+
+\begin{definition}[Deductible]\label{def:g11:asymmetric-information:deductible}
+A \emph{deductible}\index{deductible} is the part of each loss that the insured person pays before the insurance pays the rest.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.0008cm, y=0.0055cm]
+\draw[econ axes] (0,700) node[left, font=\small] {dalens a year} |- (11000,0) node[below left=12pt and 0pt, font=\small] {deductible $D$};
+\draw[demand] (0,0) -- (10000,600) node[right, font=\scriptsize] {saving from locking, $0.06D$};
+\draw[supply] (0,300) -- (10000,300) node[right, font=\scriptsize] {cost of locking};
+\node[eqpoint] at (5000,300) {}; \draw[guide] (5000,0) -- (5000,300);
+\node[below, font=\footnotesize] at (5000,0) {5000}; \node[below, font=\footnotesize] at (10000,0) {10\,000};
+\foreach \y in {300,600} \draw (0,\y) -- (-100,\y) node[left, font=\footnotesize] {\y};
+\node[font=\scriptsize, align=center] at (2600,235) {no care}; \node[font=\scriptsize, align=center] at (7700,385) {care};
+\end{tikzpicture}
+
+{\small The cyclist's choice. Below a \omterm{def:g11:asymmetric-information:deductible}{deductible} of 5000 dalens the saving from locking is less than its cost, and he does not lock.}
+\end{omfigure}
+
+\begin{model}{Moral hazard in insurance}
+\assumes The insurer cannot observe the insured person's care or use; the insured person weighs only what he himself pays.
+\predicts The more of the cost the insurance bears, the less care and the more use.
+\tested In the RAND experiment, families assigned at random to plans in which they paid a larger share of each bill spent less: 2170 dollars a year with free care,
+  1325 when they paid 95\,\% (up to the yearly limit), and fewer of them used any care at all.
+\breaks When the insurer can observe care (a lock it inspects, a fitted alarm), or when the use is not chosen (an emergency operation).
+\end{model}
+% ledger: g11:hie-free, g11:hie-95; figdata: hie
+
+\begin{record}[The RAND Health Insurance Experiment, 1974--82]
+% ledger: g11:hie-design, g11:hie-free, g11:hie-25, g11:hie-50, g11:hie-95, b2:randhie2006; figdata: hie
+Families were assigned by lot to plans in which they paid 0, 25, 50 or 95\,\% of each bill, with their out-of-pocket spending capped at a share of family income, never more than 1000 dollars of the time, and were
+covered for three to five years; 5809 people were in these plans. Spending was highest with free care and lowest with the 95\,\% plan, and the largest drop came
+between free care and the first plan with any charge. Because the plans were drawn by lot, the difference measures the effect of the price paid at the counter, not
+the different health of those who choose generous insurance.
+\end{record}
+
+\begin{definition}[Principal--agent problem]\label{def:g11:asymmetric-information:principal-agent}
+A \emph{principal--agent problem}\index{principal--agent problem} arises when one party, the agent, acts on behalf of another, the principal, who cannot fully observe
+the agent's effort, and their interests differ: a manager and the owners of a firm, a builder and his client.
+\end{definition}
+
+Owners can tie a manager's pay to the firm's results, so that the manager gains when they do. The fix has a price: results depend on luck as well as effort, so the
+manager bears risk and asks to be paid for it, and pay tied to a measure invites effort on the measure rather than on the firm.
+
+\section{Answers}\label{sec:g11:asymmetric-information:answers}
+
+\begin{definition}[Signalling and screening]\label{def:g11:asymmetric-information:signalling}
+\emph{Signalling}\index{signalling} is an action by the informed party, costly enough that only those of the good type find it worth taking, which reveals their
+type. \emph{Screening}\index{screening}\phantomsection\label{def:g11:asymmetric-information:screening} is a choice offered by the uninformed party, designed so
+that different types choose differently and so reveal themselves.
+\end{definition}
+
+\begin{example}[A signal that separates]\label{ex:g11:asymmetric-information:signal}
+Workers are of two kinds, producing 30 or 20 thousand dalens a year; employers cannot tell them apart. A certificate costs the able 8 thousand in effort and the others 15.
+If employers pay 30 to holders and 20 to the rest, an able worker gains $30 - 8 = 22 > 20$ and takes it; another would get $30 - 15 = 15 < 20$ and does not. The
+certificate need not raise anyone's output to separate them: what matters is that it costs the less able more.
+\end{example}
+
+The informed side can also offer a warranty (only a seller who knows his car is good can afford to promise repairs), build a reputation, or pay for an inspection that
+certifies quality. The uninformed side screens: an insurer offers a cheap policy with a large \omterm{def:g11:asymmetric-information:deductible}{deductible} and a dear one with a small \omterm{def:g11:asymmetric-information:deductible}{deductible}, and careful drivers
+choose the first; it also prices by experience, raising the premiums of those who have claimed.
+
+\section{Compulsory and voluntary cover}\label{sec:g11:asymmetric-information:compulsory}
+
+\omterm{def:g11:asymmetric-information:adverse-selection}{Adverse selection} hits insurance hard. If one premium is charged to everyone and buying is voluntary, the low risks find it too dear and leave; the premium must rise to
+cover those who stay, and more leave. A pool can shrink to the highest risks. Compulsory cover at one premium, such as a health scheme that every resident must join and that
+charges everyone the same, keeps the low risks in the pool and the premium near the average. Its cost falls on the low risks, who pay more than
+their expected loss. (Compulsory motor insurance is another matter: it is priced by risk, and it is compelled mainly so that the people a driver
+harms are paid.) Voluntary insurance survives
+where insurers can measure risk and price it, by age, by record, by the car, and where people's private knowledge of their own risk is small.
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g11:asymmetric-information:1}
+\omterm{def:g11:asymmetric-information:adverse-selection}{Adverse selection} or \omterm{def:g11:asymmetric-information:moral-hazard}{moral hazard}? A buyer of life insurance hides a serious illness; a cyclist with theft insurance leaves his bicycle unlocked; a seller of a used phone
+knows its battery is failing.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:asymmetric-information:2}
+\omterm{def:g11:asymmetric-information:adverse-selection}{Adverse selection} or \omterm{def:g11:asymmetric-information:moral-hazard}{moral hazard}? A worker slacks when his manager is away; the people who buy dental insurance are mostly those who expect to need a dentist; a bank whose
+deposits are insured by the state makes riskier loans.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:asymmetric-information:3}
+\omterm{def:g11:asymmetric-information:adverse-selection}{Adverse selection} or \omterm{def:g11:asymmetric-information:moral-hazard}{moral hazard}? A driver of a hired car drives it harder than his own; a borrower whose plan is risky is keener to borrow at a high interest rate than one
+whose plan is safe; a homeowner with fire insurance stops checking his wiring.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:asymmetric-information:4}
+From the opening chart, compute in per cent how much less a person spent on the 95\,\% plan than on the free plan.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:asymmetric-information:5}
+From the opening chart, by how many points does the share of people with any medical spending fall between the free and the 95\,\% plan? Why should one not conclude that
+the 50\,\% plan made people spend more than the 25\,\% plan?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:asymmetric-information:6}
+Half the used cars of a town are good, worth 8000 dalens to their sellers and 10\,000 to buyers; half are bad, worth 2000 to sellers and 3000 to buyers. Buyers cannot tell
+them apart. Which cars are sold, and at what price?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:asymmetric-information:7}
+Same question if 80\,\% of the cars are good.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:asymmetric-information:8}
+In \cref{exo:g11:asymmetric-information:6}, a seller may offer a one-year warranty. It would cost the seller of a good car 200 dalens in expected repairs and the seller of a
+bad car 8000. Show that if buyers pay 10\,000 for a car with a warranty, only good cars carry one.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:asymmetric-information:9}
+A loss of 2000 dalens strikes with probability 10\,\% a year. A policy has a \omterm{def:g11:asymmetric-information:deductible}{deductible} of 500. Compute the insurer's expected payout and the insured person's expected
+out-of-pocket cost.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:asymmetric-information:10}
+In the certificate example, let the certificate cost the able worker $c_H$ and the other $c_L$ (thousand dalens). For which values does the certificate separate the two
+kinds at wages of 30 and 20?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:asymmetric-information:11}
+From the simulated chart, read the price in round 0 and round 15 for each market. In the market whose qualities start at 2000, what share of the cars is traded at the
+end? Compare with the example of the chapter.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:asymmetric-information:12}
+What does the lemons model predict about the maintenance of trucks bought used compared with trucks that never changed hands? What did Bond (1982) find? Give two
+reasons the used-truck market might escape the lemons problem.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:asymmetric-information:13}
+Three equal groups of people have expected losses of 100, 300 and 800 dalens a year; each will pay up to 50 dalens more than its expected loss for full insurance. An
+insurer charges everyone the average expected loss of those it insures. Show that the pool shrinks to the highest risks.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:asymmetric-information:14}
+A manager's effort raises a firm's expected profit from 1000 to 1600 thousand dalens a year and costs him the equivalent of 200 thousand. On a fixed salary, does he make
+the effort? What share $s$ of profit must his pay include for him to make it? What does this cost the owners, and what new problem does it create?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:asymmetric-information:15}
+In \cref{exo:g11:asymmetric-information:13}, insurance is made compulsory at a premium equal to the average expected loss of all three groups. Find the premium, and say
+who gains and who loses compared with the voluntary market.
+\end{exercise}
+
+\section{Problem: Used Cars in a Town in Brenland}
+
+\begin{problem}[{Weekend problem --- hidden quality and an inspection service}]
+\label{pb:g11:asymmetric-information:1}
+A town in Brenland has many used cars, with qualities $q$ spread evenly between 2000 and 10\,000 dalens. A seller values a car at $q$, a buyer at $1.5q$, and there are more
+buyers than cars.
+
+\medskip
+\noindent\textbf{Part I --- Hidden quality.}
+\begin{enumerate}
+\item If buyers could see quality, which cars would be sold?
+\item What would be the average gain from trade per car?
+\item Buyers cannot see quality. At a price $p$ between 2000 and 10\,000, which cars are offered?
+\item What is the average quality of the cars offered at price $p$?
+\item How much is the average car offered worth to a buyer?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Where the market settles.}
+\begin{enumerate}[resume]
+\item Find the highest price buyers are willing to pay.
+\item What share of the cars is traded?
+\item What is the average quality of the cars traded, and the buyers' average gain?
+\item Compute the gain from trade realised, per car in the town, and compare it with question 2.
+\item If qualities were spread between 0 and 10\,000, where would the price settle?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- An inspection service.}
+\begin{enumerate}[resume]
+\item An inspection, paid by the seller, costs 400 dalens and shows the car's quality to all; buyers then pay $1.5q$. Which sellers inspect?
+\item What share of the cars is traded, and what is the average price?
+\item What is the gain from trade realised per car, net of the inspection?
+\item By how much does the service raise the gain per car?
+\item Why might a warranty do the same work as the inspection?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Variations.}
+\begin{enumerate}[resume]
+\item Without inspection, buyers value a car at $1.2q$. Find the price and the share traded.
+\item Without inspection, buyers value a car at $2q$. Show that all cars are traded.
+\item Explain the difference between the two answers.
+\item A dealer sells hundreds of cars a year in the town. Why may he not sell bad cars as good ones, even without inspection?
+\item State the result of the problem: the price at which the market settles, and the share of cars traded, with and without inspection.
+\end{enumerate}
+\end{problem}

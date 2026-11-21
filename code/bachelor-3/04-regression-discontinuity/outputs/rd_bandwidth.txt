@@ -1,0 +1,12 @@
+$ python rd_bandwidth.py
+fit       window    bias   s.d.   root mean squared error
+constant   0.02    0.006  0.009    0.011
+constant   0.05    0.015  0.005    0.016
+constant   0.10    0.030  0.004    0.030
+constant   0.25    0.071  0.003    0.071
+constant   0.50    0.119  0.002    0.119
+linear     0.02    0.000  0.016    0.016
+linear     0.05    0.000  0.010    0.010
+linear     0.10    0.000  0.007    0.007
+linear     0.25   -0.003  0.005    0.006
+linear     0.50   -0.015  0.004    0.016

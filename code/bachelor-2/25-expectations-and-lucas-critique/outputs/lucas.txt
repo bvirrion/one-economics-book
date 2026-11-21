@@ -1,0 +1,5 @@
+$ python lucas.py
+estimated under a 2% target: u = 8.92 -1.91 x inflation
+the estimate promises u = 1.27 at 4% inflation
+with a 4% target: inflation 3.81%, unemployment 5.38%
+re-estimated: u = 13.25 -2.06 x inflation

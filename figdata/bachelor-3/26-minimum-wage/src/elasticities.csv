@@ -1,0 +1,6 @@
+label,elasticity,ledger
+Card-Krueger survey data (New Jersey),0.93,b3mw:nw
+Neumark-Wascher payroll data (New Jersey),-0.24,b3mw:nw
+State panel with fixed effects (U.S.),-0.176,b3mw:dlr
+Contiguous border counties (U.S.),0.016,b3mw:dlr
+Data-chosen controls (U.S. teens),-0.3,b3mw:nsw

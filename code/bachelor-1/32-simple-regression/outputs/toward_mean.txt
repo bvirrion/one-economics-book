@@ -1,0 +1,5 @@
+$ python toward_mean.py
+1978 on 1975: slope 0.8368
+1975 on 1978: slope 0.6394
+product 0.5350; r squared 0.5350
+top tenth in 1975: mean 46,368 then 45,253

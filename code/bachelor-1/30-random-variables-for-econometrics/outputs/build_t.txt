@@ -1,0 +1,5 @@
+$ python build_t.py
+0.900  simulated  1.477  exact  1.476
+0.950  simulated  2.018  exact  2.015
+0.975  simulated  2.551  exact  2.571
+0.990  simulated  3.339  exact  3.365

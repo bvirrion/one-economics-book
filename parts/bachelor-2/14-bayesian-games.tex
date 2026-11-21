@@ -1,0 +1,453 @@
+\chapter{Games of Incomplete Information}\label{ch:b2:bayesian-games}
+
+In a sealed-bid auction each bidder knows what the object is worth to her but not what it is worth to the
+others. Game theory predicts how much below her value she should bid in a first-price auction, where the
+winner pays her own bid: with values drawn evenly between zero and a maximum, a bidder facing two rivals should
+bid two thirds of her value, and one facing five rivals five sixths. The chart compares that prediction with
+the bids of eighteen subjects in a laboratory experiment.
+
+\begin{openingchart}{Fitted bid per unit of value of each of eighteen subjects in laboratory first-price
+  auctions with values uniform between 0 and 30 dollars, bidding against 2 rivals and against 5. The dashed
+  lines are the risk-neutral equilibrium predictions, 2/3 and 5/6.}{Bajari and Horta\c{c}su (2003), Table~1,
+  on the experiments of Dyer, Kagel and Levin (1989)}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xmin=0.3, xmax=18.7, ymin=0.6, ymax=1.0, xlabel={Subject},
+    ylabel={Bid per dollar of value}, xtick={1,3,...,17}, width=0.85\linewidth, height=0.45\linewidth,
+    legend style={at={(0.5,-0.25)}, anchor=north, legend columns=2,
+    /tikz/every even column/.append style={column sep=10pt}}]
+  \addplot[only marks, mark=*, mark size=2pt, omDef] table[x=subject, y=slope3]
+    {figdata/bachelor-2/14-bayesian-games/out/bids.csv};
+  \addplot[only marks, mark=square*, mark size=1.8pt, omThm] table[x=subject, y=slope6]
+    {figdata/bachelor-2/14-bayesian-games/out/bids.csv};
+  \addplot[omDef, dashed, domain=0.3:18.7, samples=2, forget plot] {2/3};
+  \addplot[omThm, dashed, domain=0.3:18.7, samples=2, forget plot] {5/6};
+  \legend{3 bidders, 6 bidders}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% ledger: b2:bh2003-design, b2:bh2003-t1
+% figdata: bids_summary (above3 18, above6 14, at6 1, below6 3, mean3 0.811, mean6 0.867)
+With two rivals, every one of the eighteen subjects bid more than the prediction: on average 81 cents per dollar
+of value against 67. With five rivals the bids rose, as predicted, and came much closer to it: fourteen subjects
+bid above 5/6, one at it and three below, with an average of 87 cents.
+
+So far every player has known the others' payoffs. Bidders do not; nor does a firm know its rival's costs, or an
+employer a job applicant's ability. This chapter extends \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} to games in which players hold private
+information, applies it to auctions, and shows why a bidder who does not reason about the information revealed
+by winning tends to regret it.
+
+\begin{recall}
+From \cref{ch:b2:static-games,ch:b2:dynamic-games}: \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium}, dominance and \omterm{def:b2:dynamic-games:spe}{subgame-perfect equilibrium}.
+From \cref{ch:b2:expected-utility}: expected utility and \omterm{def:b2:expected-utility:risk-aversion}{risk aversion}. From the Year 1 volume: Cournot
+competition.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:bayesian-games:symbols}
+$\theta_i$ is player $i$'s \omterm{def:b2:bayesian-games:type}{type} and $p(\cdot)$ a probability. In auctions, $n$ is the number of bidders, $v_i$ bidder $i$'s value, $b_i$
+her bid and $r$ a \omterm{def:b2:expected-utility:rra}{coefficient of relative risk aversion}. In the common-value model, $V$ is the common value, $s_i = V + \varepsilon_i$
+bidder $i$'s signal and $\bar\varepsilon$ the largest possible error.
+\end{notation}
+
+\section{Types and beliefs}\label{sec:b2:bayesian-games:types}
+
+\begin{definition}[Type]\label{def:b2:bayesian-games:type}
+A player's \emph{type}\index{type (of a player)} is the private information she holds when she chooses: her
+value for an object, her cost, her ability. Her payoffs may depend on her own type and on the others' types.
+\end{definition}
+
+\begin{definition}[Common prior]\label{def:b2:bayesian-games:common-prior}
+Players share a \emph{common prior}\index{common prior} when the profile of \omterm{def:b2:bayesian-games:type}{types} is drawn from one probability
+distribution that every player knows. Each player then forms her beliefs about the others' \omterm{def:b2:bayesian-games:type}{types} by conditioning
+that distribution on her own \omterm{def:b2:bayesian-games:type}{type}.
+\end{definition}
+
+\begin{definition}[Bayesian game]\label{def:b2:bayesian-games:bayesian-game}
+A \emph{Bayesian game}\index{Bayesian game} consists of players, their actions, their possible \omterm{def:b2:bayesian-games:type}{types}, a \omterm{def:b2:bayesian-games:common-prior}{common
+prior} over profiles of \omterm{def:b2:bayesian-games:type}{types}, and payoffs that depend on the actions and the \omterm{def:b2:bayesian-games:type}{types}. A strategy is a function that
+assigns an action to each of a player's \omterm{def:b2:bayesian-games:type}{types}.
+\end{definition}
+
+Conditioning uses Bayes' rule: the probability of $A$ given $B$ is $p(A \mid B) = p(B \mid A)\,p(A)/p(B)$. If 30 per cent of
+fishing grounds are rich, and a survey reports ``rich'' for 80 per cent of rich grounds and 20 per cent of poor ones,
+a report of ``rich'' raises the probability that a ground is rich to $0.24/(0.24 + 0.14) = 0.63$
+(\cref{exo:b2:bayesian-games:7}). When \omterm{def:b2:bayesian-games:type}{types} are independent, as in most of this chapter, a player's own \omterm{def:b2:bayesian-games:type}{type} tells
+her nothing about the others', and her beliefs are the prior itself.
+
+\section{Bayesian Nash equilibrium}\label{sec:b2:bayesian-games:bne}
+
+\begin{definition}[Bayesian Nash equilibrium]\label{def:b2:bayesian-games:bne}
+A \emph{Bayesian Nash equilibrium}\index{Bayesian Nash equilibrium} is a profile of strategies in which each
+\omterm{def:b2:bayesian-games:type}{type} of each player chooses an action that maximises her expected payoff, given her beliefs about the others'
+\omterm{def:b2:bayesian-games:type}{types} and the others' strategies.
+\end{definition}
+
+The key step is that a player must predict what every \omterm{def:b2:bayesian-games:type}{type} of her rival would do, because she does not know which
+\omterm{def:b2:bayesian-games:type}{type} she faces. Take two firms competing in quantities with demand $p = 12 - Q$. Firm 1's unit cost is 2 and
+known to both. Firm 2's cost is 4 or 2, with probability one half each, and only firm 2 knows it. A high-cost
+firm 2 best-responds with $q_2^H = (12 - 4 - q_1)/2$, a low-cost one with $q_2^L = (12 - 2 - q_1)/2$. Firm 1 best-responds to the
+\emph{expected} output of firm 2, $q_1 = (12 - 2 - \tfrac12 q_2^H - \tfrac12 q_2^L)/2$. Solving the three equations,
+\[
+q_1 = 3.667, \qquad q_2^H = 2.167, \qquad q_2^L = 3.167.
+\]
+With full information, a high-cost firm 2 would face a firm 1 producing 4 and would produce 2; here it produces more,
+because firm 1, unsure, produces less than it would against a known high-cost rival. A low-cost firm 2 produces less
+than its full-information output 3.333, for the opposite reason.
+
+\section{Auctions with private values}\label{sec:b2:bayesian-games:auctions}
+
+\begin{definition}[Independent private values]\label{def:b2:bayesian-games:private-values}
+In an auction with \emph{independent private values}\index{independent private values} each bidder's value for
+the object is her \omterm{def:b2:bayesian-games:type}{type}, known only to her, drawn independently from a distribution that all bidders know, and
+unaffected by what the others know.
+\end{definition}
+
+\begin{definition}[First-price sealed-bid auction]\label{def:b2:bayesian-games:first-price}
+In a \emph{first-price sealed-bid auction}\index{first-price sealed-bid auction} every bidder submits one bid
+without seeing the others'; the highest bidder wins and pays her own bid.
+\end{definition}
+
+\begin{definition}[Second-price sealed-bid auction]\label{def:b2:bayesian-games:second-price}
+In a \emph{second-price sealed-bid auction}\index{second-price sealed-bid auction} every bidder submits one
+bid without seeing the others'; the highest bidder wins and pays the second-highest bid.
+\end{definition}
+
+\begin{proposition}[Bidding one's value]\label{prop:b2:bayesian-games:truthful}
+In a \omterm{def:b2:bayesian-games:second-price}{second-price sealed-bid auction} with private values, bidding one's value is a weakly dominant strategy.
+\end{proposition}
+
+\begin{proof}
+Fix the others' bids and let $m$ be the highest of them. A bidder with value $v$ who bids $v$ wins when $v > m$, earning $v
+- m > 0$, and loses otherwise, earning 0. Bidding $b > v$ changes the outcome only when $v < m < b$: she then wins and earns
+$v - m < 0$. Bidding $b < v$ changes it only when $b < m < v$: she then loses a gain of $v - m > 0$. Her bid fixes whether she
+wins, never what she pays, so no other bid ever does better than $v$, and each does worse for some bids of the others.
+\end{proof}
+
+In a first-price auction bidding one's value guarantees a payoff of zero, so bidders shade their bids. With values
+uniform on $[0, 1]$, suppose the others bid a fixed share $k$ of their values. A bidder with value $v$ who bids $b$ beats one
+rival with probability $p(k v_j < b) = b/k$, and all $n - 1$ with probability $(b/k)^{n-1}$. She maximises $(v - b)(b/k)^{n-1}$. The
+first-order condition, $(n - 1)(v - b) = b$, gives $b = (n - 1)v/n$, which is of the form assumed, with $k = (n - 1)/n$.
+
+\begin{proposition}[First-price bids with uniform values]\label{prop:b2:bayesian-games:first-price-bids}
+In a first-price auction with $n$ risk-neutral bidders whose values are independent and uniform on $[0, 1]$, each bidding
+$b(v) = (n - 1)v/n$ is a \omterm{def:b2:bayesian-games:bne}{Bayesian Nash equilibrium}.
+\end{proposition}
+
+\begin{proof}
+Given the others' strategies, the derivation shows that $(n - 1)v/n$ maximises the bidder's expected payoff among bids
+in $[0, k]$: the objective is zero at $b = 0$ and at $b = v$, and it rises then falls between them. A bid above $k$, the highest bid any
+rival makes, wins for sure, but less than $k$ also wins for sure and costs less. So no \omterm{def:b2:bayesian-games:type}{type} gains by deviating.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=1.05, ymin=0, ymax=1.05, width=0.5\linewidth,
+    height=0.5\linewidth, xlabel={Value $v$}, ylabel={Bid}, xtick={0,0.5,1}, ytick={0,0.5,1},
+    legend style={at={(1.05,0.5)}, anchor=west}]
+  \addplot[black, thick, domain=0:1, samples=2] {x};
+  \addplot[omDef, thick, domain=0:1, samples=2] {x/2};
+  \addplot[omThm, thick, dashed, domain=0:1, samples=2] {2*x/3};
+  \addplot[omMeth, thick, dashdotted, domain=0:1, samples=2] {5*x/6};
+  \legend{Second price (any $n$), First price $n = 2$, First price $n = 3$, First price $n = 6$}
+\end{axis}
+\end{tikzpicture}
+
+{\small Equilibrium bids with values uniform on $[0, 1]$. In the second-price auction each bidder bids her value. In the
+first-price auction she bids $(n - 1)/n$ of it: she shades her bid less when there are more rivals, since the highest of
+them is likely to be close to her.}
+\end{omfigure}
+
+A bidder who is averse to risk shades less: a higher bid lowers her gain if she wins but makes winning more likely,
+and she values that certainty. With \omterm{def:b2:expected-utility:crra}{constant relative risk aversion} $r$ the equilibrium bid becomes $(n - 1)v/(n - r)$
+(Bajari and Horta\c{c}su 2003, following Cox, Smith and Walker 1988), so a measured slope of bids on values reveals $r$.
+That is how the opening chart's slopes were estimated.
+
+\section{Revenue equivalence}\label{sec:b2:bayesian-games:revenue}
+
+Which format should a seller choose? In the first-price auction the winner pays her own, shaded, bid; in the
+second-price she pays a rival's unshaded one. The effects cancel.
+
+\begin{definition}[Revenue equivalence theorem]\label{def:b2:bayesian-games:revenue-equivalence}
+The \emph{revenue equivalence theorem}\index{revenue equivalence theorem} is the result that, with risk-neutral
+bidders whose values are independent draws from one distribution, every auction format in which the bidder with the
+highest value wins and a bidder with the lowest possible value expects to pay nothing gives the seller the same
+expected revenue.
+\end{definition}
+
+\begin{theorem}[Revenue equivalence]\label{thm:b2:bayesian-games:revenue}
+Under the assumptions of the definition, the first-price and \omterm{def:b2:bayesian-games:second-price}{second-price sealed-bid auctions} give the same expected
+revenue, and so does every other format satisfying them.
+\end{theorem}
+
+\admitted
+
+The proof is given in the Year 3 volume. For uniform values the two revenues can be computed directly. The highest of
+$n$ values uniform on $[0, 1]$ has expectation $n/(n + 1)$ and the second-highest $(n - 1)/(n + 1)$. The first-price auction yields the
+winner's bid, $(n - 1)/n$ times the highest value, whose expectation is $(n - 1)/(n + 1)$; the second-price yields the
+second-highest value, also $(n - 1)/(n + 1)$ (\cref{exo:b2:bayesian-games:11}). The listing checks this by simulation, and adds
+bidders who are averse to risk.
+
+\omcode{code/bachelor-2/14-bayesian-games/listings/auctions.py}{1}{19}{Revenue of first-price and second-price
+auctions, simulated with values uniform between 0 and 1.}\label{lst:b2:bayesian-games:auctions}
+
+\omoutput{code/bachelor-2/14-bayesian-games/outputs/auctions.txt}{Equal expected revenues; the first-price
+revenue varies less, and rises when bidders are averse to risk.}\label{out:b2:bayesian-games:auctions}
+
+% code: listings/auctions.py
+The two formats raise the same revenue on average but not the same risk for the seller: the first-price revenue
+varies about half as much, since it depends on one value and a shading that falls as the value rises. \omterm{def:b2:expected-utility:risk-aversion}{Risk aversion}
+breaks the equivalence: it raises bids in the first-price auction and leaves bidding one's value optimal in the
+second-price, so the first-price auction raises more.
+
+\begin{model}{Auction with independent private values}
+\assumes Risk-neutral bidders, values drawn independently from a known distribution, equilibrium play.
+\predicts Bidding one's value in the second-price auction; bids of $(n - 1)v/n$ in the first-price auction with uniform
+values; equal expected revenue.
+\tested Laboratory auctions with assigned values (Dyer, Kagel and Levin 1989, as analysed by Bajari and Horta\c{c}su
+2003).
+\breaks Bids above the prediction in first-price auctions, most with few bidders, which \omterm{def:b2:expected-utility:risk-aversion}{risk aversion} can explain;
+with common values, winning bids above the object's value (the \omterm{def:b2:bayesian-games:winners-curse}{winner's curse}).
+\end{model}
+
+\begin{record}[Bidding above the prediction]
+% ledger: b2:bh2003-design, b2:bh2003-t1
+In the experiments of Dyer, Kagel and Levin (1989), three groups of six business students bid for an object whose
+value to each of them was drawn between 0 and 30 dollars. Each submitted two bids, one for an auction with 3 bidders and
+one with 6, and a coin decided which applied. Bids were above the risk-neutral prediction: by 2.55 dollars on average,
+in absolute value, with 3 bidders and by 0.94 with 6. Estimates of the \omterm{def:b2:expected-utility:risk-aversion}{risk aversion} that would explain the bids with 3
+bidders are near 0.5, as in other auction experiments, but the bids with 6 imply much less \omterm{def:b2:expected-utility:risk-aversion}{risk aversion} in the same
+people, which \omterm{def:b2:expected-utility:risk-aversion}{risk aversion} alone cannot account for (Bajari and Horta\c{c}su 2003).
+\end{record}
+
+\section{Common values and the winner's curse}\label{sec:b2:bayesian-games:common}
+
+\begin{definition}[Common-value auction]\label{def:b2:bayesian-games:common-value}
+In a \emph{common-value auction}\index{common-value auction} the object is worth the same amount $V$ to every bidder,
+but no bidder knows $V$; each holds a private signal correlated with it, such as an estimate of the oil under a tract.
+\end{definition}
+
+Suppose bidder $i$'s signal is $s_i = V + \varepsilon_i$, with the errors $\varepsilon_i$ independent and uniform on $[-\bar\varepsilon, \bar\varepsilon]$. On its own a
+signal is unbiased: the expected value given $s_i$ is $s_i$. But a bidder who wins with the highest bid holds, if all bid
+alike, the highest signal, the one with the largest error. The highest of $n$ such errors has expectation
+$\bar\varepsilon\,(n - 1)/(n + 1)$ (\cref{exo:b2:bayesian-games:12}), so
+\[
+E[V \mid s_i = s \text{ and } s_i \text{ is the highest}] = s - \bar\varepsilon\,\frac{n - 1}{n + 1}.
+\]
+
+\begin{definition}[Winner's curse]\label{def:b2:bayesian-games:winners-curse}
+The \emph{winner's curse}\index{winner's curse} is the tendency of the winner of a \omterm{def:b2:bayesian-games:common-value}{common-value auction} to have
+overestimated the object's value, so that she pays more than it is worth, when bidders fail to allow for the
+information that winning reveals.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, xmin=0.5, xmax=12.5, ymin=0, ymax=1, width=0.6\linewidth, height=0.4\linewidth,
+    xlabel={Number of bidders $n$}, ylabel={Correction, share of $\bar\varepsilon$}, xtick={1,2,4,6,8,10,12}]
+  \addplot[omDef, thick, mark=*, mark size=1.6pt, samples at={1,...,12}] {(x - 1)/(x + 1)};
+\end{axis}
+\end{tikzpicture}
+
+{\small The amount by which the expected value of a common-value object falls short of the winner's signal, as a share of
+the largest possible error. With one bidder winning reveals nothing; with more, the winner is more likely to hold a signal
+far above the true value.}
+\end{omfigure}
+
+A rational bidder bids as if her signal were the highest, which lowers her bid, more so the more rivals there are. In a
+private-values auction more rivals mean bidding closer to one's value; in a \omterm{def:b2:bayesian-games:common-value}{common-value auction} they also mean that
+winning is worse news.
+
+\begin{record}[Oil leases and the winner's curse]
+% ledger: b2:thaler1988-oil, b2:thaler1988-jar
+Engineers at an oil company argued in 1971 that winners of offshore oil leases earned poor returns because they were the
+bidders who had most overestimated the oil (Capen, Clapp and Campbell 1971). The bids they reported were very dispersed: in
+the 1969 sale of Alaska North Slope tracts the winning bids summed to 900 million dollars and the second-highest to 370
+million, and the winning bid was at least twice the second on 77 per cent of tracts. A later study of leases in the Gulf
+of Mexico found that, of 18 firms or consortia that bid often, 12 would have earned more by scaling down all their bids,
+with a median optimal scaling of 0.68 (Hendricks, Porter and Boudreau 1987). In a classroom experiment, jars of coins worth
+8 dollars, unknown to the bidders, were auctioned 48 times: the bidders' mean estimate of the value was 5.13 dollars, but
+the mean winning bid was 10.01, a loss of 2.01 to the winner (Bazerman and Samuelson 1983). All three studies are as
+summarised by Thaler (1988).
+\end{record}
+
+\section{A first look at perfect Bayesian equilibrium}\label{sec:b2:bayesian-games:pbe}
+
+When a player with private information moves first, the others can learn from what she does. Take a job applicant
+who is Good or Poor, with probability one half each, and knows which. She chooses whether to obtain a certificate,
+which costs a Good applicant 1 and a Poor one 3. An employer sees whether she has the certificate, not her \omterm{def:b2:bayesian-games:type}{type}, and
+hires her at a wage of 2 or rejects her. Hiring a Good applicant is worth 1 to the employer, a Poor one $-1$, rejecting
+0.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, font=\footnotesize]
+  \node[circle, draw, fill=white, inner sep=1.6pt] (N) at (0,0) {};
+  \node[anchor=east] at (-0.15,0) {Nature};
+  \node[circle, fill=black, inner sep=1.4pt] (G) at (0,1.6) {};
+  \node[circle, fill=black, inner sep=1.4pt] (P) at (0,-1.6) {};
+  \draw[thick] (N) -- node[right] {Good, $\tfrac12$} (G);
+  \draw[thick] (N) -- node[right] {Poor, $\tfrac12$} (P);
+  \node[above] at (G.north) {applicant};
+  \node[below] at (P.south) {applicant};
+  \foreach \nm/\x/\y in {GC/-3.4/1.6, PC/-3.4/-1.6, GN/3.4/1.6, PN/3.4/-1.6}
+    \node[circle, fill=black, inner sep=1.4pt] (\nm) at (\x,\y) {};
+  \draw[thick] (G) -- node[pos=0.6, above] {Certificate} (GC);
+  \draw[thick] (P) -- node[pos=0.6, below] {Certificate} (PC);
+  \draw[thick] (G) -- node[pos=0.6, above] {None} (GN);
+  \draw[thick] (P) -- node[pos=0.6, below] {None} (PN);
+  \draw[densely dashed] (GC) -- (PC);
+  \draw[densely dashed] (GN) -- (PN);
+  \node[anchor=west] at (-3.3,0) {employer};
+  \node[anchor=east] at (3.3,0) {employer};
+  \node[anchor=north west] at (-3.3,1.5) {$[\mu]$};
+  \node[anchor=south west] at (-3.3,-1.5) {$[1 - \mu]$};
+  \node[anchor=north east] at (3.3,1.5) {$[\mu']$};
+  \node[anchor=south east] at (3.3,-1.5) {$[1 - \mu']$};
+  \foreach \nm/\dx/\hy/\ry/\hp/\rp/\side in {
+      GC/-1.5/2.4/0.8/{$(1, 1)$}/{$(-1, 0)$}/east, PC/-1.5/-0.8/-2.4/{$(-1, -1)$}/{$(-3, 0)$}/east,
+      GN/1.5/2.4/0.8/{$(2, 1)$}/{$(0, 0)$}/west, PN/1.5/-0.8/-2.4/{$(2, -1)$}/{$(0, 0)$}/west} {
+    \path (\nm) ++(\dx,0) coordinate (end);
+    \draw[thick] (\nm) -- node[above, sloped] {hire} (end |- 0,\hy) node[anchor=\side] {\hp};
+    \draw[thick] (\nm) -- node[below, sloped] {reject} (end |- 0,\ry) node[anchor=\side] {\rp};
+  }
+\end{tikzpicture}
+
+{\small The certificate game. Nature draws the applicant's \omterm{def:b2:bayesian-games:type}{type}; she chooses a certificate or none; the employer, who sees
+only that choice, hires or rejects. The dashed lines join the nodes the employer cannot tell apart, with her beliefs $\mu$
+and $\mu'$ that the applicant is Good. Payoffs are the applicant's first and the employer's second.}
+\end{omfigure}
+
+\begin{definition}[Perfect Bayesian equilibrium]\label{def:b2:bayesian-games:pbe}
+A \emph{perfect Bayesian equilibrium}\index{perfect Bayesian equilibrium} of a game in which players observe some
+actions but not others' \omterm{def:b2:bayesian-games:type}{types} is a profile of strategies together with beliefs at every point where a player moves
+without knowing the \omterm{def:b2:bayesian-games:type}{types}, such that each player's action is optimal given her beliefs and the others' strategies,
+and beliefs follow from the strategies by Bayes' rule wherever that rule applies.
+\end{definition}
+
+In one equilibrium the Good applicant obtains the certificate and the Poor one does not. Bayes' rule then gives the
+employer the beliefs $\mu = 1$ and $\mu' = 0$, so she hires with a certificate (1 is better than 0) and rejects without one. Each \omterm{def:b2:bayesian-games:type}{type} is
+content: the Good applicant earns $2 - 1 = 1$ with a certificate and 0 without, the Poor applicant $2 - 3 = -1$ and 0. The
+certificate separates the \omterm{def:b2:bayesian-games:type}{types}, though it teaches nothing.
+
+There is another. Neither \omterm{def:b2:bayesian-games:type}{type} obtains the certificate, and the employer, believing $\mu' = \tfrac12$, expects $\tfrac12 - \tfrac12 = 0$ from
+hiring and rejects. A certificate is never seen, so Bayes' rule says nothing about $\mu$; if the employer would believe a
+certified applicant to be Poor with probability above one half, she would reject her too, and no applicant has a
+reason to certify. Beliefs about actions that are never taken can sustain an equilibrium, and the signalling
+models of \cref{ch:b2:signalling-and-screening} return to the question of which beliefs are reasonable.
+
+\section{Exercises}\label{sec:b2:bayesian-games:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:bayesian-games:1}
+Three bidders with values 30, 50 and 80 take part in a second-price auction. Who wins, and what does she pay? If their
+values were drawn uniformly from $[0, 100]$, what would each bid in the first-price equilibrium, and who would win at what
+price?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:bayesian-games:2}
+Read the opening chart. How many of the eighteen subjects bid above the risk-neutral prediction with three bidders? With
+six? What was the average bid per dollar of value in each case?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:bayesian-games:3}
+Predict, then compute: the expected revenue of a first-price auction with values uniform on $[0, 1]$ and 2 bidders, then 10.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:bayesian-games:4}
+What laboratory result would refute the prediction that bidders bid their values in a second-price auction? What
+result would leave the prediction standing although bids differ from values?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:bayesian-games:5}
+Redo the Cournot example of \cref{sec:b2:bayesian-games:bne} with probability 0.25 that firm 2's cost is high.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:bayesian-games:6}
+Show by an example that bidding one's value is not a dominant strategy in a first-price auction.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:bayesian-games:7}
+Thirty per cent of fishing grounds are rich. A survey reports ``rich'' for 80 per cent of rich grounds and for 20 per
+cent of poor ones. What is the probability that a ground reported rich is rich? And one reported poor?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:bayesian-games:8}
+In the jar experiment of the record box, what was the winner's average loss? Bidders' estimates of the value were
+on average too low; why did the winners still pay too much?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:bayesian-games:9}
+With \omterm{def:b2:expected-utility:crra}{constant relative risk aversion} $r$ the first-price bid is $(n - 1)v/(n - r)$. Find the bid per unit of value with three
+bidders and $r = 0.5$. What $r$ would explain a slope of 0.75 with three bidders?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:bayesian-games:10}
+Derive the first-price equilibrium for values uniform on $[0, \bar v]$ and $n$ bidders, assuming a linear bid function, and show
+that no \omterm{def:b2:bayesian-games:type}{type} gains from any deviation.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:bayesian-games:11}
+Show that the highest of $n$ independent values uniform on $[0, 1]$ has expectation $n/(n + 1)$ and the second-highest $(n -
+1)/(n + 1)$, and deduce that both auction formats give the expected revenue $(n - 1)/(n + 1)$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:bayesian-games:12}
+Show that the highest of $n$ independent errors uniform on $[-\bar\varepsilon, \bar\varepsilon]$ has expectation $\bar\varepsilon(n - 1)/(n + 1)$.
+\end{exercise}
+
+\section{Problem: Brenland's fishing-licence auction}\label{sec:b2:bayesian-games:problem}
+
+\begin{problem}[{Weekend problem --- the fisheries office of Brenland, an invented economy, auctions a one-year
+licence to four fishing firms: how should they bid, which format raises more, and how should a firm bid when the
+licence is worth the same to all}]
+\label{pb:b2:bayesian-games:1}
+Each firm's value for the licence is private and drawn uniformly between 0 and 800 thousand dalens. Firms are risk
+neutral unless stated otherwise. Amounts are in thousands of dalens.
+
+\medskip
+\noindent\textbf{Part I --- Values and types.}
+\begin{enumerate}
+  \item What is a firm's \omterm{def:b2:bayesian-games:type}{type} in this auction?
+  \item What is the probability that a given firm has the highest value?
+  \item What is the expected highest value of the four?
+  \item What is the expected second-highest value?
+  \item What is the probability that a firm with value 600 has the highest value?
+  \item Why is this a private-values auction?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- First price.}
+\begin{enumerate}[resume]
+  \item Find the equilibrium bid function.
+  \item What does a firm with value 600 bid?
+  \item What is its expected payoff?
+  \item What is the office's expected revenue?
+  \item What would a firm with value 600 bid if all firms had \omterm{def:b2:expected-utility:risk-aversion}{risk aversion} $r = 0.5$?
+  \item Why does no firm bid its value?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Second price.}
+\begin{enumerate}[resume]
+  \item What should each firm bid?
+  \item What is the office's expected revenue?
+  \item What is the expected payoff of a firm with value 600?
+  \item The standard deviation of revenue is 98 in the first-price auction. In the second-price auction it is 160.
+    Which format would an office that dislikes risk prefer?
+  \item Which format raises more if the firms are averse to risk?
+  \item Which format is easier for a firm to bid in, and why might that matter?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- A common value.} Now the licence gives access to a fishing ground whose catch is worth the
+same amount $V$ to each firm. Each firm's survey gives a signal $s_i = V + \varepsilon_i$, with errors independent and uniform between
+$-100$ and $100$.
+\begin{enumerate}[resume]
+  \item A firm's signal is 500. What is its expected value of the licence?
+  \item What is its expected value if its signal turns out to be the highest of the four?
+  \item A firm bids in a second-price auction as if the value were its signal. What does it expect to lose, if it wins
+    with the highest signal, relative to bidding with the correction?
+  \item By how much should a firm reduce its estimate with eight bidders?
+  \item Why does the correction grow with the number of bidders?
+  \item State the result: the expected revenue of both formats with private values, and the correction to a naive bid with
+    a common value and four bidders.
+\end{enumerate}
+\end{problem}

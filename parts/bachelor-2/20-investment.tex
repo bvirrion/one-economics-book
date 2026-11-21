@@ -1,0 +1,395 @@
+\chapter{Investment}\label{ch:b2:investment}
+
+% figdata: recession (inv -31.4, cons -1.9); iy_summary (USA late 20.3)
+Investment is the most volatile part of spending. In the United States it has been about a fifth of GDP on average since
+1950, and from the end of 2007 to the middle of 2009 real private investment fell by 31 per cent while real consumption fell
+by 2 per cent. The theory of this chapter says that a firm invests when the market values its capital above
+what the capital costs to replace. The chart puts that to a first test on the data Grunfeld collected on eleven large
+American firms from 1935 to 1954.
+
+\begin{openingchart}{Gross investment against the market value of the firm, eleven United States firms, 1935--1954, each
+  divided by the firm's own average over the period (220 firm-years).}{statsmodels bundled data (public domain), grunfeld
+  (Grunfeld's data as recreated by Kleiber and Zeileis); our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.62\linewidth, height=0.5\linewidth, xmin=0, xmax=2.5, ymin=0, ymax=2.6,
+    xlabel={Market value, relative to the firm's average}, ylabel={Investment, relative to the firm's average}]
+  \addplot[only marks, mark=*, mark size=1.2pt, omDef, fill opacity=0.6]
+    table[x=v_rel, y=i_rel] {figdata/bachelor-2/20-investment/out/grunfeld.csv};
+  \addplot[omThm, thick, domain=0:2.5, samples=2] {0.93*x + 0.07};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: grunfeld_summary (n 220, firms 11, corr 0.57, slope 0.93)
+In years in which a firm's market value was high relative to its own average, it invested more: the correlation over the
+220 firm-years is 0.57, and the fitted line has a slope of 0.93. But the cloud is wide: at the same relative value, some
+firms invested half their average and others twice it. This chapter builds the theory that predicts the slope, and
+asks what else drives investment: uncertainty, which makes waiting valuable, and finance, whose role is disputed.
+
+\begin{recall}
+From the Year 1 volume: the rental price of capital and the marginal product of capital. From \cref{ch:b2:asset-prices}: the
+value of an asset as the present value of what it pays. From the mathematics volumes: systems of two differential
+equations and their phase diagrams.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:investment:symbols}
+$K$ is the capital stock and $I$ gross investment; $\delta$ the depreciation rate; $r$ the real interest rate; $p_K$ the price of a
+unit of capital; $q$ the value of a unit of installed capital relative to its price; $\chi$ the adjustment-cost parameter.
+\end{notation}
+
+\section{The user cost of capital}\label{sec:b2:investment:user-cost}
+
+A firm that buys a machine at price $p_K$ and holds it for a year gives up interest $rp_K$, loses $\delta p_K$ to wear, and gains $\pi_K p_K$ if the
+price of machines rises at rate $\pi_K$.
+
+\begin{definition}[User cost of capital]\label{def:b2:investment:user-cost}
+The \emph{user cost of capital}\index{user cost of capital} is the cost of holding one unit of capital for one period:
+$p_K(r + \delta - \pi_K)$, where $\pi_K$ is the rate of change of the price of capital goods.
+\end{definition}
+
+\begin{definition}[Desired capital stock]\label{def:b2:investment:desired-capital}
+The \emph{desired capital stock}\index{desired capital stock} is the stock at which the value of the marginal product of
+capital equals its user cost.
+\end{definition}
+
+With output $Y = AK^\alpha L^{1-\alpha}$ and output price 1, the marginal product is $\alpha Y/K$, so the desired stock is $K^* = \alpha Y/(p_K(r + \delta - \pi_K))$. With $\alpha = 0.3$, $Y = 1{,}000$, $p_K = 1$,
+$r = 0.05$, $\delta = 0.10$ and $\pi_K = 0$, the user cost is 0.15 and $K^* = 2{,}000$. A rise in the interest rate to 0.07 raises the user cost to 0.17 and lowers $K^*$ to 1,765.
+Taxes enter the same way: a tax on profits lowers the after-tax value of the marginal product, and allowances for
+depreciation or credits for investment lower the effective price $p_K$.
+
+The \omterm{def:b2:investment:desired-capital}{desired capital stock} says where the firm wants to be, not how fast it gets there. If the firm could adjust at no
+cost, a fall in the interest rate would produce an instant jump in the capital stock, an infinite rate of investment for
+a moment. Investment is in fact spread over years.
+
+\section{Adjustment costs and Tobin's \texorpdfstring{$q$}{q}}\label{sec:b2:investment:q}
+
+\begin{definition}[Adjustment cost]\label{def:b2:investment:adjustment-cost}
+An \emph{adjustment cost}\index{adjustment cost} is a cost of changing the capital stock over and above the price of the
+capital goods, such as installation, disruption and training, which rises more than in proportion to the speed of
+investment.
+\end{definition}
+
+Let the cost of investing $I$ with capital $K$ be $I + \tfrac{\chi}{2}(I/K - \delta)^2K$: the price of the goods, plus a convex cost that is zero when the firm only replaces
+worn capital. Let $q$ be the value to the firm, in present value, of one more unit of installed capital, measured relative to
+its price $p_K = 1$. The firm invests until the marginal cost of a unit, $1 + \chi(I/K - \delta)$, equals $q$:
+\begin{equation}\label{eq:b2:investment:q}
+\frac{I}{K} = \delta + \frac{q - 1}{\chi}.
+\end{equation}
+With $\chi = 10$ and $\delta = 0.08$, a firm with $q = 1.3$ invests 11 per cent of its capital a year; at $q = 1$ it only replaces what wears out.
+
+\begin{definition}[Tobin's q]\label{def:b2:investment:tobins-q}
+\emph{Tobin's q}\index{Tobin's q} is the ratio of the value of capital to its replacement cost. \emph{Marginal $q$} is the value
+of one more unit of installed capital over its price; \emph{average $q$} is the market value of the firm over the
+replacement cost of its whole capital stock.
+\end{definition}
+
+Marginal $q$ drives investment but cannot be observed; average $q$ can, from stock prices. When the firm has constant returns to
+scale in production and in \omterm{def:b2:investment:adjustment-cost}{adjustment costs} and takes prices as given, the two are equal, a result this book
+admits. The theory then says: regress investment on average $q$ and nothing else should matter.
+
+\begin{model}{$q$ theory of investment}
+\assumes Firms that maximise their market value, convex \omterm{def:b2:investment:adjustment-cost}{adjustment costs}, and (for the test) constant returns, so that
+average $q$, observed in stock prices, equals marginal $q$.
+\predicts Investment rises with $q$, and given $q$, nothing else, such as cash flow or sales, helps predict investment.
+\tested Within Grunfeld's firms, holding the capital stock fixed, investment rises with market value (the fixed-effects
+regression of \cref{exo:b2:investment:7}, 0.110 per dollar of value); the opening chart illustrates the same correlation.
+Market value is not $q$ here, so this is consistent with the theory rather than a test of it; the test of its second
+prediction is in the next field.
+\breaks The fit is low, and cash flow predicts investment given $q$, especially for some groups of firms (Fazzari,
+Hubbard and Petersen 1988); whether that reflects finance or mismeasured $q$ is debated (see the box below).
+\end{model}
+
+\section{The \texorpdfstring{$q$}{q} phase diagram}\label{sec:b2:investment:phase}
+
+Two equations describe the dynamics. The capital stock grows when $q > 1$: $\dot K = K(q - 1)/\chi$ by \eqref{eq:b2:investment:q}. The value of installed capital earns its
+marginal product plus capital gains, and must yield the required return: $(r + \delta)q = \mathit{MPK}(K) + \dot q$, near the steady state, where the
+adjustment-cost term is negligible. So $\dot q = 0$ where $q = \mathit{MPK}(K)/(r + \delta)$, a downward-sloping curve, and $\dot K = 0$ where $q = 1$. In the steady state $\mathit{MPK}(K^*) = r + \delta$: the \omterm{def:b2:investment:desired-capital}{desired
+capital stock} of the user-cost section.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, scale=0.95]
+  \draw[->] (0,0) -- (7,0) node[below] {$K$};
+  \draw[->] (0,0) -- (0,4.6) node[left] {$q$};
+  \draw[omThm, thick] (0,2) -- (6.6,2) node[right, font=\footnotesize] {$\dot K = 0$};
+  \draw[omDef, thick, domain=1:6.4, samples=40] plot (\x, {6/(\x+0.5)}) node[right, font=\footnotesize] {$\dot q = 0$};
+  \draw[omMeth, very thick, domain=1.1:6.4, samples=40] plot (\x, {2 + 0.9*(2.5-\x)/(\x-0.3)});
+  \node[omMeth, font=\footnotesize, anchor=west] at (1.85,3.45) {saddle path};
+  \draw[omMeth, thin] (1.85,3.4) -- (1.3,3.1);
+  \node[eqpoint] at (2.5,2) {};
+  \draw[guide] (2.5,2) -- (2.5,0) node[below] {$K^*$};
+  \node[left] at (0,2) {1};
+  \draw[->, thick] (1.2,1.1) -- (1.2,0.65);
+  \draw[->, thick] (1.2,1.1) -- (0.75,1.1);
+  \draw[->, thick] (5.3,3.4) -- (5.3,3.85);
+  \draw[->, thick] (5.3,3.4) -- (5.75,3.4);
+  \draw[->, thick] (5.3,1.5) -- (5.3,1.95);
+  \draw[->, thick] (5.3,1.5) -- (4.85,1.5);
+  \draw[->, thick] (1.6,2.45) -- (1.6,2.0);
+  \draw[->, thick] (1.6,2.45) -- (2.05,2.45);
+\end{tikzpicture}
+
+{\small The $q$ phase diagram. Above $q = 1$ the capital stock grows; above the $\dot q = 0$ curve $q$ rises. Only the saddle path, which slopes
+down through the steady state, leads to it: a firm with little capital has a high $q$, invests, and $q$ falls as capital
+accumulates.}
+\end{omfigure}
+
+A firm with less capital than $K^*$ has a high marginal product, so a high $q$, and invests; as capital builds up, $q$ falls back to 1. The
+diagram shows what a change in policy or prices does. Take a permanent cut in the tax on profits, announced and in force
+at once: the after-tax marginal product rises, and the $\dot q = 0$ curve shifts up. Capital cannot jump, but $q$, a price set in a
+market, can: it jumps to the new saddle path, and the firm invests until capital reaches its new, higher steady state.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, scale=1.15]
+  \draw[->] (0,0) -- (7,0) node[below] {$K$};
+  \draw[->] (0,0) -- (0,4.6) node[left] {$q$};
+  \draw[omThm, thick] (0,2) -- (6.6,2) node[right, font=\footnotesize] {$\dot K = 0$};
+  \draw[omDef, thick, domain=1:6.4, samples=40] plot (\x, {6/(\x+0.5)});
+  \node[omDef, font=\footnotesize, anchor=west] at (6.4,0.75) {before};
+  \draw[omDef, thick, dashed, domain=1.6:6.4, samples=40] plot (\x, {8/(\x+0.5)});
+  \node[omDef, font=\footnotesize, anchor=west] at (6.4,1.15) {after};
+  \draw[omMeth, very thick, domain=2.5:5.6, samples=40] plot (\x, {2 + 0.6*(3.5-\x)/(\x-1.5)});
+  \node[omMeth, font=\footnotesize, anchor=south west] at (4.3,2.0) {new saddle path};
+  \node[eqpoint] at (2.5,2) {};
+  \node[eqpoint] at (3.5,2) {};
+  \node[font=\footnotesize, below] at (2.5,1.95) {$E_0$};
+  \node[font=\footnotesize, below] at (3.6,1.95) {$E_1$};
+  \node[left] at (0,2) {1};
+  \draw[->, thick, black!70] (2.5,2.06) -- (2.5,2.56);
+  \node[font=\footnotesize, anchor=east] at (2.3,2.3) {jump};
+  \draw[->, thick, black!70] (2.62,2.66) -- (3.3,2.2);
+\end{tikzpicture}
+
+{\small A permanent cut in the tax on profits. The $\dot q = 0$ curve shifts up; the capital stock starts at $E_0$, $q$ jumps at once to the new
+saddle path, and capital and $q$ move together along it to the new steady state $E_1$, with $q$ back at 1.}
+\end{omfigure}
+
+The same diagram gives the other cases. A cut announced today but in force only next year makes $q$ jump today, by less, and
+investment start before the cut. A temporary cut raises $q$ by less than a permanent one, and so raises investment by less:
+the firm will not install capital that costs adjustment to install and then wants to shed.
+
+\section{Irreversible investment under uncertainty}\label{sec:b2:investment:irreversible}
+
+Much capital, once installed, cannot be resold except at a large loss: a berth, a mine, a machine built for one plant.
+Then investing today has a cost that the user cost misses: it gives up the chance of waiting to see.
+
+\begin{definition}[Option value of waiting]\label{def:b2:investment:option-value}
+The \emph{option value of waiting}\index{option value of waiting} is the amount by which the value of being able to
+decide later on an irreversible investment exceeds the value of deciding now.
+\end{definition}
+
+Take a project that costs 100, sunk once spent, earns a profit $x_0$ this year, and from next year on earns $x_0(1 + u)$ or $x_0(1 - u)$ for ever,
+equally likely; $r = 0.10$. Investing now is worth $11x_0 - 100$, since 1 a year for ever from today is worth $1.1/0.1 = 11$. The net present value is positive
+when $x_0 > 9.09$. Waiting a year, the firm invests only in the good state. With $x_0 = 10$ and $u = 0.5$, investing now is worth 10; waiting is worth
+$\tfrac12(11 \times 15 - 100)/1.1 = 29.55$, since in the bad state, with profit 5, the firm does not invest. Though the project has a positive net present value, the firm waits.
+The listing finds, for each degree of uncertainty $u$, the profit above which the firm invests at once.
+
+\omcode{code/bachelor-2/20-investment/listings/wait.py}{1}{31}{The profit that triggers an irreversible investment, for
+four degrees of uncertainty.}\label{lst:b2:investment:wait}
+
+\omoutput{code/bachelor-2/20-investment/outputs/wait.txt}{With no uncertainty the firm invests as soon as the net present
+value is positive; with more uncertainty it waits for a higher profit.}\label{out:b2:investment:wait}
+
+% code: listings/wait.py
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=18, ymin=-40, ymax=110, width=0.62\linewidth,
+    height=0.42\linewidth, xlabel={Profit this year, $x_0$}, ylabel={Value}, xtick={0,9.09,15.58},
+    xticklabels={0,9.09,15.58}, legend style={at={(1.03,0.5)}, anchor=west}]
+  \addplot[omDef, very thick, domain=0:18, samples=2] {11*x - 100};
+  \addlegendentry{Invest now}
+  \addplot[omThm, very thick, domain=0:18, samples=80] {max(0, (16.5*x - 100)/2.2) + max(0, (5.5*x - 100)/2.2)};
+  \addlegendentry{Wait a year}
+  \draw[black!40] (axis cs:0,0) -- (axis cs:18,0);
+  \node[eqpoint] at (axis cs:15.584,71.43) {};
+  \draw[guide] (axis cs:15.584,71.43) -- (axis cs:15.584,-40);
+  \draw[guide] (axis cs:9.09,0) -- (axis cs:9.09,-40);
+\end{axis}
+\end{tikzpicture}
+
+{\small The option-value threshold, $u = 0.5$. Investing now has a positive net present value above a profit of 9.09, but waiting is worth
+more until the profit reaches 15.58, where the two lines cross.}
+\end{omfigure}
+
+The threshold rises with uncertainty: 11.48 when $u = 0.25$, 15.58 when $u = 0.5$, 24.24 when $u = 0.75$. Two predictions follow. In more uncertain times firms invest
+less, and they respond less to a given rise in demand, because demand must cross a higher threshold before they act.
+
+\begin{model}{Irreversible investment}
+\assumes Investment that cannot be undone without loss, uncertainty about future profits that time resolves, and the
+possibility of delay.
+\predicts Firms wait for profits well above the level at which the net present value turns positive; higher uncertainty
+lowers investment and its response to demand.
+\tested In a panel of firms, moving from the lower to the upper quartile of uncertainty typically halves the first-year
+response of investment to a demand shock (Bloom, Bond and Van Reenen 2007).
+\breaks When investment can be resold, when waiting lets a competitor in first, or when the uncertainty is not resolved by
+waiting: then the option value shrinks.
+\end{model}
+
+\section{Financing constraints}\label{sec:b2:investment:finance}
+
+\begin{definition}[Financing constraint]\label{def:b2:investment:financing-constraint}
+A firm faces a \emph{financing constraint}\index{financing constraint} when external funds, from lenders or new shares,
+cost it more than internal funds, so that its investment depends on its own cash flow as well as on the value of the
+investment.
+\end{definition}
+
+If lenders know less about a project than the firm, as in \cref{ch:b2:adverse-selection}, external finance carries a premium, and a firm with
+little cash may pass up projects with $q > 1$. The test regresses investment on $q$ and on cash flow: under $q$ theory alone, cash flow
+should not matter.
+
+\begin{debate}[Do financing constraints drive investment?]
+% ledger: b2:fhp1988, b2:kz1997
+Fazzari, Hubbard and Petersen (1988) found that investment responded strongly to cash flow, given $q$, among fast-growing firms
+that paid no dividends, whose $q$ stayed high for long periods: firms, they argued, that could not raise outside funds.
+Kaplan and Zingales (1997) analysed in depth the 49 low-dividend firms of that study: in only 15 per cent of
+firm-years was there some question whether the firm could find funds to invest more, and the firms that appeared least
+constrained had the greatest sensitivity of investment to cash flow. A high sensitivity, they concluded, cannot be read as
+evidence of a constraint. The two readings differ on what the cash-flow coefficient measures; the evidence so far does not
+settle how much investment \omterm{def:b2:investment:financing-constraint}{financing constraints} hold back, and for which firms.
+\end{debate}
+
+\section{Inventories and housing}\label{sec:b2:investment:housing}
+
+Inventories, the goods firms hold in stock, are a small part of investment but a large part of its swings, since a firm
+that expects sales to fall cuts production below sales and runs its stocks down. Housing is capital owned by households,
+and the $q$ logic applies to it: when house prices are high relative to the cost of building, construction rises.
+
+\begin{record}[Housing investment around 2006]
+% figdata: house_summary (rise_96_06 49.4, fall_06_12 -25.8, iy_2006 22.9, iy_2010 18)
+In the United States, house prices (Jord\`a--Schularick--Taylor database) deflated by the BLS consumer price index rose by 49 per cent between 1996 and 2006, then fell by 26
+per cent by 2012. Total investment, of which housing is a part, went from 22.9 per cent of GDP in 2006 to 18.0 per cent in 2010.
+\end{record}
+
+The record is one episode. Over a longer run, the share of output that economies invest has varied widely.
+
+\begin{omchart}{Gross investment as a share of GDP, per cent, United States, Germany and Japan, 1870--2020; gaps where
+  the series are missing.}{Jord\`a--Schularick--Taylor Macrohistory Database (iy)}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.8\linewidth, height=0.42\linewidth, xmin=1870, xmax=2020, ymin=0, ymax=40,
+    xlabel={Year}, ylabel={Per cent of GDP}, xtick={1880,1900,1920,1940,1960,1980,2000,2020},
+    xticklabel style={/pgf/number format/1000 sep=}, unbounded coords=jump, legend style={at={(0.5,-0.3)},
+    anchor=north, legend columns=3, /tikz/every even column/.append style={column sep=10pt}}]
+  \addplot[omDef, thick] table[x=year, y=USA] {figdata/bachelor-2/20-investment/out/iy.csv};
+  \addplot[omThm, thick, dashed] table[x=year, y=DEU] {figdata/bachelor-2/20-investment/out/iy.csv};
+  \addplot[omMeth, thick, dotted] table[x=year, y=JPN] {figdata/bachelor-2/20-investment/out/iy.csv};
+  \legend{United States, Germany, Japan}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: iy_summary (USA 16.9 then 20.3; DEU 12.8 then 23.4, peak 29.8 in 1964; JPN 15.5 then 27.7, peak 36.5 in 1973)
+Before 1914 all three invested between about 13 and 17 per cent of GDP on average; since 1950 the averages are 20.3 per cent in the
+United States, 23.4 in Germany and 27.7 in Japan, where the share peaked at 36.5 per cent in 1973.
+
+\section{Exercises}\label{sec:b2:investment:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:investment:1}
+Read the opening chart. What does $q$ theory predict for the relation it shows, and what in the chart is not explained by
+market value?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:investment:2}
+A machine costs 200; the interest rate is 4 per cent, depreciation 6 per cent, and machine prices rise 1 per cent a year.
+Compute the user cost.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:investment:3}
+Read the chart of investment shares. When did Japan's share peak, and how do the pre-1914 and post-1950 averages compare?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:investment:4}
+What observation in a panel of firms would falsify the prediction of $q$ theory that, given $q$, nothing else predicts
+investment? Does the debate box report one?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:investment:5}
+With $\alpha = 0.3$, $Y = 1{,}000$ and user cost 0.15, the \omterm{def:b2:investment:desired-capital}{desired capital stock} is 2,000. Predict, then compute, the desired stock if the interest
+rate rises by two points.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:investment:6}
+With $\chi = 10$ and $\delta = 0.08$, find the investment rate when $q = 1.3$ and when $q = 0.9$. What does a $q$ below 1 mean?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:investment:7}
+\textbf{(D)} On Grunfeld's data, regress investment on market value and capital, first pooled, then with a constant for
+each firm. Report the coefficients and explain why they differ.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:investment:8}
+Use the phase diagram to predict the path of $q$ and investment after a permanent rise in profits announced today to take
+effect in one year.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:investment:9}
+In the project of the irreversible-investment section, let $u = 0.25$ and $x_0 = 10$. Should the firm invest now?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:investment:10}
+Derive \eqref{eq:b2:investment:q} from the cost of investment $I + \tfrac{\chi}{2}(I/K - \delta)^2K$ and the value $q$ of a unit of installed capital.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:investment:11}
+For the project of the irreversible-investment section, show that while the bad state does not invest, the trigger
+profit is $x^* = C(1 - 1/k)/(L(1 - (1 + u)/k))$, where $C$ is the cost of the project, $k = 2(1 + r)$ and $L = (1 + r)/r$, and that it rises with $u$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:investment:12}
+Suppose cash flow today signals higher profits in future years, and the stock market's $q$ measures marginal $q$ with error.
+Explain why cash flow may then predict investment given measured $q$ even for a firm with no \omterm{def:b2:investment:financing-constraint}{financing constraint}.
+\end{exercise}
+
+\section{Problem: The Brenmoor container terminal}\label{sec:b2:investment:problem}
+
+\begin{problem}[{Weekend problem --- the Brenmoor container terminal decides how many cranes to own, how fast to buy them, and
+when to build an irreversible new berth}]
+\label{pb:b2:investment:1}
+Amounts are in millions of dalens.
+
+\medskip
+\noindent\textbf{Part I --- The user cost.} A crane costs 50; the interest rate is 6 per cent, cranes depreciate at 8 per cent a
+year and crane prices rise 2 per cent a year. The marginal revenue of the $K$th crane is $20 - K$ a year.
+\begin{enumerate}
+  \item What is the user cost of a crane?
+  \item How many cranes does the terminal want?
+  \item The interest rate rises to 8 per cent. What are the user cost and the desired stock?
+  \item Instead, crane prices stop rising. What is the user cost?
+  \item Instead, a subsidy lowers the price of a crane to 45. What is the user cost, and the desired stock?
+  \item Why does depreciation enter the user cost even though no money is paid out for it?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Adjustment costs and $q$.} The terminal owns 10 cranes; its shares are worth 900. Take $\chi = 10$ and
+$\delta = 0.08$.
+\begin{enumerate}[resume]
+  \item What is its average $q$?
+  \item Under what condition does average $q$ equal marginal $q$?
+  \item Taking them equal, what is its investment rate, and how many cranes a year does it buy?
+  \item What would it invest at $q = 1$?
+  \item At $q = 0.8$?
+  \item Why does the terminal not buy the four extra cranes it wants at once?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- An irreversible berth.} A new berth costs 100, cannot be resold, and earns 12 this year. From next
+year it earns 18 or 6 a year for ever, equally likely. The interest rate is 10 per cent.
+\begin{enumerate}[resume]
+  \item What is the net present value of building now?
+  \item What is the value of waiting a year?
+  \item What is the \omterm{def:b2:investment:option-value}{option value of waiting}?
+  \item What should the terminal do?
+  \item If the berth could be resold at its cost, what would it do?
+  \item If next year's earnings were 15 or 9 instead, what would waiting be worth, and what should it do?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- The trigger.} Earnings next year are $x_0(1 + u)$ or $x_0(1 - u)$.
+\begin{enumerate}[resume]
+  \item At what profit $x_0$ is the net present value of building now zero?
+  \item With $u = 0.5$, at what profit does the terminal build at once?
+  \item With $u = 0.75$?
+  \item Why do several terminals that face a rise in uncertainty together lower aggregate investment?
+  \item What evidence would contradict the prediction of Question 22?
+  \item State the result: the \omterm{def:b2:investment:option-value}{option value of waiting} at a profit of 12, and the profit that triggers investment, against
+    the net-present-value rule.
+\end{enumerate}
+\end{problem}

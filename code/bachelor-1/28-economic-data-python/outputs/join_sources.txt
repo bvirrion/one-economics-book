@@ -1,0 +1,8 @@
+$ python join_sources.py
+_merge
+both          178
+left_only      69
+right_only      7
+Name: count, dtype: int64
+only in the World Bank table: ['AFE', 'AFG', 'AFW', 'AND', 'ARB', 'CEB', 'CSS', 'EAP']
+only in the Penn table: ['AIA', 'MSR', 'SSD', 'TWN', 'VEN', 'VGB', 'YEM']

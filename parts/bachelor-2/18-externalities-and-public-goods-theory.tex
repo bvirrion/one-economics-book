@@ -1,0 +1,520 @@
+\chapter{Externalities and Public Goods: The Formal Theory}\label{ch:b2:externalities-and-public-goods-theory}
+
+Burning coal with sulphur in it releases sulphur dioxide, which forms fine particles that people breathe and acid that
+falls with the rain. The plant that burns the coal does not pay for that harm. From 1995 the most polluting American power plants needed a
+permit, an allowance, for every ton they emitted, and from 2000 all large plants shared a national cap. The chart
+shows what happened to emissions.
+
+\begin{openingchart}{Sulphur-dioxide emissions in the United States, million tonnes a year, 1970--2023: electricity and heat
+  production, and all other sources. Dashed lines: the start of the allowance programme's first phase (1995) and of
+  its national cap (2000).}{Community Emissions Data System (CEDS), emissions by country and sector}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.82\linewidth, height=0.42\linewidth, xmin=1970, xmax=2023, ymin=0, ymax=19,
+    xlabel={Year}, ylabel={Million tonnes}, xtick={1970,1980,1990,2000,2010,2020},
+    xticklabel style={/pgf/number format/1000 sep=}, legend style={at={(0.5,-0.3)}, anchor=north,
+    legend columns=2, /tikz/every even column/.append style={column sep=10pt}}]
+  \addplot[omDef, very thick] table[x=year, y=power]
+    {figdata/bachelor-2/18-externalities-and-public-goods-theory/out/so2.csv};
+  \addplot[omThm, thick, dashed] table[x=year, y=other]
+    {figdata/bachelor-2/18-externalities-and-public-goods-theory/out/so2.csv};
+  \draw[black!50, dashed] (axis cs:1995,0) -- (axis cs:1995,19);
+  \draw[black!50, dashed] (axis cs:2000,0) -- (axis cs:2000,19);
+  \legend{Electricity and heat, All other sources}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: so2_summary (power_1990 14.76, power_1995 11.91, power_2000 11.17, power_2010 4.88, power_last 0.79, power_fall_pct 95, last 2023)
+In this series, emissions from electricity and heat fell from 14.8 million tonnes in 1990 to 11.9 in 1995, 11.2 in 2000,
+4.9 in 2010 and 0.8 in 2023, a fall of 95 per cent. Emissions from all other sources had fallen earlier. Later rules on the
+same pollutant, which required further cuts state by state and limited trading between states, also lowered emissions
+(Schmalensee and Stavins 2013): the chart alone cannot say how much of the fall each rule caused.
+
+This chapter states the theory behind such programmes: why an external effect makes a \omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium}
+inefficient, the three classical remedies (a tax, permits and bargaining), how to choose between a price and a quantity
+when costs are uncertain, and the parallel theory of \omterm{def:b2:externalities-and-public-goods-theory:public-good}{public goods}, including a mechanism that makes people state their
+values truthfully. It ends with the ways public remedies themselves fail.
+
+\begin{recall}
+From the school volumes: externalities, \omterm{def:b2:externalities-and-public-goods-theory:public-good}{public goods}, the \omterm{def:b2:externalities-and-public-goods-theory:corrective-tax}{corrective tax} and the tragedy of the commons. From
+\cref{ch:b2:exchange-economies,ch:b2:welfare-theorems}: \omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium} and the first welfare theorem. From
+\cref{ch:b2:static-games}: voluntary contributions to a \omterm{def:b2:externalities-and-public-goods-theory:public-good}{public good}.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:externalities-and-public-goods-theory:symbols}
+$E$ is a quantity of emissions; $\mathit{MB}(E)$ the polluter's marginal benefit of emitting, equal to its marginal cost of
+abatement; $\mathit{MD}(E)$ the marginal damage to others. $G$ is a quantity of a \omterm{def:b2:externalities-and-public-goods-theory:public-good}{public good}, $v_i(G)$ person $i$'s benefit from it, and
+$c(G)$ its cost.
+\end{notation}
+
+\section{An external effect in a competitive economy}\label{sec:b2:externalities-and-public-goods-theory:inefficiency}
+
+\begin{definition}[Externality]\label{def:b2:externalities-and-public-goods-theory:externality}
+An \emph{externality}\index{externality} is an effect of one agent's consumption or production on another agent's
+utility or production that does not pass through prices.
+\end{definition}
+
+The first welfare theorem (\cref{ch:b2:welfare-theorems}) assumed that each agent's utility or output depends only on
+what that agent buys and sells. An \omterm{def:b2:externalities-and-public-goods-theory:externality}{externality} breaks the assumption, and with it the theorem. Take a mill whose
+emissions $E$ are a by-product of its output, so that it gains $\mathit{MB}(E)$, decreasing, from a further unit of emissions; and a
+fishery downstream that loses $\mathit{MD}(E)$, increasing, from it. Utility is quasi-linear in money, so surplus can be added.
+
+\begin{proposition}[Competitive equilibrium with an externality is inefficient]\label{prop:b2:externalities-and-public-goods-theory:inefficient}
+If the mill chooses emissions to maximise its own profit and $\mathit{MD}(E) > 0$, it emits more than the level $E^*$ that maximises total
+surplus, defined by $\mathit{MB}(E^*) = \mathit{MD}(E^*)$.
+\end{proposition}
+
+\begin{proof}
+The mill emits until its own marginal benefit is zero: $\mathit{MB}(E_0) = 0$. Total surplus $\int_0^E (\mathit{MB} - \mathit{MD})$ is maximised where $\mathit{MB} = \mathit{MD}$. At $E_0$,
+$\mathit{MB} - \mathit{MD} = -\mathit{MD}(E_0) < 0$, so a small cut in emissions raises surplus. Since $\mathit{MB} - \mathit{MD}$ is decreasing, it is zero at a unique $E^*$ below
+$E_0$.
+\end{proof}
+
+Take $\mathit{MB}(E) = 120 - 2E$ and $\mathit{MD}(E) = E$, in thousands of dalens per tonne. The mill emits 60 tonnes; the efficient level is 40, where $120 -
+2E = E$. Between 40 and 60 each tonne does more harm than good, and the surplus lost is the triangle between the two curves, $\int_{40}^{60}(3E - 120)\,dE = 600$.
+
+\section{A tax and permits}\label{sec:b2:externalities-and-public-goods-theory:tax}
+
+\begin{definition}[Corrective tax]\label{def:b2:externalities-and-public-goods-theory:corrective-tax}
+A \emph{corrective tax}\index{corrective tax} is a tax on an activity equal to the marginal external damage it causes at the
+efficient level, so that the agent's private cost equals the social cost.
+\end{definition}
+
+\begin{definition}[Tradable emission permit]\label{def:b2:externalities-and-public-goods-theory:permit}
+A \emph{tradable emission permit}\index{tradable emission permit} is a right to emit one unit of a pollutant in a period,
+which its holder may use, sell or keep; the government fixes the total number.
+\end{definition}
+
+A tax of $t = \mathit{MD}(E^*) = 40$ a tonne makes the mill emit where $\mathit{MB}(E) = 40$, which is 40 tonnes: the efficient level. Alternatively the
+government can issue 40 permits. If the mill must buy them, their price settles where the mill's marginal benefit of
+the fortieth tonne equals the price, again 40. With one polluter the two instruments are the same, one fixing the price and
+letting the quantity follow, the other the reverse. With many polluters, both have the property that matters most: every
+polluter abates until its marginal cost of abatement equals the same price, so a given total is reached at least cost
+(\cref{exo:b2:externalities-and-public-goods-theory:6}). Who pays differs: a tax and auctioned permits raise revenue; permits
+given away free hand their value to the polluters, without changing the outcome.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=66, ymin=0, ymax=130, width=0.6\linewidth,
+    height=0.45\linewidth, xlabel={$E$: tonnes emitted}, ylabel={Thousands of dalens a tonne},
+    xtick={0,40,60}, ytick={40,120}, legend style={at={(1.03,0.5)}, anchor=west}]
+  \addplot[fill=omDef!15, draw=none, forget plot] coordinates {(40,40) (60,60) (60,0)} -- cycle;
+  \addplot[omDef, very thick, domain=0:60, samples=2] {120 - 2*x};
+  \addplot[omThm, very thick, dashed, domain=0:66, samples=2] {x};
+  \addplot[black!60, thin, domain=0:66, samples=2] {40};
+  \node[eqpoint] at (axis cs:40,40) {};
+  \node[font=\footnotesize] at (axis cs:55,22) {loss};
+  \legend{Mill's marginal benefit, Marginal damage, Tax of 40}
+\end{axis}
+\end{tikzpicture}
+
+{\small A polluter and a \omterm{def:b2:externalities-and-public-goods-theory:corrective-tax}{corrective tax}. Unregulated, the mill emits until its marginal benefit is zero, at 60 tonnes; the
+efficient level is 40, where marginal benefit equals marginal damage. A tax of 40 a tonne makes the mill stop there. The
+shaded triangle is the surplus lost without the tax.}
+\end{omfigure}
+
+\begin{record}[The sulphur-dioxide permit market]
+% ledger: b2:ss2013-design, b2:ss2013-performance, b2:ss2013-benefits
+The 1990 amendments to the United States Clean Air Act aimed to cut annual sulphur-dioxide emissions by 10 million tons from
+their 1980 level. From 1995 the 263 most polluting coal-fired units needed allowances; from 2000 about 3{,}200 units shared a
+cap of 8.95 million tons a year, half the 1980 level. Allowances were given free, and could be traded or banked. Emissions
+from power plants fell 36 per cent between 1990 and 2004 while coal-fired generation rose 25 per cent, and the cap was reached
+in 2007. With continuous monitoring and a fine of 2{,}000 dollars a ton, compliance was nearly complete. Estimates put the
+saving against rules that prescribed the means of abatement at between 15 and 90 per cent, and the annual benefits, mostly
+from fewer deaths from fine particles, at 59 to 116 billion dollars against costs of 0.5 to 2 billion (Schmalensee and Stavins
+2013).
+\end{record}
+
+\begin{measure}[How emissions are counted]
+% ledger: b2:hoesly2018, b2:ss2013-performance
+Most emissions are not measured at the chimney but estimated: the fuel burned in each sector is multiplied by an emission
+factor, the tonnes of pollutant per unit of fuel given the technology, and the results are reconciled with national
+inventories. The series in the opening chart is built this way, consistently for all years and countries; its recent
+years are the most uncertain (Hoesly et al.\ 2018). Large American power plants under the permit programme measured their
+emissions continuously, which made a cap enforceable (Schmalensee and Stavins 2013). Different series of the same
+emissions differ in what they cover and how they estimate, so levels should be compared only within one series.
+\end{measure}
+
+\begin{model}{Corrective tax and permits}
+\assumes A known marginal damage; polluters that minimise cost; emissions that can be measured; a government able to set
+and keep a tax rate or a cap.
+\predicts Emissions fall to the level where marginal abatement cost equals the tax or permit price, at least total cost
+for that level; abatement moves to the polluters who can abate most cheaply.
+\tested The United States sulphur-dioxide market: the cap was met early and at well below the cost of prescriptive rules
+(Schmalensee and Stavins 2013).
+\breaks When damage depends on where the pollutant is emitted, so that a tonne is not a tonne everywhere; and when the
+government changes the rules, as in the collapse of the same market after 2008.
+\end{model}
+
+\section{Bargaining: the Coase theorem}\label{sec:b2:externalities-and-public-goods-theory:coase}
+
+\begin{definition}[Transaction cost]\label{def:b2:externalities-and-public-goods-theory:transaction-cost}
+A \emph{transaction cost}\index{transaction cost} is a cost of making an exchange other than the price: finding the
+other party, negotiating, writing and enforcing the agreement.
+\end{definition}
+
+\begin{definition}[Coase theorem]\label{def:b2:externalities-and-public-goods-theory:coase}
+The \emph{Coase theorem}\index{Coase theorem} states that if property rights over an external effect are clearly
+assigned, \omterm{def:b2:externalities-and-public-goods-theory:transaction-cost}{transaction costs} are zero and utility is quasi-linear, bargaining between the parties reaches the efficient
+level of the effect whichever party holds the right; the assignment affects only who pays whom.
+\end{definition}
+
+\begin{proposition}[The Coase theorem]\label{prop:b2:externalities-and-public-goods-theory:coase}
+With quasi-linear utility and costless bargaining that exhausts the gains from trade, the mill and the fishery agree on $E^*$
+whether the mill has the right to pollute or the fishery the right to clean water.
+\end{proposition}
+
+\begin{proof}
+With quasi-linear utility, money moves surplus one for one between the parties, so any agreement that does not maximise
+their joint surplus $\int_0^E (\mathit{MB} - \mathit{MD})$ can be improved for both by changing $E$ toward the maximiser and dividing the gain. Bargaining
+that exhausts the gains therefore ends at $E^*$, which by \cref{prop:b2:externalities-and-public-goods-theory:inefficient} does not depend on who
+holds the right. The right fixes the starting point, $E_0$ or 0, and so the direction of the payment: the fishery pays the
+mill to cut from $E_0$, or the mill pays the fishery for permission to emit up to $E^*$.
+\end{proof}
+
+In the example, if the mill has the right, cutting from 60 to 40 tonnes costs it $\int_{40}^{60}(120 - 2E)\,dE = 400$ and saves the fishery
+$\int_{40}^{60}E\,dE = 1{,}000$; any payment between 400 and 1{,}000 makes both better off. The theorem's lesson is less that bargaining
+solves externalities than that the obstacles to bargaining are the problem: many parties, private information about
+costs and damages, and the cost of enforcing an agreement. Where these are small, private agreements appear.
+
+\begin{record}[Bees and orchards]
+% ledger: b2:cheung1973
+Pollination by bees is a textbook example of an \omterm{def:b2:externalities-and-public-goods-theory:externality}{externality} between beekeepers and fruit growers. A survey in the state of
+Washington in spring 1972, of nine beekeepers with about 10{,}000 colonies, found it handled by contract. Hives are moved by
+truck from farm to farm, about 2.2 crops a year. Growers of crops that need pollination but yield little honey, such as
+cherries, pay beekeepers a pollination fee; for crops that yield honey but need no pollination, such as mint, beekeepers pay
+the farmer a rent, mostly in honey. Where the hives on one orchard also pollinate the neighbours', a custom replaces
+contracts among the many neighbours: each grower keeps or hires as many hives per acre as the orchards around him (Cheung
+1973).
+\end{record}
+
+\begin{model}{Coase bargaining}
+\assumes Clearly assigned rights; few parties who know one another's costs and damages; agreements that can be enforced;
+quasi-linear utility.
+\predicts The efficient level of the external effect whatever the assignment of rights; payments in the direction the
+rights determine.
+\tested Pollination contracts between beekeepers and growers, with fees and rents that run in the direction the crop
+implies (Cheung 1973).
+\breaks With many parties, such as the residents downwind of a power plant: no one can gather them to bargain, and each
+would hope the others pay.
+\end{model}
+
+\section{Prices or quantities?}\label{sec:b2:externalities-and-public-goods-theory:weitzman}
+
+When the regulator knows both curves, a tax and a cap are equivalent. Usually it does not know the polluter's cost of
+abatement, which the polluter knows better. Let $\mathit{MB}(E) = a + \theta - bE$, with $\theta$ a shock to abatement cost of mean zero that the
+polluter sees and the regulator does not, and $\mathit{MD}(E) = dE$. The regulator must set a tax $t$ or a quota $\bar E$ before $\theta$ is known. It
+sets both for the average case: $\bar E = a/(b + d)$ and $t = d\bar E$.
+
+\begin{proposition}[The slopes rule]\label{prop:b2:externalities-and-public-goods-theory:slopes}
+The expected welfare loss of the tax is $d^2/b^2$ times that of the quota. A tax is better when marginal damage is flatter
+than marginal abatement cost ($d < b$), a quota when it is steeper.
+\end{proposition}
+
+\begin{proof}
+The efficient level is $E^*(\theta) = (a + \theta)/(b + d)$. The loss from any $E$ is the triangle between the curves, $\tfrac12(b + d)(E - E^*)^2$. Under the
+quota, $E - E^* = -\theta/(b + d)$, so the loss is $\theta^2/(2(b + d))$. Under the tax, the polluter emits where $a + \theta - bE = t$, so $E = \bar E + \theta/b$ and $E - E^* = \theta/b -
+\theta/(b + d) = \theta d/(b(b + d))$; the loss is $\theta^2 d^2/(2b^2(b + d))$. Taking expectations, the ratio of the two is $d^2/b^2$.
+\end{proof}
+
+A tax fixes the marginal cost of abatement and lets emissions vary with the shock; a quota fixes emissions and lets the
+marginal cost vary. If damage barely changes with a few more tonnes, varying emissions costs little, and a tax is better;
+if damage rises steeply, as near a threshold, fixing the quantity is better.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=8, xmax=31, ymin=0, ymax=60, width=0.6\linewidth,
+    height=0.45\linewidth, xlabel={$E$: tonnes emitted}, ylabel={Thousands of dalens a tonne},
+    xtick={15,20,25}, ytick={30}, legend style={at={(1.03,0.5)}, anchor=west}]
+  \addplot[omDef, very thick, domain=10:30, samples=2] {105 - 3*x};
+  \addplot[omDef, thick, dashed, domain=8:25, samples=2] {75 - 3*x};
+  \addplot[omThm, very thick, domain=8:31, samples=2] {1.5*x};
+  \addplot[black!60, thin, domain=8:31, samples=2] {30};
+  \draw[black!60, thin] (axis cs:20,0) -- (axis cs:20,60);
+  \node[eqpoint] at (axis cs:23.333,35) {};
+  \node[eqpoint] at (axis cs:16.667,25) {};
+  \node[anchor=south west, font=\footnotesize] at (axis cs:20,55) {quota};
+  \node[anchor=south, font=\footnotesize] at (axis cs:10,30.5) {tax};
+  \legend{Marginal benefit (high cost), Marginal benefit (low cost), Marginal damage}
+\end{axis}
+\end{tikzpicture}
+
+{\small Prices against quantities, with the numbers of the weekend problem. Abatement cost may be high or low. The efficient
+emissions (dots) are 23.3 and 16.7 tonnes. The quota holds emissions at 20 in both cases; the tax of 30 lets them move to 25
+and 15, closer to the efficient levels because marginal damage is flatter than marginal benefit.}
+\end{omfigure}
+
+The sulphur-dioxide market was a quantity instrument, and its price did the varying. It rose from 273 dollars a ton at the
+2004 auction to 703 at the 2005 auction, and passed 1{,}200 dollars in the market later that year, on expectations of a
+tighter cap. It fell to 70 at the 2009 auction and 56 cents at the 2012 one, as
+the rules changed. The chart shows the auction prices that Schmalensee and Stavins quote.
+
+\begin{omchart}{Spot price of a sulphur-dioxide allowance at the Environmental Protection Agency's annual auction, dollars a
+  ton, logarithmic scale, the five years quoted by the source.}{Schmalensee and Stavins (2013)}
+\begin{tikzpicture}
+\begin{axis}[omrecord, ymode=log, width=0.6\linewidth, height=0.38\linewidth, xmin=2003, xmax=2013, ymin=0.3,
+    ymax=2000, xtick={2004,2006,2008,2010,2012}, xticklabel style={/pgf/number format/1000 sep=},
+    ytick={1,10,100,1000}, yticklabels={1,10,100,1000}, xlabel={Year of auction}, ylabel={Dollars a ton},
+    nodes near coords, point meta=explicit symbolic, nodes near coords style={font=\footnotesize, anchor=west}]
+  \addplot[omDef, thick, mark=*, mark size=2pt] table[x=year, y=price, meta=price]
+    {figdata/bachelor-2/18-externalities-and-public-goods-theory/out/allowance.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\begin{model}{Prices against quantities}
+\assumes A regulator uncertain about abatement costs, who must fix a tax or a quota in advance; linear marginal curves.
+\predicts A tax gives certain prices and uncertain emissions, a quota the reverse; the tax has the lower expected loss when
+marginal damage is flatter than marginal abatement cost.
+\tested The slopes rule has no direct test reported here: a test would compare realised losses under a tax and under a
+cap for the same pollutant and the same cost shocks. The sulphur-dioxide cap illustrates the price risk of a quantity
+instrument: emissions stayed within the cap while the allowance price ranged from under a dollar to over 1{,}200 dollars
+a ton in the market (Schmalensee and Stavins 2013).
+\breaks When the uncertainty is about the rules themselves rather than about costs: the same price swings came mostly from
+proposed and annulled regulations.
+\end{model}
+
+\section{Public goods and the Samuelson condition}\label{sec:b2:externalities-and-public-goods-theory:samuelson}
+
+\begin{definition}[Public good]\label{def:b2:externalities-and-public-goods-theory:public-good}
+A \emph{public good}\index{public good} is a good that is non-rival, so that one person's use does not reduce what
+others can use, and non-excludable, so that no one can be kept from using it.
+\end{definition}
+
+\begin{definition}[Club good]\label{def:b2:externalities-and-public-goods-theory:club-good}
+A \emph{club good}\index{club good} is a good that is non-rival, at least until it is crowded, but excludable, so that
+its use can be charged for.
+\end{definition}
+
+\begin{definition}[Samuelson condition]\label{def:b2:externalities-and-public-goods-theory:samuelson}
+The \emph{Samuelson condition}\index{Samuelson condition} states that the efficient quantity of a \omterm{def:b2:externalities-and-public-goods-theory:public-good}{public good} equates
+the sum of all users' marginal benefits to its marginal cost.
+\end{definition}
+
+\begin{proposition}[Efficient provision of a public good]\label{prop:b2:externalities-and-public-goods-theory:samuelson}
+With quasi-linear utilities $v_i(G) + x_i$, $v_i$ increasing and concave, and a convex cost $c(G)$ paid from the $x_i$, a quantity $G^* > 0$ is
+efficient if and only if $\sum_i v_i'(G^*) = c'(G^*)$.
+\end{proposition}
+
+\begin{proof}
+With quasi-linear utility, an \omterm{def:b2:exchange-economies:allocation}{allocation} is efficient if and only if it maximises total surplus $\sum_i v_i(G) - c(G)$: if it did not,
+a change in $G$ with suitable transfers would make everyone better off. The surplus is concave, so it is maximised where
+its derivative is zero, $\sum_i v_i'(G) = c'(G)$.
+\end{proof}
+
+For a private good, efficiency requires each person's marginal benefit to equal marginal cost; for a \omterm{def:b2:externalities-and-public-goods-theory:public-good}{public good}, the
+sum, because one unit serves everyone. Take three households on a street that could light it with lamps: their marginal
+benefits from the $G$-th lamp are $12 - G$, $10 - G$ and $8 - G$ dalens a month, and a lamp costs 9. The sum is $30 - 3G$, so the efficient
+number is 7.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=10.5, ymin=0, ymax=31, width=0.6\linewidth,
+    height=0.45\linewidth, xlabel={$G$: lamps}, ylabel={Dalens a month},
+    xtick={3,7,10}, ytick={9,12,30}, legend style={at={(1.03,0.5)}, anchor=west}]
+  \addplot[omDef, thin, domain=0:10, samples=2] {12 - x};
+  \addplot[omDef, thin, dashed, domain=0:10, samples=2] {10 - x};
+  \addplot[omDef, thin, dotted, domain=0:8, samples=2] {8 - x};
+  \addplot[omThm, very thick, domain=0:8, samples=2] {30 - 3*x};
+  \addplot[black!60, thin, domain=0:10.5, samples=2] {9};
+  \node[eqpoint] at (axis cs:7,9) {};
+  \node[eqpoint] at (axis cs:3,9) {};
+  \node[anchor=south west, font=\footnotesize] at (axis cs:7,9.3) {efficient};
+  \draw[guide] (axis cs:3,0) -- (axis cs:3,9);
+  \node[anchor=north west, font=\footnotesize, fill=white, inner sep=1pt] at (axis cs:3.1,3) {voluntary};
+  \legend{Household 1, Household 2, Household 3, Sum, Cost of a lamp}
+\end{axis}
+\end{tikzpicture}
+
+{\small Vertical summation. Each lamp lights the whole street, so the marginal benefits of the three households are added
+at each quantity. The sum meets the cost of a lamp at 7 lamps; left to themselves, the households buy 3.}
+\end{omfigure}
+
+\section{Voluntary provision falls short}\label{sec:b2:externalities-and-public-goods-theory:voluntary}
+
+If each household buys lamps for itself, taking the others' purchases as given (\cref{ch:b2:static-games}), household 1 buys
+lamps until its own marginal benefit equals the cost: $12 - G = 9$, so $G = 3$. At 3 lamps the others' marginal benefits, 7 and 5, are
+below 9, so they buy none. The street gets 3 lamps instead of 7, and the surplus lost is $\int_3^7 (21 - 3G)\,dG = 24$ dalens a month. Each
+household counts only its own benefit, ignoring what its lamps give the others: provision of a \omterm{def:b2:externalities-and-public-goods-theory:public-good}{public good} is an
+\omterm{def:b2:externalities-and-public-goods-theory:externality}{externality} in reverse.
+
+\section{Personalised prices}\label{sec:b2:externalities-and-public-goods-theory:lindahl}
+
+\begin{definition}[Personalised prices]\label{def:b2:externalities-and-public-goods-theory:lindahl}
+\emph{Personalised (Lindahl) prices}\index{personalised prices} are prices per unit of a \omterm{def:b2:externalities-and-public-goods-theory:public-good}{public good}, one for each
+person, that sum to its marginal cost and at which every person demands the same quantity.
+\end{definition}
+
+If household 1 paid 5 a lamp, household 2 paid 3 and household 3 paid 1, each would want exactly 7 lamps, since each one's marginal
+benefit at 7 equals its price, and the prices sum to the cost, 9. \omterm{def:b2:externalities-and-public-goods-theory:lindahl}{Personalised prices} reach the efficient quantity as
+ordinary prices do for private goods. But they need each person's marginal benefit, which each has every reason to
+understate: a household that claims to value lamps less pays less and still enjoys the street lit by the others.
+
+\section{A mechanism that makes people tell the truth}\label{sec:b2:externalities-and-public-goods-theory:pivot}
+
+\begin{definition}[Pivot mechanism]\label{def:b2:externalities-and-public-goods-theory:pivot}
+The \emph{pivot mechanism}\index{pivot mechanism} decides on a public project from reported values, carrying it out if
+the reported net values sum to zero or more, and charges each person whose report changes the decision the net loss
+that the change imposes on everyone else.
+\end{definition}
+
+\begin{proposition}[Truth-telling is a dominant strategy]\label{prop:b2:externalities-and-public-goods-theory:pivot}
+In the \omterm{def:b2:externalities-and-public-goods-theory:pivot}{pivot mechanism}, reporting one's true net value is a \omterm{def:b2:static-games:best-response}{best response} to any reports by the others.
+\end{proposition}
+
+\begin{proof}
+Let person $i$ have true net value $u_i$ and let $S$ be the sum of the others' reported net values. If the project is carried out,
+$i$ gets $u_i$, and pays $-S$ if $S < 0$, since then she changed the decision; so her payoff is $u_i + \min(S, 0)$. If it is not, she gets 0, and pays $S$ if
+$S \ge 0$: her payoff is $-\max(S, 0)$. Subtracting $\min(S, 0)$ from both, she compares $u_i + S$ with 0. She prefers the project exactly when $u_i + S \ge 0$. Reporting
+$u_i$ makes the mechanism build exactly when $u_i + S \ge 0$, which is her preference, whatever $S$ is. No other report can do better, and
+some do worse.
+\end{proof}
+
+A bridge costs 300 dalens, shared equally by three residents who value it at 250, 60 and 40. The listing
+runs the mechanism and checks, by trying every report from 0 to 400, that no resident gains by lying.
+
+\omcode{code/bachelor-2/18-externalities-and-public-goods-theory/listings/pivot.py}{1}{33}{The \omterm{def:b2:externalities-and-public-goods-theory:pivot}{pivot mechanism} for
+a shared bridge, with a check of every alternative report.}\label{lst:b2:externalities-and-public-goods-theory:pivot}
+
+\omoutput{code/bachelor-2/18-externalities-and-public-goods-theory/outputs/pivot.txt}{The bridge is built; only resident 1
+is pivotal, and pays 100; no resident gains from any other report.}\label{out:b2:externalities-and-public-goods-theory:pivot}
+
+% code: listings/pivot.py
+Net values are 150, $-40$ and $-60$, summing to 50, so the bridge is built. Without resident 1 the others' net values sum to $-100$: she changes
+the decision, and pays the 100 that the other two lose. The mechanism has a cost: the 100 cannot be handed back to the
+residents, since a rebate that depended on the reports would change their incentives, so it must be wasted or paid to
+someone outside. A mechanism with dominant-strategy truth-telling and an efficient decision cannot, in general, balance its
+budget.
+
+\section{Government failure beside market failure}\label{sec:b2:externalities-and-public-goods-theory:government}
+
+Every remedy in this chapter is chosen and run by a government that has its own information problems and incentives. The
+sulphur-dioxide cap was not set where marginal benefit met marginal damage; no credible estimates of the benefits existed,
+and the level was chosen near where abatement costs began to rise steeply and to win political support. Its later
+collapse came from the government: the law gave the regulator no power to tighten the cap as evidence on health damage
+grew, a replacement rule was annulled by a court, and the rules that followed restricted trading between states, so that
+demand for allowances all but vanished (Schmalensee and Stavins 2013). A regulator that overestimates damage, as in
+\cref{exo:b2:externalities-and-public-goods-theory:11}, imposes losses as a missing regulator does. The theory of how
+public choices are made, and how they fail, is the subject of the Year 3 volume.
+
+\section{Exercises}\label{sec:b2:externalities-and-public-goods-theory:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:externalities-and-public-goods-theory:1}
+Read the opening chart. By how much did emissions from electricity and heat fall from 1990 to 2023? Why does the chart alone
+not show how much of the fall the permit programme caused?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:externalities-and-public-goods-theory:2}
+Let $\mathit{MB}(E) = 100 - 2E$ and $\mathit{MD}(E) = 2E$. Find unregulated emissions, the efficient level, the \omterm{def:b2:externalities-and-public-goods-theory:corrective-tax}{corrective tax} and the surplus lost
+without it.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:externalities-and-public-goods-theory:3}
+Classify as public, club, common-pool or private: a coastal lighthouse; a subscription music service; a fishing ground open
+to all; a sandwich. Give the property that decides each.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:externalities-and-public-goods-theory:4}
+In the bridge example, change resident 2's value to 160. Is the bridge built, and who pays a tax? Then return to 60 and
+raise the bridge's cost to 330: who pays, and how much?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:externalities-and-public-goods-theory:5}
+In the example of \cref{sec:b2:externalities-and-public-goods-theory:inefficiency}, let the fishery hold the right to clean
+water. What is the mill's gain from emitting 40 tonnes, the fishery's damage, and the range of payments that both accept?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:externalities-and-public-goods-theory:6}
+Two firms each emit 60 tonnes unregulated; firm A's marginal abatement cost is $120 - 2E_A$, firm B's $60 - E_B$. A cap of 50 tonnes is
+imposed. Compare the total abatement cost when each firm gets 25 permits and may not trade with the cost when they may
+trade. Find the permit price.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:externalities-and-public-goods-theory:7}
+Add a fourth household with marginal benefit $6 - G$ to the street, and let a lamp cost 12. Find the efficient number of lamps,
+the \omterm{def:b2:externalities-and-public-goods-theory:lindahl}{personalised prices}, the number bought voluntarily and the surplus lost.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:externalities-and-public-goods-theory:8}
+Predict, then compute: with $\mathit{MB}(E) = 90 + \theta - 3E$, $\theta = \pm 15$ equally likely, and $\mathit{MD}(E) = 6E$, find the loss of a tax and of a quota in each case.
+Which is better?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:externalities-and-public-goods-theory:9}
+Read the record on bees. Why do payments run from growers to beekeepers for cherries and the other way for mint? Why is a
+custom used among neighbouring orchards rather than contracts?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:externalities-and-public-goods-theory:10}
+With linear marginal benefits $a_i - G$ and marginal cost $c$, show that in the \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} of voluntary purchases only the
+household with the largest $a_i$ buys, and that $G = \max(a_i - c, 0)$. For $n$ identical households with $a_i = a > c$, show that the gap between the
+efficient and the voluntary quantity rises with $n$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:externalities-and-public-goods-theory:11}
+In the river of the weekend problem, a regulator believes marginal damage is $3E$ when it is $1.5E$. What quota does it set, and
+what surplus is lost? Compare with the loss of no regulation.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:externalities-and-public-goods-theory:12}
+In the model of \cref{prop:b2:externalities-and-public-goods-theory:slopes}, show that a tax reaches the efficient level for every $\theta$
+when marginal damage is constant, and that a quota does when marginal damage becomes vertical at a threshold. Interpret.
+\end{exercise}
+
+\section{Problem: Brenmoor's river}\label{sec:b2:externalities-and-public-goods-theory:problem}
+
+\begin{problem}[{Weekend problem --- a paper mill on Brenmoor's river discharges waste that harms a fishery downstream: what
+level of discharge is efficient, what do a tax, permits and bargaining achieve, and which instrument is better when the
+mill's costs are uncertain}]
+\label{pb:b2:externalities-and-public-goods-theory:1}
+The mill's marginal benefit from discharging $E$ tonnes a month is $90 - 3E$ thousand dalens a tonne; the fishery's marginal
+damage is $1.5E$. Utilities are quasi-linear.
+
+\medskip
+\noindent\textbf{Part I --- A mill and a fishery.}
+\begin{enumerate}
+  \item How much does the mill discharge unregulated?
+  \item What is the mill's total benefit from that discharge?
+  \item What is the fishery's total damage?
+  \item What is the net surplus?
+  \item Which effect is external, and why does the mill ignore it?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Efficient discharge and bargaining.}
+\begin{enumerate}[resume]
+  \item Find the efficient discharge.
+  \item Find the net surplus there.
+  \item What surplus does the unregulated mill waste?
+  \item If the mill holds the right to discharge, what does it lose and the fishery gain from a cut to the efficient level?
+    What payments would both accept?
+  \item If the fishery holds the right to clean water, what payments for permission to discharge would both accept?
+  \item Show that the discharge agreed is the same in both cases.
+  \item Why might bargaining fail on a real river?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- A tax and permits.}
+\begin{enumerate}[resume]
+  \item What tax per tonne reaches the efficient level?
+  \item What revenue does it raise?
+  \item What is the mill's surplus under the tax?
+  \item If the town auctions permits for the efficient total, what is their price?
+  \item If it gives the permits to the mill free, what changes?
+  \item A regulator who believes the damage is $3E$ sets a quota. What quota, and what surplus is lost?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Uncertain costs: tax or quota.} The mill's marginal benefit is $90 + \theta - 3E$, with $\theta = 15$ or $-15$, equally likely; the
+town must fix a tax of 30 or a quota of 20 before $\theta$ is known.
+\begin{enumerate}[resume]
+  \item Find the efficient discharge in each case.
+  \item Find the discharge under the tax in each case.
+  \item Find the loss of the tax in each case.
+  \item Find the loss of the quota in each case.
+  \item Which instrument has the lower expected loss? Check with the slopes rule.
+  \item If the damage were $4.5E$, with the tax and quota set for the average case, which would be better?
+  \item State the result: the efficient level, the \omterm{def:b2:externalities-and-public-goods-theory:corrective-tax}{corrective tax}, and the expected welfare loss of each instrument under
+    cost uncertainty.
+\end{enumerate}
+\end{problem}

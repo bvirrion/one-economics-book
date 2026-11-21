@@ -1,0 +1,147 @@
+\section*{Chapter \ref{ch:b1:partial-equilibrium-welfare} --- Partial Equilibrium and Welfare}
+% Numbers recomputed in code/bachelor-1/13-partial-equilibrium-welfare/exercises/solutions.py (tested).
+
+\begin{solution}{exo:b1:partial-equilibrium-welfare:cs-ps}
+$120 - 2p = p$: $p = 40$, $Q = 40$. Demand reaches zero at $p = 60$:
+$\mathrm{CS} = \tfrac12 \times 40 \times 20 = 400$; $\mathrm{PS} = \tfrac12 \times 40 \times 40 = 800$.
+\end{solution}
+
+\begin{solution}{exo:b1:partial-equilibrium-welfare:read}
+All items: $0.0 - 0.8 = -0.8$ points in July 2020 and $1.6 - (-0.7) = +2.3$ points in
+January 2021. Food: $0.9 - 4.1 = -3.2$ points in July 2020.
+\end{solution}
+
+\begin{solution}{exo:b1:partial-equilibrium-welfare:share}
+$\varepsilon_s/(\varepsilon_s + |\varepsilon_d|) = 1.5/2 = 0.75$: buyers bear three quarters.
+\end{solution}
+
+\begin{solution}{exo:b1:partial-equilibrium-welfare:cigarettes}
+Buyers: their demand is inelastic, while sellers who can sell elsewhere
+have elastic supply to any one market.
+\end{solution}
+
+\begin{solution}{exo:b1:partial-equilibrium-welfare:cs-integral}
+$\int_1^2 100/p\,\dd p = 100\ln 2 = 69.31$.
+\end{solution}
+
+\begin{solution}{exo:b1:partial-equilibrium-welfare:exact}
+Sellers keep $p$ and buyers pay $1.1p$: $100/(1.1p) = p$ gives $p = \sqrt{100/1.1} = 9.5346$,
+$P = 10.4881$ and $Q = 9.5346$, against $p = Q = 10$ untaxed. The exact loss is
+$\int_{9.5346}^{10}(100/x - x)\,\dd x = 100\ln(10/9.5346) - (100 - 90.909)/2 = 0.2201$. Both
+elasticities are 1 in absolute value and $Q/p = 1$, so the formula gives
+$\tfrac12\tau^2 \times \tfrac12$: $0.25$ with $\tau = 1$ and $0.2273$ with the actual wedge
+$10.4881 - 9.5346 = 0.9535$. The formula is close; it errs because the curves
+are not straight lines.
+\end{solution}
+
+\begin{solution}{exo:b1:partial-equilibrium-welfare:double}
+To second order the loss is proportional to $\tau^2$: it is multiplied by
+four. Revenue $\tau Q(\tau)$ less than doubles because the quantity falls as the
+tax rises.
+\end{solution}
+
+\begin{solution}{exo:b1:partial-equilibrium-welfare:stability-ex}
+$D = 20 + p$: \omterm{def:b1:models-and-data:equilibrium}{equilibrium} $p = 20$; $D' = 1 < S' = 2$, so $Z' = -1$ and
+$\dot x = -0.5x$: \omterm{def:b1:partial-equilibrium-welfare:stable}{stable}. $D = -20 + 3p$: \omterm{def:b1:models-and-data:equilibrium}{equilibrium} $p = 20$; $D' = 3 > 2$, $Z' = 1$ and
+$\dot x = 0.5x$: unstable, the price moves away from 20.
+\end{solution}
+
+\begin{solution}{exo:b1:partial-equilibrium-welfare:vat}
+$1 - 1.16/1.19 = 2.52\%$ at the standard rate and $1 - 1.05/1.07 = 1.87\%$ at the
+reduced rate. The all-items rate fell 0.8 points and the food rate 3.2
+points from June to July 2020. The comparison is rough: the twelve-month
+rate also moves with the change in prices of a year before and with every
+other price change of the month, not all spending carries VAT (rents), and
+pass-through was not full.
+\end{solution}
+
+\begin{solution}{exo:b1:partial-equilibrium-welfare:max}
+$W(Q) = \int_0^Q(P^d - P^s)\,\dd x$ and $W'(Q) = P^d(Q) - P^s(Q)$, which is decreasing, zero at
+the competitive quantity $Q^*$, positive before and negative after: $W$ rises
+up to $Q^*$ and falls after it. Above $Q^*$ each extra unit costs more to
+make than any buyer will pay, so producing it loses
+$\int_{Q^*}^Q(P^s - P^d)\,\dd x > 0$.
+\end{solution}
+
+\begin{solution}{exo:b1:partial-equilibrium-welfare:substitute}
+The tax raises the price of butter, so demand for margarine shifts out. With
+upward-sloping supply, margarine's price rises: its producers gain surplus
+(the area between the old and new price, left of the supply curve) and its
+buyers lose about as much, since margarine is not taxed and its market stays
+efficient: the change there is mostly a transfer. The dearer margarine in
+turn raises the demand for butter, so butter buyers cut back less than they
+would at the old margarine price. The right measure is the butter triangle
+under a demand curve that lets the margarine price adjust, which is less
+elastic; the triangle drawn with the margarine price held fixed
+\emph{overstates} the loss.
+\end{solution}
+
+\begin{solution}{exo:b1:partial-equilibrium-welfare:refute}
+Competitive incidence predicts pass-through between 0 and 1, symmetric for
+a cut and a rise of the same size, larger where supply is more elastic
+relative to demand. Across products: pass-through above one, or no
+relation to the elasticities. Over time: prices that did not rise back
+when the rates rose, or that moved by much more on the return than on the
+cut.
+\end{solution}
+
+\begin{solution}{pb:b1:partial-equilibrium-welfare:sugar}
+\textbf{1.} $120 - 10p = 10p$: $p = 6$, $Q = 60$.
+
+\textbf{2.} $\varepsilon_d = -10 \times 6/60 = -1$ and $\varepsilon_s = 10 \times 6/60 = 1$.
+
+\textbf{3.} $\dot p = k(120 - 20p)$; $Z'(p) = -20 < 0$, and
+$p(t) = 6 + (p(0) - 6)e^{-20kt} \to 6$.
+
+\textbf{4.} Demand reaches zero at $P = 12$: $\tfrac12 \times 60 \times 6 = 180$.
+
+\textbf{5.} $\tfrac12 \times 60 \times 6 = 180$.
+
+\textbf{6.} $W(Q) = \int_0^Q(12 - x/5)\,\dd x = 12Q - Q^2/10$: $W(60) = 360$, $W(50) = W(70) = 350$.
+
+\textbf{7.} $120 - 10(p + 1.2) = 10p$: $p = 5.4$, $P = 6.6$, $Q = 54$.
+
+\textbf{8.} $1/(1 + 1) = \tfrac12$: buyers pay $0.6$ more and sellers keep $0.6$ less, half each.
+
+\textbf{9.} $1.2 \times 54 = 64.8$.
+
+\textbf{10.} No: the wedge, the prices and the quantity are the same.
+
+\textbf{11.} $\dd P/\dd\tau = 0.6/1.2 = 0.5$.
+
+\textbf{12.} $p = P + 1.2$: $120 - 10P = 10(P + 1.2)$, so $P = 5.4$, $p = 6.6$ and $Q = 66$; it costs
+$1.2 \times 66 = 79.2$.
+
+\textbf{13.} $\tfrac12 \times 54 \times (12 - 6.6) = 145.8$.
+
+\textbf{14.} $\tfrac12 \times 54 \times 5.4 = 145.8$.
+
+\textbf{15.} $360 - 145.8 - 145.8 - 64.8 = 3.6$.
+
+\textbf{16.} $\tfrac12 \times 1.2^2 \times (60/6) \times \tfrac{1 \times 1}{1 + 1} = 3.6$.
+
+\textbf{17.} The curves are straight lines: the area lost is exactly a
+triangle, and the second-order formula is exact.
+
+\textbf{18.} $Q = 48$, revenue $2.4 \times 48 = 115.2$, loss $\tfrac12 \times 2.4 \times 12 = 14.4$: four times as
+large, while revenue is less than twice as large.
+
+\textbf{19.} $3.6/64.8 = 0.056$ and $14.4/115.2 = 0.125$.
+
+\textbf{20.} $Q = 60 - 5\tau$, so $R(\tau) = \tau(60 - 5\tau)$.
+
+\textbf{21.} $R'(\tau) = 60 - 10\tau = 0$ at $\tau = 6$: $P = 9$, $p = 3$, $Q = 30$ and $R = 180$.
+
+\textbf{22.} $\mathrm{DWL} = 2.5 \times 36 = 90$: half a dalen per dalen raised.
+
+\textbf{23.} $\mathrm{DWL}(\tau) = \tfrac12\tau \times 5\tau = 2.5\tau^2$, so $\mathrm{DWL}' = 5\tau$, while $R' = 60 - 10\tau$; the
+loss per extra dalen raised is the ratio.
+
+\textbf{24.} $6/48 = 0.125$ at $\tau = 1.2$ and $12/36 = 0.333$ at $\tau = 2.4$.
+
+\textbf{25.} It grows without limit: near the top of the revenue curve a
+higher tax raises almost no revenue but still destroys surplus.
+
+\textbf{26.} At a $20\%$ rate the last dalen raised costs $0.125$ dalens of
+\omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss}, more than twice the average loss per dalen, $0.056$.
+\end{solution}

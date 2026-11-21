@@ -1,0 +1,123 @@
+\section*{Chapter \ref{ch:b2:signalling-and-screening} --- Signalling and Screening}
+
+\begin{solution}{exo:b2:signalling-and-screening:1}
+% figdata: summary
+The jumps are $14{,}715 - 9{,}903 = 4{,}812$ dollars at twelve years and $16{,}256 - 12{,}749 = 3{,}507$ at sixteen; no other rise between nine
+and eighteen years exceeds 1{,}200 (the largest, from seventeen to eighteen, is about 1{,}170). The sample includes men from age
+16, some of them still at school with little or no earnings; those with ten or eleven years are more often young.
+\end{solution}
+
+\begin{solution}{exo:b2:signalling-and-screening:2}
+% code: exercises/solutions.py separating_range
+$(18 - 12)/3 = 2 \le s^* \le (18 - 12)/1.5 = 4$.
+\end{solution}
+
+\begin{solution}{exo:b2:signalling-and-screening:3}
+% code: exercises/solutions.py waste
+Separating ($s^* = 2.5$): high $20 - 2 \times 2.5 = 15$, low 10, whatever the shares. Pooling at 0 with half high: both earn 15, so the high
+type is as well off and the low type gains 5. With 80 per cent high the pooled wage is $0.8 \times 20 + 0.2 \times 10 = 18$: both types gain
+from pooling, the high type by 3 and the low type by 8.
+\end{solution}
+
+\begin{solution}{exo:b2:signalling-and-screening:4}
+% code: exercises/solutions.py menu_checks
+Light user: own plan $6 \times 2 - 2 - 10 = 0$; heavy plan $6 \times 8 - 32 - 40 = -24$. Heavy user: own plan $10 \times 8 - 32 - 40 = 8$; light plan
+$10 \times 2 - 2 - 10 = 8$. Both participate (0 and 8 are not negative), and each weakly prefers his own plan; the light user's
+participation and the heavy user's incentive constraint bind.
+\end{solution}
+
+\begin{solution}{exo:b2:signalling-and-screening:5}
+% code: exercises/solutions.py deviation
+A low type at $s = 3$ gets at most $20 - 4 \times 3 = 8 < 10$, so she would never choose it; employers should believe it comes from a high
+type and pay 20. The high type then gets $20 - 2 \times 3 = 14 > 20 - 2 \times 4 = 12$. For any $s^* > 2.5$, a choice $s$ between 2.5 and $s^*$ gives
+the low type less than 10 even at wage 20 and gives the high type more than at $s^*$, so the equilibrium fails.
+\end{solution}
+
+\begin{solution}{exo:b2:signalling-and-screening:6}
+% code: exercises/solutions.py pooling_bound
+The pooled wage is 18. The low type stays if $18 - 4s_p \ge 10$, so $s_p \le 2$; the high type if $18 - 2s_p \ge 10$, so $s_p \le 4$. Every $s_p$
+from 0 to 2 is a \omterm{def:b2:signalling-and-screening:pooling}{pooling equilibrium}.
+\end{solution}
+
+\begin{solution}{exo:b2:signalling-and-screening:7}
+% code: exercises/solutions.py rs_utilities
+With $x = 9.12$: $W_1 = 100 - 0.2 \times 9.12 = 98.18$, $W_2 = 50 + 0.8 \times 9.12 = 57.29$ (from the unrounded root), premium 1.82. Check:
+$98.18 \times 57.29 = 5{,}625$ to rounding, so high risks are indifferent. The low risk's expected utility is $0.8\ln 98.18 + 0.2\ln 57.29 =
+4.479$, against $\ln 75 = 4.317$ from the high risks' contract: she prefers her own.
+\end{solution}
+
+\begin{solution}{exo:b2:signalling-and-screening:8}
+% code: exercises/solutions.py screen
+$q_L = 6 - 2 - 1 \times 4 = 0$: light users are offered nothing worth buying. Heavy users get 8 units for their whole value, 48, and keep no
+rent. Profit per user is $0.5 \times (48 - 16) = 16$.
+\end{solution}
+
+\begin{solution}{exo:b2:signalling-and-screening:9}
+Human capital predicts earnings that rise with each year of school, roughly smoothly; signalling predicts jumps where
+diplomas sort workers. The chart shows jumps, but compares different people: those who finish a diploma may differ in
+ability or background in ways that employers see, which produces jumps without any \omterm{def:b2:signalling-and-screening:signal}{signal}.
+\end{solution}
+
+\begin{solution}{exo:b2:signalling-and-screening:10}
+Take a \omterm{def:b2:signalling-and-screening:separating}{separating equilibrium} with $s^* > (\theta_H - \theta_L)/c_L$. For $s$ strictly between $(\theta_H - \theta_L)/c_L$ and $s^*$, the low type's best payoff from
+$s$ is $\theta_H - c_L s < \theta_L$, her equilibrium payoff, so the criterion assigns $s$ to the high type; the high type then gets $\theta_H - c_H s >
+\theta_H - c_H s^*$ and deviates. At $s^* = (\theta_H - \theta_L)/c_L$ no such $s$ exists below $s^*$; above it the high type gains nothing. So only the
+least-cost \omterm{def:b2:signalling-and-screening:separating}{separating equilibrium} survives.
+\end{solution}
+
+\begin{solution}{exo:b2:signalling-and-screening:11}
+% code: exercises/solutions.py screen
+$q_L = 0$ when $\frac{n_H}{n_L}(\theta_H - \theta_L) \ge \theta_L - c$, that is, with $n_L = 1 - n_H$, when $n_H \ge (\theta_L - c)/(\theta_H - c)$. For the listing:
+$(6 - 2)/(10 - 2) = 0.5$.
+\end{solution}
+
+\begin{solution}{exo:b2:signalling-and-screening:12}
+% code: exercises/solutions.py pooling_breaks, best_pooled, pooled_threshold
+Pooled probability $0.9 \times 0.2 + 0.1 \times 0.5 = 0.23$; premium for full cover $0.23 \times 50 = 11.5$, leaving 88.5 in both states, with
+utility $\ln 88.5 = 4.483$. The low risks' separating contract gives 4.4791, so they prefer the pooled contract, and high risks
+prefer it to their own full cover ($\ln 75 = 4.317$); an insurer offering slightly less than it attracts both and breaks even,
+and the separating menu is not an equilibrium. Neither is pooling (\cref{prop:b2:signalling-and-screening:no-pooling}), so there is
+none.
+
+The threshold must use the best pooled contract, not only full cover. At a pooled price $\bar p$ per unit of cover, above
+their own probability, low risks want partial cover: maximising $0.8\ln(100 - \bar p x) + 0.2\ln(50 + (1 - \bar p)x)$ gives
+$x = \bigl(0.2(1 - \bar p)100 - 0.8\bar p \times 50\bigr)/\bigl(\bar p(1 - \bar p)\bigr)$; at $\bar p = 0.23$ that is $x = 35.0$, with utility
+4.486. With $\bar p = 0.5 - 0.3\,n_L$, this best pooled contract beats 4.4791 once the share of low risks exceeds $n_L = 0.838$
+($\bar p = 0.249$, $x = 27.2$), and high risks buy it too (utility 4.395 against 4.317), so it breaks even. The separating menu
+fails from 0.838; full pooled cover alone would break it only from 0.877.
+\end{solution}
+
+\begin{solution}{pb:b2:signalling-and-screening:1}
+% code: exercises/solutions.py phones, phones_more
+\textbf{Part I.}
+1. $30 - q$ and $40 - q$.
+2. 20 and 30 gigabytes.
+3. Light $\tfrac12 \times 20 \times 20 = 200$; heavy $\tfrac12 \times 30 \times 30 = 450$.
+4. The heavy user, by 10 a gigabyte: $(40 - 30)q$.
+5. It knows the two types and their shares, not who is which.
+\textbf{Part II.}
+6. Light: 20 GB for $30 \times 20 - 200 = 400$; heavy: 30 GB for $40 \times 30 - 450 = 750$.
+7. $400 - 200 = 200$ and $750 - 300 = 450$; $6{,}000 \times 200 + 3{,}000 \times 450 = 2{,}550{,}000$ dalens a month.
+8. None.
+9. The light plan: he values it at $40 \times 20 - 200 = 600$, a surplus of 200 against 0 from his own.
+10. Everyone buys the light plan: $9{,}000 \times 200 = 1{,}800{,}000$.
+11. No: $3{,}000 \times 450 = 1{,}350{,}000$.
+\textbf{Part III.}
+12. $30q_L - q_L^2/2 \ge F_L$; $40q_H - q_H^2/2 \ge F_H$; $40q_H - q_H^2/2 - F_H \ge 40q_L - q_L^2/2 - F_L$; $30q_L - q_L^2/2 - F_L \ge 30q_H - q_H^2/2 - F_H$.
+13. The light user's participation (otherwise both fees could rise) and the heavy user's incentive constraint (otherwise
+$F_H$ could rise).
+14. $q_L = 20 - \tfrac{3{,}000}{6{,}000} \times 10 = 15$.
+15. $q_H = 30$.
+16. $F_L = 30 \times 15 - 112.5 = 337.5$.
+17. Rent $10 \times 15 = 150$; $F_H = 750 - 150 = 600$.
+18. He values 30 GB at $900 - 450 = 450$, below 600: a surplus of $-150$.
+19. Light $337.5 - 150 = 187.5$; heavy $600 - 300 = 300$; total $1{,}125{,}000 + 900{,}000 = 2{,}025{,}000$.
+\textbf{Part IV.}
+20. $3{,}000 \times 150 = 450{,}000$.
+21. $\int_{15}^{20}(20 - q)\,dq = 12.5$ each; $6{,}000 \times 12.5 = 75{,}000$.
+22. $2{,}550{,}000 - 2{,}025{,}000 = 525{,}000 = 450{,}000 + 75{,}000$.
+23. $q_L = 20 - 1 \times 10 = 10$.
+24. When $n_H \ge (30 - 10)/(40 - 10) = 2/3$.
+25. Light users get 15 GB for 337.5 dalens instead of 20 for 400; heavy users get 30 GB for 600 dalens instead of 750, keeping a
+rent of 150 each, 450{,}000 a month in all; the distortion at the bottom costs 75{,}000 a month of surplus.
+\end{solution}

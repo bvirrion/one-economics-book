@@ -1,0 +1,8 @@
+$ python late_sim.py
+share treated if offered      0.499
+share treated if not offered  0.198
+first stage (complier share)  0.301
+Wald estimate                 0.143
+compliers' mean gain          0.150
+everyone's mean gain (ATE)    0.115
+treated minus untreated       0.351

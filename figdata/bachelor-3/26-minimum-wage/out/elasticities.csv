@@ -1,0 +1,6 @@
+label,elasticity,pos
+Data-chosen controls (U.S. teens),-0.3,1
+Contiguous border counties (U.S.),0.016,2
+State panel with fixed effects (U.S.),-0.176,3
+Neumark-Wascher payroll data (New Jersey),-0.24,4
+Card-Krueger survey data (New Jersey),0.93,5

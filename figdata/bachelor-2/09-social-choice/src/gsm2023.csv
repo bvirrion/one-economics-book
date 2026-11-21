@@ -1,0 +1,7 @@
+flaw,rate,ledger
+Compromise failure,3.8,b2:gsm2023-t7
+Spoiler effect,1.6,b2:gsm2023-t7
+Upward monotonicity,1.6,b2:gsm2023-t7
+Condorcet winner loses,1.1,b2:gsm2023-t7
+Downward monotonicity,1.1,b2:gsm2023-t7
+Truncation paradox,0.5,b2:gsm2023-t7

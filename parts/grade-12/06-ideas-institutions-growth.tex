@@ -1,0 +1,283 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g12-06, with the sync ruling: no WGI (licence); the opening chart is a
+% Maddison pair different from Book 1 g9-06 (Haiti and the Dominican Republic). Ideas are nonrival; incentives to invent;
+% creative destruction; institutions recalled; diffusion; growth and the environment. Real numbers:
+% figdata/grade-12/06-ideas-institutions-growth/ (Maddison HTI, DOM 1950-2022; WDI energy intensity and world GDP 2000-2021).
+% Ledger: Bloom et al. 2020 abstract, Longitude rewards, BLS Business Employment Dynamics 2026 Q1. Patent is Book 1's
+% (recalled). The Korean photograph is Book 1's and is not repeated; no governance index is printed. The medicine of the
+% weekend problem is invented.
+\chapter{Ideas, Institutions and Growth}\label{ch:g12:ideas-institutions-growth}
+
+Haiti and the Dominican Republic share one island, its climate and its storms. In 1950 output per person was about the same in both: 1790 dollars in Haiti and 1637 in the
+Dominican Republic, in the Maddison Project's estimates. By 2022 the Dominican figure was 17\,714 dollars. Haiti's was 1546, lower than in 1950.
+% figdata: island (1950 HTI 1790, DOM 1637; 2022 HTI 1546, DOM 17714)
+
+The Solow model says that lasting growth needs better technology, and that capital follows technology. It does not say where better technology comes from, nor why some
+countries use the best methods and others do not. This chapter takes up both questions: \omterm{def:g12:ideas-institutions-growth:idea}{ideas}, and the rules under which people produce and use them.
+
+\begin{openingchart}{GDP per person in Haiti and in the Dominican Republic, 1950--2022, in 2011 dollars, logarithmic scale.}{Maddison Project Database}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.84\linewidth, height=5.4cm, xmin=1950, xmax=2022, ymode=log, ymin=1000, ymax=25000, log ticks with fixed point,
+  ytick={1000,2000,5000,10000,20000}, xtick={1950,1960,...,2020}, ylabel={dollars of 2011}]
+\addplot[omDef, thick] table[x=year, y=DOM] {figdata/grade-12/06-ideas-institutions-growth/out/island.csv};
+\addplot[omThm, thick] table[x=year, y=HTI] {figdata/grade-12/06-ideas-institutions-growth/out/island.csv};
+\node[omDef, font=\scriptsize, anchor=south] at (axis cs:2000,8500) {Dominican Republic};
+\node[omThm, font=\scriptsize, anchor=north] at (axis cs:2000,1400) {Haiti};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: patents; institutions, natural experiments and the comparison of planned and market economies. From \cref{ch:g11:externalities}: external
+benefits. From \cref{ch:g11:public-goods-and-commons}: rival and \omterm{def:g11:public-goods-and-commons:rival}{excludable goods}. From \cref{ch:g12:growth-and-production-function} and \cref{ch:g12:solow-first-look}: \omterm{def:g12:growth-and-production-function:tfp}{total
+factor productivity}, and why growth in the Solow model needs it to rise.
+\end{recall}
+
+\section{Ideas are nonrival}\label{sec:g12:ideas-institutions-growth:ideas}
+
+\begin{definition}[Idea]\label{def:g12:ideas-institutions-growth:idea}
+An \emph{idea}\index{idea}, in economics, is a set of instructions for making or doing something: a design, a formula, a method, a program. It is a nonrival good: one
+person's use of it does not leave less for anyone else.
+\end{definition}
+
+A machine can be used by one worker at a time; the design of the machine can be used by every factory at once. That is why \omterm{def:g12:ideas-institutions-growth:idea}{ideas} can sustain growth where capital cannot:
+an \omterm{def:g12:ideas-institutions-growth:idea}{idea}'s returns do not diminish as more people use it. But a nonrival good that others can copy brings its inventor little, and so may not be produced at all: an \omterm{def:g12:ideas-institutions-growth:idea}{idea}
+has large external benefits.
+
+\section{The incentives to invent}\label{sec:g12:ideas-institutions-growth:incentives}
+
+\begin{definition}[Research and development]\label{def:g12:ideas-institutions-growth:rnd}
+\emph{Research and development}\index{research and development} is work done to produce new \omterm{def:g12:ideas-institutions-growth:idea}{ideas}: new products, new processes, or new knowledge that may lead to them.
+\end{definition}
+
+Three ways to pay for it are in use. A patent gives the inventor the sole right to use an \omterm{def:g12:ideas-institutions-growth:idea}{idea} for a period, often twenty years: the inventor charges a monopoly price, and
+the \omterm{def:g10:what-prices-do:dwl}{deadweight loss} of monopoly is the cost of the incentive. Public funding of research, in universities and laboratories, pays for \omterm{def:g12:ideas-institutions-growth:idea}{ideas} whose results are given away.
+And a prize pays for a result defined in advance.
+
+\begin{definition}[Innovation prize]\label{def:g12:ideas-institutions-growth:prize}
+An \emph{innovation prize}\index{innovation prize} is a sum promised in advance to whoever first achieves a specified result, after which the \omterm{def:g12:ideas-institutions-growth:idea}{idea} can be used freely.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[width=0.62\linewidth, height=5.4cm, xmin=0, xmax=105, ymin=0, ymax=105, xlabel={quantity}, ylabel={price},
+  xtick={40,80}, ytick={20,60,100}]
+\fill[omThm!25] (axis cs:0,60) -- (axis cs:40,60) -- (axis cs:40,20) -- (axis cs:0,20) -- cycle;
+\fill[omProp!35] (axis cs:40,60) -- (axis cs:80,20) -- (axis cs:40,20) -- cycle;
+\fill[omDef!15] (axis cs:0,100) -- (axis cs:40,60) -- (axis cs:0,60) -- cycle;
+\addplot[omDef, thick, domain=0:100, samples=2] {100 - x} node[pos=0.12, above right, font=\scriptsize] {demand};
+\addplot[black, thick, domain=0:105, samples=2] {20} node[pos=0.95, above, font=\scriptsize] {cost};
+\draw[dashed, gray] (axis cs:40,0) -- (axis cs:40,60);
+\node[font=\scriptsize] at (axis cs:20,40) {inventor's profit};
+\node[font=\scriptsize, anchor=west] at (axis cs:47,32) {lost};
+\node[font=\scriptsize] at (axis cs:12,70) {buyers};
+\end{axis}
+\end{tikzpicture}
+
+{\small The patent's trade-off, with the numbers of the weekend problem. While the patent lasts, the inventor charges 60 instead of the cost of 20: the profit (rectangle) is
+the reward for inventing, and the triangle marked ``lost'' is the \omterm{def:g10:what-prices-do:dwl}{deadweight loss}, the treatments not sold that buyers valued above their cost. A prize paid instead lets
+the medicine sell at cost from the start.}
+\end{omfigure}
+
+\begin{record}[The longitude prizes]
+% ledger: g12:longitude
+A ship at sea could not tell how far east or west it was. In 1714 the British Parliament offered 10\,000 pounds for a method accurate to within one degree of longitude,
+15\,000 for 40 minutes and 20\,000 for 30 minutes. A clockmaker received a first 250 pounds in 1737 to improve his sea clock; after decades of trials and
+disputes over whether his result met the terms, Parliament granted him 8750 pounds in 1773, bringing his total to 23\,065 pounds over thirty-six years. The record shows
+both the strength of a prize, a result anyone may then use, and its weakness: someone must judge whether the result has been reached.
+\end{record}
+
+\begin{definition}[Creative destruction]\label{def:g12:ideas-institutions-growth:creative-destruction}
+\emph{Creative destruction}\index{creative destruction} is the process by which new products, methods and firms replace old ones, so that growth comes with the closing of
+firms and the loss of jobs as well as with new ones.
+\end{definition}
+
+% ledger: g12:bed-2026q1
+In the United States in the first quarter of 2026, expanding and opening private businesses added 7.4 million jobs, and shrinking and closing ones lost 7.3 million: each
+about 5.5\,\% of private employment, for a net change of 88\,000. In that quarter 323\,000 new establishments opened. Behind a small net change in employment lies a large
+reallocation of workers from some firms to others.
+
+\begin{model}{Ideas-driven growth (toy)}
+\assumes \omterm{def:g12:growth-and-production-function:tfp}{Total factor productivity} grows in proportion to the number of researchers: $g_A = \theta R$, with $\theta$ constant.
+\predicts More researchers bring faster growth, and a growing number of researchers brings ever faster growth.
+\tested Research effort has risen substantially for decades while productivity growth has not: the number of researchers needed to double the density of computer chips is
+  more than 18 times larger than in the early 1970s (Bloom, Jones, Van Reenen and Webb 2020).
+\breaks \omterm{def:g12:ideas-institutions-growth:idea}{Ideas} are getting harder to find: $\theta$ falls as the easy \omterm{def:g12:ideas-institutions-growth:idea}{ideas} are used up, and the same growth needs ever more research.
+\end{model}
+% ledger: g12:bloom2020
+
+\section{Institutions}\label{sec:g12:ideas-institutions-growth:institutions}
+
+The grades 6--9 volume compared countries split by history, the two Koreas, the two Germanys, and China before and after 1978, and found that the rules under which people
+own, trade and decide made great differences to income. The same goes for \omterm{def:g12:ideas-institutions-growth:idea}{ideas}: a firm invests in research, and a worker in skills, only if they expect to keep a good share
+of the return; a patent is worth little where courts do not enforce it. The opening chart is consistent with that, but a pair of countries is not a natural experiment:
+Haiti and the Dominican Republic differ in their history, their politics and the disasters that struck them, and the chart alone cannot say which difference mattered most.
+
+\section{Why the best methods do not spread everywhere}\label{sec:g12:ideas-institutions-growth:diffusion}
+
+\begin{definition}[Technology diffusion]\label{def:g12:ideas-institutions-growth:diffusion}
+\emph{Technology diffusion}\index{technology diffusion} is the spread of a new method or product from those who first use it to other firms and countries.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[width=0.66\linewidth, height=5.0cm, xmin=0, xmax=70, ymin=0, ymax=1.05, xlabel={years after invention}, ylabel={share of users},
+  ytick={0,0.5,1}, grid=major, grid style={gray!20}]
+\addplot[omDef, thick, domain=0:70, samples=100] {1/(1+exp(-0.3*(x-20)))};
+\node[omDef, font=\scriptsize, anchor=east] at (axis cs:23,0.82) {first adopters};
+\addplot[omThm, thick, domain=0:70, samples=100] {1/(1+exp(-0.3*(x-45)))};
+\node[omThm, font=\scriptsize, anchor=west] at (axis cs:50,0.3) {late adopters};
+\draw[<->, gray] (axis cs:20,0.5) -- node[below, font=\scriptsize, black] {lag} (axis cs:45,0.5);
+\end{axis}
+\end{tikzpicture}
+
+{\small Diffusion as an S-curve (logistic, admitted): use spreads slowly at first, fast once many have adopted, and slowly again near saturation. A country that starts
+later follows the same curve with a lag; a lag, not the shape, can make much of the difference between rich and poor countries.}
+\end{omfigure}
+
+New methods spread slowly: firms must learn them, buy the machines that carry them, train workers and change how they are organised, and a firm sheltered from competition
+has less reason to bother. Where firms can enter freely and must compete, the best methods spread faster.
+
+\section{Growth and the environment}\label{sec:g12:ideas-institutions-growth:environment}
+
+\begin{definition}[Energy intensity]\label{def:g12:ideas-institutions-growth:energy-intensity}
+\emph{Energy intensity}\index{energy intensity} is the primary energy used per unit of GDP.
+\end{definition}
+
+\begin{omchart}{Energy intensity of GDP, megajoules of primary energy per dollar of GDP at constant purchasing power parity, five countries and the world, 2000--2021.}{World
+Bank, World Development Indicators (EG.EGY.PRIM.PP.KD)}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.84\linewidth, height=5.4cm, xmin=2000, xmax=2021, ymin=0, ymax=12, xtick={2000,2005,...,2020}, ylabel={megajoules per dollar}]
+\addplot[omDef, thick] table[x=year, y=USA] {figdata/grade-12/06-ideas-institutions-growth/out/intensity.csv};
+\addplot[omThm, thick] table[x=year, y=CHN] {figdata/grade-12/06-ideas-institutions-growth/out/intensity.csv};
+\addplot[omProp, thick] table[x=year, y=IND] {figdata/grade-12/06-ideas-institutions-growth/out/intensity.csv};
+\addplot[omMeth, thick] table[x=year, y=DEU] {figdata/grade-12/06-ideas-institutions-growth/out/intensity.csv};
+\addplot[gray, thick] table[x=year, y=GBR] {figdata/grade-12/06-ideas-institutions-growth/out/intensity.csv};
+\addplot[black, thick, dashed] table[x=year, y=WLD] {figdata/grade-12/06-ideas-institutions-growth/out/intensity.csv};
+\node[omThm, font=\scriptsize, anchor=south west] at (axis cs:2001,10.9) {China};
+\node[omProp, font=\scriptsize, anchor=south west] at (axis cs:2001,7.2) {India};
+\draw[omDef] (axis cs:2009,5.5) -- (axis cs:2009,4.45);
+\node[omDef, font=\scriptsize, anchor=north] at (axis cs:2009,4.45) {United States};
+\node[black, font=\scriptsize, anchor=south] at (axis cs:2016,5.0) {world};
+\node[omMeth, font=\scriptsize, anchor=north] at (axis cs:2008,3.3) {Germany};
+\node[gray, font=\scriptsize, anchor=north] at (axis cs:2018,2.3) {United Kingdom};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: intensity (USA 6.72 -> 4.24; CHN 10.91 -> 6.30; WLD 6.05 -> 4.54); intensity_key (gdp_ratio 2.0, energy_ratio 1.5)
+
+Growth uses resources and produces pollution, and innovation has changed how much. Each dollar of world output used a quarter less primary energy in 2021 than in 2000,
+from 6.05 to 4.54 megajoules; in the United States \omterm{def:g12:ideas-institutions-growth:energy-intensity}{energy intensity} fell by about 2.2\,\% a year. Innovation, and a shift of output towards services, have done that. What they have not done is cut the total:
+world output doubled over those years, so world energy use still rose by half. Whether output can keep growing while the use of energy from fossil fuels, and the emissions
+that come with it, fall is a question about the speed of innovation and about the prices that steer it: the \omterm{def:g11:externalities:private-cost}{external costs} of \cref{ch:g11:externalities}.
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g12:ideas-institutions-growth:1}
+Rival or nonrival: a recipe; a cake; a computer program; a delivery truck?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:ideas-institutions-growth:2}
+Rival or nonrival: a mathematical theorem; a seat on a train; a song; a dose of vaccine; the formula of the vaccine?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:ideas-institutions-growth:3}
+From the opening chart, give both countries' GDP per person in 1950 and in 2022, and the ratio in 2022.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:ideas-institutions-growth:4}
+From the opening chart, in which decade did the two countries begin to diverge? What was the Dominican figure in 1980 and the Haitian one?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:ideas-institutions-growth:5}
+Demand is $P = 50 - Q$ and the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} is 10. A patent holder sells at the monopoly price. Find price, quantity, profit and the \omterm{def:g10:what-prices-do:dwl}{deadweight loss}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:ideas-institutions-growth:6}
+A patent brings a profit of 100 a year for 20 years. Find its \omterm{def:g12:present-value:present-value}{present value} at 4\,\%.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:ideas-institutions-growth:7}
+An inventor can choose a prize of 1000 now or a patent bringing 80 a year for 20 years. Which is worth more at 5\,\%?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:ideas-institutions-growth:8}
+In the weekend problem's market, the patent is lengthened from 20 to 25 years. By how much does its \omterm{def:g12:present-value:present-value}{present value} at 5\,\% rise? What does society give up in exchange?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:ideas-institutions-growth:9}
+American \omterm{def:g12:ideas-institutions-growth:energy-intensity}{energy intensity} fell from 6.72 megajoules per dollar in 2000 to 4.24 in 2021. Find the average annual rate of change.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:ideas-institutions-growth:10}
+From the energy-intensity chart, give China's value in 2000 and 2021. By what fraction did it fall? Compare with the world.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:ideas-institutions-growth:11}
+The share of firms using a method is $1/(1 + e^{-0.3(t - 20)})$, $t$ in years. When does it reach 10\,\%, 50\,\% and 90\,\%? A second country follows the same curve 25 years
+later: when does it reach 50\,\%?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:ideas-institutions-growth:12}
+What evidence contradicts the toy model of ideas-driven growth? Use the model box, and say which assumption fails.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:ideas-institutions-growth:13}
+Does the opening chart show that institutions cause income differences? Name two other explanations, and the kind of evidence that would separate them.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:ideas-institutions-growth:14}
+In the toy model, let $g_A = 0.1R$, with $g_A$ in per cent a year and $R$ the number of researchers per 1000 workers. Find $g_A$ for $R = 10$ and $R = 20$. If $\theta$
+halves while $R$ doubles, what happens to growth, and which record of the chapter does that resemble?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:ideas-institutions-growth:15}
+Who loses from \omterm{def:g12:ideas-institutions-growth:creative-destruction}{creative destruction}, and who gains? Use the job-flow figures of the chapter, and link the answer to the measures of inequality of \cref{ch:g11:inequality}.
+\end{exercise}
+
+\section{Problem: Two Inventors in Brenland}
+
+\begin{problem}[{Weekend problem --- a patent or a prize}]
+\label{pb:g12:ideas-institutions-growth:1}
+In a town in Brenland, two inventors race to develop a medicine. Yearly demand is $P = 100 - Q$ ($Q$ in thousands of treatments, $P$ in dalens), and each treatment costs 20
+to make. The winner can take a 20-year patent, or the government can offer a prize instead and let anyone make the medicine. Use a \omterm{def:g12:present-value:present-value}{discount rate} of 5\,\%.
+
+\medskip
+\noindent\textbf{Part I --- The patent.}
+\begin{enumerate}
+\item Find the monopoly quantity and price.
+\item Find the yearly profit.
+\item Find the yearly \omterm{def:g10:surplus-and-efficiency:consumer-surplus}{consumer surplus} and \omterm{def:g10:what-prices-do:dwl}{deadweight loss} under the patent.
+\item Find the \omterm{def:g12:present-value:present-value}{present value} of 20 years of profit.
+\item Once the patent ends, what are the price, quantity and \omterm{def:g10:surplus-and-efficiency:consumer-surplus}{consumer surplus}?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The prize.}
+\begin{enumerate}[resume]
+\item What prize, paid now, gives the inventor the same \omterm{def:g12:present-value:present-value}{present value} as the patent?
+\item With the prize, at what price is the medicine sold from the start?
+\item Find the \omterm{def:g12:present-value:present-value}{present value} of the \omterm{def:g10:what-prices-do:dwl}{deadweight loss} avoided over 20 years.
+\item Find the \omterm{def:g12:present-value:present-value}{present value} of the extra \omterm{def:g10:surplus-and-efficiency:consumer-surplus}{consumer surplus} over 20 years, and compare it with the prize.
+\item Development costs 15\,000 thousand dalens. Is the medicine developed under the patent? Under the prize?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- What can go wrong.}
+\begin{enumerate}[resume]
+\item The government underestimates demand and offers 12\,000. What happens?
+\item It overestimates and offers 30\,000. Who gains, and at whose expense?
+\item Why does a prize require the government to know more than a patent does?
+\item Both inventors spend 15\,000 racing, and only one wins. What is the \omterm{def:g11:externalities:private-cost}{social cost} of the race? Is it wasted?
+\item The longitude prizes took decades to pay out. What does that record suggest about defining the result in advance?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Longer protection.}
+\begin{enumerate}[resume]
+\item The patent is lengthened to 25 years. Find its new \omterm{def:g12:present-value:present-value}{present value}.
+\item With development costing 21\,000, which length of patent leads to the medicine being developed?
+\item What is the cost to buyers of the five extra years, in \omterm{def:g12:present-value:present-value}{present value} of \omterm{def:g10:what-prices-do:dwl}{deadweight loss}?
+\item Why might a longer patent bring more medicines but each at a higher cost to buyers?
+\item State the result of the problem: the prize that gives the inventor the same \omterm{def:g12:present-value:present-value}{present value} as the patent, and the \omterm{def:g10:what-prices-do:dwl}{deadweight loss} it avoids.
+\end{enumerate}
+\end{problem}

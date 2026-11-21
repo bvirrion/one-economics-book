@@ -1,0 +1,4 @@
+estimate,label,pct,coef,ledger
+raw,Raw means,20,0.54,b2:lazear2000-t2
+total,Month and year controlled,44,0.368,b2:lazear2000-t3
+within,Same worker,22,0.197,b2:lazear2000-t3

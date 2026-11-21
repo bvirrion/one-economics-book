@@ -1,0 +1,2 @@
+games,overall_l,overall_r,mean_abs_gap,p05,p10,max_printed_gap
+40,0.641,0.654,0.085,1,2,0.005

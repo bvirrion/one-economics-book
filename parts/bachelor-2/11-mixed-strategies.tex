@@ -1,0 +1,407 @@
+\chapter{Mixed Strategies}\label{ch:b2:mixed-strategies}
+
+A tennis server chooses, on every first serve, whether to aim at the receiver's left or right; the
+receiver must guess. If the server always aimed at the side where he wins more often, the receiver would
+learn it and lean that way, and the advantage would vanish. Game theory predicts that a server who plays
+well mixes his serves so that he wins equally often whichever side he picks. The chart tests that
+prediction on 40 ``point games'' (one server, serving to one court, in one match) from ten professional
+finals of 1974--1997.
+
+\begin{openingchart}{Share of points won by the server after a first serve to the left and to the right,
+  in 40 point games from ten professional tennis finals, 1974--1997. Each dot is one server on one court in
+  one match; the line marks equal rates.}{Walker and Wooders (2001), Table~1}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xmin=0.45, xmax=0.9, ymin=0.45, ymax=0.9, xlabel={Win rate after serving left},
+    ylabel={Win rate after serving right}, width=0.55\linewidth, height=0.55\linewidth,
+    xtick={0.5,0.6,0.7,0.8,0.9}, ytick={0.5,0.6,0.7,0.8,0.9}]
+  \addplot[black!50, dashed, domain=0.45:0.9, samples=2, forget plot] {x};
+  \addplot[only marks, mark=*, mark size=1.8pt, omDef] table[x=rate_l, y=rate_r]
+    {figdata/bachelor-2/11-mixed-strategies/out/serves.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% ledger: b2:ww2001-t1, b2:ww2001-totals
+% figdata: serves_summary (games 40, overall_l 0.641, overall_r 0.654, mean_abs_gap 0.085, p05 1, p10 2)
+The dots lie around the line. Over all 3{,}026 first serves, servers won 64 per cent of points after serving
+left and 65 per cent after serving right. In single point games the two rates differ, by 8.5 points on
+average, but with 55 to 99 first serves per point game, split unevenly between the sides, such gaps are what chance
+produces: a statistical test of equal
+rates rejects in one point game of 40 at the 5 per cent level, and in two at the 10 per cent level, about as
+many as chance alone would give.
+
+\Cref{ch:b2:static-games} found games, such as matching pennies, with no \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} in which each
+player picks one strategy for sure. This chapter allows players to randomise. It shows that every finite
+game then has an equilibrium, how to compute it, and what it predicts: not which side a server picks on a
+given point, but that his chances are equal on both sides, and that his choices follow no pattern the
+receiver could exploit.
+
+\begin{recall}
+From \cref{ch:b2:static-games}: \omterm{def:b2:static-games:normal-form}{normal-form games}, \omterm{def:b2:static-games:best-response}{best responses}, \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium}, and matching pennies.
+From \cref{ch:b2:expected-utility}: expected payoffs over lotteries.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:mixed-strategies:symbols}
+In $2 \times 2$ games, $p$ is the row player's probability of playing her first strategy and $q$ the column
+player's probability of playing his; $v$ is the \omterm{def:b2:mixed-strategies:value}{value of a zero-sum game}. $\sigma_i$ is a \omterm{def:b2:mixed-strategies:mixed-strategy}{mixed strategy} of
+player $i$. In the \omterm{def:b2:mixed-strategies:inspection-game}{inspection game}, $D$ is the tax due, $F$ the fine, $k$ the cost of an audit, $a$ the
+probability of an audit and $e$ the probability of evasion.
+\end{notation}
+
+\section{Randomised strategies}\label{sec:b2:mixed-strategies:randomised}
+
+\begin{definition}[Mixed strategy]\label{def:b2:mixed-strategies:mixed-strategy}
+A \emph{mixed strategy}\index{mixed strategy} $\sigma_i$ of player $i$ is a probability distribution over her
+strategies $S_i$, which in this context are called pure strategies. Players randomise independently, and
+each evaluates a profile of mixed strategies by her expected payoff.
+\end{definition}
+
+\begin{definition}[Support of a mixed strategy]\label{def:b2:mixed-strategies:support}
+The \emph{support}\index{support (of a mixed strategy)} of a \omterm{def:b2:mixed-strategies:mixed-strategy}{mixed strategy} is the set of pure strategies
+to which it gives positive probability.
+\end{definition}
+
+A \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} in mixed strategies is a profile of mixed strategies, each a \omterm{def:b2:static-games:best-response}{best response} to the
+others. In matching pennies, suppose the column player shows heads with probability $q$. The row player, who
+wins when the coins match, earns $q - (1 - q) = 2q - 1$ from heads and $1 - 2q$ from tails. If $q > \tfrac12$ she
+plays heads; if $q < \tfrac12$, tails; at $q = \tfrac12$ she is indifferent, and any mixture is a \omterm{def:b2:static-games:best-response}{best
+response}. The same reasoning for the column player gives the only equilibrium: both play each side with
+probability one half.
+
+\section{The indifference condition}\label{sec:b2:mixed-strategies:indifference}
+
+\begin{proposition}[Indifference]\label{prop:b2:mixed-strategies:indifference}
+In a \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} in mixed strategies, every pure strategy in the \omterm{def:b2:mixed-strategies:support}{support} of a player's \omterm{def:b2:mixed-strategies:mixed-strategy}{mixed strategy}
+gives her the same expected payoff, and no pure strategy outside the \omterm{def:b2:mixed-strategies:support}{support} gives her more.
+\end{proposition}
+
+\begin{proof}
+A player's expected payoff from a \omterm{def:b2:mixed-strategies:mixed-strategy}{mixed strategy} is the average of the expected payoffs of the pure
+strategies in its \omterm{def:b2:mixed-strategies:support}{support}, weighted by their probabilities. If one strategy in the \omterm{def:b2:mixed-strategies:support}{support} paid less than
+another, moving its probability to the better one would raise the average, so the \omterm{def:b2:mixed-strategies:mixed-strategy}{mixed strategy} would not
+be a \omterm{def:b2:static-games:best-response}{best response}. If a pure strategy outside the \omterm{def:b2:mixed-strategies:support}{support} paid more than the common payoff of those inside,
+playing it for sure would be better.
+\end{proof}
+
+The proposition gives the method. To find a mixed equilibrium, choose each player's mixture so that the
+\emph{other} player is indifferent among the strategies in his \omterm{def:b2:mixed-strategies:support}{support}. The striking consequence is that a
+player's equilibrium mixture depends on the opponent's payoffs, not on her own.
+
+Take a stylised penalty kick, used in laboratory experiments with professional footballers. The kicker
+kicks left or right; the goalkeeper covers left or right. The kicker scores with probability 0.60 if both
+choose left, 0.95 if he kicks left and the keeper covers right, 0.90 if he kicks right and the keeper covers
+left, 0.70 if both choose right.
+% ledger: b2:wooders2008-pk
+The game has no pure equilibrium. If the keeper covers left with probability $q$, the kicker scores $0.60q +
+0.95(1 - q)$ by kicking left and $0.90q + 0.70(1 - q)$ by kicking right; equal when $0.25 = 0.55q$, so $q =
+0.4545$. If the kicker kicks left with probability $p$, the keeper concedes $0.60p + 0.90(1 - p)$ by covering
+left and $0.95p + 0.70(1 - p)$ by covering right; equal when $0.20 = 0.55p$, so $p = 0.3636$. At these mixtures the
+kicker scores with probability $0.60 \times 0.4545 + 0.95 \times 0.5455 = 0.7909$ whichever side he picks.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=-0.04, xmax=1.04, ymin=-0.04, ymax=1.04,
+    xlabel={$p$: kicker's probability of kicking left}, ylabel={$q$: keeper's probability of covering left},
+    xtick={0,0.3636,1}, xticklabels={0, 0.36, 1}, ytick={0,0.4545,1}, yticklabels={0, 0.45, 1},
+    width=0.55\linewidth, height=0.55\linewidth]
+  \addplot[omDef, very thick] coordinates {(1,0) (1,0.4545) (0,0.4545) (0,1)};
+  \addplot[omThm, very thick, dashed] coordinates {(0,0) (0.3636,0) (0.3636,1) (1,1)};
+  \node[eqpoint] at (axis cs:0.3636,0.4545) {};
+  \node[anchor=south west, font=\footnotesize] at (axis cs:0.38,0.47) {equilibrium};
+  \node[anchor=west, font=\footnotesize, omDef, align=left] at (axis cs:0.55,0.3) {kicker's best\\response};
+  \node[anchor=west, font=\footnotesize, omThm, align=left] at (axis cs:0.45,0.85) {keeper's best\\response};
+\end{axis}
+\end{tikzpicture}
+
+{\small \omterm{def:b2:static-games:best-response}{Best responses} in the penalty-kick game. The kicker kicks left for sure when the keeper covers left
+less than 45 per cent of the time, right when more, and is indifferent at 45 per cent. The keeper covers left
+when the kicker kicks left more than 36 per cent of the time. The two best-response lines cross only at the
+mixed equilibrium.}
+\end{omfigure}
+
+The kicker kicks right 64 per cent of the time and the keeper covers right 55 per cent of the time. Each
+mixture is pinned down by the other player's indifference, so a change in any scoring probability moves both,
+sometimes in surprising directions (\cref{exo:b2:mixed-strategies:6}).
+
+\section{Existence}\label{sec:b2:mixed-strategies:existence}
+
+\begin{theorem}[Existence of Nash equilibrium]\label{thm:b2:mixed-strategies:nash}
+Every game with finitely many players, each with finitely many pure strategies, has at least one \omterm{def:b2:static-games:nash-equilibrium}{Nash
+equilibrium} in mixed strategies (Nash 1950).
+\end{theorem}
+
+\admitted
+
+The proof applies a fixed-point theorem to the players' best-response correspondences, and its idea can be
+seen in the figure: in a $2 \times 2$ game each player's \omterm{def:b2:static-games:best-response}{best response} is a step that runs from one side of the
+square to the other, so the two steps must cross (\cref{exo:b2:mixed-strategies:11}). The theorem says
+nothing about how many equilibria there are or how players would find one.
+
+\section{Zero-sum games and the minimax theorem}\label{sec:b2:mixed-strategies:minimax}
+
+\begin{definition}[Zero-sum game]\label{def:b2:mixed-strategies:zero-sum}
+A two-player game is \emph{zero-sum}\index{zero-sum game} if, in every profile, the two payoffs sum to zero:
+one player's gain is the other's loss. A game in which the payoffs sum to the same constant in every profile,
+such as the penalty kick, where the keeper's payoff is one minus the kicker's, is equivalent.
+\end{definition}
+
+\begin{definition}[Maximin strategy]\label{def:b2:mixed-strategies:maximin}
+A \emph{maximin strategy}\index{maximin strategy} of a player is a \omterm{def:b2:mixed-strategies:mixed-strategy}{mixed strategy} that maximises the payoff
+she can guarantee, the smallest expected payoff she could receive whatever the opponent does.
+\end{definition}
+
+\begin{definition}[Value of a zero-sum game]\label{def:b2:mixed-strategies:value}
+The \emph{value}\index{value of a zero-sum game} $v$ of a \omterm{def:b2:mixed-strategies:zero-sum}{zero-sum game} is the payoff that the row player's
+\omterm{def:b2:mixed-strategies:maximin}{maximin strategy} guarantees her when it equals the payoff that the column player's \omterm{def:b2:mixed-strategies:maximin}{maximin strategy} holds
+her to: $\max_{\sigma_1}\min_{\sigma_2} u_1 = \min_{\sigma_2}\max_{\sigma_1} u_1 = v$.
+\end{definition}
+
+\begin{theorem}[Minimax theorem]\label{thm:b2:mixed-strategies:minimax}
+In every finite two-player \omterm{def:b2:mixed-strategies:zero-sum}{zero-sum game}, $\max_{\sigma_1}\min_{\sigma_2} u_1(\sigma_1, \sigma_2) =
+\min_{\sigma_2}\max_{\sigma_1} u_1(\sigma_1, \sigma_2)$. Maximin strategies form a \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium}, and every
+\omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} consists of maximin strategies.
+\end{theorem}
+
+\begin{proof}[Proof for $2 \times 2$ games]
+Always $\max_{\sigma_1}\min_{\sigma_2} u_1 \le \min_{\sigma_2}\max_{\sigma_1} u_1$: whatever player 1
+guarantees with some $\sigma_1$, no $\sigma_2$ can hold her below it. If the game has a pure equilibrium (a saddle point), its payoff is the least in its row
+and the greatest in its column, so the row player guarantees it and the column player holds her to it:
+equality. Otherwise, by \cref{prop:b2:mixed-strategies:indifference} there are mixtures $p^*$ and $q^*$ that make
+each player indifferent between his two strategies. Against $q^*$, every strategy of player 1 earns the same
+amount $v$, so $\min\max \le v$; with $p^*$, player 1 earns $v$ against every strategy of player 2, so $\max\min \ge
+v$. Hence $v \le \max\min \le \min\max \le v$. The general case is \admitted.
+\end{proof}
+
+In the penalty kick the \omterm{def:b2:mixed-strategies:value}{value} is 0.7909: the kicker can guarantee scoring with that probability, and the
+keeper can hold him to it. Minimax play has a second implication, which tests often use: a player whose
+choices followed a pattern, such as alternating, would be exploitable by an opponent who noticed it.
+Equilibrium choices are serially independent.
+
+\section{Tested on professional sport}\label{sec:b2:mixed-strategies:sport}
+
+Professional sport offers \omterm{def:b2:mixed-strategies:zero-sum}{zero-sum games} played for high stakes by experienced players, with outcomes
+that are recorded. The chart at the start of the chapter is one test; the listing shows what data from
+equilibrium play would look like. It simulates 20 pairs of kicker and keeper playing 150 penalty kicks each
+at the equilibrium mixtures, and tests, for each pair, whether the kicker's scoring rates on the two sides
+differ.
+
+\omcode{code/bachelor-2/11-mixed-strategies/listings/penalty_play.py}{1}{26}{Simulated equilibrium play of
+the penalty-kick game, with a test of equal scoring rates for each
+pair.}\label{lst:b2:mixed-strategies:penalty}
+
+\omoutput{code/bachelor-2/11-mixed-strategies/outputs/penalty_play.txt}{Equilibrium play produces equal
+scoring rates up to chance.}\label{out:b2:mixed-strategies:penalty}
+
+% code: listings/penalty_play.py
+Even under perfect equilibrium play, a 5 per cent test rejects equality in about one pair in twenty by
+chance; in this run, none. The Wimbledon data passed the same kind of test: one rejection in 40 point games.
+
+\begin{record}[Serves at Wimbledon]
+% ledger: b2:ww2001-t1, b2:ww2001-totals
+Walker and Wooders (2001) recorded the direction of every first serve, and whether the server won the
+point, in ten finals between 1974 and 1997. Serves to the centre, 6
+per cent of the total, were left out. Over the 40 point games, equality of the win rates after left and right
+serves was rejected at the 5 per cent level once, and a joint test over all 40 gives a p-value of 0.852:
+the win rates are consistent with equilibrium play. The same paper finds that servers switched direction
+more often than independent choices would, so the serves were not serially independent; in laboratory data,
+both equal win rates and serial independence were rejected.
+\end{record}
+
+\begin{model}{Mixed-strategy equilibrium}
+\assumes Players who maximise expected payoffs, know the game, and correctly anticipate the opponent's
+mixture.
+\predicts Equal expected payoffs across the strategies each player uses; choices that are serially
+independent; mixtures that respond to the opponent's payoffs, not one's own.
+\tested Professional tennis serves (Walker and Wooders 2001): equal win rates hold, serial independence
+does not; laboratory penalty kicks played by professionals and students (Palacios-Huerta and Volij 2008).
+\breaks Serial correlation: servers switch too often; a re-examination of the laboratory data finds the
+professionals' play inconsistent with minimax in several respects and the students' closer to it (Wooders
+2008).
+\end{model}
+
+% ledger: b2:wooders2008-pk
+The two findings are different tests of one model. Equal win rates are about what players achieve; serial
+independence is about how they achieve it. Professionals pass the first test better than the second,
+which is the more demanding: it requires a person to produce random sequences, which people do poorly.
+
+\section{An inspection game}\label{sec:b2:mixed-strategies:inspection}
+
+\begin{definition}[Inspection game]\label{def:b2:mixed-strategies:inspection-game}
+An \emph{inspection game}\index{inspection game} is a game between an inspector, who decides whether to
+check, at a cost, and an inspectee, who decides whether to comply or to violate a rule, gaining if she
+violates unchecked and paying a penalty if she violates and is checked.
+\end{definition}
+
+A taxpayer owes $D$ and can declare it (honest) or not (evade). A tax inspector can audit at a cost $k$. An audit
+of an evader recovers the tax and imposes a fine $F$; the inspector values the tax he collects, net of audit
+costs, while fines go to the treasury. The taxpayer pays $D$ if honest, $D + F$ if she evades and is audited,
+nothing if she evades unaudited. The inspector collects $D - k$ if he audits (from an honest taxpayer or a
+caught evader), $D$ if he does not audit an honest taxpayer, and nothing from an unaudited evader.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, font=\footnotesize]
+  \foreach \ox/\title/\sa/\sb/\ta/\tb/\p/\q/\r/\s in {
+      0/Penalty kick (scoring probability)/Left/Right/Left/Right/{0.60}/{0.95}/{0.90}/{0.70},
+      7.0/Inspection game/Honest/Evade/Audit/No audit/{$-D$, $D - k$}/{$-D$, $D$}/{$-D - F$, $D - k$}/{0, 0}} {
+    \node[font=\small\bfseries] at (\ox+2.3,1.9) {\title};
+    \node[payoff, minimum width=25mm] at (\ox+1.0,0.4) {\p};
+    \node[payoff, minimum width=25mm] at (\ox+3.6,0.4) {\q};
+    \node[payoff, minimum width=25mm] at (\ox+1.0,-0.4) {\r};
+    \node[payoff, minimum width=25mm] at (\ox+3.6,-0.4) {\s};
+    \node[anchor=east] at (\ox-0.4,0.4) {\sa};
+    \node[anchor=east] at (\ox-0.4,-0.4) {\sb};
+    \node at (\ox+1.0,1.1) {\ta};
+    \node at (\ox+3.6,1.1) {\tb};
+  }
+\end{tikzpicture}
+
+{\small Two games without pure equilibria. Left: the kicker's scoring probability, rows for the kicker and
+columns for the keeper; the keeper's payoff is one minus it. Right: the taxpayer (rows) and the inspector
+(columns), the taxpayer's payoff first.}
+\end{omfigure}
+
+There is no pure equilibrium: if the inspector audits, the taxpayer is honest; then the inspector prefers
+not to audit; then she evades; then he audits. In the mixed equilibrium each player's mixture makes the
+other indifferent.
+
+\begin{proposition}[Equilibrium of the inspection game]\label{prop:b2:mixed-strategies:inspection}
+If $0 < k < D$, the \omterm{def:b2:mixed-strategies:inspection-game}{inspection game} has a unique equilibrium, in which the inspector audits with probability
+$a^* = D/(D + F)$ and the taxpayer evades with probability $e^* = k/D$. A higher fine lowers the audit rate and
+leaves the evasion rate unchanged.
+\end{proposition}
+
+\begin{proof}
+The taxpayer is indifferent when $D = a(D + F)$, so $a^* = D/(D + F)$. The inspector earns $D - k$ from auditing
+whatever the taxpayer does, and $(1 - e)D$ from not auditing; he is indifferent when $e^* = k/D$. The fine enters
+only the taxpayer's indifference condition, which fixes the inspector's mixture.
+\end{proof}
+
+The result is a direct consequence of the indifference condition, and it runs against intuition: in
+equilibrium, a harsher penalty does not deter evasion, because the inspector, anticipating more honesty,
+audits less until the taxpayer is again indifferent. Evasion falls only if the cost of an audit falls or the
+inspector's gain from catching an evader rises. The prediction assumes that the inspector chooses his audit
+rate after seeing nothing and cannot commit to it; an inspector who can announce, and keep to, an audit rate
+changes the game (\cref{pb:b2:mixed-strategies:1}, Part IV), a theme of \cref{ch:b2:dynamic-games}.
+
+\section{Exercises}\label{sec:b2:mixed-strategies:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:mixed-strategies:1}
+In a \omterm{def:b2:static-games:coordination-game}{coordination game} the row player gets 2 and the column player 1 if both choose $A$, the row player 1 and the
+column player 2 if both choose $B$, and both get 0 otherwise. Find the pure equilibria and the mixed
+equilibrium, and each player's expected payoff in the mixed one.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:mixed-strategies:2}
+A server wins the point with probability 0.58 if he serves left and the receiver leans left, 0.79 if he serves
+left and the receiver leans right, 0.73 if he serves right and the receiver leans left, and 0.49 if both choose
+right. Find the equilibrium mixtures and the server's winning probability.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:mixed-strategies:3}
+Read the opening chart. What were the overall win rates after serves to the left and to the right? In how many
+point games was equality rejected at the 5 per cent level, and how many would you expect by chance?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:mixed-strategies:4}
+What data from tennis matches would refute the prediction of equal win rates? Distinguish evidence against the
+model from evidence of skill differences between players.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:mixed-strategies:5}
+A \omterm{def:b2:mixed-strategies:zero-sum}{zero-sum game} has row payoffs 4 and 2 in the first row, 3 and 1 in the second. Find each player's \omterm{def:b2:mixed-strategies:maximin}{maximin
+strategy} and the \omterm{def:b2:mixed-strategies:value}{value}. Why is no mixing needed?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:mixed-strategies:6}
+Predict, then compute: the keeper in the penalty-kick game becomes better at saving kicks to his left when he
+covers left, so that the scoring probability there falls from 0.60 to 0.50. How do the kicker's and the keeper's
+mixtures change, and the \omterm{def:b2:mixed-strategies:value}{value}?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:mixed-strategies:7}
+In one point game of the Wimbledon data, a server served left 33 times and won 20 points, and served right 26
+times and won 22. Compute the two win rates, the pooled rate and the Pearson statistic $\sum (g - np)^2/(np(1 -
+p))$ over the two directions. Is equality rejected at the 5 per cent level (critical value 3.84)?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:mixed-strategies:8}
+In rock--paper--scissors each player wins 1 from the other when her choice beats his and nothing changes hands
+on a tie. Use the indifference condition to find the equilibrium.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:mixed-strategies:9}
+Design a test of serial independence for a tennis server's sequence of serve directions. What pattern would
+reject it, and why might a player who knows the game still produce such a pattern?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:mixed-strategies:10}
+For a $2 \times 2$ \omterm{def:b2:mixed-strategies:zero-sum}{zero-sum game} without a saddle point, with row payoffs $a_{11}, a_{12}, a_{21}, a_{22}$, derive
+$p^*$, $q^*$ and the \omterm{def:b2:mixed-strategies:value}{value} $v = (a_{11}a_{22} - a_{12}a_{21})/(a_{11} - a_{12} - a_{21} + a_{22})$, and complete the proof
+of \cref{thm:b2:mixed-strategies:minimax}.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:mixed-strategies:11}
+Prove that every $2 \times 2$ game has a \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium}, possibly in mixed strategies, by considering the
+best-response correspondences in the unit square.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:mixed-strategies:12}
+In the \omterm{def:b2:mixed-strategies:inspection-game}{inspection game}, suppose the inspector also receives a share $s$ of the fine. Find the equilibrium. Which
+parameters now affect evasion, and in which direction?
+\end{exercise}
+
+\section{Problem: Brenland's tax inspectors}\label{sec:b2:mixed-strategies:problem}
+
+\begin{problem}[{Weekend problem --- the tax office of Brenland, an invented economy, decides how often to
+audit a group of self-employed taxpayers: how often do they evade, what does a higher fine achieve, and when
+does it pay the office to announce its audit rate in advance}]
+\label{pb:b2:mixed-strategies:1}
+Each taxpayer owes $D = 1{,}000$ dalens. An audit costs the office $k = 200$ dalens. An evader who is audited pays
+the tax and a fine $F = 1{,}500$; fines go to the treasury. The office maximises the tax it collects net of audit
+costs.
+
+\medskip
+\noindent\textbf{Part I --- The inspection game.}
+\begin{enumerate}
+  \item Write the payoff table.
+  \item Show that there is no pure-strategy equilibrium.
+  \item Which player's payoffs determine the audit rate in a mixed equilibrium?
+  \item Which player's payoffs determine the evasion rate?
+  \item Does the taxpayer have a dominant strategy?
+  \item Is the game \omterm{def:b2:mixed-strategies:zero-sum}{zero-sum}?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The mixed equilibrium.}
+\begin{enumerate}[resume]
+  \item Find the equilibrium audit probability.
+  \item Find the equilibrium evasion probability.
+  \item Find the taxpayer's expected payment.
+  \item Find the office's expected net collection per taxpayer.
+  \item What share of the tax due does the office collect, before audit costs?
+  \item Check that at these probabilities neither player gains by changing alone.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- A higher fine.}
+\begin{enumerate}[resume]
+  \item Predict what a fine of 4{,}000 dalens does to evasion and to audits.
+  \item Compute the new equilibrium.
+  \item What happens to the office's audit costs?
+  \item What change would reduce evasion in this model?
+  \item Why might real taxpayers respond to the fine even if the model says they do not?
+  \item What evidence would distinguish the two views?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Commitment.} The office can announce an audit rate and keep to it, at a fixed cost of
+100 dalens per taxpayer (staff hired in advance). A taxpayer who is indifferent declares honestly.
+\begin{enumerate}[resume]
+  \item What is the lowest audit rate that makes every taxpayer honest?
+  \item Find the office's net collection under commitment, with $F = 1{,}500$.
+  \item Compare with Part II. Does commitment pay?
+  \item Repeat with $F = 500$.
+  \item Find the fine above which commitment pays.
+  \item State the result: the equilibrium audit and evasion rates, and the fine at which commitment pays.
+\end{enumerate}
+\end{problem}

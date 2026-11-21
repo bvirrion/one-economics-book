@@ -1,0 +1,13 @@
+year,item,slope
+2012,food_home,0.6
+2012,food_away,1.06
+2012,shelter,0.77
+2012,entertainment,1.14
+2015,food_home,0.61
+2015,food_away,1.04
+2015,shelter,0.78
+2015,entertainment,1.02
+2025,food_home,0.73
+2025,food_away,1.15
+2025,shelter,0.76
+2025,entertainment,1.21

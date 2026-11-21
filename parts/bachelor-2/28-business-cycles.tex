@@ -1,0 +1,352 @@
+\chapter{Business Cycles and Shocks}\label{ch:b2:business-cycles}
+
+Output does not grow smoothly: it rises faster than its trend for a while, then slower, and sometimes falls. This chapter
+measures these fluctuations, separates them from the trend, and builds the simplest equilibrium model in which they arise
+from shocks to technology. The chart shows how volatile growth has been in rich countries over a century and a half.
+
+\begin{openingchart}{Standard deviation of the annual growth of real GDP per person over the ten years ending in each year,
+  1880--2020, per cent, logarithmic scale: United States, United Kingdom, Germany, and the median of seventeen rich
+  countries.}{Jord\`a--Schularick--Taylor Macrohistory Database (rgdpmad); our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.72\linewidth, height=0.42\linewidth, xmin=1880, xmax=2020, ymode=log, ymin=0.4,
+    ymax=40, ytick={0.5,1,2,5,10,20}, yticklabels={0.5,1,2,5,10,20}, xticklabel style={/pgf/number format/1000 sep=},
+    ylabel={Per cent}, legend style={at={(0.5,-0.18)}, anchor=north, legend columns=4, font=\scriptsize}]
+  \addplot[omDef, thick] table[x=year, y=USA] {figdata/bachelor-2/28-business-cycles/out/vol.csv};
+  \addlegendentry{United States}
+  \addplot[omThm, thick, dashed] table[x=year, y=GBR] {figdata/bachelor-2/28-business-cycles/out/vol.csv};
+  \addlegendentry{United Kingdom}
+  \addplot[omMeth, thick, dotted] table[x=year, y=DEU] {figdata/bachelor-2/28-business-cycles/out/vol.csv};
+  \addlegendentry{Germany}
+  \addplot[black, very thick] table[x=year, y=median] {figdata/bachelor-2/28-business-cycles/out/vol.csv};
+  \addlegendentry{median of 17}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: vol_summary (median: 1913 2.34, 1950 6.20, 1975 2.21, 2000 1.54, 2007 1.13, 2019 0.89 (minimum), 2020 2.10; DEU 1950 27.29; USA 2007 1.11)
+In the median country, growth of income per person had a standard deviation of 2.34 per cent over the ten years to 1913 and
+6.20 per cent over the ten years to 1950, a decade of war and reconstruction; Germany's reached 27.29. It was 2.21 in the decade to 1975, 1.54 in
+the decade to 2000 and 1.13 in the decade to 2007. The crisis of 2008--09 raised it; the calm decade 2010--19 brought it to 0.89, the
+lowest of the whole period; and 2020 alone took it back to 2.10.
+Fluctuations are a permanent feature, but their size has changed a great deal.
+
+\begin{recall}
+From the school volumes: the business cycle, recessions and expansions. From the Year 1 volume: aggregate demand and supply
+shocks. From \cref{ch:b2:ramsey-model}: the planner's problem and the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation}. From
+\cref{ch:b2:three-equation-model}: demand shocks and monetary policy.
+\end{recall}
+
+\section{The facts}\label{sec:b2:business-cycles:facts}
+
+\begin{definition}[Cyclical component]\label{def:b2:business-cycles:cyclical-component}
+The \emph{cyclical component}\index{cyclical component} of a time series is its deviation from a smooth trend, usually of
+its logarithm, so that it measures the per cent distance from trend.
+\end{definition}
+
+\begin{definition}[Procyclical variable]\label{def:b2:business-cycles:procyclical}
+A variable is \emph{procyclical}\index{procyclical variable} if its \omterm{def:b2:business-cycles:cyclical-component}{cyclical component} is positively correlated with that
+of output, \emph{countercyclical}\index{countercyclical variable} if negatively, and acyclical if the correlation is near
+zero.
+\end{definition}
+
+The table summarises the American cycle from 1959 to 2009: the standard deviation of each \omterm{def:b2:business-cycles:cyclical-component}{cyclical component}, its size relative to
+output's, its correlation with output's and its correlation with its own value one quarter earlier.
+
+\begin{center}
+\pgfplotstabletypeset[col sep=comma,
+  columns={var,sd,rel,corr,ac1},
+  columns/var/.style={string type, column name={Variable}, column type={l}},
+  columns/sd/.style={column name={Std.\ dev.}, column type={r}, fixed, fixed zerofill, precision=2},
+  columns/rel/.style={column name={Relative to output}, column type={r}, fixed, fixed zerofill, precision=2},
+  columns/corr/.style={column name={Corr.\ with output}, column type={r}, fixed, fixed zerofill, precision=2},
+  columns/ac1/.style={column name={Autocorr.}, column type={r}, fixed, fixed zerofill, precision=2},
+  every head row/.style={before row=\toprule, after row=\midrule}, every last row/.style={after row=\bottomrule}]
+  {figdata/bachelor-2/28-business-cycles/out/moments.csv}
+
+{\small United States, HP \omterm{def:b2:business-cycles:cyclical-component}{cyclical components} (smoothing 1600) of quarterly data, 1959--2009: logarithms in per cent, the
+unemployment rate in percentage points. Government is real government purchases, income real disposable income. Source: statsmodels macrodata; our computation.}
+\end{center}
+
+% figdata: moments (consumption rel 0.80, corr 0.87; investment rel 4.66, corr 0.91; government corr -0.06; unemployment corr -0.88; output ac1 0.86)
+Three facts stand out. Consumption moves with output but less, 0.80 times as much; investment moves with it and much more, 4.66
+times as much. Unemployment is strongly \omterm{def:b2:business-cycles:procyclical}{countercyclical}, with a correlation of $-0.88$; government purchases are acyclical, at
+$-0.06$. And deviations are persistent: output's \omterm{def:b2:business-cycles:cyclical-component}{cyclical component} has a correlation of 0.86 with its value a quarter earlier.
+
+\begin{omchart}{United States: HP cyclical components of real GDP, consumption and investment, quarterly 1959--2009, per
+  cent; shaded, recessions.}{statsmodels macrodata; recession dates from the NBER; our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.72\linewidth, height=0.4\linewidth, xmin=1959, xmax=2009.75, ymin=-30, ymax=20,
+    xticklabel style={/pgf/number format/1000 sep=}, ylabel={Per cent from trend},
+    legend style={at={(0.5,-0.18)}, anchor=north, legend columns=3, font=\scriptsize}]
+  \omshadeperiods{figdata/bachelor-2/28-business-cycles/out/recessions.csv}
+  \addplot[omMeth, thin] table[x=t, y=inv] {figdata/bachelor-2/28-business-cycles/out/hp.csv};
+  \addlegendentry{investment}
+  \addplot[omDef, thick] table[x=t, y=gdp] {figdata/bachelor-2/28-business-cycles/out/hp.csv};
+  \addlegendentry{GDP}
+  \addplot[omThm, thick, dashed] table[x=t, y=cons] {figdata/bachelor-2/28-business-cycles/out/hp.csv};
+  \addlegendentry{consumption}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\begin{measure}[How recessions are dated]
+% ledger: b2:nber-faq, b2:nber-dates
+American recessions are dated by a committee of the National Bureau of Economic Research. It defines a recession as a
+significant decline in economic activity that is spread across the economy and lasts more than a few months, and weighs
+depth, diffusion and duration together. It looks at monthly series (real personal income less transfers, payroll
+employment, real consumption, real manufacturing and trade sales, household employment, industrial production) and at
+quarterly real GDP and real gross domestic income. It does not use the rule of two consecutive quarters of falling GDP: the
+2001 recession had no such two quarters. It announces turning points only once it is confident of them, between 4 and 21 months
+after they occurred. The shaded periods of the chart are its recessions, from peak quarter to trough quarter.
+\end{measure}
+
+\section{Trend and cycle}\label{sec:b2:business-cycles:trend}
+
+\begin{definition}[Hodrick--Prescott filter]\label{def:b2:business-cycles:hp-filter}
+The \emph{Hodrick--Prescott filter}\index{Hodrick--Prescott filter} splits a series $y_t$ into a trend $\tau_t$ and a \omterm{def:b2:business-cycles:cyclical-component}{cyclical component} $y_t - \tau_t$ by choosing the trend that minimises
+$\sum_t(y_t - \tau_t)^2 + \lambda\sum_t\bigl((\tau_{t+1} - \tau_t) - (\tau_t - \tau_{t-1})\bigr)^2$; the larger $\lambda$, the smoother the trend. For quarterly data $\lambda = 1600$ is the usual choice.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=40, ymin=0, ymax=6, width=0.6\linewidth, height=0.36\linewidth,
+    xlabel={Time}, ylabel={Log output}, ytick=\empty, legend style={at={(1.03,0.5)}, anchor=west, font=\small}]
+  \addplot[omDef, thick, domain=0:40, samples=200] {1 + 0.1*x + 0.5*sin(deg(x/2.2)) + 0.2*sin(deg(x/0.9))};
+  \addlegendentry{series}
+  \addplot[omThm, thick, dashed, domain=0:40, samples=2] {1 + 0.1*x};
+  \addlegendentry{trend}
+  \draw[<->, guide] (axis cs:3.45,1.345) -- (axis cs:3.45,1.718);
+\end{axis}
+\end{tikzpicture}
+
+{\small The decomposition: the \omterm{def:b2:business-cycles:cyclical-component}{cyclical component} is the vertical distance between the series and its trend (arrow). Which
+trend is right is not observed; it is chosen by the method.}
+\end{omfigure}
+
+The decomposition is a convention, not a measurement. The HP trend bends toward the last observations, so the cycle at the
+end of a sample is revised as new data arrive. A filter that removes slow movements can create cycles in a series that has
+none: applied to a random walk, it produces a \omterm{def:b2:business-cycles:cyclical-component}{cyclical component} with a regular-looking period. First differences, the
+other common choice, keep the slow movements in and amplify quarter-to-quarter noise. Moments of the cycle therefore
+depend on the method (Exercise 9).
+
+\section{The real-business-cycle model as a toy model}\label{sec:b2:business-cycles:rbc}
+
+\begin{definition}[Technology shock]\label{def:b2:business-cycles:technology-shock}
+A \emph{technology shock}\index{technology shock} is an unexpected change in total factor productivity, the efficiency with
+which inputs are turned into output.
+\end{definition}
+
+\begin{definition}[Real-business-cycle model]\label{def:b2:business-cycles:rbc}
+A \emph{real-business-cycle model}\index{real-business-cycle model} is a stochastic version of the \omterm{def:b2:ramsey-model:ramsey}{Ramsey model} in which
+fluctuations arise from \omterm{def:b2:business-cycles:technology-shock}{technology shocks}, markets are competitive and clear, and prices and money play no role.
+\end{definition}
+
+The analytic case has log utility, Cobb--Douglas production and full depreciation. A planner chooses consumption and next
+period's capital to maximise $E_0\sum_t\beta^t\ln c_t$ subject to $c_t + k_{t+1} = a_tk_t^\alpha$, with $\ln a_t = \rho\ln a_{t-1} + \varepsilon_t$. Guess that a constant share $s$ of output is saved, $k_{t+1} = sy_t$. The \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation}
+$1/c_t = \beta E_t[\alpha y_{t+1}/(k_{t+1}c_{t+1})]$ with $c = (1 - s)y$ becomes $\frac{1}{(1 - s)y_t} = \beta E_t\bigl[\frac{\alpha y_{t+1}}{sy_t(1 - s)y_{t+1}}\bigr] = \frac{\alpha\beta}{s(1 - s)y_t}$, so $s = \alpha\beta$: the guess is verified (Exercise 10).
+
+In per cent deviations from the steady state, $\hat k_{t+1} = \hat y_t$ and $\hat y_t = \hat a_t + \alpha\hat k_t$, so
+\begin{equation}\label{eq:b2:business-cycles:propagation}
+\hat y_t = \hat a_t + \alpha\hat y_{t-1}.
+\end{equation}
+Output today is high because technology is high and because capital, built from yesterday's output, is high. The second
+term is the model's propagation mechanism.
+
+\begin{definition}[Impulse response]\label{def:b2:business-cycles:impulse-response}
+The \emph{impulse response}\index{impulse response} of a variable to a shock is the path of its deviation from what it
+would otherwise have been, after a one-time shock of given size and no other shocks.
+\end{definition}
+
+The listing computes the \omterm{def:b2:business-cycles:impulse-response}{impulse response} of output to a 1 per cent \omterm{def:b2:business-cycles:technology-shock}{technology shock}, for a shock that disappears at once ($\rho = 0$) and
+one that decays at 10 per cent a period ($\rho = 0.9$), and simulates the model's moments.
+
+\omcode{code/bachelor-2/28-business-cycles/listings/rbc.py}{1}{35}{\omterm{def:b2:business-cycles:impulse-response}{Impulse responses} and moments of the analytic
+\omterm{def:b2:business-cycles:rbc}{real-business-cycle model}.}\label{lst:b2:business-cycles:rbc}
+
+\omoutput{code/bachelor-2/28-business-cycles/outputs/rbc.txt}{With a one-time shock the response dies in a period or two;
+with a persistent shock it has a hump; consumption and investment are exactly as volatile as output.}\label{out:b2:business-cycles:rbc}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=-0.3, xmax=12.3, ymin=0, ymax=1.4, width=0.55\linewidth, height=0.36\linewidth,
+    xlabel={Periods after the shock}, ylabel={Output, per cent}, legend style={at={(1.03,0.5)}, anchor=west, font=\small}]
+  \addplot[omDef, thick, mark=*, mark size=1.3pt, samples at={0,...,12}] {(0.9^(x+1) - (1/3)^(x+1))/(0.9 - 1/3)};
+  \addlegendentry{$\rho = 0.9$}
+  \addplot[omThm, thick, mark=square*, mark size=1.3pt, samples at={0,...,12}] {(1/3)^x};
+  \addlegendentry{$\rho = 0$}
+  \addplot[black!50, thin, dashed, samples at={0,...,12}] {0.9^x};
+  \addlegendentry{technology, $\rho = 0.9$}
+\end{axis}
+\end{tikzpicture}
+
+{\small \omterm{def:b2:business-cycles:impulse-response}{Impulse responses} of output to a 1 per cent \omterm{def:b2:business-cycles:technology-shock}{technology shock}, $\alpha = 1/3$: $\hat y_t = (\rho^{t+1} - \alpha^{t+1})/(\rho - \alpha)$. With $\rho = 0$ the response is $\alpha^t$: two thirds gone after one period. With $\rho = 0.9$ output rises above
+the shock for a while, as capital accumulates, then follows it down.}
+\end{omfigure}
+
+% code: listings/rbc.py
+With a one-time shock, output is 0.33 per cent above trend after one period and 0.11 after two: capital accumulation adds
+almost no persistence. The persistence of the data must come from the shock itself. With $\rho = 0.9$ output peaks at 1.23 per cent one
+period after the shock, and the simulated output has an autocorrelation of 0.95.
+
+\begin{model}{Real-business-cycle model}
+\assumes A \omterm{def:b2:ramsey-model:representative-household}{representative household}, competitive markets that always clear, \omterm{def:b2:business-cycles:technology-shock}{technology shocks} as the only disturbance;
+in the analytic case log utility, full depreciation and no labour choice.
+\predicts \omterm{def:b2:business-cycles:procyclical}{Procyclical} consumption and investment; persistent output if \omterm{def:b2:business-cycles:technology-shock}{technology shocks} are persistent; in versions
+with partial depreciation, solved numerically, consumption smoother than output, because households spread a temporary gain
+over time, and investment more volatile.
+\tested Against the moments of the table. The signs agree, consumption and investment being \omterm{def:b2:business-cycles:procyclical}{procyclical} with correlations
+of 0.87 and 0.91 with output, but almost every model of the cycle predicts those signs, so they do not single this one out.
+The model's own claims, the relative volatilities and the persistence, are what the table tests, and the analytic case
+fails them (next field); the numerical versions, calibrated to match them, are the Year 3 volume's subject.
+\breaks The model propagates shocks weakly: persistence must be put into the shocks. In the analytic case consumption and
+investment are exactly as volatile as output, against 0.80 and 4.66 in the data. There is no role for money, prices or finance, so the
+model has nothing to say about recessions that follow a financial crisis (\cref{ch:b2:banks-and-crises}).
+\end{model}
+
+\section{Technology, demand, financial and oil shocks}\label{sec:b2:business-cycles:shocks}
+
+\omterm{def:b2:business-cycles:technology-shock}{Technology shocks} are one candidate. Others are shocks to demand (to spending plans, fiscal policy or monetary policy, which
+move output when prices are slow to adjust, as in \cref{ch:b2:three-equation-model}), financial shocks (a fall in banks'
+ability or willingness to lend, the subject of the next chapter) and shocks to the price of an input such as oil, which act
+like a fall in technology for an oil importer.
+
+\begin{record}[Oil shocks and recessions]
+% ledger: b2:hamilton1983
+Hamilton (1983) found that all but one of the American recessions after the Second World War had been preceded, typically
+by about three quarters of a year, by a dramatic rise in the price of crude oil; the exception was the recession of
+1960--61. He stressed that this does not show that oil shocks caused the recessions, but found that over 1948--72 the
+correlation was statistically significant and not spurious, which supports the view that oil shocks contributed to at least
+some of them.
+\end{record}
+
+\section{How a shock is identified}\label{sec:b2:business-cycles:identification}
+
+Output, prices and interest rates move together, so a correlation does not say which shock moved them. Two families of
+methods are used. The narrative approach reads the record (central-bank minutes, budget speeches, oil-market events) to
+find changes in policy or prices made for reasons unrelated to the current state of the economy, and traces what followed.
+Timing restrictions assume that some variables cannot respond within a period to some shocks: for instance, that output
+does not respond within the month to a change in the policy rate, so that the month's surprise in the rate can be read as
+a policy shock. Both give \omterm{def:b2:business-cycles:impulse-response}{impulse responses}; both rest on assumptions that cannot be fully tested within the data they use.
+
+\section{The fall in volatility after 1985 and its end}\label{sec:b2:business-cycles:moderation}
+
+\begin{definition}[Great Moderation]\label{def:b2:business-cycles:great-moderation}
+The \emph{Great Moderation}\index{Great Moderation} is the fall in the volatility of output growth and inflation in the
+United States and other rich countries from the mid-1980s to 2007.
+\end{definition}
+
+\begin{record}[The Great Moderation and its end]
+% ledger: b2:stock-watson2002, b2:mcconnell2000; figdata: moderation (2.47, 1.58, 1.01)
+McConnell and Perez-Quiros (2000) dated a break in the volatility of American GDP growth to the first quarter of 1984 and
+traced it to durable goods production. Stock and Watson (2002) found that the standard deviation of annual GDP growth fell from 2.7 per cent in 1960--1983 to
+1.6 per cent in 1984--2001, and attributed 20 to 30 per cent of the fall to better policy, 20 to 30 per cent to identifiable good luck in productivity
+and commodity-price shocks, and 40 to 60 per cent to other good luck. On the data of this chapter the figures are 2.47 and 1.58, and 1.01 for 2002--2008.
+The opening chart shows the end: the median volatility of the decade to 2020, 2.10, is back near that of the decade to
+1975, 2.21.
+\end{record}
+
+\section{Exercises}\label{sec:b2:business-cycles:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:business-cycles:1}
+Read the opening chart. Give the median volatility for the decades to 1913, 1950, 2007 and 2020. Why is the 1950 value so high?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:business-cycles:2}
+From the table: which variables are \omterm{def:b2:business-cycles:procyclical}{procyclical}, which \omterm{def:b2:business-cycles:procyclical}{countercyclical}, which acyclical? Which is most volatile relative to output?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:business-cycles:3}
+Compare the standard deviations of annual growth in Stock and Watson's two periods with those computed on this chapter's data.
+By what proportion did volatility fall?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:business-cycles:4}
+Why does the committee that dates American recessions not use the rule of two quarters of falling GDP? Give the example it
+gives.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:business-cycles:5}
+Predict, then compute: with $\rho = 0$ and $\alpha = 1/3$, how long does it take for the response of output to fall to half its initial size?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:business-cycles:6}
+With $\alpha = 1/3$ and $\beta = 0.96$, what shares of output are saved and consumed in the analytic model? Why do they not depend on technology?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:business-cycles:7}
+Modify the listing to set $\rho = 0.5$. Give the response of output in the first four periods, and compare it with the closed form.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:business-cycles:8}
+Explain why the analytic model gives consumption exactly as volatile as output, and what change to the model makes it
+smoother.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:business-cycles:9}
+\textbf{(D)} With the macrodata, compute the standard deviations of quarterly log growth of consumption and investment relative to
+that of output, and their correlations with output growth. Compare with the HP table.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:business-cycles:10}
+Verify that $k_{t+1} = \alpha\beta y_t$ satisfies the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} of the analytic model for every realisation of $a_{t+1}$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:business-cycles:11}
+From \eqref{eq:b2:business-cycles:propagation} and $\hat a_t = \rho^t$, derive $\hat y_t = (\rho^{t+1} - \alpha^{t+1})/(\rho - \alpha)$, and show that the sum of the responses is $1/((1 - \rho)(1 - \alpha))$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:business-cycles:12}
+Show that the HP trend equals the series when $\lambda = 0$, and that it tends to a straight line as $\lambda \to \infty$.
+\end{exercise}
+
+\section{Problem: Brenland's harvest shocks}\label{sec:b2:business-cycles:problem}
+
+\begin{problem}[{Weekend problem --- Brenland's harvest shocks: the planner's problem, the analytic policy rule, a 1 per
+cent shock, and persistence}]
+\label{pb:b2:business-cycles:1}
+Brenland's output is $y_t = a_tk_t^{0.3}$, where $a_t$ is the harvest; capital lasts one year; the planner maximises $E_0\sum_t 0.95^t\ln c_t$; and $\ln a_t = 0.8\ln a_{t-1} + \varepsilon_t$.
+
+\medskip
+\noindent\textbf{Part I --- The planner's problem.}
+\begin{enumerate}
+  \item Write the resource constraint.
+  \item Write the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation}.
+  \item Why is full depreciation unrealistic for an economy's whole capital stock?
+  \item Find the steady-state capital with $a = 1$.
+  \item Find steady-state output.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The analytic policy rule.}
+\begin{enumerate}[resume]
+  \item Guess $k_{t+1} = sy_t$ and find $s$.
+  \item What share of output is consumed?
+  \item Write the law of motion of $\hat y_t$.
+  \item How does consumption deviate from its steady state?
+  \item And investment?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- A 1 per cent shock.} A good harvest raises $a$ by 1 per cent in year 0.
+\begin{enumerate}[resume]
+  \item What is output in year 0?
+  \item In year 1?
+  \item In year 2?
+  \item When does the response peak, and why does it peak after the shock?
+  \item What is the response in year 5?
+  \item How does consumption respond?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Persistence.}
+\begin{enumerate}[resume]
+  \item After how many years is the response below half its peak?
+  \item With $\rho = 0$, how long would the response take to halve?
+  \item What does the comparison say about where persistence comes from?
+  \item Find the sum of the responses over all years.
+  \item Split it into a factor due to the shock and a factor due to capital.
+  \item With $\rho = 0.95$, when does the response peak, and after how many years is it below half the peak?
+  \item In the data, output's \omterm{def:b2:business-cycles:cyclical-component}{cyclical component} has an autocorrelation of 0.86 a quarter. What would the model need to match it?
+  \item State the result: the \omterm{def:b2:business-cycles:impulse-response}{impulse response} of output and its half-life.
+\end{enumerate}
+\end{problem}

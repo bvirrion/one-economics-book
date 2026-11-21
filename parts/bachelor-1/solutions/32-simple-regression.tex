@@ -1,0 +1,136 @@
+\section*{Chapter \ref{ch:b1:simple-regression} --- Simple Regression}
+% Numbers recomputed in code/bachelor-1/32-simple-regression/exercises/ (solutions.py,
+% exo_07.py; tested in tests/test_ch32.py) and in the chapter's captured outputs.
+
+\begin{solution}{exo:b1:simple-regression:five}
+$\bar x = 12$, $\bar y = 9.84$; $\sum (x_i - \bar x)(y_i - \bar y) = 4.4$ and $\sum (x_i - \bar x)^2 = 40$, so $\hat\beta_1 = 0.11$ and
+$\hat\beta_0 = 9.84 - 0.11 \times 12 = 8.52$.
+\end{solution}
+
+\begin{solution}{exo:b1:simple-regression:read}
+Slope $0.0885$, \omterm{def:b1:sampling-and-inference:standard-error}{standard error} $0.005$ ($0.00487$ unrounded), $R^2 = 0.1304$.
+\end{solution}
+
+\begin{solution}{exo:b1:simple-regression:interpret}
+One more year of experience goes with wages about $6\%$ higher ($100(e^{0.06} - 1) = 6.18\%$
+exactly), on average across workers; it is a description, not yet an effect.
+\end{solution}
+
+\begin{solution}{exo:b1:simple-regression:predict}
+$8.8172 + 16 \times 0.0885 = 10.233$, which corresponds to $e^{10.233} \approx 27{,}800$ dollars --- a
+typical (geometric-mean) value, below the mean earnings of such men.
+\end{solution}
+
+\begin{solution}{exo:b1:simple-regression:residuals}
+$\sum_i \hat y_i\hat u_i = \hat\beta_0\sum_i \hat u_i + \hat\beta_1\sum_i x_i\hat u_i = 0$ by \cref{prop:b1:simple-regression:residuals}, and the \omterm{def:b1:simple-regression:residual}{residuals}
+have mean zero, so their sample covariance with $\hat y$ is zero.
+\end{solution}
+
+\begin{solution}{exo:b1:simple-regression:ages}
+Under 30: 953 men, slope $0.117$ (\omterm{def:b1:sampling-and-inference:standard-error}{standard error} $0.0097$). Over 40: 678 men, slope
+$0.0939$ ($0.0074$). The difference, $0.023$, has a \omterm{def:b1:sampling-and-inference:standard-error}{standard error} of about
+$\sqrt{0.0097^2 + 0.0074^2} = 0.012$: about two \omterm{def:b1:sampling-and-inference:standard-error}{standard errors}, suggestive but not
+conclusive.
+\end{solution}
+
+\begin{solution}{exo:b1:simple-regression:energy}
+183 countries; slope $1.247$, \omterm{def:b1:sampling-and-inference:standard-error}{standard error} $0.033$: $1\%$ more income per person goes
+with $1.25\%$ more energy use per person, as \cref{ch:b1:comparative-statics} found.
+\end{solution}
+
+\begin{solution}{exo:b1:simple-regression:direction}
+Upward: wealth raises earnings and is positively correlated with
+schooling, so the slope of earnings on schooling picks up part of
+wealth's effect.
+\end{solution}
+
+\begin{solution}{exo:b1:simple-regression:test}
+$t = (0.0885 - 0.10)/0.00487 = -2.36$, beyond $-1.96$: the slope is significantly below
+$0.10$ at $5\%$.
+\end{solution}
+
+\begin{solution}{exo:b1:simple-regression:derive}
+Setting the derivatives of $\sum_i (y_i - b_0 - b_1x_i)^2$ to zero gives $\sum_i \hat u_i = 0$ and $\sum_i x_i\hat u_i = 0$.
+The first gives $\hat\beta_0 = \bar y - \hat\beta_1\bar x$; substituting into the second and subtracting
+$\bar x\sum_i \hat u_i = 0$ gives $\sum_i (x_i - \bar x)(y_i - \bar y - \hat\beta_1(x_i - \bar x)) = 0$, hence $\hat\beta_1$. Unbiasedness:
+write $y_i = \beta_0 + \beta_1x_i + u_i$, so $\hat\beta_1 = \beta_1 + \sum_i (x_i - \bar x)u_i/\sum_i (x_i - \bar x)^2$; given the $x$'s, each
+$\E[u_i \mid x] = 0$, so the expectation is $\beta_1$.
+\end{solution}
+
+\begin{solution}{exo:b1:simple-regression:product}
+The two slopes are $s_{xy}/s_x^2$ and $s_{xy}/s_y^2$; their product is $s_{xy}^2/(s_x^2s_y^2) = r^2$. With $r^2 < 1$ the
+two cannot both be at least one when the variances are similar; here
+$0.8368 \times 0.6394 = 0.5350 = 0.7315^2$. Earnings in each year are partly transitory, so
+each year's earnings predict the other's with a slope below one.
+\end{solution}
+
+\begin{solution}{exo:b1:simple-regression:refute}
+Twins or siblings with different schooling but the same earnings; or a
+natural experiment --- a change in school-leaving rules that raised schooling
+for some cohorts --- with no matching rise in their earnings; or a slope that
+falls to near zero once measures of ability and family background enter.
+\end{solution}
+
+\begin{solution}{pb:b1:simple-regression:brenland}
+\textbf{1.} 1,922.
+
+\textbf{2.} Mean $12.63$ years, standard deviation $2.59$.
+
+\textbf{3.} Slope $0.0580$, intercept $9.3956$.
+
+\textbf{4.} The sum is $1.3 \times 10^{-11}$: zero up to rounding error.
+
+\textbf{5.} $10.091$ and $10.323$.
+
+\textbf{6.} $e^{4 \times 0.058} = 1.261$: $26\%$ higher.
+
+\textbf{7.} 1,841 dalens per year of schooling.
+
+\textbf{8.} A year more of the head's schooling goes with about $5.8\%$ more
+household income.
+
+\textbf{9.} $100(e^{0.058} - 1) = 5.97\%$.
+
+\textbf{10.} $0.108$.
+
+\textbf{11.} No: it means schooling leaves most of the variation unexplained;
+the slope is precisely estimated (item 12).
+
+\textbf{12.} $0.0038$; $t = 15.3$.
+
+\textbf{13.} $0.0505$ to $0.0654$.
+
+\textbf{14.} $t = (0.058 - 0.10)/0.0038 = -11.1$: rejected.
+
+\textbf{15.} $0.1888$.
+
+\textbf{16.} $0.0628$.
+
+\textbf{17.} Schooling $0.0453$, ability $0.0927$.
+
+\textbf{18.} $0.0628 - 0.0453 = 0.0175 = 0.0927 \times 0.1888$.
+
+\textbf{19.} By $0.0128$ (from $0.05$ to $0.0628$).
+
+\textbf{20.} Ability raises income and goes with more schooling, so the short
+regression credits schooling with part of ability's effect.
+
+\textbf{21.} Yes, if anything that raises income is also correlated with
+schooling; the survey has no ability measure to check.
+
+\textbf{22.} $0.0591$.
+
+\textbf{23.} $-0.0034$: $0.34\%$ less income per year of age, schooling held fixed.
+
+\textbf{24.} $0.049$: age is almost uncorrelated with schooling, so leaving it out
+biases the slope very little.
+
+\textbf{25.} When the variable both affects income and is correlated with
+schooling, like ability in Part III; this is what multiple regression in
+the second university year handles.
+
+\textbf{26.} The Brenland return to a year of the head's schooling is $5.8\%$
+(\omterm{def:b1:sampling-and-inference:standard-error}{standard error} $0.4$ point) in the survey; if it carried an ability bias of
+the size simulated in Part III (1.3 points), the causal return would be
+about $4.5\%$.
+\end{solution}

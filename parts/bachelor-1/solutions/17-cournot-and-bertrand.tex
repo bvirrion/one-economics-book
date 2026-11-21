@@ -1,0 +1,135 @@
+\section*{Chapter \ref{ch:b1:cournot-and-bertrand} --- Oligopoly: Cournot and Bertrand}
+% Numbers recomputed in code/bachelor-1/17-cournot-and-bertrand/exercises/solutions.py (tested).
+
+\begin{solution}{exo:b1:cournot-and-bertrand:duo}
+$q_i = (120 - 30)/3 = 30$, $Q = 60$, $p = 60$, profit $30 \times 30 = 900$ each.
+\end{solution}
+
+\begin{solution}{exo:b1:cournot-and-bertrand:bert}
+$p = 30$ and zero profit (\cref{prop:b1:cournot-and-bertrand:bertrand}).
+\end{solution}
+
+\begin{solution}{exo:b1:cournot-and-bertrand:read}
+$0.71$ thousand per dentist with one, $2.54/2 = 1.27$ with two: a ratio of
+$1.27/0.71 = 1.79$.
+\end{solution}
+
+\begin{solution}{exo:b1:cournot-and-bertrand:third}
+$p = 30 + 90/4 = 52.5$, down from 60.
+\end{solution}
+
+\begin{solution}{exo:b1:cournot-and-bertrand:surplus}
+$p = 30 + 90/(n + 1)$ and $Q = 90n/(n + 1)$; \omterm{def:b1:partial-equilibrium-welfare:surplus}{total surplus} is
+$\int_0^Q(120 - x - 30)\,\dd x = 90Q - Q^2/2$: 3,037.5 for $n = 1$ ($Q = 45$), 3,600 for $n = 2$,
+3,796.9 for $n = 3$, and $90^2/2 = 4050$ in the limit.
+\end{solution}
+
+\begin{solution}{exo:b1:cournot-and-bertrand:share}
+Firm $i$'s condition $p + q_i\,p'(Q) = c_i$ gives
+$(p - c_i)/p = -\frac{q_i}{Q}\cdot\frac{Q}{p}p'(Q) = -s/\varepsilon = s/|\varepsilon|$.
+\end{solution}
+
+\begin{solution}{exo:b1:cournot-and-bertrand:unequal}
+Firm 1 sets its price just below 12 (in whole cents, 11.99) and serves the
+market; firm 2 cannot profitably match. In the limit $p = 12$, $Q = 88$, and firm
+1 earns $(12 - 10) \times 88 = 176$; firm 2 sells nothing.
+\end{solution}
+
+\begin{solution}{exo:b1:cournot-and-bertrand:stack}
+The leader makes $90/2 = 45$, the follower $(90 - 45)/2 = 22.5$; $Q = 67.5$ and $p = 52.5$.
+Profits: $22.5 \times 45 = 1012.5$ and $22.5 \times 22.5 = 506.25$, against 900 each in Cournot. The
+leader gains, the follower loses, and buyers gain from the higher output.
+\end{solution}
+
+\begin{solution}{exo:b1:cournot-and-bertrand:diff}
+Firm $i$ maximises $(p_i - 10)(100 - 2p_i + p_j)$: $100 - 4p_i + p_j + 20 = 0$, so
+$p_i = (120 + p_j)/4$. Symmetric: $p = 40$, $q = 100 - 80 + 40 = 60$, profit $30 \times 60 = 1800$
+each.
+\end{solution}
+
+\begin{solution}{exo:b1:cournot-and-bertrand:limit-ex}
+$p - c = (a - c)/(n + 1) \to 0$, and $n(p - c) = (a - c)\,n/(n + 1) \to a - c$: the margin is
+about $(a - c)/n$ for large $n$.
+\end{solution}
+
+\begin{solution}{exo:b1:cournot-and-bertrand:thresholds}
+Inverse demand $p = a - Q/S$; with $N$ firms $q_i = S(a - c)/(N + 1)$ and
+$p - c = (a - c)/(N + 1)$, so each earns $S(a - c)^2/(N + 1)^2 - F$ and
+$S_N = F(N + 1)^2/(a - c)^2$. Then $S_{N+1}/S_N = (N + 2)^2/(N + 1)^2$, and the per-firm ratio
+is $\frac{N}{N+1}\cdot\frac{(N + 2)^2}{(N + 1)^2}$: $1.125$ from one to two firms, $1.185$ from two to
+three. Under Bertrand, two firms earn zero margins and cannot cover $F$ at
+any size: $S_2$ is infinite, and a market has one firm however large it is.
+\end{solution}
+
+\begin{solution}{exo:b1:cournot-and-bertrand:refute}
+If the second firm drove the price to cost, no town of any size would
+have two firms making positive profits: we would see only monopolies, or
+per-firm thresholds jumping without limit at $N = 2$. Direct evidence: prices
+in towns with two sellers well above marginal cost. The chart's finite
+ratios near 2 refute the strict Bertrand prediction; they also suggest
+that the second firm cuts margins more than in Cournot.
+\end{solution}
+
+\begin{solution}{pb:b1:cournot-and-bertrand:ferries}
+\textbf{1.} $p = 60 - Q/4$.
+
+\textbf{2.} $MR = 60 - Q/2 = 20$: $Q = 80$ thousand trips, $p = 40$.
+
+\textbf{3.} $(40 - 20) \times 80 - 800 = 800$.
+
+\textbf{4.} $L = 20/40 = 0.5$; $\varepsilon = -4 \times 40/80 = -2$, and $-1/\varepsilon = 0.5$.
+
+\textbf{5.} $\tfrac12 \times 80 \times 20 = 800$.
+
+\textbf{6.} The competitive quantity is $4 \times 40 = 160$: $\tfrac12 \times 80 \times 20 = 800$.
+
+\textbf{7.} $p = 60 - Q/9$.
+
+\textbf{8.} Ferry 1 maximises $(60 - (q_1 + q_2)/9 - 20)q_1$: $q_1 = (360 - q_2)/2$.
+
+\textbf{9.} $q_1 = q_2 = 120$, $Q = 240$, $p = 60 - 240/9 = 33.33$.
+
+\textbf{10.} $(33.33 - 20) \times 120 - 800 = 1600 - 800 = 800$ each.
+
+\textbf{11.} $L = 13.33/33.33 = 0.4$; $\varepsilon = -9 \times 33.33/240 = -1.25$, and $1/(2 \times 1.25) = 0.4$.
+
+\textbf{12.} $\tfrac12 \times 240 \times (60 - 33.33) = 3200$.
+
+\textbf{13.} One ferry: $Q = 180$, $p = 40$, profit $20 \times 180 - 800 = 2800$. A merger would
+raise the joint profit from 1,600 to 2,800 and the fare from 33.33 to 40.
+
+\textbf{14.} 20, the marginal cost.
+
+\textbf{15.} $-800$ each: they cannot cover their fixed costs, and one leaves.
+
+\textbf{16.} The monopoly profit of question 13, 2,800.
+
+\textbf{17.} A full ferry cannot carry more, so a lower fare only loses
+revenue. Given ferry 2's 120, ferry 1's residual demand is $p = 60 - (q_1 + 120)/9$,
+and its best response is $q_1 = (360 - 120)/2 = 120$: offering fewer trips earns
+less.
+
+\textbf{18.} $q_1 = 360/2 = 180$, $q_2 = (360 - 180)/2 = 90$, $Q = 270$, $p = 30$; profits
+$10 \times 180 - 800 = 1000$ and $10 \times 90 - 800 = 100$.
+
+\textbf{19.} $1000 - 800 = 200$ a year more than in the \omterm{def:b1:cournot-and-bertrand:cournot}{Cournot equilibrium}.
+
+\textbf{20.} $S \times 40^2/(n + 1)^2 - 800 = 1600S/(n + 1)^2 - 800$.
+
+\textbf{21.} $S_n = (n + 1)^2/2$: $S_1 = 2$, $S_2 = 4.5$, $S_3 = 8$ thousand people.
+
+\textbf{22.} 2, 2.25 and 2.667 thousand per ferry; ratios 1.125 and 1.185.
+
+\textbf{23.} Island A (4) supports one ferry ($S_2 = 4.5$). Island B (9) supports three
+($S_3 = 8 \le 9 < S_4 = 12.5$), at a fare of $20 + 40/4 = 30$.
+
+\textbf{24.} Cournot's 1.125 is far below the doctors' 1.98 and the dentists'
+1.79: in those towns the second firm cut margins much more than Cournot
+competition with linear demand would.
+
+\textbf{25.} Infinite: two ferries in a price war never cover their fixed
+costs.
+
+\textbf{26.} Three ferries need an island of 8 thousand people, 4 times the 2
+thousand that supports one.
+\end{solution}

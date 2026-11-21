@@ -1,0 +1,10 @@
+$ python balance.py
+variable     treated   control   difference      t
+age            25.82     25.05         0.76   1.11
+education      10.35     10.09         0.26   1.44
+black           0.84      0.83         0.02   0.46
+hispanic        0.06      0.11        -0.05  -1.86
+married         0.19      0.15         0.04   0.97
+nodegree        0.71      0.83        -0.13  -3.11
+re74         2095.57   2107.03       -11.45  -0.02
+re75         1532.05   1266.91       265.15   0.87

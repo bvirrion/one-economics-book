@@ -1,0 +1,480 @@
+\chapter{Social Choice}\label{ch:b2:social-choice}
+
+Voting theory has a long list of things that can go wrong. With three or more candidates, the majority
+may prefer $A$ to $B$, $B$ to $C$ and $C$ to $A$, so that no candidate beats every other; a candidate can lose
+by gaining votes; a losing candidate's presence can change the winner. These are theorems about what
+\emph{can} happen. The chart shows how often each happened in 182 American elections of 2004--2022 that used
+ranked ballots, in which every voter lists the candidates in order.
+
+\begin{openingchart}{Share of 182 US ranked-choice elections, 2004--2022, in which each flaw of the
+  voting rule occurred, in per cent. All elections went to at least a second round of counting. The first
+  bar is one election out of 182.}{Graham-Squire and McCune (2023), Table~7}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xbar, bar width=9pt, xmin=0, xmax=5, ymin=0.4, ymax=7.6, y dir=reverse,
+    ytick=data, yticklabels from table={figdata/bachelor-2/09-social-choice/out/flaws.csv}{flaw},
+    xlabel={Per cent of elections}, grid=none, xmajorgrids, width=0.6\linewidth,
+    height=0.48\linewidth, nodes near coords,
+    every node near coord/.append style={font=\footnotesize}]
+  \addplot[fill=omDef!70, draw=omDef] table[x=rate, y=pos]
+    {figdata/bachelor-2/09-social-choice/out/flaws.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% ledger: b2:gsm2023-t7
+% figdata: flaws_summary (no_winner 0.55, largest 3.8)
+All but one of the 182 elections had a candidate who would have beaten every other one-to-one: 0.55 per
+cent had none. The other flaws, each defined later in this chapter or in its exercises, occurred in at
+most 3.8 per cent. The study finds one exception: in 52.5 per cent of the elections, the final-round
+winner had a majority only of the ballots still counted, not of all ballots cast, because many voters
+had not ranked the last two candidates.
+
+\Cref{ch:b2:welfare-theorems} showed that markets reach efficient \omterm{def:b2:exchange-economies:allocation}{allocations}, and that choosing among
+efficient \omterm{def:b2:exchange-economies:allocation}{allocations} needs a judgement the theorems do not supply. This chapter studies how such
+judgements might be made: by comparing gains and losses, by a \omterm{def:b2:social-choice:swf}{social welfare function}, or by a vote. Each
+method has a precise weakness, and the strongest result, Arrow's theorem, says that no voting rule escapes
+all of them. The chart is the other half of the story: how often the weaknesses bite depends on what
+voters' preferences actually look like.
+
+\begin{recall}
+From the school volumes: majority voting and the idea that collective decisions are made by rules. From
+\cref{ch:b2:exchange-economies,ch:b2:welfare-theorems}: Pareto efficiency, the \omterm{def:b2:exchange-economies:edgeworth-box}{Edgeworth box}, and the
+second welfare theorem's \omterm{def:b2:welfare-theorems:lump-sum}{lump-sum transfers}.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:social-choice:symbols}
+Voters or citizens are $i = 1, \dots, n$; alternatives are $x, y, z$ (candidates, budgets, policies), and
+$m$ is their number. $x \succ_i y$ means voter $i$ ranks $x$ above $y$; a profile is a list of every voter's
+ranking. $\succsim$ is a social ordering and $\succ$ its strict part. $u_i$ is person $i$'s utility and
+$W(u_1, \dots, u_n)$ a \omterm{def:b2:social-choice:swf}{social welfare function}.
+\end{notation}
+
+\section{The Pareto criterion and compensation tests}\label{sec:b2:social-choice:pareto}
+
+\begin{definition}[Pareto improvement]\label{def:b2:social-choice:pareto-improvement}
+A change from one state of the economy to another is a \emph{Pareto improvement}\index{Pareto
+improvement} if it makes at least one person better off and no one worse off.
+\end{definition}
+
+The Pareto criterion is the least controversial way of ranking states: almost anyone accepts that a
+\omterm{def:b2:social-choice:pareto-improvement}{Pareto improvement} is an improvement. Its weakness is that it is silent about most comparisons. Almost
+every policy, a new road, a tariff cut, a tax, makes someone worse off, and the criterion then has nothing
+to say. A \omterm{def:b2:social-choice:compensation-test}{compensation test} widens its reach.
+
+\begin{definition}[Compensation test]\label{def:b2:social-choice:compensation-test}
+A change from state $A$ to state $B$ passes the \emph{compensation test}\index{compensation test}
+(Kaldor--Hicks test) if the people who gain from it could compensate the people who lose and still be
+better off: some reallocation of what $B$ makes possible is a \omterm{def:b2:social-choice:pareto-improvement}{Pareto improvement} on $A$. The compensation
+need not be paid.
+\end{definition}
+
+The test is what lies behind adding up gains and losses in money, as in cost--benefit analysis: if gains
+exceed losses, the winners could compensate the losers. It has two weaknesses. Because compensation is
+not paid, the losers stay losers, so passing the test is not a \omterm{def:b2:social-choice:pareto-improvement}{Pareto improvement}. And the test can approve
+a change and its reverse.
+
+Two policies, $A$ and $B$, lead to different sets of possible utilities for two people. Under $A$ the
+utility possibility frontier is $u_1 + 2u_2 = 10$; under $B$ it is $2u_1 + u_2 = 10$. State $A$ gives
+$(u_1, u_2) = (2, 4)$; state $B$ gives $(4, 2)$. From $A$, moving to $B$ passes the test, because policy $B$ allows
+$(3, 4)$, which is better for both than $(2, 4)$. From $B$, moving back to $A$ also passes, because policy $A$
+allows $(4, 3)$, which is better for both than $(4, 2)$. The test approves both moves.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=6.5, ymin=0, ymax=6.5, xlabel={$u_1$}, ylabel={$u_2$},
+    xtick={0,2,4,6}, ytick={0,2,4,6}, width=0.5\linewidth, height=0.5\linewidth]
+  \addplot[omDef, very thick, domain=0:6.5, samples=2] {(10 - x)/2};
+  \addplot[omThm, very thick, domain=1.75:5, samples=2] {10 - 2*x};
+  \node[eqpoint] at (axis cs:2,4) {};
+  \node[anchor=north east, font=\footnotesize] at (axis cs:1.95,3.95) {$A$};
+  \node[eqpoint] at (axis cs:4,2) {};
+  \node[anchor=north, font=\footnotesize] at (axis cs:3.9,1.9) {$B$};
+  \node[draw, circle, inner sep=1.5pt] at (axis cs:3,4) {};
+  \node[anchor=south west, font=\footnotesize] at (axis cs:3,4) {$(3, 4)$};
+  \node[draw, circle, inner sep=1.5pt] at (axis cs:4,3) {};
+  \node[anchor=south west, font=\footnotesize] at (axis cs:4,3) {$(4, 3)$};
+  \node[anchor=west, font=\footnotesize, omDef] at (axis cs:4.6,2.4) {policy $A$};
+  \node[anchor=west, font=\footnotesize, omThm] at (axis cs:2.4,5.6) {policy $B$};
+\end{axis}
+\end{tikzpicture}
+
+{\small A compensation-test reversal. The two utility possibility frontiers cross. From $A$, policy $B$'s
+frontier passes above and to the right of $A$, at $(3, 4)$; from $B$, policy $A$'s frontier passes above
+and to the right of $B$, at $(4, 3)$. Each state passes the test against the other.}
+\end{omfigure}
+
+The reversal needs the frontiers to cross, which they can when the two policies change what is produced
+and so whose tastes it favours. When they do not cross, the test gives a consistent answer, and it is then
+equivalent to asking whether one frontier lies outside the other: a statement about efficiency, not about
+the distribution actually reached.
+
+\section{Social welfare functions as tools}\label{sec:b2:social-choice:swf}
+
+\begin{definition}[Social welfare function]\label{def:b2:social-choice:swf}
+A \emph{social welfare function}\index{social welfare function} $W(u_1, \dots, u_n)$ ranks states of the
+economy by the utilities they give to its $n$ members; it increases in each $u_i$. Common forms are the
+utilitarian $W = \sum_i u_i$, the maximin $W = \min_i u_i$, and the weighted sum $W = \sum_i a_i u_i$ with
+weights $a_i > 0$.
+\end{definition}
+
+A \omterm{def:b2:social-choice:swf}{social welfare function} does not come from economics; it states a judgement, which economics can then
+apply consistently. Every one that increases in each $u_i$ respects the Pareto criterion, and each makes a
+different trade-off when the criterion is silent. A worked case shows how far apart they can be.
+
+% code: exercises/solutions.py transfers
+Two people have incomes of 80 and 20. Each dollar taken from the first reaches the second as 80 cents: the
+rest is lost in administration and in changed behaviour. With utilities equal to income, the utilitarian
+function forbids any transfer, since each one lowers the sum. With utilities $\ln m$, the utilitarian
+optimum sets $1/(80 - t) = 0.8/(20 + 0.8t)$, so $t = 27.5$: incomes become 52.5 and 42. The maximin
+function equalises incomes, $80 - t = 20 + 0.8t$, so $t = 33.33$ and both have 46.67, although 6.67 dollars
+are lost on the way. The three answers come from the same facts and different judgements. What economics
+can supply is the facts: how large the leak is, which depends on how people respond to taxes and
+transfers, a question for the public economics of the Year 3 volume.
+
+\begin{definition}[Envy-free allocation]\label{def:b2:social-choice:envy-free}
+An \omterm{def:b2:exchange-economies:allocation}{allocation} is \emph{envy-free}\index{envy-free allocation} if every person weakly prefers her own bundle
+to the bundle of every other person.
+\end{definition}
+
+\begin{remark}
+Envy-freeness compares bundles rather than utilities, so it needs no comparison of one person's
+satisfaction with another's. In an \omterm{def:b2:exchange-economies:exchange-economy}{exchange economy}, the \omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium} from equal \omterm{def:b2:exchange-economies:endowment}{endowments} is
+both \omterm{def:b2:social-choice:envy-free}{envy-free} and \omterm{def:b2:exchange-economies:pareto-efficient}{Pareto-efficient}: everyone faces the same budget, so anyone who preferred another's
+bundle could have bought it.
+\end{remark}
+
+\section{Voting cycles}\label{sec:b2:social-choice:cycles}
+
+When a group decides by voting, it does not need to compare utilities: each voter ranks the
+alternatives, and a rule turns the rankings into a decision. The simplest rule for two alternatives,
+majority voting, has every good property one could ask for. With three, trouble starts.
+
+\begin{definition}[Condorcet winner]\label{def:b2:social-choice:condorcet-winner}
+A \emph{Condorcet winner}\index{Condorcet winner} is an alternative that a majority of voters prefers to
+each other alternative, in one-to-one comparisons.
+\end{definition}
+
+Three voters rank three alternatives: voter 1 has $x \succ y \succ z$, voter 2 has $y \succ z \succ x$,
+voter 3 has $z \succ x \succ y$. Voters 1 and 3 prefer $x$ to $y$; voters 1 and 2 prefer $y$ to $z$;
+voters 2 and 3 prefer $z$ to $x$. Each comparison is won two votes to one, and the majority's preferences go
+round in a circle.
+
+\begin{definition}[Condorcet paradox]\label{def:b2:social-choice:condorcet-paradox}
+The \emph{Condorcet paradox}\index{Condorcet paradox} (voting cycle) is the possibility that majority
+voting over pairs is intransitive: a majority prefers $x$ to $y$, a majority $y$ to $z$ and a majority $z$
+to $x$, although every voter's ranking is transitive. There is then no \omterm{def:b2:social-choice:condorcet-winner}{Condorcet winner}.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, font=\footnotesize, alt/.style={draw, circle, minimum size=8mm,
+    fill=omDef!15}]
+  \node[alt] (x) at (90:1.6) {$x$};
+  \node[alt] (y) at (210:1.6) {$y$};
+  \node[alt] (z) at (330:1.6) {$z$};
+  \draw[->, very thick, omThm] (x) -- node[left=2pt] {2 to 1} (y);
+  \draw[->, very thick, omThm] (y) -- node[below=2pt] {2 to 1} (z);
+  \draw[->, very thick, omThm] (z) -- node[right=2pt] {2 to 1} (x);
+\end{tikzpicture}
+
+{\small A majority cycle. An arrow from one alternative to another means that a majority prefers the
+first. Whatever is chosen, a majority prefers something else.}
+\end{omfigure}
+
+With a cycle, the outcome depends on the order of the votes. If $x$ first meets $y$ and the winner then
+meets $z$, $z$ wins; with the agenda $y$ against $z$, then $x$, $x$ wins. Whoever sets the agenda chooses the
+outcome (\cref{pb:b2:social-choice:1}, Part IV).
+
+How likely is a cycle? If every voter's ranking were drawn at random, with all orders equally likely, the
+chance of no \omterm{def:b2:social-choice:condorcet-winner}{Condorcet winner} in a large electorate can be computed. The listing estimates it by
+simulation, for 501 voters and three to five candidates, and repeats the count for \omterm{def:b2:social-choice:single-peaked}{single-peaked
+preferences} (\cref{sec:b2:social-choice:median}), where each voter has a favourite point on a line and
+likes candidates less the further they are from it.
+
+\omcode{code/bachelor-2/09-social-choice/listings/condorcet_random.py}{1}{27}{Counting elections without
+a \omterm{def:b2:social-choice:condorcet-winner}{Condorcet winner}, for random and for \omterm{def:b2:social-choice:single-peaked}{single-peaked preferences}.}\label{lst:b2:social-choice:random}
+
+\omoutput{code/bachelor-2/09-social-choice/outputs/condorcet_random.txt}{With random preferences cycles are
+common, and they grow with the number of candidates; with \omterm{def:b2:social-choice:single-peaked}{single-peaked preferences} there are
+none.}\label{out:b2:social-choice:random}
+
+% code: listings/condorcet_random.py
+With random rankings, 9.2 per cent of three-candidate elections and 24.2 per cent of five-candidate
+elections have no \omterm{def:b2:social-choice:condorcet-winner}{Condorcet winner}. In the ranked-choice elections of the opening chart, which often had
+more than three candidates, the share was 0.55 per cent. Real preferences are far from random: they share
+structure, and the structure is what makes majority voting work.
+
+\section{Arrow's theorem}\label{sec:b2:social-choice:arrow}
+
+Majority voting over pairs can cycle. Is there a better rule? A rule should turn any profile of rankings
+into a ranking for society.
+
+\begin{definition}[Social preference ordering]\label{def:b2:social-choice:social-ordering}
+A \emph{social preference ordering}\index{social preference ordering} is a complete and transitive
+ranking of the alternatives on behalf of society. A rule that assigns one to each profile of the voters'
+rankings satisfies \emph{unrestricted domain} if it is defined for every possible profile, and the
+\emph{weak Pareto} condition if society ranks $x$ above $y$ whenever every voter does.
+\end{definition}
+
+\begin{definition}[Independence of irrelevant alternatives]\label{def:b2:social-choice:iia}
+A rule satisfies \emph{independence of irrelevant alternatives}\index{independence of irrelevant
+alternatives} if society's ranking of any two alternatives $x$ and $y$ depends only on how each voter ranks
+$x$ against $y$, not on where voters place other alternatives.
+\end{definition}
+
+\begin{definition}[Dictator]\label{def:b2:social-choice:dictator}
+A voter is a \emph{dictator}\index{dictator (social choice)} for a rule if, for every profile and every pair
+$x, y$, society ranks $x$ above $y$ whenever she does.
+\end{definition}
+
+\begin{theorem}[Arrow's impossibility theorem]\label{thm:b2:social-choice:arrow}
+With at least three alternatives and voters with strict rankings, every rule that produces a \omterm{def:b2:social-choice:social-ordering}{social
+preference ordering} and satisfies unrestricted domain, weak Pareto and \omterm{def:b2:social-choice:iia}{independence of irrelevant
+alternatives} has a \omterm{def:b2:social-choice:dictator}{dictator}.
+\end{theorem}
+
+\begin{proof}
+\emph{Step 1: an alternative that every voter puts at an extreme is at an extreme socially.} Let every voter
+place $b$ at the top or the bottom of her ranking, and suppose society does not: there are $a$ and $c$ with
+$a \succsim b$ and $b \succsim c$. Change every voter's ranking by moving $c$ just above $a$. This changes no
+voter's comparison of $a$ with $b$ or of $c$ with $b$, since $b$ is at an extreme, so by independence $a
+\succsim b$ and $b \succsim c$ still hold, and by transitivity $a \succsim c$. But every voter now prefers $c$
+to $a$, so by weak Pareto $c \succ a$: a contradiction.
+
+\emph{Step 2: a pivotal voter.} Start from a profile where every voter places $b$ at the bottom; by weak
+Pareto, society does too. Move $b$ to the top of the voters' rankings one at a time, voter 1 first. When all
+have moved it, society places $b$ at the top. By step 1, at every stage $b$ is at the top or the bottom
+socially, so there is a first voter $n^*$ whose move takes it from the bottom to the top. Call the profiles
+just before and just after her move I and II.
+
+\emph{Step 3: $n^*$ decides every pair without $b$.} Take $a, c \ne b$. Starting from II, let $n^*$ move $a$
+above $b$, so that she ranks $a \succ b \succ c$, and let the other voters rearrange $a$ and $c$ in any way,
+leaving $b$ where it was. Call this profile III. In III every voter compares $a$ and $b$ as in I, where $b$
+was at the bottom socially, so $a \succ b$. Every voter compares $b$ and $c$ as in II, where $b$ was at the
+top, so $b \succ c$. Hence $a \succ c$ in III. By independence, society ranks $a$ above $c$ whenever $n^*$
+does, whatever the others do.
+
+\emph{Step 4: $n^*$ also decides the pairs with $b$.} Take $c \ne b$. Steps 2 and 3, run with $c$ in the role of
+$b$, give a voter who decides every pair without $c$, among them every pair $(a, b)$. Between profiles I and
+II only $n^*$'s ranking changed, and society's ranking of $b$ against $a$ changed with it; so that voter
+must be $n^*$. Hence $n^*$ is a \omterm{def:b2:social-choice:dictator}{dictator}.
+\end{proof}
+
+The theorem does not say that every collective decision is arbitrary; it says that no rule keeps all four
+conditions on every possible profile. Something has to give. The ranked-choice elections of the opening
+chart use instant runoff, which breaks independence; majority voting over pairs breaks the requirement of
+a transitive ordering, but only for profiles that cycle. The record suggests where the escape lies:
+real profiles rarely come from the whole unrestricted domain.
+
+\section{Single-peaked preferences and the median voter}\label{sec:b2:social-choice:median}
+
+\begin{definition}[Single-peaked preferences]\label{def:b2:social-choice:single-peaked}
+Alternatives are ordered on a line, such as budgets from low to high. A voter's preferences are
+\emph{single-peaked}\index{single-peaked preferences} if she has a favourite alternative and, on each side
+of it, likes alternatives less the further they are from it.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0.5, xmax=3.5, ymin=0, ymax=3.5, xtick={1,2,3},
+    xticklabels={$L$, $M$, $R$}, ytick=\empty, xlabel={Alternatives on a line},
+    ylabel={Ranking (higher is better)}, width=0.5\linewidth, height=0.42\linewidth,
+    legend style={at={(1.04,0.5)}, anchor=west, font=\footnotesize}]
+  \addplot[omDef, very thick, mark=*] coordinates {(1,3) (2,2) (3,1)};
+  \addplot[black!60, thick, mark=square*] coordinates {(1,1) (2,3) (3,2)};
+  \addplot[omThm, thick, dashed, mark=triangle*] coordinates {(1,2) (2,1) (3,3)};
+  \legend{$L \succ M \succ R$, $M \succ R \succ L$, $R \succ L \succ M$}
+\end{axis}
+\end{tikzpicture}
+
+{\small The voters of the cycle in \cref{sec:b2:social-choice:cycles}, with $x = L$, $y = M$, $z = R$. The first
+two rankings are \omterm{def:b2:social-choice:single-peaked}{single-peaked}. The third has two peaks, at $L$ and $R$, with a dip at $M$: it is not.}
+\end{omfigure}
+
+\begin{definition}[Median voter theorem]\label{def:b2:social-choice:median-voter}
+The \emph{median voter theorem}\index{median voter theorem} is the result that, with \omterm{def:b2:social-choice:single-peaked}{single-peaked
+preferences} and an odd number of voters, the favourite of the median voter wins every majority vote over
+pairs (\cref{thm:b2:social-choice:median-voter}).
+\end{definition}
+
+\begin{theorem}[Median voter theorem]\label{thm:b2:social-choice:median-voter}
+Let the number of voters $n$ be odd and every voter's preferences be \omterm{def:b2:social-choice:single-peaked}{single-peaked} on the same line. Let $x_m$
+be the median of the voters' favourite alternatives. Then $x_m$ is a \omterm{def:b2:social-choice:condorcet-winner}{Condorcet winner}: a majority prefers it
+to every other alternative.
+\end{theorem}
+
+\begin{proof}
+Take any $y < x_m$. At least $(n + 1)/2$ voters have a favourite at or above $x_m$. Each of them is on the
+side of $x_m$ away from $y$, so by single-peakedness she prefers $x_m$, which is closer to her peak along the
+line, to $y$. That is a majority. The case $y > x_m$ is symmetric, using the $(n + 1)/2$ voters with favourites
+at or below $x_m$.
+\end{proof}
+
+Single-peakedness rules out the cycle: in the proof, any alternative loses to the median's favourite, so
+no chain of majorities can go round. It also says which alternative wins: neither the average voter's
+favourite nor the one that maximises a utilitarian sum, but the median's. If those who favour high budgets
+care much more than those who favour low ones, majority voting ignores the intensity.
+
+\begin{model}{The median-voter model}
+\assumes Alternatives on one dimension; \omterm{def:b2:social-choice:single-peaked}{single-peaked preferences}; majority voting over pairs; every
+voter votes.
+\predicts The median voter's favourite wins; changes in the electorate move the outcome only through the
+median; candidates who compete for votes converge on the median.
+\tested Equations for local public spending built on the median voter's income and tax share fit municipal
+data, which is consistent with the model but does not single it out: a test needs cases where the median
+voter's favourite differs from what an agenda setter or the mean voter would choose. The Year 3 volume
+reviews that evidence.
+\breaks Several dimensions at once (a budget and its use); turnout that differs across voters; whoever
+sets the agenda; intensity of preferences.
+\end{model}
+
+\section{Strategic voting}\label{sec:b2:social-choice:strategic}
+
+All the rules so far took the rankings as given. A voter who knows the rule may report a ranking that is not
+her own, if that brings a better result.
+
+\begin{definition}[Strategy-proof voting rule]\label{def:b2:social-choice:strategy-proof}
+A voting rule is \emph{strategy-proof}\index{strategy-proof voting rule} if no voter can ever obtain an
+outcome she prefers by reporting a ranking other than her true one, whatever the others report.
+\end{definition}
+
+% code: exercises/solutions.py borda
+The Borda count gives each alternative $m - 1$ points for a first place, $m - 2$ for a second, and so on.
+Three voters rank $x \succ y \succ z$ and two rank $y \succ z \succ x$. Then $x$ is the \omterm{def:b2:social-choice:condorcet-winner}{Condorcet winner}, since three
+of the five prefer it to each other alternative, but the Borda count gives $x$ six points, $y$ seven and $z$ two:
+$y$ wins. If the three supporters of $x$ report $x \succ z \succ y$ instead, $y$ falls to four points and $z$ rises to
+five, and $x$ wins with six. By moving $y$ to the bottom, they changed the result in their favour.
+
+The Gibbard--Satterthwaite theorem says that this is no accident of the Borda count. With at least three
+alternatives, every voting rule that is \omterm{def:b2:social-choice:strategy-proof}{strategy-proof} and can produce each alternative as the winner
+has a \omterm{def:b2:social-choice:dictator}{dictator}. \omterm{def:b2:social-choice:single-peaked}{Single-peaked preferences} again offer the way out: with them, choosing the median of
+the reported favourites is \omterm{def:b2:social-choice:strategy-proof}{strategy-proof}, since a voter who reports a favourite on the other side of the
+median moves the outcome away from her (\cref{pb:b2:social-choice:1}, question 16).
+
+\section{Exercises}\label{sec:b2:social-choice:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:social-choice:1}
+Five voters rank three alternatives: two rank $A \succ B \succ C$, two rank $B \succ C \succ A$, and one ranks
+$C \succ A \succ B$. Find the result of each one-to-one majority vote. Is there a \omterm{def:b2:social-choice:condorcet-winner}{Condorcet winner}?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:social-choice:2}
+Three states give two people the utilities $x = (5, 3)$, $y = (6, 3)$ and $z = (8, 1)$. Which comparisons can
+the Pareto criterion decide?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:social-choice:3}
+Read the opening chart. In how many of the 182 elections was there no \omterm{def:b2:social-choice:condorcet-winner}{Condorcet winner}? Compare with the
+listing's estimate for random preferences, and say what the difference suggests.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:social-choice:4}
+A town decides its library budget by majority vote over pairs. Describe a result that would refute the
+\omterm{def:b2:social-choice:median-voter}{median voter theorem}'s prediction, and what you would need to check before concluding that it did.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:social-choice:5}
+Three voters rank $A \succ B \succ C$ and two rank $B \succ C \succ A$. Find the \omterm{def:b2:social-choice:condorcet-winner}{Condorcet winner} and the Borda
+winner. Which property does the Borda count violate here?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:social-choice:6}
+On the line $L < M < R$, which of the rankings $L \succ M \succ R$, $M \succ R \succ L$ and $R \succ L \succ M$ are
+\omterm{def:b2:social-choice:single-peaked}{single-peaked}? Explain why a \omterm{def:b2:social-choice:single-peaked}{single-peaked} voter never ranks the middle alternative last.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:social-choice:7}
+Five voters have favourite spending levels 10, 20, 30, 40 and 50. Two voters with favourites 60 and 70 join
+the electorate. Predict the direction of the change in the outcome, then compute it. Would two new voters
+with favourites 5 and 70 change it?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:social-choice:8}
+Policy $A$ allows the utilities $u_1 + 3u_2 = 12$, policy $B$ allows $3u_1 + u_2 = 12$. State $A$ is $(1.5, 3.5)$
+and state $B$ is $(3.5, 1.5)$. Show that the \omterm{def:b2:social-choice:compensation-test}{compensation test} approves the move from $A$ to $B$ and the move from $B$
+to $A$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:social-choice:9}
+Towns vote on local spending in referenda. Design a test of the median voter model with data on the
+outcomes and on the residents' incomes, and say what result would count against it.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:social-choice:10}
+In the proof of \cref{thm:b2:social-choice:arrow}: (a) explain why, in step 2, $b$ cannot stop halfway
+up society's ranking; (b) in step 3, check that profile III can be built for any rearrangement of $a$ and
+$c$ by the other voters; (c) why does step 4 need profiles I and II?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:social-choice:11}
+Prove the \omterm{def:b2:social-choice:median-voter}{median voter theorem} for an even number of voters: every alternative between the two middle
+favourites, inclusive, is beaten by no other alternative in a majority vote, although it may tie.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:social-choice:12}
+In \cref{exo:b2:social-choice:5}, show that the three voters who rank $A$ first can make $A$ win the Borda count
+by misreporting. Could the two others then answer with a misreport of their own? What does this say
+about the rule?
+\end{exercise}
+
+\section{Problem: Brenmoor's park budget}\label{sec:b2:social-choice:problem}
+
+\begin{problem}[{Weekend problem --- the seven councillors of Brenmoor, a city of Brenland, an invented
+economy, choose a budget for a new park: which budget wins each kind of vote, and how does adding a second
+question change the result}]
+\label{pb:b2:social-choice:1}
+The options are budgets of 200, 400, 600 and 800 thousand dalens. Each councillor has a favourite budget,
+not necessarily one of the options, and ranks the options by their distance from it: 250, 380, 450, 520,
+640, 690 and 900.
+
+\medskip
+\noindent\textbf{Part I --- Ballots.}
+\begin{enumerate}
+  \item Write each councillor's ranking of the four options.
+  \item Which option wins a plurality vote (most first places)?
+  \item Compute the Borda scores (3, 2, 1 and 0 points).
+  \item Find the result of each one-to-one majority vote involving 600.
+  \item Is there a \omterm{def:b2:social-choice:condorcet-winner}{Condorcet winner}?
+  \item Do the three rules agree?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Single-peakedness.}
+\begin{enumerate}[resume]
+  \item Show that every ranking is \omterm{def:b2:social-choice:single-peaked}{single-peaked} on the line $200 < 400 < 600 < 800$.
+  \item A councillor ranks $200 \succ 800 \succ 400 \succ 600$. Is this \omterm{def:b2:social-choice:single-peaked}{single-peaked}? What kind of view might
+        produce it?
+  \item Why does ranking options by distance from a favourite always give \omterm{def:b2:social-choice:single-peaked}{single-peaked preferences}?
+  \item Which theorem now applies, and what does it predict?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- The median and pairwise votes.}
+\begin{enumerate}[resume]
+  \item Find the median favourite budget.
+  \item Which option does the median councillor rank first?
+  \item Check that this option beats every other in one-to-one votes.
+  \item The councillor whose favourite is 250 is replaced by one whose favourite is 950. Find the new median
+        favourite and the new \omterm{def:b2:social-choice:condorcet-winner}{Condorcet winner}.
+  \item Councillors 380 and 450 both report $400 \succ 200 \succ 800 \succ 600$ in a Borda count. Find the new
+        scores. Could either of them change the result alone?
+  \item Under pairwise majority voting, could any councillor obtain a better result by misreporting?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- A second question.} The council must also decide where the park goes.
+Three proposals combine a budget and a site: $X$, $Y$ and $Z$. Three councillors rank $X \succ Y \succ Z$, two
+rank $Y \succ Z \succ X$, and two rank $Z \succ X \succ Y$.
+\begin{enumerate}[resume]
+  \item Find the result of each one-to-one vote.
+  \item Show that there is a cycle.
+  \item The mayor first puts $X$ against $Y$, then the winner against $Z$. Which proposal is adopted?
+  \item Find the outcome of each of the other two agendas.
+  \item Which condition of Arrow's theorem do the rankings violate, and why can two questions produce
+        this when one could not?
+  \item Under the agenda of question 19, would the three councillors who rank $X$ first gain by voting
+        for $Y$ in the first round?
+  \item What does this suggest about who holds power in a council that votes over pairs?
+  \item State the result: the budget that wins every pairwise vote, and the outcome of each agenda once the
+        site is added.
+\end{enumerate}
+\end{problem}

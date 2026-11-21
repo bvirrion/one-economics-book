@@ -1,0 +1,4 @@
+$ python random_effects.py
+corr(a, x)   FE      RE      theta
+    0.00   0.996   0.999   0.610
+    0.45   1.003   1.149   0.467

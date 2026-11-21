@@ -1,0 +1,4 @@
+$ python lambda_iv.py
+quarters used 198; first-stage R2 0.072, F 2.46
+OLS slope 0.342
+lambda (instrumented) 0.617, standard error 0.200

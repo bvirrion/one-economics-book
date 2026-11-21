@@ -1,0 +1,332 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g11-05. Oligopoly and monopolistic competition, games,
+% dominant strategies, Nash equilibrium, the prisoner's dilemma, cartels, repeated play, leniency. Real numbers:
+% figdata/grade-11/05-oligopoly-and-games/ (EIA crude output 1979-1990; BLS real gasoline price in place of the
+% unapproved World Bank crude price; Connor 2005 overcharges as a cited table). Ledger: 1980s oil glut, lysine,
+% Connor 2005, EU leniency, the 2025 car-recycling decision. Kestria's quarries are invented.
+\chapter{Oligopoly and a First Look at Games}\label{ch:g11:oligopoly-and-games}
+
+Between 1981 and 1985, Saudi Arabia cut its output of crude oil from 9.81 million barrels a day to 3.39 million: by two-thirds. The other
+members of the oil exporters' organisation, OPEC, which had agreed to share the cuts, produced 11.42 million barrels a day in 1981 and 11.92
+million in 1985. Saudi Arabia was holding the price up almost alone. At the end of 1985 it gave up: in 1986 it pumped 4.87 million barrels a day,
+and the price of oil fell from about 27 dollars a barrel to below 10.
+% figdata: opec_points (sau 1981 9.81, 1985 3.39, 1986 4.87; others 1981 11.42, 1985 11.92); ledger: g11:opec-1980s
+
+A market with a few large sellers is not like the markets of the last two chapters. Each seller's best choice depends on what the others do, and
+each knows it. This chapter gives the tool for such situations, the theory of \omterm{def:g11:oligopoly-and-games:game}{games}, and uses it to explain why sellers would like to agree on high
+prices, why their agreements tend to break, and what the law does about it.
+
+\begin{openingchart}{Crude oil output of Saudi Arabia and of eleven other OPEC members, 1979--1990, in millions of barrels a day (top), and the price of a gallon of
+regular petrol in the United States, in 2024 dollars (bottom).}{US Energy Information Administration, international energy statistics (crude oil including lease
+condensate; the other members exclude Indonesia, with no data before 1984); US Bureau of Labor Statistics, average price data and CPI-U}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=1 by 2, vertical sep=0.9cm}, omtime, width=0.84\linewidth, xmin=1979, xmax=1990,
+  xtick={1979,1981,...,1989}]
+\nextgroupplot[width=0.84\linewidth, height=5.0cm, ymin=0, ymax=22, ylabel={million barrels a day},
+  legend style={at={(0.5,0.97)}, anchor=north, font=\scriptsize}]
+\addplot[omThm, thick, mark=*, mark size=1pt] table[x=year, y=sau] {figdata/grade-11/05-oligopoly-and-games/out/opec.csv};
+\addlegendentry{Saudi Arabia}
+\addplot[omDef, thick, mark=*, mark size=1pt] table[x=year, y=others] {figdata/grade-11/05-oligopoly-and-games/out/opec.csv};
+\addlegendentry{eleven other members}
+\nextgroupplot[width=0.84\linewidth, height=3.6cm, ymin=2, ymax=5, ylabel={dollars a gallon}]
+\addplot[black, thick, mark=*, mark size=1pt] table[x=year, y=gas] {figdata/grade-11/05-oligopoly-and-games/out/opec.csv};
+\end{groupplot}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: firms compete for buyers, and competition keeps prices down. From \cref{ch:g11:perfect-competition}: \omterm{def:g11:perfect-competition:economic-profit}{economic profit} and \omterm{def:g11:perfect-competition:free-entry}{free
+entry}. From \cref{ch:g11:monopoly}: the \omterm{def:g11:monopoly:monopoly-output}{monopoly output}, where \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal revenue} equals \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost}, and the \omterm{def:g10:what-prices-do:dwl}{deadweight loss}.
+\end{recall}
+
+\section{Few sellers, or many different ones}\label{sec:g11:oligopoly-and-games:structures}
+
+\begin{definition}[Oligopoly]\label{def:g11:oligopoly-and-games:oligopoly}
+An \emph{oligopoly}\index{oligopoly} is a market with a few sellers, each large enough for its choices to change the price and the other sellers' profits.
+\end{definition}
+
+Mobile phone networks, aircraft makers, cement in a region and oil exporters are oligopolies. The opposite case has many sellers who each sell something a little
+different.
+
+\begin{definition}[Product differentiation and monopolistic competition]\label{def:g11:oligopoly-and-games:differentiation}
+\emph{Product differentiation}\index{product differentiation} means that sellers' products differ in ways buyers care about: place, taste, brand, design.
+\emph{Monopolistic competition}\index{monopolistic competition}\phantomsection\label{def:g11:oligopoly-and-games:monopolistic-competition} is a market with many
+sellers of differentiated products and \omterm{def:g11:perfect-competition:free-entry}{free entry}.
+\end{definition}
+
+Restaurants, hairdressers and clothes shops fit. Each seller faces a demand curve of its own that slopes down, because some buyers prefer its product, so it
+sets a price above \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost}, like a small monopoly. \omterm{def:g11:perfect-competition:free-entry}{Free entry} does the rest: while there are profits, new sellers open and take some of each seller's
+buyers, until the demand curve of each just touches its average cost curve.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.55cm, y=0.14cm]
+\draw[econ axes] (0,36) node[left, font=\small] {dalens} |- (13,0) node[below left=12pt and 0pt, font=\small] {$q$};
+\draw[demand] (0,32) -- (10.67,0) node[above right, font=\scriptsize] {demand};
+\draw[omMeth, thick] (0,32) -- (5.33,0) node[above, font=\scriptsize] {MR};
+\draw[supply, domain=2.2:12.5, samples=50] plot (\x, {64/\x + \x}) node[right, font=\scriptsize] {ATC};
+\draw[omThm, thick, domain=0:12] plot (\x, {2*\x}) node[right, font=\scriptsize] {MC};
+\node[eqpoint] at (4,20) {}; \node[eqpoint] at (8,16) {};
+\draw[guide] (0,20) -- (4,20) -- (4,0); \draw[guide] (8,16) -- (8,0); \draw[guide] (4,8) -- (0,8);
+\foreach \y in {8,16,20,32} \draw (0,\y) -- (-0.15,\y) node[left, font=\footnotesize] {\y};
+\node[below, font=\footnotesize] at (4,0) {4}; \node[below, font=\footnotesize] at (8,0) {8};
+\end{tikzpicture}
+
+{\small A seller in \omterm{def:g11:oligopoly-and-games:differentiation}{monopolistic competition} in the long run, with demand $p = 32 - 3q$, $\mathit{ATC} = 64/q + q$ and $\mathit{MC} = 2q$. It sells 4 units, where \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal
+revenue} equals \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} (8), at a price of 20, equal to its average cost: zero profit. The price is above \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost}, and the seller produces less than the 8
+units at which its average cost would be lowest.}
+\end{omfigure}
+
+\section{Games}\label{sec:g11:oligopoly-and-games:games}
+
+\begin{definition}[Game, strategy, payoff]\label{def:g11:oligopoly-and-games:game}
+A \emph{game}\index{game} is a situation in which several players each choose an action, and each player's result depends on the choices of all. A
+\emph{strategy}\index{strategy}\phantomsection\label{def:g11:oligopoly-and-games:strategy} is a choice open to a player; a player's
+\emph{payoff}\index{payoff}\phantomsection\label{def:g11:oligopoly-and-games:payoff} is what she gets for each combination of strategies.
+\end{definition}
+
+With two players and two strategies each, the \omterm{def:g11:oligopoly-and-games:game}{game} fits in a table. Each cell gives the \omterm{def:g11:oligopoly-and-games:game}{payoffs} of the row player, then of the column player.
+
+\begin{definition}[Dominant strategy]\label{def:g11:oligopoly-and-games:dominant-strategy}
+A \omterm{def:g11:oligopoly-and-games:game}{strategy} is \emph{dominant}\index{dominant strategy} for a player if it gives her a higher \omterm{def:g11:oligopoly-and-games:game}{payoff} than any other \omterm{def:g11:oligopoly-and-games:game}{strategy}, whatever the other players do.
+\end{definition}
+
+\begin{definition}[Nash equilibrium]\label{def:g11:oligopoly-and-games:nash}
+A \emph{Nash equilibrium}\index{Nash equilibrium} is a combination of strategies, one for each player, in which no player can raise her \omterm{def:g11:oligopoly-and-games:game}{payoff} by changing her
+\omterm{def:g11:oligopoly-and-games:game}{strategy} while the others keep theirs.
+\end{definition}
+
+To find the Nash equilibria of a table, mark each player's best reply to each \omterm{def:g11:oligopoly-and-games:game}{strategy} of the other; a cell in which both \omterm{def:g11:oligopoly-and-games:game}{payoffs} are marked is an equilibrium.
+If each player has a \omterm{def:g11:oligopoly-and-games:dominant-strategy}{dominant strategy}, the cell where both play it is the only equilibrium.
+
+\section{The prisoner's dilemma and the cartel}\label{sec:g11:oligopoly-and-games:cartel}
+
+\begin{definition}[Cartel and collusion]\label{def:g11:oligopoly-and-games:cartel}
+A \emph{cartel}\index{cartel} is a group of firms that agree to limit their output or fix their prices, to earn together what a monopoly would.
+\emph{Collusion}\index{collusion}\phantomsection\label{def:g11:oligopoly-and-games:collusion} is any such cooperation among rivals to raise prices, by an
+explicit agreement or a tacit one.
+\end{definition}
+
+\begin{example}[Two quarries]\label{ex:g11:oligopoly-and-games:quarries}
+Two quarries sell gravel; demand is $p = 120 - Q$ (thousand tonnes a year, kests a tonne) and each tonne costs 24 kests to produce. A monopoly would sell where $120 -
+2Q = 24$, that is 48: so the \omterm{def:g11:oligopoly-and-games:cartel}{cartel} gives each quarry a quota of 24, the price is 72, and each earns $(72 - 24) \times 24 = 1152$ thousand kests. If one quarry
+produces 32 while the other keeps to 24, the price is $120 - 56 = 64$: the first earns $40 \times 32 = 1280$ and the second $40 \times 24 = 960$. If both produce 32,
+the price is 56 and each earns $32 \times 32 = 1024$.
+\end{example}
+
+\begin{omfigure}
+\small
+\begin{tabular}{l c c}
+\toprule
+& \multicolumn{2}{c}{quarry B} \\
+quarry A & 24 (quota) & 32 \\
+\midrule
+24 (quota) & 1152, 1152 & 960, 1280 \\
+32 & 1280, 960 & \textbf{1024, 1024} \\
+\bottomrule
+\end{tabular}
+
+\medskip
+{\small The two quarries' \omterm{def:g11:oligopoly-and-games:game}{game}: yearly profits in thousand kests (quarry A, quarry B). Producing 32 is a \omterm{def:g11:oligopoly-and-games:dominant-strategy}{dominant strategy} for each; the only \omterm{def:g11:oligopoly-and-games:nash}{Nash equilibrium}, in bold,
+leaves both worse off than keeping to the quota.}
+\end{omfigure}
+
+\begin{definition}[Prisoner's dilemma]\label{def:g11:oligopoly-and-games:prisoners-dilemma}
+A \emph{prisoner's dilemma}\index{prisoner's dilemma} is a \omterm{def:g11:oligopoly-and-games:game}{game} in which each player has a \omterm{def:g11:oligopoly-and-games:dominant-strategy}{dominant strategy}, but the equilibrium in which all play it gives every
+player less than another combination would.
+\end{definition}
+
+A \omterm{def:g11:oligopoly-and-games:cartel}{cartel} is a \omterm{def:g11:oligopoly-and-games:prisoners-dilemma}{prisoner's dilemma}. Each member gains by selling more than its quota at the high price that the others' restraint keeps up, and if all reason so,
+the \omterm{def:g11:oligopoly-and-games:cartel}{cartel} collapses. The OPEC members who produced above their quotas in the early 1980s, while Saudi Arabia cut, were playing the \omterm{def:g11:oligopoly-and-games:dominant-strategy}{dominant strategy}.
+
+\begin{model}{The cartel as a prisoner's dilemma}
+\assumes Each member of a \omterm{def:g11:oligopoly-and-games:cartel}{cartel} chooses its own output to maximise its own profit; the agreement cannot be enforced in court; the \omterm{def:g11:oligopoly-and-games:game}{game} is played once.
+\predicts Each member produces more than its quota; the price falls towards the level without a \omterm{def:g11:oligopoly-and-games:cartel}{cartel}; \omterm{def:g11:oligopoly-and-games:cartel}{cartels} break down unless members can punish cheating.
+\tested Consistent with it: OPEC in 1981--85, while Saudi Arabia cut its output by two-thirds to defend the price, the other members did not cut theirs; when Saudi Arabia stopped in
+  1986, the price collapsed (opening chart).
+\breaks When the same firms meet year after year and cheating is quickly seen, \omterm{def:g11:oligopoly-and-games:cartel}{cartels} can last: the lysine \omterm{def:g11:oligopoly-and-games:cartel}{cartel} of the 1990s met regularly and raised prices
+  by 70\,\% within nine months. In laboratory experiments, players cooperate in a one-shot dilemma more often than the model predicts.
+\end{model}
+% ledger: g11:opec-1980s, g11:lysine; figdata: opec
+
+\begin{record}[OPEC, 1981--86]
+% ledger: g11:opec-1980s; figdata: opec_points, opec
+In the early 1980s, the oil exporters' organisation set production quotas for its members to hold the price up as demand for oil fell. Several members cheated on
+their quotas or refused them. Saudi Arabia, the largest producer, acted as the swing producer: it cut its own output to keep the total down, from 9.81 million
+barrels a day in 1981 to 3.39 million in 1985. Then it abandoned that role and produced at full capacity. In 1986 the price of oil fell from about 27 dollars a barrel
+to below 10, and the real price of petrol in the United States fell by about a quarter. Iran and Iraq were at war through most of the decade, which shaped their
+output whatever the quotas said.
+\end{record}
+% figdata: opec (gas 1985 3.50, 1986 2.65)
+
+\section{Playing again and again}\label{sec:g11:oligopoly-and-games:repeated}
+
+\begin{definition}[Repeated game]\label{def:g11:oligopoly-and-games:repeated-game}
+A \emph{repeated game}\index{repeated game} is the same \omterm{def:g11:oligopoly-and-games:game}{game} played by the same players several times, each player seeing what the others did before choosing again.
+\end{definition}
+
+In a \omterm{def:g11:oligopoly-and-games:repeated-game}{repeated game}, a player can make her future choices depend on the others' past ones. A \emph{trigger \omterm{def:g11:oligopoly-and-games:game}{strategy}} keeps to the quota as long as the other does, and
+produces the high output for ever after the first time the other cheats. Against it, cheating brings a gain once and a loss every year after. In the quarries' \omterm{def:g11:oligopoly-and-games:game}{game},
+cheating with the best possible output brings 144 thousand kests in the year of cheating (the weekend problem computes it) and costs $1152 - 1024 = 128$ in each later
+year: two years of punishment remove the gain. The more the players care about the future, and the faster cheating is seen, the easier it is to sustain a \omterm{def:g11:oligopoly-and-games:cartel}{cartel}.
+
+\section{Cartels and the law}\label{sec:g11:oligopoly-and-games:law}
+
+\omterm{def:g11:oligopoly-and-games:cartel}{Cartels} are illegal in most countries, and their members are fined, and in some countries jailed. In the lysine case of the 1990s, an executive of one member firm
+informed the FBI, the American federal police; the firm was fined 100 million dollars, and three of its executives went to prison.
+% ledger: g11:lysine
+
+\begin{definition}[Leniency programme]\label{def:g11:oligopoly-and-games:leniency}
+A \emph{leniency programme}\index{leniency programme} cancels or reduces the fine of a \omterm{def:g11:oligopoly-and-games:cartel}{cartel} member that reports the \omterm{def:g11:oligopoly-and-games:cartel}{cartel} to the competition authority and helps
+prove it.
+\end{definition}
+
+The European Union has run one since 1996; under its notice of 2006, the first member to report gets full immunity, and later members who bring evidence of real
+value get reductions of 30 to 50\,\%, 20 to 30\,\%, and up to 20\,\%. Leniency starts a race to report: each member fears that another will report first, and once one is
+expected to report, every member's best reply is to report too.
+% ledger: g11:eu-leniency
+
+\begin{dated}{2026}
+% ledger: g11:eu-car-recycling-2025
+On 1 April 2025 the European Commission announced fines of 458 million euros on 15 carmakers and their trade association, which it found had coordinated for more than
+15 years to avoid paying for the recycling of old cars and not to compete on how recyclable their cars were. The carmaker that revealed the \omterm{def:g11:oligopoly-and-games:cartel}{cartel} avoided a fine of
+about 35 million euros; another had its fine halved, to 75 million euros, for cooperating.
+\end{dated}
+
+How much do \omterm{def:g11:oligopoly-and-games:cartel}{cartels} raise prices? A survey of hundreds of studies, with 699 estimates, found a median overcharge, the rise of the price above what it would have been
+without the \omterm{def:g11:oligopoly-and-games:cartel}{cartel}, of 25\,\%, and a mean of 42\,\%, pulled up by a few very large ones.
+% ledger: g11:connor2005-all
+
+\begin{omchart}{Median long-run cartel overcharge, in percent of the price that would have prevailed without the cartel, by kind of cartel.}{Connor (2005), survey of
+published overcharge estimates}
+\begin{tikzpicture}
+\begin{axis}[omtime, ybar, width=0.62\linewidth, height=5.0cm, ymin=0, ymax=40, bar width=18pt, symbolic x coords={all cartels,domestic,international,successful},
+  enlarge x limits=0.18, xtick=data, ylabel={percent}, nodes near coords, nodes near coords style={font=\scriptsize}, xmajorgrids=false, x tick label style={/tikz/font=\scriptsize}]
+\addplot[fill=omDef!60, draw=omDef] table[x=group, y=median] {figdata/grade-11/05-oligopoly-and-games/out/overcharge.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% ledger: g11:connor2005-all, g11:connor2005-domestic, g11:connor2005-international, g11:connor2005-successful
+
+Not every \omterm{def:g11:oligopoly-and-games:game}{game} is a dilemma. In a \emph{coordination \omterm{def:g11:oligopoly-and-games:game}{game}} the players want to make the same choice: drive on the same side of the road, use the same plug. There
+are then several Nash equilibria, and the theory alone does not say which one is reached; custom, a law or a first mover does.
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g11:oligopoly-and-games:1}
+In this \omterm{def:g11:oligopoly-and-games:game}{game}, \omterm{def:g11:oligopoly-and-games:game}{payoffs} are (row, column). Row: Top gives (4, 1) against Left and (2, 3) against Right; Bottom gives (3, 0) and (1, 2). Does either player have a \omterm{def:g11:oligopoly-and-games:dominant-strategy}{dominant
+strategy}? What is the outcome?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:oligopoly-and-games:2}
+Two cafés each choose a high or a low price. Profits (A, B): both high (10, 10); A high and B low (4, 12); A low and B high (12, 4); both low (6, 6). Find each café's
+\omterm{def:g11:oligopoly-and-games:dominant-strategy}{dominant strategy} and the outcome.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:oligopoly-and-games:3}
+\omterm{def:g11:oligopoly-and-games:game}{Payoffs} (row, column): (Top, Left) (5, 2); (Top, Right) (3, 1); (Bottom, Left) (4, 1); (Bottom, Right) (2, 3). Which player has a \omterm{def:g11:oligopoly-and-games:dominant-strategy}{dominant strategy}? Find the \omterm{def:g11:oligopoly-and-games:nash}{Nash
+equilibrium}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:oligopoly-and-games:4}
+Two firms choose a standard, A or B. \omterm{def:g11:oligopoly-and-games:game}{Payoffs}: both A (3, 3); both B (1, 1); different standards (0, 0). Find all the Nash equilibria.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:oligopoly-and-games:5}
+Read the opening chart. By how much did Saudi output fall between 1981 and 1985, and the others' output change? What happened to both and to the price in 1986?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:oligopoly-and-games:6}
+Demand is $p = 100 - Q$ and two firms each have a \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} of 10. Each can produce 22.5 (half the \omterm{def:g11:monopoly:monopoly-output}{monopoly output}) or 30. Build the \omterm{def:g11:oligopoly-and-games:game}{payoff} table and find the
+equilibrium.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:oligopoly-and-games:7}
+Same question with $p = 130 - Q$, a \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} of 10, and outputs of 30 or 40.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:oligopoly-and-games:8}
+In \cref{exo:g11:oligopoly-and-games:7}, the other firm keeps to 30. Find, with a derivative, the output that maximises the first firm's profit, and its gain over
+keeping to 30.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:oligopoly-and-games:9}
+Two \omterm{def:g11:oligopoly-and-games:cartel}{cartel} members each choose to stay silent or to report the \omterm{def:g11:oligopoly-and-games:cartel}{cartel}. Silent, each expects a profit of 60 (including the risk of being caught). If one reports, it gets
+immunity and earns 0, and the other is fined: $-200$. If both report, each gets half the fine: $-100$. Find the Nash equilibria. How does the \omterm{def:g11:oligopoly-and-games:leniency}{leniency programme} threaten
+the \omterm{def:g11:oligopoly-and-games:cartel}{cartel}?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:oligopoly-and-games:10}
+Read the overcharge chart. A \omterm{def:g11:oligopoly-and-games:cartel}{cartel} with the median overcharge of an international \omterm{def:g11:oligopoly-and-games:cartel}{cartel} sells goods worth 660 million euros at its prices. How much did buyers pay
+because of the \omterm{def:g11:oligopoly-and-games:cartel}{cartel}?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:oligopoly-and-games:11}
+Find all the Nash equilibria: (Top, Left) (3, 2); (Top, Right) (0, 0); (Bottom, Left) (0, 0); (Bottom, Right) (2, 3). Which would each player prefer?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:oligopoly-and-games:12}
+What evidence contradicts the one-shot model of the \omterm{def:g11:oligopoly-and-games:cartel}{cartel}? Use the lysine \omterm{def:g11:oligopoly-and-games:cartel}{cartel} and laboratory experiments, and say which assumption of the model fails in each.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:oligopoly-and-games:13}
+In a \omterm{def:g11:oligopoly-and-games:repeated-game}{repeated game}, cooperation brings $\pi_c$ each year, cheating once brings $\pi_d$ then $\pi_n$ for ever, and each player values a kest next year at $\delta$ kests now
+($0 < \delta < 1$). Admitting that $\delta + \delta^2 + \dots = \delta/(1 - \delta)$, show that a trigger \omterm{def:g11:oligopoly-and-games:game}{strategy} deters cheating if $\pi_d - \pi_c \leq (\pi_c - \pi_n)\,\delta/(1 -
+\delta)$. Find the smallest $\delta$ for the two quarries.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:oligopoly-and-games:14}
+Explain why a firm in \omterm{def:g11:oligopoly-and-games:differentiation}{monopolistic competition} makes zero profit in the long run although its price is above its \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost}, and why it produces less than the output at
+which its average cost is lowest.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:oligopoly-and-games:15}
+Which side of the road to drive on is a coordination \omterm{def:g11:oligopoly-and-games:game}{game}. Write its \omterm{def:g11:oligopoly-and-games:game}{payoff} table for two drivers, find its equilibria, and explain why a law settles it while no law could
+settle a \omterm{def:g11:oligopoly-and-games:prisoners-dilemma}{prisoner's dilemma} without a penalty.
+\end{exercise}
+
+\section{Problem: Two Quarries in Kestria}
+
+\begin{problem}[{Weekend problem --- a cartel, cheating and punishment}]
+\label{pb:g11:oligopoly-and-games:1}
+Two quarries supply all the gravel in a Kestrian valley. Demand is $p = 120 - Q$, with $Q$ in thousand tonnes a year and $p$ in kests a tonne; each quarry's cost is 24
+kests a tonne, with no fixed cost. Profits are in thousand kests a year.
+
+\medskip
+\noindent\textbf{Part I --- The cartel.}
+\begin{enumerate}
+\item Find the output and price that a single owner of both quarries would choose.
+\item The \omterm{def:g11:oligopoly-and-games:cartel}{cartel} splits that output equally. Give each quarry's quota and profit.
+\item Compute the \omterm{def:g10:what-prices-do:dwl}{deadweight loss} of the \omterm{def:g11:oligopoly-and-games:cartel}{cartel}, compared with a price equal to \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost}.
+\item Quarry B keeps to its quota of 24. Write quarry A's profit as a function of its own output $q_A$.
+\item Find, with the derivative, the output that maximises it, the price and A's profit.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Without a cartel.}
+\begin{enumerate}[resume]
+\item For any output $q_B$ of quarry B, find A's best output (its best reply) as a function of $q_B$.
+\item Find the outputs at which each quarry's output is the best reply to the other's.
+\item Compute the price and each quarry's profit there.
+\item Build the \omterm{def:g11:oligopoly-and-games:game}{payoff} table with the strategies 24 and 32 for each quarry.
+\item Show that the \omterm{def:g11:oligopoly-and-games:game}{game} is a \omterm{def:g11:oligopoly-and-games:prisoners-dilemma}{prisoner's dilemma}.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Cheating and punishment.}
+\begin{enumerate}[resume]
+\item Compute A's gain from its best cheating output (question 5) in the year it cheats.
+\item What does B earn that year?
+\item After cheating is seen, both produce 32 for ever. How much does A lose in each later year, compared with the \omterm{def:g11:oligopoly-and-games:cartel}{cartel}?
+\item Without discounting, how many years of punishment remove the gain?
+\item With a kest next year worth $1/1.1$ kests now, are two years of punishment enough? Compute the discounted loss.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- A ten-year horizon.}
+\begin{enumerate}[resume]
+\item The quarries' licences end in ten years. In the tenth year, is there any reason to keep to the quota? Explain.
+\item What does this imply for the ninth year, and for the years before?
+\item In practice, firms rarely know when their \omterm{def:g11:oligopoly-and-games:game}{game} ends. Why does that help the \omterm{def:g11:oligopoly-and-games:cartel}{cartel}?
+\item Under a \omterm{def:g11:oligopoly-and-games:leniency}{leniency programme}, a quarry that reports the \omterm{def:g11:oligopoly-and-games:cartel}{cartel} pays no fine. How does that change the comparison of question 14?
+\item State the result of the problem: the gain from cheating on the \omterm{def:g11:oligopoly-and-games:cartel}{cartel}, and the punishment that removes it.
+\end{enumerate}
+\end{problem}

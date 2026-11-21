@@ -1,0 +1,393 @@
+\chapter{Government Debt and Ricardian Equivalence}\label{ch:b2:government-debt}
+
+Governments borrow, sometimes a great deal. The chart shows the debt of five governments as a share of their country's
+GDP over a century and a half.
+
+\begin{openingchart}{General government debt as a share of GDP, per cent, United Kingdom, United States, France, Japan
+  and Italy, 1870--2020; gaps where the series are missing.}{Jord\`a--Schularick--Taylor Macrohistory Database (debtgdp)}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.86\linewidth, height=0.44\linewidth, xmin=1870, xmax=2020, ymin=0, ymax=280,
+    xlabel={Year}, ylabel={Per cent of GDP}, xtick={1880,1900,1920,1940,1960,1980,2000,2020},
+    xticklabel style={/pgf/number format/1000 sep=}, unbounded coords=jump, legend style={at={(0.5,-0.3)},
+    anchor=north, legend columns=5, /tikz/every even column/.append style={column sep=8pt}}]
+  \addplot[omDef, thick] table[x=year, y=GBR] {figdata/bachelor-2/21-government-debt/out/debt.csv};
+  \addplot[omThm, thick, dashed] table[x=year, y=USA] {figdata/bachelor-2/21-government-debt/out/debt.csv};
+  \addplot[omMeth, thick, dotted] table[x=year, y=FRA] {figdata/bachelor-2/21-government-debt/out/debt.csv};
+  \addplot[black!70, thick, dashdotted] table[x=year, y=JPN] {figdata/bachelor-2/21-government-debt/out/debt.csv};
+  \addplot[omProp, thick] table[x=year, y=ITA] {figdata/bachelor-2/21-government-debt/out/debt.csv};
+  \legend{United Kingdom, United States, France, Japan, Italy}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: debt_summary (GBR peak 270 in 1946; FRA 237 in 1921; 2020: GBR 104, USA 128, FRA 115, JPN 254, ITA 156)
+The peaks before 1950 come from wars: British debt reached 270 per cent of GDP in 1946, French debt 237 per cent in 1921. After each
+war the ratios fell, sometimes fast. The peaks of 2020 are of another kind: Japan's debt was 254 per cent of GDP, Italy's 156,
+the United States' 128, all reached in peacetime. This chapter asks how debt evolves, when it can be sustained, whether
+borrowing instead of taxing changes what households do, and how large debts have come down.
+
+\begin{recall}
+From the school volumes: the government budget, the deficit and the debt. From the Year 1 volume: crowding out in the
+long-run model. From \cref{ch:b2:consumption}: the permanent-income model and \omterm{def:b2:consumption:hand-to-mouth}{hand-to-mouth households}.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:government-debt:symbols}
+$B_t$ is government debt at the end of year $t$ and $b_t = B_t/Y_t$ its ratio to GDP; $S_t$ the primary surplus and $s_t = S_t/Y_t$; $i$ the nominal interest rate paid on
+the debt; $\gamma$ the growth rate of nominal GDP; $T_t$ taxes and $G_t$ government purchases.
+\end{notation}
+
+\section{The budget constraint over time}\label{sec:b2:government-debt:budget}
+
+\begin{definition}[Primary balance]\label{def:b2:government-debt:primary-balance}
+The \emph{primary balance}\index{primary balance} is government revenue minus government spending other than interest on
+the debt. A positive primary balance is a primary surplus.
+\end{definition}
+
+Each year the debt grows by the interest paid on it and falls by the primary surplus: $B_{t+1} = (1 + i)B_t - S_{t+1}$. Dividing by $Y_{t+1} = (1 + \gamma)Y_t$ gives the
+law of motion of the debt ratio:
+\begin{equation}\label{eq:b2:government-debt:dynamics}
+b_{t+1} = \frac{1 + i}{1 + \gamma}\,b_t - s_{t+1}.
+\end{equation}
+Two forces move the ratio: the gap between the interest rate and the growth rate of nominal GDP, which acts on the whole
+stock of debt, and the primary surplus.
+
+\begin{definition}[Intertemporal government budget constraint]\label{def:b2:government-debt:igbc}
+The \emph{intertemporal government budget constraint}\index{intertemporal government budget constraint} states that the
+debt today equals the present value of future primary surpluses, discounted at the interest rate on the debt: when
+$i > \gamma$, $b_0 = \sum_{t \ge 1} s_t\left(\frac{1 + \gamma}{1 + i}\right)^t$.
+\end{definition}
+
+It follows from \eqref{eq:b2:government-debt:dynamics} by solving forward, provided the discounted debt $b_T((1 + \gamma)/(1 + i))^T$ tends to zero: lenders will not let a government repay
+its debt for ever with new debt. A government that owes debt must, in present value, run primary surpluses. When $i < \gamma$ the
+discounted debt shrinks without surpluses, and the constraint loses its force; \cref{ch:b2:overlapping-generations} returns to this case.
+
+\section{Sustainability}\label{sec:b2:government-debt:sustainability}
+
+\begin{definition}[Debt-stabilising primary surplus]\label{def:b2:government-debt:stabilising-surplus}
+The \emph{debt-stabilising primary surplus}\index{debt-stabilising primary surplus} is the primary surplus, as a share
+of GDP, that keeps the debt ratio constant: $s^* = \frac{i - \gamma}{1 + \gamma}\,b$.
+\end{definition}
+
+With debt at 90 per cent of GDP, an interest rate of 4 per cent and nominal growth of 3 per cent, $s^* = 0.01/1.03 \times 0.9 = 0.874$ per cent of GDP. If growth exceeded the
+interest rate, the stabilising balance would be a primary deficit.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+  \begin{scope}
+    \draw[->] (0,-1.4) -- (0,1.6) node[left] {$b_{t+1} - b_t$};
+    \draw[->] (0,0) -- (4.4,0) node[below] {$b_t$};
+    \draw[omDef, thick] (0,-1.2) -- (4,1.3);
+    \node[eqpoint] at (1.92,0) {};
+    \node[below right, font=\footnotesize] at (1.92,0) {$b^*$};
+    \draw[->, thick] (1.6,0.12) -- (0.9,0.12);
+    \draw[->, thick] (2.3,0.12) -- (3.0,0.12);
+    \node[font=\footnotesize] at (2,-1.9) {$i > \gamma$: unstable};
+  \end{scope}
+  \begin{scope}[xshift=6cm]
+    \draw[->] (0,-1.4) -- (0,1.6) node[left] {$b_{t+1} - b_t$};
+    \draw[->] (0,0) -- (4.4,0) node[below] {$b_t$};
+    \draw[omThm, thick] (0,1.2) -- (4,-1.3);
+    \node[eqpoint] at (1.92,0) {};
+    \node[below left, font=\footnotesize] at (1.92,0) {$b^*$};
+    \draw[->, thick] (0.9,0.12) -- (1.6,0.12);
+    \draw[->, thick] (3.0,0.12) -- (2.3,0.12);
+    \node[font=\footnotesize] at (2,-1.9) {$i < \gamma$: stable};
+  \end{scope}
+\end{tikzpicture}
+
+{\small Debt dynamics with a constant \omterm{def:b2:government-debt:primary-balance}{primary balance}. The change in the ratio is $\frac{i - \gamma}{1 + \gamma}b_t - s$. When $i > \gamma$ (left) the line slopes up: above the ratio $b^*$ that
+the surplus stabilises, debt grows without limit unless the surplus rises. When $i < \gamma$ (right) the line slopes down: the ratio
+converges to $b^*$ from any start, even with a primary deficit.}
+\end{omfigure}
+
+\begin{definition}[Fiscal sustainability]\label{def:b2:government-debt:sustainability}
+Fiscal policy is \emph{sustainable}\index{fiscal sustainability} if, continued, it satisfies the intertemporal budget
+constraint without a default or an unplanned change of policy.
+\end{definition}
+
+\omterm{def:b2:government-debt:sustainability}{Sustainability} is a property of policy, not of a debt ratio, and it cannot be read from one year's numbers. A practical
+test asks whether governments respond to debt: if the primary surplus rises when the debt ratio rises, by more than $(i - \gamma)/(1 + \gamma)$
+for each point of debt, the ratio is pulled back.
+
+% ledger: b2:bohn1998
+Bohn (1998) ran this test on the United States for 1916--1995. Unit-root tests on the debt ratio alone could not reject that
+it wanders without returning; but the primary surplus rose with the debt ratio, with a coefficient of 0.054 over the full
+sample: each 100 dollars of extra debt raised the next year's primary surplus by 5.40 dollars. Across his samples the
+coefficient lay between 2.8 and 5.4 per cent.
+
+The listing computes, from Eurostat's government accounts, the stabilising \omterm{def:b2:government-debt:primary-balance}{primary balance} of four European governments
+in 2024 and compares it with the actual one.
+
+\omcode{code/bachelor-2/21-government-debt/listings/stabilise.py}{1}{30}{The debt-stabilising \omterm{def:b2:government-debt:primary-balance}{primary balance} and the
+actual \omterm{def:b2:government-debt:primary-balance}{primary balance} of four governments, 2024.}\label{lst:b2:government-debt:stabilise}
+
+\omoutput{code/bachelor-2/21-government-debt/outputs/stabilise.txt}{In 2024 Germany and France ran \omterm{def:b2:government-debt:primary-balance}{primary balances}
+below the stabilising one; Italy and Greece ran primary surpluses well above it.}\label{out:b2:government-debt:stabilise}
+
+% code: listings/stabilise.py
+The table rests on an average: from 2019 to 2024 nominal GDP grew fast, in part because prices rose fast, while the
+interest paid on the stock of debt, fixed for the life of each bond, adjusted only as old bonds were replaced. Over that window growth
+exceeded the interest rate everywhere, so every government could have run a primary deficit and held its ratio. With
+another window, or when old debt is refinanced at higher rates, the answer changes; an exercise tries it.
+
+\section{Ricardian equivalence}\label{sec:b2:government-debt:ricardian}
+
+Suppose the government cuts taxes today and borrows to pay for the cut, planning to raise taxes later to repay. Does
+consumption rise?
+
+\begin{definition}[Ricardian equivalence]\label{def:b2:government-debt:ricardian-equivalence}
+\emph{Ricardian equivalence}\index{Ricardian equivalence} is the proposition that, for a given path of government
+purchases, replacing taxes by debt, or debt by taxes, leaves households' consumption unchanged: households save the tax
+cut to pay the future taxes it implies.
+\end{definition}
+
+\begin{proposition}[Ricardian equivalence in two periods]\label{prop:b2:government-debt:ricardian}
+Let a household live two periods with incomes $y_1$, $y_2$ and pay taxes $T_1$, $T_2$, and let it borrow and lend at the rate $r$ at which the government
+borrows. If the government cuts $T_1$ by $\Delta$ and raises $T_2$ by $(1 + r)\Delta$ to repay the debt, the household's consumption in both periods is unchanged and its saving rises by $\Delta$.
+\end{proposition}
+
+\begin{proof}
+The household's budget constraint is $c_1 + c_2/(1 + r) = y_1 - T_1 + (y_2 - T_2)/(1 + r)$. The change in the right-hand side is $\Delta - (1 + r)\Delta/(1 + r) = 0$. The set of affordable plans is
+unchanged, so the chosen plan is unchanged. With $c_1$ the same and disposable income $y_1 - T_1$ higher by $\Delta$, saving $y_1 - T_1 - c_1$ rises by $\Delta$.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=210, ymin=0, ymax=220, width=0.52\linewidth, height=0.46\linewidth,
+    xlabel={$c_1$}, ylabel={$c_2$}, xtick=\empty, ytick=\empty]
+  \addplot[black, thick, domain=0:200, samples=2] {210 - 1.05*x};
+  \addplot[omDef, thick, domain=55:190, samples=60] {10500/x};
+  \node[eqpoint] at (axis cs:100,105) {};
+  \node[anchor=south west, font=\footnotesize] at (axis cs:100,105) {$C$};
+  \node[eqpoint, fill=omThm] at (axis cs:120,84) {};
+  \node[anchor=north east, font=\footnotesize] at (axis cs:119,83) {$E$};
+  \node[eqpoint, fill=omThm] at (axis cs:140,63) {};
+  \node[anchor=north east, font=\footnotesize] at (axis cs:139,62) {$E'$};
+\end{axis}
+\end{tikzpicture}
+
+{\small A debt-financed tax cut in two periods. Disposable income moves from $E$ to $E'$: more now, less later, with the same present value,
+so along the same budget line. The household's choice $C$ does not move; it saves the extra disposable income.}
+\end{omfigure}
+
+The proof uses four assumptions, and each is a reason the proposition may fail. Households must be able to borrow and lend
+at the government's rate: a household that cannot borrow, the \omterm{def:b2:consumption:hand-to-mouth}{hand-to-mouth household} of \cref{ch:b2:consumption}, spends a tax cut. The
+future taxes must fall on the same households: if they fall on people not yet born, and the living do not care for them,
+a tax cut makes the living richer. Taxes must be lump-sum: a tax on income changes incentives, so moving it in time changes
+behaviour. And households must foresee the future taxes.
+
+\begin{model}{Ricardian equivalence}
+\assumes Households that borrow and lend at the government's rate, care about the households that will pay future taxes,
+foresee those taxes, and pay lump-sum taxes; a given path of government purchases.
+\predicts A debt-financed tax cut raises private saving one for one, and leaves national saving and consumption unchanged.
+\tested Across countries, changes in government net lending are partly offset in national saving: about half of a change
+passes into national saving (the chart below).
+\breaks With borrowing limits and finite horizons: households spend part of a tax cut, all of it for \omterm{def:b2:consumption:hand-to-mouth}{hand-to-mouth
+households}.
+\end{model}
+
+If \omterm{def:b2:government-debt:ricardian-equivalence}{Ricardian equivalence} held, a rise in the government deficit would be matched by a rise in private saving, and national
+saving would not change. If households ignored future taxes entirely, national saving would fall one for one with
+government saving. The chart compares, across 87 countries, the change in national saving with the change in government net
+lending between the years before and after the financial crisis.
+
+\begin{omchart}{Change in gross national saving (per cent of GNI) against change in general government net lending (per
+  cent of GDP), average 2010--2017 minus average 2000--2007, 87 countries; least-squares line, and the line of no offset
+  (slope 1).}{World Bank, World Development Indicators (NY.GNS.ICTR.ZS, GC.NLD.TOTL.GD.ZS); our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.66\linewidth, height=0.5\linewidth, xmin=-14, xmax=14, ymin=-15, ymax=26,
+    xlabel={Change in government net lending, points}, ylabel={Change in national saving, points},
+    legend style={at={(0.5,-0.25)}, anchor=north, legend columns=2, /tikz/every even column/.append style={column
+    sep=10pt}}]
+  \addplot[only marks, mark=*, mark size=1.3pt, omDef, fill opacity=0.6, forget plot]
+    table[x=dn, y=ds] {figdata/bachelor-2/21-government-debt/out/offset.csv};
+  \addplot[omThm, thick, domain=-14:14, samples=2] {0.48 + 0.53*x};
+  \addplot[black!60, dashed, domain=-14:14, samples=2] {0.48 + x};
+  \legend{Fitted (slope 0.53), No offset (slope 1)}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: offset_summary (n 87, slope 0.53, se 0.19, intercept 0.48, corr 0.3)
+The slope is 0.53, with a standard error of 0.19: about half of a change in government saving passed into national saving, and
+about half was offset by private saving. Both full offset (slope 0) and no offset (slope 1) are rejected. The test is rough: government
+net lending includes public investment, which Ricardian reasoning treats differently, and the decade also saw changes in
+private saving with other causes, which is why the correlation is only 0.3.
+
+\section{Tax smoothing}\label{sec:b2:government-debt:tax-smoothing}
+
+\begin{definition}[Tax smoothing]\label{def:b2:government-debt:tax-smoothing}
+\emph{Tax smoothing}\index{tax smoothing} is the policy of keeping tax rates roughly constant over time, using debt to
+absorb temporary changes in spending or revenue, because the efficiency cost of a tax rises more than in proportion to
+its rate.
+\end{definition}
+
+If the deadweight loss of a tax grows with the square of its rate, as the deadweight-loss triangle suggests, then two years of
+a 10 per cent tax cost $10^2 + 10^2 = 200$ units of loss against $0^2 + 20^2 = 400$ for one year at 0 and one at 20, though both raise the same revenue (with a zero interest rate). A government
+facing a war, which raises spending for a few years, should then borrow for the war and raise taxes a little for a long
+time to repay.
+
+\begin{model}{Tax smoothing}
+\assumes A government that minimises the efficiency cost of the taxes needed to finance a given path of spending, with
+convex costs of taxation and access to borrowing.
+\predicts Debt rises in wars and other temporary spending surges and falls slowly afterwards; tax rates move less than
+spending.
+\tested Only consistency is shown here: debt rose in the two world wars and fell in the decades after them (the opening
+chart). A test needs the model's distinctive prediction, tax rates that move less than spending, checked against
+series of tax rates and spending.
+\breaks When debt rises in peacetime with no temporary surge in spending, as in Japan and Italy since 1980 (the opening
+chart), the model does not explain it.
+\end{model}
+
+\section{How large debts ended}\label{sec:b2:government-debt:ending}
+
+Equation \eqref{eq:b2:government-debt:dynamics} lists the ways a debt ratio can fall: primary surpluses, growth of real GDP, inflation that raises nominal GDP faster
+than the interest rate, a lower interest rate, or a default that reduces $B$ itself.
+
+\begin{definition}[Financial repression]\label{def:b2:government-debt:financial-repression}
+\emph{Financial repression}\index{financial repression} is a set of regulations that hold the interest rates a
+government pays below the rates savers would otherwise obtain, for example by requiring banks and pension funds to hold
+government bonds, capping interest rates or restricting the movement of capital abroad.
+\end{definition}
+
+\begin{record}[How Britain's debt fell after 1945]
+% figdata: uk_summary (debt 270 -> 47; nominal 8.9, real_total 2.4, deflator 6.3, inflation 5.7, ltrate 6.4)
+British government debt fell from 270 per cent of GDP in 1946 to 47 per cent in 1975. Over those years nominal GDP grew by 8.9 per cent a year on
+average: real GDP by 2.4 per cent and its prices, the GDP deflator, by 6.3 per cent (consumer prices rose 5.7 per cent a year), while the long-term government bond rate averaged 6.4
+per cent. Nominal growth above the bond rate shrank the ratio year after year; how much primary surpluses added cannot be read
+from this database, which does not report them.
+\end{record}
+
+\begin{record}[Germany's debt agreement of 1953]
+% ledger: b2:london1953
+The London Debt Agreement of 1953 settled Germany's debts from the period between the two world wars. It cut the overall
+debt by roughly half, stretched repayment over a longer period, and let Germany defer some payments until reunification
+(Guinnane 2004). A debt reduced by agreement is a default by another name: the creditors accepted less than they had
+been owed.
+\end{record}
+
+\begin{debate}[Does high public debt slow growth?]
+% ledger: b2:rr2010, b2:hap2014, b2:pss2014
+Reinhart and Rogoff (2010) found that above a debt of 90 per cent of GDP, median growth rates were about one percentage point
+lower, and average growth considerably lower. Herndon, Ash and Pollin (2014) replicated the calculation for 20 advanced
+economies after the war and found coding errors, the exclusion of available data and unusual weighting: computed
+correctly, average growth above 90 per cent was 2.2 per cent, not $-0.1$, not dramatically different from growth at lower debt.
+Pescatori, Sandri and Simon (2014) found no threshold above which medium-term growth is dramatically compromised, and found
+that countries with high but declining debt grew about as fast as those with lower debt. Even a negative correlation would
+leave the direction open: slow growth raises debt ratios, as well as the reverse. How much, if at all, high debt lowers
+growth is not settled.
+\end{debate}
+
+\section{Exercises}\label{sec:b2:government-debt:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:government-debt:1}
+Read the opening chart. When did each of the five ratios reach its peak, and which peaks came in wartime?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:government-debt:2}
+A government runs a deficit of 3 per cent of GDP and pays interest worth 2.5 per cent of GDP. What is its \omterm{def:b2:government-debt:primary-balance}{primary balance}?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:government-debt:3}
+Read the offset chart. What slope would \omterm{def:b2:government-debt:ricardian-equivalence}{Ricardian equivalence} predict, what slope would households that ignore future
+taxes produce, and what does the fitted slope say?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:government-debt:4}
+Describe an observation on households that would falsify \omterm{def:b2:government-debt:ricardian-equivalence}{Ricardian equivalence}, and one that would support it.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:government-debt:5}
+Predict, then compute: with debt at 90 per cent of GDP and growth of 3 per cent, the stabilising primary surplus at an interest rate of 4 per cent and at 3 per cent.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:government-debt:6}
+With $i = 2$ per cent and $\gamma = 4$ per cent, a government runs a primary deficit of 2 per cent of GDP for ever. Show that the debt ratio converges, and find its limit.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:government-debt:7}
+\textbf{(D)} Extend the listing to Spain and Portugal. Then recompute the six stabilising balances with nominal growth
+averaged over 2014--2024. Which conclusions change?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:government-debt:8}
+A household with income 100 in each of two periods pays taxes of 20 in each. The government cuts the first tax by 10 and
+borrows at 5 per cent. Find the second-period tax, and the change in the household's consumption and saving if it can
+borrow at 5 per cent and if it cannot borrow and wants to consume more now.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:government-debt:9}
+A government must spend 20 in one of two years and nothing in the other; the interest rate is zero, and the deadweight
+loss of a tax rate $\tau$ is proportional to $\tau^2$. Compare the losses of taxing in the year of spending and of smoothing.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:government-debt:10}
+Derive \eqref{eq:b2:government-debt:dynamics} from $B_{t+1} = (1 + i)B_t - S_{t+1}$, the stabilising surplus from it, and the intertemporal budget constraint by solving forward when
+$i > \gamma$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:government-debt:11}
+Let the household of the proposition live only one period, and let the debt be repaid by the next generation, whose
+welfare it does not weigh. Show that the tax cut raises its consumption, and explain why it would not if it cared for its
+heirs as for itself.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:government-debt:12}
+Let the primary surplus respond to debt, $s_{t+1} = \rho b_t + \mu$. Show that the debt ratio converges if $\rho > (i - \gamma)/(1 + \gamma)$. With Bohn's $\rho = 0.054$, $i = 4$ per cent and $\gamma = 3$ per cent, find the
+half-life of a deviation of the ratio from its long-run level.
+\end{exercise}
+
+\section{Problem: Brenland's debt}\label{sec:b2:government-debt:problem}
+
+\begin{problem}[{Weekend problem --- Brenland's debt: its accounts, the surplus that holds its ratio, a debt-financed tax cut,
+and the years to reach a lower ratio}]
+\label{pb:b2:government-debt:1}
+Use Brenland's public accounts (\texttt{accounts.csv}, millions of dalens). In 2024 the debt was 228,953 and GDP 379,562; in 2025 GDP was 393,264, the deficit 7,865
+and the debt 236,818. The interest rate paid on the debt is 3 per cent.
+
+\medskip
+\noindent\textbf{Part I --- The accounts.}
+\begin{enumerate}
+  \item What was the deficit in 2025 as a share of GDP?
+  \item What was the debt ratio at the end of 2025?
+  \item Check that the debt rose by the deficit.
+  \item What interest did the government pay in 2025?
+  \item What was its \omterm{def:b2:government-debt:primary-balance}{primary balance}, and as a share of GDP?
+  \item In 2022 the deficit was 2 per cent of GDP, but the debt ratio fell from 68.5 to 63.8 per cent. How?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Dynamics.} From now on nominal GDP grows 3.6 per cent a year; take $b = 0.602$.
+\begin{enumerate}[resume]
+  \item What is the stabilising \omterm{def:b2:government-debt:primary-balance}{primary balance} at an interest rate of 3 per cent?
+  \item With the 2025 primary deficit kept, does the ratio rise or fall?
+  \item What is the ratio after one more year?
+  \item If the interest rate rose to 5 per cent, what would the stabilising balance be?
+  \item And the ratio after one year, with the same primary deficit?
+  \item Why does the interest rate act on the whole debt, and the \omterm{def:b2:government-debt:primary-balance}{primary balance} only on the year's flow?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- A tax cut.} The government cuts each household's taxes by 1,000 dalens this year, borrows at 3 per
+cent, and raises the tax next year to repay.
+\begin{enumerate}[resume]
+  \item By how much does next year's tax rise?
+  \item What does a household that can borrow and lend at 3 per cent do with the cut?
+  \item What does a \omterm{def:b2:consumption:hand-to-mouth}{hand-to-mouth household} do?
+  \item If 30 per cent of households are hand to mouth, by how much does private saving rise per household, on average?
+  \item By how much does national saving fall, and what share of the cut is offset?
+  \item Name two assumptions of \omterm{def:b2:government-debt:ricardian-equivalence}{Ricardian equivalence} that the \omterm{def:b2:consumption:hand-to-mouth}{hand-to-mouth household} violates or might violate.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- A lower ratio.} Brenland aims at a debt ratio of 50 per cent.
+\begin{enumerate}[resume]
+  \item With a primary surplus of 1 per cent of GDP, at 3 per cent interest, how many years does it take?
+  \item At 5 per cent interest?
+  \item What constant primary surplus reaches 50 per cent in ten years, at 3 per cent?
+  \item If inflation raised nominal growth to 5.6 per cent while the interest rate stayed at 3 per cent, how many years would it take?
+  \item What would the government need to keep the interest rate at 3 per cent in that case, and what would savers lose?
+  \item State the result: the stabilising \omterm{def:b2:government-debt:primary-balance}{primary balance} at 3 and at 5 per cent, and the share of a debt-financed tax cut
+    that private saving offsets.
+\end{enumerate}
+\end{problem}

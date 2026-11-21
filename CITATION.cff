@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use these books, please cite them as below."
+title: "One Economics Book"
+authors:
+  - name: "One Course"
+    website: "https://one-course.com"
+license: CC-BY-NC-SA-4.0
+url: "https://one-course.com"
+repository-code: "https://github.com/bvirrion/one-economics-book"
+abstract: >
+  A series of five free economics textbooks forming a single coherent
+  course from Grade 6 to the end of the bachelor's degree, with graded
+  exercises and full solutions, in English. Part of the One Course project.
+keywords:
+  - economics
+  - microeconomics
+  - macroeconomics
+  - econometrics
+  - textbook
+  - education
+  - open educational resources
+preferred-citation:
+  type: book
+  title: "One Economics Book: One Coherent Economics Course from Grade 6 to the Bachelor's Degree"
+  authors:
+    - name: "One Course"
+      website: "https://one-course.com"
+  year: 2026
+  url: "https://one-course.com"

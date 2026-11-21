@@ -1,0 +1,126 @@
+\section*{Chapter \ref{ch:b2:static-games} --- Static Games}
+
+\begin{solution}{exo:b2:static-games:1}
+% code: exercises/solutions.py iesds
+For the column player, $C$ strictly dominates $R$ (2 against 1 against $T$, 1 against 0 against $B$): remove $R$. Then
+$T$ strictly dominates $B$ for the row player (1 against 0 against both $L$ and $C$): remove $B$. Against $T$, the column
+player prefers $C$ (2) to $L$ (0). The solution is $(T, C)$, with payoffs $(1, 2)$.
+\end{solution}
+
+\begin{solution}{exo:b2:static-games:2}
+% code: exercises/solutions.py pure_nash
+$(U, L)$: in column $L$ the row player's best is $U$ (3), and in row $U$ the column player's best is $L$ (3). $(M, C)$: 2 is
+the row player's best in column $C$, 2 the column player's best in row $M$. $(D, R)$: 4 and 4. No other cell has both
+properties: three pure Nash equilibria.
+\end{solution}
+
+\begin{solution}{exo:b2:static-games:3}
+% figdata: contrib_summary
+Strangers: from 18.5 to 57.5 per cent, 39 points. Fixed groups: from 37.5 to 85 per cent, 47.5 points. Strangers
+without punishment in the final period, at 9.5 per cent, come closest to the prediction of zero.
+\end{solution}
+
+\begin{solution}{exo:b2:static-games:4}
+Contributions that stay well above zero in the last period, when no future play can reward them, and among
+players who will never meet again, refute it. Contributions that start positive but fall to zero by the last
+period are consistent with players who learn the game, or who contribute early in the hope of encouraging
+others, and the one-shot prediction applies to the final period only.
+\end{solution}
+
+\begin{solution}{exo:b2:static-games:5}
+% code: exercises/solutions.py cournot
+$q^* = 90/(n + 1)$ and $p^* = 100 - nq^*$. $n = 1$: 45 at 55, profit 2{,}025; $n = 2$: 30 each at 40, profit 900 each; $n = 4$: 18 each
+at 28, profit 324; $n = 9$: 9 each at 19, profit 81.
+\end{solution}
+
+\begin{solution}{exo:b2:static-games:6}
+% code: exercises/solutions.py public_good
+$g^* = 12/4 = 3$ each, a total of 9. The efficient symmetric total is $3 \times 12/2 = 18$.
+\end{solution}
+
+\begin{solution}{exo:b2:static-games:7}
+% code: exercises/solutions.py public_good
+The ratio $2/(n + 1)$ falls: 0.67 for $n = 2$, 0.40 for $n = 4$, 0.18 for $n = 10$. Each person gives $12/(n + 1)$: 4, 2.4 and
+1.09. A larger group raises the total only a little, from 8 to 9.6 to 10.9, while the efficient total grows in
+proportion to $n$.
+\end{solution}
+
+\begin{solution}{exo:b2:static-games:8}
+% code: exercises/solutions.py commons
+$E^{\mathrm{N}} = 2 \times 80/3 = 53.33$; $E^* = 80/2 = 40$; over-use $53.33/40 - 1 = 33$ per cent. The fee is $80 \times 1/4 = 20$ per
+boat-day: then $E = 2 \times 60/3 = 40$.
+\end{solution}
+
+\begin{solution}{exo:b2:static-games:9}
+For each election, measure each candidate's position and the median voter's position on the same scale (from
+surveys that place both). The proposition predicts that both candidates are close to the median and to each
+other. Candidates who stay far apart in two-candidate races, consistently and not because of measurement
+error, count against it, as does a gap that does not shrink when the median moves; before concluding, check
+that the race is about one dimension and that candidates care only about winning.
+\end{solution}
+
+\begin{solution}{exo:b2:static-games:10}
+(a) Suppose a \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} $s^*$ and let $s^*_i$ be the first of its strategies to be eliminated, at some
+round, dominated by $t_i$ in the game that remains. Since no strategy of $s^*$ was removed before, $s^*_{-i}$ is
+still present, so $u_i(t_i, s^*_{-i}) > u_i(s^*_i, s^*_{-i})$, which contradicts the equilibrium. (b) Player $i$
+maximises $y - g_i + v(g_i + G_{-i})$; at an interior choice $v'(G) = 1$, and if $g_i = 0$ then $v'(G) \le 1$. With a positive
+total some player contributes, so $v'(G^{\mathrm{N}}) = 1$. Total utility $ny - G + nv(G)$ is largest where $nv'(G^*) = 1$,
+so $v'(G^*) = 1/n < 1 = v'(G^{\mathrm{N}})$; since $v'$ is decreasing, $G^* > G^{\mathrm{N}}$.
+\end{solution}
+
+\begin{solution}{exo:b2:static-games:11}
+% code: exercises/solutions.py pure_nash
+In matching pennies, at $(H, H)$ and $(T, T)$ the column player gains by switching; at $(H, T)$ and $(T, H)$ the row player
+does. On $[0, 1]$, let $u_1 = -(s_1 - s_2)^2$ and $u_2 = (s_1 - s_2)^2$: player 1 wants to match, player 2 to be as far as
+possible. If $s_1 \ne s_2$, player 1 gains by moving to $s_2$; if $s_1 = s_2$, player 2 gains by moving to 0 or 1. No profile is
+an equilibrium.
+\end{solution}
+
+\begin{solution}{exo:b2:static-games:12}
+If all three share a position $x$, each has $1/3$; one seller moving slightly to the longer side gains nearly $\max(x,
+1 - x) \ge 1/2$. If exactly two share a position $x$ and the third is at $z > x$ (the case $z < x$ is symmetric), each of
+the pair has $(x + z)/4$. Moving slightly left gives nearly $x$, moving slightly right nearly $(z - x)/2$; the first exceeds
+$(x + z)/4$ when $z < 3x$ and the second when $z > 3x$. If $z = 3x$, the third seller gains by moving next to the pair,
+from $1 - 2x$ to nearly $1 - x$. If all three are at different positions, the leftmost seller
+gains by moving towards its neighbour: it keeps every buyer to its left and gains some between them. No profile
+is an equilibrium.
+\end{solution}
+
+\begin{solution}{pb:b2:static-games:1}
+% code: exercises/solutions.py commons quota_deviation
+\textbf{Part I.}
+1. $\pi_i = e_i(100 - e_i - E_{-i} - 20) = e_i(80 - e_i - E_{-i})$.
+2. $80 - 2e_i - E_{-i} = 0$: $e_i = (80 - E_{-i})/2$.
+3. No: the best effort falls as the others fish more.
+4. The Cournot game, with effort for quantity.
+5. One more boat-day lowers the value of every boat-day by one, and the boat bears that loss only on its own days.
+6. Each boat would compare a fixed value with the cost, and its effort would not affect the others: no external
+effect, and no over-fishing.
+\textbf{Part II.}
+7. $e = 80/6 = 13.33$ and $E = 66.67$.
+8. $100 - 66.67 = 33.33$; profit $13.33 \times (33.33 - 20) = 177.78$ thousand kests.
+9. $5 \times 177.78 = 888.89$.
+10. The others' total is 53.33, and the \omterm{def:b2:static-games:best-response}{best response} is $(80 - 53.33)/2 = 13.33$.
+11. $E = 10 \times 80/11 = 72.73$: more.
+12. No: if every boat cut its effort to 8, each would earn $8 \times 40 = 320$, more than 177.78.
+\textbf{Part III.}
+13. Total profit $E(80 - E)$ is largest at $E^* = 40$.
+14. Value 60 per boat-day; total profit $40 \times 40 = 1{,}600$.
+15. $66.67/40 - 1 = 66.7$ per cent.
+16. $1{,}600 - 888.89 = 711.11$ thousand kests a season.
+17. Worse: each boat's catch would also lower future stocks, a further cost borne by all.
+18. In equilibrium the five boats fish 66.7 per cent more than the efficient effort, and lose 711.11 thousand kests of
+profit a season.
+\textbf{Part IV.}
+19. $f = 80 \times 4/10 = 32$: then $E = 5 \times 48/6 = 40$.
+20. Each boat fishes 8 days and earns $8 \times (60 - 20 - 32) = 64$; the fee raises $32 \times 40 = 1{,}280$.
+21. With the others at 32 days, the best effort is $(80 - 32)/2 = 24$, earning $24 \times 24 = 576$ against $8 \times 40 = 320$: a
+gain of 256.
+22. The expected fine must be at least 256: with detection probability one half, a fine of at least 512.
+23. The fee needs an agency that knows the value and cost functions and the number of boats, and that sets the
+fee in the boats' interest rather than its own; the boats keep only 64 each unless the revenue is returned.
+The quota needs the boats to agree, a monitor, a fine that is paid, and a way to keep new boats out; the boats
+keep the whole 1{,}600.
+24. Over-fishing is 66.7 per cent of the efficient effort; a fee of 32 thousand kests per boat-day restores the
+efficient effort of 40 boat-days.
+\end{solution}

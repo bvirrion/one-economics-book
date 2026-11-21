@@ -1,0 +1,461 @@
+\chapter{Economic Data with Python}\label{ch:b1:economic-data-python}
+
+Three analysts are asked how fast the euro-area economy grew from 2000 to
+2023. The first divides GDP in current euros in 2023 by GDP in 2000 and finds
+$3.24\%$ a year. The second uses GDP in chained volumes and finds $1.23\%$. The
+third divides by population and finds $0.95\%$. % computed: code/bachelor-1/28-economic-data-python/outputs/per_person_growth.txt
+All three are right; they answer three different questions, and a report
+that prints one of them without saying which has made an error that no
+reader can find. This chapter is about the steps between a published
+table and a number in a report: loading, joining, converting, adjusting
+and writing --- each done by a script that can be run again.
+
+\begin{openingchart}{US consumer prices, month-on-month change (per cent),
+2015--2024: not seasonally adjusted (blue) and seasonally adjusted by the
+statistical office (red).}{Bureau of Labor Statistics, CPI-U all items
+(CUUR0000SA0, CUSR0000SA0)}
+\begin{tikzpicture}
+\begin{axis}[omtime, xlabel={Year}, ylabel={Change on previous month (\%)}, xmin=2015, xmax=2025, ymin=-1,
+  ymax=1.5, width=0.75\linewidth, height=0.38\linewidth]
+  \addplot[omDef, thin] table[x=t, y=nsa, col sep=comma] {figdata/bachelor-1/28-economic-data-python/out/cpi_mom.csv};
+  \addplot[omThm, thick] table[x=t, y=sa, col sep=comma] {figdata/bachelor-1/28-economic-data-python/out/cpi_mom.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+The unadjusted series swings with the calendar: prices rise faster in the
+first months of the year and slower at its end. Over the 120 months its
+standard deviation is $0.345$ points, against $0.287$ for the adjusted series.
+% figdata: cpi_stats
+Read without adjustment, a fall in December looks like news; it is the
+season.
+
+\begin{recall}
+Python, lists, dictionaries, functions, reading a file and first tables
+were met in the computer science series. Growth rates and logarithms are
+\cref{ch:b1:models-and-data}; price indices, deflators and chained
+indices are \cref{ch:b1:consumer-welfare}.
+\end{recall}
+
+\section{Three shapes of data}\label{sec:b1:economic-data-python:shapes}
+
+\begin{definition}[Cross-section, time series, panel data]\label{def:b1:economic-data-python:shapes}
+\index{cross-section}\index{time series}\index{panel data}
+A \emph{cross-section} observes many units at one date; a \emph{time series}
+observes one unit at many dates; \emph{panel data} observe many units at many
+dates.
+\end{definition}
+
+\begin{definition}[Unit of observation]\label{def:b1:economic-data-python:unit}
+\index{unit of observation}
+The \emph{unit of observation} is what one row of a table describes: a
+country in a year, a household, a firm in a month.
+\end{definition}
+
+\begin{definition}[Merge key]\label{def:b1:economic-data-python:key}
+\index{merge key}
+A \emph{merge key} is the set of columns that identifies a \omterm{def:b1:economic-data-python:unit}{unit of
+observation}, such as \texttt{(iso3, year)}: no two rows of a table share it,
+and two tables are joined by matching it.
+\end{definition}
+
+A panel can be stored \emph{long}, one row per unit and date, or \emph{wide},
+one row per unit and one column per date. Long tables are what programs
+join and filter; wide tables are what people read.
+
+\omcode{code/bachelor-1/28-economic-data-python/listings/first_look.py}{1}{8}{A first look at a
+table: its shape, its column types and its first rows.}\label{lst:b1:economic-data-python:first-look}
+
+\omoutput{code/bachelor-1/28-economic-data-python/outputs/first_look.txt}{Eighteen rows: two
+countries over nine years. The key is \texttt{(iso3, year)}.}\label{out:b1:economic-data-python:first-look}
+
+Three things are worth reading before any computation. The shape says how
+many rows to expect from every later step. The types say that
+\texttt{iso3} and \texttt{country} are text and \texttt{year} an integer, so a year
+can be compared and sorted. The numbers at the left, 3469 to 3472, are
+positions in the full table, not years. The output does not give the units:
+\texttt{rgdpe} is in millions of 2021 dollars and \texttt{pop} and \texttt{emp} in
+millions of people. They come from the source's documentation, and any script
+that divides one column by another must use them.
+
+\omcode{code/bachelor-1/28-economic-data-python/listings/long_and_wide.py}{1}{16}{From long to wide
+and back: \texttt{pivot} and \texttt{melt}.}\label{lst:b1:economic-data-python:long-wide}
+
+\omoutput{code/bachelor-1/28-economic-data-python/outputs/long_and_wide.txt}{Twenty-five rows long,
+five by five wide, twenty-five again after melting.}\label{out:b1:economic-data-python:long-wide}
+
+\texttt{pivot} takes the key apart: \texttt{iso3} becomes the rows and
+\texttt{year} the columns, so each pair may appear only once, or pandas raises
+an error. \texttt{melt} puts the key back together, with the former column
+names in a column of their own. The round trip returns the 25 rows it
+started from, a cheap check that nothing was lost. The wide table is the
+one to read. Germany's GDP per person in 2023, 59,854 dollars, was still
+below its 2019 level of 60,283; seen from the long table, that comparison
+needs a filter.
+
+\section{Loading and joining}\label{sec:b1:economic-data-python:joining}
+
+Two sources rarely cover the same units. A join keeps what matches, and
+whatever does not match is lost without a message unless one asks for it.
+The argument \texttt{indicator=True} adds a column that says, for each row,
+whether its key was found in both tables or in one only.
+
+\begin{omfigure}
+\begin{tikzpicture}[font=\footnotesize]
+  \draw[thick, omDef] (0,0) circle (1.3);
+  \draw[thick, omThm] (1.6,0) circle (1.3);
+  \node at (-0.75,0) {\shortstack{World Bank\\only: 69}};
+  \node at (0.8,0) {\shortstack{both\\178}};
+  \node at (2.2,0) {\shortstack{Penn\\only: 7}};
+  \node[anchor=north] at (0.8,-1.4) {key: \texttt{(iso3, year)}, 2019};
+\end{tikzpicture}
+
+{\small Joining the World Bank and Penn tables for 2019. The 69 keys found only
+in the World Bank table are mostly aggregates (regions, income groups);
+the 7 found only in the Penn table are economies the World Bank series
+does not cover that year.}
+\end{omfigure}
+
+\omcode{code/bachelor-1/28-economic-data-python/listings/join_sources.py}{1}{13}{An outer join with an
+indicator: count what did not match.}\label{lst:b1:economic-data-python:join}
+
+\omoutput{code/bachelor-1/28-economic-data-python/outputs/join_sources.txt}{178 matches, 69 keys
+only in the World Bank table, 7 only in the Penn table.}\label{out:b1:economic-data-python:join}
+
+The first keys found only in the World Bank table show what most of them
+are. AFE and AFW are the two halves of sub-Saharan Africa, ARB is the Arab
+world and CEB is central Europe and the Baltics: aggregates, not countries.
+AFG and AND are countries that the Penn table does not cover. The seven keys
+found only in the Penn table --- Anguilla, Montserrat, the British Virgin
+Islands, Taiwan, South Sudan, Venezuela and Yemen --- have no value in this
+World Bank series. An inner join would have dropped all 76 keys without a
+word.
+
+The commonest silent error is the opposite one: a key that is too short.
+Merging two panels on the country alone, forgetting the year, pairs every
+year of one table with every year of the other.
+
+\omcode{code/bachelor-1/28-economic-data-python/listings/join_trap.py}{1}{13}{A merge on too few keys,
+and the check that would have caught it.}\label{lst:b1:economic-data-python:trap}
+
+\omoutput{code/bachelor-1/28-economic-data-python/outputs/join_trap.txt}{Five years each side:
+the short key multiplies the rows by five.}\label{out:b1:economic-data-python:trap}
+
+The arithmetic shows what happened. Over the five years the World Bank
+table has 199 economies and the Penn table 185, and 178 are in both. On the
+right key the merge keeps the 890 country-years found in both. On the
+country alone, each of those country-years is paired with all five years of
+the other table: $890 \times 5 = 4{,}450$ rows, every one of which looks like
+valid data.
+
+The argument \texttt{validate="one\_to\_one"} makes pandas raise an error if
+a key appears twice on either side. It costs one line and turns a silent
+error into a loud one.
+
+\section{Units and frequencies}\label{sec:b1:economic-data-python:units}
+
+A series is a level (GDP in euros), a ratio (GDP per person, a debt ratio)
+or a rate (inflation). Turning monthly data into yearly data depends on
+what the series measures: a flow (spending in a month) is summed; a price
+or a rate is averaged; a stock (debt at the end of a month) takes the last
+value.
+
+\omcode{code/bachelor-1/28-economic-data-python/listings/monthly_to_yearly.py}{1}{14}{The yearly average
+of a monthly price index, the December value, and the published annual
+average.}\label{lst:b1:economic-data-python:yearly}
+
+\omoutput{code/bachelor-1/28-economic-data-python/outputs/monthly_to_yearly.txt}{The computed averages
+equal the published ones to three decimals.}\label{out:b1:economic-data-python:yearly}
+
+The published annual figure is the average of the twelve months, and the
+listing finds it again to the third decimal. In these years of rising
+prices the December value is above the average every year, by 1.7 points in
+2020 and 4.1 in 2022. A report that compares one year's December with
+another year's average mixes two measures.
+
+The helper \texttt{monthly} that these listings import drops the row the
+statistical office uses for the annual average (period \texttt{M13}) and
+indexes the rest by \texttt{(year, month)}.
+
+\omcode{code/bachelor-1/28-economic-data-python/listings/cpi_tools.py}{1}{19}{A monthly series indexed by
+year and month.}\label{lst:b1:economic-data-python:cpi-tools}
+
+This file is a module, not a script: it prints nothing, and the other
+listings import its function, so that every one of them filters the period
+codes in the same way. The warning it silences concerns a column of the
+loader's file that no listing reads.
+
+\begin{definition}[Annualised rate]\label{def:b1:economic-data-python:annualised}
+\index{annualised rate}
+The \emph{annualised rate} of a change over a period shorter than a year is
+the change it would give over a year if repeated: for a monthly change $g$,
+$(1 + g)^{12} - 1$; for a quarterly change, $(1 + g)^4 - 1$.
+\end{definition}
+
+\omcode{code/bachelor-1/28-economic-data-python/listings/changes.py}{1}{13}{Three ways to report one
+month's inflation.}\label{lst:b1:economic-data-python:changes}
+
+\omoutput{code/bachelor-1/28-economic-data-python/outputs/changes.txt}{June 2022: a monthly change
+of 1.26\% annualises to 16\%; the twelve-month change is 9\%.}\label{out:b1:economic-data-python:changes}
+
+The same month gives a rise of $1.26\%$, $8.98\%$ or $16.16\%$, depending on
+the question. % computed: code/bachelor-1/28-economic-data-python/outputs/changes.txt
+An annualised monthly rate is noisy and amplifies the season; a
+twelve-month change is smooth but six months late on average.
+
+\section{Seasonal adjustment}\label{sec:b1:economic-data-python:seasonal}
+
+\begin{definition}[Seasonal adjustment, seasonal factor]\label{def:b1:economic-data-python:seasonal}
+\index{seasonal adjustment}\index{seasonal factor}
+A \emph{seasonal factor} is the typical ratio of a series in a given month
+(or quarter) to its trend. \emph{Seasonal adjustment} divides each value by
+its month's factor, removing the movements that recur at the same time
+every year.
+\end{definition}
+
+The simplest method estimates the trend by a centred twelve-month moving
+average, with weights $1/24$ on the two ends and $1/12$ on the eleven months
+between them, so that every calendar month counts equally. The ratio of
+the series to that trend, averaged month by month and scaled to average 1,
+gives the factors.
+
+\omcode{code/bachelor-1/28-economic-data-python/listings/seasonal_by_hand.py}{1}{27}{The ratio to a
+centred moving average, as a function.}\label{lst:b1:economic-data-python:seasonal}
+
+\omoutput{code/bachelor-1/28-economic-data-python/outputs/seasonal_by_hand.txt}{Prices sit $0.43\%$ above
+trend in June and $0.63\%$ below in December; the by-hand series moves with the
+official one.}\label{out:b1:economic-data-python:seasonal}
+
+The factors run from 0.9937 in December to 1.0043 in June, a swing of about
+one per cent within the year. That is as large as a whole month of the
+inflation of 2022, which is why the unadjusted series of the opening chart
+swings. In the function, a twelve-month mean averaged with itself shifted
+by one month gives the centred trend, with weights $1/24$ at the two ends.
+The first and last six months have no centred trend and are dropped. The
+official method fills them with forecasts (measure box below).
+
+\begin{omchart}{US consumer prices, month-on-month change (per cent),
+2015--2024: seasonally adjusted by the statistical office (red) and by the
+listing (black, dashed).}{Bureau of Labor Statistics, CPI-U; adjustment by
+\cref{lst:b1:economic-data-python:seasonal}}
+\begin{tikzpicture}
+\begin{axis}[omtime, xlabel={Year}, ylabel={Change on previous month (\%)}, xmin=2015, xmax=2025, ymin=-1,
+  ymax=1.5, width=0.75\linewidth, height=0.36\linewidth]
+  \addplot[omThm, thick] table[x=t, y=sa, col sep=comma] {figdata/bachelor-1/28-economic-data-python/out/cpi_mom.csv};
+  \addplot[black, thin, dashed] table[x=t, y=hand, col sep=comma] {figdata/bachelor-1/28-economic-data-python/out/cpi_mom.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+The two adjusted series have a correlation of $0.975$ over the 120 months.
+% figdata: cpi_stats
+The chart's table is written by a script that imports the listing's
+function, so the chart and the listing cannot drift apart.
+
+\begin{measure}[Seasonal adjustment]
+The statistical office computes its factors with the X-13ARIMA-SEATS
+method, which extends the series with forecasts before averaging, so that
+the most recent months have a centred trend, and treats outliers and
+calendar effects. Its factors are updated each February, and the
+previous five years of adjusted data are revised. % ledger: b1:bls-x13
+An adjusted figure is therefore never final: last year's December will
+change next February.
+\end{measure}
+
+\section{Deflating, indexing, logarithms and growth}\label{sec:b1:economic-data-python:deflating}
+
+A real series divides a nominal one by a price index and multiplies by its
+base-year value. An index rebased to year $b$ divides by its value in $b$ and
+multiplies by 100. The difference of logarithms is a growth rate in log
+points; their mean over a span is the average log growth, close to the
+compound rate when growth is small.
+
+\omcode{code/bachelor-1/28-economic-data-python/listings/deflate_and_index.py}{1}{14}{Brenland's real GDP,
+an index with 2020 = 100, and its mean log growth.}\label{lst:b1:economic-data-python:deflate}
+
+\omoutput{code/bachelor-1/28-economic-data-python/outputs/deflate_and_index.txt}{Real GDP grew by
+$14.3\%$ from 2020 to 2025; the recomputed series equals the published one.}\label{out:b1:economic-data-python:deflate}
+
+The last line is a check: recomputing a published series and finding no
+difference is how one learns that the deflator and the base year were the
+ones assumed. A deflator chained year by year (\cref{ch:b1:consumer-welfare})
+makes real components that do not add up to real GDP: a check that adds up
+real consumption, investment, government purchases and net exports then
+fails, for a reason that must be stated. The check of the listing cannot
+fail that way, because real GDP is recomputed from its own deflator.
+
+\omcode{code/bachelor-1/28-economic-data-python/listings/per_person_growth.py}{1}{19}{The three
+growth rates of the chapter's opening.}\label{lst:b1:economic-data-python:per-person}
+
+\omoutput{code/bachelor-1/28-economic-data-python/outputs/per_person_growth.txt}{Prices, then
+population, take two points and then a quarter of a point off the
+first number.}\label{out:b1:economic-data-python:per-person}
+
+Each line divides by one more thing. Prices take 2.01 points a year off
+nominal growth, from 3.24 to 1.23, and population growth another 0.28 points,
+leaving 0.95. The function \texttt{yearly} computes a compound rate from the
+two end years only, so a recession inside the span does not show in it.
+That is a choice of method, and it belongs next to the number when the
+number is printed.
+
+\section{A chart is a table a script wrote}\label{sec:b1:economic-data-python:reproducible}
+
+\begin{definition}[Reproducible computation]\label{def:b1:economic-data-python:reproducible}
+\index{reproducible computation}
+A computation is \emph{reproducible} when running its scripts again on the
+same inputs gives the same outputs, byte for byte, with no step done by
+hand.
+\end{definition}
+
+Every chart of this book is drawn from a CSV file that a tested script
+wrote; no number in a chart was typed. When a source is revised, the
+scripts run again and every chart and every quoted number follows.
+
+\omcode{code/bachelor-1/28-economic-data-python/listings/write_chart_table.py}{2}{15}{Writing a chart's
+table twice and comparing the bytes.}\label{lst:b1:economic-data-python:write}
+
+\omoutput{code/bachelor-1/28-economic-data-python/outputs/write_chart_table.txt}{The same digest twice:
+the file is the same.}\label{out:b1:economic-data-python:write}
+
+A digest is a fingerprint of a file's bytes: a change of one character
+anywhere gives a different one. Two runs that print the same sixteen
+hexadecimal digits wrote the same file. The fixed line ending matters
+here. Left to its default, the operating system chooses the end-of-line
+character, and two machines could write the same numbers in different
+bytes.
+
+\begin{record}[A spreadsheet and two choices]
+A widely cited study of public debt and growth (Reinhart and Rogoff 2010)
+in 20 advanced economies
+over 1946--2009 reported that country-years with public debt above $90\%$ of
+GDP had average growth of $-0.1\%$. Working from the authors' own
+spreadsheet, a replication found that a coding error left five countries
+out of an average, that some available years were excluded, and that the
+averages were weighted unusually; corrected, the growth rate was $2.2\%$
+(Herndon, Ash and Pollin 2014). % ledger: b1:herndon2014
+A formula typed into a cell is invisible on the page that cites its
+result. A script that can be rerun, and a check that recomputes a
+published number, are how such errors are found.
+\end{record}
+
+\section*{Exercises}\label{sec:b1:economic-data-python:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:economic-data-python:shapes-ex}
+Give the shape, the \omterm{def:b1:economic-data-python:unit}{unit of observation} and the key of the tables printed
+by \cref{out:b1:economic-data-python:first-look,out:b1:economic-data-python:long-wide},
+and of the monthly series of \cref{lst:b1:economic-data-python:cpi-tools}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:economic-data-python:yoy}
+From \cref{out:b1:economic-data-python:changes}, give the twelve-month change of the
+unadjusted and the adjusted index in June 2022. Why do they differ?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:economic-data-python:annualise}
+Prices rise by $0.4\%$ in a month. Give the \omterm{def:b1:economic-data-python:annualised}{annualised rate}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:economic-data-python:aggregate}
+Which aggregation from months to years --- mean, sum or last value --- suits
+the unemployment rate, exports, the consumer price index, the population
+and government debt?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:economic-data-python:maddison}
+Merge the Penn World Table and the Maddison Project table for 2019 on
+\texttt{(iso3, year)}. How many keys match, and how many are found in one
+table only? Name two kinds of unit in each group.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:economic-data-python:rebase}
+Rebase Brenland's consumer price index to 2025 = 100 and compute its average
+log growth from 2016 to 2025.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:economic-data-python:toy}
+A quarterly series is $x_t = 100 + t + s_t$ for $t = 0, \dots, 11$, with a season $s$ of
+$+2$, $-1$, $-2$ and $+1$ in quarters 1 to 4. Using the differences from a centred
+four-quarter moving average, recover the season.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:economic-data-python:falling}
+A country's population falls. Predict the sign of the difference between
+the growth of its GDP per person and the growth of its GDP.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:economic-data-python:hook}
+Recompute the three growth rates of \cref{lst:b1:economic-data-python:per-person} for
+2000--2019. Which of the three changes most when the pandemic years are
+left out?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:economic-data-python:quarterly}
+Write \texttt{adjust\_q}, the quarterly version of \texttt{adjust}, and test it on a
+series with a known multiplicative season of $0.98$, $1.01$, $1.03$ and $0.98$ and a
+trend of $0.5\%$ a quarter.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:economic-data-python:silent}
+A colleague's export of the Penn table writes country codes in lower
+case. A left join of the World Bank table with it runs without error. What
+does it return, and which check would catch the error?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:economic-data-python:base}
+A real GDP series was computed with a deflator whose base year is not the
+one stated. What simple check would reveal it?
+\end{exercise}
+
+\section{Problem: Brenland's Open-Data Portal}\label{sec:b1:economic-data-python:problem}
+
+\begin{problem}[{Weekend problem --- checking a portal's numbers}]\label{pb:b1:economic-data-python:portal}
+Brenland's statistical office (invented) publishes its accounts, its trade
+with Kestria and its consumer basket, and a headline: ``\omterm{prop:b1:models-and-data:real-growth}{real growth},
+2015--2025: $4.7\%$ a year''. Its trade file has one year mistyped. Its monthly
+consumer price index for 2015--2024 is built from the yearly index, with a
+\omterm{def:b1:economic-data-python:seasonal}{seasonal factor} of $1 + 0.004\sin(2\pi(m - 3)/12)$ in month $m$ and a little noise. Each
+answer comes from a script.
+
+\medskip\noindent\textbf{Part I --- Loading and checking.}
+\begin{enumerate}
+  \item How many rows does the accounts table have, and which years?
+  \item Check that $GDP = C + I + G + X - M$ in every year.
+  \item Check that the deficit equals spending minus revenue.
+  \item How many rows do the trade and basket tables have, and why 130?
+  \item What is the price index in 2015, and why check it?
+  \item Why run these checks before any analysis?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- Joining.}
+\begin{enumerate}[resume]
+  \item Join the accounts and the portal's trade file on \texttt{year} with an
+    indicator. Which year of the accounts finds no match?
+  \item Which year appears twice in the trade file?
+  \item What would \texttt{validate="one\_to\_one"} have done?
+  \item Fix the file, and join again.
+  \item What share of Brenland's exports went to Kestria in 2025?
+  \item What were those exports worth in kests?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- The monthly index.}
+\begin{enumerate}[resume]
+  \item What is the true \omterm{def:b1:economic-data-python:seasonal}{seasonal factor} of June?
+  \item What factor does \texttt{adjust} recover for June?
+  \item And for December?
+  \item What is the largest error of the recovered factors?
+  \item Compare the twelve-month change in December 2024 with the change in
+    the yearly average from 2023 to 2024.
+  \item Which of the two would you report for 2024, and why?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- The headline.}
+\begin{enumerate}[resume]
+  \item How did the portal obtain $4.7\%$?
+  \item Compute \omterm{prop:b1:models-and-data:real-growth}{real growth} with the deflator.
+  \item Compute the mean log growth, and say why it is a little lower.
+  \item Compute growth of real GDP per person.
+  \item Compute growth of nominal GDP divided by the consumer price index,
+    and say why it differs from the answer to question 20.
+  \item State the result: the corrected \omterm{prop:b1:models-and-data:real-growth}{real growth} of Brenland, 2015--2025.
+\end{enumerate}
+\end{problem}

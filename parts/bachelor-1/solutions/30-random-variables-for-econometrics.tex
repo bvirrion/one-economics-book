@@ -1,0 +1,127 @@
+\section*{Chapter \ref{ch:b1:random-variables-for-econometrics} --- Random Variables for Econometrics}
+% Numbers recomputed in code/bachelor-1/30-random-variables-for-econometrics/exercises/solutions.py
+% (tested in tests/test_ch30.py) and in the chapter's captured outputs.
+
+\begin{solution}{exo:b1:random-variables-for-econometrics:linear}
+$\E[2X + 3] = 2 \times 5 + 3 = 13$; $\Var(2X + 3) = 4 \times 2 = 8$.
+\end{solution}
+
+\begin{solution}{exo:b1:random-variables-for-econometrics:cond}
+$0.138/0.353 = 0.391$ with the rounded table ($0.392$ unrounded, as the
+conditional table prints).
+\end{solution}
+
+\begin{solution}{exo:b1:random-variables-for-econometrics:read}
+2,840 dollars, against $\sigma/\sqrt{30} = 2{,}839$: within one dollar.
+\end{solution}
+
+\begin{solution}{exo:b1:random-variables-for-econometrics:predict}
+$15{,}552/\sqrt{120} = 1{,}420$ dollars, half the value for $n = 30$, since 120 is four
+times 30.
+\end{solution}
+
+\begin{solution}{exo:b1:random-variables-for-econometrics:two-groups}
+By the law of iterated expectations, $0.4 \times 10 + 0.6 \times 20 = 16$.
+\end{solution}
+
+\begin{solution}{exo:b1:random-variables-for-econometrics:var-sum}
+$4 + 9 + 2 \times 1.5 = 16$.
+\end{solution}
+
+\begin{solution}{exo:b1:random-variables-for-econometrics:interval}
+$\sigma/\sqrt{200} = 1{,}100$, so $95\%$ of the means lie within $1.96 \times 1{,}100 = 2{,}156$ dollars
+of $21{,}554$ (2,155 unrounded): from about 19,400 to 23,710 dollars.
+\end{solution}
+
+\begin{solution}{exo:b1:random-variables-for-econometrics:chi2}
+$\E[V] = \sum_i \E[Z_i^2] = k$. $\Var(Z_i^2) = \E[Z_i^4] - (\E[Z_i^2])^2 = 3 - 1 = 2$, and the terms are
+independent, so $\Var(V) = 2k$.
+\end{solution}
+
+\begin{solution}{exo:b1:random-variables-for-econometrics:brothers}
+With variance $\sigma^2$ for each man, the sum of a pair has variance $2\sigma^2 + 2\rho\sigma^2$.
+The mean of $n/2$ independent pairs, divided by $n$, has variance
+$\frac{n}{2}\cdot 2\sigma^2(1 + \rho)/n^2 = \sigma^2(1 + \rho)/n$: larger than $\sigma^2/n$ by the factor $1 + \rho$.
+\end{solution}
+
+\begin{solution}{exo:b1:random-variables-for-econometrics:best}
+For a given $x$, $\E[(Y - c)^2 \mid X = x] = \Var(Y \mid X = x) + (\E[Y \mid X = x] - c)^2$, smallest at
+$c = \E[Y \mid X = x]$. Choosing $g(x)$ this way for every $x$ minimises each term of
+$\E[(Y - g(X))^2] = \sum_x P(X = x)\,\E[(Y - g(x))^2 \mid X = x]$, hence the sum.
+\end{solution}
+
+\begin{solution}{exo:b1:random-variables-for-econometrics:mean-indep}
+If $\E[Y \mid X] = \E[Y]$, then $\E[XY] = \E[X\,\E[Y \mid X]] = \E[X]\E[Y]$ by the law of iterated
+expectations, so $\Cov(X, Y) = 0$. Counterexample to the converse: $X$ equal to $-1$, 0
+or 1 with probability $1/3$ each and $Y = X^2$. Then $\Cov(X, Y) = \E[X^3] = 0$, but
+$\E[Y \mid X = 0] = 0$ and $\E[Y \mid X = 1] = 1$.
+\end{solution}
+
+\begin{solution}{exo:b1:random-variables-for-econometrics:fail}
+Many simulated samples of 30 from that population, with the share of
+means outside $\mu \pm 1.96\sigma/\sqrt{30}$ far from $5\%$, or a \omterm{def:b1:describing-data:histogram}{histogram} of the means that
+is clearly skewed, or simulated \omterm{def:b1:describing-data:quantile}{quantiles} of the standardised mean far
+from the normal ones. A population with a very heavy tail, such as the
+Pareto one of the chapter, would show it.
+\end{solution}
+
+\begin{solution}{pb:b1:random-variables-for-econometrics:lottery}
+\textbf{1.} Sizes 1 to 5: $0.275$, $0.311$, $0.176$, $0.166$, $0.072$.
+
+\textbf{2.} $0.056$.
+
+\textbf{3.} $0.056/0.275 = 0.204$ for size 1; for size 4, $0.044/0.166 = 0.265$ with the
+rounded table ($0.267$ unrounded).
+
+\textbf{4.} No: the \omterm{def:b1:random-variables-for-econometrics:joint}{conditional distribution} of income changes with size.
+
+\textbf{5.} Larger households more often have two earners.
+
+\textbf{6.} 23,326; 24,004; 26,678; 26,834; 26,249 dalens for sizes 1 to 5.
+
+\textbf{7.} The weighted mean of the \omterm{def:b1:describing-data:conditional-mean}{conditional means} is 24,919.72, equal to
+the population mean.
+
+\textbf{8.} No: mean income changes with size, from 23,326 to 26,834.
+
+\textbf{9.} The \omterm{def:b1:describing-data:conditional-mean}{conditional mean} by size (\cref{prop:b1:random-variables-for-econometrics:best}).
+
+\textbf{10.} No: income per person falls with size, from 23,326 for one person
+to about 5,250 for five.
+
+\textbf{11.} $\mu = 24{,}919.7$ and $\sigma = 10{,}601.3$ dalens (dividing by 2,000, the population).
+
+\textbf{12.} $10{,}601.3/\sqrt{100} = 1{,}060.1$.
+
+\textbf{13.} 1,061.2.
+
+\textbf{14.} 2,061 dalens.
+
+\textbf{15.} $1.96 \times 1{,}060.1 = 2{,}078$.
+
+\textbf{16.} It would halve, to about 1,040.
+
+\textbf{17.} Draws with replacement are independent and from the same
+population, so $\Var(\bar y) = \sigma^2/n$ exactly.
+
+\textbf{18.} Student's $t$ with 99 degrees of freedom.
+
+\textbf{19.} $1.984$.
+
+\textbf{20.} $5.13\%$.
+
+\textbf{21.} $1.025$.
+
+\textbf{22.} With 100 households the mean is close to normal by the central
+limit theorem, and $s$ is close to $\sigma$.
+
+\textbf{23.} Small samples from very skewed or heavy-tailed populations, or
+dependent draws.
+
+\textbf{24.} Alone, nothing; but the share of item 20 means that the interval
+$\bar y \pm 1.984\,s/10$ contains $\mu$ in about $95\%$ of surveys (\cref{ch:b1:sampling-and-inference}).
+
+\textbf{25.} With 100 households, the mean income is within 2,061 dalens of the
+truth in $95\%$ of surveys, close to the 2,078 that the central limit theorem
+predicts.
+\end{solution}

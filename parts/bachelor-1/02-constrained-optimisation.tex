@@ -1,0 +1,586 @@
+\chapter{Optimisation under Constraint}\label{ch:b1:constrained-optimisation}
+
+A student in Brenmoor has sixty hours a week to split between paid work in
+a café and study. Each hour of work pays \dal{15}. A grant of \dal{200} a
+week comes with a rule: once the student earns more than \dal{100} a week,
+the grant shrinks by half a dalen for each further dalen earned, until
+nothing is left. How many hours should the student work? The question has
+the shape of almost every problem in the microeconomics of this book: a
+person or a firm wants as much as possible of something, and a constraint
+--- hours, income, land, a budget --- stops them from having it all. This
+chapter gives the method that solves such problems, and the number it
+produces along the way: the value of relaxing the constraint by one unit.
+
+\begin{openingchart}{Hours worked in a year by a person in work, against labour
+compensation per hour, 111 countries, 2019. Compensation is in 2021 dollars at
+purchasing-power parity, on a logarithmic axis. Venezuela, at 5 cents an hour
+in these data, is left out.}{Penn World Table 11.0; average annual hours worked
+by persons engaged; compensation per hour = labour share $\times$ output-side real
+GDP at current PPPs $\div$ (persons engaged $\times$ hours)}
+\begin{tikzpicture}
+\begin{semilogxaxis}[omincomex, xlabel={Compensation per hour (dollars, logarithmic axis)},
+  ylabel={Hours worked per year}, xmin=0.5, xmax=100, ymin=1200, ymax=2600,
+  height=0.55\linewidth]
+  \addplot table[x=wage, y=hours] {figdata/bachelor-1/02-constrained-optimisation/out/hours_wage.csv};
+\end{semilogxaxis}
+\end{tikzpicture}
+\end{openingchart}
+
+Where an hour of work is paid more, people work fewer hours. The
+correlation between hours and the logarithm of pay per hour across the 111
+countries is $-0.53$, and the fitted line falls by 162 hours a year for
+each unit of the logarithm, about 1.6 hours a year less for each per cent
+more pay. % figdata: hours_wage_stats
+In the tenth of countries with the lowest pay (a median of \usd{2.20} an
+hour) the median worker puts in 2064 hours a year; in the tenth with the
+highest (\usd{49.48}) the median is 1504 hours. % figdata: hours_wage_tenths
+In the United States, at \usd{45.86} an hour, it is 1797. % figdata: hours_wage_stats
+A higher wage makes an hour of leisure more expensive, which should make
+people work more, and it makes them richer, which should make them take
+more leisure. The chart says that across countries the second force wins,
+or that something else differs between rich and poor countries. To say which,
+one must first know how a person chooses hours under a constraint. That is
+the subject of this chapter, and \cref{ch:b1:labour-supply-and-saving}
+returns to the chart with the answer.
+
+\begin{recall}
+For a function $f(x, y)$, the partial derivative $f_x = \pd{f}{x}$ is the
+derivative in $x$ with $y$ held fixed. The gradient $\nabla f = (f_x, f_y)$
+points in the direction of steepest increase. A level curve is the set of
+points where $f$ takes one value. A critical point, where $\nabla f = 0$, is
+a candidate for an unconstrained maximum.
+\end{recall}
+
+\section{Functions of two variables}\label{sec:b1:constrained-optimisation:two-variables}
+
+An objective in economics usually depends on two or more quantities: the
+amounts of two goods, of two inputs, of work and leisure. Its level curves
+--- indifference curves for a consumer, isoquants for a firm --- carry most
+of the reasoning, and the slope of a level curve is the number used most.
+
+\begin{proposition}[Slope of a level curve]\label{prop:b1:constrained-optimisation:level-slope}
+\index{level curve!slope}
+Let $f$ have continuous partial derivatives, and let the level curve
+$f(x, y) = c$ be, near a point where $f_y \neq 0$, the graph of a
+differentiable function $y(x)$. Its slope there is
+\[
+y'(x) = -\frac{f_x}{f_y}.
+\]
+\end{proposition}
+
+\begin{proof}
+Along the curve, $f(x, y(x)) = c$ for every $x$. Differentiate with respect
+to $x$ by the chain rule: $f_x + f_y\, y'(x) = 0$. Divide by $f_y \neq 0$.
+\end{proof}
+
+That the curve is the graph of such a function whenever $f_y \neq 0$ is the
+implicit function theorem of the mathematics volumes; it is admitted here.
+The proposition says that moving along a level curve, a small increase
+$\dd x$ must be paid for with $\dd y = -(f_x/f_y)\dd x$: the ratio of the
+partial derivatives is the rate at which the function lets one variable be
+traded for the other. For $f(x, y) = x^{1/2}y^{1/2}$,
+$f_x = \tfrac12 x^{-1/2}y^{1/2}$ and $f_y = \tfrac12 x^{1/2}y^{-1/2}$, so the
+slope of a level curve is $-y/x$. The gradient $(f_x, f_y)$ is
+perpendicular to the level curve, since it is perpendicular to the tangent
+vector $(1, y')$: $f_x + f_y y' = 0$.
+
+\section{A maximum under one equality constraint}\label{sec:b1:constrained-optimisation:equality}
+
+\begin{definition}[Constrained maximum and minimum]\label{def:b1:constrained-optimisation:constrained-max}
+\index{constrained maximum}\index{constrained minimum}
+Let $f$ and $g$ be functions of $(x, y)$ and $b$ a number. A point
+$(x^*, y^*)$ with $g(x^*, y^*) = b$ is a \emph{constrained maximum} of $f$
+under the constraint $g = b$ if $f(x^*, y^*) \ge f(x, y)$ for every $(x, y)$
+with $g(x, y) = b$ (in the region where the problem is posed). A
+\emph{constrained minimum} reverses the inequality. The problem is written
+$\max_{x, y} f(x, y)$ subject to $g(x, y) = b$.
+\end{definition}
+
+The first method is substitution: solve the constraint for one variable and
+maximise a function of the other, with the calculus of one variable.
+
+\begin{example}[Substitution]\label{ex:b1:constrained-optimisation:substitution}
+Maximise $f(x, y) = x^{1/2}y^{1/2}$ subject to $x + 2y = 12$, with $x, y > 0$.
+The constraint gives $x = 12 - 2y$. Since the square root is increasing,
+maximising $f$ is maximising $h(y) = (12 - 2y)y = 12y - 2y^2$:
+$h'(y) = 12 - 4y = 0$ at $y = 3$, and $h'' = -4 < 0$, so this is the
+maximum. Then $x = 6$ and $f^* = \sqrt{18} = 4.243$.
+\end{example}
+
+Substitution works when the constraint can be solved, and it hides the
+geometry. The geometry is this: at the best point on the constraint, the
+level curve of $f$ through that point cannot cross the constraint, for if
+it did, a step along the constraint would reach a higher level curve.
+
+\begin{definition}[Tangency condition]\label{def:b1:constrained-optimisation:tangency}
+\index{tangency condition}
+For the problem of maximising $f$ subject to $g = b$, the \emph{tangency
+condition} at a point is that the level curve of $f$ and the constraint
+curve have the same slope there:
+\[
+\frac{f_x}{f_y} = \frac{g_x}{g_y}.
+\]
+\end{definition}
+
+\begin{proposition}[Tangency at an interior optimum]\label{prop:b1:constrained-optimisation:tangency}
+\index{tangency condition!necessity}
+Let $f$ and $g$ have continuous partial derivatives, let $(x^*, y^*)$ be a
+\omterm{def:b1:constrained-optimisation:constrained-max}{constrained maximum} of $f$ subject to $g = b$ that is not at the edge of the
+region, and let $g_y \neq 0$ and $f_y \neq 0$ there. Then the \omterm{def:b1:constrained-optimisation:tangency}{tangency
+condition} holds at $(x^*, y^*)$.
+\end{proposition}
+
+\begin{proof}
+Near $(x^*, y^*)$ the constraint is the graph of a function $y(x)$ with
+$y' = -g_x/g_y$ (\cref{prop:b1:constrained-optimisation:level-slope} applied
+to $g$). The function $h(x) = f(x, y(x))$ has a maximum at $x^*$, an interior
+point, so $h'(x^*) = f_x + f_y y' = f_x - f_y g_x/g_y = 0$. Divide by
+$f_y \neq 0$: $f_x/f_y = g_x/g_y$.
+\end{proof}
+
+In \cref{ex:b1:constrained-optimisation:substitution}, the slope of the
+level curve at $(6, 3)$ is $-y/x = -1/2$ and the slope of the constraint
+$x + 2y = 12$ is $-1/2$: tangency.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={$x$}, ylabel={$y$}, xmin=0, xmax=13,
+  ymin=0, ymax=7, width=0.62\linewidth, height=0.44\linewidth, samples=120,
+  clip mode=individual]
+  \addplot[demand, domain=1.3:13] {9/x};
+  \addplot[demand, domain=2.6:13] {18/x};
+  \addplot[demand, domain=3.6:13] {25/x};
+  \addplot[supply, domain=0:12] {(12 - x)/2};
+  \addplot[guide] coordinates {(6,0) (6,3)};
+  \addplot[guide] coordinates {(0,3) (6,3)};
+  \addplot[only marks, mark=*, black] coordinates {(6,3)};
+  \node[font=\footnotesize, anchor=west] at (axis cs:13,1.385) {$f = \sqrt{18}$};
+  \node[font=\footnotesize, anchor=west] at (axis cs:13,1.923) {$f = 5$};
+  \node[font=\footnotesize, anchor=west] at (axis cs:13,0.692) {$f = 3$};
+  \node[font=\footnotesize, anchor=west, text=omThm] at (axis cs:4.3,6.4) {constraint $x + 2y = 12$};
+\end{axis}
+\end{tikzpicture}
+
+{\small Level curves of $f = x^{1/2}y^{1/2}$ (blue) and the constraint
+$x + 2y = 12$ (red). The highest level curve that the constraint reaches,
+$f = \sqrt{18}$, touches it at $(6, 3)$; the curve $f = 5$ lies beyond reach.}
+\end{omfigure}
+
+\section{Lagrange's method}\label{sec:b1:constrained-optimisation:lagrange}
+
+The \omterm{def:b1:constrained-optimisation:tangency}{tangency condition} and the constraint are two equations in two
+unknowns. \omterm{met:b1:constrained-optimisation:lagrange}{Lagrange's method} writes them in a form that extends to many
+variables and many constraints, and that delivers one more number.
+
+\begin{definition}[Lagrangian]\label{def:b1:constrained-optimisation:lagrangian}
+\index{Lagrangian}
+For the problem $\max f(x, y)$ subject to $g(x, y) = b$, the
+\emph{Lagrangian} is the function of three variables
+\[
+\mathcal{L}(x, y, \lambda) = f(x, y) - \lambda\bigl(g(x, y) - b\bigr),
+\]
+where the new variable $\lambda$ is the Lagrange multiplier.
+\end{definition}
+
+\begin{theorem}[Lagrange conditions]\label{thm:b1:constrained-optimisation:lagrange}
+\index{Lagrange conditions}
+Let $f$ and $g$ have continuous partial derivatives on an open set, and let
+$(x^*, y^*)$ be a \omterm{def:b1:constrained-optimisation:constrained-max}{constrained maximum} (or minimum) of $f$ subject to $g = b$
+at which $\nabla g \neq 0$. Then there is a number $\lambda^*$ such that
+$(x^*, y^*, \lambda^*)$ is a critical point of $\mathcal L$:
+\[
+f_x = \lambda g_x, \qquad f_y = \lambda g_y, \qquad g(x, y) = b .
+\]
+The same holds with $n$ variables and $m < n$ constraints, one multiplier
+per constraint, when the gradients of the constraints are linearly
+independent.
+\end{theorem}
+\admitted
+
+\begin{proposition}[Lagrange and tangency]\label{prop:b1:constrained-optimisation:equivalence}
+\index{Lagrange conditions!and tangency}
+At a point where $f_y \neq 0$ and $g_y \neq 0$, the \omterm{thm:b1:constrained-optimisation:lagrange}{Lagrange conditions} hold
+for some $\lambda$ if and only if the constraint and the \omterm{def:b1:constrained-optimisation:tangency}{tangency condition}
+hold; then $\lambda = f_y/g_y = f_x/g_x$ (the last when $g_x \neq 0$).
+\end{proposition}
+
+\begin{proof}
+If $f_x = \lambda g_x$ and $f_y = \lambda g_y$, then $\lambda = f_y/g_y \neq 0$
+and $f_x/f_y = \lambda g_x/(\lambda g_y) = g_x/g_y$. Conversely, if
+$f_x/f_y = g_x/g_y$, set $\lambda = f_y/g_y$: the second condition holds by
+construction, and $f_x = f_y g_x/g_y = \lambda g_x$ gives the first.
+\end{proof}
+
+\begin{method}[Solving a problem with Lagrange's method]\label{met:b1:constrained-optimisation:lagrange}
+\index{Lagrange's method}
+\begin{enumerate}
+  \item Write the \omterm{def:b1:constrained-optimisation:lagrangian}{Lagrangian} $\mathcal L = f - \lambda(g - b)$.
+  \item Set its three partial derivatives to zero.
+  \item Eliminate $\lambda$ by dividing the first two conditions: this gives
+    the \omterm{def:b1:constrained-optimisation:tangency}{tangency condition}, a relation between $x$ and $y$.
+  \item Substitute that relation into the constraint, solve, and recover
+    $\lambda$ from either of the first two conditions.
+  \item Check that the point is a maximum: compare its value with the edges
+    of the region (\cref{sec:b1:constrained-optimisation:corners}).
+\end{enumerate}
+\end{method}
+
+For \cref{ex:b1:constrained-optimisation:substitution}: $\tfrac12\sqrt{y/x}
+= \lambda$ and $\tfrac12\sqrt{x/y} = 2\lambda$. Dividing the second by the
+first, $x/y = 2$, so $x = 2y$; the constraint gives $4y = 12$, $y = 3$,
+$x = 6$, and $\lambda = \tfrac12\sqrt{3/6} = 0.354$. The same point, found
+without solving the constraint, and a new number $\lambda$.
+
+\section{The multiplier as a shadow price}\label{sec:b1:constrained-optimisation:shadow}
+
+\begin{definition}[Value function]\label{def:b1:constrained-optimisation:value-function}
+\index{value function}
+The \emph{value function} of the problem $\max f$ subject to $g = b$ is the
+best attainable value as a function of the constraint's level,
+$V(b) = f\bigl(x^*(b), y^*(b)\bigr)$, where $(x^*(b), y^*(b))$ is the solution
+for that $b$.
+\end{definition}
+
+\begin{proposition}[The multiplier is the derivative of the value function]\label{prop:b1:constrained-optimisation:shadow}
+\index{shadow price!as a derivative}
+If the solution $(x^*(b), y^*(b))$ and its multiplier $\lambda^*(b)$ satisfy
+the \omterm{thm:b1:constrained-optimisation:lagrange}{Lagrange conditions} and $x^*$, $y^*$ are differentiable in $b$, then
+\[
+V'(b) = \lambda^*(b).
+\]
+\end{proposition}
+
+\begin{proof}
+Differentiate $V(b) = f(x^*(b), y^*(b))$:
+$V'(b) = f_x \,x^{*\prime} + f_y \,y^{*\prime}$. By the \omterm{thm:b1:constrained-optimisation:lagrange}{Lagrange conditions}
+this is $\lambda^*(g_x x^{*\prime} + g_y y^{*\prime})$. The bracket is the
+derivative of $g(x^*(b), y^*(b))$, which equals $b$ for every $b$, so the
+bracket is $1$.
+\end{proof}
+
+\begin{definition}[Shadow price]\label{def:b1:constrained-optimisation:shadow-price}
+\index{shadow price}\index{Lagrange multiplier!as a shadow price}
+The \emph{shadow price} of a constraint is the value of its Lagrange
+multiplier at the optimum, $\lambda^* = V'(b)$: the increase in the best
+attainable value of the objective per unit by which the constraint is
+relaxed. Its unit is the unit of the objective divided by the unit of the
+constraint.
+\end{definition}
+
+In the example, $x^* = b/2$ and $y^* = b/4$, so
+$V(b) = \sqrt{b^2/8} = b/(2\sqrt2)$ and $V'(b) = 1/(2\sqrt 2) = 0.354$, the
+$\lambda$ found above. Relaxing the constraint from 12 to 14 raises the
+value by $2 \times 0.354 = 0.71$, from $4.243$ to $4.950$; here the
+approximation is exact because $V$ is linear in $b$. In general $\lambda$
+gives the first-order change, $\Delta V \approx \lambda \Delta b$, as any
+derivative does.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={$x$}, ylabel={$y$}, xmin=0, xmax=15,
+  ymin=0, ymax=8, width=0.62\linewidth, height=0.44\linewidth, samples=120]
+  \addplot[demand, domain=2.6:15] {18/x};
+  \addplot[demand, shifted, domain=3.2:15] {24.5/x};
+  \addplot[supply, domain=0:12] {(12 - x)/2};
+  \addplot[supply, shifted, domain=0:14] {(14 - x)/2};
+  \addplot[only marks, mark=*, black] coordinates {(6,3) (7,3.5)};
+  \node[font=\footnotesize, anchor=north east] at (axis cs:6,3) {$V(12) = 4.243$};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:7.2,3.6) {$V(14) = 4.950$};
+\end{axis}
+\end{tikzpicture}
+
+{\small The \omterm{def:b1:constrained-optimisation:shadow-price}{shadow price}: relaxing the constraint from $b = 12$ to $b = 14$
+(dashed) moves the optimum from $(6, 3)$ to $(7, 3.5)$ and raises the value by
+$\lambda^* \Delta b = 0.354 \times 2 = 0.71$.}
+\end{omfigure}
+
+The unit makes the multiplier economics. If $f$ is a firm's profit in
+dalens and $b$ is hectares of land, $\lambda^*$ is in dalens per hectare: the
+most the firm would pay to rent one more hectare, whatever the market rent
+happens to be. If $f$ is utility and $b$ is income, $\lambda^*$ is utility
+per dalen, the marginal utility of income. If the constraint is a
+regulation --- a cap on emissions, a quota --- its \omterm{def:b1:constrained-optimisation:shadow-price}{shadow price} is what the
+regulation costs the one who obeys it, at the margin.
+\Cref{ch:b1:comparative-statics} extends the proposition to the derivative
+of a \omterm{def:b1:constrained-optimisation:value-function}{value function} with respect to any parameter.
+
+\section{Corners and kinks}\label{sec:b1:constrained-optimisation:corners}
+
+Quantities in economics cannot be negative, and many constraints are
+inequalities: a budget need not be spent, a field need not be fully
+planted.
+
+\begin{definition}[Binding constraint]\label{def:b1:constrained-optimisation:binding}
+\index{binding constraint}
+An inequality constraint $g(x, y) \le b$ is \emph{binding} at a solution if
+it holds with equality there, $g(x^*, y^*) = b$, and \emph{slack} if it
+holds strictly. A slack constraint has a \omterm{def:b1:constrained-optimisation:shadow-price}{shadow price} of zero: relaxing it a
+little changes nothing.
+\end{definition}
+
+\begin{definition}[Interior and corner solutions]\label{def:b1:constrained-optimisation:corner}
+\index{corner solution}\index{interior solution}
+A solution with every quantity strictly positive is an \emph{interior
+solution}. A solution at which some quantity is zero because a
+non-negativity constraint binds is a \emph{corner solution}.
+\end{definition}
+
+At a corner the \omterm{def:b1:constrained-optimisation:tangency}{tangency condition} need not hold, and usually does not.
+Take $f(x, y) = x + \ln y$ with the constraint $x + y = m$ and $x, y \ge 0$.
+\omterm{met:b1:constrained-optimisation:lagrange}{Lagrange's method} gives $1 = \lambda$ and $1/y = \lambda$, so $y = 1$ and
+$x = m - 1$. When $m < 1$ this asks for a negative $x$, which is not
+allowed. The solution is the corner $x = 0$, $y = m$: every dalen goes to $y$,
+because the last unit of $y$ is worth $1/m > 1$, more than a unit of $x$.
+The rule at a corner is an inequality: the good that is not bought is worth
+less, at the margin, than its price in terms of the good that is bought.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={$x$}, ylabel={$y$}, xmin=0, xmax=1.6,
+  ymin=0, ymax=1.6, width=0.5\linewidth, height=0.42\linewidth, samples=100]
+  \addplot[demand, domain=0:1.6] {exp(ln(0.5) - x)};
+  \addplot[demand, domain=0:1.6] {exp(ln(1.0) - x)};
+  \addplot[demand, domain=0:1.6] {exp(ln(1.5) - x)};
+  \addplot[supply, domain=0:0.5] {0.5 - x};
+  \addplot[only marks, mark=*, black] coordinates {(0,0.5)};
+  \node[font=\footnotesize, anchor=west] at (axis cs:0.08,0.7) {corner $(0, 0.5)$};
+\end{axis}
+\end{tikzpicture}
+
+{\small A corner: the level curves of $x + \ln y$ (blue) and the constraint
+$x + y = 0.5$ (red). Every point of the constraint with $x > 0$ lies on a
+lower level curve than the corner $(0, 0.5)$, where the level curve is flatter
+than the constraint (slope $-0.5$ against $-1$): a unit of $x$ is worth only half
+a unit of $y$ there.}
+\end{omfigure}
+
+The first-order conditions find candidates; they do not certify a maximum.
+A level curve can touch the constraint from the wrong side, as the level
+curves of $x^2 + y^2$ touch a straight line: there the tangency point is the
+\omterm{def:b1:constrained-optimisation:constrained-max}{constrained minimum}. A sufficient condition with two variables is that the
+level curves of $f$ are convex towards the origin --- the upper level sets
+$\{f \ge c\}$ are convex --- and the constraint is a straight line; the
+general test, with a bordered matrix of second derivatives, is in the Year~2
+mathematics volume. In this book, objectives will be chosen so that their
+upper level sets are convex, and the edges are checked by hand.
+
+Return to the student. With $h$ hours of work, weekly income is
+$y = 15h + \max\bigl(0, 200 - 0.5\max(0, 15h - 100)\bigr)$. Below
+$h = 100/15 = 6.67$ hours each hour adds \dal{15}. From there until the grant
+is gone, at $15h - 100 = 400$, that is $h = 33.33$, each hour adds
+$15 \times 0.5 = \num{7.5}$~dalens. After that, \dal{15} again. Income at the two
+kinks is \dal{300} and \dal{500}. Drawn against hours of study, $60 - h$, the
+constraint is a line with two kinks.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Hours of study a week}, ylabel={Income (dalens a week)},
+  xmin=0, xmax=62, ymin=0, ymax=950, width=0.68\linewidth, height=0.44\linewidth]
+  \addplot[supply, domain=60-20/3:60] {200 + 15*(60 - x)};
+  \addplot[supply, domain=60-100/3:60-20/3] {250 + 7.5*(60 - x)};
+  \addplot[supply, domain=0:60-100/3] {15*(60 - x)};
+  \addplot[guide, domain=0:60] {900 - 15*x};
+  \addplot[only marks, mark=*, black] coordinates {(53.333,300) (26.667,500)};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:53.3,300) {300};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:26.7,510) {500};
+\end{axis}
+\end{tikzpicture}
+
+{\small The student's weekly constraint (red): \dal{15} an hour, a grant of
+\dal{200} withdrawn at half a dalen per dalen earned above \dal{100}. On the
+middle segment an hour of work pays \dal{7.5}. The dotted line is the
+constraint with no grant.}
+\end{omfigure}
+
+A kink where the reward for one more hour falls has a sharp prediction.
+At the first kink, where the grant starts to be withdrawn, pay per hour
+drops from \dal{15} to \dal{7.5}. Every student who would work past the kink
+at \dal{15} an hour, but would not reach it at \dal{7.5}, stops exactly there:
+students with different tastes end up at the same point. The model
+predicts \emph{bunching}: more people exactly at such a kink than at nearby
+points. At the second kink, where the grant is exhausted and pay per hour
+rises back to \dal{15}, the prediction is the opposite: nobody stops there.
+
+\begin{model}{The constrained optimiser}
+\assumes An agent knows its objective and its constraint, and chooses the
+point of the constraint with the highest value of the objective.
+\predicts At an interior optimum the agent's rate of trade-off equals the
+constraint's; a slack constraint has a \omterm{def:b1:constrained-optimisation:shadow-price}{shadow price} of zero; a kink where
+the marginal reward falls attracts a bunch of agents with different tastes.
+\tested The fall of hours with pay across countries (correlation $-0.53$
+with log pay, 111 countries) is consistent with it but not a test: the model
+predicts no sign there. % figdata: hours_wage_stats
+The test is bunching: American tax filers with self-employment income bunch at the first kink of
+the earned income tax credit (see the record box). % ledger: b1:saez2010-firstkink
+\breaks When agents do not know the constraint: wage earners show no bunching
+at the same kink, and the response to the credit is larger where knowledge of
+its schedule is higher (Chetty, Friedman and Saez 2013); % ledger: b1:saez2010-firstkink, b1:cfs2013-knowledge
+and when hours are set by the employer, not chosen.
+\end{model}
+
+\begin{record}[Bunching at a kink]
+The American earned income tax credit pays low earners a credit that rises
+with earnings, then stays flat, then is withdrawn: its schedule has kinks.
+Pooling the tax returns of 1995 to 2004, Saez (2010) found clear bunching of
+reported earnings at the first kink, where the credit stops rising. The
+implied elasticity of reported earnings was 0.21 for filers with one child
+and 0.15 for those with two or more. % ledger: b1:saez2010-firstkink
+The whole effect came from the self-employed, with elasticities of 1.1 and
+0.8; filers with wage income only showed elasticities close to zero. % ledger: b1:saez2010-firstkink
+At the threshold where income tax begins, bunching was clearest in the
+1960s, with an elasticity around 0.2, and there was none at the higher
+kinks of the schedule. % ledger: b1:saez2010-bracket
+The prediction holds where the agent can adjust the number reported, and
+fails where hours are hard to adjust or the schedule is not known. The self-employed
+report their own earnings; a wage earner's are reported by the employer.
+\end{record}
+
+\section*{Exercises}\label{sec:b1:constrained-optimisation:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:constrained-optimisation:read-chart}
+From the table behind the opening chart: in the tenth of countries with the
+lowest pay, the median pay is \usd{2.20} an hour and the median hours 2064;
+in the top tenth, \usd{49.48} and 1504. % figdata: hours_wage_tenths
+\begin{enumerate}
+  \item By what factor does pay differ, and by how many hours a year, and by what percentage, do hours differ?
+  \item How many fewer hours does that make per week, over 48 working weeks?
+  \item Is this the slope of one worker's labour supply? Say why not in one sentence.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:constrained-optimisation:substitution}
+Maximise $xy$ subject to $2x + 3y = 24$, $x, y > 0$, by substitution. Check
+the \omterm{def:b1:constrained-optimisation:tangency}{tangency condition} at your answer.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:constrained-optimisation:level-slope}
+Compute the slope of the level curve of $f(x, y) = x^2 y$ through the point
+$(1, 2)$. Which level is it, and what is the equation of the curve?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:constrained-optimisation:binding}
+The solution of $\max x^{1/2}y^{1/2}$ subject to $x + 2y \le 12$, $x \le 8$ and
+$y \le 5$ is $(6, 3)$. Which constraints bind, and which have a \omterm{def:b1:constrained-optimisation:shadow-price}{shadow price}
+of zero? What happens to the solution if the second constraint becomes
+$x \le 4$?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:constrained-optimisation:lagrange-log}
+Maximise $\ln x + 2\ln y$ subject to $p_1 x + p_2 y = m$ with \omterm{met:b1:constrained-optimisation:lagrange}{Lagrange's
+method}. Give $x^*$, $y^*$ and $\lambda^*$ as functions of $p_1$, $p_2$, $m$, then
+evaluate them at $p_1 = 1$, $p_2 = 2$, $m = 30$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:constrained-optimisation:lambda-units}
+In \cref{exo:b1:constrained-optimisation:lagrange-log}, at $p_1 = 1$,
+$p_2 = 2$, $m = 30$:
+\begin{enumerate}
+  \item give the unit of $\lambda^*$ and say in words what it measures;
+  \item predict, with $\lambda^*$, the change in the maximum value if $m$ rises to 40;
+  \item compute the exact change and explain the gap.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:constrained-optimisation:corner}
+Maximise $x + \ln y$ subject to $x + y = 0.5$, $x, y \ge 0$. Show that
+\omterm{met:b1:constrained-optimisation:lagrange}{Lagrange's method} gives an inadmissible point, find the solution, and
+compute the ratio of the marginal values of $y$ and $x$ there.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:constrained-optimisation:student-kinks}
+For the student of the chapter:
+\begin{enumerate}
+  \item compute the hours at which the two kinks occur and the income there;
+  \item compute what an hour of work adds to income on each of the three segments;
+  \item compute weekly income at 20 hours and at 40 hours of work.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:constrained-optimisation:withdrawal}
+The grant's withdrawal rate rises from 0.5 to 0.75, the other rules
+unchanged. Predict, with reasons, the direction of the change in hours for
+three students: one who worked 5 hours, one who worked 20, and one who
+worked 40. Which of them could end up at a kink?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:constrained-optimisation:equivalence}
+Let $f$ and $g$ be smooth, and let $(x^*, y^*)$ satisfy $g = b$ with
+$g_x \neq 0$, $g_y \neq 0$ and $f_y \neq 0$.
+\begin{enumerate}
+  \item Show that if the gradients $\nabla f$ and $\nabla g$ are parallel at $(x^*, y^*)$, the \omterm{thm:b1:constrained-optimisation:lagrange}{Lagrange conditions} hold.
+  \item Show that the \omterm{thm:b1:constrained-optimisation:lagrange}{Lagrange conditions} hold if and only if the level curve of $f$ and the constraint have a common tangent line.
+  \item Give an example where the \omterm{thm:b1:constrained-optimisation:lagrange}{Lagrange conditions} hold at a \omterm{def:b1:constrained-optimisation:constrained-max}{constrained minimum}, and draw it.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:constrained-optimisation:dual}
+Minimise the cost $x + 2y$ of reaching the level curve $x^{1/2}y^{1/2} = u_0$.
+\begin{enumerate}
+  \item Solve with \omterm{met:b1:constrained-optimisation:lagrange}{Lagrange's method}; give the minimum cost $C(u_0)$ and the multiplier $\mu^*$.
+  \item Show that $C'(u_0) = \mu^*$, and give its unit.
+  \item Take $u_0 = \sqrt{18}$. Compare with \cref{ex:b1:constrained-optimisation:substitution}, and show that $\mu^* = 1/\lambda^*$.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:constrained-optimisation:falsify}
+Someone reads the opening chart as proof that ``when the wage rises, a worker
+works less because the income effect beats the substitution effect.''
+\begin{enumerate}
+  \item What would the chart look like if the reading were false and every worker had a rising labour supply curve?
+  \item Name two differences between rich and poor countries, other than the wage, that could produce the falling cloud.
+  \item What kind of data, about the same people over time, could contradict the reading?
+\end{enumerate}
+\end{exercise}
+
+\section{Problem: A Farm with One Field}\label{sec:b1:constrained-optimisation:problem}
+
+\begin{problem}[{Weekend problem --- the shadow rent of a hectare}]\label{pb:b1:constrained-optimisation:farm}
+A farm near Brenmoor (invented) has a field of 20 hectares to share between
+potatoes and barley. On $x$ hectares of potatoes the season's profit is
+$2400\sqrt x$ dalens, and on $y$ hectares of barley $1200\sqrt y$ dalens; the
+square roots say that the farmer plants the best soil first. The farmer
+maximises total profit $\Pi(x, y) = 2400\sqrt x + 1200\sqrt y$ subject to
+$x + y = 20$, $x, y \ge 0$.
+
+\medskip\noindent\textbf{Part I --- By substitution.}
+\begin{enumerate}
+  \item Write profit as a function of $x$ alone.
+  \item Find the $x$ that makes its derivative zero, and the matching $y$.
+  \item Check that it is a maximum, using the second derivative.
+  \item Compute the maximum profit.
+  \item Compare with planting the whole field in potatoes, and in barley.
+  \item Compute the marginal profit of a hectare of potatoes and of barley at the optimum. Why must they be equal?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- By Lagrange's method.}
+\begin{enumerate}[resume]
+  \item Write the \omterm{def:b1:constrained-optimisation:lagrangian}{Lagrangian}.
+  \item Write the three conditions.
+  \item Divide the first two to obtain the \omterm{def:b1:constrained-optimisation:tangency}{tangency condition}, and solve it for $x/y$.
+  \item Solve for $x$, $y$ and $\lambda$.
+  \item Draw the constraint and the level curve of $\Pi$ through the optimum, and mark the optimum.
+  \item Explain why \omterm{met:b1:constrained-optimisation:lagrange}{Lagrange's method} and substitution must give the same point here.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- The shadow price of land.}
+\begin{enumerate}[resume]
+  \item Solve the problem with $L$ hectares in place of 20, and show that the \omterm{def:b1:constrained-optimisation:value-function}{value function} is $V(L) = 6000\sqrt{L/5}$.
+  \item Compute $V'(20)$ and compare it with $\lambda$.
+  \item Give the unit of $\lambda$ and its meaning.
+  \item A neighbour offers to rent one hectare to the farm for \dal{250} for the season. Should the farm, maximising profit, take it? And at \dal{350}?
+  \item Compute the exact gain from a 21st hectare, $V(21) - V(20)$, and compare it with $\lambda$.
+  \item Does the shadow rent rise or fall with the size of the field? Explain from $V(L)$.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- A second constraint.}
+Potatoes need 500 cubic metres of water a hectare in the season, barley
+100. The farm has a water allowance of $W$ cubic metres.
+\begin{enumerate}[resume]
+  \item How much water does the plan of Part II use? Is the water constraint \omterm{def:b1:constrained-optimisation:binding}{binding} when $W = 9000$? What is its \omterm{def:b1:constrained-optimisation:shadow-price}{shadow price} then?
+  \item Take $W = 6000$. Show that both constraints bind, and find $x$ and $y$ from the two constraints.
+  \item Compute profit, and the profit lost because of the water allowance.
+  \item Write the \omterm{def:b1:constrained-optimisation:lagrangian}{Lagrangian} with two multipliers, $\lambda$ for land and $\mu$ for water, and its conditions at the new plan.
+  \item Solve for $\mu$ and $\lambda$.
+  \item State the chapter's result: the shadow rent of one hectare when water is plentiful and when it is scarce, and what the farm would pay for one more cubic metre of water.
+\end{enumerate}
+\end{problem}

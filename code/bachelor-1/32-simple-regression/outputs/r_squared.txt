@@ -1,0 +1,4 @@
+$ python r_squared.py
+squared correlation      0.130406
+explained / total        0.130406
+1 - residual / total     0.130406

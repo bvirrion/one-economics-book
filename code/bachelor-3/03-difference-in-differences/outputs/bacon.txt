@@ -1,0 +1,4 @@
+$ python bacon.py
+true average effect on the treated   4.286
+two-way fixed effects                2.547
+clean comparisons, averaged          4.243

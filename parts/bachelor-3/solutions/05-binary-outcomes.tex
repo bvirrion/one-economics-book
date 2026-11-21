@@ -1,0 +1,211 @@
+\section*{Chapter \ref{ch:b3:binary-outcomes} --- Binary Outcomes and Maximum Likelihood}
+
+\begin{solution}{exo:b3:binary-outcomes:1}
+They differ most at the edges: at zero earnings the linear model predicts 0.704,
+the logit 0.665 and the probit 0.681; near the top the linear model reaches 1
+while the curves flatten at about 0.97. % figdata: work_fits
+All three fail for the men with no earnings in 1975, whose observed share is
+0.438. % figdata: work_bins
+Those men form a group of their own --- most were out of work --- and a smooth
+function of earnings that also fits the men with earnings cannot drop to them.
+\end{solution}
+
+\begin{solution}{exo:b3:binary-outcomes:2}
+$\Lambda(0.8) = 1/(1 + \eu^{-0.8}) = 0.690$; marginal effect $0.690 \times 0.310
+\times 0.5 = 0.107$. $\Lambda(3) = 0.953$; marginal effect $0.953 \times 0.047
+\times 0.5 = 0.022$ (0.023 from the unrounded values). The same coefficient moves the probability a fifth as much
+near the top.
+\end{solution}
+
+\begin{solution}{exo:b3:binary-outcomes:3}
+$\eu^{-0.2981} = 0.742$: other things equal, a married man's odds of having
+earnings in 1978 are 0.74 times an unmarried man's, about a quarter lower.
+% output: lpm_logit_probit
+\end{solution}
+
+\begin{solution}{exo:b3:binary-outcomes:4}
+IIA says the tram takes the same percentage of each mode's users. Data showing
+that the bus lost a large percentage of its riders while driving lost a small
+one (say the bus share fell by 40~\% and the car share by 5~\%) contradict it, as
+does a change in the ratio of car to bus riders after the tram opened.
+\end{solution}
+
+\begin{solution}{exo:b3:binary-outcomes:5}
+The tested solution is \code{ex05_zero_earnings.py}, in the chapter's
+\code{exercises/} folder.
+\begin{enumerate}
+\item The \omterm{def:b3:binary-outcomes:mle}{log-likelihood} rises from $-5{,}507.9$ to $-5{,}149.5$, and the mean
+fitted probability for men with no earnings in 1975 falls from 0.665 to 0.438,
+exactly the observed share. % output: ex05_zero_earnings
+\item The \omterm{def:b3:binary-outcomes:ame}{average marginal effect} of the dummy is $-0.135$: having no earnings in
+1975 lowers the probability of earnings in 1978 by 13.5 points beyond what a
+low income predicts. That of a thousand dollars of 1975 earnings falls to
+0.0082.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:binary-outcomes:6}
+$\ln 0.8 + \ln 0.7 + \ln 0.6 + \ln 0.9 + \ln 0.5 = -0.223 - 0.357 - 0.511 - 0.105
+- 0.693 = -1.889$. (For $y = 0$ the term is $\ln(1 - p)$.) The fifth observation
+contributes most, $-0.693$: its outcome had a fitted probability of only one
+half.
+\end{solution}
+
+\begin{solution}{exo:b3:binary-outcomes:7}
+A 1~\% rise in product 1's price raises the shares of products 2 and 3 by 0.21~\%
+each; a 1~\% rise in product 4's price raises them by 0.47~\% each.
+% output: logit_demand
+The cross elasticity with respect to product $k$'s price is $-\alpha p_k s_k$, which
+does not depend on the product whose share responds: IIA.
+\end{solution}
+
+\begin{solution}{exo:b3:binary-outcomes:8}
+\begin{enumerate}
+\item $\ell(b) = n_1 b - n\ln(1 + \eu^b)$; the score is $n_1 - np$ and the
+second derivative $-np(1 - p)$, with $p = \Lambda(b)$. The Newton step is $b +
+(n_1 - np)/(np(1 - p))$.
+\item From $b = 0$: $p = 0.5$, $b_1 = 0 + 30/25 = 1.2$. Then $p = \Lambda(1.2) =
+0.7685$ and $b_2 = 1.2 + (80 - 76.85)/(100 \times 0.7685 \times 0.2315) = 1.2 +
+0.177 = 1.377$, against $\ln 4 = 1.386$.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:binary-outcomes:9}
+First, sort the sample by fitted value, cut it into ten groups and compare each
+group's mean outcome with its mean fitted value: a linear model that is wrong
+will be off systematically at the ends. Second, count fitted values outside
+$[0, 1]$: 15.7~\% exceed one here. % output: lpm_logit_probit
+A third check adds the squared fitted values as a regressor; a significant
+coefficient signals curvature the model misses.
+\end{solution}
+
+\begin{solution}{exo:b3:binary-outcomes:10}
+The score equation for the constant is $\sum_i (y_i - p_i) = 0$, so $\frac1n\sum_i
+p_i = \frac1n\sum_i y_i$. With only group dummies and no constant, every member
+of group $g$ has the same index $\beta_g$ and probability $p_g = \Lambda(\beta_g)$;
+the score equation for $\beta_g$ is $\sum_{i \in g} (y_i - p_g) = 0$, so $p_g$ is
+the group's share. In \cref{exo:b3:binary-outcomes:5} the dummy for no earnings
+plays this role, together with the constant: the fitted share for that group
+equals the observed 0.438 whatever the other regressors.
+\end{solution}
+
+\begin{solution}{exo:b3:binary-outcomes:11}
+The tested solution is \code{ex11_endogenous_price.py}, in the chapter's
+\code{exercises/} folder.
+\begin{enumerate}
+\item OLS gives $-1.071$ against a true $-2$. % output: ex11_endogenous_price
+It is biased toward zero: products with high unseen quality have both high
+prices and high shares, so price seems to hurt sales less than it does.
+\item \omterm{def:b3:instrumental-variables:tsls}{Two-stage least squares} with the cost as instrument gives $-2.033$
+(s.e.\ 0.064).
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:binary-outcomes:12}
+\begin{enumerate}
+\item Each existing share is multiplied by 0.9: car 54~\%, bus 27~\%, cycling
+9~\%, cycle lane 10~\%.
+\item The lane is a close substitute for cycling and a poor one for driving. It
+should take mostly from cyclists and some bus riders: IIA overstates the fall in
+driving and understates the fall in cycling on the old roads.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{pb:b3:binary-outcomes:bus}
+\textbf{1.} $\Pr(\text{car}) = \Lambda(0.6131 - 0.3198\,\Delta\text{cost} -
+0.0537\,\Delta\text{time})$, with differences car minus bus.
+% figdata: commuters_binary
+
+\textbf{2.} $\Delta\text{cost} = 2$, $\Delta\text{time} = -15$: $x'\hat\beta =
+0.6131 - 0.6396 + 0.8055 = 0.779$; $\Pr = \Lambda(0.779) = 0.685$.
+
+\textbf{3.} At equal cost and time, the log odds of driving are 0.61: a
+probability of $\Lambda(0.6131) = 0.65$. It measures what the model leaves out
+(comfort, flexibility) relative to the bus; a different base would change its
+meaning but not the probabilities.
+
+\textbf{4.} $t = -0.3198/0.0546 = -5.86$: clearly different from zero.
+
+\textbf{5.} Only the ratio of the coefficients to the spread of the taste shocks
+is identified. The logit fixes the spread (variance $\pi^2/3$) so that the
+coefficients are defined; ratios such as the value of time do not depend on
+the choice.
+
+\textbf{6.} If the three-way logit is right, IIA implies that among those who
+chose the car or the bus, the choice between them follows a binary logit with
+the same coefficients; dropping the cyclists loses information but not
+consistency.
+
+\textbf{7.} $p(1 - p) \times 0.3198 = 0.685 \times 0.315 \times 0.3198 = 0.069$: a
+dalen more on the bus fare raises her probability of driving by about 7 points.
+
+\textbf{8.} The marginal effect gives $0.2158 \times (-0.0537) \times 10 =
+-0.116$. Exactly: $x'\hat\beta$ falls by 0.537 to 0.242, and $\Lambda(0.242) = 0.560$,
+a fall of 0.125. The probability curve is not straight; the marginal effect is
+its slope at the starting point only.
+
+\textbf{9.} $60 \times 0.0537/0.3198 = 10.1$ dalens an hour.
+
+\textbf{10.} $60 \times 0.0730/0.3335 = 13.1$ dalens an hour.
+% figdata: commuters_mnl
+
+\textbf{11.} Both are estimates with sampling error, and the binary model uses
+fewer commuters and only the car--bus comparisons; its cost and time
+coefficients have larger standard errors (0.0546 and 0.0114 against 0.0467
+and 0.0073).
+
+\textbf{12.} $20{,}000 \times 5 \times 220 = 22{,}000{,}000$ minutes, or
+$366{,}667$ hours, times 13.13 dalens: about \dal{4.8} million a year.
+
+\textbf{13.} $\Pr(\text{bicycle}) = \eu^{V_b}/(\eu^{V_c} + \eu^{V_u} + \eu^{V_b})$,
+with $V_c = 0.4053 - 0.3335\,\text{cost}_c - 0.0730\,\text{time}_c$, $V_u =
+-0.3335 \times 2.5 - 0.0730\,\text{time}_u$ and $V_b = -0.6719 -
+0.0730\,\text{time}_b$.
+
+\textbf{14.} 0.448, 0.213 and 0.339 in both columns. % figdata: commuters_shares
+With a constant for every mode but the base, the score equations for the
+constants say that fitted and observed shares are equal.
+
+\textbf{15.} At equal cost and time, the bicycle is less attractive than the bus
+by 0.672 in utility: worth $0.672/0.3335 = 2.0$ dalens a trip, or $0.672/0.0730
+= 9.2$ minutes. It stands for effort, weather and danger.
+
+\textbf{16.} $\eu^{-2} = 0.1353$, $\eu^{-3} = 0.0498$, $\eu^{-2.5} = 0.0821$, sum
+0.2672: car 0.506, bus 0.186, bicycle 0.307.
+
+\textbf{17.} $\eu^{-2}/\eu^{-3} = \eu = 2.72$. Without the bicycle it is still
+2.72 (IIA): car 0.731, bus 0.269.
+
+\textbf{18.} Yes, by assumption. A minute on a bicycle is effort and exposure,
+not a seat; a mode-specific time coefficient would let the data say whether it
+costs more.
+
+\textbf{19.} 0.297, almost three commuters in ten.
+
+\textbf{20.} Car: $0.448 - 0.319 = 0.129$ points, 28.8~\% of its share. Bus:
+$0.213 - 0.143 = 0.070$ points, 32.9~\%. Bicycle: $0.339 - 0.241 = 0.098$ points,
+28.9~\%. Most riders come from the car; the largest percentage from the bus.
+
+\textbf{21.} For each commuter, the express takes from every mode in proportion
+to that commuter's probabilities (IIA). The percentages differ across modes only
+because the express is more attractive to some commuters, those for whom the
+bus is already a good option.
+
+\textbf{22.} From the ordinary bus: the express is the same product, only
+faster. Commuters who drive because they dislike buses will mostly keep
+driving.
+
+\textbf{23.} With the two buses in one nest, tastes for bus travel are shared
+by the two options, and the express takes most of its riders from the ordinary
+bus; the bus-type share grows less, and the car and bicycle lose fewer riders.
+
+\textbf{24.} Survey the same commuters after the express opens, compare each
+mode's forecast share with the realised one, and tabulate forecast against
+actual choices.
+
+\textbf{25.} The commuters value travel time at about 13.1 dalens an hour. The
+three-way logit forecasts that an express line 10 minutes faster than the bus
+would carry 29.7~\% of commuters; because of IIA the forecast takes too many from
+the car and the bicycle and too few from the ordinary bus, and is probably too
+high.
+\end{solution}

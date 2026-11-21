@@ -1,0 +1,4 @@
+$ python trimmed.py
+all                  n 445  mean   5,301  median   3,702  5% trimmed   4,538
+without the largest  n 444  mean   5,177  median   3,673  5% trimmed   4,507
+largest 60,308

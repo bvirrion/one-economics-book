@@ -1,0 +1,5 @@
+$ python reading_slopes.py
+re78 ~ education                    1849.0325  dollars per year of schooling
+np.log(re78) ~ education               0.0875  x 100: per cent per year of schooling
+re78 ~ np.log(education)           16832.1165  / 100: dollars per 1% more schooling
+np.log(re78) ~ np.log(education)       0.8315  elasticity: % per 1% more schooling

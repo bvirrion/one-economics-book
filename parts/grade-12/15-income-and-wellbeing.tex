@@ -1,0 +1,356 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g12-15. Life satisfaction against income across countries and inside
+% them; the log relation (proved: the same gain per doubling); what GDP leaves out, with numbers (free time, health, the
+% distribution, nature); other indicators and how closely they follow income; what economics measures and what it does not.
+% Real numbers: figdata/grade-12/15-income-and-wellbeing/ (Eurostat ilc_pw01 life satisfaction 2018 with WDI GDP per person
+% at purchasing power; Penn World Table hours; WDI life expectancy; five invented countries, seeded). Ledger: Stevenson and
+% Wolfers 2008, Deaton 2008, Killingsworth 2021, Killingsworth-Kahneman-Mellers 2023 (abstracts), Easterlin 1974 (Wikipedia,
+% dated label). No photograph; no debate box (Year 3 owns the open question).
+\chapter{Income and Wellbeing}\label{ch:g12:income-and-wellbeing}
+
+In 2018 people in Finland, asked to rate their satisfaction with their life from 0 to 10, gave on average 8.1. In Bulgaria they gave 5.4. Finland produced about 56,000
+dollars a person, at purchasing power, and Bulgaria about 28,000. Across 37 European countries, the richer the country, the more satisfied its people said they were.
+% figdata: well_key (fi_s 8.1, fi_y 56226, bg_s 5.4, bg_y 27691, n_ls 37)
+
+This last chapter asks how closely income follows what people value, and what the measures of this book leave out.
+
+\begin{openingchart}{Mean life satisfaction (0--10) against GDP per person at constant purchasing power (logarithmic scale), 37 European countries, 2018;
+the line is the fit $s = a + b \ln y$.}{Eurostat (ilc\_pw01); World Bank, World Development Indicators (NY.GDP.PCAP.PP.KD)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.8\linewidth, height=6.0cm, xmode=log, xmin=9000, xmax=150000, ymin=5, ymax=8.5, log ticks with fixed point,
+  xtick={10000,20000,50000,100000}, xticklabels={10, 20, 50, 100}, xlabel={GDP per person, thousands of dollars}, ylabel={life satisfaction}]
+\addplot+[omDef, mark=*, mark size=1.3pt, only marks] table[x=gdppc, y=lifesat] {figdata/grade-12/15-income-and-wellbeing/out/lifesat.csv};
+\addplot[black, dashed, sharp plot, no marks] table[x=gdppc, y=lifesat] {figdata/grade-12/15-income-and-wellbeing/out/fit.csv};
+\node[font=\scriptsize, anchor=north] at (axis cs:27691,5.4) {Bulgaria};
+\node[font=\scriptsize, anchor=south east] at (axis cs:34829,7.4) {Romania};
+\node[font=\scriptsize, anchor=south east] at (axis cs:56226,8.1) {Finland};
+\node[font=\scriptsize, anchor=north east] at (axis cs:131734,7.45) {Luxembourg};
+\node[font=\scriptsize, anchor=south] at (axis cs:11188,5.9) {Kosovo};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: what GDP leaves out, and life expectancy. From \cref{ch:g10:national-accounts}: how GDP is measured. From \cref{ch:g11:inequality}: the \omterm{def:g11:inequality:gini}{Gini
+coefficient}. From mathematics: the logarithm.
+\end{recall}
+
+\section{Asking people}\label{sec:g12:income-and-wellbeing:asking}
+
+\begin{definition}[Life satisfaction]\label{def:g12:income-and-wellbeing:life-satisfaction}
+\emph{Life satisfaction}\index{life satisfaction} is a person's own rating of their life as a whole, given in answer to a survey question on a fixed scale.
+\end{definition}
+
+\begin{definition}[Subjective wellbeing]\label{def:g12:income-and-wellbeing:subjective-wellbeing}
+\emph{Subjective wellbeing}\index{subjective wellbeing} is wellbeing as people report it themselves: their \omterm{def:g12:income-and-wellbeing:life-satisfaction}{life satisfaction}, and the feelings, such as happiness, worry or
+stress, they report over a day.
+\end{definition}
+
+\begin{measure}[How life satisfaction is measured]
+A large sample of people, chosen at random, are asked to rate their satisfaction with their life overall on a scale from 0 (not at all satisfied) to 10 (completely
+satisfied); the average is published by country and by group. Another method asks people at random moments, often by phone, how they feel at that moment. The answers depend on
+how the question is worded and on where it comes in the survey, so comparisons are safest when the same question is asked in the same way; whether people in different
+countries use the scale in the same way cannot be checked directly.
+\end{measure}
+
+The relation in the opening chart is not only between countries. Within countries, richer people report higher satisfaction than poorer people, and the slope is similar to the
+slope across countries.
+% ledger: g12:sw2008
+
+\section{A relation in the logarithm}\label{sec:g12:income-and-wellbeing:log}
+
+\begin{proposition}[The same gain for each doubling]\label{prop:g12:income-and-wellbeing:doubling}
+If \omterm{def:g12:income-and-wellbeing:life-satisfaction}{life satisfaction} $s$ and income $y$ satisfy $s = a + b \ln y$, then multiplying income by any factor $k$ raises $s$ by $b \ln k$, whatever the starting income. In
+particular, each doubling adds $b \ln 2$.
+\end{proposition}
+\begin{proof}
+$s(ky) - s(y) = a + b \ln k + b \ln y - a - b \ln y = b \ln k$.
+\end{proof}
+
+On the opening chart, $b = 1.35$: each doubling of income goes with a rise of 0.93 points. A rise of 1,000 dollars therefore matters much more in a poor country than in a rich
+one, because it is a larger fraction of income, while a 10\,\% rise matters as much everywhere.
+% figdata: well_key (b_ln 1.346, per_doubling 0.93, corr_ls 0.84)
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[name=lin, width=0.46\linewidth, height=4.6cm, xmin=0, xmax=64, ymin=4, ymax=8, xlabel={income, thousands}, ylabel={satisfaction}, xtick={4,16,32,64},
+  title={\scriptsize linear axis}, grid=major, grid style={gray!20}]
+\addplot[omDef, thick, domain=2:64, samples=80] {4.5 + 0.6*ln(x/2)/ln(2)};
+\end{axis}
+\begin{axis}[at={(lin.east)}, anchor=west, xshift=1.2cm, width=0.46\linewidth, height=4.6cm, xmode=log, log basis x=2, xmin=2, xmax=64, ymin=4, ymax=8,
+  xlabel={income, thousands}, xtick={2,4,8,16,32,64}, xticklabels={2,4,8,16,32,64}, title={\scriptsize logarithmic axis}, grid=major, grid style={gray!20}]
+\addplot[omDef, thick, domain=2:64, samples=2] {4.5 + 0.6*ln(x/2)/ln(2)};
+\end{axis}
+\end{tikzpicture}
+
+{\small The same relation, $s = 4.5 + 0.6 \log_2(y/2)$, on two axes. On a linear axis it flattens as income rises; on a logarithmic axis, where each doubling takes the same
+width, it is a straight line: 0.6 points per doubling, at 2,000 as at 32,000.}
+\end{omfigure}
+
+\begin{model}{Life satisfaction in the logarithm of income}
+\assumes Average \omterm{def:g12:income-and-wellbeing:life-satisfaction}{life satisfaction} rises with the logarithm of income.
+\predicts The same gain for each doubling of income, at any income, across countries and within them.
+\tested Consistent with it: across countries, a doubling of income goes with nearly one more point on the 0--10 scale, a slope no smaller among rich countries; no point has been found beyond
+  which it stops. In the United States, reports of how people feel during the day rise in a straight line with the logarithm of income, even above 75,000 dollars a year.
+\breaks For the least happy people, whose good feelings stop rising with income at high incomes. And perhaps over time: a 1974 study found that within a
+  country, average happiness did not trend upward as income grew (Easterlin 1974); later work with other data found a positive relation over time, and the
+  question is still argued over.
+\end{model}
+% ledger: g12:deaton2008, g12:sw2008, g12:kill2021, g12:kkm2023, g12:easterlin1974
+
+A slope across countries is not the effect of raising a country's income. Richer countries also have better health, more trust and more security, which people may value for
+themselves; and satisfied, healthy people may earn more. The chart shows how closely the two move together, not how much one causes the other.
+
+\section{What GDP leaves out}\label{sec:g12:income-and-wellbeing:leaves-out}
+
+\emph{Free time.} GDP counts what is produced, not the hours it took. In Germany the average worker worked 2,427 hours in 1950 and 1,372 in 2019, while output per person rose
+7.2 times; in the United States, hours fell from 2,022 to 1,797 while output per person rose 3.8 times. Part of the gain from growth was taken as time. Across countries in 2019
+the link is weak (a correlation of $-0.18$ over 130 countries): in the Penn World Table's estimates, Mexicans worked fewer hours than Koreans, though Koreans were more
+than twice as rich. Other sources measure hours differently, and such comparisons across countries are rough.
+% figdata: well_key (h1950_DEU 2427, h2019_DEU 1372, ymult_DEU 7.2, h1950_USA 2022, h2019_USA 1797, ymult_USA 3.8, n_hr 130, corr_hr -0.18); hours.csv (MEX 1639 at 21299, KOR 1963 at 49200)
+
+\begin{omchart}{Average annual hours worked per person employed, six economies, 1950--2019 (South Korea from 1953). Straight stretches in the early years, such as
+Germany's before 1960 and South Korea's before 1963, are interpolations between benchmark years in the source, not yearly data.}{Penn World Table 11.0 (avh)}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.84\linewidth, height=5.6cm, xmin=1950, xmax=2019, ymin=1200, ymax=3100, ytick={1200,1600,2000,2400,2800}, xtick={1950,1960,...,2010}, ylabel={hours a year},
+  y tick label style={/pgf/number format/.cd, 1000 sep={}}, unbounded coords=discard]
+\addplot[omMeth, thick] table[x=year, y=DEU] {figdata/grade-12/15-income-and-wellbeing/out/hours_ts.csv};
+\addplot[gray, thick] table[x=year, y=FRA] {figdata/grade-12/15-income-and-wellbeing/out/hours_ts.csv};
+\addplot[black, thick, dashed] table[x=year, y=GBR] {figdata/grade-12/15-income-and-wellbeing/out/hours_ts.csv};
+\addplot[omProp, thick] table[x=year, y=JPN] {figdata/grade-12/15-income-and-wellbeing/out/hours_ts.csv};
+\addplot[omThm, thick] table[x=year, y=KOR] {figdata/grade-12/15-income-and-wellbeing/out/hours_ts.csv};
+\addplot[omDef, thick] table[x=year, y=USA] {figdata/grade-12/15-income-and-wellbeing/out/hours_ts.csv};
+\node[font=\scriptsize, omThm, anchor=south] at (axis cs:1975,2930) {South Korea};
+\node[font=\scriptsize, omProp, anchor=south west] at (axis cs:1960,2240) {Japan};
+\draw[gray] (axis cs:1951.5,2410) -- (axis cs:1951.5,2840) node[anchor=south west, xshift=-2pt, font=\scriptsize, omMeth] {Germany};
+\draw[gray] (axis cs:1956,1985) -- (axis cs:1956,1720) node[anchor=north, font=\scriptsize, omDef] {United States};
+\node[font=\scriptsize, anchor=north] at (axis cs:1990,1420) {France (grey), United Kingdom (dashed)};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\emph{Health.} Life expectancy is not in GDP, but it follows income closely: across 198 countries in 2019 the correlation between life expectancy and the logarithm of income
+per person was 0.86. The chart below shows the cloud: it rises steeply among the poorest countries and flattens among the richest,
+even on a logarithmic scale. Countries differ around it. Costa Rica, with a third of American income, had a longer life expectancy, 80.3 years against 78.8; Nigeria, with
+a little more income than India, had 53.0 years against 70.7. People's own ratings, though, respond little to measured health: neither \omterm{def:g12:income-and-wellbeing:life-satisfaction}{life satisfaction} nor
+satisfaction with health responds strongly to objective measures of health.
+% figdata: well_key (n_le 198, corr_le 0.86); lifeexp (CRI 23497 80.3; USA 69121 78.8; NGA 8362 53.0; IND 7702 70.7); ledger: g12:deaton2008
+
+\begin{omchart}{Life expectancy at birth against GDP per person at constant purchasing power (logarithmic scale), 198 countries, 2019. The Central African Republic
+is left out: its series jumps by twenty years from one year to the next.}{World Bank, World Development Indicators (SP.DYN.LE00.IN, NY.GDP.PCAP.PP.KD)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.8\linewidth, height=6.0cm, xmode=log, xmin=800, xmax=160000, ymin=50, ymax=88, log ticks with fixed point,
+  xtick={1000,3000,10000,30000,100000}, xticklabels={1, 3, 10, 30, 100}, xlabel={GDP per person, thousands of dollars}, ylabel={years}]
+\addplot+[omDef, mark=*, mark size=1.1pt, only marks] table[x=gdppc, y=le] {figdata/grade-12/15-income-and-wellbeing/out/lifeexp.csv};
+\draw[gray] (axis cs:69121,78.8) -- (axis cs:100000,70) node[anchor=north, font=\scriptsize, black] {United States};
+\draw[gray] (axis cs:23497,80.3) -- (axis cs:9000,85) node[anchor=east, font=\scriptsize, black] {Costa Rica};
+\draw[gray] (axis cs:46055,84.4) -- (axis cs:30000,87) node[anchor=east, font=\scriptsize, black] {Japan};
+\draw[gray] (axis cs:8362,53.0) -- (axis cs:20000,54) node[anchor=west, font=\scriptsize, black] {Nigeria};
+\draw[gray] (axis cs:7702,70.7) -- (axis cs:2500,77) node[anchor=east, font=\scriptsize, black] {India};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\emph{The distribution.} GDP per person is an average. Two countries with the same average can differ in their \omterm{def:g11:inequality:gini}{Gini coefficient}, and if satisfaction rises with the logarithm
+of income, a dollar moved from a rich person to a poor one raises the average log of income: the same average income goes with lower average satisfaction where it is
+spread more unequally. Take two invented countries of five people with the same average income of 20,000 dollars: in one each person has 20,000, in the other
+they have 5, 10, 15, 25 and 45 thousand. The second country's average log income is that of 15,319 dollars, its geometric mean, and with the opening chart's slope of
+1.35 its average satisfaction is $1.35 \ln(20\,000/15\,319) \approx 0.36$ points lower. Moving income has costs of its own, the \omterm{def:g10:what-prices-do:dwl}{deadweight loss} of the taxes that pay for
+it (\cref{ch:g10:tax-incidence}) and the weaker reason to work and save, which this comparison leaves out.
+% figdata: dist (geo_mean 15319, sat_gap 0.36); well_key (b_ln 1.346)
+
+\emph{Nature.} GDP counts the timber sold, not the forest lost; it counts the output of a factory, not the harm its smoke does. Carbon dioxide is the largest such
+harm by most estimates, and it rises with income: in 2019 each American emitted 15.6 tonnes from fuels and industry, each Swede 3.5 and each Indian 1.8. Across 152
+countries of a million people or more, emissions per person rose slightly faster than income, by about 1.2\,\% for each 1\,\% of income, with a correlation of 0.91 in
+logarithms. The World Bank values the damage at 40 dollars a tonne: on that price, it took 0.9\,\% of national income in the United States in 2019, 3.1\,\% in China,
+4.2\,\% in Russia and 4.7\,\% in South Africa, whose output uses more coal and oil per dollar. The price is an estimate, and a different one would scale these numbers;
+earlier chapters showed how a tax or a permit market can put such a price on the harm itself (\cref{ch:g11:externalities}). Other costs, such as a lost species, have no
+agreed price at all.
+% figdata: co2 (USA 15.61, SWE 3.53, IND 1.79); nature_key (n_co2 152, slope_co2 1.18, corr_co2 0.91); composite (dmg USA 0.9, CHN 3.1, RUS 4.2, ZAF 4.7)
+
+\begin{omchart}{Carbon dioxide emitted per person against GDP per person at constant purchasing power, both on logarithmic scales, 152 countries of a million
+people or more, 2019.}{Community Emissions Data System (CEDS), carbon dioxide by country; World Bank, World Development Indicators (SP.POP.TOTL, NY.GDP.PCAP.PP.KD)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.8\linewidth, height=6.0cm, xmode=log, ymode=log, xmin=800, xmax=160000, ymin=0.02, ymax=60, log ticks with fixed point,
+  xtick={1000,3000,10000,30000,100000}, xticklabels={1, 3, 10, 30, 100}, ytick={0.1,1,10}, xlabel={GDP per person, thousands of dollars},
+  ylabel={tonnes per person}]
+\addplot+[omDef, mark=*, mark size=1.1pt, only marks] table[x=gdppc, y=t] {figdata/grade-12/15-income-and-wellbeing/out/co2.csv};
+\draw[gray] (axis cs:69121,15.61) -- (axis cs:30000,35) node[anchor=east, font=\scriptsize, black] {United States};
+\draw[gray] (axis cs:61071,3.53) -- (axis cs:100000,1) node[anchor=north, font=\scriptsize, black] {Sweden};
+\draw[gray] (axis cs:23497,1.63) -- (axis cs:30000,0.3) node[anchor=north, font=\scriptsize, black] {Costa Rica};
+\draw[gray] (axis cs:7702,1.79) -- (axis cs:2500,8) node[anchor=east, font=\scriptsize, black] {India};
+\draw[gray] (axis cs:18821,7.77) -- (axis cs:6000,25) node[anchor=east, font=\scriptsize, black] {China};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\section{Other indicators}\label{sec:g12:income-and-wellbeing:indicators}
+
+\begin{definition}[Composite indicator]\label{def:g12:income-and-wellbeing:composite-indicator}
+A \emph{composite indicator}\index{composite indicator} combines several measures, each rescaled to a common range, into a single number by a weighted average.
+\end{definition}
+
+Each measure is rescaled between two bounds, a minimum and a maximum, so that the index
+\[ \frac{x - x_{\min}}{x_{\max} - x_{\min}} \]
+runs from 0 to 1. Income usually enters through its
+logarithm, for the reason of \cref{prop:g12:income-and-wellbeing:doubling}. The choice of bounds and weights is a judgement, not a measurement: it decides how many years of
+life are worth a given rise in income, and a different choice can change the ranking. Because the indicators move closely with income per person, as health and satisfaction do,
+the rankings by income and by \omterm{def:g12:income-and-wellbeing:composite-indicator}{composite indicators} are often similar; where they differ, the difference is the interesting part.
+
+The table builds one for thirteen countries. Life expectancy is rescaled between 20 and 85 years, the logarithm of income between those of 100 and 75,000 dollars
+(capped at 1), and the two are averaged with equal weights; the bounds and the weights are this book's choice. Ranked by income, the United States is first and Japan
+fifth; ranked by the composite, Germany and Japan share first place and the United States is fourth. Russia falls from sixth to eighth and Saudi Arabia from third to
+fifth, while Nigeria, richer than India, ends below it. Every one of these moves comes from life expectancy, the part that income does not buy at the same rate
+everywhere. Put more weight on income and the ranking moves back towards the income ranking; that is the judgement the definition warned of.
+% figdata: composite (r_y, r_c, comp)
+
+\begin{omfigure}
+\small
+\pgfplotstabletypeset[col sep=comma, columns={name,gdppc,le,comp,r_y,r_c},
+  columns/name/.style={string type, column name={country}, column type=l},
+  columns/gdppc/.style={column name={income (dollars)}, fixed, precision=0, 1000 sep={\,}},
+  columns/le/.style={column name={life expectancy}, fixed, precision=1, zerofill},
+  columns/comp/.style={column name={composite}, fixed, precision=3, zerofill},
+  columns/r_y/.style={column name={rank by income}},
+  columns/r_c/.style={column name={rank by composite}},
+  every head row/.style={before row=\toprule, after row=\midrule}, every last row/.style={after row=\bottomrule}]
+  {figdata/grade-12/15-income-and-wellbeing/out/composite.csv}
+
+\medskip
+{\small Thirteen countries in 2019: GDP per person at constant purchasing power, life expectancy at birth, and a composite of the two (equal weights; life
+expectancy rescaled between 20 and 85 years, the logarithm of income between those of 100 and 75,000 dollars, capped at 1). Germany and Japan tie at 0.958. Sources: World Bank,
+World Development Indicators (SP.DYN.LE00.IN, NY.GDP.PCAP.PP.KD); composite computed in this book.}
+\end{omfigure}
+
+\section{What economics measures}\label{sec:g12:income-and-wellbeing:closing}
+
+This book has measured output, prices, wages, trade, debt, inflation and unemployment, and it has tested models against them. These measures are reliable, comparable across
+countries and years, and they track a great deal of what people say they value: health, free time and their own satisfaction all rise with income. They do not track
+everything, and a measure that leaves something out says nothing about how much it matters. The next volume takes the same tools further, with more mathematics and more data,
+and with the same rule: say what a model assumes, what it predicts, how it was tested, and where it breaks.
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g12:income-and-wellbeing:1}
+From the opening chart, give Finland's income and \omterm{def:g12:income-and-wellbeing:life-satisfaction}{life satisfaction} in 2018.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:income-and-wellbeing:2}
+From the opening chart, compare Bulgaria (27,691 dollars, 5.4) with Romania (34,829 dollars, 7.4). What does the comparison say about income alone?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:income-and-wellbeing:3}
+With a gain of 0.93 points per doubling, how much more satisfied would a country four times richer be? Eight times?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:income-and-wellbeing:4}
+German workers worked 2,427 hours a year in 1950 and 1,372 in 2019. By what percentage did hours fall?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:income-and-wellbeing:5}
+A country's indices are 0.8 for income, 0.6 for health and 0.7 for schooling. Find the \omterm{def:g12:income-and-wellbeing:composite-indicator}{composite indicator} with equal weights.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:income-and-wellbeing:6}
+A country at 10,000 dollars has satisfaction 6.0, and one at 40,000 has 7.8. Fit $s = a + b \ln y$ through the two points, and give the gain per doubling.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:income-and-wellbeing:7}
+Fit the same model through Kosovo (11,188 dollars, 5.9) and Luxembourg (131,734 dollars, 7.5). Compare the gain per doubling with the 0.93 of the full fit. What does this say
+about fitting through two points?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:income-and-wellbeing:8}
+With 0.93 points per doubling, find the gain from a 10\,\% rise in income.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:income-and-wellbeing:9}
+Country X has an income index of 0.9 and a health index of 0.6; country Y, 0.6 and 0.8. Rank them with equal weights, then with weights of one-third on income and two-thirds
+on health.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:income-and-wellbeing:10}
+From the hours chart, South Korean workers worked 2,749 hours in 1960 and 1,963 in 2019. By how many hours a week did they work less, over 50 weeks?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:income-and-wellbeing:11}
+A worker earning 30 dalens an hour cuts her hours from 1,800 to 1,600 a year. By how much does her income fall? If she chose the change freely, what is the 200 hours of free
+time worth to her, at least?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:income-and-wellbeing:12}
+Give two observations that would contradict the model of satisfaction in the logarithm of income, and say whether any has been found.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:income-and-wellbeing:13}
+Why is the slope of the opening chart not the effect of raising a country's income? Name two reasons.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:income-and-wellbeing:14}
+Workers in country F produce 60,000 dollars a year in 1,400 hours; in country G, 65,000 dollars in 1,800 hours. Value the extra 400 hours of free time in F at G's output per
+hour and compare the adjusted figures.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:income-and-wellbeing:15}
+Two countries have the same average income, 40,000 dollars. In A, half the people earn 20,000 and half 60,000; in B, half earn 30,000 and half 50,000. With $b = 1.346$, find
+the difference in average satisfaction predicted by the log model, and the income that, given to everyone, would give each country its average satisfaction.
+\end{exercise}
+
+\section{Problem: Five Countries, One Ladder}
+
+\begin{problem}[{Weekend problem --- income, life and satisfaction}]
+\label{pb:g12:income-and-wellbeing:1}
+Five invented countries report their income per person (dollars), annual hours worked per worker, life expectancy (years) and mean \omterm{def:g12:income-and-wellbeing:life-satisfaction}{life satisfaction} (0--10).
+
+\begin{center}
+\small
+\pgfplotstabletypeset[col sep=comma, columns={country,income,hours,lifeexp,lifesat},
+  columns/country/.style={string type, column name={country}, column type=l},
+  columns/income/.style={column name={income}, int detect},
+  columns/hours/.style={column name={hours}, int detect},
+  columns/lifeexp/.style={column name={life expectancy}, int detect},
+  columns/lifesat/.style={column name={satisfaction}, fixed, precision=1, zerofill},
+  every head row/.style={before row=\toprule, after row=\midrule}, every last row/.style={after row=\bottomrule}]
+  {figdata/grade-12/15-income-and-wellbeing/out/five.csv}
+\end{center}
+
+\medskip
+\noindent\textbf{Part I --- Fitting the model.}
+\begin{enumerate}
+\item Let $x = \log_2(y/1{,}000)$. Find $x$ for each country.
+\item Find the mean of $x$ and the mean satisfaction.
+\item Find the least-squares slope of satisfaction on $x$: $\sum (x - \bar x) s / \sum (x - \bar x)^2$. This is the gain per doubling.
+\item Write the fitted line.
+\item Predict the satisfaction of a sixth country at 128,000 dollars.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Reading the fit.}
+\begin{enumerate}[resume]
+\item Find the five residuals.
+\item Find the predicted gain from a 10\,\% rise in income.
+\item How much income would country C need to reach a satisfaction of 7.0?
+\item By how many hours a year does E work less than A?
+\item Does the fit show that raising C's income to E's would raise its satisfaction to E's? Explain.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- A composite indicator.}
+\begin{enumerate}[resume]
+\item The income index is $(\ln y - \ln 1{,}000)/(\ln 128{,}000 - \ln 1{,}000)$. Find it for each country.
+\item The life index is $(L - 50)/(90 - 50)$. Find it for each country.
+\item Find the \omterm{def:g12:income-and-wellbeing:composite-indicator}{composite indicator}, the average of the two indices.
+\item Rank the countries by income, life expectancy, satisfaction and the composite. Do the rankings differ?
+\item One more year of life expectancy raises the composite by how much? What rise in income, in per cent, would raise it by the same amount?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Judgements in the numbers.}
+\begin{enumerate}[resume]
+\item By the fitted satisfaction line, what gain in satisfaction goes with that income rise?
+\item With weights of one-third on income and two-thirds on life, what income rise would match one more year of life?
+\item Which bounds in Part III are choices rather than measurements?
+\item What data on these five countries would contradict the log model?
+\item State the result of the problem: the satisfaction gain per doubling of income, and the income gain that matches one more year of life expectancy under the equal-weight
+  composite.
+\end{enumerate}
+\end{problem}

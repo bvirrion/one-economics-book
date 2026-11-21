@@ -1,0 +1,13 @@
+$ python repeated_pd.py
+beta = 0.4: row player's average payoff against each column
+                always C    always D        grim tit for tat
+    always C       3.000       0.000       3.000       3.000
+    always D       5.000       1.000       3.400       3.400
+        grim       3.000       0.400       3.000       3.000
+ tit for tat       3.000       0.400       3.000       3.000
+beta = 0.9: row player's average payoff against each column
+                always C    always D        grim tit for tat
+    always C       3.000       0.000       3.000       3.000
+    always D       5.000       1.000       1.400       1.400
+        grim       3.000       0.900       3.000       3.000
+ tit for tat       3.000       0.900       3.000       3.000

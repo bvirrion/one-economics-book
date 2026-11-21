@@ -1,0 +1,9 @@
+$ python bargaining.py
+  1 rounds: player 1 gets 1.0000
+  2 rounds: player 1 gets 0.1000
+  3 rounds: player 1 gets 0.9550
+  4 rounds: player 1 gets 0.1855
+ 10 rounds: player 1 gets 0.3745
+ 50 rounds: player 1 gets 0.6759
+200 rounds: player 1 gets 0.6897
+infinite horizon:  0.6897

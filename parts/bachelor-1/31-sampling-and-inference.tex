@@ -1,0 +1,484 @@
+\chapter{Sampling and Inference}\label{ch:b1:sampling-and-inference}
+
+The US unemployment rate is estimated each month from a survey of about
+60,000 households. % ledger: b1:bls-cps-design
+At a rate of around $6\%$, the statistical office gives a $90\%$ \omterm{def:b1:sampling-and-inference:confidence-interval}{confidence interval}
+of about $\pm 0.3$ point for the change from one month to the next. % ledger: b1:bls-se-change
+A rise of $0.1$ point, reported as news, cannot be told apart from the noise of
+drawing a different sample. This chapter is about what one sample can say
+about a \omterm{def:b1:sampling-and-inference:population}{population}: \omterm{def:b1:sampling-and-inference:estimator}{estimators} and their errors, \omterm{def:b1:sampling-and-inference:confidence-interval}{confidence intervals},
+tests, and how surveys are designed and weighted.
+
+\begin{openingchart}{Unemployment rate, ages 15--74, per cent of the labour force,
+quarterly, 2010--2026: seasonally adjusted (thin) and trend-cycle (thick),
+Germany (left) and Estonia (right).}{Eurostat, une\_rt\_q}
+\begin{tikzpicture}
+\begin{groupplot}[omtime, group style={group size=2 by 1, horizontal sep=1.5cm}, width=0.47\linewidth,
+  height=0.36\linewidth, xmin=2010, xmax=2026.5, xlabel={Year}, xtick={2010,2014,2018,2022,2026}]
+  \nextgroupplot[ylabel={Per cent}, ymin=0, ymax=8]
+  \addplot[omDef, thin, mark=*, mark size=0.7pt] table[x=t, y=DE_SA, col sep=comma] {figdata/bachelor-1/31-sampling-and-inference/out/unemp.csv};
+  \addplot[black, very thick] table[x=t, y=DE_TC, col sep=comma] {figdata/bachelor-1/31-sampling-and-inference/out/unemp.csv};
+  \nextgroupplot[ymin=0, ymax=20]
+  \addplot[omDef, thin, mark=*, mark size=0.7pt] table[x=t, y=EE_SA, col sep=comma] {figdata/bachelor-1/31-sampling-and-inference/out/unemp.csv};
+  \addplot[black, very thick] table[x=t, y=EE_TC, col sep=comma] {figdata/bachelor-1/31-sampling-and-inference/out/unemp.csv};
+\end{groupplot}
+\end{tikzpicture}
+\end{openingchart}
+
+Both series are survey estimates. Germany's seasonally adjusted rate stays
+within a standard deviation of $0.07$ point of its trend; Estonia's jumps
+around it with a standard deviation of $0.51$ point, and moves by $0.72$ point
+from one quarter to the next on average, against $0.13$ in Germany. % figdata: noise
+Part of the gap is that Estonia's labour market moves more; part is that the
+survey of a small country samples far fewer people, and its estimates are
+noisier.
+
+\begin{recall}
+\omterm{def:b1:random-variables-for-econometrics:sampling-distribution}{Sampling distributions}, the normal and Student's $t$ laws and the central
+limit theorem are \cref{ch:b1:random-variables-for-econometrics}; \omterm{def:b1:describing-data:conditional-mean}{conditional means} are
+\cref{ch:b1:describing-data}. The unemployment survey and its definitions were met
+at school.
+\end{recall}
+
+\section{Population and sample}\label{sec:b1:sampling-and-inference:population}
+
+\begin{definition}[Population parameter]\label{def:b1:sampling-and-inference:population}
+\index{population parameter}
+A \emph{population}, in statistics, is the set of units about which a
+question is asked; a \emph{population parameter} is a number that describes it,
+such as its mean $\mu$ or its unemployment rate. It is fixed and unknown. (A
+model's parameters, \cref{ch:b1:models-and-data}, are a different use of the word.)
+\end{definition}
+
+\begin{definition}[Estimator, unbiased, consistent]\label{def:b1:sampling-and-inference:estimator}
+\index{estimator}\index{unbiased estimator}\index{consistent estimator}
+An \emph{estimator} is a rule that turns a sample into a guess of a parameter $\theta$;
+the number it gives in one sample is an estimate. An estimator $\hat\theta_n$ is
+\emph{unbiased} when $\E[\hat\theta_n] = \theta$, and \emph{consistent} when, for every $\varepsilon > 0$,
+$P(|\hat\theta_n - \theta| > \varepsilon) \to 0$ as the sample size $n$ grows.
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[font=\small, node distance=1.2cm]
+  \node[draw, rounded corners, fill=omDef!10, minimum width=2.6cm, minimum height=1cm, align=center] (pop) {Population\\ parameter $\theta$};
+  \node[draw, rounded corners, right=1.3cm of pop, minimum width=2.4cm, minimum height=1cm, align=center] (s) {Sample\\ $x_1, \dots, x_n$};
+  \node[draw, rounded corners, right=1.3cm of s, minimum width=2.4cm, minimum height=1cm, align=center] (e) {Estimate\\ $\hat\theta$};
+  \draw[->, thick] (pop) -- node[above]{draw} (s);
+  \draw[->, thick] (s) -- node[above]{rule} (e);
+  \draw[->, dashed] (e.south) to[bend left=25] node[below]{inference: how far from $\theta$?} (pop.south);
+\end{tikzpicture}
+\end{center}
+
+\section{Estimators: bias, variance, consistency}\label{sec:b1:sampling-and-inference:estimators}
+
+\begin{proposition}[The sample mean]\label{prop:b1:sampling-and-inference:mean}
+For independent draws with mean $\mu$ and variance $\sigma^2$, the sample mean $\bar X_n$ is
+unbiased and consistent for $\mu$.
+\end{proposition}
+
+\begin{proof}
+$\E[\bar X_n] = \frac1n\sum_i \E[X_i] = \mu$. Its variance is $\sigma^2/n$ (\cref{ch:b1:random-variables-for-econometrics}),
+so by Chebyshev's inequality $P(|\bar X_n - \mu| > \varepsilon) \le \sigma^2/(n\varepsilon^2) \to 0$.
+\end{proof}
+
+\begin{proposition}[Dividing by $n - 1$]\label{prop:b1:sampling-and-inference:variance}
+$s^2 = \frac1{n-1}\sum_i (X_i - \bar X)^2$ is an \omterm{def:b1:sampling-and-inference:estimator}{unbiased estimator} of $\sigma^2$.
+\end{proposition}
+
+\begin{proof}
+$\sum_i (X_i - \bar X)^2 = \sum_i (X_i - \mu)^2 - n(\bar X - \mu)^2$. Taking expectations,
+$n\sigma^2 - n \cdot \sigma^2/n = (n - 1)\sigma^2$.
+\end{proof}
+
+\omcode{code/bachelor-1/31-sampling-and-inference/listings/sample_variance.py}{1}{12}{Dividing by $n$
+or by $n - 1$, with samples of 5.}\label{lst:b1:sampling-and-inference:variance}
+
+\omoutput{code/bachelor-1/31-sampling-and-inference/outputs/sample_variance.txt}{Dividing by $n$
+underestimates by the factor $4/5$.}\label{out:b1:sampling-and-inference:variance}
+
+\begin{definition}[Mean squared error]\label{def:b1:sampling-and-inference:mse}
+\index{mean squared error}
+The \emph{mean squared error} of an \omterm{def:b1:sampling-and-inference:estimator}{estimator} is $\E[(\hat\theta - \theta)^2] = \text{bias}^2 + \Var(\hat\theta)$.
+\end{definition}
+
+\omcode{code/bachelor-1/31-sampling-and-inference/listings/bias_variance.py}{1}{20}{An \omterm{def:b1:sampling-and-inference:estimator}{unbiased estimator}
+and a shrunk one.}\label{lst:b1:sampling-and-inference:bias-variance}
+
+\omoutput{code/bachelor-1/31-sampling-and-inference/outputs/bias_variance.txt}{Shrinking cuts the
+spread by a fifth but adds a bias of 4,297 dollars (of 1982, the unit of
+all the earnings in this chapter).}\label{out:b1:sampling-and-inference:bias-variance}
+
+Shrinking the mean towards zero trades bias for variance. Here the trade is
+bad --- the root \omterm{def:b1:sampling-and-inference:mse}{mean squared error} rises from 4,917 to 5,825 dollars ---
+because the mean is far from zero; for a parameter close to the point of
+shrinkage, it can be good. Several \omterm{def:b1:sampling-and-inference:estimator}{estimators} of the later volumes make
+this trade on purpose.
+
+\section{The standard error and confidence intervals}\label{sec:b1:sampling-and-inference:intervals}
+
+\begin{definition}[Standard error]\label{def:b1:sampling-and-inference:standard-error}
+\index{standard error}
+The \emph{standard error} of an \omterm{def:b1:sampling-and-inference:estimator}{estimator} is the standard deviation of its
+\omterm{def:b1:random-variables-for-econometrics:sampling-distribution}{sampling distribution}; for the sample mean it is $\sigma/\sqrt n$, estimated by
+$\widehat{\mathrm{se}} = s/\sqrt n$.
+\end{definition}
+
+\begin{definition}[Confidence interval]\label{def:b1:sampling-and-inference:confidence-interval}
+\index{confidence interval}
+A \emph{confidence interval} at level $1 - \alpha$ is an interval computed from the
+sample that contains the parameter in a share $1 - \alpha$ of repeated samples. For a
+mean, $\bar x \pm t_{n-1,\,1-\alpha/2}\,\widehat{\mathrm{se}}$, with $t_{n-1,\,1-\alpha/2}$ close to $1.96$ for $\alpha = 0.05$ and large $n$.
+\end{definition}
+
+The level describes the procedure, not one interval: once computed, an
+interval contains the parameter or it does not.
+
+\omcode{code/bachelor-1/31-sampling-and-inference/listings/interval.py}{1}{14}{Mean earnings of the
+control group, with a 95\% interval.}\label{lst:b1:sampling-and-inference:interval}
+
+\omoutput{code/bachelor-1/31-sampling-and-inference/outputs/interval.txt}{From 3,885 to 5,224
+dollars.}\label{out:b1:sampling-and-inference:interval}
+
+\omcode{code/bachelor-1/31-sampling-and-inference/listings/coverage.py}{1}{24}{One hundred intervals
+from one hundred samples of 30 men.}\label{lst:b1:sampling-and-inference:coverage}
+
+\omoutput{code/bachelor-1/31-sampling-and-inference/outputs/coverage.txt}{Ten of the hundred
+miss.}\label{out:b1:sampling-and-inference:coverage}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xlabel={Sample}, ylabel={Interval (dollars of 1982)}, xmin=0, xmax=101, ymin=5000, ymax=42000,
+  width=0.8\linewidth, height=0.36\linewidth]
+  \addplot[omDef, only marks, mark=none, error bars/.cd, y dir=both, y explicit] table[x=k,
+    y expr=(\thisrow{lo}+\thisrow{hi})/2, y error expr=(\thisrow{hi}-\thisrow{lo})/2, col sep=comma] {figdata/bachelor-1/31-sampling-and-inference/out/cover_hit.csv};
+  \addplot[omThm, only marks, mark=none, error bars/.cd, y dir=both, y explicit, error bar style={very thick}] table[x=k,
+    y expr=(\thisrow{lo}+\thisrow{hi})/2, y error expr=(\thisrow{hi}-\thisrow{lo})/2, col sep=comma] {figdata/bachelor-1/31-sampling-and-inference/out/cover_miss.csv};
+  \draw[black, dashed] (axis cs:0,21554) -- (axis cs:101,21554);
+\end{axis}
+\end{tikzpicture}
+
+{\small One hundred $95\%$ intervals for mean earnings, each from 30 men drawn
+from the PSID sample; the \omterm{def:b1:sampling-and-inference:population}{population} mean is dashed. The ten in red miss
+it.}
+\end{omfigure}
+
+Ten misses in a hundred is more than five, but one hundred intervals are a
+small sample of intervals: over 20,000 of them, $94.3\%$ contain the mean.
+% figdata: coverage_stats
+The shortfall from $95\%$ is real and comes from the \omterm{def:b1:describing-data:skewness}{skewness} of earnings:
+with 30 draws, the $t$ interval is only approximately right.
+
+\section{Tests}\label{sec:b1:sampling-and-inference:tests}
+
+\begin{definition}[Null hypothesis, alternative, test statistic]\label{def:b1:sampling-and-inference:test}
+\index{null hypothesis}\index{alternative hypothesis}\index{test statistic}
+A test confronts a \emph{null hypothesis} $H_0$ (say, $\mu_1 - \mu_0 = 0$) with an
+\emph{alternative hypothesis} $H_1$ (say, $\mu_1 - \mu_0 \ne 0$). A \emph{test statistic} is a function
+of the sample whose distribution under $H_0$ is known, at least approximately,
+such as $t = (\bar x_1 - \bar x_0)/\widehat{\mathrm{se}}$.
+\end{definition}
+
+\begin{definition}[Significance level, $p$-value]\label{def:b1:sampling-and-inference:p-value}
+\index{significance level}\index{p-value}
+A test rejects $H_0$ when the statistic falls in a rejection region. The
+\emph{significance level}, or \emph{size}, is the probability of rejecting $H_0$ when it is
+true. The \emph{$p$-value} is the probability, computed under $H_0$, of a statistic at least
+as extreme as the one observed; a test at level $\alpha$ rejects when $p < \alpha$.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Test statistic under $H_0$}, ylabel={Density}, xmin=-4, xmax=4, ymin=0,
+  ymax=0.45, width=0.62\linewidth, height=0.34\linewidth, samples=121, domain=-4:4]
+  \addplot[fill=omThm!40, draw=none, domain=1.96:4] {exp(-x^2/2)/sqrt(2*pi)} \closedcycle;
+  \addplot[fill=omThm!40, draw=none, domain=-4:-1.96] {exp(-x^2/2)/sqrt(2*pi)} \closedcycle;
+  \addplot[black, thick] {exp(-x^2/2)/sqrt(2*pi)};
+  \draw[omDef, very thick] (axis cs:2.674,0) -- (axis cs:2.674,0.2) node[above, font=\scriptsize] {$t = 2.674$};
+  \node[font=\scriptsize] at (axis cs:-3,0.08) {$2.5\%$};
+  \node[font=\scriptsize] at (axis cs:3.3,0.06) {$2.5\%$};
+\end{axis}
+\end{tikzpicture}
+
+{\small A two-sided test at $5\%$: the rejection regions beyond $\pm 1.96$
+(shaded), and the job-training experiment's statistic.}
+\end{omfigure}
+
+\begin{record}[What a $p$-value is not]
+In 2016 the American Statistical Association published six principles on
+$p$-values (Wasserstein and Lazar 2016). Two of them: a $p$-value does not
+measure the probability that the studied hypothesis is true, or the
+probability that the data were produced by random chance alone; and it does
+not measure the size of an effect or the importance of a result. % ledger: b1:asa2016
+A $p$-value of $0.008$ says that data this far from $H_0$ would be rare if $H_0$ held
+--- not that $H_0$ has a $0.8\%$ chance of being true.
+\end{record}
+
+\begin{model}{The randomised comparison}
+\index{randomised comparison}
+\assumes People are assigned to a programme or to a control group at
+random, and one person's assignment does not affect another's outcome.
+\predicts The difference in mean outcomes estimates the programme's
+average effect without bias, with the \omterm{def:b1:sampling-and-inference:standard-error}{standard error} of a difference of
+two means.
+\tested Two checks of the job-training experiment. Earnings before the
+programme, which assignment cannot have changed, are close in the two
+groups ($p = 0.98$ in 1974 and $0.39$ in 1975, \cref{out:b1:sampling-and-inference:effect}), as random
+assignment predicts. And LaLonde (1986) used the experimental estimate as a
+benchmark that many non-experimental procedures failed to reproduce (record
+below). % ledger: b1:lalonde1986
+\breaks People who leave the study before the outcome is measured, in a way
+related to the treatment; samples so small that the interval is too wide
+to say anything; and effects that do not carry over to other people,
+places or scales, which the second university year takes up under
+causality and experiments.
+\end{model}
+
+\omcode{code/bachelor-1/31-sampling-and-inference/listings/nsw_effect.py}{1}{23}{The experiment's
+estimate, its \omterm{def:b1:sampling-and-inference:standard-error}{standard error}, $t$ and $p$-value, and the earnings of the
+two groups before the programme.}\label{lst:b1:sampling-and-inference:effect}
+
+\omoutput{code/bachelor-1/31-sampling-and-inference/outputs/nsw_effect.txt}{A difference of
+1,794 dollars, $t = 2.67$, $p = 0.008$; before the programme, no difference.}\label{out:b1:sampling-and-inference:effect}
+
+The \omterm{def:b1:sampling-and-inference:standard-error}{standard error} of a difference of two independent means is
+$\sqrt{s_1^2/n_1 + s_0^2/n_0}$, with $s_1$ and $s_0$ the standard deviations and $n_1$ and $n_0$ the sizes of
+the two groups. It lets each group keep its own variance, and the test built
+on it is \emph{Welch's test}. The pooled form, which assumes one common
+variance, would be wrong here: the treated men's earnings in 1978 have a
+standard deviation of 7,867 dollars, the controls' 5,484. The listing gives
+two $p$-values for the same $t$. The first uses the normal distribution, as the
+interval does with its $1.96$; Welch's uses a Student $t$ with a degrees-of-freedom
+correction. With groups of 185 and 260 they agree: $0.0075$ and $0.0079$.
+% computed: code/bachelor-1/31-sampling-and-inference/outputs/nsw_effect.txt
+
+\begin{record}[The job-training experiment]
+A job-training programme in the United States assigned
+applicants at random to training or to a control group. The experiment
+gives an estimate that needs no model of who chooses to train. LaLonde
+(1986) replaced the experimental controls by comparison samples from
+two large surveys --- the PSID and CPS samples of \cref{ch:b1:describing-data} --- and found
+that many of the econometric procedures in use did not reproduce the
+experimental result. % ledger: b1:lalonde1986
+Dehejia and Wahba (1999) re-examined the samples with other methods.
+% ledger: b1:dehejia1999
+The lesson: who is compared with whom matters more than the formula.
+\end{record}
+
+\begin{definition}[Power of a test]\label{def:b1:sampling-and-inference:power}
+\index{power (of a test)}
+The \emph{power} of a test against an alternative is the probability that it
+rejects $H_0$ when that alternative is true.
+\end{definition}
+
+\omcode{code/bachelor-1/31-sampling-and-inference/listings/power.py}{1}{18}{\omterm{def:b1:sampling-and-inference:power}{Power} to detect an effect
+of 1,000 dollars with the experiment's group sizes.}\label{lst:b1:sampling-and-inference:power}
+
+\omoutput{code/bachelor-1/31-sampling-and-inference/outputs/power.txt}{Less than one chance in
+two.}\label{out:b1:sampling-and-inference:power}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xlabel={True effect (dollars of 1982)}, ylabel={Power}, xmin=0, xmax=4000, ymin=0, ymax=1,
+  width=0.62\linewidth, height=0.36\linewidth, legend style={font=\scriptsize, at={(0.98,0.04)}, anchor=south east}]
+  \addplot[gray, thick, dashed] table[x=effect, y=n100, col sep=comma] {figdata/bachelor-1/31-sampling-and-inference/out/power.csv};
+  \addplot[omDef, thick] table[x=effect, y=n445, col sep=comma] {figdata/bachelor-1/31-sampling-and-inference/out/power.csv};
+  \addplot[omThm, thick] table[x=effect, y=n2000, col sep=comma] {figdata/bachelor-1/31-sampling-and-inference/out/power.csv};
+  \legend{$n = 100$, $n = 445$, $n = 2{,}000$}
+\end{axis}
+\end{tikzpicture}
+
+{\small \omterm{def:b1:sampling-and-inference:power}{Power} of a two-sided $5\%$ test of a difference in mean earnings, with
+the control group's standard deviation and two equal groups, for 100, 445 (the
+experiment's size) and 2,000 people: an effect of 1,000 dollars is detected
+with probability $0.15$, $0.49$ and $0.98$. % figdata: power
+}
+\end{omfigure}
+
+\section{Many tests at once}\label{sec:b1:sampling-and-inference:many}
+
+\begin{definition}[Family-wise error rate]\label{def:b1:sampling-and-inference:fwer}
+\index{family-wise error rate}\index{Bonferroni correction}
+The \emph{family-wise error rate} of a set of tests is the probability that at
+least one of them rejects a true \omterm{def:b1:sampling-and-inference:test}{null hypothesis}. Testing each of $m$
+hypotheses at level $\alpha/m$ (the Bonferroni correction) keeps it at most $\alpha$.
+\end{definition}
+
+The bound follows from $P(A_1 \cup \dots \cup A_m) \le \sum_j P(A_j) = m \cdot \alpha/m$. With 20 independent tests at $5\%$
+and every null true, the chance of at least one rejection is $1 - 0.95^{20} = 64\%$.
+
+\omcode{code/bachelor-1/31-sampling-and-inference/listings/many_tests.py}{1}{16}{Twenty tests where
+nothing is there.}\label{lst:b1:sampling-and-inference:many}
+
+\omoutput{code/bachelor-1/31-sampling-and-inference/outputs/many_tests.txt}{One ``significant''
+difference between two random halves of the same men.}\label{out:b1:sampling-and-inference:many}
+
+The seed, 7, was chosen to show a typical draw, with the one rejection that
+twenty tests at $5\%$ give on average; of the seeds 0 to 99, 40 give no
+rejection, 38 one and 22 two or more.
+A study that runs twenty comparisons and reports the one with $p = 0.04$ has
+shown nothing. The third university year returns to the search for
+specifications and how credible work guards against it.
+
+\section{Survey design and weights}\label{sec:b1:sampling-and-inference:weights}
+
+\begin{definition}[Stratified sample, sampling weight, design effect]\label{def:b1:sampling-and-inference:weights}
+\index{stratified sample}\index{sampling weight}\index{design effect}
+A \emph{stratified sample} divides the \omterm{def:b1:sampling-and-inference:population}{population} into groups (strata) and
+draws a separate \omterm{def:b1:random-variables-for-econometrics:random-sample}{random sample} in each. A unit's \emph{sampling weight} is the
+inverse of its probability of being drawn: the number of \omterm{def:b1:sampling-and-inference:population}{population} units it
+stands for. The \emph{design effect} is the variance of an estimate under the
+design divided by its variance under a simple \omterm{def:b1:random-variables-for-econometrics:random-sample}{random sample} of the same
+size.
+\end{definition}
+
+\omcode{code/bachelor-1/31-sampling-and-inference/listings/weights.py}{1}{19}{Owners over-sampled,
+then weighted back.}\label{lst:b1:sampling-and-inference:weights}
+
+\omoutput{code/bachelor-1/31-sampling-and-inference/outputs/weights.txt}{Unweighted, the sample
+overstates income by 1,555 dalens; weighted, it is 98 dalens off.}\label{out:b1:sampling-and-inference:weights}
+
+Owners are a third of households but half the sample, and they have higher
+incomes, so the unweighted mean is too high. Unequal weights cost
+precision: the \omterm{def:b1:sampling-and-inference:weights}{design effect} of $1.135$ makes 300 households worth 264 drawn
+at random. (The formula $1 + \mathrm{CV}^2$ of the weights is Kish's approximation for
+weighting alone; stratification itself usually lowers the variance.)
+
+\begin{measure}[The monthly unemployment survey]
+A labour-force survey asks a sample of households about each member's
+work and job search in a reference week, and classifies each person as
+employed, unemployed or out of the labour force. The rate is the weighted
+number of unemployed divided by the weighted labour force. A $90\%$ interval
+spans about $1.6$ \omterm{def:b1:sampling-and-inference:standard-error}{standard errors} on each side; for the US monthly change, it
+is about $\pm 0.3$ point at a rate around $6\%$. % ledger: b1:bls-se-change
+Households stay in the sample for several months, so successive samples
+overlap, which makes the \omterm{def:b1:sampling-and-inference:standard-error}{standard error} of a change smaller than that of
+two independent samples.
+\end{measure}
+
+\omcode{code/bachelor-1/31-sampling-and-inference/listings/unemployment_survey.py}{1}{18}{A simulated
+monthly survey and the change between two months.}\label{lst:b1:sampling-and-inference:unemployment}
+
+\omoutput{code/bachelor-1/31-sampling-and-inference/outputs/unemployment_survey.txt}{A change of
+$0.10$ point when nothing changed.}\label{out:b1:sampling-and-inference:unemployment}
+
+\section*{Exercises}\label{sec:b1:sampling-and-inference:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:sampling-and-inference:se}
+A sample of 400 has a standard deviation of 9,000. Find the \omterm{def:b1:sampling-and-inference:standard-error}{standard error}
+of its mean.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:sampling-and-inference:read}
+From \cref{out:b1:sampling-and-inference:effect}, give the estimated effect, its \omterm{def:b1:sampling-and-inference:standard-error}{standard error}
+and the $p$-value of Welch's test.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:sampling-and-inference:statements}
+A test gives $p = 0.03$. Which statement is right? (a) $H_0$ has a $3\%$ chance of
+being true. (b) The effect is large. (c) If $H_0$ were true, a statistic at least
+this extreme would occur in $3\%$ of samples. (d) The result has a $97\%$ chance of
+being replicated.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:sampling-and-inference:width}
+Predict the width of a $95\%$ interval when the sample size is multiplied by 4.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:sampling-and-inference:bias}
+Find the bias of $\tilde\mu = \frac1{n+1}\sum_{i=1}^n X_i$ as an \omterm{def:b1:sampling-and-inference:estimator}{estimator} of $\mu$. Is it consistent?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:sampling-and-inference:proportions}
+In two \omterm{def:b1:random-variables-for-econometrics:random-sample}{random samples} of 400, 120 and 90 people say they are looking for
+another job. Test at $5\%$ whether the two \omterm{def:b1:sampling-and-inference:population}{population} shares differ.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:sampling-and-inference:size}
+With the standard deviations of the experiment's two groups (7,867 and 5,484
+dollars), how many people per group give a \omterm{def:b1:sampling-and-inference:power}{power} of $80\%$ to detect an effect
+of 1,000 dollars at $5\%$, two-sided?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:sampling-and-inference:fifty}
+Fifty true null hypotheses are tested at $5\%$. How many rejections do you
+expect? What is the Bonferroni threshold?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:sampling-and-inference:predict}
+A survey over-samples young households, whose income is lower than
+average. Predict which of the weighted and unweighted mean incomes is closer
+to the \omterm{def:b1:sampling-and-inference:population}{population}'s, and why.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:sampling-and-inference:unbiased}
+Write out the proof of \cref{prop:b1:sampling-and-inference:variance}, justifying the
+decomposition of $\sum_i (X_i - \bar X)^2$ and each expectation.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:sampling-and-inference:consistent}
+Show that an \omterm{def:b1:sampling-and-inference:estimator}{estimator} can be biased and consistent, with an example from
+this chapter.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:sampling-and-inference:search}
+What pattern among published $p$-values would show that many tests were run
+and only the significant ones reported?
+\end{exercise}
+
+\section{Problem: The Brenland Labour-Force Survey}\label{sec:b1:sampling-and-inference:problem}
+
+\begin{problem}[{Weekend problem --- how big must the survey be?}]\label{pb:b1:sampling-and-inference:survey}
+Brenland (invented) has three regions: the Capital (2.0 million in the
+labour force, true unemployment rate $5.0\%$), the North (1.5 million, $6.5\%$) and
+the South (1.0 million, $7.25\%$). Each month the statistical office samples
+4,000 people in the labour force of each region, independently from month to
+month. In month 2 every regional rate rises by $0.2$ point. A script simulates
+the two months; its seed, 2028, was chosen to show a typical draw, one whose
+measured change is within half a \omterm{def:b1:sampling-and-inference:standard-error}{standard error} of the true one.
+
+\medskip\noindent\textbf{Part I --- Design.}
+\begin{enumerate}
+  \item Give each region's share of the labour force and the true national rate.
+  \item Give each region's probability of selection.
+  \item Give the \omterm{def:b1:sampling-and-inference:weights}{sampling weights}.
+  \item Why sample the same number in each region?
+  \item Which way would an unweighted rate be biased?
+  \item Give the \omterm{def:b1:sampling-and-inference:weights}{design effect} of the weights by Kish's formula.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- The estimate.}
+\begin{enumerate}[resume]
+  \item Give the unemployed counted in each region's sample in month 1.
+  \item Give the regional rates and their \omterm{def:b1:sampling-and-inference:standard-error}{standard errors}.
+  \item Give the unweighted national rate.
+  \item Give the weighted national rate.
+  \item Give its \omterm{def:b1:sampling-and-inference:standard-error}{standard error}, $\sqrt{\sum_h W_h^2\,\hat p_h(1 - \hat p_h)/n_h}$, with $W_h$ the regions' shares.
+  \item Compare with the \omterm{def:b1:sampling-and-inference:standard-error}{standard error} of a simple \omterm{def:b1:random-variables-for-econometrics:random-sample}{random sample} of 12,000.
+  \item Give a $95\%$ interval.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- The change.}
+\begin{enumerate}[resume]
+  \item Give the weighted rate in month 2.
+  \item Give the change.
+  \item Give the \omterm{def:b1:sampling-and-inference:standard-error}{standard error} of the change.
+  \item Give the $t$ statistic and the $p$-value.
+  \item Does the survey detect the rise at $5\%$?
+  \item Is the drawn change far from the true one?
+  \item How would keeping the same people in the sample from one month to
+    the next change the \omterm{def:b1:sampling-and-inference:standard-error}{standard error} of the change?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- The sample size.}
+\begin{enumerate}[resume]
+  \item What \omterm{def:b1:sampling-and-inference:standard-error}{standard error} of the change gives a \omterm{def:b1:sampling-and-inference:power}{power} of $80\%$ to detect a
+    $0.2$-point rise at $5\%$, two-sided?
+  \item Give the \omterm{def:b1:sampling-and-inference:standard-error}{standard error} of the change with 12,000 people, from the
+    true rates.
+  \item How many people a month, with the same design, give the \omterm{def:b1:sampling-and-inference:power}{power} of item 21?
+  \item And with a simple \omterm{def:b1:random-variables-for-econometrics:random-sample}{random sample}?
+  \item How many with overlapping samples whose estimates have a correlation
+    of $0.5$ between months?
+  \item State the result.
+\end{enumerate}
+\end{problem}

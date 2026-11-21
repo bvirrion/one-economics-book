@@ -1,0 +1,137 @@
+\section*{Chapter \ref{ch:b1:solow-model} --- The Solow Model}
+% Numbers recomputed in code/bachelor-1/20-solow-model/exercises/solutions.py (tested).
+
+\begin{solution}{exo:b1:solow-model:steady}
+$k^* = (0.25/0.07)^{1/0.7} = 6.163$, $y^* = 6.163^{0.3} = 1.726$ and $c^* = 0.75 \times 1.726 = 1.294$.
+\end{solution}
+
+\begin{solution}{exo:b1:solow-model:read}
+Singapore invested a third more and was almost six times richer: the
+direction fits, but a ratio of saving rates of $1.33$ predicts, with $\alpha = 1/3$, an
+income ratio of about $1.15$, not 6. Population growth, schooling, technology
+and the starting point differ too; China was far below its \omterm{def:b1:solow-model:steady-state}{steady state}
+for much of the period.
+\end{solution}
+
+\begin{solution}{exo:b1:solow-model:predict}
+Just after the change, investment exceeds break-even investment, so $k$ and
+$y$ grow; the growth rate then falls back to zero (to $g$ with \omterm{def:b1:technology:technical-progress}{technical
+progress}). In the long run, only the level is higher.
+\end{solution}
+
+\begin{solution}{exo:b1:solow-model:golden-ex}
+$f'(k) = \alpha k^{\alpha - 1} = n + \delta$ and $s_g f(k_g) = (n + \delta)k_g$ give $s_g = \alpha$ (as in
+\cref{prop:b1:solow-model:golden}). $k_g = (0.3/0.07)^{1/0.7} = 7.996$.
+\end{solution}
+
+\begin{solution}{exo:b1:solow-model:half}
+$\lambda = (2/3) \times 0.07 = 0.0467$ a year; the \omterm{def:b1:solow-model:speed}{half-life} is $\ln 2/0.0467 = 14.85$ years.
+\end{solution}
+
+\begin{solution}{exo:b1:solow-model:ratio}
+$(0.25/0.10)^{\alpha/(1 - \alpha)} = 2.5^{0.5} = 1.581$. The quartiles differ by a factor $7.14$ in
+income: the saving gap alone explains little of it.
+\end{solution}
+
+\begin{solution}{exo:b1:solow-model:balanced-ex}
+$Y$ grows at $n + g = 3\%$, $Y/L$ at $g = 2\%$, and $K/Y$ is constant at
+$s/(n + g + \delta) = 0.2/0.08 = 2.5$.
+\end{solution}
+
+\begin{solution}{exo:b1:solow-model:inefficient}
+At once, $c$ jumps up, since $s$ falls and $y$ is unchanged. Afterwards $k$ falls
+monotonically from $k^*$ to $k_g$. Along the way $c = f(k) - \dot k - (n + \delta)k$ with $\dot k < 0$, so
+$c > f(k) - (n + \delta)k$; and $f(k) - (n + \delta)k$ rises as $k$ falls towards $k_g$, since its slope
+$f'(k) - (n + \delta)$ is negative above $k_g$. So $c$ exceeds the old $c^* = f(k^*) - (n + \delta)k^*$ at
+every date.
+\end{solution}
+
+\begin{solution}{exo:b1:solow-model:fit}
+India: $8854/7390 = 1.198$; the model overpredicts by about $20\%$. United
+States: $49351/68683 = 0.719$; it underpredicts by about $28\%$. The model leaves
+out differences in technology and efficiency, the constant common to all
+countries.
+\end{solution}
+
+\begin{solution}{exo:b1:solow-model:exact}
+$\dot z = (1 - \alpha)k^{-\alpha}\dot k = (1 - \alpha)k^{-\alpha}[sk^{\alpha} - (n + \delta)k] = (1 - \alpha)[s - (n + \delta)z]$. This is
+linear: $z(t) = z^* + (z(0) - z^*)e^{-(1 - \alpha)(n + \delta)t}$ with $z^* = s/(n + \delta)$. For any $z(0) > 0$,
+$z(t) \to z^*$, so $k(t) \to k^*$: the \omterm{def:b1:solow-model:steady-state}{steady state} is globally stable.
+\end{solution}
+
+\begin{solution}{exo:b1:solow-model:linear}
+With $x = \ln k$, $\dot x = sf(e^x)e^{-x} - (n + \delta)$. Its derivative at $x^*$ is
+$s[f'(k^*)k^* - f(k^*)]/k^* = s f(k^*)/k^*\,(\alpha_k - 1) = -(1 - \alpha_k)(n + \delta)$, using $sf(k^*)/k^* = n + \delta$.
+So $\lambda = (1 - \alpha_k)(n + \delta)$ for $\ln k$; since $d\ln y = \alpha_k\, d\ln k$ near $k^*$, the same rate holds
+for $\ln y$.
+\end{solution}
+
+\begin{solution}{exo:b1:solow-model:refute}
+For example: countries with similar saving, population growth and
+schooling having persistently very different incomes and no tendency to
+converge; or the implied capital share staying far from the measured share
+of income however human capital is measured; or poor countries with high
+saving not growing faster than rich ones with the same saving.
+\end{solution}
+
+\begin{solution}{pb:b1:solow-model:kestria}
+\textbf{1.} $k^* = (0.2/0.06)^{1.5} = 6.086$.
+
+\textbf{2.} $y^* = 6.086^{1/3} = 1.826$ and $c^* = 0.8 \times 1.826 = 1.461$.
+
+\textbf{3.} $k^*/y^* = s/(n + \delta) = 3.333$.
+
+\textbf{4.} $f'(k^*) = \alpha y^*/k^* = 0.1$, above $n + \delta = 0.06$.
+
+\textbf{5.} Below: $f'(k^*) > n + \delta$, so $k^* < k_g$ (equivalently $s = 0.2 < \alpha$).
+
+\textbf{6.} $k_g = (1/3 / 0.06)^{1.5} = 13.095$, $y_g = 2.357$ and $c_g = (2/3) \times 2.357 = 1.571$.
+
+\textbf{7.} $k = 3.043$ and $y = 3.043^{1/3} = 1.449$.
+
+\textbf{8.} $\dot k/k = 0.2 \times 1.449/3.043 - 0.06 = 0.0352$, that is $3.52\%$ a year.
+
+\textbf{9.} $\alpha \times 3.52\% = 1.17\%$ a year.
+
+\textbf{10.} $\lambda = (2/3) \times 0.06 = 0.04$; \omterm{def:b1:solow-model:speed}{half-life} $\ln 2/0.04 = 17.33$ years.
+
+\textbf{11.} $z^* = 0.2/0.06 = 3.333$ and $z(0) = 3.043^{2/3} = 2.0999$, so
+$z(t) = 3.333 - 1.2334\,e^{-0.04t}$.
+
+\textbf{12.} $z = 3.333 - 1.2334/2 = 2.7166$, so $k = 2.7166^{1.5} = 4.478$ and $y = 1.648$.
+
+\textbf{13.} The log gap falls from $\ln(1.826/1.449) = 0.231$ to $\ln(1.826/1.648) = 0.1023$:
+$55.7\%$ is closed.
+
+\textbf{14.} $(1.648 - 1.449)/(1.826 - 1.449) = 52.9\%$.
+
+\textbf{15.} The gap in $z$ halves exactly; $\ln y = \tfrac12 \ln z$ and $y = z^{1/2}$ are concave
+in $z$, so the gaps in $\ln y$ and $y$ close a little faster. The \omterm{def:b1:solow-model:speed}{half-life} of
+\cref{def:b1:solow-model:speed} is exact only close to the \omterm{def:b1:solow-model:steady-state}{steady state}.
+
+\textbf{16.} With less capital per worker, the \omterm{def:b1:technology:marginal-product}{marginal product} of capital
+is high and investment far exceeds what is needed to maintain $k$.
+
+\textbf{17.} $s_g = \alpha = 1/3$.
+
+\textbf{18.} $c = (2/3) \times 1.826 = 1.217$, down from 1.461.
+
+\textbf{19.} $1.344$.
+
+\textbf{20.} After $27.0$ years.
+
+\textbf{21.} $c_g = 1.571$.
+
+\textbf{22.} Those alive at the reform consume less for 27 years; later
+generations consume $7.5\%$ more for ever. Whether the reform is worth it
+depends on how the present is weighed against the future.
+
+\textbf{23.} $\tilde k^* = (0.2/0.08)^{1.5} = 3.953$ and $\tilde y^* = 3.953^{1/3} = 1.581$.
+
+\textbf{24.} Output grows at $3\%$, output per worker at $2\%$, and $K/Y = 0.2/0.08 = 2.5$.
+
+\textbf{25.} $\lambda = (2/3) \times 0.08 = 0.0533$; \omterm{def:b1:solow-model:speed}{half-life} $13.0$ years.
+
+\textbf{26.} By the linearised model, Kestria recovers half its gap in 17
+years (17.33); on the exact path it has closed $55.7\%$ of the log gap by then.
+\end{solution}

@@ -1,0 +1,130 @@
+\section*{Chapter \ref{ch:b1:unemployment-flows} --- Unemployment: Stocks and Flows}
+% Numbers recomputed in code/bachelor-1/22-unemployment-flows/exercises/solutions.py (tested).
+
+\begin{solution}{exo:b1:unemployment-flows:ustar}
+$u^* = 0.02/(0.02 + 0.28) = 6.67\%$.
+\end{solution}
+
+\begin{solution}{exo:b1:unemployment-flows:dur}
+$1/0.25 = 4$ months.
+\end{solution}
+
+\begin{solution}{exo:b1:unemployment-flows:read}
+In 1933, at the bottom of the Depression, firms hired almost no one: a
+collapse of $f$, after a wave of separations. In 2009 both moved, but by the
+evidence of \cref{sec:b1:unemployment-flows:flows}, mostly $f$. In 1944 war
+production and the armed forces absorbed almost every worker: vacancies
+everywhere and a very high $f$.
+\end{solution}
+
+\begin{solution}{exo:b1:unemployment-flows:predict}
+$0.02/0.22 = 9.09\%$.
+\end{solution}
+
+\begin{solution}{exo:b1:unemployment-flows:half}
+$\ln 2/0.30 = 2.31$ months.
+\end{solution}
+
+\begin{solution}{exo:b1:unemployment-flows:which}
+$u^*_A = 0.015/0.315 = 4.76\%$ and $u^*_B = 0.017/0.237 = 7.17\%$. The change in $s$ alone gives
+$0.017/0.317 = 5.36\%$; the change in $f$ alone gives $0.015/0.235 = 6.38\%$. The fall in job
+finding moved unemployment more: $1.62$ points against $0.6$.
+\end{solution}
+
+\begin{solution}{exo:b1:unemployment-flows:nsw}
+$w = 1 + 0.4 + (0.4/0.2)(0.004 + 0.02 + 0.28) = 1.4 + 2 \times 0.304 = 2.008$.
+\end{solution}
+
+\begin{solution}{exo:b1:unemployment-flows:firing}
+$u^* = 0.016/(0.016 + 0.224) = 6.67\%$, unchanged; the \omterm{def:b1:solow-model:speed}{half-life} rises from $2.31$ to
+$\ln 2/0.24 = 2.89$ months. Spells are longer and jobs last longer.
+\end{solution}
+
+\begin{solution}{exo:b1:unemployment-flows:youth}
+Germany $1.9$, Spain $2.35$, Sweden $2.87$, Poland $4.07$. The young separate
+more often --- first jobs, temporary contracts, moves between education
+and work --- so their $s$ is higher; their $f$ need not be lower.
+\end{solution}
+
+\begin{solution}{exo:b1:unemployment-flows:solve}
+$\dot u = -(s + f)(u - u^*)$, so $u(t) - u^* = (u(0) - u^*)e^{-(s + f)t}$, which tends to zero for any $u(0)$; $u$
+stays in $[0, 1]$ because $\dot u > 0$ at $u = 0$ and $\dot u < 0$ at $u = 1$.
+\end{solution}
+
+\begin{solution}{exo:b1:unemployment-flows:three}
+In the \omterm{def:b1:solow-model:steady-state}{steady state} $sE = fU$ and $xU = yN$, so $U = (s/f)E$ and $N = (x/y)(s/f)E$; with
+$E + U + N = 1$, $E = 1/[1 + s/f + (x/y)(s/f)]$. The unemployment rate $U/(E + U) = s/(s + f)$ is
+unchanged: with these flows, inactivity changes the size of the labour
+force, not the rate.
+\end{solution}
+
+\begin{solution}{exo:b1:unemployment-flows:refute}
+Recessions in which the inflow into unemployment rises sharply while the
+\omterm{def:b1:unemployment-flows:rates}{job-finding rate} barely moves; or a decomposition, like that of
+\cref{exo:b1:unemployment-flows:which}, giving most of the rise in $u^*$ to $s$
+across many recessions.
+\end{solution}
+
+\begin{solution}{pb:b1:unemployment-flows:brenland}
+\textbf{1.} $4645 - 4366 = 279$ thousand, $279/4645 = 6.006\%$.
+
+\textbf{2.} $s = uf/(1 - u) = 0.06006 \times 0.30/0.93994 = 0.01917$.
+
+\textbf{3.} Inflow $0.01917 \times 4366 = 83.7$ thousand; outflow $0.30 \times 279 = 83.7$ thousand.
+
+\textbf{4.} $1/0.30 = 3.33$ months.
+
+\textbf{5.} $s + f = 0.31917$; \omterm{def:b1:solow-model:speed}{half-life} $\ln 2/0.31917 = 2.17$ months.
+
+\textbf{6.} $0.02 \times 4366 = 87.3$ thousand.
+
+\textbf{7.} $(279 + 87.3)/4645 = 7.886\%$.
+
+\textbf{8.} $u(t) = 6.006\% + (7.886\% - 6.006\%)e^{-0.31917t}$.
+
+\textbf{9.} $7.373\%$, $6.728\%$, $6.283\%$ and $6.047\%$.
+
+\textbf{10.} Three in ten of the unemployed find a job each month: the pool
+turns over fast.
+
+\textbf{11.} A fall in $f$ --- if the laid-off workers' skills do not fit the
+jobs on offer, or if the closure is part of a recession --- or duration
+dependence among the laid-off.
+
+\textbf{12.} $w = 1.2 + 0.5 + (0.5/0.1)(0.005 + 0.01917 + 0.30) = 3.3209$ thousand dalens a month.
+
+\textbf{13.} $1.6209$, which equals $(e/q)(r + s + f)$.
+
+\textbf{14.} It rises by $0.3$ to $3.6209$.
+
+\textbf{15.} It falls by $5 \times 0.05 = 0.25$ to $3.0709$.
+
+\textbf{16.} At a lower wage, workers would shirk: the queue does not make a
+lower wage an incentive.
+
+\textbf{17.} It lowers the rent $e/q$ needed, so the wage, and raises employment.
+
+\textbf{18.} $0.01917/(0.01917 + 0.25) = 7.122\%$.
+
+\textbf{19.} $0.07122 \times 4645 = 330.8$ thousand.
+
+\textbf{20.} $4$ months.
+
+\textbf{21.} $\ln 2/0.26917 = 2.58$ months.
+
+\textbf{22.} If part of the fall in $f$ comes from cash in hand, it reflects
+the relief of a borrowing constraint rather than a distorted incentive, so
+the efficiency cost of the reform is smaller than the rise in $u^*$ alone
+suggests. The same study finds that the longer searches do not lead to
+better jobs (Card, Chetty and Weber 2007): the gain is not in match
+quality. % ledger: b1:card2007-match
+
+\textbf{23.} Compare the effect of extra benefits with that of an equal
+lump sum that does not depend on staying unemployed, as in the Austrian
+study, and the quality of the jobs found.
+
+\textbf{24.} On both: lower separations and slower hiring.
+
+\textbf{25.} The reform raises the steady-state rate from $6.0\%$ to $7.1\%$ (from
+$6.006\%$ to $7.122\%$).
+\end{solution}

@@ -1,0 +1,5 @@
+$ python clt.py
+population: mean 21,554  sd 15,552  skewness 1.24
+n =   5: sd of means  6,979  sigma/sqrt(n)  6,955  skewness 0.51
+n =  30: sd of means  2,840  sigma/sqrt(n)  2,839  skewness 0.23
+n = 200: sd of means  1,093  sigma/sqrt(n)  1,100  skewness 0.12

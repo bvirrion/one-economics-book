@@ -1,0 +1,348 @@
+% Provenance (never printed): the labour strand of ../economics_series.md (grade 8: the labour market; employed,
+% unemployed, outside; the two rates and the survey; why wages differ; wages and productivity over long periods).
+% Brief: sources/book1/BRIEFS.md, g8-05. Chart data: figdata/grade-8/05-jobs-wages-unemployment (JST R6 unemp, wage,
+% cpi, rgdpmad; US 2019 from WDI SL.UEM.TOTL.NE.ZS because JST prints 2.0; Brenland accounts and households).
+% Ledger: g8:bls-unemployed-search, g8:bls-labour-force-age, g8:ilo-future-starters.
+\chapter{Jobs, Wages and Unemployment}\label{ch:g8:jobs-wages-unemployment}
+
+\begin{openingchart}{Unemployment rate in five countries, 1970--2020, in percent of the labour
+force.}{Jord\`a--Schularick--Taylor Macrohistory Database, \omterm{def:g8:jobs-wages-unemployment:unemployment-rate}{unemployment rate}; United States 2019
+from World Bank, World Development Indicators, SL.UEM.TOTL.NE.ZS}
+\begin{tikzpicture}
+\begin{axis}[omtime, xmin=1970, xmax=2020, ymin=0, ymax=28, xlabel={Year},
+  ylabel={Unemployment rate (percent)},
+  legend style={at={(0.5,-0.2)}, anchor=north, legend columns=5}]
+\addplot table[x=year, y=usa] {figdata/grade-8/05-jobs-wages-unemployment/out/unemployment.csv};
+\addplot table[x=year, y=gbr] {figdata/grade-8/05-jobs-wages-unemployment/out/unemployment.csv};
+\addplot table[x=year, y=deu] {figdata/grade-8/05-jobs-wages-unemployment/out/unemployment.csv};
+\addplot table[x=year, y=esp] {figdata/grade-8/05-jobs-wages-unemployment/out/unemployment.csv};
+\addplot table[x=year, y=jpn] {figdata/grade-8/05-jobs-wages-unemployment/out/unemployment.csv};
+\legend{United States, United Kingdom, Germany, Spain, Japan}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: facts (esp_max 26.1 in 2013, esp_2007 8.2; jpn_max 5.4 in 2002, jpn_1970 1.1; usa_max 9.7 in 1982;
+% gbr_max 11.5 in 1985; deu_max 11.2 in 2005; usa_2020 8.0)
+In Spain, the share of people who wanted a job and could not find one went from $8.2\,\%$ in 2007 to
+$26.1\,\%$ in 2013: more than one in four. In Japan over the same fifty years, it never went above
+$5.4\,\%$. In the United States, it rose to $9.7\,\%$ in 1982 and jumped to $8.0\,\%$ in 2020, the
+year of the pandemic, from $3.7\,\%$ the year before.
+
+What does it mean to be ``unemployed'', and who counts it? This chapter defines the words, the two
+rates built on them and the survey that measures them, then looks at \omterm{def:g7:households:wage}{wages}: why they differ between
+jobs, and how they have moved over a century and a half.
+
+\begin{recall}
+Hours worked and the three sectors were met in \cref{ch:g6:school-and-work}; a \omterm{def:g7:households:wage}{wage} is the pay for
+work (\cref{ch:g7:households}); a \omterm{def:g8:inflation-and-price-indices:real-wage}{real wage} is a \omterm{def:g7:households:wage}{wage} divided by a \omterm{def:g8:inflation-and-price-indices:cpi}{consumer price index}, times 100
+(\cref{ch:g8:inflation-and-price-indices}); output per hour measures productivity
+(\cref{ch:g8:production-and-productivity}).
+\end{recall}
+
+\section{The labour market}
+
+\begin{definition}[Labour market]\label{def:g8:jobs-wages-unemployment:labour-market}
+The \emph{labour market}\index{labour market} is the set of all the exchanges in which people offer
+their work and employers hire it for a \omterm{def:g7:households:wage}{wage}.
+\end{definition}
+
+Workers choose which jobs to apply for and how many hours to offer; employers choose whom to hire,
+for which tasks, and at which \omterm{def:g7:households:wage}{wage}. Each day, people take new jobs, leave jobs, lose them or start
+looking for one. The counts and rates below are a photograph of this \omterm{def:g7:markets-and-prices:market}{market} at one moment.
+
+\begin{omfigure}
+\includegraphics[width=0.62\linewidth]{images/book1/ai/g8-jobs-job-fair.jpg}
+
+{\small A job fair: employers at the tables, people looking for work going from one table to the
+next.}
+\end{omfigure}
+
+\section{Employed, unemployed, outside the labour force}
+
+\begin{definition}[Employed person]\label{def:g8:jobs-wages-unemployment:employed}
+An \emph{employed person}\index{employed person} is a person who did paid work in the week of the
+survey, even for one hour, or who has a job and was away from it for a short time (holiday,
+illness).
+\end{definition}
+
+\begin{definition}[Unemployed person]\label{def:g8:jobs-wages-unemployment:unemployed}
+An \emph{unemployed person}\index{unemployed person} is a person who is not employed, is available
+to start work, and has actively looked for work in the recent past.
+\end{definition}
+
+\begin{definition}[Labour force]\label{def:g8:jobs-wages-unemployment:labour-force}
+The \emph{labour force}\index{labour force} is the number of \omterm{def:g8:jobs-wages-unemployment:employed}{employed persons} plus the number of
+\omterm{def:g8:jobs-wages-unemployment:unemployed}{unemployed persons}.
+\end{definition}
+
+\begin{definition}[Outside the labour force]\label{def:g8:jobs-wages-unemployment:outside}
+A person of working age is \emph{outside the labour force}\index{outside the labour force} when
+they are neither employed nor unemployed: most students, retired people, people who care for their
+family at home, and people who would like a job but have stopped looking.
+\end{definition}
+
+Being without a job is not enough to be unemployed: a retired person or a student who does not look
+for work is \omterm{def:g8:jobs-wages-unemployment:outside}{outside the labour force}. A person who wants a job but has given up looking is outside
+it too.
+
+% figdata: brenland 2025 (pop 9291, under15 1490, working_age 7801, outside 3156, labour_force 4645,
+% employed 4366, unemployed 279, unemp_rate 6.0, participation 59.5); under15 invented as 16 % of pop
+\begin{omfigure}
+\begin{tikzpicture}[x=1cm, y=1cm, font=\small]
+  \node[anchor=south west, font=\small\bfseries] at (0,4.3) {Brenland, 2025: population $9\,291$};
+  \draw[fill=black!8] (0,0) rectangle (2.2,3.5);
+  \node[align=center] at (1.1,1.75) {under 15\\$1\,490$};
+  \draw[fill=black!18] (2.2,0) rectangle (6.0,3.5);
+  \node[align=center] at (4.1,1.75) {outside the\\labour force\\$3\,156$};
+  \draw[fill=omDef!25] (6.0,0) rectangle (10.3,3.5);
+  \node[align=center] at (8.15,1.75) {employed\\$4\,366$};
+  \draw[fill=omDef!60] (10.3,0) rectangle (12,3.5);
+  \node[align=center, font=\footnotesize] at (11.15,1.75) {unem-\\ployed\\$279$};
+  \draw[decorate, decoration={brace, amplitude=5pt, mirror}] (2.2,-0.1) -- (12,-0.1)
+    node[midway, below=6pt] {aged 15 and over: $7\,801$};
+  \draw[decorate, decoration={brace, amplitude=5pt}] (6.0,3.6) -- (12,3.6)
+    node[midway, above=5pt] {labour force: $4\,645$};
+\end{tikzpicture}
+
+{\small Brenland's population in 2025, in thousands, split into four groups. The number of children
+under 15 is invented for this figure; the other numbers are from Brenland's accounts.}
+\end{omfigure}
+
+\section{Two rates and the survey}
+
+\begin{definition}[Unemployment rate]\label{def:g8:jobs-wages-unemployment:unemployment-rate}
+The \emph{unemployment rate}\index{unemployment rate} is the number of \omterm{def:g8:jobs-wages-unemployment:unemployed}{unemployed persons} divided by
+the \omterm{def:g8:jobs-wages-unemployment:labour-force}{labour force}, in percent:
+\[
+\text{unemployment rate} = \frac{\text{unemployed}}{\text{employed} + \text{unemployed}} \times 100.
+\]
+\end{definition}
+
+\begin{definition}[Participation rate]\label{def:g8:jobs-wages-unemployment:participation-rate}
+The \emph{participation rate}\index{participation rate} is the \omterm{def:g8:jobs-wages-unemployment:labour-force}{labour force} divided by the
+population of working age, in percent.
+\end{definition}
+
+In Brenland in 2025, the \omterm{def:g8:jobs-wages-unemployment:unemployment-rate}{unemployment rate} is $279 \div 4\,645 \times 100 \approx 6.0\,\%$ and the
+\omterm{def:g8:jobs-wages-unemployment:participation-rate}{participation rate} is $4\,645 \div 7\,801 \times 100 \approx 59.5\,\%$. The \omterm{def:g8:jobs-wages-unemployment:unemployment-rate}{unemployment rate} is
+divided by the \omterm{def:g8:jobs-wages-unemployment:labour-force}{labour force}, not by the whole population: dividing by $9\,291$ would count babies
+and retired people as if they could be looking for work.
+
+\begin{definition}[Labour force survey]\label{def:g8:jobs-wages-unemployment:survey}
+A \emph{labour force survey}\index{labour force survey} is a survey that asks a sample of
+\omterm{def:g7:households:household}{households}, every month or every quarter, what each of their members did in a given week, in order
+to count the employed, the unemployed and the people \omterm{def:g8:jobs-wages-unemployment:outside}{outside the labour force}.
+\end{definition}
+
+\begin{measure}[The labour force survey]
+Nobody is counted as unemployed because they say so. The survey asks a list of questions: did you
+do any paid work last week? If not, could you have started a job? Did you do anything to find one?
+In the United States, a person counts as unemployed if they were not employed in the survey week,
+were available for work, and made at least one specific, active effort to find a job during the
+4 weeks ending with that week; the figures cover people aged 16 and over. Other countries use the
+same three tests (no work, available, searching), with small differences in ages and periods. The
+international rule adds one case: a person without work who could start now and has already arranged
+to start a job soon, generally within three months, counts as unemployed even without searching. The
+answers of the sample are then scaled up to the whole population.
+\end{measure}
+
+\section{Why wages differ}
+
+In the same country and the same year, some jobs pay several times more than others. Four reasons
+come back again and again.
+
+\begin{description}
+  \item[What the work produces.] An employer cannot keep paying a worker more than the value of what
+        that worker adds, and competing employers bid for workers who add more.
+  \item[Skills and schooling.] Skills that take years to learn are scarce, and the people who have
+        them add more to output.
+  \item[The job itself.] Night work, danger, dirt or long trips often come with extra pay, needed to
+        find people willing to do them.
+  \item[Place.] \omterm{def:g7:households:wage}{Wages} in cities and in richer regions are higher, and so are \omterm{def:g7:money:price}{prices} and rents.
+\end{description}
+
+% figdata: schooling (up to 9: 163, 20430; 10 to 12: 532, 24840; 13 to 15: 559, 30770; 16 or more: 185, 40430)
+Brenland's \omterm{def:g7:households:household}{household} survey of 2025 shows the second reason. Among \omterm{def:g7:households:household}{households} whose head worked
+during the year, the median gross \omterm{def:g7:households:income}{income} was $20\,430$ dalens when the head had studied for 9 years
+or less, $24\,840$ for 10 to 12 years, $30\,770$ for 13 to 15 years and $40\,430$ for 16 years or
+more. These are \omterm{def:g7:households:household}{household} \omterm{def:g7:households:income}{incomes}, and schooling is not the only difference between these groups:
+the table shows that more schooling and higher \omterm{def:g7:households:income}{income} go together, not by how much schooling alone
+raises pay.
+
+\section{Wages and productivity over a century}
+
+\begin{model}{Wages follow productivity}
+\assumes Employers compete to hire workers; none can keep paying a worker more than what that worker
+adds, and a worker can leave for an employer who pays closer to it.
+\predicts Over decades, \omterm{def:g8:inflation-and-price-indices:real-wage}{real wages} rise roughly as fast as \omterm{def:g7:specialisation:output-per-worker}{output per worker}.
+\tested In the United States, the United Kingdom and Sweden from 1870 to 2020, \omterm{def:g8:inflation-and-price-indices:real-wage}{real wages} and real
+\omterm{def:g8:gdp:gdp-per-person}{GDP per person} (a stand-in for \omterm{def:g7:specialisation:output-per-worker}{output per worker}) both rose many times over, in the same decades
+(chart below).
+\breaks In the short run, \omterm{def:g7:households:wage}{wages} can lag behind or run ahead of output; over long periods the two can
+drift apart by a large factor, when the share of \omterm{def:g7:households:income}{income} paid as \omterm{def:g7:households:wage}{wages} changes, or when \omterm{def:g7:money:price}{prices} of
+what workers buy rise faster than \omterm{def:g7:money:price}{prices} of what they produce. How large such gaps are is studied in
+a later volume.
+\end{model}
+
+% figdata: real_wages 1913 = 100; 2020 values w_usa 461.8, y_usa 634.7; w_gbr 463.6, y_gbr 480.6;
+% w_swe 1421.6, y_swe 936.4
+\begin{omchart}{Real wages (solid) and real GDP per person (dashed), 1870--2020, both 1913 = 100, on a
+times-ten scale.}{Jord\`a--Schularick--Taylor Macrohistory Database: \omterm{def:g7:households:wage}{wages} divided by consumer \omterm{def:g7:money:price}{prices};
+real \omterm{def:g8:gdp:gdp-per-person}{GDP per person}}
+\begin{tikzpicture}
+\begin{semilogyaxis}[omtimesten, name=usa, width=0.375\linewidth, height=0.42\linewidth,
+  xmin=1870, xmax=2020, ymin=20, ymax=2000, xtick={1900,1960}, title={United States\strut},
+  ylabel={Index, 1913 = 100}]
+\addplot[omDef, thick] table[x=year, y=w_usa] {figdata/grade-8/05-jobs-wages-unemployment/out/real_wages.csv};
+\addplot[black!60, dashed] table[x=year, y=y_usa] {figdata/grade-8/05-jobs-wages-unemployment/out/real_wages.csv};
+\end{semilogyaxis}
+\begin{semilogyaxis}[omtimesten, name=gbr, at={(usa.east)}, anchor=west, xshift=0.3cm,
+  width=0.375\linewidth, height=0.42\linewidth, xmin=1870, xmax=2020, ymin=20, ymax=2000,
+  xtick={1900,1960}, title={United Kingdom\strut}, yticklabels={}]
+\addplot[omDef, thick] table[x=year, y=w_gbr] {figdata/grade-8/05-jobs-wages-unemployment/out/real_wages.csv};
+\addplot[black!60, dashed] table[x=year, y=y_gbr] {figdata/grade-8/05-jobs-wages-unemployment/out/real_wages.csv};
+\end{semilogyaxis}
+\begin{semilogyaxis}[omtimesten, at={(gbr.east)}, anchor=west, xshift=0.3cm,
+  width=0.375\linewidth, height=0.42\linewidth, xmin=1870, xmax=2020, ymin=20, ymax=2000,
+  xtick={1900,1960}, title={Sweden\strut}, yticklabels={}]
+\addplot[omDef, thick] table[x=year, y=w_swe] {figdata/grade-8/05-jobs-wages-unemployment/out/real_wages.csv};
+\addplot[black!60, dashed] table[x=year, y=y_swe] {figdata/grade-8/05-jobs-wages-unemployment/out/real_wages.csv};
+\end{semilogyaxis}
+\end{tikzpicture}
+\end{omchart}
+
+From 1913 to 2020, \omterm{def:g8:inflation-and-price-indices:real-wage}{real wages} were multiplied by $4.6$ in the United States and in the United
+Kingdom, and by $14.2$ in Sweden; real \omterm{def:g8:gdp:gdp-per-person}{GDP per person} by $6.3$, $4.8$ and $9.4$. In all three
+countries, a worker of 2020 could buy several times what a worker of 1913 could buy with a day's
+pay. The two lines do not end at the same height: in the United States \omterm{def:g8:inflation-and-price-indices:real-wage}{real wages} rose less than
+\omterm{def:g8:gdp:gdp-per-person}{GDP per person}, in Sweden more. The model gets the direction and the order of size right, not the
+exact factor.
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g8:jobs-wages-unemployment:1}
+Use the opening chart. What was Spain's highest \omterm{def:g8:jobs-wages-unemployment:unemployment-rate}{unemployment rate}, and in which year?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g8:jobs-wages-unemployment:2}
+A town has $18\,800$ employed and $1\,200$ \omterm{def:g8:jobs-wages-unemployment:unemployed}{unemployed persons}. Compute its \omterm{def:g8:jobs-wages-unemployment:labour-force}{labour force} and its
+\omterm{def:g8:jobs-wages-unemployment:unemployment-rate}{unemployment rate}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g8:jobs-wages-unemployment:3}
+A country has $40\,000$ people of working age, of whom $24\,000$ are in the \omterm{def:g8:jobs-wages-unemployment:labour-force}{labour force}. Compute
+its \omterm{def:g8:jobs-wages-unemployment:participation-rate}{participation rate}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g8:jobs-wages-unemployment:4}
+Use the opening chart. In the 1990s, Germany's \omterm{def:g8:jobs-wages-unemployment:unemployment-rate}{unemployment rate} rose above the United Kingdom's.
+About when did this happen, and about when did it fall back below it?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g8:jobs-wages-unemployment:5}
+In 2015, Brenland's \omterm{def:g8:jobs-wages-unemployment:labour-force}{labour force} was $4\,376$ thousand and $4\,122$ thousand people were employed.
+Compute the number of \omterm{def:g8:jobs-wages-unemployment:unemployed}{unemployed persons} and the \omterm{def:g8:jobs-wages-unemployment:unemployment-rate}{unemployment rate}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g8:jobs-wages-unemployment:6}
+In the town of exercise 2, 100 \omterm{def:g8:jobs-wages-unemployment:unemployed}{unemployed persons} stop looking for work and nothing else changes.
+Compute the new \omterm{def:g8:jobs-wages-unemployment:unemployment-rate}{unemployment rate}. What happens to the \omterm{def:g8:jobs-wages-unemployment:participation-rate}{participation rate}?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g8:jobs-wages-unemployment:7}
+Use the text. By how much were \omterm{def:g8:inflation-and-price-indices:real-wage}{real wages} multiplied from 1913 to 2020 in Sweden? And real \omterm{def:g8:gdp:gdp-per-person}{GDP per
+person}?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g8:jobs-wages-unemployment:8}
+\omterm{def:g7:specialisation:output-per-worker}{Output per worker} rises by $2\,\%$ a year for 35 years. If the model ``\omterm{def:g7:households:wage}{Wages} follow productivity''
+holds, what happens to \omterm{def:g8:inflation-and-price-indices:real-wage}{real wages} over these years? (Use the rule of 70.)
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g8:jobs-wages-unemployment:9}
+Give an observation from this chapter's chart of \omterm{def:g7:households:wage}{wages} that does not fit the model ``\omterm{def:g7:households:wage}{Wages} follow
+productivity'' exactly.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g8:jobs-wages-unemployment:10}
+A hospital employs 300 nurses paid $3\,000$ dalens a month and 100 doctors paid $7\,000$ dalens a
+month. Compute the average monthly \omterm{def:g7:households:wage}{wage} in the hospital.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g8:jobs-wages-unemployment:11}
+A country has $50\,000$ people of working age, $28\,500$ employed and $1\,500$ unemployed. (a) Compute
+the \omterm{def:g8:jobs-wages-unemployment:unemployment-rate}{unemployment rate} and the \omterm{def:g8:jobs-wages-unemployment:participation-rate}{participation rate}. (b) 500 of the unemployed stop looking for work;
+employment does not change. Compute both rates again. (c) Did anyone find a job?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g8:jobs-wages-unemployment:12}
+Give two things about work that the \omterm{def:g8:jobs-wages-unemployment:unemployment-rate}{unemployment rate} cannot show.
+\end{exercise}
+
+\section{Problem: The Brenland Labour Survey}
+
+\begin{problem}[{Weekend problem --- classifying survey answers, computing the two rates, and
+Brenland's unemployment from 2000 to 2025}]
+\label{pb:g8:jobs-wages-unemployment:1}
+Everything in this problem is invented. A small test of Brenland's \omterm{def:g8:jobs-wages-unemployment:survey}{labour force survey} asks 20
+people about the week of 3 to 9 March.
+\begin{center}
+\small
+\begin{tabular}{rrl@{\hspace{1.5em}}rrl}
+\toprule
+No. & Age & Answer & No. & Age & Answer \\
+\midrule
+1 & 34 & worked 40 hours & 11 & 41 & worked 38 hours \\
+2 & 16 & at school; not looking & 12 & 60 & no job; looking; can start now \\
+3 & 71 & retired & 13 & 33 & home with children; not looking \\
+4 & 45 & no job; looking; can start now & 14 & 27 & worked 45 hours \\
+5 & 29 & worked 10 hours & 15 & 8 & at school \\
+6 & 12 & at school & 16 & 48 & has a job; on holiday \\
+7 & 52 & no job; stopped looking & 17 & 36 & no job; looking; cannot start before June \\
+8 & 38 & worked 35 hours & 18 & 55 & worked 40 hours \\
+9 & 23 & no job; looking; can start now & 19 & 25 & no job; looking; can start now \\
+10 & 19 & student; worked 8 hours & 20 & 66 & worked 15 hours \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent\textbf{Part I --- Classifying.}
+\begin{enumerate}
+  \item Put each person in one group: under 15, employed, unemployed, or \omterm{def:g8:jobs-wages-unemployment:outside}{outside the labour force}.
+  \item How many people are in each group?
+  \item Person 7 would like a job. Why is she not unemployed?
+  \item Why is person 17 not unemployed, although he is looking for work?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The rates.}
+\begin{enumerate}[resume]
+  \item What is the \omterm{def:g8:jobs-wages-unemployment:labour-force}{labour force} of the sample?
+  \item Compute the \omterm{def:g8:jobs-wages-unemployment:unemployment-rate}{unemployment rate} of the sample.
+  \item Compute the \omterm{def:g8:jobs-wages-unemployment:participation-rate}{participation rate} of the sample (working age is 15 and over).
+  \item Person 7 starts looking again and could start at once. Compute both rates again.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Brenland, 2000--2025.} The table gives Brenland's \omterm{def:g8:jobs-wages-unemployment:labour-force}{labour force} and
+employment, in thousands.
+\begin{center}
+\begin{tabular}{lrrrrrrr}
+\toprule
+Year & 2000 & 2008 & 2009 & 2012 & 2020 & 2021 & 2025 \\
+\midrule
+\omterm{def:g8:jobs-wages-unemployment:labour-force}{Labour force} & 4\,000 & 4\,196 & 4\,221 & 4\,298 & 4\,508 & 4\,535 & 4\,645 \\
+Employed & 3\,760 & 3\,906 & 3\,883 & 4\,019 & 4\,111 & 4\,317 & 4\,366 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{enumerate}[resume]
+  \item Compute the \omterm{def:g8:jobs-wages-unemployment:unemployment-rate}{unemployment rate} in 2000 and in 2025.
+  \item Compute it in 2008 and in 2009. How many more people were unemployed in 2009?
+  \item In 2025, $7\,801$ thousand people in Brenland were aged 15 and over. Compute the
+        \omterm{def:g8:jobs-wages-unemployment:participation-rate}{participation rate}.
+  \item Among the years of the table, which had the highest \omterm{def:g8:jobs-wages-unemployment:unemployment-rate}{unemployment rate}, and what was it?
+\end{enumerate}
+\end{problem}

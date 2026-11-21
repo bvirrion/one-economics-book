@@ -1,0 +1,5 @@
+$ python rd_fuzzy.py
+schools within 10 of the cutoff 689
+first stage: jump in class size  -14.01 (s.e. 1.01)
+reduced form: jump in score        4.04 (s.e. 1.15)
+fuzzy RD (Wald ratio)            -0.289

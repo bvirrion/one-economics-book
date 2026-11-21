@@ -1,0 +1,137 @@
+\section*{Chapter \ref{ch:b1:describing-data} --- Describing Data}
+% Numbers recomputed in code/bachelor-1/29-describing-data/exercises/ (solutions.py, exo_05.py,
+% exo_06.py, exo_07.py; tested in tests/test_ch29.py).
+
+\begin{solution}{exo:b1:describing-data:read}
+$169.65/67.15 = 2.53$. On the logarithmic panel the ninetieth hundredth lies
+$\log_{10} 2.53 = 0.40$ decades above the median, about as far above it as the
+tenth hundredth (24.55 dollars) lies below it.
+\end{solution}
+
+\begin{solution}{exo:b1:describing-data:five}
+Mean $30/5 = 6$, median $3$. The median: one large value pulls the mean above four
+of the five numbers.
+\end{solution}
+
+\begin{solution}{exo:b1:describing-data:r}
+$r = 12/(3 \times 5) = 0.8$.
+\end{solution}
+
+\begin{solution}{exo:b1:describing-data:trap}
+A \omterm{def:b1:describing-data:simpson}{composition effect}: employment shifted towards lower-paid occupations,
+for example because high-paid jobs were lost in a recession or many
+young workers entered low-paid ones.
+\end{solution}
+
+\begin{solution}{exo:b1:describing-data:log}
+For the 2,107 men earning at least 5,000 dollars, the \omterm{def:b1:describing-data:skewness}{skewness} is $1.878$ for
+earnings and $-0.238$ for their logarithm: without the lowest earnings, the
+logarithm is close to symmetric.
+\end{solution}
+
+\begin{solution}{exo:b1:describing-data:cap}
+The mean rises from 14,847 to 18,160 dollars, by $22.3\%$; the median stays at
+16,422, since it lies below the cap.
+\end{solution}
+
+\begin{solution}{exo:b1:describing-data:step}
+$20{,}564 - 16{,}153 = 4{,}411$ dollars from 11 to 12 years; from 12 to 16 years,
+$(30{,}184 - 20{,}564)/4 = 2{,}405$ dollars a year.
+\end{solution}
+
+\begin{solution}{exo:b1:describing-data:prove}
+With $A = \sqrt{\sum a_i^2}$ and $B = \sqrt{\sum b_i^2}$, expanding gives
+$\sum a_i^2/A^2 + \sum b_i^2/B^2 \pm 2\sum a_ib_i/(AB) = 2 \pm 2r \ge 0$, so $-1 \le r \le 1$. Equality needs every term zero:
+$b_i/B = \mp a_i/A$, a straight line.
+\end{solution}
+
+\begin{solution}{exo:b1:describing-data:billionaire}
+The mean rises by about $10^9/10{,}001 \approx 99{,}990$ dollars; the median barely moves (it
+shifts by half a step between two neighbouring values).
+\end{solution}
+
+\begin{solution}{exo:b1:describing-data:build}
+Men: $80\%$ in A, $20\%$ in B, $90/150 = 60\%$ overall. Women: $90\%$ in A, $30/130 = 23.1\%$ in B,
+$48/150 = 32\%$ overall. Women are admitted at a higher rate in each department
+and at a lower rate overall, because most of them applied to B, which
+admits few.
+\end{solution}
+
+\begin{solution}{exo:b1:describing-data:minimise}
+The derivative of $\sum(x_i - c)^2$ is $-2\sum(x_i - c)$, zero at $c = \bar x$, and the function is
+convex. For $\sum|x_i - c|$, moving $c$ up by a small $h$ changes the sum by $h$ times
+(the number of observations below $c$ minus the number above); the sum
+falls while more lie above and rises once more lie below, so it is smallest
+where half lie on each side: at a median.
+\end{solution}
+
+\begin{solution}{exo:b1:describing-data:hidden}
+A scatter plot showing the points close to a curve that is not a line ---
+a parabola, a threshold, a relation that holds in one group and is reversed
+in another. Correlations within groups, or of transformed variables, much
+larger than $0.1$ would show it too.
+\end{solution}
+
+\begin{solution}{pb:b1:describing-data:survey}
+\textbf{1.} 49, 731, 734, 315, 111, 40, 11, 7, 1, 1 (from 0 to 100,000).
+
+\textbf{2.} 30, 249, 926, 598, 163, 15: 1,981 households. The other 19, all at
+the minimum of 6,000 dalens ($\log_{10} 6000 = 3.78$), lie below $3.8$.
+
+\textbf{3.} The logarithmic one: the level has a long right tail.
+
+\textbf{4.} Mean $24{,}919.7$ dalens; median $22{,}265$.
+
+\textbf{5.} $60.8\%$.
+
+\textbf{6.} The distribution is skewed to the right: a few high incomes raise
+the mean and not the median.
+
+\textbf{7.} $10{,}603.9$ dalens; \omterm{def:b1:describing-data:skewness}{skewness} $1.436$.
+
+\textbf{8.} $-0.123$.
+
+\textbf{9.} 14,789 and 38,991; ratio $2.64$.
+
+\textbf{10.} $19.3\%$.
+
+\textbf{11.} Wealthy households answer less often, and top incomes are
+under-reported.
+
+\textbf{12.} 22,355; 24,775; 28,367; 35,762 dalens.
+
+\textbf{13.} $0.315$; $0.329$ with the logarithm.
+
+\textbf{14.} Income also depends on age, hours and luck, and retired
+households with high schooling have pensions rather than earnings; the
+relation may also be steeper at high schooling than a line allows.
+
+\textbf{15.} No: it describes; people with more schooling may differ in other
+ways that raise income.
+
+\textbf{16.} Under 50: 25,301; 50 or over: 24,519 dalens.
+
+\textbf{17.} Not working: 9,353 (under 50) and 18,370 (50 or over). Working: 26,240
+and 31,098.
+
+\textbf{18.} $94.4\%$ under 50, $48.3\%$ at 50 or over.
+
+\textbf{19.} $\tfrac{968}{1025} \times 26{,}240 + \tfrac{57}{1025} \times 9{,}353 = 25{,}301$; $\tfrac{471}{975} \times 31{,}098 + \tfrac{504}{975} \times 18{,}370 = 24{,}519$
+(with the shares rounded to $0.944$ and $0.483$ the sums are about 25,294 and 24,518).
+
+\textbf{20.} $\tfrac{968}{1025} \times 31{,}098 + \tfrac{57}{1025} \times 18{,}370 = 30{,}390$ dalens.
+
+\textbf{21.} The within-group comparison.
+
+\textbf{22.} The overall comparison, if the question is about households as
+they are.
+
+\textbf{23.} \omterm{def:b1:describing-data:simpson}{Simpson's paradox}, a \omterm{def:b1:describing-data:simpson}{composition effect}.
+
+\textbf{24.} That households get poorer with age at every stage, when the
+difference comes from retirement.
+
+\textbf{25.} Within working and within non-working households, older heads'
+households have more income, yet overall their mean is lower by 782
+dalens, because half of them no longer work.
+\end{solution}

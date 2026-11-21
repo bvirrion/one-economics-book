@@ -1,0 +1,6 @@
+$ python stabilise.py
+country  debt %GDP  interest %  growth %  stabilising  actual primary
+DE            61.4        1.75      4.28        -1.49           -1.67
+FR           112.6        1.94      3.83        -2.05           -3.71
+IT           134.3        2.98      4.19        -1.56            0.48
+EL           153.5        2.23      5.12        -4.22            4.86

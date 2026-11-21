@@ -1,0 +1,104 @@
+\section*{Chapter \ref{ch:b2:government-debt} --- Government Debt and Ricardian Equivalence}
+
+\begin{solution}{exo:b2:government-debt:1}
+% figdata: debt_summary
+United Kingdom 270 per cent in 1946 and France 237 per cent in 1921, both after wars. The United States (128), Japan (254) and Italy (156) reached their highest
+ratios in 2020, in peacetime.
+\end{solution}
+
+\begin{solution}{exo:b2:government-debt:2}
+A primary deficit of $3 - 2.5 = 0.5$ per cent of GDP.
+\end{solution}
+
+\begin{solution}{exo:b2:government-debt:3}
+% figdata: offset_summary
+\omterm{def:b2:government-debt:ricardian-equivalence}{Ricardian equivalence} predicts a slope of 0: private saving offsets any change in government saving. Households that
+ignore future taxes give a slope of 1. The fitted slope, 0.53 (standard error 0.19), lies between: about half is offset.
+\end{solution}
+
+\begin{solution}{exo:b2:government-debt:4}
+Falsify: households with access to credit that spend a large share of a tax cut announced as debt-financed. Support:
+households that raise their saving by the amount of such a cut, while their income and expectations of future
+spending are unchanged.
+\end{solution}
+
+\begin{solution}{exo:b2:government-debt:5}
+% code: exercises/solutions.py stabilising
+At 4 per cent: $0.01/1.03 \times 0.9 = 0.874$ per cent of GDP. At 3 per cent the interest rate equals growth, and the stabilising balance is zero.
+\end{solution}
+
+\begin{solution}{exo:b2:government-debt:6}
+% code: exercises/solutions.py limit_with_deficit
+$b_{t+1} = (1.02/1.04)b_t + 0.02$: the coefficient $1.02/1.04 < 1$, so $b_t$ converges to $b^* = 0.02/(1 - 1.02/1.04) = 0.02 \times 1.04/0.02 = 1.04$, debt of 104 per cent of GDP.
+\end{solution}
+
+\begin{solution}{exo:b2:government-debt:7}
+% code: exercises/solutions.py eurostat_extended
+Spain: stabilising $-2.42$, actual $-0.74$; Portugal: stabilising $-3.52$, actual 2.78 (per cent of GDP), with 2019--2024 growth. With growth averaged over 2014--2024 the
+stabilising balances become $-1.28$ (Germany), $-1.32$ (France), $-0.13$ (Italy), $-1.22$ (Greece), $-1.88$ (Spain) and $-2.69$ (Portugal): all less negative, Italy's close to zero, because the
+longer window has less inflation in it. Germany and France still run \omterm{def:b2:government-debt:primary-balance}{primary balances} below the stabilising ones, now by more ($-1.67$ against $-1.28$, $-3.71$ against
+$-1.32$); Italy, Greece, Spain and Portugal stay above theirs, Italy by much less than before (0.48 against $-0.13$).
+\end{solution}
+
+\begin{solution}{exo:b2:government-debt:8}
+The second tax is $20 + 10 \times 1.05 = 30.5$. A household that can borrow: the present value of its taxes is unchanged ($-10 + 10.5/1.05 = 0$), so its consumption is
+unchanged and its saving rises by 10. A household that cannot borrow and wanted to consume more now spends the cut, up to
+the consumption it would choose if it could borrow.
+\end{solution}
+
+\begin{solution}{exo:b2:government-debt:9}
+% code: exercises/solutions.py smoothing
+Taxing 20 in the year of spending costs $0^2 + 20^2 = 400$ units; 10 in each year costs $10^2 + 10^2 = 200$: smoothing halves the loss.
+\end{solution}
+
+\begin{solution}{exo:b2:government-debt:10}
+Dividing $B_{t+1} = (1 + i)B_t - S_{t+1}$ by $Y_{t+1} = (1 + \gamma)Y_t$ gives $b_{t+1} = \frac{1 + i}{1 + \gamma}b_t - s_{t+1}$. Setting $b_{t+1} = b_t = b$: $s = \left(\frac{1 + i}{1 + \gamma} - 1\right)b = \frac{i - \gamma}{1 + \gamma}b$. Solving forward, with $a = (1 + \gamma)/(1 + i) < 1$:
+$b_0 = a(s_1 + b_1) = as_1 + a^2(s_2 + b_2) = \dots = \sum_{t=1}^T a^ts_t + a^Tb_T$, and if $a^Tb_T \to 0$, $b_0 = \sum_{t \ge 1} a^ts_t$.
+\end{solution}
+
+\begin{solution}{exo:b2:government-debt:11}
+The household's budget is $c_1 = y_1 - T_1$; the cut raises its disposable income by $\Delta$ and the repayment falls on the next generation, so $c_1$ rises by $\Delta$. If the household
+weighs its heirs' welfare as its own and leaves them a bequest, it raises the bequest by $(1 + r)\Delta$ to pay their extra tax: the two
+generations act as one household with an unchanged budget, and consumption does not change.
+\end{solution}
+
+\begin{solution}{exo:b2:government-debt:12}
+% code: exercises/solutions.py bohn
+$b_{t+1} = \left(\frac{1 + i}{1 + \gamma} - \rho\right)b_t - \mu$ converges if the coefficient is below 1 in absolute value, that is if $\rho > \frac{1 + i}{1 + \gamma} - 1 = \frac{i - \gamma}{1 + \gamma}$ (and the coefficient is above $-1$). With the numbers,
+$1.04/1.03 - 0.054 = 0.9557$, and the half-life is $\ln 0.5/\ln 0.9557 = 15.3$ years.
+\end{solution}
+
+\begin{solution}{pb:b2:government-debt:1}
+% code: exercises/solutions.py brenland
+\textbf{Part I.}
+1. $7{,}865/393{,}264 = 2.0$ per cent.
+2. $236{,}818/393{,}264 = 60.2$ per cent.
+3. $228{,}953 + 7{,}865 = 236{,}818$.
+4. $0.03 \times 228{,}953 = 6{,}869$.
+5. $7{,}865 - 6{,}869 = 996$ of primary deficit, 0.25 per cent of GDP.
+6. Nominal GDP grew 10.9 per cent, mostly through inflation: the denominator rose faster than the debt.
+\textbf{Part II.}
+7. $(0.03 - 0.036)/1.036 \times 0.602 = -0.35$ per cent: a primary deficit of 0.35 per cent holds the ratio.
+8. The actual primary deficit, 0.25 per cent, is smaller: the ratio falls.
+9. $(1.03/1.036) \times 0.602 + 0.0025 = 0.601$, 60.1 per cent.
+10. $0.014/1.036 \times 0.602 = 0.81$ per cent of GDP.
+11. $(1.05/1.036) \times 0.602 + 0.0025 = 0.613$, 61.3 per cent.
+12. Interest is paid on every dalen owed, 60 per cent of GDP; the \omterm{def:b2:government-debt:primary-balance}{primary balance} adds or removes only one year's flow.
+\textbf{Part III.}
+13. By $1{,}000 \times 1.03 = 1{,}030$ dalens.
+14. It saves the 1,000, lends it at 3 per cent, and pays next year's extra tax with the 1,030: consumption unchanged.
+15. It spends the 1,000 now.
+16. $0.7 \times 1{,}000 = 700$ dalens.
+17. Government saving falls by 1,000 per household and private saving rises by 700: national saving falls by 300. Private saving offsets 70
+per cent.
+18. It cannot borrow; and it may not foresee the future tax, or expect someone else to pay it.
+\textbf{Part IV.}
+19. Iterating $b_{t+1} = (1.03/1.036)b_t - 0.01$ from 0.602: below 0.50 after 8 years.
+20. With $(1.05/1.036)b_t - 0.01$: 42 years, since the surplus barely exceeds the stabilising 0.81 per cent.
+21. $s = \left(a^{10} \times 0.602 - 0.50\right)/\sum_{k=0}^{9}a^k$ with $a = 1.03/1.036$: 0.70 per cent of GDP.
+22. With $(1.03/1.056)b_t - 0.01$: 5 years.
+23. Savers would have to accept 3 per cent while prices rise faster: rules that keep them holding government bonds, the
+\omterm{def:b2:government-debt:financial-repression}{financial repression} of the text. They would lose the real return they would otherwise earn.
+24. At a growth rate of 3.6 per cent and $b = 0.602$, the stabilising \omterm{def:b2:government-debt:primary-balance}{primary balance} is a deficit of 0.35 per cent of GDP at 3 per cent interest and a surplus of 0.81 per cent
+at 5 per cent; with 30 per cent of households hand to mouth, private saving offsets 70 per cent of a debt-financed tax cut.
+\end{solution}

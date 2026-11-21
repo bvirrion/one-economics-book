@@ -1,0 +1,16 @@
+# Pinned environment of the economics series (make venv). Packages, not datasets.
+pandas==3.1.1
+numpy==2.5.5
+openpyxl==3.1.5
+statsmodels==0.15.0
+scipy==1.18.1
+patsy==1.0.3
+pytest==9.2.0
+ruff==0.17.6
+python-dateutil==4.0.0
+tzdata==2026.6
+et_xmlfile==2.0.0
+packaging==26.3
+pluggy==1.7.0
+iniconfig==2.3.1
+pygments==2.21.0

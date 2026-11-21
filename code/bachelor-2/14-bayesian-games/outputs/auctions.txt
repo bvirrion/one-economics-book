@@ -1,0 +1,7 @@
+$ python auctions.py
+n = 2: revenue first-price 0.333 (sd 0.118), second-price 0.333 (sd 0.236); theory 0.333
+        first-price with risk-averse bidders 0.444
+n = 3: revenue first-price 0.500 (sd 0.129), second-price 0.500 (sd 0.224); theory 0.500
+        first-price with risk-averse bidders 0.600
+n = 6: revenue first-price 0.714 (sd 0.103), second-price 0.713 (sd 0.160); theory 0.714
+        first-price with risk-averse bidders 0.779

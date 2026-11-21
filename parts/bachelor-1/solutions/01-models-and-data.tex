@@ -1,0 +1,257 @@
+\section*{Chapter \ref{ch:b1:models-and-data} --- Models and Data}
+% Numbers recomputed in code/bachelor-1/01-models-and-data/exercises/solutions.py (tested).
+
+\begin{solution}{exo:b1:models-and-data:read-cloud}
+\begin{enumerate}
+  \item Hours fell and pay rose: the quantity down and the price up. If one
+    curve moved, it was supply, and it moved left (less labour offered at
+    each wage). A fall in demand would have lowered both.
+  \item Hours rose and pay fell slightly: again supply, now moving right.
+  \item The measured pay per hour is an average over the hours actually
+    worked. In a downturn the hours lost are disproportionately low-paid
+    ones, so the average rises with no worker's pay rising (the BLS said so
+    of April 2020); and in any case both curves move every year, so ``only
+    one curve moved'' is itself an assumption the cloud contradicts
+    (\cref{exo:b1:models-and-data:falsify}).
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:models-and-data:per-worker}
+\begin{enumerate}
+  \item By \cref{prop:b1:models-and-data:product}, $g_{Y/L} = 3\% - 1\% = 2\%$ exactly.
+  \item $1.03/1.01 - 1 = 0.0198$, that is $1.98\%$: the yearly rule ``subtract
+    the rates'' is off by $0.02$ points, the order of the product of the rates.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:models-and-data:brenland}
+\begin{enumerate}
+  \item $393264/1.345 = 292389.6$, so about \dal{292390} million of 2015, the
+    value \code{accounts.csv} lists as \code{real_gdp}.
+  \item Per year:
+    \[
+    \tfrac{1}{10}\ln\tfrac{393264}{248438} = 4.59\%, \qquad
+    \tfrac{1}{10}\ln\tfrac{292390}{248438} = 1.63\%, \qquad
+    \tfrac{1}{10}\ln 1.345 = 2.96\%,
+    \]
+    for nominal GDP, real GDP and the deflator ($\ln 1.58295 = 0.4592$,
+    $\ln 1.17691 = 0.1629$, $\ln 1.345 = 0.2964$).
+  \item $1.63 + 2.96 = 4.59$: with continuous rates the identity
+    nominal = real $\times$ deflator becomes a sum, exactly
+    (\cref{prop:b1:models-and-data:product}).
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:models-and-data:stock-or-flow}
+(a) \omterm{def:b1:models-and-data:stock-flow}{Stock}, dalens. (b) \omterm{def:b1:models-and-data:stock-flow}{Flow}, dalens per year. (c) \omterm{def:b1:models-and-data:stock-flow}{Stock}, persons.
+(d) \omterm{def:b1:models-and-data:stock-flow}{Flow}, persons per month. (e) \omterm{def:b1:models-and-data:stock-flow}{Stock}, dalens. (f) \omterm{def:b1:models-and-data:stock-flow}{Flow}, dalens per month
+or per year: saving is the \omterm{def:b1:models-and-data:stock-flow}{flow} that changes the balance (e). (g) \omterm{def:b1:models-and-data:stock-flow}{Stock},
+crates. (h) \omterm{def:b1:models-and-data:stock-flow}{Flow}, crates per day.
+\end{solution}
+
+\begin{solution}{exo:b1:models-and-data:high-inflation}
+\begin{enumerate}
+  \item $g_R = 1.5/1.4 - 1 = 0.0714$, a real rise of $7.14\%$.
+  \item $50\% - 40\% = 10\%$: the rule overstates by $2.86$ points, which is
+    $\pi g_R = 0.40 \times 7.14$ (\cref{prop:b1:models-and-data:real-growth}).
+  \item $\ln 1.5 - \ln 1.4 = 0.40547 - 0.33647 = 0.06899$, that is $6.90\%$.
+    It is the continuous rate of \omterm{prop:b1:models-and-data:real-growth}{real growth}; the yearly \omterm{prop:b1:models-and-data:real-growth}{real growth} is the
+    exact $7.14\%$, and $\ln 1.0714 = 0.0690$ links the two.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:models-and-data:doubling}
+\begin{enumerate}
+  \item $\eu^{0.02T} = 2$ gives $T = \ln 2/0.02 = 0.693147/0.02 = 34.7$ years.
+  \item $1.02^T = 2$ gives $T = \ln 2/\ln 1.02 = 0.693147/0.0198026 = 35.0$ years.
+  \item $70/2 = 35$. The exact constant for continuous rates is
+    $100 \ln 2 = 69.3$; rounding it up to 70 makes the rule easy to divide and
+    compensates, at low rates, for yearly compounding being slightly slower
+    than continuous growth.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:models-and-data:slope-numbers}
+\begin{enumerate}
+  \item $w = S_d/(S_d + S_s) = 1/4$, and $\hat\beta = \tfrac14 \times 1 -
+    \tfrac34 \times 2 = -1.25$.
+  \item Closer to demand (slope $-2$) than to supply ($+1$): the supply
+    shocks are larger, so most of the movement is supply sliding along
+    demand.
+  \item Smaller supply shocks raise $w$, so $\hat\beta$ rises towards the
+    supply slope $+1$; with no supply shocks it equals $+1$.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:models-and-data:one-curve}
+(a) Only demand shifts: $S_s = 0$, $w = 1$, $\hat\beta = d > 0$. The cloud
+lies on the supply curve and traces it. (b) Only supply shifts: $S_d = 0$,
+$w = 0$, $\hat\beta = -b < 0$; the cloud traces demand. In either case every
+point would lie exactly on one straight line, so a single point off the
+line --- a day with price and quantity moving in the ``wrong'' direction for
+that line --- shows the prediction wrong.
+\end{solution}
+
+\begin{solution}{exo:b1:models-and-data:log-chart}
+\begin{enumerate}
+  \item Per year,
+    \[
+    \tfrac{1}{23}\ln\tfrac{19168}{11061} = \tfrac{0.5498}{23} = 2.39\%
+    \ \text{(1950--1973)}, \qquad
+    \tfrac{1}{27}\ln\tfrac{31946}{19168} = \tfrac{0.5108}{27} = 1.89\%
+    \ \text{(1973--2000)}.
+    \]
+    The first is steeper.
+  \item $8212/2431 = 3.38$. On a logarithmic axis a factor shows as a fixed
+    vertical distance: $\log_{10} 3.38 = 0.53$ of the distance between two
+    ticks, wherever on the axis the two lines stand.
+  \item On an ordinary axis a slope is a change in dollars per year, which is
+    larger at high levels even for the same growth rate: the 1973--2000
+    stretch, which starts higher, would look steeper although it grew more
+    slowly.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:models-and-data:cross}
+\begin{enumerate}
+  \item From the proof of \cref{prop:b1:models-and-data:cloud}, without
+    setting $S_{ds}$ to zero,
+    \[
+    \hat\beta = \frac{d S_d - b S_s + (b - d) S_{ds}}{S_d + S_s - 2 S_{ds}} .
+    \]
+  \item $\hat\beta = (1 - 6 + 1)/(1 + 3 - 2) = -4/2 = -2$. The positive cross
+    term makes the cloud as steep as the demand curve here, by chance: the
+    common movement adds quantity without much price.
+  \item A fine Saturday: calm seas bring more boats in ($u^s > 0$) and good
+    weather brings more shoppers out ($u^d > 0$). On such days both
+    deviations are positive together, and on rainy days both are negative,
+    so the products $\tilde u^d_t \tilde u^s_t$ are mostly positive and
+    $S_{ds} > 0$.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:models-and-data:bad-shifter}
+\begin{enumerate}
+  \item With $u^d = -10$ and $u^s = -30$, \cref{prop:b1:models-and-data:linear}
+    gives $\Delta p = (-10 + 30)/20 = 1$ dalen and
+    $\Delta q = (10 \times (-10) + 10 \times (-30))/20 = -20$ crates.
+  \item The ratio is $-20/1 = -20$ crates per dalen, twice the true demand
+    slope of $-10$: demand looks twice as sensitive to price as it is.
+  \item The \omterm{def:b1:models-and-data:shifter}{shifter} entered demand: the demand shocks do not have the same
+    average on storm and calm days. Prices and quantities cannot show it.
+    A count of shoppers at the market, or the sales on storm days of goods
+    whose supply the storm does not touch (vegetables at the next stall),
+    would: if they also fall on storm days, demand moved.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:models-and-data:falsify}
+\begin{enumerate}
+  \item The dots would lie on one upward-sloping line, the supply curve:
+    hours and pay would always change in the same direction, with a
+    correlation of $+1$.
+  \item The correlation is $-0.42$ and the fitted slope $-0.53$, both of
+    the wrong sign. The clearest single dot is 2020: hours $-6.7\%$ and pay
+    $+6.8\%$, far from any upward line.
+  \item If supply alone had moved, the dots would lie on one downward line,
+    with a correlation of $-1$. The correlation is only $-0.42$, and several
+    years had hours and pay both rising strongly, such as 1984 (hours
+    $+5.0\%$, pay $+1.7\%$) and 1998 ($+1.9\%$, $+4.7\%$). Both curves moved.
+    % figdata: labour_cloud, labour_cloud_stats
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{pb:b1:models-and-data:fish}
+\textbf{1.} $S_t$ is a \omterm{def:b1:models-and-data:stock-flow}{stock}, in crates. $C_t$ and $Q_t$ are \omterm{def:b1:models-and-data:stock-flow}{flows}, in crates
+per day.
+
+\textbf{2.} $S_{t+1} = 0.98\,S_t + C_t - Q_t$.
+
+\textbf{3.} $S_2 = 0.98 \times 50 + 110 - 99 = 60.0$;
+$S_3 = 0.98 \times 60.0 + 95 - 99 = 54.8$;
+$S_4 = 0.98 \times 54.8 + 120 - 80 = 93.7$.
+
+\textbf{4.} With $C_t - Q_t = 2$, $S^* = 0.98 S^* + 2$, so $0.02 S^* = 2$ and
+$S^* = 100$ crates.
+
+\textbf{5.} $0.98 \times 100 + 2 = 100$: the \omterm{def:b1:models-and-data:stock-flow}{stock} that starts at 100 stays
+at 100, a fixed point of the equation of question 2.
+
+\textbf{6.} Subtracting $S^* = 0.98 S^* + 2$ from $S_{t+1} = 0.98 S_t + 2$
+gives $S_{t+1} - 100 = 0.98(S_t - 100)$: the gap shrinks by $2\%$ a day and
+keeps its sign. Starting at 50, below 100, the \omterm{def:b1:models-and-data:stock-flow}{stock} rises towards 100.
+
+\textbf{7.} $8.50/7.90 - 1 = 0.0759$, a nominal rise of $7.6\%$.
+
+\textbf{8.} $143.5/140.0 - 1 = 0.025$, that is $2.5\%$.
+
+\textbf{9.} Exactly, $1.076/1.025 - 1 = 0.0498$, a real rise of $5.0\%$.
+The rule gives $7.6 - 2.5 = 5.1\%$.
+
+\textbf{10.} $8.50/(143.5/140.0) = 8.50/1.025 = \num{8.29}$~dalens of 2024 per kilogram.
+
+\textbf{11.} It is true in dalens. In goods, cod is $5.0\%$ dearer: the
+price rose $7.6\%$ while prices in general rose $2.5\%$.
+
+\textbf{12.} Calm: $207.77/26 = 7.9912$ dalens and $2629/26 = 101.12$ crates.
+Storm: $94.25/10 = 9.4250$ and $848/10 = 84.80$. Festival:
+$37.97/4 = 9.4925$ and $453/4 = 113.25$.
+
+\textbf{13.} The forty days mix storm days, which slide supply along
+demand, festival days, which slide demand along supply, and the daily
+shocks to both curves. By \cref{prop:b1:models-and-data:cloud} the fitted
+slope is a weighted average of a negative demand slope and a positive
+supply slope, here $-5.32$, which is neither.
+
+\textbf{14.} On festival days the price is higher ($9.4925$ against $7.9912$)
+and more is sold ($113.25$ against $101.12$): demand moved right.
+
+\textbf{15.} $(113.25 - 101.12)/(9.4925 - 7.9912) = 12.13/1.5013 = 8.08$
+crates per dalen. A festival is a \omterm{def:b1:models-and-data:shifter}{demand shifter}, so by the symmetric case
+of \cref{prop:b1:models-and-data:trace} the ratio estimates the slope of
+supply, provided the supply shocks average the same on festival and calm
+days (the fleet does not fish harder for a festival).
+
+\textbf{16.} Calm: $10 \times 7.9912 \times 101.12 = \num{8081}$~dalens a day.
+Storm: $10 \times 9.4250 \times 84.80 = \num{7992}$~dalens a day.
+
+\textbf{17.} A storm raises the price by about as much, in per cent, as it
+lowers the quantity: demand is close to unit-elastic over that range
+(questions 20 and 21), so revenue barely moves.
+
+\textbf{18.} A storm changes how much the fleet can land, not how much fish
+a household or a restaurant wants that morning: it enters supply only. It
+would be both if it also kept buyers away from the market
+(\cref{exo:b1:models-and-data:bad-shifter}).
+
+\textbf{19.} $(84.80 - 101.12)/(9.4250 - 7.9912) = -16.32/1.4338 = -11.38$
+crates per dalen. Festival days are left out because their demand is
+higher: putting them in either group would make the average demand shock
+differ between storm and calm days, against the assumption of
+\cref{prop:b1:models-and-data:trace}.
+
+\textbf{20.} $\varepsilon_d = -11.38 \times 8.4998/98.25 = -0.98$.
+
+\textbf{21.} At the averages $|\varepsilon_d| = 0.98 < 1$: just inelastic, so a
+small rise in price would raise revenue very slightly. A storm is not a
+small change. Between calm and storm days the ratio of log changes is
+$\ln(84.80/101.12)/\ln(9.4250/7.9912) = -0.176/0.165 = -1.07$, just elastic,
+and revenue fell by $1.1\%$ (question 16). Either way, demand is close to
+unit-elastic and storms leave the fishers' revenue nearly unchanged.
+
+\textbf{22.} $-10 \times 8.4998/98.25 = -0.87$. On ten storm days and 26 calm
+days the daily demand shocks do not average exactly the same: the storm
+days happened to have slightly weaker demand, which the ratio counts as a
+price effect. The assumption of the proposition holds on average over many
+seasons, not exactly in one.
+
+\textbf{23.} If demand differs by day of the week (a market day, a Sunday)
+and the storms fell more often on weak days --- or if demand drifted down
+during the season and the storms came late --- then the storm days would
+also be low-demand days, and the ratio would mix the two effects.
+
+\textbf{24.} At the forty-day averages the demand elasticity of cod,
+recovered from storm days, is about $-0.98$ (the true value used by the
+script is $-0.87$); the plain cloud's slope of $-5.32$ would have said
+$-5.32 \times 8.4998/98.25 = -0.46$, half as sensitive.
+\end{solution}

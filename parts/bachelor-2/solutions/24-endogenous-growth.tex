@@ -1,0 +1,102 @@
+\section*{Chapter \ref{ch:b2:endogenous-growth} --- Ideas and Endogenous Growth}
+
+\begin{solution}{exo:b2:endogenous-growth:1}
+% figdata: tfp, res_summary
+Fastest in 1954--63 (1.33 per cent a year), slowest in 1973--83 ($-0.23$). Researchers per million people: United States 1.54 times (1996--2022), Germany 2.11, Japan 1.14,
+Korea 4.33, China 4.71 (1996--2023).
+\end{solution}
+
+\begin{solution}{exo:b2:endogenous-growth:2}
+% code: exercises/solutions.py ak_growth
+$0.2 \times 0.5 - 0.05 = 5$ per cent; $0.25 \times 0.5 - 0.05 = 7.5$ per cent.
+\end{solution}
+
+\begin{solution}{exo:b2:endogenous-growth:3}
+Nonrival: the recipe, the program, the vaccine's formula. Rival: the meal, the computer, the dose.
+\end{solution}
+
+\begin{solution}{exo:b2:endogenous-growth:4}
+A large, persistent rise in the number of researchers without a matching rise in the growth rate. Yes: the opening chart
+and Jones (1995) document it.
+\end{solution}
+
+\begin{solution}{exo:b2:endogenous-growth:5}
+% code: exercises/solutions.py semi_growth
+Higher: $0.01/0.25 = 4$ per cent, against $0.01/0.5 = 2$ per cent: stronger spillovers from existing ideas make growth faster for the same population growth.
+\end{solution}
+
+\begin{solution}{exo:b2:endogenous-growth:6}
+% code: exercises/solutions.py level_gain
+$(3/2)^{1/0.5} \times 0.97/0.98 = 2.25 \times 0.9898 = 2.227$.
+\end{solution}
+
+\begin{solution}{exo:b2:endogenous-growth:7}
+% code: exercises/solutions.py research_productivity
+$g_A/L_A$ changes by $(1/2)/4 = 1/8$: it falls to an eighth.
+\end{solution}
+
+\begin{solution}{exo:b2:endogenous-growth:8}
+Long-run growth becomes $0.01/0.25 = 4$ per cent, in both scenarios. The level gain becomes $2^{1/0.25} \times 0.96/0.98 = 15.67$,
+four times the 3.92 of $\phi = 0.5$. The listing starts both economies on the baseline's balanced path, $a_0 = (0.02(1 - \phi)/n)^{1/(1 - \phi)}$,
+which is 0.0625 for $\phi = 0.75$: with $a_0 = 1$ kept, the baseline would not be on its balanced path. The run prints growth
+of 8.00 per cent at once, falling to 4.29 after 200 years, and an output ratio of 3.69 after 50 years and 11.84 after 200.
+The speed of the transition does not change. Linearised at $z^* = n/(1 - \phi)$, $\dot z = z(n - (1 - \phi)z)$ returns at the rate $n$ whatever $\phi$
+is, and the same share of the log-level gain is reached at each date: after 50 years, $\ln(3.692/0.98)/\ln(15.67/0.98) = 0.48$, as
+for $\phi = 0.5$, $\ln(1.902/0.98)/\ln(3.918/0.98) = 0.48$.
+\end{solution}
+
+\begin{solution}{exo:b2:endogenous-growth:9}
+Once a design exists, letting one more firm use it costs nothing, so a competitive price would be zero and the inventor
+could not recover the cost of discovery. A patent lets the inventor charge more than marginal cost, which pays for
+research but excludes buyers who value the good above its cost of production: a static deadweight loss in exchange for
+the incentive to discover.
+\end{solution}
+
+\begin{solution}{exo:b2:endogenous-growth:10}
+$g_A = \nu s_RLA^{\phi - 1}$. If $g_A$ is constant, the growth rate of the right-hand side is zero: $g_L + (\phi - 1)g_A = 0$, so $g_A = n/(1 - \phi)$.
+\end{solution}
+
+\begin{solution}{exo:b2:endogenous-growth:11}
+% code: exercises/solutions.py growth_path, time_to
+$\dot z/z = g_L + (\phi - 1)g_A = n - (1 - \phi)z$. This logistic equation has solution $z(t) = n/((1 - \phi) + (n/z_0 - (1 - \phi))e^{-nt})$. With $n = 0.01$, $\phi = 0.5$ and $z_0 = 0.04$: $z(t) = 0.01/(0.5 - 0.25e^{-0.01t})$, which equals 0.03 when
+$e^{-0.01t} = (0.5 - 1/3)/0.25 = 2/3$, after $t = 100\ln 1.5 = 40.5$ years.
+\end{solution}
+
+\begin{solution}{exo:b2:endogenous-growth:12}
+From $g_A = \nu s_RLA^{\phi - 1}$: $A^{1-\phi} = \nu s_RL/g_A$. On the balanced path $g_A = n/(1 - \phi)$ does not depend on $s_R$, so for the same $L$, doubling $s_R$ doubles $A^{1-\phi}$ and multiplies $A$ by $2^{1/(1-\phi)}$.
+\end{solution}
+
+\begin{solution}{pb:b2:endogenous-growth:1}
+% code: exercises/solutions.py brenland; listings/ideas.py
+\textbf{Part I.}
+1. $\phi = 0.5$: existing ideas help produce new ones, but less than in proportion; ideas get harder to find.
+2. $g_A = \nu s_RLA^{-0.5}$.
+3. It falls, as $A^{-0.5}$.
+4. Each idea makes the next harder; only more researchers keep the flow of ideas growing in proportion to the stock.
+5. $g_A/(s_RL) = \nu A^{-0.5}$, falling as $A$ grows.
+\textbf{Part II.}
+6. $0.01/(1 - 0.5) = 2$ per cent a year.
+7. 2 per cent: output per worker is $A(1 - s_R)$ with $s_R$ constant.
+8. No.
+9. Zero: $n = 0$ gives $g_A = 0$ in the long run.
+10. $0.01/0.25 = 4$ per cent.
+11. Growth would rise without limit, since $g_A = \nu s_RL$ grows with $L$.
+\textbf{Part III.}
+12. It falls by about 2 per cent: $0.96/0.98 = 0.980$.
+13. It doubles, to 4 per cent.
+14. $g_A(t) = 0.01/(0.5 - 0.25e^{-0.01t})$; 3 per cent after $100\ln 1.5 = 40.5$ years.
+15. 2.87 per cent.
+16. 2 per cent.
+17. As ideas accumulate, the same research effort adds a smaller proportion to the stock.
+\textbf{Part IV.}
+18. $2^{1/0.5} = 4$.
+19. $4 \times 0.96/0.98 = 3.918$.
+20. After 50 years output per worker is 1.902 times the baseline: in logarithms, $\ln 1.902/\ln 3.918 = 0.47$, about half of the long-run gain.
+21. $2^4 \times 0.96/0.98 = 15.67$.
+22. Because the level gain is large: almost four times the income per worker in the long run, and nearly twice within fifty
+years, at the price of 2 per cent of output at the start.
+23. A smaller fall in \omterm{def:b2:endogenous-growth:research-productivity}{research productivity} as ideas accumulate: growth that falls back more slowly after the rise in
+research, or long-run growth above 2 per cent with a workforce growing 1 per cent.
+24. Brenland's balanced growth rate is $n/(1 - \phi) = 2$ per cent a year whatever its research share; doubling the share leaves it unchanged but multiplies
+output per worker in the long run by 3.918.
+\end{solution}

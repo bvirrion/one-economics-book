@@ -1,0 +1,610 @@
+\chapter{Consumer Choice}\label{ch:b1:consumer-choice}
+
+In 2025 the fifth of American households with the lowest incomes spent
+$9.5\%$ of their budget on food eaten at home; the fifth with the highest
+incomes spent $6.5\%$. % figdata: cex_shares
+The richer households spent more dollars on groceries --- \$10,308 a year
+against \$3,600 --- but a smaller share of a much larger
+budget. % figdata: cex_shares
+The same pattern, a food share that falls as households get richer, is
+found in household budget surveys across countries and decades, and it
+carries a label: Engel's law. This chapter joins the preferences of
+\cref{ch:b1:preferences-and-utility} to a budget, derives the \omterm{def:b1:consumer-choice:demand-function}{demand
+functions} that come out, and asks which preferences can produce the
+chart below.
+
+\begin{openingchart}{Budget shares of four kinds of spending by fifth of
+income before taxes, United States, 2025, each fifth plotted at its mean
+total spending (logarithmic axis). The dashed line is food at home in
+2012.}{U.S. Bureau of Labor Statistics, Consumer Expenditure Surveys, tables
+of mean, share and standard error by quintile of income before taxes, 2012
+and 2025}
+\begin{tikzpicture}
+\begin{semilogxaxis}[omrecord, log basis x=10, xtick={20000,50000,100000,200000},
+  xticklabels={20\,000, 50\,000, 100\,000, 200\,000}, xmin=18000, xmax=220000,
+  ymin=0, ymax=30, xlabel={Mean total spending of the fifth (dollars a year)},
+  ylabel={Share of total spending (\%)}, width=0.72\linewidth,
+  height=0.5\linewidth, legend pos=outer north east]
+  \addplot+[mark=*, omDef, thick] table[x=spending, y=shelter, restrict expr to domain={\thisrow{year}}{2025:2025}] {figdata/bachelor-1/05-consumer-choice/out/cex_shares.csv};
+  \addplot+[mark=square*, omThm, thick] table[x=spending, y=food_home, restrict expr to domain={\thisrow{year}}{2025:2025}] {figdata/bachelor-1/05-consumer-choice/out/cex_shares.csv};
+  \addplot+[mark=triangle*, omMeth, thick] table[x=spending, y=food_away, restrict expr to domain={\thisrow{year}}{2025:2025}] {figdata/bachelor-1/05-consumer-choice/out/cex_shares.csv};
+  \addplot+[mark=diamond*, omProp, thick] table[x=spending, y=entertainment, restrict expr to domain={\thisrow{year}}{2025:2025}] {figdata/bachelor-1/05-consumer-choice/out/cex_shares.csv};
+  \addplot+[mark=square, omThm, thick, dashed] table[x=spending, y=food_home, restrict expr to domain={\thisrow{year}}{2012:2012}] {figdata/bachelor-1/05-consumer-choice/out/cex_shares.csv};
+  \legend{Shelter, Food at home, Food away, Entertainment, Food at home 2012}
+\end{semilogxaxis}
+\end{tikzpicture}
+\end{openingchart}
+
+Two shares fall across the fifths: shelter, from $27.3\%$ to $19.4\%$, and
+food at home, from $9.5\%$ to $6.5\%$. Two rise a little: food away from
+home, from $4.1\%$ to $5.1\%$, and entertainment, from $4.3\%$ to
+$5.8\%$. % figdata: cex_shares
+The slope of log spending on an item against log total spending, between
+the bottom and the top fifth, is $0.73$ for food at home in 2025 and $0.60$
+in 2012, against $1.15$ for food away from home and $1.21$ for
+entertainment in 2025. % figdata: cex_slopes
+A slope below one means that spending on the item rises less than in
+proportion to the budget, so its share falls.
+
+\begin{recall}
+A good is \emph{\omterm{def:b1:consumer-choice:normal-inferior}{normal}} if the quantity demanded rises when income rises,
+and \emph{inferior} if it falls. The income elasticity of demand is the
+percentage change in quantity for a one per cent change in income. The
+share of food in spending falls as households get richer, in household
+surveys across countries and decades.
+\end{recall}
+
+\section{The budget set}\label{sec:b1:consumer-choice:budget}
+
+A consumer buys two goods at prices $p_1, p_2 > 0$ that she cannot
+influence, with an income $m > 0$.
+
+\begin{definition}[Budget set and budget line]\label{def:b1:consumer-choice:budget}
+\index{budget set}\index{budget line}
+The \emph{budget set} is the set of affordable bundles,
+$B(p, m) = \{(x_1, x_2) \ge 0 : p_1x_1 + p_2x_2 \le m\}$. Its upper edge,
+$p_1x_1 + p_2x_2 = m$, is the \emph{budget line}.
+\end{definition}
+
+The \omterm{def:b1:consumer-choice:budget}{budget line} meets the axes at $m/p_1$ and $m/p_2$, and its slope is
+$-p_1/p_2$: the market's rate of exchange, the units of good 2 that one unit
+of good 1 costs. A rise in $m$ moves the line out in parallel; a rise in
+$p_1$ pivots it inwards about the intercept $m/p_2$. Multiplying both prices
+and income by the same factor $t > 0$ leaves the set unchanged, since
+$tp_1x_1 + tp_2x_2 \le tm$ is the same inequality.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Good 1, $x_1$}, ylabel={Good 2, $x_2$},
+  xmin=0, xmax=80, ymin=0, ymax=32, width=0.55\linewidth, height=0.4\linewidth]
+  \addplot[cs area] coordinates {(0,0) (50,0) (0,20)} \closedcycle;
+  \addplot[demand] coordinates {(0,20) (50,0)};
+  \addplot[shifted] coordinates {(0,30) (75,0)};
+  \addplot[supply] coordinates {(0,20) (25,0)};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:50,0.5) {$m = 100$};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:56,6) {$m = 150$};
+  \node[font=\footnotesize, anchor=west, omThm] at (axis cs:23,2.6) {$p_1 = 4$};
+\end{axis}
+\end{tikzpicture}
+
+{\small The \omterm{def:b1:consumer-choice:budget}{budget set} with $p_1 = 2$, $p_2 = 5$, $m = 100$ (shaded), its
+line through $(50, 0)$ and $(0, 20)$; the line after income rises to 150
+(parallel shift); the line after $p_1$ rises to 4 (pivot about $(0, 20)$).}
+\end{omfigure}
+
+Not every consumer starts with money. A farmer who grows wheat, or a
+worker who sells hours, starts with goods.
+
+\begin{definition}[Endowment]\label{def:b1:consumer-choice:endowment}
+\index{endowment}
+A consumer with an \emph{endowment} $\omega = (\omega_1, \omega_2)$ owns these
+quantities and can sell or buy at prices $p$. Her \omterm{def:b1:consumer-choice:budget}{budget line} is
+$p_1x_1 + p_2x_2 = p_1\omega_1 + p_2\omega_2$: it always passes through $\omega$,
+whatever the prices.
+\end{definition}
+
+A rise in $p_1$ pivots this \omterm{def:b1:consumer-choice:budget}{budget line} about $\omega$, not about an
+intercept. A consumer who sells good 1 (chooses $x_1 < \omega_1$) can then
+afford more of good 2: a price rise that hurts a buyer can help a seller.
+
+\section{The optimum}\label{sec:b1:consumer-choice:optimum}
+
+The consumer chooses the bundle she likes best in her \omterm{def:b1:consumer-choice:budget}{budget set}:
+\[
+\max_{x_1, x_2 \ge 0}\; u(x_1, x_2) \quad\text{subject to}\quad p_1x_1 + p_2x_2 \le m.
+\]
+With monotone preferences she spends all her income (proved below), so the
+constraint holds with equality, and \cref{ch:b1:constrained-optimisation}
+applies. At an interior optimum the \omterm{thm:b1:constrained-optimisation:lagrange}{Lagrange conditions} give
+\begin{equation}\label{eq:b1:consumer-choice:tangency}
+\frac{u_1}{u_2} = \frac{p_1}{p_2},\qquad\text{that is,}\qquad \mathrm{MRS} = \frac{p_1}{p_2}:
+\end{equation}
+the rate at which she is willing to exchange the goods equals the rate at
+which the market exchanges them. If her \omterm{def:b1:preferences-and-utility:mrs}{MRS} were above $p_1/p_2$, she would
+give up more of good 2 for a unit of good 1 than the market asks, and
+buying a little more good 1 would make her better off.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 1, horizontal sep=16mm},
+  omrecord, grid=none, width=0.46\linewidth, height=0.38\linewidth,
+  xmin=0, xmax=60, ymin=0, ymax=30, samples=80, xlabel={$x_1$}, ylabel={$x_2$}]
+\nextgroupplot[title={\small Tangency: $u = \sqrt{x_1x_2}$}, width=0.46\linewidth]
+  \addplot[supply] coordinates {(0,20) (50,0)};
+  \addplot[demand, domain=8.4:60] {250/x};
+  \addplot[only marks, mark=*, black] coordinates {(25,10)};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:25,10) {$(25, 10)$};
+\nextgroupplot[title={\small Corner: $u = x_1 + 2x_2$}, width=0.46\linewidth]
+  \addplot[supply] coordinates {(0,20) (50,0)};
+  \addplot[demand, domain=0:50] {(50 - x)/2};
+  \addplot[guide, domain=0:40] {(40 - x)/2};
+  \addplot[only marks, mark=*, black] coordinates {(50,0)};
+  \node[font=\footnotesize, anchor=south] at (axis cs:50,2.5) {$(50, 0)$};
+\end{groupplot}
+\end{tikzpicture}
+
+{\small Prices $p_1 = 2$, $p_2 = 5$ and income 100 (red \omterm{def:b1:consumer-choice:budget}{budget line}). Left:
+the \omterm{def:b1:preferences-and-utility:indifference-curve}{indifference curve} $x_1x_2 = 250$ touches the line at $(25, 10)$.
+Right: the \omterm{def:b1:preferences-and-utility:preference}{indifference} lines $x_1 + 2x_2 = \text{constant}$ have slope
+$-1/2$, steeper than the \omterm{def:b1:consumer-choice:budget}{budget line}'s $-2/5$, so the highest one that
+touches the \omterm{def:b1:consumer-choice:budget}{budget set} touches it at the corner $(50, 0)$.}
+\end{omfigure}
+
+The \omterm{def:b1:constrained-optimisation:tangency}{tangency condition} can fail at a corner. With \omterm{def:b1:preferences-and-utility:perfect}{perfect substitutes}
+$u = x_1 + 2x_2$, the \omterm{def:b1:preferences-and-utility:mrs}{MRS} is $1/2$ everywhere. At $p_1 = 2$ and $p_2 = 5$, the
+price ratio is $2/5 = 0.4 < 0.5$: good 1 is cheaper relative to what she
+values it at, at every bundle, so she spends all her income on it, $x_1 = 50$.
+At the corner the conditions become inequalities, the \emph{Kuhn--Tucker
+conditions}: with a multiplier $\lambda \ge 0$ on the budget,
+\[
+u_i \le \lambda p_i,\quad\text{with equality if } x_i > 0.
+\]
+A good not bought has a marginal utility per unit of money no larger than
+that of the goods bought. Here $u_1/p_1 = 1/2$ and $u_2/p_2 = 2/5$, so
+$\lambda = 1/2$, $u_1 = \lambda p_1$ and $u_2 = 2 < \lambda p_2 = 2.5$: the conditions
+hold at $(50, 0)$.
+
+\section{Demand functions}\label{sec:b1:consumer-choice:demand}
+
+\begin{definition}[Demand function]\label{def:b1:consumer-choice:demand-function}
+\index{demand function}\index{Marshallian demand}
+When the consumer's problem has a unique solution for every $(p, m)$, the
+solution $x(p, m) = \bigl(x_1(p, m), x_2(p, m)\bigr)$ is her \emph{demand
+function}, also called \emph{Marshallian demand}.
+\end{definition}
+
+\begin{proposition}[Cobb--Douglas demand]\label{prop:b1:consumer-choice:cd-demand}
+\index{Cobb--Douglas utility!demand}
+With $u = x_1^{a}x_2^{1-a}$, $0 < a < 1$, demand is
+\[
+x_1 = \frac{am}{p_1},\qquad x_2 = \frac{(1 - a)m}{p_2}.
+\]
+The consumer spends the constant share $a$ of her income on good 1,
+whatever the prices and income.
+\end{proposition}
+
+\begin{proof}
+Both goods are bought, since $u = 0$ if either is zero. The \omterm{def:b1:constrained-optimisation:tangency}{tangency
+condition} \eqref{eq:b1:consumer-choice:tangency} with
+$\mathrm{MRS} = \bigl(a/(1 - a)\bigr)(x_2/x_1)$ gives
+$(1 - a)p_1x_1 = ap_2x_2$. Substituting $p_2x_2 = (1 - a)p_1x_1/a$ in the budget
+$p_1x_1 + p_2x_2 = m$ gives $p_1x_1/a = m$, so $p_1x_1 = am$, and then
+$p_2x_2 = (1 - a)m$.
+\end{proof}
+
+Other standard forms give other demands. With \omterm{def:b1:preferences-and-utility:perfect}{perfect complements}
+$u = \min(x_1/a, x_2/b)$, the consumer buys on the corner of an L,
+$x_1/a = x_2/b$, and the budget gives $x_1 = am/(ap_1 + bp_2)$ and
+$x_2 = bm/(ap_1 + bp_2)$. With \omterm{def:b1:preferences-and-utility:perfect}{perfect substitutes} she buys only the good
+with the larger $u_i/p_i$ (either, if they are equal). With \omterm{def:b1:preferences-and-utility:quasi-linear}{quasi-linear
+utility} $u = v(x_1) + x_2$ and $p_2 = 1$, the tangency is $v'(x_1) = p_1$: the
+demand for good 1 does not depend on income, as long as income is large
+enough to pay for it.
+
+\begin{proposition}[Homogeneity and the budget]\label{prop:b1:consumer-choice:homogeneity}
+\index{homogeneity of degree zero}\index{Walras' law (consumer)}
+\begin{enumerate}
+  \item Demand is homogeneous of degree zero in prices and income:
+    $x(tp, tm) = x(p, m)$ for every $t > 0$.
+  \item If preferences are monotone, the consumer spends all her income:
+    $p_1x_1(p, m) + p_2x_2(p, m) = m$ (Walras' law for the consumer).
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+1. $B(tp, tm) = B(p, m)$, as shown in the first section. The same set has the
+same best bundle.
+
+2. Let $x$ be chosen with $p_1x_1 + p_2x_2 < m$. Then the bundle
+$x' = (x_1 + \varepsilon, x_2)$ with
+$\varepsilon = (m - p_1x_1 - p_2x_2)/p_1 > 0$ is affordable, and by monotonicity
+$x' \succ x$: $x$ was not the best affordable bundle.
+\end{proof}
+
+Homogeneity is the absence of money illusion: doubling every price and
+every income changes nothing a consumer can buy, so in the model it changes
+nothing she buys.
+
+\begin{definition}[Engel curve]\label{def:b1:consumer-choice:engel-curve}
+\index{Engel curve}\index{income-expansion path}
+At fixed prices, the \emph{Engel curve} of good $i$ is the graph of
+$m \mapsto x_i(p, m)$ (or of spending $p_ix_i$ against income or total
+spending). The curve traced in the $(x_1, x_2)$ plane by the optimum as $m$
+varies is the \emph{income-expansion path}.
+\end{definition}
+
+\begin{definition}[Normal and inferior goods]\label{def:b1:consumer-choice:normal-inferior}
+\index{normal good}\index{inferior good}
+Good $i$ is \emph{normal} at $(p, m)$ if $\partial x_i/\partial m > 0$, and
+\emph{inferior} if $\partial x_i/\partial m < 0$. Its income elasticity is
+$\eta_i = (\partial x_i/\partial m)(m/x_i)$.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 1, horizontal sep=18mm},
+  omrecord, grid=none, width=0.46\linewidth, height=0.38\linewidth, samples=80]
+\nextgroupplot[xlabel={$x_1$}, ylabel={$x_2$}, xmin=0, xmax=65, ymin=0, ymax=26,
+  title={\small Income-expansion path}, width=0.46\linewidth]
+  \addplot[supply] coordinates {(0,8) (20,0)};
+  \addplot[supply] coordinates {(0,16) (40,0)};
+  \addplot[supply] coordinates {(0,24) (60,0)};
+  \addplot[demand, domain=2:65] {40/x};
+  \addplot[demand, domain=4:65] {160/x};
+  \addplot[demand, domain=10:65] {360/x};
+  \addplot[shifted, domain=0:62] {0.4*x};
+  \addplot[only marks, mark=*, black] coordinates {(10,4) (20,8) (30,12)};
+\nextgroupplot[xlabel={Income $m$}, ylabel={$x_1$}, xmin=0, xmax=130, ymin=0, ymax=35,
+  title={\small Engel curve of good 1}, width=0.46\linewidth]
+  \addplot[shifted, domain=0:125] {x/4};
+  \addplot[only marks, mark=*, black] coordinates {(40,10) (80,20) (120,30)};
+\end{groupplot}
+\end{tikzpicture}
+
+{\small $u = \sqrt{x_1x_2}$, $p_1 = 2$, $p_2 = 5$, income 40, 80 and 120. Left:
+the optima $(10, 4)$, $(20, 8)$, $(30, 12)$ lie on the ray $x_2 = 0.4x_1$.
+Right: the \omterm{def:b1:consumer-choice:engel-curve}{Engel curve} $x_1 = m/4$, a straight line through the origin, so
+the income elasticity is 1 at every income.}
+\end{omfigure}
+
+With Cobb--Douglas preferences $\eta_1 = \eta_2 = 1$: every good is \omterm{def:b1:consumer-choice:normal-inferior}{normal},
+every \omterm{def:b1:consumer-choice:engel-curve}{Engel curve} is a ray, every budget share is constant. The opening
+chart refutes that for food at home, whose share falls across the fifths,
+and for shelter. Other preferences can produce falling shares. The
+weekend problem fits one of them, with a subsistence quantity, to a survey
+of the invented country Brenland.
+
+\begin{omchart}{Food spending against total consumption, 2,000 Brenland
+households, 2025, both on logarithmic axes, with the mean of each tenth of
+consumption (dark points), the constant share 0.199 that a Cobb--Douglas
+consumer would keep (dashed) and the straight line
+$\text{food} = 3334 + 0.056\,c$ fitted by least squares
+(solid). The vertical stripes at 6,000 and 7,500 dalens are households with no
+other income, living on the minimum benefit.}{Brenland household survey of 2025 (invented data)}
+% figdata: brenland_fit (log slope 0.31, a 3334, b 0.056, share 0.199)
+\begin{tikzpicture}
+\begin{loglogaxis}[omscatter, log ticks with fixed point, xtickten={-3,...,9}, ytickten={-3,...,9},
+  xtick={5000,10000,20000,50000}, ytick={1000,2000,5000,10000},
+  xlabel={Total consumption $c$ (dalens a year)}, ylabel={Food spending (dalens a year)},
+  xmin=5000, xmax=80000, ymin=900, ymax=16000, height=0.5\linewidth]
+  \addplot[only marks, mark=*, mark size=0.5pt, black!25] table[x=consumption, y=food] {figdata/bachelor-1/05-consumer-choice/out/brenland_food.csv};
+  \addplot[only marks, mark=*, mark size=2pt, omThm] table[x=consumption, y=food] {figdata/bachelor-1/05-consumer-choice/out/brenland_tenths.csv};
+  \addplot[omDef, thick, dashed, no marks, sharp plot] table[x=consumption, y=cd] {figdata/bachelor-1/05-consumer-choice/out/brenland_lines.csv};
+  \addplot[omMeth, thick, no marks, sharp plot] table[x=consumption, y=line] {figdata/bachelor-1/05-consumer-choice/out/brenland_lines.csv};
+\end{loglogaxis}
+\end{tikzpicture}
+\end{omchart}
+
+On logarithmic axes a constant share is a line of slope 1. The Brenland
+cloud is much flatter: the least-squares slope of log food on log
+consumption is $0.31$, an income elasticity of food far below
+one. % figdata: brenland_fit
+The poorest tenth spends $32.0\%$ of its consumption on food, the richest
+$13.1\%$. % figdata: brenland_tenths
+
+\section{Indirect utility}\label{sec:b1:consumer-choice:indirect}
+
+\begin{definition}[Indirect utility function]\label{def:b1:consumer-choice:indirect-utility}
+\index{indirect utility function}
+The \emph{indirect \omterm{def:b1:preferences-and-utility:utility}{utility function}} is the value of the consumer's
+problem, $v(p, m) = u\bigl(x(p, m)\bigr)$: the highest utility she can reach at
+prices $p$ with income $m$.
+\end{definition}
+
+$v$ is non-increasing in each price and non-decreasing in income (a larger
+\omterm{def:b1:consumer-choice:budget}{budget set} contains the smaller one), and homogeneous of degree zero in
+$(p, m)$. For Cobb--Douglas,
+\[
+v(p, m) = \Bigl(\frac{am}{p_1}\Bigr)^{a}\Bigl(\frac{(1 - a)m}{p_2}\Bigr)^{1-a} = a^a(1 - a)^{1-a}\,m\,p_1^{-a}p_2^{-(1-a)}.
+\]
+
+\begin{theorem}[Roy's identity]\label{thm:b1:consumer-choice:roy}
+\index{Roy's identity}
+If $v$ is differentiable and $\partial v/\partial m > 0$, then
+\[
+x_i(p, m) = -\frac{\partial v/\partial p_i}{\partial v/\partial m}.
+\]
+\end{theorem}
+
+\begin{proof}
+Write the problem with the constraint $g = p_1x_1 + p_2x_2 - m = 0$ and the
+\omterm{def:b1:constrained-optimisation:lagrangian}{Lagrangian} $\mathcal L = u - \lambda g$. By the envelope theorem
+(\cref{thm:b1:comparative-statics:envelope}, part 2), with the parameter
+$m$, $\partial v/\partial m = \partial\mathcal L/\partial m = \lambda$; with the
+parameter $p_i$, $\partial v/\partial p_i = \partial\mathcal L/\partial p_i = -\lambda x_i$.
+Dividing, $-(\partial v/\partial p_i)/(\partial v/\partial m) = x_i$.
+\end{proof}
+
+The multiplier $\lambda = \partial v/\partial m$ is the marginal utility of
+income, the \omterm{def:b1:constrained-optimisation:shadow-price}{shadow price} of the budget (\cref{ch:b1:constrained-optimisation}).
+Roy's identity says that a small rise $\dd p_i$ in a price costs the consumer
+as much as a loss of income $x_i\,\dd p_i$: the extra she would pay on what
+she already buys. \Cref{ch:b1:consumer-welfare} uses this to put a money
+value on a price change.
+
+\section{Revealed preference and market demand}\label{sec:b1:consumer-choice:revealed}
+
+The model can be tested without writing down a \omterm{def:b1:preferences-and-utility:utility}{utility function}, using
+only prices and choices.
+
+\begin{definition}[Revealed preference and the weak axiom]\label{def:b1:consumer-choice:warp}
+\index{revealed preference}\index{weak axiom of revealed preference}\index{WARP}
+If a consumer chooses $x$ at prices $p$ and another bundle $y$ was also
+affordable, $p\cdot y \le p\cdot x$, then $x$ is \emph{directly revealed preferred}
+to $y$. Her choices satisfy the \emph{weak axiom of revealed preference}
+(WARP) if, whenever $x$ is directly revealed preferred to $y$ and $x \neq y$, $y$
+is never directly revealed preferred to $x$: at the prices where $y$ is
+chosen, $x$ is not affordable.
+\end{definition}
+
+A consumer who maximises a utility with strictly \omterm{def:b1:preferences-and-utility:convex}{convex preferences}, and so
+has a unique best bundle on every budget, satisfies \omterm{def:b1:consumer-choice:warp}{WARP}: if $y$ was
+affordable when she chose $x$, then $x \succ y$, and if $x$ were affordable
+when she chose $y$, she would have chosen $x$. A chain of revelations over
+several observations must also not cycle; that stronger condition, the
+generalised axiom (GARP), is the one tested in the laboratory record of
+\cref{ch:b1:preferences-and-utility}.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={$x_1$}, ylabel={$x_2$},
+  xmin=0, xmax=10, ymin=0, ymax=10, width=0.5\linewidth, height=0.42\linewidth]
+  \addplot[demand] coordinates {(0,4.5) (9,0)};
+  \addplot[supply] coordinates {(0,9) (4.5,0)};
+  \addplot[only marks, mark=*, black] coordinates {(1,4) (4,1)};
+  \node[font=\footnotesize, anchor=north west] at (axis cs:0.6,3.6) {$x^1 = (1, 4)$};
+  \node[font=\footnotesize, anchor=west] at (axis cs:4.6,1.1) {$x^2 = (4, 1)$};
+  \node[font=\footnotesize, omDef] at (axis cs:8.2,2.6) {$p^1 = (1, 2)$};
+  \node[font=\footnotesize, omThm] at (axis cs:2.6,8.4) {$p^2 = (2, 1)$};
+\end{axis}
+\end{tikzpicture}
+
+{\small A violation of \omterm{def:b1:consumer-choice:warp}{WARP}. With income 9, the bundle $x^1$ is chosen on the
+blue line, where $x^2$ costs only 6; $x^2$ is chosen on the red line, where $x^1$
+costs only 6. Each choice lies strictly inside the other's \omterm{def:b1:consumer-choice:budget}{budget set}.}
+\end{omfigure}
+
+\begin{definition}[Market demand]\label{def:b1:consumer-choice:market-demand}
+\index{market demand}
+With $n$ consumers of incomes $m_1, \dots, m_n$, the \emph{market demand}
+for good $i$ is the sum of their demands,
+$X_i(p, m_1, \dots, m_n) = \sum_{h} x_i^h(p, m_h)$: graphically, the horizontal
+sum of the individual demand curves.
+\end{definition}
+
+\omterm{def:b1:consumer-choice:market-demand}{Market demand} depends in general on how income is shared out, not only on
+its total: moving a dalen from a household that spends a large share of an
+extra dalen on food to one that spends a small share changes the \omterm{def:b1:consumer-choice:market-demand}{market
+demand} for food. It behaves like the demand of one consumer with the total
+income only when every consumer spends the same share of an extra dalen
+on each good, which holds for special forms of preferences (\omterm{def:b1:consumer-choice:engel-curve}{Engel curves}
+that are parallel straight lines). \Cref{exo:b1:consumer-choice:aggregate} works through the Cobb--Douglas case.
+
+\begin{model}{The utility-maximising consumer}
+\assumes Rational, monotone and \omterm{def:b1:preferences-and-utility:convex}{convex preferences}; prices taken as given;
+the best bundle in the \omterm{def:b1:consumer-choice:budget}{budget set} is chosen, so all income is spent.
+\predicts Demand homogeneous of degree zero in prices and income; with
+Cobb--Douglas preferences, budget shares that do not change with prices or
+income; in general, \omterm{def:b1:consumer-choice:engel-curve}{Engel curves} whose slopes sort goods into \omterm{def:b1:consumer-choice:normal-inferior}{normal} and
+inferior; choices from different budgets that satisfy the weak axiom.
+\tested The American survey of the opening chart is consistent with it
+(in 2012, 2015 and 2025 the bottom fifth spends a larger share on food at
+home than the top fifth), but the general model predicts no falling food
+share; the survey refutes only the Cobb--Douglas special case. % figdata: cex_shares
+The shape of \omterm{def:b1:consumer-choice:engel-curve}{Engel curves} has been tested: in a long series of British
+surveys they are smooth functions of log spending, but they need a
+quadratic term in it (Banks, Blundell and Lewbel 1997). % ledger: b1:banks1997
+The weak axiom has been tested in the laboratory: most subjects' choices
+come close to satisfying it (\cref{ch:b1:preferences-and-utility}).
+\breaks Cobb--Douglas preferences, the same for every household, fail at
+once: the food share falls with spending. Demand systems that impose
+homogeneity can still fit; what breaks is the constant-share form, not the
+consumer model. Observed households also violate the weak axiom from time
+to time, as laboratory subjects do.
+\end{model}
+
+\begin{record}[Engel's law]
+In 2025 the bottom fifth of American households by income spent a mean of
+\$37,935 in the year and $9.5\%$ of it on food at home; the top fifth spent
+\$159,512 and $6.5\%$. % figdata: cex_shares
+Between them, spending on food at home rose by a factor of
+$10308/3600 = 2.86$ while total spending rose by $159512/37935 = 4.20$, an
+elasticity of $\ln 2.86/\ln 4.20 = 0.73$. % figdata: cex_slopes
+In the invented Brenland survey of the second chart, the elasticity fitted
+across 2,000 households is $0.31$. % figdata: brenland_fit
+Food away from home behaves differently: its American share rises a little
+across the fifths, with an elasticity of $1.15$. % figdata: cex_slopes
+``Food'' is two goods for the model: groceries, a necessity, and meals out,
+which are closer to a luxury. The shape of an \omterm{def:b1:consumer-choice:engel-curve}{Engel curve} is a property of
+the good as it is defined in the survey.
+\end{record}
+
+\begin{measure}[A household budget survey]
+The American Consumer Expenditure Surveys have two parts. An interview,
+repeated over a year, records large or recurring spending (rent, vehicles,
+utilities, insurance); a diary records small, frequent purchases such as
+food and household supplies, which people cannot recall weeks later.
+About 20,000 interviews and 11,000 diaries are completed each
+year. % ledger: b1:ce-handbook
+The tables group households by fifth of income before taxes. Two cautions
+apply to the opening chart. Spending is not income: the bottom fifth spends
+more than its measured income, because it includes students, retired people
+drawing on savings and households with a bad year. And spending reported in
+surveys falls short of what national accounts record for some goods,
+especially alcohol and tobacco, so a share in a survey is a share of
+reported spending.
+\end{measure}
+
+\section*{Exercises}\label{sec:b1:consumer-choice:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:consumer-choice:cd}
+A consumer has $u = x_1^{0.25}x_2^{0.75}$, faces $p_1 = 2$ and $p_2 = 5$, and has
+income 100. Find her demand and her budget shares.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:consumer-choice:read}
+From the opening chart's table for 2025: the bottom fifth spends a mean of
+\$3,600 on food at home out of \$37,935, and the top fifth \$10,308 out of
+\$159,512. % figdata: cex_shares
+Compute both shares, and the ratio of dollar spending on food at home
+between the two fifths. Is food at home \omterm{def:b1:consumer-choice:normal-inferior}{normal} or inferior across the
+fifths?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:consumer-choice:pivot}
+With $p_1 = 2$, $p_2 = 5$ and $m = 100$, give the intercepts and slope of the
+\omterm{def:b1:consumer-choice:budget}{budget line}. The price of good 1 doubles. Give the new intercepts and
+slope, and say which bundles on the old line stay affordable.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:consumer-choice:normal}
+Two Engel points are observed for each of two goods. Bread: 120 loaves a
+year at an income of 15,000 dalens and 140 at 40,000. Bus trips: 300 a year
+at 15,000 and 220 at 40,000 (invented numbers). Which good is \omterm{def:b1:consumer-choice:normal-inferior}{normal} and
+which inferior over this range? Compute the arc income elasticity
+$\ln(x'/x)/\ln(m'/m)$ of each.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:consumer-choice:min}
+Find the \omterm{def:b1:consumer-choice:demand-function}{demand functions} for $u = \min(x_1, 3x_2)$, then evaluate them at
+$p_1 = 2$, $p_2 = 1$ and $m = 70$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:consumer-choice:quasi}
+With $u = 4\sqrt{x_1} + x_2$ and $p_2 = 1$, find the demand for good 1 when
+income is large enough, and the income below which the consumer is at a
+corner. Evaluate at $p_1 = 0.5$ with $m = 20$, then with $m = 5$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:consumer-choice:roy}
+Starting from the Cobb--Douglas indirect utility
+$v = a^a(1 - a)^{1-a}\,m\,p_1^{-a}p_2^{-(1-a)}$, recover the demand for good 1
+by Roy's identity.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:consumer-choice:predict}
+In the Brenland survey, the slope of log food on log consumption is $0.31$
+and mean food spending is 4,645 dalens a year. % figdata: brenland_fit
+Predict the change in mean food spending if every household's consumption
+rises by $10\%$. What does the prediction assume about how the
+cross-section of households describes one household over time?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:consumer-choice:warp-table}
+A consumer is observed three times (invented data).
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+Observation & Prices $(p_1, p_2)$ & Chosen bundle & Spending\\
+\midrule
+A & $(1, 1)$ & $(5, 5)$ & 10\\
+B & $(2, 1)$ & $(6, 2)$ & 14\\
+C & $(1, 2)$ & $(2, 7)$ & 16\\
+\bottomrule
+\end{tabular}
+\end{center}
+For each pair of observations, say whether one choice is directly revealed
+preferred to the other, and whether \omterm{def:b1:consumer-choice:warp}{WARP} holds.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:consumer-choice:prove}
+Prove, for any utility with a unique optimum, that demand is homogeneous of
+degree zero, and, for any monotone preferences, that the budget is
+exhausted. Show by an example that without monotonicity the second part
+fails.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:consumer-choice:aggregate}
+Two consumers have Cobb--Douglas preferences with shares $a_1$ and $a_2$ on
+good 1 and incomes $m_1$ and $m_2$. Write \omterm{def:b1:consumer-choice:market-demand}{market demand} for good 1. Show
+that it depends only on $m_1 + m_2$ if $a_1 = a_2$, and compute the change in
+\omterm{def:b1:consumer-choice:market-demand}{market demand} when 10 is moved from consumer 2 to consumer 1 with
+$a_1 = 0.4$, $a_2 = 0.2$, $p_1 = 2$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:consumer-choice:refute}
+Which pattern in a household budget survey would refute the hypothesis
+``every household has the same Cobb--Douglas preferences and faces the same
+prices''? Does the opening chart show it? Give one way the hypothesis could
+be saved, and say why it would then predict nothing about the chart.
+\end{exercise}
+
+\section{Problem: The Brenland Survey, Read with a Model}\label{sec:b1:consumer-choice:problem}
+
+\begin{problem}[{Weekend problem --- the subsistence food spending that fits the survey}]\label{pb:b1:consumer-choice:survey}
+The Brenland household survey of 2025 (invented) records, for 2,000
+households, food spending $f$ and total consumption $c$, in dalens a year.
+Its summary, from the tested script behind the second chart: mean food
+spending 4,645 and mean consumption 23,394; aggregate food share $0.199$;
+slope of $\ln f$ on $\ln c$, $0.31$; least-squares line
+$f = 3334 + 0.056\,c$. The poorest tenth by consumption spends on average
+11,639 in all and 3,726 on food; the richest tenth 42,736 and
+5,594. % figdata: brenland_fit, brenland_tenths
+
+\medskip\noindent\textbf{Part I --- Budget sets.} Food costs 4 dalens a
+kilogram, and other goods, measured in dalens, cost 1.
+\begin{enumerate}
+  \item Household A spends 12,000, B 20,000 and C 40,000 dalens. Give each \omterm{def:b1:consumer-choice:budget}{budget line}'s intercepts and its slope.
+  \item The price of food rises to 5. Give A's new food intercept and the new slope.
+  \item A bought 900 kg of food and 8,400 dalens of other goods before the rise. Is this bundle affordable after it? How much extra income would make it affordable again?
+  \item Household D farms: it owns 600 kg of food and 6,000 dalens of other goods, and trades at the market prices. Write its \omterm{def:b1:consumer-choice:budget}{budget line} at a food price of 4.
+  \item At a food price of 5, write D's \omterm{def:b1:consumer-choice:budget}{budget line} again. Show that it passes through the same point, and say when D is better off after the rise.
+  \item All prices and every income rise by $10\%$. What happens to the \omterm{def:b1:consumer-choice:budget}{budget sets} of A, B and C?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- A Cobb--Douglas fit.} Measure food in
+dalens of food at survey prices, so that both goods have a price of 1.
+\begin{enumerate}[resume]
+  \item With $u = f^{\beta}o^{1-\beta}$, where $o$ is other spending, show that every household spends the share $\beta$ of $c$ on food.
+  \item Fit $\beta$ by the aggregate food share, and predict food spending for the poorest and the richest tenths. Compare with the survey.
+  \item What slope of $\ln f$ on $\ln c$ does the Cobb--Douglas model predict? Compare with the survey.
+  \item What does the model predict for the food share across the tenths? What does the survey show?
+  \item Is food a \omterm{def:b1:consumer-choice:normal-inferior}{normal good} in Brenland? Is it a necessity, in the sense of an income elasticity below one?
+  \item Could different households have different Cobb--Douglas shares and produce the survey? What would that require, and could a single cross-section tell?
+  \item In the American survey of 2025, the food-at-home share falls from $9.5\%$ to $6.5\%$ across the fifths and the arc elasticity is $0.73$. Does that survey reject the Cobb--Douglas model in the same way? % figdata: cex_shares, cex_slopes
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- A subsistence quantity.} Take
+$u = \beta\ln(f - \gamma) + (1 - \beta)\ln o$ for $f > \gamma$, with $0 < \beta < 1$ and
+$\gamma > 0$ (the Stone--Geary form), and $f + o = c$.
+\begin{enumerate}[resume]
+  \item Show that demand is $f = \gamma + \beta(c - \gamma)$ when $c > \gamma$.
+  \item Show that the \omterm{def:b1:consumer-choice:engel-curve}{Engel curve} is a straight line, and give its intercept and slope in terms of $\beta$ and $\gamma$.
+  \item Match the line to the survey's least-squares line, and deduce $\beta$ and $\gamma$.
+  \item Predict food spending and the food share of the poorest and richest tenths. Compare with the survey and with Part II.
+  \item Compute the income elasticity of food, $\eta = \beta c/f$, at the two tenths' predicted points.
+  \item Show that $\eta < 1$ at every $c > \gamma$, and find its limit as $c$ grows.
+  \item 433 of the 2,000 households spend less than $\gamma$ on food. What does the model say about them? Suggest a change to the model that the survey's other columns would allow. % figdata: brenland_fit
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- A prediction.} The consumption of the
+poorest tenth rises by $10\%$ and prices do not change.
+\begin{enumerate}[resume]
+  \item Give the tenth's new consumption, and its food spending and food share predicted by the Cobb--Douglas model, starting from its observed food spending.
+  \item Predict the new food spending and share with the log slope $0.31$.
+  \item Predict them with the fitted line of Part III, starting from the line's own prediction for the tenth, then starting from the observed food spending and adding the line's slope times the rise in consumption.
+  \item Compare the three predictions of the change in food spending.
+  \item What kind of data, rather than one cross-section, would tell the three models apart?
+  \item State the result: the subsistence food spending that fits the survey.
+\end{enumerate}
+\end{problem}

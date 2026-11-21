@@ -1,0 +1,15 @@
+stat,value
+countries,32
+eu_birth,10.5
+eu_death,8.07
+eu_emp_birth,2.29
+eu_emp_death,1.74
+eu_size_birth,1.05
+eu_surv1,80.52
+eu_surv2,66.24
+eu_grow5,76.91
+med_birth,10.87
+med_death,7.985
+min_birth,6.22
+max_birth,18.27
+corr,0.570077

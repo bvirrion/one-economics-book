@@ -1,0 +1,421 @@
+\chapter{The Open Economy}\label{ch:b1:open-economy}
+
+From 1979 to 1998 the Netherlands kept its currency pegged to the Deutsche
+Mark, and its short-term interest rate stayed on average $0.46$ points above
+Germany's. France and Italy also pegged, in the years the Macrohistory
+Database classifies as pegged to the Deutsche Mark (a de facto
+classification), and their rates stayed on average $2.76$ and $5.86$ points
+above. % figdata: peg_stats
+On the afternoon of 16 September 1992 the Swedish central bank raised its
+policy rate to 500 per cent to defend its fixed exchange rate. % ledger: b1:riksbank-1992
+A country that fixes its exchange rate and lets capital move freely gives
+up its own interest rate; a country that tries to keep both may have to pay
+such a rate for a few days, and then give up the peg. This chapter opens the
+models of the last chapters to trade and capital flows.
+
+\begin{openingchart}{Short-term interest rate minus Germany's (points),
+1979--1998, for four countries in the years the Macrohistory Database
+classifies as pegged to the Deutsche Mark, a de facto classification (Italy
+from 1983, Sweden to 1992).}{Jord\`a--Schularick--Taylor Macrohistory Database, release 6}
+\begin{tikzpicture}
+\begin{axis}[omtime, xlabel={Year}, ylabel={Gap to Germany (points)}, xmin=1979, xmax=1998, ymin=-2, ymax=14,
+  width=0.7\linewidth, height=0.42\linewidth, legend style={font=\scriptsize, at={(0.98,0.98)}, anchor=north east}]
+  \addplot[thick, omDef] table[x=year, y=NLD, col sep=comma] {figdata/bachelor-1/27-open-economy/out/pegs.csv};
+  \addplot[thick, omThm, dashed] table[x=year, y=FRA, col sep=comma] {figdata/bachelor-1/27-open-economy/out/pegs.csv};
+  \addplot[thick, black] table[x=year, y=ITA, col sep=comma, restrict x to domain=1983:1998] {figdata/bachelor-1/27-open-economy/out/pegs.csv};
+  \addplot[thick, omRecord, dotted] table[x=year, y=SWE, col sep=comma, restrict x to domain=1979:1992] {figdata/bachelor-1/27-open-economy/out/pegs.csv};
+  \legend{Netherlands, France, Italy, Sweden}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+The Netherlands' gap was within about a point and a half of zero from 1981
+on; France's narrowed only in the 1990s; Italy's stayed between 3 and 12.5
+points until 1997, and fell to 1.2 in 1998. % figdata: pegs
+In the model of this chapter, a credible peg with free capital flows makes the
+home interest rate equal the base country's. Where it did not, the markets
+were pricing a devaluation.
+
+\begin{recall}
+Exchange rates, the balance of payments, the real exchange rate,
+PPP (the hypothesis) and interest parity were met at school. The
+gains from trade come from comparative advantage. IS--LM is
+\cref{ch:b1:is-lm}; the sector balances are \cref{ch:b1:national-accounts-in-depth}.
+\end{recall}
+
+\section{Open-economy accounts}\label{sec:b1:open-economy:accounts}
+
+In an open economy, output is spent at home or abroad:
+$Y = C + I + G + NX$, with net exports $NX = X - M$. \omterm{def:b1:long-run-model:saving}{National saving} is $S = Y - C - G$,
+so
+\[
+S - I = NX :
+\]
+a country that saves more than it invests lends the difference abroad, and
+runs a trade surplus. Ignoring income from abroad, $NX$ is the current
+account; adding it, the identity becomes $S - I = CA$, with the private,
+public and foreign sector balances of \cref{ch:b1:national-accounts-in-depth}.
+
+\begin{definition}[Net foreign asset position]\label{def:b1:open-economy:nfa}
+\index{net foreign asset position}
+A country's \emph{net foreign asset position} is the value of the assets its
+residents hold abroad minus the value of the domestic assets held by
+foreigners. A current-account surplus adds to it; so do valuation gains.
+\end{definition}
+
+Brenland's accounts for 2025 show net exports of 1,113 million dalens:
+\omterm{def:b1:long-run-model:saving}{national saving} of 89,597 million against investment of 88,484 million. Its
+government saved $-7{,}865$ million and its private sector 97,462 million. % computed: code/bachelor-1/27-open-economy/exercises/solutions.py
+
+\section{The real exchange rate}\label{sec:b1:open-economy:real}
+
+Let $e$ be the price of a unit of foreign currency in home currency (dalens
+per kest), so that a rise in $e$ is a depreciation of the home currency. The
+real exchange rate $\varepsilon_r = eP^*/P$ is the price of foreign goods in terms of home
+goods; a rise is a real depreciation, which makes home goods cheaper
+abroad. Net exports rise with $\varepsilon_r$ --- if the volumes respond enough.
+
+\begin{definition}[Marshall--Lerner condition]\label{def:b1:open-economy:marshall-lerner}
+\index{Marshall--Lerner condition}
+The \emph{Marshall--Lerner condition} states that, starting from balanced
+trade, a real depreciation raises net exports if the price elasticities of
+export and import volumes sum to more than one: $\eta_X + \eta_M > 1$.
+\end{definition}
+
+In home goods, $NX = X(\varepsilon_r) - \varepsilon_r M(\varepsilon_r)$. Differentiating at $X = \varepsilon_r M$,
+\[
+\frac{dNX}{d\varepsilon_r} = M(\eta_X + \eta_M - 1),
+\]
+where $\eta_X = \varepsilon_r X'/X$ and $\eta_M = -\varepsilon_r M'/M$: a depreciation makes each import dearer,
+which lowers net exports until the volumes have responded. Since volumes
+respond slowly, the condition can fail in the short run and hold later.
+
+\begin{measure}[A real effective exchange rate]
+A country trades with many partners. A real effective exchange rate is a
+weighted average of its real exchange rates with each of them, the weights
+being shares of its trade. The published indices are usually written the
+other way round from the convention of this book --- a rise is a real
+appreciation --- so a chart must say which.
+\end{measure}
+
+\section{The small open economy in the long run}\label{sec:b1:open-economy:long-run}
+
+\begin{definition}[Small open economy]\label{def:b1:open-economy:small-open}
+\index{small open economy}
+A \emph{small open economy} is one that trades and borrows freely in world
+markets and is too small to affect world prices or the world interest
+rate: its real interest rate equals the world rate, $r = r^*$.
+\end{definition}
+
+With output at its natural level and $r = r^*$, saving and investment no longer
+need to be equal; their difference is net exports, $NX = S - I(r^*)$, and the
+real exchange rate adjusts so that $NX(\varepsilon_r)$ equals it.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Saving, investment}, ylabel={Real interest rate $r$}, xmin=60, xmax=110,
+  ymin=0, ymax=8, width=0.5\linewidth, height=0.4\linewidth, xtick=\empty, ytick=\empty]
+  \addplot[supply] coordinates {(89.597,0) (89.597,8)};
+  \addplot[demand, domain=63.484:103.484] {(103.484 - x)/5};
+  \addplot[guide] coordinates {(60,3) (110,3)};
+  \addplot[thick, <->] coordinates {(88.484,3.4) (89.597,3.4)};
+  \addplot[shifted] coordinates {(79.597,0) (79.597,8)};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:89.8,6.5) {$S$};
+  \node[font=\footnotesize, anchor=south east] at (axis cs:79.4,6.5) {$S'$};
+  \node[font=\footnotesize, anchor=west] at (axis cs:97,1.2) {$I(r)$};
+  \node[font=\footnotesize, anchor=south] at (axis cs:105,3) {$r^*$};
+\end{axis}
+\end{tikzpicture}
+\hspace{1em}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Net exports}, ylabel={Real exchange rate $\varepsilon_r$}, xmin=-20, xmax=20,
+  ymin=0.6, ymax=1.4, width=0.5\linewidth, height=0.4\linewidth]
+  \addplot[demand, domain=-18.887:21.113] {(x + 48.887)/50};
+  \addplot[supply] coordinates {(1.113,0.6) (1.113,1.4)};
+  \addplot[shifted] coordinates {(-8.887,0.6) (-8.887,1.4)};
+  \node[font=\footnotesize, anchor=west] at (axis cs:8,1.18) {$NX(\varepsilon_r)$};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:1.3,1.3) {$S - I$};
+\end{axis}
+\end{tikzpicture}
+
+{\small The \omterm{def:b1:open-economy:small-open}{small open economy} of the weekend problem (billions of dalens).
+Left: at the world rate $r^* = 3\%$, investment is 88.484 and saving 89.597; the
+difference, 1.113, is lent abroad. Right: the real exchange rate makes net
+exports equal to $S - I$. A rise of 10 in government purchases lowers saving
+(dashed): net exports fall to $-8.887$ and the real exchange rate appreciates
+from 1 to 0.8.}
+\end{omfigure}
+
+\begin{model}{The small open economy in the long run}
+\index{small open economy}
+\assumes $r = r^*$; output at its natural level; saving that does not
+depend on $r$.
+\predicts A fiscal expansion at home lowers saving, net exports and the
+real exchange rate (a real appreciation), and leaves investment
+unchanged; a fiscal expansion abroad raises $r^*$, lowers investment at home
+and raises net exports.
+\tested If capital moved freely, a country's investment would not depend
+on its own saving. Across 16 OECD countries in 1960--1974, Feldstein and
+Horioka found a coefficient of the investment rate on the saving rate of
+$0.89$: most extra saving stayed at home. % ledger: b1:feldstein1980
+Across 18 of the 21 countries of their table (they estimated on 16),
+averages of 2000--2019 give $0.272$, and
+across 49 high-income countries $0.168$ (second chart). % figdata: fh21_stats
+% figdata: fh_stats
+\breaks Capital is not perfectly mobile; large economies move the world
+rate; prices and output adjust in the short run.
+\end{model}
+
+\begin{omchart}{Gross investment against gross national saving, per cent of
+GDP, average 2000--2019, 49 high-income countries, with the fitted
+line.}{World Bank, World Development Indicators}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xlabel={Gross saving (\% of GDP)}, ylabel={Gross investment (\% of GDP)}, xmin=0, xmax=60,
+  ymin=10, ymax=40, width=0.6\linewidth, height=0.42\linewidth]
+  \addplot[only marks, mark=*, mark size=1.5pt, omDef] table[x=saving, y=invest, col sep=comma] {figdata/bachelor-1/27-open-economy/out/fh.csv};
+  \addplot[omThm, thick, sharp plot, mark=none] table[x=s, y=fit, col sep=comma] {figdata/bachelor-1/27-open-economy/out/fh_fit.csv};
+  \addplot[black, thin, dashed, domain=10:40] {x};
+  \addplot[only marks, mark=none, nodes near coords, point meta=explicit symbolic, nodes near coords style={font=\scriptsize, anchor=west}]
+    table[x=saving, y=invest, meta=iso3, col sep=comma] {figdata/bachelor-1/27-open-economy/out/fh_labels.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\begin{record}[Saving and investment]
+In 1960--1974, international differences in saving rates among industrial
+countries went with almost equal differences in investment rates
+(Feldstein and Horioka 1980). % ledger: b1:feldstein1980
+With perfect capital mobility the coefficient should have been near zero;
+it was $0.89$. Since then the link has weakened: in 2000--2019 it is $0.272$
+across 18 of the 21 countries of their table, with a correlation of $0.623$. % figdata: fh21_stats
+Norway and Singapore save far more than they invest; Greece and the United
+Kingdom invested more than they saved. Capital moves more freely than it
+did, but saving still stays largely at home.
+\end{record}
+
+\section{The Mundell--Fleming model}\label{sec:b1:open-economy:mf}
+
+In the short run prices are fixed, so $\varepsilon_r$ moves with $e$, and output is set by
+demand. With perfect capital mobility, $r = r^*$, and IS--LM becomes:
+\[
+\text{IS}^*: \quad Y = C(Y - T) + I(r^*) + G + NX(e), \qquad
+\text{LM}^*: \quad M/P = L(r^*, Y).
+\]
+LM$^*$ fixes output; IS$^*$ slopes up in $(Y, e)$: a higher $e$ raises net exports and output.
+
+\begin{model}{The Mundell--Fleming model}
+\index{Mundell--Fleming model}
+\assumes A \omterm{def:b1:open-economy:small-open}{small open economy}; perfect capital mobility, $r = r^*$; fixed
+prices; no expected change in the exchange rate.
+\predicts Under a floating rate, a fiscal expansion appreciates the
+currency and leaves output unchanged, while a monetary expansion
+depreciates it and raises output. Under a fixed rate, the reverse: fiscal
+policy moves output by the full multiplier, and monetary policy cannot
+move anything.
+\tested Interest rates of countries with fixed exchange rates and open
+capital markets follow the base country's: over more than 130 years, the
+co-movement of interest rates largely supports the constraint
+(Obstfeld, Shambaugh and Taylor 2005); the opening chart shows it for
+the Netherlands. % ledger: b1:obstfeld2005
+\breaks Expected devaluations (Italy's and Sweden's gaps, the rates of
+September 1992); prices that adjust; capital that is not perfectly
+mobile; large economies.
+\end{model}
+
+\begin{proposition}[Policy under the two regimes]\label{prop:b1:open-economy:regimes}
+In the Mundell--Fleming model with $C' < 1$ and $NX' > 0$:
+\begin{enumerate}
+  \item under a float, $dY/dG = 0$, $de/dG = -1/NX'$, and $dY/d(M/P) = 1/L_Y$;
+  \item under a peg, $dY/dG = 1/(1 - C')$ and the money supply adjusts by $L_Y\,dY$; a
+    change in $M$ has no effect.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Under a float, LM$^*$ alone gives $Y$, so $G$ cannot move it; IS$^*$ then needs
+$NX'de = -dG$. A larger $M/P$ raises $Y$ by $1/L_Y$ and IS$^*$ gives the depreciation. Under a
+peg, $e$ is given and IS$^*$ gives $dY = dG/(1 - C')$; to hold $e$ the central bank
+supplies the money demanded, $L_Y dY$, buying foreign currency. A purchase of
+bonds that raises $M$ would push $r$ below $r^*$; capital would leave, and the bank
+would sell foreign currency until $M$ was back where it was.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Output $Y$}, ylabel={Exchange rate $e$}, xmin=370, xmax=430, ymin=0.6,
+  ymax=1.4, width=0.46\linewidth, height=0.4\linewidth, title={\small Float}]
+  \addplot[demand, domain=370:430] {(x - 268.265)/125};
+  \addplot[shifted, domain=370:430] {(x - 293.265)/125};
+  \addplot[supply] coordinates {(393.264,0.6) (393.264,1.4)};
+  \addplot[supply, dashed] coordinates {(413.264,0.6) (413.264,1.4)};
+  \node[font=\scriptsize, anchor=north] at (axis cs:393.264,1.4) {LM$^*$};
+  \node[font=\scriptsize, anchor=west] at (axis cs:412,1.18) {IS$^*$};
+\end{axis}
+\end{tikzpicture}
+\hspace{1em}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Output $Y$}, ylabel={Exchange rate $e$}, xmin=370, xmax=430, ymin=0.6,
+  ymax=1.4, width=0.46\linewidth, height=0.4\linewidth, title={\small Peg}]
+  \addplot[demand, domain=370:430] {(x - 268.265)/125};
+  \addplot[shifted, domain=370:430] {(x - 293.265)/125};
+  \addplot[black, thick] coordinates {(370,1) (430,1)};
+  \addplot[supply] coordinates {(393.264,0.6) (393.264,1.4)};
+  \addplot[supply, dashed] coordinates {(418.264,0.6) (418.264,1.4)};
+  \node[font=\scriptsize, anchor=south west] at (axis cs:371,1) {peg};
+\end{axis}
+\end{tikzpicture}
+
+{\small Mundell--Fleming with the weekend problem's numbers, billions of
+dalens. IS$^*$ (blue) slopes up: a higher $e$ is a weaker currency. Float: a rise of
+10 in $G$ shifts IS$^*$ to the right (dashed) and only lowers $e$ to 0.8; a rise
+of 10 in $M/P$ shifts LM$^*$ to 413.264 (dashed red). Peg at $e = 1$: the same rise in $G$
+raises output to 418.264, and LM$^*$ follows as the money supply adjusts.}
+\end{omfigure}
+
+\section{The trilemma}\label{sec:b1:open-economy:trilemma}
+
+\begin{definition}[Trilemma]\label{def:b1:open-economy:trilemma}
+\index{trilemma}\index{impossible trinity}
+The \emph{trilemma} (or \emph{impossible trinity}) states that a country cannot
+have at once a fixed exchange rate, free capital flows and a monetary
+policy of its own: it can have any two.
+\end{definition}
+
+Within the model it follows from the condition $r = r^* + \Delta e^e$, where $\Delta e^e$ is the
+expected rate of depreciation: with free capital flows any difference in
+expected returns is arbitraged away; with a credible peg, $\Delta e^e = 0$, so $r = r^*$.
+Monetary policy is then the base country's. Giving up the peg frees $r$;
+controls on capital flows break the \omterm{def:b1:price-theory-at-work:arbitrage}{arbitrage}. When the peg is not
+credible, $\Delta e^e > 0$ and the home rate must exceed the base rate: the gaps of
+France, Italy and Sweden in the opening chart.
+
+\begin{record}[September 1992]
+In the summer of 1992 several currencies of the European exchange-rate
+mechanism came under attack. On 16 September the Swedish central bank
+raised its policy rate to 500 per cent to defend its peg; % ledger: b1:riksbank-1992
+the same day, after heavy official purchases of sterling, the United
+Kingdom suspended sterling's membership of the mechanism. % ledger: b1:boe-erm-exit-1992
+Sweden let its currency float later that autumn. A peg can be held against
+an expected devaluation only with interest rates that the rest of the
+economy cannot bear for long.
+\end{record}
+
+\section*{Exercises}\label{sec:b1:open-economy:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:open-economy:nx}
+\omterm{def:b1:long-run-model:saving}{National saving} is 400 and investment 350. Find net exports.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:open-economy:real-ex}
+The dalen--kest rate is $e = 1.25$ dalens per kest, Kestria's price level 100 and
+Brenland's 110. Find the real exchange rate.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:open-economy:read}
+From the opening chart's table, give the mean gap to Germany of the
+Netherlands, France and Italy in their pegged years. % figdata: peg_stats
+Rank them, and say what the ranking suggests about the credibility of
+each peg.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:open-economy:predict}
+In the \omterm{def:b1:open-economy:small-open}{small open economy} in the long run, predict the effect of a home
+fiscal expansion on the real exchange rate.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:open-economy:small}
+A \omterm{def:b1:open-economy:small-open}{small open economy} has $S = 400$, $I = 500 - 20r$, $r^* = 4$ and $NX = 50\varepsilon_r - 100$. Find
+$I$, $NX$ and $\varepsilon_r$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:open-economy:float}
+In the Mundell--Fleming model with a floating rate, $G$ rises by 50 and
+$NX' = 25$. Find the change in output, the exchange rate and net exports.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:open-economy:peg}
+Under a peg, the central bank buys bonds to raise $M$. Describe what happens,
+step by step, and the final effect.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:open-economy:ml}
+Starting from balanced trade, the export and import elasticities are 0.6
+and 0.7. Does a real depreciation raise net exports? And with 0.3 and 0.4?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:open-economy:count}
+In the opening chart's table, Italy was pegged for 16 years and Sweden for
+14, with mean gaps of $5.86$ and $4.28$ points and largest gaps of $12.53$ and $9.3$.
+% figdata: peg_stats
+What do these say about the \omterm{def:b1:open-economy:trilemma}{trilemma}, and about the credibility of the pegs?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:open-economy:derive}
+Derive \cref{prop:b1:open-economy:regimes} by differentiating IS$^*$ and LM$^*$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:open-economy:sweden}
+With an expected devaluation $\Delta e^e$, show that a peg needs $r = r^* + \Delta e^e$. Markets
+expect a devaluation of $10\%$ within a week. What annual rate, at simple
+interest, does holding the peg require?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:open-economy:refute}
+What evidence would refute the \omterm{def:b1:open-economy:trilemma}{trilemma}?
+\end{exercise}
+
+\section{Problem: Brenland Pegs to the Kest}\label{sec:b1:open-economy:problem}
+
+\begin{problem}[{Weekend problem --- accounts, a peg and an attack}]\label{pb:b1:open-economy:peg}
+Brenland's accounts for 2025 (invented, millions of dalens) give $Y = 393{,}264$,
+$C = 225{,}014$, $I = 88{,}484$, $G = 78{,}653$, $X = 129{,}777$ and $M = 128{,}664$; government revenue was
+157,306 and spending 165,171. Exports to Kestria were 40,231 and imports from
+it 34,739; the rate was 1.207 dalens per kest in 2024 and 1.242 in 2025.
+
+\medskip\noindent\textbf{Part I --- Accounts.}
+\begin{enumerate}
+  \item Compute net exports.
+  \item Compute \omterm{def:b1:long-run-model:saving}{national saving}.
+  \item Check that $S - I = NX$.
+  \item Compute \omterm{def:b1:long-run-model:saving}{public saving}.
+  \item Compute \omterm{def:b1:long-run-model:saving}{private saving}.
+  \item Compute the trade balance with Kestria and with the rest of the world.
+  \item By how much did the dalen depreciate against the kest in 2025?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- The long run.} In billions: saving is fixed at
+89.597, $I = 103.484 - 5r$, $r^* = 3$, and $NX = 50\varepsilon_r - 48.887$.
+\begin{enumerate}[resume]
+  \item Find $I$, $NX$ and $\varepsilon_r$.
+  \item The world rate rises to $4\%$. Find $I$ and $NX$.
+  \item Find the new real exchange rate.
+  \item Government purchases rise by 10 at $r^* = 3$. Find $NX$ and $\varepsilon_r$.
+  \item Why does output not change?
+  \item What does the Feldstein--Horioka evidence suggest about $r = r^*$?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- Mundell--Fleming.} With the consumption,
+investment and money demand of \cref{pb:b1:is-lm:brenland}, $r = r^* = 3$ and
+$NX = 50e - 48.887$, with $e$ an index of the exchange rate, 2025 = 1.
+\begin{enumerate}[resume]
+  \item Write IS$^*$ and LM$^*$, and check the 2025 \omterm{def:b1:models-and-data:equilibrium}{equilibrium}.
+  \item Float: $G$ rises by 10. Find $Y$ and $e$.
+  \item Float: $M/P$ rises by 10. Find $Y$ and $e$.
+  \item Peg at $e = 1$: $G$ rises by 10. Find $Y$.
+  \item By how much must the real money supply rise, and how does it happen?
+  \item Peg: the central bank raises $M/P$ by 10. What happens?
+  \item Which instrument works under which regime?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- An attack.} Markets expect a devaluation of $5\%$
+within a month.
+\begin{enumerate}[resume]
+  \item What must the monthly return on dalen assets exceed?
+  \item Annualise the expected depreciation, compounding over twelve months.
+  \item Find the annual interest rate needed to hold the peg.
+  \item What would that rate do to investment in the toy model?
+  \item The central bank holds reserves of 30 billion kests; holders of dalens
+    sell 4 billion dalens a day. How many days do the reserves last?
+  \item State the result: what rate does holding the peg require?
+\end{enumerate}
+\end{problem}

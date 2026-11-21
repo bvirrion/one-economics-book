@@ -1,0 +1,484 @@
+\chapter{The Current Account}\label{ch:b3:current-account}
+
+A country that spends more than it earns borrows from the rest of the world, and a
+country that saves more than it invests lends. The \omterm{def:b3:current-account:accounts}{current account} records the
+difference, year by year, and the international investment position records what
+it adds up to. This chapter treats the \omterm{def:b3:current-account:accounts}{current account} as a decision --- how a
+country spreads its consumption over time when it can borrow and lend abroad ---
+and asks when the borrowing must stop, what happens when lenders stop it
+suddenly, and why capital flows so little from rich countries to poor ones.
+
+\begin{openingchart}{Current-account balances as a percent of world GDP, 1990--2024:
+four economies, all other countries with data, and the sum over all countries
+with data, which should be zero (130 countries in 1990, 189 in 2014, 169 in 2024).}{World Bank, World Development Indicators (BN.CAB.XOKA.CD,
+NY.GDP.MKTP.CD); our computation}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.72\linewidth, height=0.46\linewidth, xmin=1989, xmax=2025,
+  ymin=-1.8, ymax=1.2, ylabel={Percent of world GDP}, legend columns=3,
+  legend style={at={(0.5,1.03)}, anchor=south, font=\footnotesize}, unbounded coords=jump]
+  \addplot[omDef, thick, mark=none] table[x=year, y=USA] {figdata/bachelor-3/12-current-account/out/ca_world.csv};
+  \addplot[omThm, thick, mark=none] table[x=year, y=CHN] {figdata/bachelor-3/12-current-account/out/ca_world.csv};
+  \addplot[black, thick, mark=none] table[x=year, y=DEU] {figdata/bachelor-3/12-current-account/out/ca_world.csv};
+  \addplot[black, thick, dashed, mark=none] table[x=year, y=JPN] {figdata/bachelor-3/12-current-account/out/ca_world.csv};
+  \addplot[omThm, thick, dashed, mark=none] table[x=year, y=rest] {figdata/bachelor-3/12-current-account/out/ca_world.csv};
+  \addplot[gray, thick, dotted, mark=none] table[x=year, y=sum] {figdata/bachelor-3/12-current-account/out/ca_world.csv};
+  \legend{United States, China, Germany, Japan (from 1996), all others, sum of all}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: ca_world_points
+The United States' deficit reached 1.5~\% of world GDP in 2006, and was 1.1~\% again
+in 2024. China, Germany and Japan ran the matching surpluses, each a few tenths of
+a percent of world output. And the sum over all countries, which accounting says
+must be zero, was 0.36~\% of world GDP in 2019 and 0.35~\% in 2024: the world
+appears to run a surplus with itself.
+
+\begin{recall}
+The grades 10--12 volume introduced the balance of payments; the Year 1 volume the
+national accounts identity $Y = C + I + G + X - M$; the Year 2 volume intertemporal
+choice and the Euler equation, $u'(c_1) = \beta(1 + r)u'(c_2)$.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:current-account:symbols}
+$CA$ is the \omterm{def:b3:current-account:accounts}{current account}, $NX = X - M$ net exports, $S$ national saving, $I$
+investment, $B$ (or $-D$) net foreign assets, and $r$ the world real interest rate.
+Lower-case $nx$, $b$ and $d$ are ratios to GDP, and $g$ is the growth rate of GDP.
+\end{notation}
+
+\section{The balance of payments}\label{sec:b3:current-account:bop}
+
+\begin{definition}[Current account; financial account]\label{def:b3:current-account:accounts}
+\index{current account}\index{financial account}
+The \emph{current account} records a country's net exports of goods and services,
+its net primary income from abroad (interest, dividends, wages) and its net
+secondary income (transfers). The \emph{financial account} records its net
+acquisition of foreign assets minus its net incurrence of foreign liabilities.
+With the small capital account (transfers of capital), the two sum to zero up to
+errors and omissions: a current-account deficit is financed by a net sale of
+assets to foreigners.
+\end{definition}
+
+\begin{definition}[Net international investment position; valuation effect]\label{def:b3:current-account:niip}
+\index{net international investment position}\index{valuation effect}
+The \emph{net international investment position} (NIIP) is the value of a
+country's foreign assets minus its foreign liabilities at a date. A
+\emph{valuation effect} is a change in it caused by changes in asset prices or
+exchange rates rather than by transactions.
+\end{definition}
+
+\begin{proposition}[The current account as saving minus investment]\label{prop:b3:current-account:identity}
+National saving minus investment equals the \omterm{def:b3:current-account:accounts}{current account}, and the \omterm{def:b3:current-account:accounts}{current
+account}, plus the capital account and \omterm{def:b3:current-account:niip}{valuation effects}, equals the change in
+the NIIP: $CA = S - I$ and $\Delta B = CA + KA + V$.
+\end{proposition}
+
+\begin{proof}
+Gross national disposable income is $Y + NFI$, where $NFI$ is net primary and
+secondary income from abroad. National saving is what is left after consumption:
+$S = Y + NFI - C - G$. With $Y = C + I + G + NX$, $S - I = NX + NFI = CA$. Each
+transaction in the \omterm{def:b3:current-account:accounts}{current account} has a counterpart in the \omterm{def:b3:current-account:accounts}{financial account},
+which changes the stock of net foreign assets one for one; the capital account
+adds its transfers, and price and exchange-rate changes $V$ revalue the stock.
+\end{proof}
+
+\begin{measure}[Why the world's current accounts do not add to zero]
+Every export is someone's import, so the world's \omterm{def:b3:current-account:accounts}{current accounts} should sum to
+zero. They do not, because each country measures its own side: shipments in transit
+at the end of a year, income paid to holders who are hard to identify, services
+that one side records and the other misses. In the chart the sum was a deficit of
+0.6 to 1.0~\% of world GDP in the early 1990s, close to zero around 2005, and a
+surplus of 0.15 to 0.6~\% since 2009. % figdata: ca_world
+Part of that movement is coverage: the number of countries with data rises from
+130 in 1990 to 189 in 2014, and a country missing from the sum takes its balance
+with it --- Japan, absent before 1996, adds a surplus of 0.2~\% of world GDP when it
+enters. Over the 133 countries with data in every year from 2000, the sum still
+moves from a deficit of 0.6~\% in 2000 to a surplus of 0.5~\% in 2021.
+% figdata: ca_balanced
+The sign has changed with the same countries, so no single omission explains it; the discrepancy is a
+reminder that each country's figure is an estimate, with an error of the size of
+many countries' whole balances.
+\end{measure}
+
+\begin{measure}[Valuation effects in the investment position]
+Because a country's assets and liabilities differ in currency and kind, their
+values move apart even when no transaction occurs. A depreciation of the home
+currency raises the home value of foreign-currency assets and leaves
+home-currency liabilities unchanged. For the United States, which borrows mostly
+in dollars and in safe short-term instruments and holds abroad equity and direct
+investment, the return on its assets has exceeded the return it pays on its
+liabilities --- a return difference within each class of assets, and a composition
+effect of borrowing short and lending long. % ledger: b3ca:gr.privilege
+\end{measure}
+
+\section{The current account as a choice over time}\label{sec:b3:current-account:intertemporal}
+
+\begin{definition}[Intertemporal approach to the current account]\label{def:b3:current-account:intertemporal}
+\index{intertemporal approach to the current account}
+The \emph{intertemporal approach to the \omterm{def:b3:current-account:accounts}{current account}} treats the \omterm{def:b3:current-account:accounts}{current account}
+as the outcome of saving and investment decisions by forward-looking households
+and firms that can borrow and lend abroad at the world interest rate.
+\end{definition}
+
+Take a small open economy that lives two periods, receives output $Y_1$ and $Y_2$,
+and can borrow or lend at the world rate $r$. The household maximises $\ln C_1 + \beta
+\ln C_2$ subject to $C_1 + C_2/(1 + r) = Y_1 + Y_2/(1 + r)$ (no initial assets, no
+investment or government).
+
+\begin{proposition}[Temporary and permanent shocks]\label{prop:b3:current-account:temporary}
+If $\beta(1 + r) = 1$, consumption is the same in both periods and $CA_1 = Y_1 - \bar C$ with
+$\bar C = (Y_1 + Y_2/(1 + r))/(1 + 1/(1 + r))$. A temporary fall in $Y_1$ alone produces a
+current-account deficit of about half its size; a permanent fall of the same size
+in both periods leaves the \omterm{def:b3:current-account:accounts}{current account} unchanged.
+\end{proposition}
+
+\begin{proof}
+The Euler equation gives $1/C_1 = \beta(1 + r)/C_2$, so $C_1 = C_2 = \bar C$, and the budget
+gives $\bar C$. If $Y_1$ falls by $\Delta$ with $Y_2$ fixed, $\bar C$ falls by $\Delta/(1 + 1/(1 + r))$,
+slightly more than $\Delta/2$, so $CA_1 = Y_1 - \bar C$ falls by $\Delta(1 - (1 + r)/(2 + r)) = \Delta/(2 + r)$,
+about half of $\Delta$. If both outputs fall by $\Delta$, $\bar C$ falls by $\Delta$, and $CA_1$ does not move.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.55cm, y=0.55cm]
+  \draw[econ axes] (0,0) -- (12,0) node[right] {$C_1$};
+  \draw[econ axes] (0,0) -- (0,12) node[above] {$C_2$};
+  \draw[curve, omDef] (0.5,11.571) -- (11.5,0.241) node[above right, font=\scriptsize] {slope $-(1 + r)$};
+  \draw[curve, omThm, domain=3.5:11, samples=60] plot (\x, {37.39/(\x^1.03)});
+  \fill (4.2,7.76) circle (2pt) node[left, font=\scriptsize] {endowment $(Y_1, Y_2)$};
+  \fill (5.954,5.954) circle (2pt) node[above right, font=\scriptsize] {consumption};
+  \draw[guide] (4.2,0) node[below, font=\scriptsize] {$Y_1$} -- (4.2,7.76);
+  \draw[guide] (5.954,0) node[below, font=\scriptsize] {$C_1$} -- (5.954,5.954);
+\end{tikzpicture}
+\par\smallskip{\small The two-period small open economy after a temporary fall in
+first-period output. The country borrows $C_1 - Y_1$ in period 1, a current-account
+deficit, and repays it with interest in period 2.}
+\end{omfigure}
+
+The model predicts that a country runs deficits when output is temporarily low,
+when its investment opportunities are good, and when it expects to be richer
+later; and that permanent shocks pass straight to consumption. Its most direct
+test is the link between saving and investment.
+
+\section{Saving, investment and capital mobility}\label{sec:b3:current-account:fh}
+
+\begin{definition}[Feldstein--Horioka puzzle]\label{def:b3:current-account:feldstein-horioka}
+\index{Feldstein--Horioka puzzle}
+The \emph{Feldstein--Horioka puzzle} is the finding that, across countries, average
+investment rates move almost one for one with average saving rates, as if capital
+did not cross borders, although financial markets are open.
+\end{definition}
+
+With perfect capital mobility, a country's investment depends on its returns, not
+on its own saving, and the slope of investment on saving across countries should
+be near zero. Feldstein and Horioka found a slope near one for rich countries; a
+later estimate for 17 of them over 1974--1979 was 0.85: each extra dollar of
+domestic saving raised domestic investment by about 85 cents. % ledger: b3ca:feld.retention
+
+\begin{omchart}{Gross capital formation against gross national saving, country
+averages 2000--2024 (percent of GDP), 122 countries with at least 20 years of data and
+more than a million people, with the least-squares line.}{World Bank, World
+Development Indicators (NY.GNS.ICTR.ZS, NE.GDI.TOTL.ZS); our computation}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.55\linewidth, height=0.45\linewidth, xmin=-10, xmax=60,
+  ymin=0, ymax=50, xlabel={Saving (\% of GDP)}, ylabel={Investment (\% of GDP)}]
+  \addplot table[x=saving, y=investment] {figdata/bachelor-3/12-current-account/out/fh.csv};
+  \addplot[omThm, thick, no marks, sharp plot] table[x=saving, y=investment] {figdata/bachelor-3/12-current-account/out/fh_fit.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: fh_stats
+In a world sample of the last quarter-century, the slope is only 0.22 (standard
+error 0.05), and saving explains 14~\% of the variation in investment. Capital is
+more mobile, or the sample wider, than in the rich countries of the 1970s; the slope
+also moves a great deal from decade to decade (\cref{exo:b3:current-account:7}).
+
+\section{Sustainability}\label{sec:b3:current-account:sustainability}
+
+\begin{definition}[External sustainability]\label{def:b3:current-account:sustainability}
+\index{external sustainability}\index{no-Ponzi condition}
+A path of net external debt is \emph{sustainable} if it satisfies the
+\emph{no-Ponzi condition}: the present value of the debt far in the future is not
+positive, $\lim_{T\to\infty} D_T/(1 + r)^T \le 0$. The country cannot forever pay the interest on its
+debt by borrowing more.
+\end{definition}
+
+\begin{proposition}[The sustainable trade balance]\label{prop:b3:current-account:sustainable}
+With net external debt $D$ at interest $r$, the \omterm{def:b3:current-account:sustainability}{no-Ponzi condition} holds if and only
+if $D_0 \le \sum_{t \ge 1} NX_t/(1 + r)^t$. If GDP grows at $g < r$, the debt ratio $d$ stays
+constant when net exports are $nx = d\,(r - g)/(1 + g)$ of GDP.
+\end{proposition}
+
+\begin{proof}
+Each period $D_t = (1 + r)D_{t-1} - NX_t$. Dividing by $(1 + r)^t$ and summing from 1 to
+$T$, $D_T/(1 + r)^T = D_0 - \sum_{t=1}^T NX_t/(1 + r)^t$; the limit is non-positive exactly when
+$D_0$ does not exceed the present value of net exports. In ratios, $d_t = d_{t-1}(1 +
+r)/(1 + g) - nx_t$, and $d_t = d_{t-1} = d$ requires $nx = d((1 + r)/(1 + g) - 1) = d(r - g)/(1 + g)$.
+\end{proof}
+
+A debtor whose economy grows faster than the interest rate can run trade deficits
+for ever with a stable debt ratio; one that pays more than it grows must earn a
+trade surplus. Sustainability is not solvency alone: lenders must also believe it.
+
+\section{Sudden stops}\label{sec:b3:current-account:sudden}
+
+\begin{definition}[Sudden stop]\label{def:b3:current-account:sudden-stop}
+\index{sudden stop}
+A \emph{sudden stop} is an abrupt fall in a country's net capital inflows, which
+forces its current-account deficit to shrink by the same amount within a short
+time.
+\end{definition}
+
+\begin{omchart}{Current-account balance before and after three sudden stops
+(percent of GDP; year 0 is 1994 for Mexico, 1997 for Thailand, 2010 for
+Greece).}{World Bank, World Development Indicators (BN.CAB.XOKA.GD.ZS)}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.6\linewidth, height=0.4\linewidth, xmin=-3.3, xmax=3.3,
+  ymin=-16, ymax=14, xtick={-3,...,3}, xlabel={Years from the stop},
+  ylabel={Percent of GDP}, legend pos=north west, legend style={font=\footnotesize}]
+  \addplot[omDef, thick, mark=*] table[x=k, y=MEX] {figdata/bachelor-3/12-current-account/out/sudden.csv};
+  \addplot[omThm, thick, mark=square*] table[x=k, y=THA] {figdata/bachelor-3/12-current-account/out/sudden.csv};
+  \addplot[black, thick, mark=triangle*] table[x=k, y=GRC] {figdata/bachelor-3/12-current-account/out/sudden.csv};
+  \legend{Mexico, Thailand, Greece}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\begin{record}[Sudden stops of the 1990s]
+% figdata: sudden
+Mexico's \omterm{def:b3:current-account:accounts}{current account} was in deficit by 5.4~\% of GDP in 1994; in 1995, after the
+peso collapsed, it was close to balance ($-0.4$~\%). Thailand's deficit of 8.0~\% of
+GDP in 1996 became a surplus of 12.5~\% in 1998: a swing of more than 20 points in two
+years. Neither country chose this adjustment. When lenders stop, the deficit must
+close, through a fall in imports, which means a fall in spending and usually in
+output, and a real depreciation that makes exports cheaper.
+\end{record}
+
+\begin{record}[The euro-area periphery, 2008--2013]
+% figdata: sudden
+Greece's deficit was 14.6~\% of GDP in 2008. Private inflows stopped in 2010, but
+the adjustment was slower than Thailand's: official loans from other euro-area
+governments and the European Central Bank's lending to Greek banks replaced
+private capital. The deficit was still 10~\% of GDP in 2011 and fell to about 2.6~\% in
+2012. A member of a currency union cannot depreciate its own currency; the real
+depreciation had to come through lower wages and prices, and the fall in imports
+through a deep recession.
+\end{record}
+
+\section{Why capital does not flow to poor countries}\label{sec:b3:current-account:lucas}
+
+\begin{definition}[Lucas paradox]\label{def:b3:current-account:lucas-paradox}
+\index{Lucas paradox}
+The \emph{Lucas paradox} is the observation that, although the neoclassical model
+predicts much higher returns to capital in poor countries, little capital flows
+from rich countries to poor ones.
+\end{definition}
+
+\begin{proposition}[The Lucas calculation]\label{prop:b3:current-account:lucas}
+If output per worker is $y = Ak^\alpha$ with the same $A$ in two countries, the ratio of
+their marginal products of capital is $(y_{\mathrm{rich}}/y_{\mathrm{poor}})^{(1-\alpha)/\alpha}$.
+\end{proposition}
+
+\begin{proof}
+$\mathrm{MPK} = \alpha A k^{\alpha - 1}$ and $k = (y/A)^{1/\alpha}$, so $\mathrm{MPK} = \alpha A^{1/\alpha}y^{(\alpha - 1)/\alpha}$.
+With the same $A$ and $\alpha$, the ratio for the poor country to the rich one is
+$(y_{\mathrm{poor}}/y_{\mathrm{rich}})^{(\alpha-1)/\alpha} = (y_{\mathrm{rich}}/y_{\mathrm{poor}})^{(1-\alpha)/\alpha}$.
+\end{proof}
+
+% figdata: lucas_stats
+With the Penn World Table, output per worker in the United States was 7.18 times
+India's in 2019; with $\alpha = 0.4$, the marginal product of capital in India would be
+$7.18^{1.5} = 19.2$ times the American one. Lucas's own comparison, for 1988, gave a
+factor of about 58. % ledger: b3ca:akv.lucas
+Returns that differ by such factors would pull all new investment to poor
+countries. They do not.
+
+\begin{omchart}{Net inflows of foreign direct investment (median over 2000--2024,
+percent of GDP) against GDP per person (mean over 2000--2024, constant 2021 PPP dollars,
+log scale), 151 countries of more than a million people.}{World Bank, World
+Development Indicators (BX.KLT.DINV.WD.GD.ZS, NY.GDP.PCAP.PP.KD); our computation}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xmode=log, log ticks with fixed point, width=0.6\linewidth,
+  height=0.42\linewidth, xmin=500, xmax=150000, ymin=-2, ymax=32,
+  xlabel={GDP per person}, ylabel={FDI inflows (\% of GDP)}]
+  \addplot table[x=y, y=fdi] {figdata/bachelor-3/12-current-account/out/lucas.csv};
+  \addplot[omThm, thick, mark=square*, mark size=2.5pt, sharp plot] table[x=y, y=fdi] {figdata/bachelor-3/12-current-account/out/lucas_bins.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: lucas_bins
+The squares are the medians of the five quintiles of income: poor countries
+received FDI of about 2.3~\% of their GDP, the richest fifth 2.7~\%, the middle about
+3.3~\%. Measured against their size, poor countries do not draw more capital. The
+explanations are those of growth accounting: technology and human capital differ
+($A$ is not the same), and investors fear for their property. During 1970--2000, low
+institutional quality was the leading explanation of the missing flows.
+% ledger: b3ca:akv.lucas
+Among developing countries, net capital flows even go more to countries that
+invest and grow less, the opposite of what faster productivity growth should
+attract. % ledger: b3ca:gj.allocation
+
+\begin{model}{The intertemporal current account}
+\assumes A small open economy with perfect capital mobility at a world interest
+rate; households smooth consumption.
+\predicts Deficits when output is temporarily low or investment opportunities are
+good; no response to permanent shocks; investment unrelated to domestic saving;
+capital flowing to where its return is highest.
+\tested Saving and investment move together across countries, more so in the past
+and among rich countries; capital flows little to poor countries, and among
+developing countries goes to those that grow less. % ledger: b3ca:feld.retention, b3ca:gj.allocation
+\breaks Borrowing limits and \omterm{def:b3:current-account:sudden-stop}{sudden stops}: lenders, not households, decide when the
+deficit ends; returns to capital adjusted for risk and institutions are not
+higher in poor countries.
+\end{model}
+
+\section{Exercises}\label{sec:b3:current-account:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:current-account:1}
+In the opening chart, in which year was the United States' deficit largest
+relative to world GDP? Which economies ran the matching surpluses in 2006, and how
+large was the world discrepancy?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:current-account:2}
+Record in Brenland's balance of payments: (a) a firm exports machines worth 100 and is
+paid into its account at a Kestrian bank; (b) a household receives dividends of 10
+from Kestrian shares; (c) a Kestrian fund buys Brenland government bonds worth 50;
+(d) Brenland's government gives 5 in aid to a foreign country.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:current-account:3}
+National saving is 22~\% of GDP and investment 25~\%. Find the \omterm{def:b3:current-account:accounts}{current account}. If the
+budget deficit rises by 2~\% of GDP and private saving does not change, what happens
+to it?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:current-account:4}
+What pattern in a country's \omterm{def:b3:current-account:accounts}{current account} and output would contradict
+consumption smoothing?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:current-account:5}
+With $\ln C_1 + \beta\ln C_2$, $r = 5~\%$, $\beta = 1/1.05$, $Y_2 = 100$ and $Y_1 = 90$ (a temporary fall),
+find $C_1$, $C_2$ and the \omterm{def:b3:current-account:accounts}{current account} in both periods. Do the same if $Y_1 = Y_2 = 90$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:current-account:6}
+A country's net external debt is 60~\% of GDP, the interest rate 4~\% and growth 3~\%.
+What trade balance keeps the debt ratio constant? And if growth falls to 1~\%?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:current-account:7}
+Estimate the Feldstein--Horioka slope on WDI data for 1990--1999, 2000--2011 and
+2012--2024, using countries with every year of data and more than a million people.
+Is the coefficient stable?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:current-account:8}
+A country's \omterm{def:b3:ricardian-trade:terms-of-trade}{terms of trade} fall permanently by 10~\%. What does the intertemporal
+model predict for its \omterm{def:b3:current-account:accounts}{current account}? And if markets expect the fall to reverse in
+two years?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:current-account:9}
+What observations would show that capital is perfectly mobile between two
+countries? Name two.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:current-account:10}
+Output per worker in the United States is 7.18 times India's. Find the ratio of
+marginal products of capital with $\alpha = 0.4$ and with $\alpha = 1/3$. If workers in the
+United States have 2.5 times the human capital of Indian workers and $y = Ak^\alpha h^{1-\alpha}$,
+what is the ratio?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:current-account:11}
+A country has a current-account deficit of 6~\% of GDP when inflows stop. Net exports
+must rise by the full 6 points. If each 1~\% real depreciation raises net exports by
+0.25~\% of GDP, how large a real depreciation is needed? If instead imports, at 30~\%
+of GDP, must fall with spending and the import share of spending is 0.3, by how much
+must spending fall?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:current-account:12}
+Find current-account reversals in the WDI data since 1990: a deficit of at least
+4~\% of GDP that shrinks by at least 4 points within two years, in countries of more
+than a million people. How many are there, and what happens to GDP growth around
+them?
+\end{exercise}
+
+\section{Problem: Brenland's Borrowing Years}\label{sec:b3:current-account:problem}
+
+\begin{problem}[{Weekend problem --- Brenland's borrowing years}]\label{pb:b3:current-account:borrowing}
+Brenland's net exports and GDP come from its national accounts. Assume that its net
+external debt was 45{,}000 million dalens at the end of 1999, that it pays interest
+on it at the policy rate plus one point, and that there are no transfers and no
+valuation changes. Then $CA_t = NX_t - i_tD_{t-1}$ and $D_t = D_{t-1} - CA_t$:
+% figdata: borrow_points
+\begin{center}\small
+\pgfplotstabletypeset[col sep=comma, columns={year,gdp,nx,i,interest,ca,debt_pct},
+  columns/year/.style={column name={Year}, int detect, column type=l},
+  columns/gdp/.style={column name={GDP}, fixed, precision=0, 1000 sep={\,}},
+  columns/nx/.style={column name={$NX$}, fixed, precision=0, 1000 sep={\,}},
+  columns/i/.style={column name={$i$ (\%)}, fixed, fixed zerofill, precision=2},
+  columns/interest/.style={column name={Interest}, fixed, precision=0, 1000 sep={\,}},
+  columns/ca/.style={column name={$CA$}, fixed, precision=0, 1000 sep={\,}},
+  columns/debt_pct/.style={column name={$D$ (\% of GDP)}, fixed, fixed zerofill, precision=2},
+  every head row/.style={after row=\hline}, every last row/.style={after row=\hline}]
+  {figdata/bachelor-3/12-current-account/out/borrow_points.csv}
+\end{center}
+(Millions of dalens.) Over 2021--2025 the interest rate averaged 5.90~\%, and nominal
+GDP grew by 4.76~\% a year on average over 2016--2025. % figdata: borrow_stats
+
+\medskip\noindent\textbf{Part I --- the balance of payments.}
+\begin{enumerate}
+\item Compute the 2000 \omterm{def:b3:current-account:accounts}{current account} from the table's other columns.
+\item In which listed years did Brenland run a trade surplus but a current-account
+deficit? Why?
+\item Express the 2025 \omterm{def:b3:current-account:accounts}{current account} as a percent of GDP. How was it financed?
+\item Check the change in debt from 2009 to 2010.
+\item The debt ratio rose from 30.3~\% in 2008 to 38.6~\% in 2020. Through which two
+channels can a debt ratio rise?
+\item What would a 10~\% depreciation of the dalen do to the NIIP if half of the debt
+were in kests? (Give the effect in percent of 2025 GDP.)
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- the 2009 export collapse.}
+\begin{enumerate}[resume]
+\item Real GDP fell by 3.3~\% in 2009. In a two-period model with $\ln C_1 + \beta\ln C_2$,
+$\beta(1 + r) = 1$, $r = 3~\%$, normal output 100 and $Y_1 = 96.7$, find consumption.
+\item Find the \omterm{def:b3:current-account:accounts}{current account} in period 1, in percent of normal output.
+\item Compare it with the change in Brenland's \omterm{def:b3:current-account:accounts}{current account} from 2008 to 2009.
+\item What would the model predict had the fall been permanent?
+\item Which assumption of the model fits Brenland in 2009 poorly?
+\item In 2020 real GDP fell by 4.85~\%. Was the change in the deficit from 2019 to
+2020 consistent with a temporary shock?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- sustainability.}
+\begin{enumerate}[resume]
+\item Write the law of motion of the debt ratio.
+\item Find the trade balance, in percent of GDP, that keeps the 2025 debt ratio
+constant with the average interest rate and growth rate.
+\item Compare it with the 2025 trade balance (0.28~\% of GDP). Is the debt ratio
+rising?
+\item If the interest rate fell to 4~\%, what trade balance would stabilise the
+ratio?
+\item Does the \omterm{def:b3:current-account:sustainability}{no-Ponzi condition} require Brenland to repay its debt?
+\item Why might lenders stop before the condition is violated?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- a sudden stop.}
+\begin{enumerate}[resume]
+\item If lenders refuse any new lending in 2026, what \omterm{def:b3:current-account:accounts}{current account} must Brenland
+run?
+\item With 2025's interest bill, what trade balance does that require, in percent of
+GDP? How large is the swing from 2025?
+\item If each 1~\% real depreciation of the dalen raises net exports by 0.3~\% of GDP,
+how large a depreciation is needed?
+\item State the result: the trade surplus, in percent of GDP, that stabilises
+Brenland's external debt.
+\end{enumerate}
+\end{problem}

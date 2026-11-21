@@ -1,0 +1,208 @@
+\section*{Chapter \ref{ch:b3:credible-empirical-work} --- Credible Empirical Work}
+
+\begin{solution}{exo:b3:credible-empirical-work:1}
+0.647, in parentheses below 1.679. % output: reading_table
+$t = 1.679/0.647 = 2.60$; the interval is $1.679 \pm 1.96 \times 0.647 = 1.679 \pm
+1.268$, from 0.41 to 2.95 thousand dollars. The table should state the kind of
+standard error (robust, clustered and at which level, or classical) and the
+controls in each column.
+\end{solution}
+
+\begin{solution}{exo:b3:credible-empirical-work:2}
+$1 - 0.95^5 = 0.226$; $1 - 0.95^{20} = 0.642$. The sixteen paths use the same data
+and the same treatment variable, and the two outcomes share a component: when
+one path is significant, its neighbours tend to be too, and when one is not,
+neither are they. Correlated tests add fewer independent chances, so at least one
+success comes less often (0.214 against 0.560). % output: forking_paths
+\end{solution}
+
+\begin{solution}{exo:b3:credible-empirical-work:3}
+$\beta/s = 0.05/0.02 = 2.5$; power $= 1 - \Phi(1.96 - 2.5) = \Phi(0.54) = 0.705$.
+\end{solution}
+
+\begin{solution}{exo:b3:credible-empirical-work:4}
+A symmetric inverted funnel centred on the true effect: precise studies near
+it at the top, imprecise ones spread evenly on both sides at the bottom. A funnel
+can also lean if small studies differ in their true effects --- for example, if
+small pilot studies are run where the programme is most promising, or treat
+more intensively than large roll-outs.
+\end{solution}
+
+\begin{solution}{exo:b3:credible-empirical-work:5}
+Power 0.2 means $1 - \Phi(1.96 - \beta/s) = 0.2$, so $1.96 - \beta/s = 0.8416$ and
+$\beta/s = 1.1184$. With $a = 0.8416$, $\lambda(a) = 0.2800/0.2 = 1.400$. The mean
+significant $z$ is $1.1184 + 1.400 = 2.518$, and the ratio is $2.518/1.1184 =
+2.25$, as the chart shows. % figdata: exaggeration
+\end{solution}
+
+\begin{solution}{exo:b3:credible-empirical-work:6}
+The tested solution is \code{ex06_fat_pet.py}, in the chapter's \code{exercises/}
+folder.
+\begin{enumerate}
+\item The simple mean is 0.225 and the inverse-variance mean 0.080.
+% output: ex06_fat_pet
+\item FAT: 2.032 (s.e.\ 0.105), $t = 19.4$; PET: 0.0056 (s.e.\ 0.0050), $t = 1.1$.
+Every estimate is about twice its standard error, which is what a literature
+where only significant results survive looks like. The corrected effect is
+indistinguishable from zero: the literature gives no evidence of an effect.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:credible-empirical-work:7}
+With the analysis fixed in advance, only one path is reported, and its false
+positive rate is the 5~\% the test promises (6.4~\% in the simulation, within
+sampling error of 5~\%). % output: forking_paths
+It does not change the data, the power of the study, or the filter at the
+journal: a pre-registered null result can still go unpublished, which is why
+registration of the study matters as much as the plan.
+\end{solution}
+
+\begin{solution}{exo:b3:credible-empirical-work:8}
+Weights $1/0.01 = 100$, $1/0.0025 = 400$, $1/0.04 = 25$, sum 525. Mean $(0.20 \times
+100 + 0.10 \times 400 + 0.40 \times 25)/525 = 70/525 = 0.133$; standard error
+$1/\sqrt{525} = 0.044$. The second study, with the smallest standard error, has
+$400/525 = 76~\%$ of the weight.
+\end{solution}
+
+\begin{solution}{exo:b3:credible-empirical-work:9}
+It shows that the original estimate was probably too large: either a false
+positive or, more likely in a literature with low power, a real effect
+exaggerated by the filter. It does not show that the effect is zero (a third
+of the original may still be real and worth knowing), that the original authors
+erred, or, if the setting differs, that the original effect was not real where
+it was measured.
+\end{solution}
+
+\begin{solution}{exo:b3:credible-empirical-work:10}
+\begin{enumerate}
+\item At $\beta/s = 1$: $a = 0.96$, $\phi(0.96) = 0.2516$, $1 - \Phi(0.96) = 0.1685$,
+$\lambda = 1.493$, ratio $1 + 1.493 = 2.49$. At $\beta/s = 3$: $a = -1.04$,
+$\phi(-1.04) = 0.2323$, $1 - \Phi(-1.04) = 0.8508$, $\lambda = 0.273$, ratio $1 +
+0.273/3 = 1.09$.
+\item As $\beta/s \to \infty$, $a \to -\infty$: $\phi(a) \to 0$ and $1 - \Phi(a) \to 1$,
+so $\lambda(a) \to 0$, and $(s/\beta)\lambda(a) \to 0$; the ratio tends to 1.
+\item Publication has probability $1 - \Phi(0.96) + \Phi(-2.96) = 0.1685 + 0.0015 =
+0.170$. \omterm{def:b3:credible-empirical-work:exaggeration}{Sign errors} are the significant negative estimates: $0.0015/0.170 =
+0.009$, about one published estimate in 110.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:credible-empirical-work:11}
+The tested solution is \code{ex11_random_effects.py}, in the chapter's
+\code{exercises/} folder.
+\begin{enumerate}
+\item The weights are 400, 625, 100, 277.8, 400, 156.2, 1{,}111.1 and 204.1,
+summing to 3{,}274.2; the weighted sum of estimates is 316.24, so $\bar\beta =
+0.0966$, with standard error $1/\sqrt{3{,}274.2} = 0.0175$; $Q = 16.09$ on 7 degrees
+of freedom. % output: ex11_random_effects
+\item $\sum w_i^2/\sum w_i = 2{,}098{,}417/3{,}274.2 = 640.9$, so the denominator is
+$3{,}274.2 - 640.9 = 2{,}633.3$ and $\hat\tau^2 = (16.09 - 7)/2{,}633.3 = 0.00345$
+($\hat\tau = 0.059$). The random-effects mean is 0.1128, standard error 0.0289. The
+standard error is larger because each study's variance now includes the
+spread of true effects across settings, which more studies of the same size
+would not remove; and the weights are more equal, so the imprecise studies,
+whose estimates are larger, count for more and the mean rises.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:credible-empirical-work:12}
+An example of an answer. The training experiment of
+\cref{ch:b3:difference-in-differences}: grade 2, one randomised trial in one
+setting; a \omterm{def:b3:credible-empirical-work:replication}{replication} in another country would raise it. The effect of
+election victory on the next election in \cref{ch:b3:regression-discontinuity}:
+grade 2 for the United States House, from a strong discontinuity design; the
+same design in other countries' elections, agreeing, would raise it to 1. The
+effect of trade on income in \cref{ch:b3:instrumental-variables}: grade 3, since
+the instrument's exclusion is disputed; a natural experiment that changed trade
+alone would raise it.
+\end{solution}
+
+\begin{solution}{pb:b3:credible-empirical-work:twenty}
+\textbf{1.} Nine: S02, S04, S07, S13, S14, S16, S17, S18 and S19 (for example
+$21.2/7.91 = 2.68$, $3.1/1.55 = 2.00$, $3.6/1.81 = 1.99$). $9/20 = 0.45$, the share
+in the summary table. % figdata: studies, studies_summary
+
+\textbf{2.} That every study is equally informative, whatever its size, and that
+the twenty are an unselected sample of the studies run.
+
+\textbf{3.} $w_{16} = 1/1.55^2 = 0.416$; $w_{04} = 1/8.32^2 = 0.0144$; the ratio is
+$8.32^2/1.55^2 = 28.8$.
+
+\textbf{4.} The small studies report the largest effects (21.2~\%, 27.0~\%,
+13.4~\%); precision weighting gives them little weight.
+
+\textbf{5.} $3.78 \pm 1.96 \times 0.58 = 3.78 \pm 1.14$: from 2.64 to 4.92~\%.
+
+\textbf{6.} $\beta/s = 3.78/8.32 = 0.454$; power $= 1 - \Phi(1.96 - 0.454) = 1 -
+\Phi(1.506) = 0.066$. A study with one chance in fifteen of being significant
+reported $z = 3.25$: a lucky draw, published because it was significant.
+
+\textbf{7.} Estimates on the horizontal axis, precision $1/s$ on the vertical.
+Without selection, the points would spread evenly on both sides of the true
+effect at every height, narrowing toward the top.
+
+\textbf{8.} S01, S02, S04, S05, S08, S09, S15 and S20. Six lie above 3.78 (21.2, 27.0,
+8.8, 9.0, 9.2, 13.4) and two below (1.3 and $-0.7$): the bottom of the funnel
+leans right, the mark of the filter.
+
+\textbf{9.} Estimates rise by 1.26 for each unit of standard error; $t = 1.26/0.48
+= 2.63$, so funnel asymmetry is significant at 5~\%.
+
+\textbf{10.} The effect extrapolated to a perfectly precise study is 0.93~\%,
+with $t = 0.93/1.23 = 0.76$ and an interval from $0.93 - 2.41 = -1.48$ to $0.93 +
+2.41 = 3.34$~\%: corrected for selection, the twenty studies cannot tell a small
+positive effect from none.
+
+\textbf{11.} The filter acts through sampling error: a study with $s = 0$ reports
+the truth and needs no luck to be significant. PET is the regression line's value
+there.
+
+\textbf{12.} $\beta/s = 0.25$, $a = 1.71$, power $= 1 - \Phi(1.71) = 0.0436$;
+$\lambda = 0.0925/0.0436 = 2.12$; mean significant estimate $2 + 8 \times 2.12 =
+19.0$~\%, nine and a half times the truth. S02 (21.2) and S04 (27.0) are what such
+studies publish.
+
+\textbf{13.} $2.0 \pm 1.96 \times 0.60 = 2.0 \pm 1.18$: from 0.82 to 3.18~\%.
+
+\textbf{14.} The difference is $3.78 - 2.0 = 1.78$, with standard error
+$\sqrt{0.58^2 + 0.60^2} = 0.834$: $z = 2.13$. At 5~\%, the trial rejects the
+inverse-variance mean.
+
+\textbf{15.} $2.0 - 0.93 = 1.07$, standard error $\sqrt{1.23^2 + 0.60^2} = 1.369$:
+$z = 0.78$. Consistent.
+
+\textbf{16.} $\beta/s = 2/0.6 = 3.33$; power $= \Phi(3.33 - 1.96) = \Phi(1.37) =
+0.915$.
+
+\textbf{17.} It would have been reported whatever it found, with the outcome and
+the analysis fixed in advance: neither the filter nor forking paths could have
+shaped it.
+
+\textbf{18.} No. It is one estimate with an interval from 0.82 to 3.18; it agrees
+with PET, but it would also have agreed with a corrected estimate of 3~\%.
+
+\textbf{19.} Weights $1/1.23^2 = 0.661$ and $1/0.60^2 = 2.778$, sum 3.439. Combined
+estimate $(0.661 \times 0.93 + 2.778 \times 2.0)/3.439 = 6.171/3.439 = 1.79$~\%,
+standard error $1/\sqrt{3.439} = 0.54$.
+
+\textbf{20.} PET rests on a model of the bias (linear in the standard error) and
+extrapolates beyond the data; its standard error does not include the
+uncertainty about that model. The trial alone is the cleaner number.
+
+\textbf{21.} Before the trial: grade 2 --- several randomised trials that
+disagree in size --- and the funnel shows that their agreement on a positive sign
+is partly the filter's work. After it: still grade 2, now resting on one strong
+pre-registered design; agreement with a second large trial elsewhere would
+give grade 1.
+
+\textbf{22.} $20{,}000 \times 0.0652 = 1{,}304$ dalens a year; $20{,}000 \times 0.020 =
+400$ dalens a year.
+
+\textbf{23.} The simple mean is $6.52/2.0 = 3.3$ times the trial's estimate: it
+overstates the yearly gain by 904 dalens per trainee.
+
+\textbf{24.} Corrected for selection and combined with the pre-registered trial,
+the programme raises trainees' earnings by about 1.8~\% (standard error 0.54),
+against 6.5~\% in the simple mean of the published studies; the trial alone gives
+2.0~\% (0.60). Grade 2 on the \omterm{def:b3:credible-empirical-work:evidence-scale}{evidence scale}.
+\end{solution}

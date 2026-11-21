@@ -1,0 +1,124 @@
+\section*{Chapter \ref{ch:b2:time-series} --- Time Series: A First Course}
+
+\begin{solution}{exo:b2:time-series:1}
+% figdata: walks_fit
+A strong negative relation: $R^2 = 0.55$, $t = -15.5$. It is wrong because the walks are independent by construction.
+Both wander far from their start, and two wandering series drift in some direction relative to each other in any sample;
+the $t$ statistic, computed as if the residuals were independent, treats this drift as evidence.
+\end{solution}
+
+\begin{solution}{exo:b2:time-series:2}
+% figdata: acf
+Inflation 0.642 at lag 1 and 0.238 at lag 12; unemployment 0.956 and 0.260; band $\pm0.138$. Unemployment is far more
+persistent from quarter to quarter; after three years the two have similar autocorrelations, both still outside the band.
+\end{solution}
+
+\begin{solution}{exo:b2:time-series:3}
+% code: exercises/solutions.py long_run_multiplier
+\omterm{def:b2:time-series:dynamic-multiplier}{Dynamic multipliers} 0.4, 0.3, 0.2 and 0.1 at horizons 0 to 3; long-run multiplier $0.4 + 0.3 + 0.2 + 0.1 = 1.0$.
+\end{solution}
+
+\begin{solution}{exo:b2:time-series:4}
+It \omterm{def:b2:time-series:granger}{Granger-causes} GDP if it helps predict GDP given GDP's own past, which is what the statement says. That does not mean it
+causes GDP: share prices respond to expected profits, so they move before the GDP changes that investors foresee, without
+producing them.
+\end{solution}
+
+\begin{solution}{exo:b2:time-series:5}
+% code: exercises/solutions.py ar1_acf
+Mean $1/(1 - 0.5) = 2$; variance $1/(1 - 0.25) = 1.33$; autocorrelations 0.5, 0.25, 0.125; half-life $\ln 0.5/\ln 0.5 = 1$
+period.
+\end{solution}
+
+\begin{solution}{exo:b2:time-series:6}
+% code: listings/ar_fit.py; exercises/solutions.py unemp_mean_se
+Implied mean $0.0889/(1 - 0.9880) = 7.44$ per cent; half-life $\ln 0.5/\ln 0.988 = 57.6$ quarters. The sample mean is 5.9.
+With $\phi$ so close to one, $c/(1 - \phi)$ is very sensitive to small errors in $\phi$: its delta-method standard error is
+3.0 points, so the gap is well within the estimate's uncertainty. The AR(1) is also the wrong shape (the AR(2) fits much
+better), which biases its $\phi$ toward one.
+\end{solution}
+
+\begin{solution}{exo:b2:time-series:7}
+% code: exercises/solutions.py phillips_forecast
+Root mean squared errors: 1.772 without unemployment, 1.775 with it, 1.624 for the random walk. Adding unemployment does
+not help; the random walk still wins, as Atkeson and Ohanian (2001) found with richer models over a similar period.
+\end{solution}
+
+\begin{solution}{exo:b2:time-series:8}
+% code: listings/random_walks.py
+In differences both series are independent \omterm{def:b2:time-series:white-noise}{white noise}: the regression's errors are \omterm{def:b2:time-series:white-noise}{white noise}, independent of the
+regressor, and the usual $t$ statistic has its usual distribution, so it rejects 5.9 per cent of the time, close to 5. In
+levels the errors are a random walk, so the classical standard error is far too small and the $t$ statistic does not
+settle down as the sample grows.
+\end{solution}
+
+\begin{solution}{exo:b2:time-series:9}
+% code: listings/hac.py
+$t = -0.286/0.095 = -3.0$ with the classical error and $-0.286/0.151 = -1.9$ with Newey--West. At the 5 per cent level the
+classical test rejects a zero slope and the Newey--West test does not; at 10 per cent both reject. The estimate itself is
+the same.
+\end{solution}
+
+\begin{solution}{exo:b2:time-series:10}
+$\operatorname{Var}(y_t) = \sigma^2(1 + \theta^2)$; $\operatorname{Cov}(y_t, y_{t-1}) = E[(\varepsilon_t +
+\theta\varepsilon_{t-1})(\varepsilon_{t-1} + \theta\varepsilon_{t-2})] = \theta\sigma^2$, so $\rho_1 = \theta/(1 +
+\theta^2)$; at lags 2 and more the two terms share no shock, so $\rho_k = 0$. The derivative of $\theta/(1 + \theta^2)$ is
+$(1 - \theta^2)/(1 + \theta^2)^2$, zero at $\theta = 1$, where $\rho_1 = 0.5$: an MA(1) can never have a first
+autocorrelation above one half.
+\end{solution}
+
+\begin{solution}{exo:b2:time-series:11}
+$y_t = \varepsilon_1 + \dots + \varepsilon_t$, a sum of $t$ independent shocks, so $\operatorname{Var}(y_t) = t\sigma^2$.
+$\operatorname{Cov}(y_t, y_{t-k}) = \operatorname{Var}(y_{t-k}) = (t - k)\sigma^2$, since the later shocks are independent
+of $y_{t-k}$; the correlation is $(t - k)\sigma^2/\sqrt{t\sigma^2(t - k)\sigma^2} = \sqrt{(t - k)/t}$. The variance and the
+correlation depend on $t$, which \omterm{def:b2:time-series:stationarity}{weak stationarity} forbids.
+\end{solution}
+
+\begin{solution}{exo:b2:time-series:12}
+With $\mu = c/(1 - \phi)$, $y_{t+h} - \mu = \phi^h(y_t - \mu) + \varepsilon_{t+h} + \phi\varepsilon_{t+h-1} + \dots +
+\phi^{h-1}\varepsilon_{t+1}$. So $E[y_{t+h} \mid y_t] = \mu + \phi^h(y_t - \mu)$, and the error variance is
+$\sigma^2(1 + \phi^2 + \dots + \phi^{2(h-1)}) = \sigma^2(1 - \phi^{2h})/(1 - \phi^2)$. As $h$ grows the forecast tends to
+the mean and the error variance to the series' own variance $\sigma^2/(1 - \phi^2)$: far enough ahead, knowing $y_t$ does
+not help.
+\end{solution}
+
+\begin{solution}{pb:b2:time-series:1}
+% code: exercises/solutions.py brenland_inflation, brenland, brenland_df_critical, surge
+\textbf{Part I.}
+1. 25 (2001--2025).
+2. Mean 2.69 per cent, standard deviation 1.71.
+3. 2022, at 9.70 per cent.
+4. 2.47 per cent.
+5. 0.48.
+6. Yes: the band is $\pm1.96/\sqrt{25} = \pm0.39$.
+\textbf{Part II.}
+7. $c = 1.40$, $\phi = 0.48$.
+8. Standard error 0.186; $t = 0.4845/0.1863 = 2.60$.
+9. $1.397/(1 - 0.4845) = 2.71$, close to the sample mean of 2.69.
+10. $\ln 0.5/\ln 0.4845 = 0.96$ years: about a year.
+11. 1.56 points.
+12. The 2022 residual is 6.51 points, 4.2 residual standard deviations: an exceptional shock, which the AR(1) then expects
+to halve each year. Its forecasts for 2023 and 2024 (6.09 and 4.05) were close to the outcomes (5.49 and 3.71), a little
+above them.
+\textbf{Part III.}
+13. $\Delta\pi_t = \alpha + \gamma\pi_{t-1} + e_t$ with $\gamma = \phi - 1$; the null is $\gamma = 0$.
+14. $-2.77$.
+15. $-2.99$ (with 25 observations; $-2.64$ at 10 per cent).
+16. Not at 5 per cent; yes at 10 per cent ($p = 0.063$).
+17. The statistic is $(\hat\phi - 1)/\mathrm{s.e.} = (0.4845 - 1)/0.1863 = -2.77$: with 24 usable years the standard error is
+large, and under the null the statistic has a distribution shifted to the left, so even an estimate far below one is not
+far enough. The test has little power in so short a sample.
+18. The AR(1) forecast assumes inflation returns to 2.7; if inflation has a \omterm{def:b2:time-series:unit-root}{unit root}, it need not, and the intervals of
+Part IV are too narrow. The test cannot rule this out, so the forecast is conditional on stationarity.
+\textbf{Part IV.}
+19. $1.397 + 0.4845 \times 2.469 = 2.59$ per cent.
+20. $1.397 + 0.4845 \times 2.594 = 2.65$ per cent.
+21. 1.56 for 2026; $1.565\sqrt{1 + 0.4845^2} = 1.74$ for 2027.
+22. $2.65 \pm 1.96 \times 1.74$: from $-0.75$ to 6.06 per cent.
+23. Two years ahead, two shocks are unknown. As the horizon grows the standard error tends to $1.565/\sqrt{1 - 0.4845^2} =
+1.79$, a half-width of 3.5 points.
+24. 2.47 per cent, the last observation, with an error that keeps growing with the horizon.
+25. Brenland's inflation has an AR(1) persistence of 0.48: half of an inflation shock is gone in about a year (0.96 years),
+and the two-year-ahead forecast for 2027 is 2.65 per cent, with a 95 per cent interval from $-0.75$ to 6.06 --- on the
+assumption, which 25 years of data cannot confirm, that inflation has no \omterm{def:b2:time-series:unit-root}{unit root}.
+\end{solution}

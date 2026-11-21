@@ -1,0 +1,9 @@
+$ python changes.py
+June 2022, not adjusted:
+  month on month     1.37
+  twelve months      9.06
+  annualised        17.79
+June 2022, adjusted:
+  month on month     1.26
+  twelve months      8.98
+  annualised        16.16

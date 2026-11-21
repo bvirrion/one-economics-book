@@ -1,0 +1,8 @@
+$ python gravity_ols.py
+pairs 28,113, R-squared 0.658
+ln_gdp_o     1.306  (0.007)
+ln_gdp_d     0.957  (0.007)
+ln_dist     -1.206  (0.021)
+contig       1.259  (0.102)
+col45        1.412  (0.111)
+fta_wto      1.054  (0.036)

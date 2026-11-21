@@ -1,0 +1,455 @@
+\chapter{Banks, Runs and Financial Crises}\label{ch:b2:banks-and-crises}
+
+Banks borrow from depositors who can withdraw at any time and lend for years. That arrangement is useful, and it is
+fragile: if enough depositors withdraw at once, a bank that would have paid everyone in full can fail. This chapter builds
+the model of that fragility, looks at the private and public answers to it, and measures what banking crises have cost
+over a century and a half. The chart counts them.
+
+\begin{openingchart}{Number of systemic banking crises starting in each decade, 18 advanced economies, 1870s to
+  2010s.}{Jord\`a--Schularick--Taylor Macrohistory Database (crisisJST); our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.72\linewidth, height=0.4\linewidth, ybar, bar width=9pt, xmin=1862, xmax=2018,
+    ymin=0, ymax=16, xtick={1870,1890,...,2010}, xticklabel style={/pgf/number format/1000 sep=},
+    xticklabel={\pgfmathprintnumber{\tick}s}, ylabel={Crises}, nodes near coords,
+    nodes near coords style={font=\scriptsize}]
+  \addplot[fill=omDef!70, draw=omDef] table[x=decade, y=crises] {figdata/bachelor-2/29-banks-and-crises/out/decades.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: decades (total 88; 1920s 13, 1930s 14, 2000s 13; 1940s-1960s 0)
+The eighteen economies had 88 systemic banking crises between 1870 and 2020: 13 in the 1920s, 14 in the 1930s, 13 in
+the 2000s, and none at all from 1940 to 1969. Crises are not rare accidents of a distant past, and their frequency has
+changed with the way banks were run and regulated.
+
+\begin{recall}
+From the school volumes: a bank's balance sheet, reserves, \omterm{def:b2:banks-and-crises:bank-run}{bank runs}, \omterm{def:b2:banks-and-crises:deposit-insurance}{deposit insurance} and the \omterm{def:b2:banks-and-crises:llr}{lender of last resort}, told
+in words. From \cref{ch:b2:expected-utility}: \omterm{def:b2:expected-utility:risk-aversion}{risk aversion} and \omterm{def:b2:expected-utility:crra}{constant relative risk aversion}. From
+\cref{ch:b2:three-equation-model}: the policy rate.
+\end{recall}
+
+\section{Short deposits, long loans}\label{sec:b2:banks-and-crises:maturity}
+
+\begin{definition}[Maturity transformation]\label{def:b2:banks-and-crises:maturity-transformation}
+\emph{Maturity transformation}\index{maturity transformation} is the financing of long-term, illiquid assets with
+short-term liabilities that can be withdrawn on demand or at short notice.
+\end{definition}
+
+A household does not know whether it will need its savings next month or in ten years. Holding cash is safe but earns
+nothing; lending to a firm for ten years earns more but cannot be undone cheaply. A bank pools many households: since only
+some of them need their money at any date, it can keep a small part of its assets liquid and lend the rest long. Each
+depositor gets a claim that can be cashed at any time and still earns part of the return on long loans. The same pooling is
+the source of fragility: the bank can meet the withdrawals it expects, not withdrawals by everyone.
+
+\section{The bank-run model}\label{sec:b2:banks-and-crises:dd}
+
+\begin{definition}[Diamond--Dybvig model]\label{def:b2:banks-and-crises:dd}
+The \emph{Diamond--Dybvig model}\index{Diamond--Dybvig model} is a three-date model of a bank that offers demand deposits
+to depositors who learn privately whether they must consume early, and that invests in a technology that pays more if held
+to the end than if liquidated early.
+\end{definition}
+
+There are three dates, 0, 1 and 2, and a large number of depositors, each with one unit at date 0. At date 1 each learns
+privately whether he is \emph{impatient}, needing to consume at date 1 (a share $\pi$ of them), or \emph{patient}, able to
+wait until date 2. A unit invested at date 0 returns $R > 1$ at date 2, or 1 if it is liquidated at date 1. Utility is
+$u(c) = c^{1-\gamma}/(1 - \gamma)$, with $\gamma$ the \omterm{def:b2:expected-utility:rra}{coefficient of relative risk aversion}.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, every node/.style={font=\small}]
+  \draw[thick, ->] (0,0) -- (11,0);
+  \foreach \x/\t in {0.5/0, 5/1, 9.8/2} {\draw[thick] (\x,0.15) -- (\x,-0.15); \node[below] at (\x,-0.2) {date \t};}
+  \node[above, align=center, text width=3.2cm] at (0.5,0.3) {each depositor\\ deposits 1};
+  \node[above, align=center, text width=4.2cm] at (5,0.3) {types learnt privately;\\ withdrawers paid $c_1$\\ (liquidation yields 1)};
+  \node[above, align=center, text width=3.4cm] at (9.8,0.3) {assets yield $R$;\\ the rest is shared\\ among those who waited};
+\end{tikzpicture}
+
+{\small The timing of the model. A deposit is a promise of $c_1$ to anyone who withdraws at date 1; those who wait share
+what is left at date 2.}
+\end{omfigure}
+
+Without a bank each depositor invests alone: an impatient one liquidates and gets 1, a patient one waits and gets $R$. A
+risk-averse depositor would rather narrow that gap: give up some of $R$ in the good case to get more than 1 in the bad
+one. With $\pi$ known, a bank can do it. If it pays $c_1$ to the impatient and $c_2$ to the patient, it must liquidate
+$\pi c_1$ at date 1 and keep $1 - \pi c_1$ invested, so that $(1 - \pi)c_2 = R(1 - \pi c_1)$, or
+\begin{equation}\label{eq:b2:banks-and-crises:budget}
+\pi c_1 + (1 - \pi)\frac{c_2}{R} = 1.
+\end{equation}
+Maximising $\pi u(c_1) + (1 - \pi)u(c_2)$ under \eqref{eq:b2:banks-and-crises:budget} gives $u'(c_1) = Ru'(c_2)$, so
+$c_2 = R^{1/\gamma}c_1$ and
+\begin{equation}\label{eq:b2:banks-and-crises:contract}
+c_1 = \frac{1}{\pi + (1 - \pi)R^{1/\gamma - 1}}.
+\end{equation}
+If $\gamma > 1$, $R^{1/\gamma - 1} < 1$ and $c_1 > 1$: the bank pays early withdrawers more than the liquidation value of
+their deposit. That is the insurance, and that is the weak point.
+
+\begin{definition}[Bank run]\label{def:b2:banks-and-crises:bank-run}
+A \emph{bank run}\index{bank run} is an equilibrium in which depositors who do not need their funds withdraw them because
+they expect others to withdraw, so that withdrawals exceed what the bank can pay at the promised rate.
+\end{definition}
+
+Suppose a share $f \geq \pi$ of depositors withdraws at date 1. The bank liquidates $fc_1$ and, if $fc_1 < 1$, those who
+waited share $R(1 - fc_1)$, each getting
+\[
+w(f) = \frac{R(1 - fc_1)}{1 - f}.
+\]
+If $f = \pi$, $w = c_2 > c_1$: a patient depositor who expects only the impatient to withdraw does best to wait. But $w$
+falls as $f$ rises whenever $c_1 > 1$, and is zero once $f \geq 1/c_1$, when the bank has liquidated everything. A patient
+depositor who expects many others to withdraw does best to withdraw too. Waiting is the \omterm{def:b2:static-games:best-response}{best response} if and only if
+$w(f) \geq c_1$, that is
+\begin{equation}\label{eq:b2:banks-and-crises:threshold}
+f \leq f^* = \frac{R - c_1}{c_1(R - 1)}.
+\end{equation}
+Both outcomes are equilibria: everyone patient waits, and $f = \pi$; or everyone withdraws, and the bank fails. In the run
+equilibrium the bank liquidates investments that would have returned $R$: the run destroys real output, not merely
+transfers it.
+
+\omcode{code/bachelor-2/29-banks-and-crises/listings/dd.py}{1}{32}{The optimal deposit contract and the run threshold, for
+three degrees of \omterm{def:b2:expected-utility:risk-aversion}{risk aversion}.}\label{lst:b2:banks-and-crises:dd}
+
+\omoutput{code/bachelor-2/29-banks-and-crises/outputs/dd.txt}{With $\pi = 0.25$ and $R = 2$: the more risk-averse the
+depositors, the more the contract insures them and the lower the share of withdrawals that makes waiting worse than
+running.}\label{out:b2:banks-and-crises:dd}
+
+% code: listings/dd.py
+With log utility ($\gamma = 1$) the contract is $c_1 = 1$, $c_2 = R$: there is no insurance, and no run, since waiting
+pays $R$ whatever others do. With $\gamma = 2$ the bank promises 1.282 at date 1 and 1.812 at date 2; waiting stops paying
+once 56.1 per cent of depositors withdraw, and the bank is empty at 78.0 per cent. With $\gamma = 4$ the threshold falls
+to 39.2 per cent. The more insurance the contract gives, the more fragile the bank.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=1, ymin=0, ymax=2.2, width=0.6\linewidth, height=0.4\linewidth,
+    xlabel={Share of depositors withdrawing at date 1, $f$}, ylabel={Payoff}, clip=false,
+    legend style={at={(1.03,0.5)}, anchor=west, font=\small}]
+  \addplot[omDef, thick, domain=0:0.7803, samples=100] {2*(1 - 1.2815*x)/(1 - x)};
+  \addlegendentry{wait, $w(f)$}
+  \addplot[omThm, thick, dashed, domain=0:1, samples=2] {1.2815};
+  \addlegendentry{withdraw, $c_1$}
+  \addplot[omDef, thick, forget plot, domain=0.7803:1, samples=2] {0};
+  \node[eqpoint] at (axis cs:0.25,1.8123) {};
+  \node[above right, font=\small] at (axis cs:0.25,1.8123) {$f = \pi$: $c_2$};
+  \node[eqpoint] at (axis cs:0.5607,1.2815) {};
+  \draw[guide] (axis cs:0.5607,1.2815) -- (axis cs:0.5607,0);
+  \node[left, font=\small] at (axis cs:0.5607,0.2) {$f^* = 0.561$};
+  \draw[guide] (axis cs:0.7803,0) -- (axis cs:0.7803,0.25) node[above, font=\small] {$1/c_1$};
+\end{axis}
+\end{tikzpicture}
+
+{\small Payoffs to a patient depositor, $\pi = 0.25$, $R = 2$, $\gamma = 2$. Left of $f^* = 0.561$ waiting pays more than
+withdrawing; right of it, withdrawing pays more. Both ends are equilibria.}
+\end{omfigure}
+
+\section{Deposit insurance and the lender of last resort}\label{sec:b2:banks-and-crises:insurance}
+
+The run equilibrium exists because a patient depositor fears that the bank will have nothing left at date 2. Remove the
+fear and the run disappears. Three answers have been used.
+
+\emph{Suspension of convertibility.} The bank announces that it will pay at most $\pi c_1$ at date 1, then stop. Since
+patient depositors know that the bank will keep $1 - \pi c_1$ invested, waiting pays at least $c_2$ whatever others do, and
+none of them runs. It works when $\pi$ is known; if the share of impatient depositors is itself uncertain, some impatient
+depositors who come after the stop go unpaid.
+
+\begin{definition}[Deposit insurance]\label{def:b2:banks-and-crises:deposit-insurance}
+\emph{Deposit insurance}\index{deposit insurance} is a guarantee, by a fund or the government, that deposits up to a limit
+will be repaid in full whatever happens to the bank, financed by premiums paid by banks or by taxes.
+\end{definition}
+
+If depositors who wait are promised $c_2$, waiting is always the \omterm{def:b2:static-games:best-response}{best response} for a patient depositor, so no run starts
+and the guarantee is never called upon. In the model insurance costs nothing in equilibrium.
+
+\begin{definition}[Lender of last resort]\label{def:b2:banks-and-crises:llr}
+A \emph{lender of last resort}\index{lender of last resort} is an institution, usually the central bank, that lends to
+solvent banks facing withdrawals they cannot meet from liquid assets, against good collateral, when markets will not.
+\end{definition}
+
+A \omterm{def:b2:banks-and-crises:llr}{lender of last resort} lets the bank pay early withdrawers without liquidating its investments at a loss, so the payoff
+to waiting no longer falls as $f$ rises. Its condition is solvency: the bank's assets must be worth enough at date 2 to
+repay the loan. In practice, telling an illiquid bank from an insolvent one in the middle of a run is hard.
+
+\begin{model}{Diamond--Dybvig model}
+\assumes Depositors with private liquidity needs; an investment that pays more if held to the end; demand deposits paid in
+the order of arrival; the share of impatient depositors known.
+\predicts A deposit contract that insures depositors; a second equilibrium, the run, in which a sound bank fails; no run
+under suspension of convertibility or \omterm{def:b2:banks-and-crises:deposit-insurance}{deposit insurance}.
+\tested About 1,350 American banks suspended in 1930, 2,300 in 1931, 1,450 in 1932 and 4,000 in 1933, 3,800 of them by 16
+March; federal \omterm{def:b2:banks-and-crises:deposit-insurance}{deposit insurance} took effect on 1 January 1934, and the insurer handled nine failures of insured banks
+that year. The reforms of 1933--34 came together, so this is consistent with the prediction, not a clean test of it.
+\breaks The model does not say which equilibrium occurs, so on its own it cannot predict when a run will happen. Insurance
+that removes the run also removes depositors' reasons to watch what their bank does with their money, which invites
+risk-taking (the debate below). And the bank's assets are safe in the model; in the record the doubt that starts a run is
+usually about the assets.
+\end{model}
+
+% ledger: b2:dd1983, b2:fdic1930s
+Diamond and Dybvig (1983) showed that deposit contracts can give depositors better \omterm{def:b2:exchange-economies:allocation}{allocations} than markets for the
+underlying assets, that these contracts have a run as a second equilibrium, that runs cause real damage, and that
+government \omterm{def:b2:banks-and-crises:deposit-insurance}{deposit insurance} can, in some circumstances, do better than any private contract.
+
+\begin{record}[Clearing houses in the panic of 1907]
+% ledger: b2:panic1907, b2:gorton1985
+Before 1914 the United States had no central bank. In October 1907 runs hit banks linked to a failed attempt to corner the
+stock of a copper company; from 18 October the depositors of the Knickerbocker Trust withdrew nearly 8 million dollars in
+four days, and it suspended on 22 October. The New York Clearing House, an association of banks set up to settle cheques
+between members, declared the affected member banks solvent, forced out their management, and lent to them through clearing
+house loan certificates; on 26 October its banks restricted the convertibility of deposits into cash. Industrial output fell
+17 per cent in 1908 and real GNP 12 per cent. Gorton (1985) argued that in panics the clearing house turned its members
+into something like a single firm producing \omterm{def:b2:banks-and-crises:deposit-insurance}{deposit insurance}: a private answer to the problem the model describes. The
+panic was followed by the reform that created a public one, the Federal Reserve.
+\end{record}
+
+\begin{debate}[Does deposit insurance make crises more likely?]
+% ledger: b2:dkd2002, b2:adz2014
+Demirg\"u\c{c}-Kunt and Detragiache (2002), with data on 61 countries in 1980--97, found that explicit \omterm{def:b2:banks-and-crises:deposit-insurance}{deposit insurance}
+tended to make banking crises more likely, the more so where bank interest rates were deregulated, institutions weak,
+coverage extensive and the scheme run by the government. Anginer, Demirg\"u\c{c}-Kunt and Zhu (2014) found that more
+generous insurance was associated with higher bank risk before 2007 and with lower risk and greater stability during the
+crisis, with a destabilising net effect over the whole period, and that good supervision reduced the effect in good years.
+Both rest on comparisons across countries whose insurance schemes were not assigned at random, and the size of the effect
+is not settled.
+\end{debate}
+
+\section{Leverage and forced sales}\label{sec:b2:banks-and-crises:leverage}
+
+\begin{definition}[Leverage ratio]\label{def:b2:banks-and-crises:leverage}
+A bank's \emph{leverage ratio}\index{leverage ratio (bank)} is its equity divided by its total assets; its inverse, assets
+per unit of equity, is called its leverage.
+\end{definition}
+
+A bank with assets of 100 financed by 96 of deposits and other debt and 4 of equity has a \omterm{def:b2:banks-and-crises:leverage}{leverage ratio} of 4 per cent and
+a leverage of 25. A fall of 2 per cent in the value of its assets wipes out half its equity; a fall of 4 per cent wipes out
+all of it. With 10 of equity the same 2 per cent fall costs a fifth. Equity is the cushion that keeps an asset loss from
+becoming a loss to depositors, and so a reason for depositors to run.
+
+\begin{definition}[Fire sale]\label{def:b2:banks-and-crises:fire-sale}
+A \emph{fire sale}\index{fire sale} is a sale of assets at a price below their value in normal use, because the seller must
+sell fast and the buyers who value them most are themselves short of funds.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, every node/.style={font=\small}, box/.style={draw, rounded corners, align=center, text width=3.1cm,
+    minimum height=1cm, fill=omDef!8}]
+  \node[box] (a) at (0,2) {asset prices fall};
+  \node[box] (b) at (5,2) {banks' equity falls};
+  \node[box] (c) at (5,0) {leverage rises above its limit};
+  \node[box] (d) at (0,0) {banks sell assets, often to each other};
+  \draw[->, thick] (a) -- (b);
+  \draw[->, thick] (b) -- (c);
+  \draw[->, thick] (c) -- (d);
+  \draw[->, thick] (d) -- (a);
+\end{tikzpicture}
+
+{\small The loop between leverage and forced sales. A bank that must restore its \omterm{def:b2:banks-and-crises:leverage}{leverage ratio} after a loss sells assets
+or cuts lending; if many do so at once, prices fall further and the loss spreads to banks that held the same assets.}
+\end{omfigure}
+
+The loop works without any depositor running, and it works on lenders that are not banks: dealers, funds and others that
+finance long assets with short borrowing. In 2007--08 several of the runs were on such short-term funding.
+
+\section{2008 step by step}\label{sec:b2:banks-and-crises:2008}
+
+\omimg{book4/northern-rock-queue-2007.jpg}{0.62\linewidth}{Customers outside a branch of Northern Rock, a British mortgage
+lender, in Brighton on 14 September 2007, the day the Bank of England was authorised to support it. Photograph: Dominic
+Alves, CC BY 2.0.}
+
+\begin{record}[2008 step by step]
+% ledger: b2:2008-bnp, b2:2008-northern-rock, b2:2008-bear, b2:2008-gse, b2:2008-lehman, b2:2008-aig-mmf, b2:2008-tarp
+9 August 2007: BNP Paribas stops redemptions on three of its investment funds.
+14 September 2007: the Bank of England is authorised to give liquidity support to Northern Rock, the fifth-largest British
+mortgage lender. March 2008: the Federal Reserve finances the takeover of the investment bank Bear Stearns by JPMorgan
+Chase, lending 29 billion dollars to a vehicle that holds 30 billion of its assets, and opens a lending facility for
+securities dealers. 7 September 2008: the mortgage agencies
+Fannie Mae and Freddie Mac are placed in government conservatorship. 15 September: Lehman Brothers files for bankruptcy.
+16 September: the Federal Reserve lends up to 85 billion dollars to the insurer AIG, and the Reserve Primary Fund, a money
+market fund, falls below one dollar a share on losses on Lehman's short-term debt. 19 September: the Treasury guarantees
+money market funds. 3 October: a 700-billion-dollar programme to buy troubled assets is voted. 14 October: 250 billion
+dollars of public capital is offered to banks, 125 billion of it to nine large institutions, and the debt of insured banks
+is guaranteed.
+\end{record}
+
+Read with the model, much of 2008 was a run, though not by insured depositors: by holders of short claims on funds, dealers
+and an insurer that had no \omterm{def:b2:banks-and-crises:deposit-insurance}{deposit insurance} and, before the crisis, no access to the central bank's lending. The public answers were the
+ones of \cref{sec:b2:banks-and-crises:insurance}, extended to them: lending, guarantees, and new equity.
+
+\section{Banks and government debt}\label{sec:b2:banks-and-crises:sovereign}
+
+\begin{definition}[Bank--sovereign loop]\label{def:b2:banks-and-crises:doom-loop}
+A \emph{bank--sovereign loop}\index{bank--sovereign loop} is a feedback in which losses at a country's banks raise its
+government's debt, through support to the banks, while doubts about that debt lower the value of the government bonds the
+banks hold.
+\end{definition}
+
+% ledger: b2:ft2018
+Banks hold their own government's bonds as liquid assets, and governments stand behind their banks. When both are
+strong, each supports the other. When one weakens, each drags the other down: support to the banks raises public debt and
+its yield, the fall in bond prices weakens the banks, and the expected cost of supporting them rises again. Farhi and
+Tirole (2018) built a model of this feedback, prompted by the euro-area crisis, in which the answers are domestic
+support to the banks or support to the government from other countries.
+
+\section{A century and a half of crises}\label{sec:b2:banks-and-crises:record}
+
+\begin{definition}[Banking crisis]\label{def:b2:banks-and-crises:banking-crisis}
+A \emph{banking crisis}\index{banking crisis} is an episode in which many of a country's banks fail or need public
+support, with runs, large losses and a fall in lending; in the opening chart, a crisis is counted in the year it starts.
+\end{definition}
+
+\begin{omchart}{Real GDP per person in the five years after a business-cycle peak, log points relative to the peak year,
+  averaged over 88 peaks with a banking crisis within two years and 203 other peaks; 18 advanced economies, 1870--2020,
+  leaving out every peak whose six-year path touches a war year (1914--1919, 1939--1947).}{Jord\`a--Schularick--Taylor Macrohistory Database (rgdpmad, crisisJST); our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.6\linewidth, height=0.4\linewidth, xmin=0, xmax=5, ymin=-4, ymax=6, xtick={0,...,5},
+    xlabel={Years after the peak}, ylabel={Log points}, legend style={at={(1.03,0.5)}, anchor=west, font=\scriptsize}]
+  \addplot[omThm, thick, mark=square*, mark size=1.3pt] table[x=h, y=normal] {figdata/bachelor-2/29-banks-and-crises/out/paths.csv};
+  \addlegendentry{other peaks}
+  \addplot[omDef, thick, mark=*, mark size=1.3pt] table[x=h, y=financial] {figdata/bachelor-2/29-banks-and-crises/out/paths.csv};
+  \addlegendentry{peaks with a crisis}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: paths (financial -2.95, -2.70, -1.53, 0.01, 1.28; normal -2.18, -0.31, 1.62, 3.23, 4.89)
+Recessions that come with a \omterm{def:b2:banks-and-crises:banking-crisis}{banking crisis} are a little deeper and much longer. One year after the peak, output per person is 2.95
+log points below it with a crisis and 2.18 without; the difference is small. After a normal peak output is back above it
+in the third year and 4.89 points above it in the fifth; after a crisis it is still 1.53 below in the third year and only
+1.28 above in the fifth.
+
+\begin{definition}[Credit boom]\label{def:b2:banks-and-crises:credit-boom}
+A \emph{credit boom}\index{credit boom} is a period in which bank lending to households and firms grows much faster than
+output, so that the ratio of credit to GDP rises fast.
+\end{definition}
+
+\begin{omchart}{Change in bank loans to the non-financial private sector as a share of GDP over five years, percentage
+  points: the five years ending the year before the first year of a banking crisis (63 cases) and the same window before
+  every other year (1,861); 18 advanced economies, 1870--2020, leaving out windows that touch a war year.}{Jord\`a--Schularick--Taylor Macrohistory Database (tloans, gdp,
+  crisisJST); our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.55\linewidth, height=0.4\linewidth, ybar, bar width=16pt, xmin=-0.6, xmax=1.6, ymin=0,
+    ymax=15, xtick={0,1}, xticklabels={other windows, before a crisis}, ylabel={Percentage points},
+    nodes near coords, nodes near coords style={font=\scriptsize}, legend style={at={(1.03,0.5)}, anchor=west,
+    font=\scriptsize}]
+  \addplot[fill=omDef!70, draw=omDef] table[x=group, y=mean] {figdata/bachelor-2/29-banks-and-crises/out/credit.csv};
+  \addlegendentry{mean}
+  \addplot[fill=omThm!50, draw=omThm] table[x=group, y=median] {figdata/bachelor-2/29-banks-and-crises/out/credit.csv};
+  \addlegendentry{median}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: credit (before a crisis mean 13.35, median 10.55, n 63; other mean 4.79, median 4.41, n 1861)
+% ledger: b2:st2012
+In the five years before a crisis, loans rose by 13.35 points of GDP on average, against 4.79 in other five-year windows;
+the medians are 10.55 and 4.41. Schularick and Taylor (2012), on 14 of these countries over 1870--2008, found credit growth
+to be a powerful predictor of financial crises, and the output costs of crises to have remained large even as policy
+responses became more aggressive. The chart compares averages: not every crisis followed a boom, and not every boom ended
+in a crisis.
+
+\section{Exercises}\label{sec:b2:banks-and-crises:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:banks-and-crises:1}
+Read the opening chart. Which decade had the most crises, and which two came next? Which three had none?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:banks-and-crises:2}
+From the chart of output paths: five years after the peak, how far above the peak is output per person after a normal peak,
+and after a peak with a crisis? What is the gap?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:banks-and-crises:3}
+A bank has assets of 100 and equity of 4. What share of its equity does a 2 per cent fall in asset values wipe out? And with
+equity of 10?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:banks-and-crises:4}
+Which events of 2007--08 in the record box were runs, and who was running from what?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:banks-and-crises:5}
+Predict, then compute: with log utility, what is the optimal contract? Show that waiting is always a patient depositor's
+\omterm{def:b2:static-games:best-response}{best response}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:banks-and-crises:6}
+With $\pi = 0.5$, $R = 2$ and $\gamma = 2$, find $c_1$, $c_2$ and the run threshold $f^*$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:banks-and-crises:7}
+Modify the listing to set $R = 1.5$ with $\gamma = 2$. Give $c_1$, $c_2$ and $f^*$, and say whether the bank is more or less
+fragile than with $R = 2$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:banks-and-crises:8}
+Explain why suspension of convertibility removes the run when $\pi$ is known, and what goes wrong when it is not.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:banks-and-crises:9}
+\textbf{(D)} With the Macrohistory data, count banking crises by decade, and compute the mean change in loans to GDP over the
+five years ending the year before each crisis, leaving out windows that touch a war year. Compare with the charts.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:banks-and-crises:10}
+Derive \eqref{eq:b2:banks-and-crises:contract}, and show that $c_1 > 1$ if and only if $\gamma > 1$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:banks-and-crises:11}
+Show that $w(f)$ is decreasing in $f$ if $c_1 > 1$, derive \eqref{eq:b2:banks-and-crises:threshold}, and show that
+$f^* > \pi$ for the optimal contract.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:banks-and-crises:12}
+The government promises every depositor who waits $c_2$, paid if needed by a tax on date-1 withdrawals. Show that no patient
+depositor runs, and that the tax is never collected in equilibrium.
+\end{exercise}
+
+\section{Problem: The Brenland savings bank}\label{sec:b2:banks-and-crises:problem}
+
+\begin{problem}[{Weekend problem --- The Brenland savings bank: depositors' types, the optimal deposit contract, the run
+equilibrium, and insurance and suspension}]
+\label{pb:b2:banks-and-crises:1}
+A savings bank in a Brenland market town has depositors with one unit each. A quarter of them will need their money after
+one season; the others can wait two. Money lent to farmers for two seasons doubles; recalled after one, it returns only what
+was lent. Depositors have $u(c) = -1/c$.
+
+\medskip
+\noindent\textbf{Part I --- Depositors' types.}
+\begin{enumerate}
+  \item Give $\pi$, $R$ and $\gamma$.
+  \item Without a bank, what does each type consume?
+  \item What is a depositor's expected utility without a bank?
+  \item Why can a depositor not buy insurance against being impatient from an insurer?
+  \item Why can the bank not simply ask depositors their type?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The optimal deposit contract.}
+\begin{enumerate}[resume]
+  \item Write the bank's budget constraint.
+  \item Write the first-order condition.
+  \item Find $c_1$ and $c_2$.
+  \item Check the budget constraint.
+  \item Find the expected utility under the contract and compare it with Part I.
+  \item Why would a patient depositor not pretend to be impatient?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- The run equilibrium.}
+\begin{enumerate}[resume]
+  \item Write a waiting depositor's payoff if a share $f$ withdraws.
+  \item What does a waiting depositor get if $f = 0.25$?
+  \item If $f = 0.5$? If $f = 0.6$?
+  \item Find the run threshold $f^*$.
+  \item At what share of withdrawals is the bank empty?
+  \item Show that everyone withdrawing is an equilibrium.
+  \item What is lost in the run, compared with the good equilibrium?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Insurance and suspension.}
+\begin{enumerate}[resume]
+  \item Under suspension, how much does the bank pay out at date 1?
+  \item What does a waiting depositor then get, whatever others do?
+  \item If a third of the depositors turned out to be impatient, what would suspension do to the last of them?
+  \item Under a guarantee of $c_2$ to those who wait, what does the guarantee cost in equilibrium?
+  \item Why might the guarantee change how the bank lends?
+  \item If depositors were less risk-averse, with $\gamma = 1$, would the bank need any of this?
+  \item State the result: the optimal first-period payout and the share of early withdrawals at which the bank fails.
+\end{enumerate}
+\end{problem}

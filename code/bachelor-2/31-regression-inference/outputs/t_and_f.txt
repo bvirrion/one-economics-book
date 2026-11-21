@@ -1,0 +1,14 @@
+$ python t_and_f.py
+const      1.7379  0.0842   20.65
+lncoins   -0.1695  0.0202   -8.41
+idp       -0.7533  0.0753  -10.00
+lpi        0.1066  0.0136    7.86
+fmde      -0.1001  0.0115   -8.71
+physlm     1.0658  0.1033   10.32
+disea      0.1217  0.0049   25.01
+hlthg     -0.0487  0.0667   -0.73
+hlthf      0.2201  0.1218    1.81
+hlthp      1.4410  0.2607    5.53
+SSR restricted 382137.5, unrestricted 381469.6
+F by hand 11.778; statsmodels 11.778
+5 % critical value F(3, 20180): 2.605

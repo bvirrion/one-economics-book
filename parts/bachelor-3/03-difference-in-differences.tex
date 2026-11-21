@@ -1,0 +1,693 @@
+\chapter{Difference-in-Differences}\label{ch:b3:difference-in-differences}
+
+On 1 April 1992 New Jersey raised its minimum wage from \usd{4.25} to
+\usd{5.05} an hour. Its neighbour, Pennsylvania, did not. In February and
+again in November of that year, two economists telephoned 410 fast-food
+restaurants on both sides of the state line and asked how many people they
+employed. % ledger: b3did:ck94.design
+Employment per restaurant fell in Pennsylvania and rose slightly in New
+Jersey. % ledger: b3did:ck94.t3
+Neither change on its own says anything about the minimum wage: the season,
+the regional economy and a hundred other things moved between February and
+November. But those things moved on both sides of the line. The change in
+Pennsylvania estimates what would have happened in New Jersey without the
+rise, and the difference between the two changes estimates the effect of the
+rise. This chapter is about that subtraction: when it works, how to look for
+the cases where it does not, and what to do when the policy reaches different
+places at different times, or only one place.
+
+\begin{openingchart}{Mean full-time-equivalent employment per fast-food
+restaurant, February and November 1992 (part-time workers count as one half).
+Dashed: New Jersey's February level moved by Pennsylvania's change, the
+path New Jersey would have followed under parallel trends.}{Card and Krueger
+(1994), Table 3; the dashed line is our arithmetic on the printed means}
+\begin{tikzpicture}
+\begin{axis}[width=0.62\linewidth, height=0.42\linewidth, xmin=-0.3, xmax=1.7,
+  xtick={0,1}, xticklabels={February 1992, November 1992}, ymin=17, ymax=25,
+  ylabel={Employment per restaurant}, ymajorgrids, clip=false]
+  \addplot[omDef, very thick, mark=*] table[x=x, y=pa] {figdata/bachelor-3/03-difference-in-differences/out/ck.csv}
+    node[pos=1, anchor=south west, font=\footnotesize] {Pennsylvania};
+  \addplot[omThm, very thick, mark=square*] table[x=x, y=nj] {figdata/bachelor-3/03-difference-in-differences/out/ck.csv}
+    node[pos=1, anchor=north west, font=\footnotesize] {New Jersey};
+  \addplot[omThm, thick, dashed, mark=o] table[x=x, y=cf] {figdata/bachelor-3/03-difference-in-differences/out/ck.csv}
+    node[pos=1, right, font=\footnotesize, align=left] {New Jersey,\\ parallel path};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+Read the chart from the right. In November, New Jersey's restaurants employed
+21.03 people on average. Had New Jersey followed Pennsylvania's path, which fell
+by 2.16, it would have employed $20.44 - 2.16 = 18.28$. The difference, 2.75
+workers per restaurant, is the estimate: more employment, not less, after the
+rise. % figdata: ck_stats
+(The paper prints 2.76, with a standard error of 1.36, computed from unrounded
+means.) % ledger: b3did:ck94.t3
+The whole estimate rests on the dashed line, which nobody observed. The
+chapter's tools are ways of making that line believable, or of showing that
+it is not. What the minimum wage does to employment is a question for the
+chapter on the labour market; here the study serves only as the cleanest
+picture of the design.
+
+\begin{recall}
+The Year 2 volume wrote causal questions with potential outcomes: $Y_i(1)$ and
+$Y_i(0)$ are unit $i$'s outcome with and without treatment, only one of which is
+observed, and the average treatment effect on the treated (ATT) is $\E[Y_i(1) -
+Y_i(0) \mid D_i = 1]$. \Cref{ch:b3:panel-data} introduced unit and period
+fixed effects and showed why standard errors must be clustered when errors and
+treatment both persist within a unit.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:difference-in-differences:symbols}
+$D_i = 1$ marks the treated group and $D_i = 0$ the comparison group; $t = 0$ is
+before the treatment and $t = 1$ after. $Y_{it}(1)$ and $Y_{it}(0)$ are potential
+outcomes in period $t$, and $\tau$ is the ATT in period 1 (not a tax rate). Event time, the number
+of periods since a unit was first treated, is $k$.
+\end{notation}
+
+\section{Two groups, two periods}\label{sec:b3:difference-in-differences:two-by-two}
+
+\begin{definition}[Difference-in-differences estimator]\label{def:b3:difference-in-differences:did}
+\index{difference-in-differences estimator}
+With a treated group observed before and after a treatment and a comparison
+group observed at the same dates, the \emph{difference-in-differences
+estimator} is
+\[
+  \hat\tau_{\mathrm{DiD}} = \bigl(\bar Y_{1,\mathrm{after}} - \bar Y_{1,\mathrm{before}}\bigr)
+  - \bigl(\bar Y_{0,\mathrm{after}} - \bar Y_{0,\mathrm{before}}\bigr),
+\]
+where $\bar Y_{g,s}$ is the mean outcome of group $g$ in period $s$.
+\end{definition}
+
+\begin{definition}[Parallel-trends assumption]\label{def:b3:difference-in-differences:parallel-trends}
+\index{parallel-trends assumption}
+The \emph{parallel-trends assumption} is that, without the treatment, the
+mean outcome of the treated group would have changed by the same amount as that
+of the comparison group:
+$\E[Y_{i1}(0) - Y_{i0}(0) \mid D_i = 1] = \E[Y_{i1}(0) - Y_{i0}(0) \mid D_i = 0]$.
+\end{definition}
+
+The assumption allows the two groups to differ in level --- Pennsylvania's
+restaurants were larger than New Jersey's in February --- but not in the
+change they would have had. It is weaker than random assignment, and it is
+untestable for the period that matters, which lies after the treatment.
+
+\begin{proposition}[Difference-in-differences identifies the ATT]\label{prop:b3:difference-in-differences:att}
+Suppose the treated group is untreated in period 0 and treated in period 1, the
+comparison group is untreated in both, and parallel trends hold. Then the
+population difference in differences equals $\tau = \E[Y_{i1}(1) - Y_{i1}(0) \mid
+D_i = 1]$.
+\end{proposition}
+
+\begin{proof}
+Observed outcomes are $Y_{i1}(1)$ for the treated in period 1 and $Y_{it}(0)$ in
+every other cell. The population difference in differences is therefore
+\[
+  \E[Y_{i1}(1) - Y_{i0}(0) \mid D_i = 1] - \E[Y_{i1}(0) - Y_{i0}(0) \mid D_i = 0].
+\]
+Add and subtract $\E[Y_{i1}(0) \mid D_i = 1]$ in the first term:
+it becomes $\tau + \E[Y_{i1}(0) - Y_{i0}(0) \mid D_i = 1]$. By parallel trends the
+second part equals the comparison group's change, which cancels.
+\end{proof}
+
+The proof shows what the estimator delivers when the assumption fails: $\tau$
+plus the difference between the two groups' untreated trends. Every threat to
+a difference-in-differences design is a reason why that difference might not
+be zero.
+
+\Cref{lst:b3:difference-in-differences:nsw} applies the estimator to a
+job-training programme of the 1970s, the National Supported Work
+demonstration, whose trainees are compared with a large sample of the
+population survey. The programme ran in 1976--1977, so 1975 is before and 1978
+after.
+
+\omcode{code/bachelor-3/03-difference-in-differences/listings/did_nsw.py}{1}{27}{The difference in differences of mean earnings, then the same number as an OLS interaction.}\label{lst:b3:difference-in-differences:nsw}
+
+\omoutput{code/bachelor-3/03-difference-in-differences/outputs/did_nsw.txt}{Mean earnings in dollars of the year.}\label{out:b3:difference-in-differences:nsw}
+
+The trainees' earnings rose by \usd{4,817}, the survey's by \usd{1,196}, and the
+estimate is \usd{3,621}. % output: did_nsw
+The survey sample earned nine times as much as the trainees in 1975; parallel
+trends allow that, but it already suggests the two groups were on different
+paths. The survey's earnings are also top-coded: incomes above a ceiling (about
+\usd{25,000} in these years) are recorded at the ceiling, which holds down the
+survey's measured rise and so inflates the estimate.
+% data: nsw('cps_controls') maxima 25,244 (1975) and 25,565 (1978), held by 3,007 and 4,145 people; psid_controls maxima above 120,000 That is part of why it is
+twice the experimental answer; \cref{lst:b3:difference-in-differences:lalonde}
+repeats the comparison with the second survey, whose earnings are not top-coded.
+
+\section{Parallel trends, and how to look at them}\label{sec:b3:difference-in-differences:parallel}
+
+Two kinds of evidence bear on the assumption. The first is the period before
+the treatment: if the two groups moved in parallel for several years before,
+it is more plausible that they would have done so after. The second is a
+comparison where the answer is known to be zero.
+
+\begin{definition}[Placebo test]\label{def:b3:difference-in-differences:placebo}
+\index{placebo test}
+A \emph{placebo test} applies an estimator to a period, a group or an outcome
+that the treatment cannot have affected; an estimate far from zero reveals a
+failure of the design's assumptions.
+\end{definition}
+
+The NSW data allow a direct test of the estimator, because the programme was a
+randomised experiment: applicants were assigned by lottery to the programme or
+to a control group, and the difference in 1978 earnings between the two
+estimates the effect without any assumption about trends.
+
+\begin{record}[LaLonde's test of non-experimental estimators]
+LaLonde (1986) discarded the experiment's control group and replaced it with
+samples from two large surveys, as an evaluator without an experiment would.
+He then asked whether the estimators of the day --- regression with controls,
+differences in differences, selection models --- recovered the experimental
+answer. Most did not, and the estimates varied widely with the comparison
+sample and the specification. Dehejia and Wahba (1999) showed that on a subset
+of his sample, with two years of earlier earnings, careful matching came close
+to the benchmark; Smith and Todd (2005) showed that this success depended on
+the subset. The lesson has held: an estimator that works in one data set can
+fail in the next, and the experimental benchmark is the only way to know.
+\end{record}
+
+\omcode{code/bachelor-3/03-difference-in-differences/listings/lalonde_benchmark.py}{1}{25}{The experimental benchmark against four estimators, with each survey as the comparison group.}\label{lst:b3:difference-in-differences:lalonde}
+
+\omoutput{code/bachelor-3/03-difference-in-differences/outputs/lalonde_benchmark.txt}{Effects on 1978 earnings, dollars; robust standard errors in parentheses.}\label{out:b3:difference-in-differences:lalonde}
+
+The experiment says \usd{1,794}. % output: lalonde_benchmark
+A raw comparison with either survey says the programme cost its trainees eight
+to fifteen thousand dollars: the survey samples were simply far richer. The
+difference in differences removes that level gap and lands on the right side
+of zero, but at twice the benchmark with the population survey. Adding controls
+moves it closer, to \usd{2,264}; regression with two years of earlier earnings
+lands below the benchmark, at \usd{794}. % output: lalonde_benchmark
+No one could have chosen among these numbers without the experiment.
+
+One reason is a pattern Ashenfelter (1978) found in training data: the
+earnings of people who enter a programme fall in the year or two before they
+enter, which is often why they enter. Measured from the bottom of that dip,
+their earnings would have recovered anyway, and the recovery is counted as the
+programme's effect. The trainees' earnings fell from 1974 to 1975, a little
+more than the surveys' (\cref{exo:b3:difference-in-differences:6}). The test
+sees only part of the dip, because the programme selected people who were out
+of work when they applied.
+
+\begin{model}{Difference-in-differences}
+\assumes Without the treatment, the treated and comparison groups would have
+changed by the same amount (parallel trends); the treatment does not affect
+the comparison group; nothing else that changes the outcome happens to one
+group only at the same date; the composition of each group is stable.
+\predicts The treated group's outcome departs from the comparison group's
+path at the treatment date, not before; placebo dates, groups and outcomes show
+no effect.
+\tested Against experiments: in the NSW data, the estimate with a survey
+comparison group is twice the experimental one; with controls, closer. Its
+pre-period predictions are checked in every careful application by an \omterm{def:b3:difference-in-differences:event-study}{event
+study}.
+\breaks When units are selected for treatment because of a temporary shock
+(Ashenfelter's dip), when the treated group was already on a different trend,
+when the treatment spills over into the comparison group, and, in the
+two-way regression, when the treatment starts at different dates and its
+effect changes over time (\cref{sec:b3:difference-in-differences:staggered}).
+\end{model}
+
+\section{The regression form and its errors}\label{sec:b3:difference-in-differences:regression}
+
+\begin{proposition}[Difference-in-differences as a regression]\label{prop:b3:difference-in-differences:regression}
+In the regression $Y_{it} = \kappa + \gamma D_i + \phi\, t + \tau D_i t + u_{it}$
+over the four cells, with $t \in \{0, 1\}$, the OLS estimate of $\tau$ equals
+the \omterm{def:b3:difference-in-differences:did}{difference-in-differences estimator}.
+\end{proposition}
+
+\begin{proof}
+The regression has four parameters and the data four cells, so OLS fits each
+cell mean exactly: $\bar Y_{0,0} = \kappa$, $\bar Y_{1,0} = \kappa + \gamma$,
+$\bar Y_{0,1} = \kappa + \phi$ and $\bar Y_{1,1} = \kappa + \gamma +
+\phi + \tau$. Then $(\bar Y_{1,1} - \bar Y_{1,0}) - (\bar Y_{0,1} - \bar
+Y_{0,0}) = \tau$.
+\end{proof}
+
+The regression form earns its
+place by what it adds: controls, more periods and groups, and standard errors.
+The last need care. In the NSW listing each person appears twice, so the
+standard error is clustered by person. In policy applications the treatment is
+usually assigned to a few groups --- two states, a handful of provinces --- and
+the errors of all units in a group share the group's shocks. Clustering by group
+is then the rule (\cref{sec:b3:panel-data:clustering}), and with two groups it
+is impossible: the comparison of one state with one other has, in the end, one
+degree of freedom for the group shocks, however many restaurants were called.
+
+\section{Event studies}\label{sec:b3:difference-in-differences:event-study}
+
+\begin{definition}[Event study]\label{def:b3:difference-in-differences:event-study}
+\index{event study}
+An \emph{event study} regression, for units first treated at different dates,
+replaces the single treatment dummy with one dummy for each event time $k$
+(periods since the unit's first treatment), alongside unit and period effects,
+and omits one reference period, usually $k = -1$. The coefficients on $k < 0$
+(the leads) measure differences before the treatment; those on $k \ge 0$ (the
+lags), the effect $k$ periods after.
+\end{definition}
+
+An \omterm{def:b3:difference-in-differences:event-study}{event study} plots the leads and lags with their confidence intervals. The
+leads are a \omterm{def:b3:difference-in-differences:placebo}{placebo test} of parallel trends in the periods where it can be
+checked, and the lags show how the effect builds up or fades. The chart shows
+one on simulated data, in which half the treated units adopt in period 6 and
+half in period 11 and a third group never does.
+
+\begin{omchart}{Event study on a simulated staggered roll-out: estimated
+coefficient for each period relative to adoption, with 95~\% confidence
+intervals clustered by unit (reference period $k = -1$). Dashed: the true
+effect, $0.5 + 0.1k$ from adoption on. 300 units, 16 periods.}{simulated data,
+the chapter's seeded script}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.8\linewidth, height=0.4\linewidth, xmin=-5.5, xmax=5.5,
+  xtick={-5,...,5}, ymin=-0.3, ymax=1.2, xlabel={Periods since adoption, $k$},
+  ylabel={Effect on the outcome}, legend pos=north west,
+  y tick label style={/pgf/number format/.cd, fixed, precision=1}]
+  \addplot[guide, domain=-5.5:5.5, samples=2, forget plot] {0};
+  \draw[guide] (axis cs:-0.5,-0.3) -- (axis cs:-0.5,1.2);
+  \addplot[omDef, only marks, mark=*, mark size=1.6pt,
+    error bars/.cd, y dir=both, y explicit]
+    table[x=k, y=est, y error plus expr=\thisrow{hi}-\thisrow{est},
+      y error minus expr=\thisrow{est}-\thisrow{lo}]
+    {figdata/bachelor-3/03-difference-in-differences/out/event_study.csv};
+  \addplot[omThm, only marks, mark=diamond*, mark size=2pt] table[x=k, y=true]
+    {figdata/bachelor-3/03-difference-in-differences/out/event_study.csv};
+  \legend{estimate, true effect}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+The four leads lie within a few hundredths of zero, and every interval covers
+zero; the lags climb with the true effect. % figdata: event_study
+Flat leads do not prove parallel trends after the treatment, and a test with
+little power will find flat leads in data where the trends differ; but rising
+or falling leads are hard evidence against the design. Two cautions. If units
+react before the treatment --- shops stocking up before a tax rise is announced
+to take effect --- the reference period $k = -1$ is itself treated and every
+coefficient is shifted (\cref{exo:b3:difference-in-differences:10}). And the
+regression that produced this chart is safe only because the effect was the
+same for both cohorts; the next section shows what happens when it is not.
+
+\section{Staggered adoption}\label{sec:b3:difference-in-differences:staggered}
+
+\begin{definition}[Staggered adoption]\label{def:b3:difference-in-differences:staggered}
+\index{staggered adoption}
+A treatment has \emph{staggered adoption} when units start it at different
+dates and, once treated, stay treated. Units that start at the same date form
+a cohort.
+\end{definition}
+
+For years the standard estimator for staggered designs was the \omterm{def:b3:panel-data:twfe}{two-way fixed
+effects} regression of \cref{ch:b3:panel-data}, $Y_{it} = a_i + \mu_t + \beta
+D_{it} + u_{it}$, with $D_{it} = 1$ once unit $i$ is treated. Its coefficient
+looks like a difference in differences, and with one adoption date it is one.
+With several, it is a mixture.
+
+\begin{proposition}[Two-way fixed effects as a weighted average]\label{prop:b3:difference-in-differences:bacon}
+In a balanced panel with \omterm{def:b3:difference-in-differences:staggered}{staggered adoption}, the \omterm{def:b3:panel-data:twfe}{two-way fixed effects}
+coefficient $\hat\beta$ is a weighted average, with non-negative weights summing
+to one, of all the two-group, two-period difference-in-differences estimates
+that can be formed from the data: each cohort against the never-treated; each
+earlier cohort against a later one before the later one is treated; and each
+later cohort against an earlier one after the earlier one is treated. The
+weights grow with the size of the groups and with the variance of the
+treatment dummy in each comparison (Goodman-Bacon 2021).
+\end{proposition}
+
+\admitted
+The proof rewrites the \omterm{def:b3:panel-data:twfe}{two-way fixed effects} coefficient, by the
+Frisch--Waugh--Lovell theorem, as a ratio of sums over pairs of cohorts; it
+is in Goodman-Bacon's paper.
+
+The last kind of comparison is the trouble. When the later cohort is treated,
+the earlier one serves as its comparison, but the earlier one is itself still
+being treated, and its effect may still be growing. Its change over that
+period contains its own treatment effect, which is subtracted.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, xscale=0.75, yscale=0.6]
+  \foreach \t in {1,...,12} \node[font=\scriptsize] at (\t,-0.6) {\t};
+  \node[font=\footnotesize, anchor=east] at (0.4,2) {early cohort};
+  \node[font=\footnotesize, anchor=east] at (0.4,1) {late cohort};
+  \node[font=\footnotesize, anchor=east] at (0.4,0) {never treated};
+  \fill[omDef!15] (0.5,1.7) rectangle (3.5,2.3);
+  \fill[omDef] (3.5,1.7) rectangle (12.5,2.3);
+  \fill[omThm!15] (0.5,0.7) rectangle (7.5,1.3);
+  \fill[omThm] (7.5,0.7) rectangle (12.5,1.3);
+  \fill[black!12] (0.5,-0.3) rectangle (12.5,0.3);
+  \draw[very thick, dashed] (7.5,0.5) rectangle (12.5,2.5);
+  \node[font=\footnotesize, align=center, anchor=south] at (10,2.55)
+    {forbidden comparison: the late cohort's change\\ minus the early cohort's,
+     whose effect is still growing};
+  \node[font=\scriptsize, white] at (8,2) {treated};
+  \node[font=\scriptsize, white] at (10,1) {treated};
+\end{tikzpicture}
+\par\smallskip{\small \omterm{def:b3:difference-in-differences:staggered}{Staggered adoption} in \cref{lst:b3:difference-in-differences:bacon}:
+the early cohort is treated from period 4, the late one from period 8 (dark
+bars). In periods 8--12 \omterm{def:b3:panel-data:twfe}{two-way fixed effects} uses the early cohort, already
+treated, as a comparison for the late one.}
+\end{omfigure}
+
+\omcode{code/bachelor-3/03-difference-in-differences/listings/bacon.py}{1}{33}{\omterm{def:b3:panel-data:twfe}{Two-way fixed effects} against clean comparisons, when the effect grows with exposure.}\label{lst:b3:difference-in-differences:bacon}
+
+\omoutput{code/bachelor-3/03-difference-in-differences/outputs/bacon.txt}{True effect: 1 per period of exposure.}\label{out:b3:difference-in-differences:bacon}
+
+The true average effect on the treated is 4.29; \omterm{def:b3:panel-data:twfe}{two-way fixed effects} reports
+2.55, % output: bacon
+an error of about 40~\% with no sampling noise to blame. Here every unit's effect is
+positive and the estimate is merely too small; in other designs the bad
+comparisons can drive it below zero (\cref{exo:b3:difference-in-differences:8}).
+The repair is to make only clean comparisons: each cohort against units not yet
+treated, from the cohort's last untreated period. The last line of the listing
+uses the simplest clean comparison, each cohort against the never-treated units,
+4.24. % output: bacon
+Several estimators formalise this --- Callaway and Sant'Anna (2021) average the
+cohort-by-period comparisons; de Chaisemartin and D'Haultf\oe uille (2020) use
+the units whose treatment changes between consecutive periods --- and differ
+mainly in which comparisons they allow and how they weight them. An \omterm{def:b3:difference-in-differences:event-study}{event study}
+with a never-treated group and separate coefficients for each cohort is another
+clean route.
+
+\section{Synthetic control}\label{sec:b3:difference-in-differences:synthetic}
+
+Sometimes only one unit is treated: one country reunifies, one state passes a
+tobacco law. No group of untreated units need follow the treated one in
+parallel, and choosing a single comparison by hand invites the choice that
+gives the answer one wanted.
+
+\begin{definition}[Synthetic control; donor pool]\label{def:b3:difference-in-differences:synthetic-control}
+\index{synthetic control}\index{donor pool}
+For one treated unit and a set of untreated units, the \emph{donor pool}, a
+\emph{synthetic control} is a weighted average of the donors, with
+non-negative weights summing to one, chosen so that its outcome before the
+treatment tracks the treated unit's as closely as possible. The estimated
+effect in each later period is the gap between the treated unit and its
+synthetic control.
+\end{definition}
+
+\begin{proposition}[Synthetic weights]\label{prop:b3:difference-in-differences:synth}
+Given the treated unit's pre-treatment outcomes $y_1 \in \mathbb R^{T_0}$ and
+the donors' $Y_0 \in \mathbb R^{T_0 \times J}$, the synthetic weights solve
+$\min_w \lVert y_1 - Y_0 w \rVert^2$ subject to $w_j \ge 0$ and $\sum_j w_j = 1$:
+a least-squares problem over the simplex, whose solution exists and is a point
+of the convex hull of the donors' paths closest to the treated path.
+\end{proposition}
+
+\admitted
+Existence follows because the simplex is compact and the objective continuous;
+the solution is unique when the donors' paths are affinely independent. In
+practice the paths are often replaced by pre-period averages of the outcome and
+of predictors, weighted by a second, outer optimisation; the inner problem has
+the same form.
+
+The constraint is the method's discipline: no extrapolation beyond the donors,
+and weights that a reader can inspect. A regression with unrestricted weights
+would fit the pre-period at least as well, with negative weights on some
+countries and weights above one on others.
+
+\begin{record}[Reunification and West German income]
+Abadie, Diamond and Hainmueller (2015) built a synthetic West Germany from
+sixteen other rich countries, matched on income per person and its predictors
+before 1990. Five received weight: Austria 0.42, the United States 0.22,
+Japan 0.16, Switzerland 0.11 and the Netherlands 0.09. % ledger: b3did:adh15.weights
+After 1990 the two paths separated. Over 1990--2003, West Germany's GDP per
+person was about \usd{1,600} a year below its \omterm{def:b3:difference-in-differences:synthetic-control}{synthetic control} on average,
+about 8~\% of its 1990 level, and by 2003 the synthetic West Germany was about
+12~\% richer than the real one. % ledger: b3did:adh15.effect
+(A 2025 erratum by the authors states the dollar figures in current
+purchasing-power dollars rather than constant ones; the percentages are
+unchanged.) Placebo runs that pretend each donor reunified in 1990 give
+ratios of post- to pre-1990 gap all below West Germany's, which is about 16;
+ranking first of 17 by luck has a chance of $1/17 = 0.059$. % ledger: b3did:adh15.placebo
+\end{record}
+
+\Cref{lst:b3:difference-in-differences:synth} runs the method on a simulated
+region and twenty donors, all driven by two common factors with different
+loadings, so that no single donor matches the treated region.
+
+\omcode{code/bachelor-3/03-difference-in-differences/listings/synth_demo.py}{1}{30}{Weights, pre-period fit, effect, and the placebo rank.}\label{lst:b3:difference-in-differences:synth}
+
+\omoutput{code/bachelor-3/03-difference-in-differences/outputs/synth_demo.txt}{True effect $-2$ from period 21.}\label{out:b3:difference-in-differences:synth}
+
+\begin{omchart}{A simulated region and its synthetic control (four donors carry
+most of the weight). The policy starts in period 21; the true effect is $-2$.
+Twenty donors driven by two common factors.}{simulated data, the chapter's
+seeded script}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.8\linewidth, height=0.4\linewidth, xmin=1, xmax=30,
+  xlabel={Period}, ylabel={Outcome}, ymin=7, ymax=16, legend pos=north west]
+  \draw[guide] (axis cs:20.5,7) -- (axis cs:20.5,16);
+  \addplot[omDef, very thick, no marks] table[x=t, y=treated] {figdata/bachelor-3/03-difference-in-differences/out/synth.csv};
+  \addplot[omThm, thick, dashed, no marks] table[x=t, y=synthetic] {figdata/bachelor-3/03-difference-in-differences/out/synth.csv};
+  \legend{treated region, synthetic control}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+Before period 21 the two paths are hard to tell apart: the root mean squared
+gap is 0.26. After, the mean gap is $-1.68$ against a true $-2$. % output: synth_demo
+Inference uses placebos. Each donor in turn is treated as if it had been
+treated, a \omterm{def:b3:difference-in-differences:synthetic-control}{synthetic control} is built for it from the others, and the ratio of
+its post-period to its pre-period gap is computed. The treated region's ratio,
+6.8, is the largest of the 21; % output: synth_demo
+if the policy had done nothing, the chance that the true unit would rank first
+by luck is $1/21$, about 0.05. With fewer donors, no result can be significant
+at that level, whatever the gap.
+
+\section{Exercises}\label{sec:b3:difference-in-differences:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:difference-in-differences:1}
+Read the opening chart.
+\begin{enumerate}
+\item Compute each state's change from February to November and the
+difference in differences from the printed means.
+\item Compute New Jersey's change in percent of its February level.
+\item State in one sentence what the dashed line assumes.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:difference-in-differences:2}
+Average hourly wages (in dalens) in two regions of Brenland were 20 and 24 in
+2023, and 21 and 26.5 in 2025. Only the second region cut its payroll tax in
+2024.
+\begin{enumerate}
+\item Compute the difference-in-differences estimate of the tax cut's effect on
+wages.
+\item What assumption does it need, and what would you look at to check it?
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:difference-in-differences:3}
+In the event-study chart of \cref{sec:b3:difference-in-differences:event-study},
+read the coefficient at $k = 2$ and its interval. What would you conclude if the
+leads had been $-0.4$, $-0.3$, $-0.2$ and $-0.1$ at $k = -5, \dots, -2$?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:difference-in-differences:4}
+Describe two patterns of pre-treatment data that contradict parallel trends,
+and one that does not contradict it even though the two groups differ.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:difference-in-differences:5}
+Mean sales in two groups of shops go from 100 to 120 (group A, treated) and from
+50 to 60 (group B, untreated).
+\begin{enumerate}
+\item Compute the difference in differences in levels and in logs.
+\item Show that parallel trends cannot hold both in levels and in logs here, and
+explain how one would choose between them.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:difference-in-differences:6}
+Use the NSW data to compute a placebo difference in differences from 1974 to
+1975, both before the programme, with each survey as the comparison group.
+\begin{enumerate}
+\item Report the trainees' change, each survey's change, and the two placebo
+estimates with their standard errors.
+\item What does the result say about parallel trends, and what can it not say?
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:difference-in-differences:7}
+Workers enter a training programme after a year in which their earnings fell
+for temporary reasons. The evaluator measures the change in their earnings from
+that year to two years after the programme, against a comparison group without
+the dip. In which direction is the difference in differences biased? How would
+choosing an earlier ``before'' year help?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:difference-in-differences:8}
+Two equal-sized groups are observed in periods 1, 2 and 3. Group E is treated
+from period 2, group L from period 3; there is no never-treated group. E's
+effect is $\tau$ in period 2 and $\tau + \gamma$ in period 3 (here $\gamma$ is
+the growth of the effect); L's effect is $\tau$ in period 3.
+\begin{enumerate}
+\item Compute the double-demeaned treatment dummy in each of the six cells.
+\item Show that the \omterm{def:b3:panel-data:twfe}{two-way fixed effects} coefficient equals $\tau - \gamma/2$.
+\item Give values of $\tau$ and $\gamma$, both positive, for which the
+coefficient is negative. Which cell receives a negative weight?
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:difference-in-differences:9}
+Kestria raises the sales tax on fuel in its two western provinces only. Propose
+a placebo group, a placebo outcome and a placebo date for a
+difference-in-differences study of the effect on fuel sales, and say what
+each would rule out.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:difference-in-differences:10}
+Simulate the design of the event-study chart, but let the units react one period
+before adoption, with an effect of 0.3 at $k = -1$.
+\begin{enumerate}
+\item Estimate the \omterm{def:b3:difference-in-differences:event-study}{event study} with reference period $k = -1$ and report the
+coefficients at $k = -3, -2, 0, 1, 2$.
+\item Re-estimate with reference period $k = -2$. Explain the difference.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:difference-in-differences:11}
+A treated region has outcomes 4 and 6 in two pre-treatment periods. Three donors
+have $(2, 4)$, $(6, 6)$ and $(4, 10)$.
+\begin{enumerate}
+\item Find the synthetic-control weights, and check that they reproduce the
+pre-treatment path exactly.
+\item After the treatment, the region's outcome is 5 and the donors' are 3, 7
+and 9. Estimate the effect.
+\item Why does the method forbid negative weights?
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:difference-in-differences:12}
+A state introduces health insurance for people aged 65 and over. A
+difference in differences of the old in that state against the old in other
+states may be biased by state-wide shocks that hit the old differently.
+\begin{enumerate}
+\item Write the triple-difference estimator that also uses people under 65 in
+both kinds of state.
+\item State the assumption it needs, and show that it is weaker than
+parallel trends for the old alone.
+\end{enumerate}
+\end{exercise}
+
+\section{Problem: The Kestrian Border Tax}\label{sec:b3:difference-in-differences:problem}
+
+\begin{problem}[{Weekend problem --- the Kestrian border tax}]\label{pb:b3:difference-in-differences:border}
+Kestria (invented) has twelve provinces. In 2019 it raised its sales tax in the
+three western provinces W1--W3, which border Brenland, where shopping became
+relatively cheaper; in 2021 it raised it in the three eastern provinces E1--E3;
+the six northern provinces N1--N6 kept the old rate. A statistician has the log
+annual sales of 50 shops in each province, 2014--2024, and computes the tables
+below. Standard errors are clustered by province. % figdata: kestria_*
+
+\smallskip
+\noindent\begin{minipage}[t]{0.4\linewidth}
+\centering\small Mean log sales\par\smallskip
+\pgfplotstabletypeset[col sep=comma, string type,
+  columns/group/.style={column name={Group}, column type=l},
+  columns/y2018/.style={column name={2018}, string type=false, numeric type, fixed, precision=4, zerofill},
+  columns/y2020/.style={column name={2020}, string type=false, numeric type, fixed, precision=4, zerofill},
+  every head row/.style={after row=\hline}, every last row/.style={after row=\hline}]
+  {figdata/bachelor-3/03-difference-in-differences/out/kestria_means.csv}
+
+\medskip
+Synthetic W1\par\smallskip
+\pgfplotstabletypeset[col sep=comma,
+  columns/donor/.style={column name={Donor}, string type, column type=l},
+  columns/weight/.style={column name={Weight}, fixed, precision=4, zerofill},
+  every head row/.style={after row=\hline}, every last row/.style={after row=\hline}]
+  {figdata/bachelor-3/03-difference-in-differences/out/kestria_synth.csv}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.27\linewidth}
+\centering\small West against north\par\smallskip
+\pgfplotstabletypeset[col sep=comma,
+  columns/k/.style={column name={$k$}, int detect},
+  columns/est/.style={column name={Coef.}, fixed, precision=4, zerofill},
+  columns/se/.style={column name={s.e.}, fixed, precision=4, zerofill},
+  every head row/.style={after row=\hline}, every last row/.style={after row=\hline}]
+  {figdata/bachelor-3/03-difference-in-differences/out/kestria_event.csv}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.27\linewidth}
+\centering\small Gap, W1 minus synthetic\par\smallskip
+\pgfplotstabletypeset[col sep=comma,
+  columns/year/.style={column name={Year}, int detect, /pgf/number format/set thousands separator={}},
+  columns/gap/.style={column name={Gap}, fixed, precision=4, zerofill},
+  every head row/.style={after row=\hline}, every last row/.style={after row=\hline}]
+  {figdata/bachelor-3/03-difference-in-differences/out/kestria_synth_gap.csv}
+\end{minipage}
+
+\smallskip
+\begin{center}\small
+\pgfplotstabletypeset[col sep=comma,
+  columns/estimator/.style={column name={Estimator of the tax's effect}, string type, column type=l},
+  columns/est/.style={column name={Estimate}, fixed, precision=4, zerofill},
+  columns/se/.style={column name={s.e.}, fixed, precision=4, zerofill, empty cells with={---}},
+  every head row/.style={after row=\hline}, every last row/.style={after row=\hline}]
+  {figdata/bachelor-3/03-difference-in-differences/out/kestria_estimates.csv}
+\end{center}
+The \omterm{def:b3:difference-in-differences:event-study}{event study} uses the western and northern shops only, with shop and year
+effects and $k = -1$ (2018) as reference. The ``clean'' estimator averages, over
+every treated province and year, the province's change since its last untreated
+year minus the north's change. The data are invented, so the true average effect
+over treated shop-years is known: it is the last line.
+
+\medskip\noindent\textbf{Part I --- two groups, two years.}
+\begin{enumerate}
+\item From the table of means, compute each group's change from 2018 to 2020
+and the difference in differences.
+\item Convert it into a percentage change in sales.
+\item Give a 95~\% confidence interval with the clustered standard error.
+\item How many clusters does the standard error rest on? Why is that a concern?
+\item The west's mean was below the north's already in 2018. Does that threaten
+the estimate?
+\item Name one event in 2019--2020, other than the tax, that would bias this
+estimate, and say in which direction.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- the event study.}
+\begin{enumerate}[resume]
+\item Compute the $t$-statistic of each lead. What do the leads suggest?
+\item The coefficient at $k = 1$ equals the difference in differences of Part I.
+Explain why.
+\item Describe the path of the lags from $k = 0$ to $k = 5$, and give one
+economic reason why an effect on cross-border shopping might grow over two or
+three years.
+\item The lag at $k = 4$ has a larger standard error than the others. Why might
+estimates far from the event be noisier?
+\item Suppose shoppers had learned of the tax in mid-2018 and stocked up before
+it. What would happen to the coefficients, given the reference year?
+\item Why does this \omterm{def:b3:difference-in-differences:event-study}{event study} leave out the eastern provinces?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- the roll-out to the east.}
+\begin{enumerate}[resume]
+\item Which comparisons does the \omterm{def:b3:panel-data:twfe}{two-way fixed effects} regression over all twelve
+provinces make? Name the three kinds.
+\item Which of them is a forbidden comparison, and why does it bias the estimate
+toward zero here?
+\item Compute the bias of \omterm{def:b3:panel-data:twfe}{two-way fixed effects} as a percentage of the true effect.
+\item The clean estimator comes within 0.001 of the truth. Which comparisons
+does it avoid?
+\item Compare the standard errors of the two-by-two and two-way estimates.
+Is the smaller one a reason to prefer \omterm{def:b3:panel-data:twfe}{two-way fixed effects}?
+\item If the effect had been constant from the first year on, would \omterm{def:b3:panel-data:twfe}{two-way
+fixed effects} have been biased? Explain.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- one province.}
+\begin{enumerate}[resume]
+\item Check that the synthetic weights for W1 sum to one, and say how many
+donors receive weight.
+\item Compute the root mean squared gap over 2014--2018.
+\item Compute the mean gap over 2021--2024 and compare it with the west's
+event-study lags for the same years.
+\item Give one reason why W1's effect may be larger than the average western
+province's.
+\item Compute the root mean squared gap over 2019--2024 and the ratio of the
+post- to the pre-period value.
+\item With six donors, what is the smallest $p$-value a \omterm{def:b3:difference-in-differences:placebo}{placebo test} of ranks
+can give? Is a rank of 1 out of 7 strong evidence?
+\item Why should the \omterm{def:b3:difference-in-differences:synthetic-control}{donor pool} exclude the eastern provinces?
+\item State the results of the problem: the effect of the tax on the sales of
+western shops by each of the four estimators, and which you would report.
+\end{enumerate}
+\end{problem}

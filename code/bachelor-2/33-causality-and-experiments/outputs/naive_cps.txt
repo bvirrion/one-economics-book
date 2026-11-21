@@ -1,0 +1,7 @@
+$ python naive_cps.py
+men: 185 trained, 15992 in the survey
+naive difference -8497.5 (s.e. 581.9)
+mean age       trained     25.82, survey     33.23
+mean education trained     10.35, survey     12.03
+mean married   trained      0.19, survey      0.71
+mean re75      trained   1532.05, survey  13650.81

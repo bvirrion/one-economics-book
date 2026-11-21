@@ -1,0 +1,697 @@
+\chapter{Intertemporal Choice}\label{ch:b2:intertemporal-choice}
+
+Income comes in a lump in mid-life: little at the start of a career, the most in the forties and
+fifties, much less in retirement. Spending need not follow. A household can borrow when young, save
+in its prime and draw on its savings when old, and the theory of this chapter says that a patient
+household facing a fair interest rate will spread its consumption much more evenly than its income.
+The chart puts the two side by side for the United States, one age group at a time.
+
+\begin{openingchart}{Income after taxes and spending of American households by age of the reference
+  person, 2023, in thousands of dollars a year: one point per age group, placed at the group's mean
+  age. Spending is the survey's average annual expenditures less personal insurance and pensions
+  (pension contributions are saving and Social Security contributions a tax: neither is consumption).}{U.S. Bureau of Labor
+  Statistics, Consumer Expenditure Surveys, Table 1300 (age of reference person), 2023}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xmin=15, xmax=88, ymin=0, ymax=130, xtick={20,30,...,80},
+    xlabel={Mean age of the reference person (years)}, ylabel={Thousands of dollars a year},
+    legend pos=north east, height=0.55\linewidth, width=0.8\linewidth]
+  \addplot[omDef, very thick, mark=*, mark size=1.8pt] table[x=age, y=income_after]
+    {figdata/bachelor-2/03-intertemporal-choice/out/ce_age.csv};
+  \addplot[omThm, very thick, mark=square*, mark size=1.8pt] table[x=age, y=spending]
+    {figdata/bachelor-2/03-intertemporal-choice/out/ce_age.csv};
+  \legend{Income after taxes, Spending}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+Spending does rise less than income: from the youngest group to the 45--54 group, income after taxes
+% figdata: ce_summary (peak_income_ratio 2.26, peak_spending_ratio 1.85)
+is multiplied by 2.26 and spending by 1.85. In the oldest group, spending is 102 per cent of income,
+% figdata: ce_age (ratio 1.023 for 75 and older)
+against 71 per cent at 35--54. But spending still rises and falls with income, far more than a flat
+% figdata: ce_age (ratio 0.713)
+plan would allow. This chapter builds the model that predicts the flat plan, finds what bends it
+(impatience, the interest rate, limits on borrowing), and tests a second model, in which people are
+impatient in a way that changes as the date of a choice approaches.
+
+\begin{recall}
+From the Year 1 volume: the two-period budget constraint, saving as the difference between income and
+consumption, the real interest rate as the price of consumption today in terms of consumption
+tomorrow. From the school volumes: present value, $\sum_t m_t/(1+r)^t$. From
+\cref{ch:b2:expected-utility}: CRRA utility, $u(c) = c^{1-\gamma}/(1-\gamma)$, or $\ln c$ when $\gamma
+= 1$.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:intertemporal-choice:symbols}
+Periods are $t = 0, 1, \dots, T - 1$; in period $t$ a household earns income $m_t$, consumes $c_t$
+and ends the period with assets $b_t$ (negative when it owes). The real interest rate $r$ is the same
+in every period. $\beta$ is the \omterm{def:b2:intertemporal-choice:discount-factor}{discount factor}, $\rho$ the \omterm{def:b2:intertemporal-choice:time-preference}{rate of time preference}, $\gamma$ the CRRA
+coefficient, $\mathcal{M}$ the present value of lifetime income, $\bar B$ a borrowing limit, and
+$\varphi$ the present-bias factor of \cref{sec:b2:intertemporal-choice:consistency}.
+\end{notation}
+
+\section{Discounting and time-separable utility}\label{sec:b2:intertemporal-choice:discounting}
+
+A household chooses a whole plan of consumption $(c_0, c_1, \dots, c_{T-1})$. The simplest way to
+rank plans adds up the utility of each period, with less weight on later ones.
+
+\begin{definition}[Discount factor]\label{def:b2:intertemporal-choice:discount-factor}
+A household with \emph{exponential discounting} ranks consumption plans by
+\[
+U_0 = \sum_{t=0}^{T-1} \beta^{t}\, u(c_t), \qquad 0 < \beta \le 1,
+\]
+where $u$ is increasing and concave. The number $\beta$ is its \emph{discount
+factor}\index{discount factor}: one unit of utility a period later is worth $\beta$ units now.
+\end{definition}
+
+\begin{definition}[Rate of time preference]\label{def:b2:intertemporal-choice:time-preference}
+The \emph{rate of time preference}\index{rate of time preference} $\rho$ is defined by $\beta = 1/(1 +
+\rho)$. It is the rate at which the household discounts utility, as $r$ is the rate at which the market
+discounts money.
+\end{definition}
+
+The model makes two strong assumptions. Utility is \emph{time-separable}: what a household gets from
+consumption this year does not depend on what it consumed last year (no habits). And the weight on a
+period depends only on its distance from today, through the same factor $\beta$ for each extra period.
+\Cref{sec:b2:intertemporal-choice:consistency} shows what the second assumption buys.
+
+The household can borrow and lend at the rate $r$. Starting with no assets, its assets evolve as
+\[
+b_t = (1 + r)\, b_{t-1} + m_t - c_t, \qquad b_{-1} = 0,
+\]
+and it may not die in debt: $b_{T-1} \ge 0$.
+
+\begin{proposition}[Intertemporal budget constraint]\label{prop:b2:intertemporal-choice:budget}
+A plan satisfies the period constraints with $b_{T-1} = 0$ if and only if
+\[
+\sum_{t=0}^{T-1} \frac{c_t}{(1 + r)^{t}} = \sum_{t=0}^{T-1} \frac{m_t}{(1 + r)^{t}} = \mathcal{M}.
+\]
+The present value of consumption equals the present value of income. With $b_{T-1} \ge 0$ the left
+side is at most $\mathcal{M}$, and a household whose utility rises with consumption leaves nothing.
+\end{proposition}
+
+\begin{proof}
+Divide the period constraint by $(1 + r)^{t}$:
+$b_t/(1 + r)^{t} - b_{t-1}/(1 + r)^{t-1} = (m_t - c_t)/(1 + r)^{t}$. Summing over $t = 0, \dots, T - 1$,
+the left side telescopes to $b_{T-1}/(1 + r)^{T-1}$, so $b_{T-1} \ge 0$ is $\sum_t (m_t - c_t)/(1 +
+r)^{t} \ge 0$, with equality exactly when $b_{T-1} = 0$. If $b_{T-1} > 0$, raising $c_{T-1}$ by
+$b_{T-1}$ keeps every constraint and raises utility.
+\end{proof}
+
+So the timing of income matters only through $\mathcal{M}$, the household's lifetime resources: two
+income profiles with the same present value allow the same consumption plans, as long as the household
+can borrow freely. \Cref{sec:b2:intertemporal-choice:borrowing} drops that condition.
+
+\section{The Euler equation}\label{sec:b2:intertemporal-choice:euler}
+
+\begin{definition}[Euler equation]\label{def:b2:intertemporal-choice:euler-equation}
+The \emph{Euler equation}\index{Euler equation} of a consumption plan is the condition, for each pair
+of adjacent periods,
+\[
+u'(c_t) = \beta\,(1 + r)\, u'(c_{t+1}).
+\]
+Giving up one unit of consumption at $t$ costs $u'(c_t)$; saved, it returns $1 + r$ units at $t + 1$,
+worth $\beta(1 + r)u'(c_{t+1})$ in today's utility. At an optimum the two are equal.
+\end{definition}
+
+\begin{proposition}[The optimal plan]\label{prop:b2:intertemporal-choice:euler}
+Let $u$ be strictly increasing, strictly concave and differentiable, with $u'(c) \to \infty$ as $c \to
+0$. A plan maximises $U_0$ subject to the intertemporal budget constraint if and only if it meets the
+constraint with equality and satisfies the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} for $t = 0, \dots, T - 2$.
+\end{proposition}
+
+\begin{proof}
+The Lagrangian is $\sum_t \beta^{t} u(c_t) + \lambda\bigl(\mathcal{M} - \sum_t c_t/(1 + r)^{t}\bigr)$.
+Since $u'$ is unbounded near zero, every $c_t$ is positive at the optimum, and the first-order
+conditions are $\beta^{t} u'(c_t) = \lambda(1 + r)^{-t}$ for every $t$. Dividing the condition for $t +
+1$ by the one for $t$ gives $\beta\,u'(c_{t+1})/u'(c_t) = 1/(1 + r)$, the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation}. Conversely,
+the objective is strictly concave and the constraint linear, so a plan that meets the constraint and
+the first-order conditions (with $\lambda = u'(c_0)$) is the unique maximum.
+\end{proof}
+
+The \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} fixes the \emph{slope} of the plan, the growth of consumption from one period to the
+next; the budget fixes its \emph{level}. With CRRA utility the slope has a closed form.
+
+\begin{corollary}[Consumption growth under CRRA]\label{cor:b2:intertemporal-choice:crra-growth}
+If $u(c) = c^{1-\gamma}/(1 - \gamma)$ (or $\ln c$), then
+\[
+\frac{c_{t+1}}{c_t} = \bigl(\beta(1 + r)\bigr)^{1/\gamma}, \qquad \ln\frac{c_{t+1}}{c_t} =
+\frac{\ln(1 + r) - \ln(1 + \rho)}{\gamma} \approx \frac{r - \rho}{\gamma}.
+\]
+Consumption grows when the market rate exceeds the \omterm{def:b2:intertemporal-choice:time-preference}{rate of time preference}, falls when it is below,
+and grows faster the smaller is $\gamma$.
+\end{corollary}
+
+\begin{proof}
+$u'(c) = c^{-\gamma}$, so the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} reads $c_t^{-\gamma} = \beta(1 + r)c_{t+1}^{-\gamma}$; take
+the power $1/\gamma$ and logarithms, and use $\ln(1 + x) \approx x$ for small $x$.
+\end{proof}
+
+\begin{definition}[Elasticity of intertemporal substitution]\label{def:b2:intertemporal-choice:eis}
+The \emph{elasticity of intertemporal substitution}\index{elasticity of intertemporal substitution}
+(EIS) is the percentage change in the ratio $c_{t+1}/c_t$ caused by a one per cent rise in the gross
+interest rate $1 + r$, along the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation}. By \cref{cor:b2:intertemporal-choice:crra-growth} it
+equals $1/\gamma$ under CRRA utility.
+\end{definition}
+
+So CRRA ties together two quite different things: the aversion to risk across states of
+\cref{ch:b2:expected-utility}, measured by $\gamma$, and the reluctance to let consumption change
+across time, measured by $1/\gamma$. A household that dislikes gambles must, in this model, also
+dislike uneven consumption over time. Nothing in the evidence forces the two to be linked; the model
+links them for tractability.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=90, ymin=0, ymax=90, xtick={20,39.56,77.14}, xticklabels={20,
+    39.6, 77.1}, ytick={39.46,60,81}, yticklabels={39.5,60,81},
+    xlabel={Consumption now, $c_0$ (thousands)}, ylabel={Consumption next year, $c_1$ (thousands)},
+    width=0.62\linewidth, height=0.55\linewidth]
+  \addplot[omDef, very thick, domain=0:77.14, samples=2] {(77.142857 - x)*1.05};
+  \addplot[black, thick, domain=24:88, samples=80] {39.461538*(39.560440/x)^(1/0.95)};
+  \draw[guide] (axis cs:20,0) -- (axis cs:20,60) -- (axis cs:0,60);
+  \draw[guide] (axis cs:39.56,0) -- (axis cs:39.56,39.46) -- (axis cs:0,39.46);
+  \node[eqpoint] at (axis cs:20,60) {};
+  \node[anchor=south west, font=\small] at (axis cs:20,60) {$E$};
+  \node[eqpoint] at (axis cs:39.56,39.46) {};
+  \node[anchor=south west, font=\small] at (axis cs:39.56,39.46) {$A$};
+  \draw[->, omDef] (axis cs:66,52) -- (axis cs:66.5,12);
+  \node[anchor=south, font=\footnotesize, omDef] at (axis cs:66,52) {budget line, slope $-(1+r)$};
+\end{axis}
+\end{tikzpicture}
+
+{\small Two periods, $u = \ln$, $\beta = 0.95$, $r = 5$ per cent. A student earns 20 now and 60 next
+year (thousands of dalens; point $E$). Lifetime resources are $20 + 60/1.05 = 77.1$. The best plan
+$A$ is where an indifference curve touches the budget line: there the slope of the curve,
+$-u'(c_0)/(\beta u'(c_1))$, equals $-(1 + r)$, which is the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation}. Since $\beta(1 + r) =
+0.9975$, the plan is almost flat; the student borrows 19.6 now.}
+\end{omfigure}
+
+\section{Consumption smoothing}\label{sec:b2:intertemporal-choice:smoothing}
+
+\begin{definition}[Consumption smoothing]\label{def:b2:intertemporal-choice:smoothing}
+A household practises \emph{consumption smoothing}\index{consumption smoothing} when it uses borrowing
+and saving to make its consumption path less variable than its income path: it consumes more than its
+income when income is low and less when it is high.
+\end{definition}
+
+\begin{proposition}[Flat consumption]\label{prop:b2:intertemporal-choice:flat}
+If $\beta(1 + r) = 1$, the optimal plan is flat, whatever the income profile and whatever the
+(strictly concave) utility:
+\[
+c_t = \bar c = \frac{\mathcal{M}}{\sum_{t=0}^{T-1}(1 + r)^{-t}} \quad\text{for every } t.
+\]
+A change in income in a single period changes consumption in every period, by the same amount, and by
+much less than the change in income.
+\end{proposition}
+
+\begin{proof}
+With $\beta(1 + r) = 1$ the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} is $u'(c_t) = u'(c_{t+1})$; $u'$ is strictly decreasing, so
+$c_t = c_{t+1}$. The budget constraint then gives $\bar c\sum_t (1 + r)^{-t} = \mathcal{M}$. A rise
+$\Delta$ in $m_s$ raises $\mathcal{M}$ by $\Delta/(1 + r)^{s}$ and so every $c_t$ by that amount
+divided by $\sum_t (1 + r)^{-t}$, which is larger than one when $T > 1$.
+\end{proof}
+
+The listing below works out a whole life. Each period is a decade, so the interest rate over a period
+is 48 per cent (about 4 per cent a year); income rises to a peak in the fourth decade and falls in the
+sixth. The program finds the consumption path from the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} and the budget, then follows
+assets decade by decade.
+
+\omcode{code/bachelor-2/03-intertemporal-choice/listings/life_plan.py}{1}{26}{A life of six decades:
+the growth of consumption from the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation}, its level from the budget, then the assets.}
+\label{lst:b2:intertemporal-choice:life-plan}
+
+\omoutput{code/bachelor-2/03-intertemporal-choice/outputs/life_plan.txt}{A patient household and an
+impatient one, on the same income.}\label{out:b2:intertemporal-choice:life-plan}
+
+With $\beta(1 + r) = 1$, consumption is flat at 28.3 thousand dalens a year. The household borrows in
+its first two decades, repays its debt in the third, saves in the fourth and fifth, and spends its
+savings in the last, ending with nothing. (The model treats a decade as one period, so assets are
+printed per year of the decade, like income.) The impatient household, with $\beta(1 + r) = 0.74$, borrows more when young and lets
+its consumption fall by 14 per cent a decade, $0.74^{1/2} = 0.86$. Neither path follows the hump of
+income. Both are what the model predicts for a household that can borrow at the market rate; the next
+two sections say what changes when it cannot, or when the interest rate moves.
+
+\begin{measure}[Spending by age in an expenditure survey]
+An expenditure survey interviews a sample of households (``consumer units'') about their spending and
+income, and the agency publishes averages by the age of the \emph{reference person}, the member who
+owns or rents the home. Reading the opening chart as a life cycle needs three cautions. It is a
+cross-section: in 2023 the households aged 75 were born some thirty years before those aged 45 and
+earned their incomes in a different economy, so the chart mixes age with the date of birth. Households change size: an average unit
+% ledger: b2:bls-ce-age-35-44, b2:bls-ce-age-75p
+has 3.4 people at 35--44 and 1.6 at 75 and older, so spending per person is much flatter than spending
+per household: from the youngest group to its peak (55--64) it rises 1.48 times, against 1.85 for
+% figdata: ce_summary (peak_pp_spending_ratio 1.48)
+the unit to its own peak (45--54). And the survey's ``expenditures'' include pension and Social Security
+contributions, which the chart removes: pension contributions are saving and Social Security contributions a
+tax, and neither is consumption.
+\end{measure}
+
+\begin{model}{Exponential discounting and consumption smoothing}
+\assumes A household with time-separable utility and a constant \omterm{def:b2:intertemporal-choice:discount-factor}{discount factor} plans its whole life,
+knows its income profile, and borrows and lends at one interest rate.
+\predicts Consumption grows at $(\beta(1 + r))^{1/\gamma}$ whatever the income profile; it is flat when
+$\beta(1 + r) = 1$; predictable changes in income do not move consumption when they happen; plans,
+once made, are carried out.
+\tested Expenditure surveys by age (this chapter's opening chart): spending varies less than income,
+and the oldest households spend more than their income.
+\breaks Spending still rises and falls with income over the life cycle, more than smoothing allows,
+part of which household size and cohorts explain; households that cannot borrow
+(\cref{sec:b2:intertemporal-choice:borrowing}); preference reversals and the demand for commitment
+(\cref{sec:b2:intertemporal-choice:consistency}).
+\end{model}
+
+\section{The interest rate}\label{sec:b2:intertemporal-choice:rate}
+
+The Year 1 volume showed with two periods that a rise in the interest rate has a substitution effect
+(consumption today becomes dearer, so save more) and an income effect (a saver is richer, so consume
+more today). With CRRA utility the balance has a clean answer.
+
+\begin{proposition}[Saving and the interest rate]\label{prop:b2:intertemporal-choice:rate}
+Two periods, all income $m_0$ in period 0, CRRA utility. First-period consumption is
+\[
+c_0 = \frac{m_0}{1 + \beta^{1/\gamma}(1 + r)^{1/\gamma - 1}} .
+\]
+A rise in $r$ lowers $c_0$ (raises saving) if $\gamma < 1$, leaves it unchanged if $\gamma = 1$, and
+raises $c_0$ (lowers saving) if $\gamma > 1$.
+\end{proposition}
+
+\begin{proof}
+The budget is $c_1 = (1 + r)(m_0 - c_0)$ and the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} $c_1 = (\beta(1 + r))^{1/\gamma}c_0$.
+Equating, $m_0 - c_0 = c_0\,\beta^{1/\gamma}(1 + r)^{1/\gamma - 1}$, which gives $c_0$. The term $(1 +
+r)^{1/\gamma - 1}$ rises with $r$ when $1/\gamma > 1$, is constant when $\gamma = 1$, and falls when
+$1/\gamma < 1$; $c_0$ moves the other way.
+\end{proof}
+
+The \omterm{def:b2:intertemporal-choice:eis}{elasticity of intertemporal substitution} measures the substitution effect: when it exceeds one,
+it wins. With logarithmic utility the two effects cancel exactly, and the household consumes the
+share $1/(1 + \beta)$ of its wealth whatever the rate. When income also arrives later, a third effect
+appears: a higher rate lowers the present value of future income, the household's \emph{human wealth},
+which makes it poorer and pushes saving up. So a rise in the interest rate raises the saving of a young
+household with most of its income ahead of it more surely than the saving of a retiree living on its
+wealth. How large the EIS is, and so how much saving responds to the interest rate, is an empirical
+question that the aggregate data leave open; \cref{ch:b2:consumption} returns to it.
+
+\section{Borrowing limits}\label{sec:b2:intertemporal-choice:borrowing}
+
+Smoothing a rising income profile needs borrowing against future income, which lenders may refuse:
+future earnings cannot be pledged as collateral, and a borrower may not repay.
+
+\begin{definition}[Borrowing constraint]\label{def:b2:intertemporal-choice:borrowing-constraint}
+A \emph{borrowing constraint}\index{borrowing constraint} is a limit $b_t \ge -\bar B$ on the debt a
+household may hold at the end of each period, with $\bar B \ge 0$; $\bar B = 0$ forbids borrowing.
+\end{definition}
+
+\begin{proposition}[Euler equation with a borrowing limit]\label{prop:b2:intertemporal-choice:constrained}
+Under a \omterm{def:b2:intertemporal-choice:borrowing-constraint}{borrowing constraint} the optimal plan satisfies, in each period,
+\[
+u'(c_t) \ge \beta(1 + r)\, u'(c_{t+1}),
+\]
+with equality whenever the limit does not bind at the end of period $t$ ($b_t > -\bar B$). When it
+binds, consumption is lower today than the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} wants: $c_t = m_t + (1 + r)b_{t-1} + \bar B$,
+and consumption moves with current income.
+\end{proposition}
+
+\begin{proof}
+Add to the Lagrangian of \cref{prop:b2:intertemporal-choice:euler} the multipliers $\mu_t \ge 0$ of the
+period constraints $b_t + \bar B \ge 0$, written in terms of $c_0, \dots, c_t$. Raising $c_t$ by one and
+lowering $c_{t+1}$ by $1 + r$ leaves every later asset unchanged and lowers only $b_t$, by one. If
+$b_t > -\bar B$, this swap and its reverse are both feasible, so neither may raise utility: equality. If
+$b_t = -\bar B$, only the reverse swap (less now, more later) is feasible, and it may not raise
+utility: $\beta^{t}u'(c_t) \ge \beta^{t+1}(1 + r)u'(c_{t+1})$.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=90, ymin=0, ymax=90, xtick={20,39.56}, xticklabels={20,
+    39.6}, ytick={60,81}, xlabel={Consumption now, $c_0$ (thousands)},
+    ylabel={Consumption next year, $c_1$ (thousands)}, width=0.62\linewidth, height=0.55\linewidth]
+  \addplot[omDef, very thick, domain=0:20, samples=2] {(77.142857 - x)*1.05};
+  \draw[omDef, very thick] (axis cs:20,60) -- (axis cs:20,0);
+  \addplot[omDef, thick, dashed, domain=20:77.14, samples=2] {(77.142857 - x)*1.05};
+  \addplot[black, thick, domain=14.5:60, samples=80] {60*(20/x)^(1/0.95)};
+  \addplot[black!50, thin, domain=24:88, samples=80] {39.461538*(39.560440/x)^(1/0.95)};
+  \node[eqpoint] at (axis cs:20,60) {};
+  \node[anchor=south west, font=\small] at (axis cs:20,60) {$E$};
+  \node[circle, draw=black!60, inner sep=0pt, minimum size=4pt] at (axis cs:39.56,39.46) {};
+  \node[anchor=south west, font=\small, black!60] at (axis cs:39.56,39.46) {$A$};
+  \node[anchor=west, font=\footnotesize, omDef] at (axis cs:21,8) {no borrowing: $c_0 \le m_0$};
+\end{axis}
+\end{tikzpicture}
+
+{\small The same student when nobody lends to it ($\bar B = 0$). The feasible set loses the dashed
+part of the budget line, and the best plan is the corner $E$: the student consumes its income. The
+indifference curve through $E$ is steeper than the budget line there ($u'(c_0)/(\beta u'(c_1)) = 60/(0.95
+\times 20) = 3.2$, against $1.05$): the student would pay far more than the market rate to borrow. $A$
+is the plan it cannot reach.}
+\end{omfigure}
+
+A binding limit changes the predictions. Consumption tracks current income for households at the
+limit, mostly young ones whose income will rise; a predictable rise in income raises their consumption
+when it arrives, not before; and a loan, a transfer or a tax refund that arrives early raises their
+spending one for one. The limit also has a cost, which \cref{exo:b2:intertemporal-choice:12} measures:
+the share of lifetime resources the household would give up to be rid of it.
+
+Brenland's household survey shows the extreme case. Grouping its 2,000 households by the age of the
+head, consumption is between 92 and 97 per cent of disposable income in every age band: it follows the
+% figdata: brenland_age (ratio 0.924 to 0.973)
+hump of income almost exactly. Brenland's invented households behave as if every one of them were at
+its borrowing limit, or did not plan at all.
+
+\begin{omchart}{Brenland's household survey, 2025 (invented): mean disposable income and mean
+  consumption by age band of the head, thousands of dalens a year; 287 to 370 households per band.}{Brenland
+  household survey (invented data, \texttt{households.csv})}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xmin=20, xmax=80, ymin=0, ymax=35, xtick={25,34.5,44.5,54.5,64.5,74.5},
+    xticklabels={21--29,30--39,40--49,50--59,60--69,70--79}, xlabel={Age of the head},
+    ylabel={Thousands of dalens a year}, legend style={at={(0.5,0.04)}, anchor=south}, legend columns=2,
+    height=0.45\linewidth, width=0.8\linewidth]
+  \addplot[omDef, very thick, mark=*, mark size=1.8pt] table[x=mid, y=disposable]
+    {figdata/bachelor-2/03-intertemporal-choice/out/brenland_age.csv};
+  \addplot[omThm, very thick, mark=square*, mark size=1.8pt] table[x=mid, y=consumption]
+    {figdata/bachelor-2/03-intertemporal-choice/out/brenland_age.csv};
+  \legend{Disposable income, Consumption}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\section{Time consistency}\label{sec:b2:intertemporal-choice:consistency}
+
+A plan is made today but carried out later, by the same person at later dates. Will that later person
+still want it?
+
+\begin{definition}[Time consistency]\label{def:b2:intertemporal-choice:time-consistency}
+Preferences are \emph{time consistent}\index{time consistency} if a plan that is optimal at date 0 has
+the property that, at every later date $t$, its remainder is optimal for the household at $t$, given
+what it has done up to $t$. A household with time-consistent preferences never wants to revise its
+plan when nothing new has been learnt.
+\end{definition}
+
+\begin{proposition}[Exponential discounting is time consistent]\label{prop:b2:intertemporal-choice:consistent}
+With exponential discounting and strictly concave $u$, the remainder from date $t$ of the date-0
+optimal plan is the date-$t$ optimal plan, given assets $b_{t-1}$.
+\end{proposition}
+
+\begin{proof}
+Write $U_0 = \sum_{k<t}\beta^{k}u(c_k) + \beta^{t}U_t$, with $U_t = \sum_{k\ge t}\beta^{k-t}u(c_k)$
+the date-$t$ objective. Let $(c^*_k)$ be the date-0 optimum and $b^*_{t-1}$ the assets it leaves at
+$t$. The plans from $t$ on that are feasible with $b^*_{t-1}$ are the same for both selves. If some
+feasible remainder gave a higher $U_t$ than $(c^*_k)_{k\ge t}$, then splicing it onto
+$(c^*_k)_{k<t}$ would give a higher $U_0$, since $\beta^{t} > 0$, contradicting optimality at date 0.
+So the remainder maximises $U_t$; the maximum is unique because $U_t$ is strictly concave.
+\end{proof}
+
+The proof works because the weight the date-0 self puts on period $t + 1$ relative to period $t$,
+$\beta^{t+1}/\beta^{t} = \beta$, is the same as the weight the date-$t$ self puts on them. Only
+exponential discounting has that property (\cref{exo:b2:intertemporal-choice:10}). The simplest
+departure keeps $\beta$ between any two future periods but adds an extra discount between now and
+everything later.
+
+\begin{definition}[Quasi-hyperbolic discounting]\label{def:b2:intertemporal-choice:quasi-hyperbolic}
+A household with \emph{quasi-hyperbolic discounting}\index{quasi-hyperbolic discounting} ranks plans at
+date $t$ by
+\[
+U_t = u(c_t) + \varphi\sum_{k=1}^{T-1-t}\beta^{k}u(c_{t+k}), \qquad 0 < \varphi \le 1,\ 0 < \beta \le 1.
+\]
+With $\varphi = 1$ this is exponential discounting.
+\end{definition}
+
+\begin{remark}
+Much of the literature writes this model with $\beta$ for the present-bias factor and $\delta$ for the
+long-run \omterm{def:b2:intertemporal-choice:discount-factor}{discount factor}, and calls it the $\beta$--$\delta$ model. This book keeps $\beta$ for the
+\omterm{def:b2:intertemporal-choice:discount-factor}{discount factor} and $\delta$ for depreciation, so the present-bias factor is $\varphi$.
+\end{remark}
+
+\begin{definition}[Present bias]\label{def:b2:intertemporal-choice:present-bias}
+A household has \emph{present bias}\index{present bias} if it weights the present more heavily, relative
+to the future, than its own discounting between any two future dates implies; in the quasi-hyperbolic
+model, if $\varphi < 1$.
+\end{definition}
+
+\begin{proposition}[Present bias is time inconsistent]\label{prop:b2:intertemporal-choice:inconsistent}
+With $\varphi < 1$ and an interior optimum, the date-0 plan for periods 1 and 2 satisfies $u'(c_1) =
+\beta(1 + r)u'(c_2)$, but the household at date 1 chooses $u'(c_1) = \varphi\beta(1 + r)u'(c_2)$: it
+consumes more at date 1 than it planned.
+\end{proposition}
+
+\begin{proof}
+At date 0 the weights on periods 1 and 2 are $\varphi\beta$ and $\varphi\beta^2$, whose ratio is
+$\beta$; the Euler argument of \cref{prop:b2:intertemporal-choice:euler} between those two periods
+gives the first equation. At date 1 the weights are $1$ and $\varphi\beta$, whose ratio is $\varphi\beta
+< \beta$. Since $u'$ is decreasing, the second equation, with a smaller right-hand side for a given
+$c_2$, needs a larger $c_1$ out of the same resources.
+\end{proof}
+
+The clearest symptom is a \emph{preference reversal}. Offer \dal{100} on day 10 or \dal{110} on day
+11, and take $\beta = 1$ between days for simplicity, with $\varphi = 0.7$. Seen from day 0, both dates
+are in the future and carry the same weight $0.7$: the later, larger amount wins, 77 against 70. On
+day 10, the first amount is now and the second is not: 100 against 77, and the sooner amount wins. The
+household chooses, then changes its mind with no new information.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=1cm, y=0.028cm]
+  \foreach \xo/\title/\a/\b in {0/{Seen from day 0}/70/77, 6.4/{Seen on day 10}/100/77} {
+    \begin{scope}[xshift=\xo cm]
+      \draw[econ axes, <-] (0,115) -- (0,0) -- (5,0);
+      \fill[omDef!60] (1,0) rectangle (2,\a);
+      \fill[omThm!60] (3,0) rectangle (4,\b);
+      \node[above, font=\footnotesize] at (1.5,\a) {\a};
+      \node[above, font=\footnotesize] at (3.5,\b) {\b};
+      \node[below, font=\footnotesize, align=center] at (1.5,0) {\dal{100}\\day 10};
+      \node[below, font=\footnotesize, align=center] at (3.5,0) {\dal{110}\\day 11};
+      \node[font=\small] at (2.5,128) {\title};
+    \end{scope}
+  }
+  \node[font=\footnotesize, anchor=west] at (0.1,108) {value now};
+\end{tikzpicture}
+
+{\small A preference reversal with $\varphi = 0.7$ and $\beta = 1$ between days. From day 0 the two
+offers are both discounted by $0.7$, and \dal{110} on day 11 is worth more (77 against 70). On day 10
+the first offer is no longer discounted, and \dal{100} now beats \dal{110} tomorrow (100 against 77).
+Under exponential discounting the comparison is the same on both days.}
+\end{omfigure}
+
+What the household does about its future selves depends on whether it knows they will deviate. A
+\emph{naive} household believes its future selves will follow today's plan; a \emph{sophisticated}
+one predicts their choices correctly and plans around them. Only the sophisticated household has a
+reason to tie its own hands.
+
+\begin{definition}[Commitment device]\label{def:b2:intertemporal-choice:commitment-device}
+A \emph{commitment device}\index{commitment device} is an arrangement, chosen freely, that removes some
+of a person's future options or makes them costlier: a savings account that cannot be touched before a
+date, a contract that charges for missed sessions, a deadline set in advance.
+\end{definition}
+
+\begin{proposition}[Who pays for commitment]\label{prop:b2:intertemporal-choice:commitment}
+A household with exponential discounting never pays a positive price for a \omterm{def:b2:intertemporal-choice:commitment-device}{commitment device} that
+removes options. A sophisticated household with \omterm{def:b2:intertemporal-choice:present-bias}{present bias} may.
+\end{proposition}
+
+\begin{proof}
+By \cref{prop:b2:intertemporal-choice:consistent} the exponential household's later selves carry out
+its date-0 plan, which is feasible with or without the device; removing options can only shrink what
+is feasible, and a price lowers resources, so its utility falls. For the second claim it is enough to
+give a case, which \cref{exo:b2:intertemporal-choice:11} and the weekend problem work out: the
+date-1 self consumes more than the date-0 self wants (\cref{prop:b2:intertemporal-choice:inconsistent}),
+and a device that forces the date-0 plan raises the date-0 self's utility.
+\end{proof}
+
+So a demand for commitment at a positive price refutes exponential discounting, whatever the \omterm{def:b2:intertemporal-choice:discount-factor}{discount
+factor}; the next section reports two such observations.
+
+\section{Measured present bias}\label{sec:b2:intertemporal-choice:measured}
+
+\begin{record}[Paying not to go to the gym]
+DellaVigna and Malmendier (2006) followed the contract choices and daily attendance of 7,752 members of
+% ledger: b2:dm2006
+three American health clubs over three years. Members who chose a flat monthly fee of over \usd{70}
+attended 4.3 times a month on average: more than \usd{17} per visit, when a 10-visit pass cost
+\usd{10} per visit. On average they forwent \usd{600} over their membership. Monthly members were also
+17 per cent more likely than annual members to stay enrolled beyond a year, although the monthly
+contract costs more precisely for the option to cancel. The authors' leading explanation is
+overconfidence about future self-control: members who expect to go often, and to cancel promptly,
+and do neither. In the terms of this chapter, a naive present-biased member does what the data show.
+\end{record}
+
+\begin{record}[Effort today or tomorrow]
+Augenblick, Niederle and Sprenger (2013) had 102 participants allocate a number of dull tasks between two
+% ledger: b2:ans2013-design
+dates, over seven weeks: once a week in advance, and again on the day the first date arrived. On the
+day, they allocated about 9 per cent fewer tasks to the present than they had planned a week before.
+% ledger: b2:ans2013-beta
+The estimated present-bias factor is $0.900$ (standard error $0.037$) for effort, while the same
+participants choosing between payments of money show $0.974$ (standard error $0.009$), close to no \omterm{def:b2:intertemporal-choice:present-bias}{present
+bias}. When offered, for free, a device that made their advance allocation more likely to count, 59 per
+% ledger: b2:ans2013-commit
+cent of them took it, and those whose allocations had shown \omterm{def:b2:intertemporal-choice:present-bias}{present bias} were the ones who chose it.
+But almost nobody would pay for it: at a price of 25 cents, 91 per cent preferred flexibility.
+\end{record}
+
+\begin{model}{Quasi-hyperbolic discounting}
+\assumes A household weights every future period by an extra factor $\varphi < 1$ relative to the
+present, and discounts exponentially between future periods; it may be naive or sophisticated about
+its future selves.
+\predicts Preference reversals as a reward approaches; plans to save, exercise or work that are not
+carried out; a demand for \omterm{def:b2:intertemporal-choice:commitment-device}{commitment devices} among the sophisticated, even at a price.
+\tested Gym contracts and attendance (DellaVigna and Malmendier 2006); effort allocated in advance
+and on the day, and the take-up of commitment (Augenblick, Niederle and Sprenger 2013).
+\breaks The estimated $\varphi$ depends on what is being chosen: well below one for effort, close to
+one for money in the same people; and few people pay a positive price for commitment in the
+effort experiment, so the size of the demand is small.
+\end{model}
+
+The two models are less opposed than they look. Exponential discounting describes the long-run shape
+of plans, and its predictions about consumption growth and the interest rate are what the rest of the
+book uses, in the asset-pricing chapter and in the macroeconomic models. \omterm{def:b2:intertemporal-choice:present-bias}{Present bias} describes the
+gap between plans and their execution, which matters most where a cost comes now and a benefit later.
+Neither model says which choices people \emph{should} make; each predicts which ones they \emph{will}
+make, and the records above say where each prediction holds.
+
+\section{Exercises}\label{sec:b2:intertemporal-choice:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:intertemporal-choice:1}
+An apprentice will earn \dal{30000} this year, \dal{40000} next year and \dal{50000} the year after.
+The interest rate is 4 per cent. Find the present value of these earnings.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:intertemporal-choice:2}
+A household lives two periods, earns $m_0 = \num{40000}$ and $m_1 = \num{42000}$ dalens, has $u = \ln$,
+$\beta = 0.95$ and borrows or lends at $r = 5$ per cent. Find $c_0$, $c_1$ and its saving in period 0.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:intertemporal-choice:3}
+Read the opening chart's data (the ledger rows, or the table of the chart's source). (a) What share of
+its income after taxes does the 25--34 group spend, and the group aged 75 and older? (b) Spending per
+person divides by the average number of people in the unit: find it for the youngest group and for the
+55--64 group. (c) Which comparison, per unit or per person, is closer to what smoothing predicts?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:intertemporal-choice:4}
+Name two observations that would refute exponential discounting, whatever the \omterm{def:b2:intertemporal-choice:discount-factor}{discount factor}. Then
+say why a household that consumes more when young than when old does not refute it.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:intertemporal-choice:5}
+A household has CRRA utility with $\gamma = 2$, a \omterm{def:b2:intertemporal-choice:time-preference}{rate of time preference} $\rho = 2$ per cent, and
+faces $r = 4$ per cent. Find the growth rate of its consumption, exactly and with the approximation of
+\cref{cor:b2:intertemporal-choice:crra-growth}. Do the same with $\gamma = 0.5$. Which household has
+the larger EIS?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:intertemporal-choice:6}
+A household has \dal{100000} now and nothing next period, $\beta = 0.96$. The interest rate rises from
+3 to 6 per cent. Predict the sign of the change in its saving for $\gamma = 2$, $1$ and $0.5$, then
+compute $c_0$ before and after in each case. Which effect wins in each?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:intertemporal-choice:7}
+The student of the figures earns \dal{20000} now and \dal{60000} next year, with $u = \ln$, $\beta =
+0.95$, $r = 5$ per cent. (a) Find its unconstrained plan. (b) Nobody lends to it. Show that the limit
+binds by comparing $u'(c_0)/u'(c_1)$ at the endowment with $\beta(1 + r)$. (c) What does it consume?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:intertemporal-choice:8}
+Data and Python. Load Brenland's survey with \texttt{from country import load};
+\texttt{load("households")}. Group the households by the age of the head in bands of ten years from 21,
+and compute mean disposable income, mean consumption and their ratio in each band. Fit consumption on
+disposable income across households by least squares. Does consumption track income over the life
+cycle? Compare the highest band mean with the lowest, for income and for consumption, and say what
+smoothing would predict.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:intertemporal-choice:9}
+A bank offers a savings account that cannot be touched for a year, for a fee of \dal{20}. (a) Show that
+a household with exponential discounting never opens it, whatever $\beta$. (b) A naive present-biased
+household does not open it either. Why? (c) Which of the two records of
+\cref{sec:b2:intertemporal-choice:measured} shows a demand for commitment, and at what price?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:intertemporal-choice:10}
+Let a household rank plans at date $t$ by $\sum_{k\ge 0} D(k)\,u(c_{t+k})$, with $D(0) = 1$ and $D(k) >
+0$. Show that its preferences are \omterm{def:b2:intertemporal-choice:time-consistency}{time consistent} for every utility $u$ and every budget only if $D(k)
+= D(1)^{k}$: exponential discounting is the only time-consistent discounting of this form. (Compare
+the marginal rate of substitution between dates $t + k$ and $t + k + 1$ seen from date 0 and from date
+$t$.)
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:intertemporal-choice:11}
+A household has \dal{90000} to eat over three periods, no interest ($r = 0$), $u = \ln$, $\beta = 1$
+and $\varphi = 0.5$. (a) Find what the date-1 self consumes out of what is left, $W_1$. (b) Find the
+sophisticated date-0 self's $c_0$, and the whole path. (c) What split of $W_1$ would the date-0 self
+like? (d) Show that a naive date-0 self chooses the same $c_0$ with logarithmic utility.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:intertemporal-choice:12}
+For the student of \cref{exo:b2:intertemporal-choice:7}, find the share $\lambda$ of its lifetime
+resources that would give it, without a borrowing limit, the same utility as its constrained plan. (With
+two periods and $u = \ln$, lifetime utility is $(1 + \beta)\ln(\text{resources}) + $ a constant.) Express
+the cost of the limit in dalens of lifetime resources.
+\end{exercise}
+
+\section{Problem: An engineer in Brenmoor plans her life}\label{sec:b2:intertemporal-choice:problem}
+
+\begin{problem}[{Weekend problem --- an engineer in Brenmoor, the capital of Brenland, plans her
+consumption over three stretches of her life: smoothing, a borrowing limit, and a present bias that a
+commitment savings account can correct}]
+\label{pb:b2:intertemporal-choice:1}
+An engineer lives three periods: young, middle-aged and retired. She earns $m_0 = \num{24000}$, $m_1 =
+\num{60000}$ and $m_2 = \num{6000}$ dalens per period, has $u = \ln$ and $\beta = 0.8$, and borrows or
+lends at $r = 25$ per cent per period. Round amounts to the nearest dalen and utilities to four
+decimals.
+
+\medskip
+\noindent\textbf{Part I --- Budget and present value.}
+\begin{enumerate}
+  \item Write her budget period by period, with assets $b_0$ and $b_1$ and $b_2 = 0$, and derive the
+        intertemporal budget constraint.
+  \item Find the present value $\mathcal{M}$ of her income.
+  \item Find her \omterm{def:b2:intertemporal-choice:time-preference}{rate of time preference}, and compare it with $r$.
+  \item If she consumed her income each period, what would her lifetime utility be? Find the constant
+        consumption $\bar c_h$ that gives the same utility.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Euler equation and smoothing.}
+\begin{enumerate}[resume]
+  \item Write the two \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equations} and show that her plan is flat.
+  \item Find her consumption.
+  \item Find $b_0$ and $b_1$, and check that $b_2 = 0$.
+  \item By how much per period does smoothing beat consuming her income, in constant consumption?
+  \item The interest rate rises to 50 per cent. Find the growth factor of her consumption, the new
+        $\mathcal{M}$, and $c_0$, $c_1$, $c_2$.
+  \item Does she borrow more or less when young after the rise? Show that with $u = \ln$, $c_0 =
+        \mathcal{M}/(1 + \beta + \beta^2)$ at every rate, and say which effect of the rate remains.
+  \item With $r = 25$ per cent again, would her plan change if $\gamma$ were 2 instead of 1? Why?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- A borrowing limit.}
+\begin{enumerate}[resume]
+  \item Banks do not lend to the young: $b_0 \ge 0$. Does the limit bind?
+  \item Find her constrained plan.
+  \item Check the Euler inequality of \cref{prop:b2:intertemporal-choice:constrained} between periods
+        0 and 1, and the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} between 1 and 2.
+  \item Compute her lifetime utility with and without the limit.
+  \item Find the constant consumption $\bar c$ that gives her the constrained utility, the cost of the
+        limit per period, and its cost in dalens of lifetime resources.
+  \item A lender offers to lift the limit for a fee of \dal{1000} in present value. Does she accept?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Present bias and a commitment savings account.}
+\begin{enumerate}[resume]
+  \item She now has $\varphi = 0.7$, and no borrowing limit. Write the weights her date-0 and date-1
+        selves put on the three periods.
+  \item What split of the resources $W_1$ left at date 1 would her date-0 self like?
+  \item What split does her date-1 self choose?
+  \item She is sophisticated. Find $c_0$, $W_1$, $c_1$ and $c_2$. (Use $u = \ln$: the date-0 self
+        values $W_1$ through $\varphi\beta(1 + \beta)\ln W_1$ plus a constant.)
+  \item Would a naive engineer choose a different $c_0$? Explain.
+  \item A commitment savings account lets her fix $c_1$ and $c_2$ at date 0. What does she choose, and
+        how many dalens of $W_1$ would her date-0 self give up for the account?
+  \item Compare the three plans --- exponential ($\varphi = 1$), present-biased without the account,
+        present-biased with it --- by the exponential utility $\ln c_0 + \beta\ln c_1 + \beta^2\ln c_2$.
+        What does the account fix, and what does it leave?
+  \item State the result: the cost of the borrowing limit and the value of the commitment account, in
+        dalens.
+\end{enumerate}
+\end{problem}

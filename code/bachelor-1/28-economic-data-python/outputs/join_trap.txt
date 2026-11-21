@@ -1,0 +1,4 @@
+$ python join_trap.py
+rows: 995 925
+merged on iso3 alone: 4450
+merged on (iso3, year): 890

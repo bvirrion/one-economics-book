@@ -1,0 +1,8 @@
+$ python pooled_vs_within.py
+countries 200, country-years 6419
+pooled               2.756
+between              2.716
+within               0.999
+country dummies      0.999
+country and year     2.068
+share of the variance of log income that is within: 0.036

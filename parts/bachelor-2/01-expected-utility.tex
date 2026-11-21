@@ -1,0 +1,882 @@
+\chapter{Expected Utility}\label{ch:b2:expected-utility}
+
+Offer a group of people a choice between \num{2400} for certain and a gamble that pays \num{2500} with
+probability $0.33$, \num{2400} with probability $0.66$ and nothing with probability $0.01$. Most take
+the sure \num{2400}. Now offer the same people a second choice: \num{2500} with probability $0.33$, or
+\num{2400} with probability $0.34$. Most take the \num{2500}. Each choice looks sensible on its own.
+Together they break the theory of choice under risk that economics uses everywhere else, from
+insurance to pensions to the pricing of shares, and this chapter shows why. The chart below gives
+the answers of the respondents of Kahneman and Tversky (1979), who asked the two questions with
+prizes in Israeli pounds (the median family's net monthly income was then about \num{3000} pounds),
+% ledger: b2:kt1979-income
+and two more questions built the same way.
+
+\begin{openingchart}{The Allais pairs. Percentage of respondents choosing the less risky option in each
+  of two pairs of questions: first with a sure prize, then with both options scaled down. Expected
+  utility says that each respondent makes the same choice twice, so the two bars of a pair should
+  have the same height.}{Kahneman and Tversky (1979), Problems 1--4; 72 respondents for the first pair, 95 for the second}
+\begin{tikzpicture}
+\begin{axis}[omrecord, ybar, bar width=16pt, ymin=0, ymax=100, xmin=0.5, xmax=2.5,
+    xtick={1,2}, xticklabels={{Problems 1 and 2}, {Problems 3 and 4}},
+    ylabel={Percentage of respondents}, legend pos=north east, grid=none, ymajorgrids,
+    nodes near coords, every node near coord/.append style={font=\footnotesize}]
+  \addplot[fill=omDef!70, draw=omDef] table[x=pos, y=certain]
+    {figdata/bachelor-2/01-expected-utility/out/allais.csv};
+  \addplot[fill=omThm!45, draw=omThm] table[x=pos, y=scaled]
+    {figdata/bachelor-2/01-expected-utility/out/allais.csv};
+  \legend{With the sure prize, Scaled down}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+In the first pair, 82 per cent take the sure \num{2400}, but only 17 per cent take the matching
+% figdata: allais (certain 82, scaled 17); ledger: b2:kt1979-p1, b2:kt1979-p2
+option once the two prospects are scaled down. In the second pair the figures are 80 and 35 per cent.
+% figdata: allais (certain 80, scaled 35); ledger: b2:kt1979-p3, b2:kt1979-p4
+The gap is the size of the failure: at least 65 per cent of the respondents in the first pair, and
+% figdata: allais (gap 65, 45)
+45 per cent in the second, made a pair of choices that no expected-utility maximiser makes. The
+chapter builds the theory first, as a theorem with four axioms, then measures attitudes to risk with
+it, and ends with the places where it is tested and where it breaks.
+
+\begin{recall}
+From the school volumes: a gamble is described by its prizes and their probabilities; its expected
+value is the probability-weighted average of the prizes; a person who prefers the expected value for
+sure to the gamble itself is risk-averse; the sure amount she values as much as the gamble is its
+\omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalent}. From mathematics: expectation, variance, concave functions and Jensen's
+inequality, Taylor's formula to second order.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:expected-utility:symbols}
+Amounts of money are $z$, prizes $z_1 < z_2 < \dots < z_n$. A \omterm{def:b2:expected-utility:lottery}{lottery} is $\ell = (\ell_1, \dots,
+\ell_n)$, and $\ell'$, $\ell''$ are others; $\theta \in [0,1]$ is a mixing weight. The \omterm{def:b2:expected-utility:risk-premium}{risk premium} is
+$\rho$, a constant of \omterm{def:b2:expected-utility:risk-aversion}{risk aversion} $a$ or $\gamma$, and the Arrow--Pratt coefficients are
+$\mathcal{A}(z)$ and $\mathcal{R}(z)$. A claim comes with probability $\mu$; an amount of
+insurance cover is $\chi$, bought at $\psi$ per unit of cover. (In this series $p$ is a price, $w$ a wage, $\pi$ inflation,
+$\alpha$ a capital share, $P$ the price level and $C$ consumption, so none of them is used here.)
+\end{notation}
+
+\section{Lotteries}\label{sec:b2:expected-utility:lotteries}
+
+The objects of choice are not goods but probability distributions over outcomes. Fix a finite set of
+prizes $Z = \{z_1, \dots, z_n\}$: amounts of money, or any outcomes at all.
+
+\begin{definition}[Lottery]\label{def:b2:expected-utility:lottery}
+A \emph{lottery}\index{lottery} on the prizes $z_1, \dots, z_n$ is a vector $\ell = (\ell_1, \dots,
+\ell_n)$ with $\ell_i \ge 0$ and $\sum_i \ell_i = 1$, where $\ell_i$ is the probability of winning
+$z_i$. The set of lotteries is the simplex $\Delta = \{\ell \in \mathbb{R}^n : \ell_i \ge 0, \sum_i
+\ell_i = 1\}$. The \emph{degenerate lottery} $\delta_i$ gives $z_i$ for certain. When the prizes are
+amounts of money, $\mathbb{E}[\ell] = \sum_i \ell_i z_i$ is the lottery's expected value.
+\end{definition}
+
+\begin{definition}[Compound lottery]\label{def:b2:expected-utility:compound-lottery}
+A \emph{compound lottery}\index{compound lottery} gives the \omterm{def:b2:expected-utility:lottery}{lottery} $\ell^{(k)}$ with probability
+$\theta_k$, $k = 1, \dots, K$ ($\theta_k \ge 0$, $\sum_k \theta_k = 1$): first one draw picks a \omterm{def:b2:expected-utility:lottery}{lottery},
+then a second draw picks the prize. Its \emph{reduced \omterm{def:b2:expected-utility:lottery}{lottery}} is $\sum_k \theta_k \ell^{(k)}$, which
+gives $z_i$ with the total probability $\sum_k \theta_k \ell^{(k)}_i$. The mixture $\theta\ell +
+(1-\theta)\ell'$ is the reduced \omterm{def:b2:expected-utility:lottery}{lottery} of the compound \omterm{def:b2:expected-utility:lottery}{lottery} that gives $\ell$ with probability
+$\theta$ and $\ell'$ otherwise.
+\end{definition}
+
+Throughout, a person cares only about the reduced \omterm{def:b2:expected-utility:lottery}{lottery}: two compound lotteries with the same
+reduced \omterm{def:b2:expected-utility:lottery}{lottery} are the same object of choice. This is an assumption, not a theorem, and it is part
+of what the evidence tests.
+
+\begin{example}[The Allais lotteries]\label{ex:b2:expected-utility:allais-lotteries}
+Take the prizes $z_1 = 0$, $z_2 = \num{2400}$, $z_3 = \num{2500}$. The four options of the opening
+chart's first pair are
+\[
+\ell^{A} = (0.01, 0.66, 0.33),\quad \ell^{B} = (0, 1, 0),\quad
+\ell^{C} = (0.67, 0, 0.33),\quad \ell^{D} = (0.66, 0.34, 0).
+\]
+Let $\ell^{*} = (\tfrac{1}{34}, 0, \tfrac{33}{34})$, which pays \num{2500} with probability $33/34$.
+Then
+\[
+\ell^{A} = 0.34\,\ell^{*} + 0.66\,\delta_2,\quad \ell^{B} = 0.34\,\delta_2 + 0.66\,\delta_2,\quad
+\ell^{C} = 0.34\,\ell^{*} + 0.66\,\delta_1,\quad \ell^{D} = 0.34\,\delta_2 + 0.66\,\delta_1 .
+\]
+Check the first: $0.34 \times \tfrac{1}{34} = 0.01$ on $0$, $0.66$ on \num{2400}, $0.34 \times
+\tfrac{33}{34} = 0.33$ on \num{2500}. Each pair mixes the same two lotteries, $\ell^{*}$ and the sure
+\num{2400}, with a common consequence: \num{2400} with probability $0.66$ in the first pair, nothing
+with probability $0.66$ in the second.
+\end{example}
+
+With three prizes a \omterm{def:b2:expected-utility:lottery}{lottery} is fixed by two numbers, $\ell_1$ and $\ell_3$, since $\ell_2 = 1 - \ell_1
+- \ell_3$. The \emph{probability triangle} plots $\ell_1$ (the chance of the worst prize) across and
+$\ell_3$ (the chance of the best) up. Its corners are the three sure prizes: $\delta_2$ at the origin,
+$\delta_1$ at $(1, 0)$, $\delta_3$ at $(0, 1)$. Moving up or to the left shifts probability to better
+prizes. The figure after \cref{prop:b2:expected-utility:parallel} draws the Allais lotteries in it.
+
+\section{The expected-utility theorem}\label{sec:b2:expected-utility:theorem}
+
+A person has a preference relation $\succsim$ over $\Delta$: $\ell \succsim \ell'$ reads ``$\ell$ is
+at least as good as $\ell'$''; $\succ$ and $\sim$ are its strict part and its indifference, as for
+bundles of goods in the Year 1 volume. Four axioms are imposed.
+
+\begin{enumerate}
+  \item \textbf{Completeness:} for all $\ell, \ell'$, $\ell \succsim \ell'$ or $\ell' \succsim \ell$.
+  \item \textbf{Transitivity:} $\ell \succsim \ell'$ and $\ell' \succsim \ell''$ imply $\ell \succsim
+        \ell''$.
+  \item \textbf{Continuity:} for all $\ell, \ell', \ell''$ the sets $\{\theta \in [0,1] : \theta\ell +
+        (1-\theta)\ell' \succsim \ell''\}$ and $\{\theta \in [0,1] : \ell'' \succsim \theta\ell +
+        (1-\theta)\ell'\}$ are closed.
+  \item \textbf{Independence}, defined next.
+\end{enumerate}
+
+\begin{definition}[Independence axiom]\label{def:b2:expected-utility:independence-axiom}
+The preference $\succsim$ satisfies the \emph{independence axiom}\index{independence axiom} if, for
+all lotteries $\ell, \ell', \ell''$ and every $\theta \in (0, 1]$,
+\[
+\ell \succsim \ell' \iff \theta\ell + (1-\theta)\ell'' \succsim \theta\ell' + (1-\theta)\ell'' .
+\]
+Mixing both lotteries with a third one, in the same proportion, leaves the ranking unchanged.
+\end{definition}
+
+Because the axiom is an equivalence, it holds for $\succ$ and for $\sim$ as well. Its logic is that of
+the \omterm{def:b2:expected-utility:compound-lottery}{compound lottery}: with probability $1-\theta$ the person gets $\ell''$ whatever she chose, so only
+the branch where $\ell$ and $\ell'$ differ should matter. Continuity rules out lexicographic tastes, such
+as preferring any \omterm{def:b2:expected-utility:lottery}{lottery} with a smaller chance of death, however small the difference, whatever else
+it offers.
+
+\begin{definition}[Expected-utility representation]\label{def:b2:expected-utility:eu-representation}
+A preference $\succsim$ on $\Delta$ has an \emph{expected-utility
+representation}\index{expected-utility representation} if there is a function $u : Z \to \mathbb{R}$,
+the \emph{utility of money} (or Bernoulli utility function), such that
+\[
+\ell \succsim \ell' \iff U(\ell) \ge U(\ell'), \qquad U(\ell) = \sum_{i=1}^{n} \ell_i\,u(z_i) .
+\]
+$U$ is the \emph{expected utility} of the \omterm{def:b2:expected-utility:lottery}{lottery}. For a random amount $\tilde z$ we write $U =
+\mathbb{E}[u(\tilde z)]$.
+\end{definition}
+
+$U$ is linear in the probabilities: $U(\theta\ell + (1-\theta)\ell') = \theta U(\ell) + (1-\theta)
+U(\ell')$. That one property is the whole content of the theory, and the theorem says that the four
+axioms are exactly what it takes.
+
+\begin{theorem}[Expected-utility theorem (von Neumann--Morgenstern)]\label{thm:b2:expected-utility:vnm}
+\index{expected-utility theorem}
+A preference relation on the lotteries over finitely many prizes is complete, transitive, continuous
+and satisfies independence if and only if it has an \omterm{def:b2:expected-utility:eu-representation}{expected-utility representation}.
+\end{theorem}
+
+\begin{proof}
+\emph{If.} Let $U(\ell) = \sum_i \ell_i u(z_i)$ represent $\succsim$. Completeness and transitivity
+hold because $\ge$ on numbers has them. Since $U(\theta\ell + (1-\theta)\ell')$ is an affine function
+of $\theta$, the sets of continuity are of the form $\{\theta : \text{an affine function of }\theta
+\ge \text{a constant}\}$, which are closed intervals. For independence,
+$U(\theta\ell + (1-\theta)\ell'') - U(\theta\ell' + (1-\theta)\ell'') = \theta\,(U(\ell) - U(\ell'))$,
+which has the sign of $U(\ell) - U(\ell')$ when $\theta > 0$.
+
+\emph{Only if.} Six steps.
+
+\emph{Step 1: a best and a worst \omterm{def:b2:expected-utility:lottery}{lottery}.} The $n$ sure prizes are ranked by completeness and
+transitivity; let $\bar\delta$ be a best and $\underline\delta$ a worst of them. We show $\bar\delta
+\succsim \ell \succsim \underline\delta$ for every $\ell$, by induction on the number of prizes with
+positive probability. One prize: $\ell$ is a sure prize. Otherwise, with $\ell_1 \in (0,1)$ say, write
+$\ell = \ell_1 \delta_1 + (1-\ell_1)\ell^{(1)}$, where $\ell^{(1)}$ is $\ell$ conditional on not
+winning $z_1$ and has fewer prizes, so $\bar\delta \succsim \ell^{(1)}$. Independence applied twice
+gives
+\[
+\ell = \ell_1\delta_1 + (1-\ell_1)\ell^{(1)} \precsim \ell_1\bar\delta + (1-\ell_1)\ell^{(1)} \precsim
+\ell_1\bar\delta + (1-\ell_1)\bar\delta = \bar\delta ,
+\]
+the first step with common part $\ell^{(1)}$, the second with common part $\bar\delta$. The other
+inequality is the same argument. If $\bar\delta \sim \underline\delta$, every \omterm{def:b2:expected-utility:lottery}{lottery} is indifferent
+to every other and a constant $u$ represents $\succsim$; assume from now on $\bar\delta \succ
+\underline\delta$.
+
+\emph{Step 2: more weight on the best is better.} Write $m(\theta) = \theta\bar\delta +
+(1-\theta)\underline\delta$. If $1 \ge \theta > \theta' \ge 0$, then $m(\theta) \succ m(\theta')$.
+Indeed, with $\beta = (\theta - \theta')/(1 - \theta') \in (0, 1]$, $m(\theta) = \beta\bar\delta +
+(1-\beta) m(\theta')$. Independence (strict form, common part $\bar\delta$) gives $\bar\delta =
+\theta'\bar\delta + (1-\theta')\bar\delta \succ m(\theta')$, and then (common part $m(\theta')$)
+$m(\theta) = \beta\bar\delta + (1-\beta)m(\theta') \succ \beta m(\theta') + (1-\beta) m(\theta') =
+m(\theta')$.
+
+\emph{Step 3: every \omterm{def:b2:expected-utility:lottery}{lottery} has a calibrating weight.} Fix $\ell$. The sets $S^{+} = \{\theta :
+m(\theta) \succsim \ell\}$ and $S^{-} = \{\theta : \ell \succsim m(\theta)\}$ are closed by
+continuity, $1 \in S^{+}$ and $0 \in S^{-}$ by step 1, and $S^{+} \cup S^{-} = [0,1]$ by
+completeness. An interval is connected, so two non-empty closed sets that cover it meet: there is
+$\theta_\ell$ with $\ell \sim m(\theta_\ell)$. It is unique by step 2.
+
+\emph{Step 4: the weight represents the preference.} Let $U(\ell) = \theta_\ell$. By transitivity,
+$\ell \succsim \ell' \iff m(\theta_\ell) \succsim m(\theta_{\ell'})$, and by step 2 and completeness
+this holds if and only if $\theta_\ell \ge \theta_{\ell'}$.
+
+\emph{Step 5: $U$ is linear.} Since $\ell \sim m(\theta_\ell)$ and $\ell' \sim m(\theta_{\ell'})$,
+independence in its indifference form, used once for each \omterm{def:b2:expected-utility:lottery}{lottery}, gives
+\[
+\theta\ell + (1-\theta)\ell' \sim \theta\, m(\theta_\ell) + (1-\theta)\ell' \sim \theta\, m(\theta_\ell)
++ (1-\theta)\, m(\theta_{\ell'}) = m\bigl(\theta\theta_\ell + (1-\theta)\theta_{\ell'}\bigr).
+\]
+By the uniqueness in step 3, $U(\theta\ell + (1-\theta)\ell') = \theta U(\ell) + (1-\theta)U(\ell')$.
+
+\emph{Step 6: the expected-utility form.} Every \omterm{def:b2:expected-utility:lottery}{lottery} is a mixture of sure prizes, $\ell = \sum_i
+\ell_i\delta_i$. Applying step 5 repeatedly (induction on $n$) gives $U(\ell) = \sum_i \ell_i
+U(\delta_i)$. Set $u(z_i) = U(\delta_i)$.
+\end{proof}
+
+The proof also shows how to measure $u$: $u(z_i)$ is the probability $\theta$ of the best prize at
+which the person is indifferent between $z_i$ for sure and the \omterm{def:b2:expected-utility:lottery}{lottery} $m(\theta)$. A utility of
+money is a schedule of such answers.
+
+\begin{proposition}[Uniqueness up to a positive affine map]\label{prop:b2:expected-utility:affine}
+If $u$ gives an \omterm{def:b2:expected-utility:eu-representation}{expected-utility representation} of $\succsim$, then $v$ gives one too if and only if
+$v = \kappa_0 + \kappa_1 u$ for some numbers $\kappa_0$ and $\kappa_1 > 0$.
+\end{proposition}
+
+\begin{proof}
+If $v = \kappa_0 + \kappa_1 u$, then $\sum_i \ell_i v(z_i) = \kappa_0 + \kappa_1 \sum_i \ell_i u(z_i)$,
+an increasing function of $U(\ell)$, so $v$ ranks lotteries as $u$ does. Conversely, suppose both
+represent $\succsim$ and $\bar\delta \succ \underline\delta$ (otherwise both are constant and
+$\kappa_1 = 1$, $\kappa_0 = v - u$ will do). Write $\bar u, \underline u, \bar v, \underline v$ for the
+utilities of the best and worst prizes. For each prize, $\delta_i \sim m(\theta_i)$ for a unique
+$\theta_i$, and both representations must give the two lotteries equal value:
+\[
+u(z_i) = \theta_i\bar u + (1-\theta_i)\underline u, \qquad v(z_i) = \theta_i\bar v +
+(1-\theta_i)\underline v .
+\]
+Eliminate $\theta_i = (u(z_i) - \underline u)/(\bar u - \underline u)$: $v(z_i) = \underline v +
+\kappa_1 (u(z_i) - \underline u)$ with $\kappa_1 = (\bar v - \underline v)/(\bar u - \underline u) >
+0$.
+\end{proof}
+
+So the units and the zero of $u$ mean nothing; ratios of utility differences mean something. We may
+always set $u$ of the worst prize to $0$ and $u$ of the best to $1$. A statement such as ``she is
+twice as happy with \num{2500} as with \num{1000}'' has no content in this theory; ``the step from
+\num{1000} to \num{2500} is worth three times the step from $0$ to \num{1000}'' has.
+
+\begin{proposition}[Straight parallel indifference lines]\label{prop:b2:expected-utility:parallel}
+Under expected utility with three prizes $z_1 < z_2 < z_3$ and $u(z_1) < u(z_2) < u(z_3)$, the
+indifference curves in the probability triangle are parallel straight lines of slope
+\[
+\frac{\dd\ell_3}{\dd\ell_1} = \frac{u(z_2) - u(z_1)}{u(z_3) - u(z_2)} > 0,
+\]
+and utility rises towards the upper left.
+\end{proposition}
+
+\begin{proof}
+With $\ell_2 = 1 - \ell_1 - \ell_3$, $U = u(z_2) - \ell_1\,(u(z_2) - u(z_1)) + \ell_3\,(u(z_3) -
+u(z_2))$, an affine function of $(\ell_1, \ell_3)$. Its level sets are parallel lines, and setting
+$\dd U = 0$ gives the slope. $U$ falls with $\ell_1$ and rises with $\ell_3$.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, scale=6.2]
+  \draw[econ axes, <->] (0,1.08) node[left]{$\ell_3$} -- (0,0) -- (1.08,0) node[below]{$\ell_1$};
+  \draw[thick] (1,0) -- (0,1);
+  \node[below left] at (0,0) {$\delta_2$};
+  \node[below] at (1,0) {$\delta_1$};
+  \node[left] at (0,1) {$\delta_3$};
+  \foreach \c in {0.08,0.36,0.64,0.92} {
+    \draw[guide] ({max(0,-\c/2)},{\c+2*max(0,-\c/2)}) -- ({(1-\c)/3},{\c+2*(1-\c)/3});
+  }
+  \draw[guide] (0.16,0) -- ({0.16+0.28},{0.56});
+  \draw[guide] (0.44,0) -- ({0.44+0.187},{0.373});
+  \node[eqpoint, label={[font=\footnotesize]above right:$\ell^{B}$}] (B) at (0,0) {};
+  \node[eqpoint, label={[font=\footnotesize]left:$\ell^{A}$}] (A) at (0.01,0.33) {};
+  \node[eqpoint, label={[font=\footnotesize]below:$\ell^{D}$}] (D) at (0.66,0) {};
+  \node[eqpoint, label={[font=\footnotesize]right:$\ell^{C}$}] (C) at (0.67,0.33) {};
+  \draw[omExo, very thick] (B) -- (A);
+  \draw[omExo, very thick] (D) -- (C);
+  \node[font=\footnotesize, align=left, anchor=west] at (0.52,0.78)
+    {dotted: indifference lines\\of one utility of money,\\utility rising to the upper left};
+\end{tikzpicture}
+
+{\small The probability triangle, with $z_1 = 0$, $z_2 = \num{2400}$, $z_3 = \num{2500}$. The segments
+from $\ell^{B}$ to $\ell^{A}$ and from $\ell^{D}$ to $\ell^{C}$ are parallel (both are the vector
+$(0.01, 0.33)$). With straight parallel indifference lines, $\ell^{A}$ lies on the better side of the
+line through $\ell^{B}$ exactly when $\ell^{C}$ lies on the better side of the line through
+$\ell^{D}$: the two choices must go the same way.}
+\end{omfigure}
+
+\section{Attitudes to risk}\label{sec:b2:expected-utility:attitudes}
+
+From here on the prizes are amounts of money and $u$ is increasing and continuous. The theorem extends
+to lotteries with infinitely many outcomes (distributions of a random amount $\tilde z$ on an
+interval) under a further continuity condition, which we admit: $U = \mathbb{E}[u(\tilde z)]$.
+
+\begin{definition}[Risk aversion]\label{def:b2:expected-utility:risk-aversion}
+A person with utility of money $u$ shows \emph{risk aversion}\index{risk aversion} (is risk-averse) if,
+for every \omterm{def:b2:expected-utility:lottery}{lottery}, she weakly prefers its expected value for certain to the \omterm{def:b2:expected-utility:lottery}{lottery} itself:
+$u(\mathbb{E}[\tilde z]) \ge \mathbb{E}[u(\tilde z)]$. She is \emph{risk-neutral} if this always holds
+with equality, and \emph{risk-loving} if the inequality always goes the other way.
+\end{definition}
+
+\begin{proposition}[Risk aversion is concavity]\label{prop:b2:expected-utility:concave}
+A person is risk-averse if and only if her utility of money is concave; risk-neutral if and only if it
+is affine.
+\end{proposition}
+
+\begin{proof}
+If $u$ is concave, Jensen's inequality gives $\mathbb{E}[u(\tilde z)] \le u(\mathbb{E}[\tilde z])$
+for every distribution. Conversely, for two amounts $z, z'$ and $\theta \in [0,1]$, the \omterm{def:b2:expected-utility:lottery}{lottery} giving
+$z$ with probability $\theta$ and $z'$ otherwise has expected value $\theta z + (1-\theta) z'$, so \omterm{def:b2:expected-utility:risk-aversion}{risk
+aversion} says $u(\theta z + (1-\theta) z') \ge \theta u(z) + (1-\theta) u(z')$: this is the definition
+of concavity. Affine: apply both inequalities.
+\end{proof}
+
+\begin{definition}[Certainty equivalent]\label{def:b2:expected-utility:certainty-equivalent}
+The \emph{certainty equivalent}\index{certainty equivalent} $c(\tilde z)$ of a random amount is the
+sure amount with the same expected utility: $u(c(\tilde z)) = \mathbb{E}[u(\tilde z)]$.
+\end{definition}
+
+It exists and is unique when $u$ is continuous and increasing (by the intermediate-value theorem, it
+lies between the smallest and the largest prize), and it does not change when $u$ is replaced by
+$\kappa_0 + \kappa_1 u$: it is measured in money, not in utils.
+
+\begin{definition}[Risk premium]\label{def:b2:expected-utility:risk-premium}
+The \emph{risk premium}\index{risk premium} of a random amount is $\rho(\tilde z) = \mathbb{E}[\tilde z]
+- c(\tilde z)$: the amount of expected value the person would give up to replace the \omterm{def:b2:expected-utility:lottery}{lottery} by a sure
+payment.
+\end{definition}
+
+\begin{proposition}[Premium and attitude]\label{prop:b2:expected-utility:premium-sign}
+A person is risk-averse if and only if every \omterm{def:b2:expected-utility:risk-premium}{risk premium} she has is non-negative, and risk-neutral if
+and only if every one is zero.
+\end{proposition}
+
+\begin{proof}
+$u$ is increasing, so $c(\tilde z) \le \mathbb{E}[\tilde z] \iff u(c(\tilde z)) \le
+u(\mathbb{E}[\tilde z]) \iff \mathbb{E}[u(\tilde z)] \le u(\mathbb{E}[\tilde z])$.
+\end{proof}
+
+\begin{example}[A square-root utility]\label{ex:b2:expected-utility:sqrt}
+Let $u(z) = \sqrt z$, and let $\tilde z$ be \num{36} or \num{196} with probability $\tfrac12$ each. Its
+expected value is $116$; its expected utility is $\tfrac12(6 + 14) = 10$; its \omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalent} is
+$c = 10^2 = 100$; its \omterm{def:b2:expected-utility:risk-premium}{risk premium} is $116 - 100 = 16$.
+The figure below draws it: the expected utility sits on the chord, below the curve,
+and the \omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalent} is read off where the curve reaches that height.
+\end{example}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, width=0.72\linewidth, height=0.46\linewidth, xmin=0, xmax=225, ymin=0,
+    ymax=16, xlabel={Amount $z$}, ylabel={$u(z) = \sqrt{z}$}, grid=none,
+    xtick={36,100,116,196}, ytick={6,10,14}, axis lines=left]
+  \addplot[curve, domain=0:225, samples=120] {sqrt(x)};
+  \draw[omThm, thick] (axis cs:36,6) -- (axis cs:196,14);
+  \draw[guide] (axis cs:36,0) -- (axis cs:36,6);
+  \draw[guide] (axis cs:196,0) -- (axis cs:196,14);
+  \draw[guide] (axis cs:116,0) -- (axis cs:116,{sqrt(116)});
+  \draw[guide] (axis cs:0,10) -- (axis cs:116,10);
+  \draw[guide] (axis cs:100,0) -- (axis cs:100,10);
+  \node[eqpoint] at (axis cs:116,10) {};
+  \node[eqpoint] at (axis cs:100,10) {};
+  \node[eqpoint] at (axis cs:116,{sqrt(116)}) {};
+  \draw[omDef, very thick, <->] (axis cs:100,2.2) -- node[above, font=\footnotesize]{$\rho = 16$}
+    (axis cs:116,2.2);
+  \node[font=\footnotesize, anchor=north west] at (axis cs:118,9.8) {$\mathbb{E}[u] = 10$};
+  \node[font=\footnotesize, anchor=south east] at (axis cs:114,{sqrt(116)+0.2})
+    {$u(\mathbb{E}[\tilde z])$};
+\end{axis}
+\end{tikzpicture}
+
+{\small A concave utility of money. The \omterm{def:b2:expected-utility:lottery}{lottery} pays \num{36} or \num{196}; its expected utility, $10$,
+lies on the chord above the mean $116$. The curve reaches $10$ at $z = 100$, the \omterm{def:b2:expected-utility:certainty-equivalent}{certainty
+equivalent}, so the \omterm{def:b2:expected-utility:risk-premium}{risk premium} is $116 - 100 = 16$.}
+\end{omfigure}
+
+Some lotteries are ranked by every person who prefers more money to less, whatever her attitude to
+risk.
+
+\begin{definition}[First-order stochastic dominance]\label{def:b2:expected-utility:fosd}
+Let $F_\ell(z) = \sum_{i : z_i \le z} \ell_i$ be the distribution function of a \omterm{def:b2:expected-utility:lottery}{lottery} $\ell$ over
+amounts of money. $\ell$ shows \emph{first-order stochastic dominance}\index{first-order stochastic
+dominance} over $\ell'$ (it first-order dominates $\ell'$) if $F_\ell(z) \le F_{\ell'}(z)$ for every
+$z$: for every amount, $\ell$ is at most as likely as $\ell'$ to pay that amount or less.
+\end{definition}
+
+\begin{proposition}[Dominance and increasing utility]\label{prop:b2:expected-utility:fosd}
+$\ell$ first-order dominates $\ell'$ if and only if $\sum_i \ell_i u(z_i) \ge \sum_i \ell'_i u(z_i)$
+for every increasing function $u$.
+\end{proposition}
+
+\begin{proof}
+Put both lotteries on the same prizes $z_1 < \dots < z_n$ and write $F, F'$ for their distribution
+functions. Summing by parts, with $F(z_n) = F'(z_n) = 1$,
+\[
+\sum_i (\ell_i - \ell'_i)\,u(z_i) = \sum_{i=1}^{n-1} \bigl(F'(z_i) - F(z_i)\bigr)\bigl(u(z_{i+1}) -
+u(z_i)\bigr).
+\]
+If $F \le F'$ and $u$ is increasing, every term is $\ge 0$. Conversely, the increasing function $u(z)
+= 1$ for $z > z_k$ and $0$ otherwise gives $\sum_i (\ell_i - \ell'_i)u(z_i) = F'(z_k) - F(z_k)$, which
+must then be $\ge 0$ for each $k$.
+\end{proof}
+
+In the Allais pairs no option dominates the other: $\ell^{A}$ is more likely than $\ell^{B}$ to pay
+$0$ ($F_A(0) = 0.01 > 0 = F_B(0)$) but less likely to pay \num{2400} or less ($0.67 < 1$). The theory
+of risk attitudes is needed precisely where dominance is silent.
+
+\section{Measuring risk aversion}\label{sec:b2:expected-utility:arrow-pratt}
+
+Concavity says whether a person is risk-averse; it does not say how much. The curvature $u''$ is not
+a measure, since it changes when $u$ is multiplied by a constant. Dividing by $u'$ removes the scale.
+
+\begin{definition}[Coefficient of absolute risk aversion]\label{def:b2:expected-utility:ara}
+For a twice differentiable increasing $u$, the \emph{coefficient of absolute risk
+aversion}\index{coefficient of absolute risk aversion} at wealth $z$ is $\mathcal{A}(z) =
+-u''(z)/u'(z)$, measured per unit of money.
+\end{definition}
+
+\begin{definition}[Coefficient of relative risk aversion]\label{def:b2:expected-utility:rra}
+The \emph{coefficient of relative risk aversion}\index{coefficient of relative risk aversion} is
+$\mathcal{R}(z) = z\,\mathcal{A}(z) = -z\,u''(z)/u'(z)$, a pure number.
+\end{definition}
+
+Both are unchanged by $u \mapsto \kappa_0 + \kappa_1 u$, as a measure built on the
+\cref{prop:b2:expected-utility:affine} must be. The next result says what they measure.
+
+\begin{proposition}[The small-risk approximation]\label{prop:b2:expected-utility:small-risk}
+Let a person with wealth $z$ face a small risk $\tilde\varepsilon$ with mean $0$ and variance
+$\sigma^2$. To second order in the size of the risk, her \omterm{def:b2:expected-utility:risk-premium}{risk premium} is
+\[
+\rho \approx \tfrac12\,\mathcal{A}(z)\,\sigma^2 .
+\]
+For a risk proportional to wealth, $z(1 + \tilde\varepsilon)$, the premium as a share of wealth is
+$\rho/z \approx \tfrac12\,\mathcal{R}(z)\,\sigma^2$.
+\end{proposition}
+
+\begin{proof}
+The premium solves $u(z - \rho) = \mathbb{E}[u(z + \tilde\varepsilon)]$. On the left, to first order
+in $\rho$, $u(z - \rho) \approx u(z) - \rho\,u'(z)$. On the right, to second order,
+$\mathbb{E}[u(z + \tilde\varepsilon)] \approx u(z) + \mathbb{E}[\tilde\varepsilon]\,u'(z) +
+\tfrac12\mathbb{E}[\tilde\varepsilon^2]\,u''(z) = u(z) + \tfrac12\sigma^2 u''(z)$. Equating gives $\rho
+\approx -\tfrac12\sigma^2 u''(z)/u'(z)$. (The premium is of the order of $\sigma^2$, so the term
+$\rho^2 u''$ dropped on the left is of higher order.) For the proportional risk the variance is
+$z^2\sigma^2$, so $\rho \approx \tfrac12\mathcal{A}(z) z^2\sigma^2$ and $\rho/z \approx
+\tfrac12\mathcal{R}(z)\sigma^2$.
+\end{proof}
+
+The premium is proportional to the variance, not to the standard deviation. A person with a twice
+differentiable utility is therefore close to risk-neutral towards very small risks: halving a risk
+divides its premium by four. This is called second-order \omterm{def:b2:expected-utility:risk-aversion}{risk aversion}, and it returns in the last
+section.
+
+Two families of utility functions hold one of the coefficients fixed.
+
+\begin{definition}[Constant absolute risk aversion]\label{def:b2:expected-utility:cara}
+A utility of money shows \emph{constant absolute risk aversion}\index{constant absolute risk aversion}
+(CARA) with coefficient $a > 0$ if $u(z) = -e^{-az}/a$; then $\mathcal{A}(z) = a$ for every $z$.
+\end{definition}
+
+\begin{definition}[Constant relative risk aversion]\label{def:b2:expected-utility:crra}
+A utility of money shows \emph{constant relative risk aversion}\index{constant relative risk aversion}
+(CRRA) with coefficient $\gamma > 0$ if
+\[
+u(z) = \frac{z^{1-\gamma}}{1-\gamma} \quad (\gamma \ne 1), \qquad u(z) = \ln z \quad (\gamma = 1),
+\]
+for $z > 0$; then $\mathcal{R}(z) = \gamma$ and $\mathcal{A}(z) = \gamma / z$.
+\end{definition}
+
+The logarithm is the limit case: $(z^{1-\gamma} - 1)/(1-\gamma)$, which differs from the CRRA utility
+only by a constant and a factor, tends to $\ln z$ as $\gamma \to 1$. For $\gamma > 1$ the utility is
+negative and bounded above by $0$, a fact that matters below.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, width=0.7\linewidth, height=0.46\linewidth, xmin=0.2, xmax=3, ymin=-3,
+    ymax=2.2, xlabel={Wealth $z$ (in units of a reference wealth)}, ylabel={$u(z)$}, grid=none,
+    legend pos=south east]
+  \addplot[omDef, thick, domain=0.2:3, samples=80] {(x^0.5 - 1)/0.5};
+  \addplot[omThm, thick, domain=0.2:3, samples=80] {ln(x)};
+  \addplot[omMeth, thick, domain=0.2:3, samples=80] {(x^(-1) - 1)/(-1)};
+  \addplot[omProp, thick, domain=0.2:3, samples=80] {(x^(-4) - 1)/(-4)};
+  \legend{$\gamma = 0.5$, $\gamma = 1$, $\gamma = 2$, $\gamma = 5$}
+\end{axis}
+\end{tikzpicture}
+
+{\small \omterm{def:b2:expected-utility:crra}{Constant relative risk aversion}, $u(z) = (z^{1-\gamma} - 1)/(1-\gamma)$, scaled so that every
+curve passes through $(1, 0)$ with slope $1$. The higher $\gamma$, the faster marginal utility falls
+and the flatter the curve above the reference wealth.}
+\end{omfigure}
+
+\begin{proposition}[What stays constant]\label{prop:b2:expected-utility:cara-crra}
+\begin{enumerate}
+  \item Under CARA, the \omterm{def:b2:expected-utility:risk-premium}{risk premium} of an added risk $\tilde\varepsilon$ does not depend on wealth:
+        $c(z + \tilde\varepsilon) = z + c(\tilde\varepsilon)$, exactly.
+  \item Under CRRA, the \omterm{def:b2:expected-utility:risk-premium}{risk premium} of a proportional risk is proportional to wealth: $c(z(1 +
+        \tilde\varepsilon)) = z\,c(1 + \tilde\varepsilon)$, exactly.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(1) $u(z + x) = -e^{-az}e^{-ax}/a = e^{-az}u(x)$: adding $z$ multiplies every utility by the same
+positive number, which does not change the ranking, so the sure amount matching $z + \tilde\varepsilon$
+is $z$ plus the one matching $\tilde\varepsilon$. (2) For $\gamma \ne 1$, $u(zx) = z^{1-\gamma}u(x)$;
+for $\gamma = 1$, $\ln(zx) = \ln z + \ln x$. Either way scaling wealth by $z$ is an increasing affine
+change of $u$ and leaves the ranking unchanged.
+\end{proof}
+
+\begin{example}[The premium as wealth rises]\label{ex:b2:expected-utility:wealth}
+Let a person face a 50--50 gain or loss of \usd{5000}. With CRRA $\gamma = 2$, $u(z) = -1/z$ and
+\[
+\mathbb{E}[u] = -\tfrac12\Bigl(\frac{1}{z - h} + \frac{1}{z + h}\Bigr) = -\frac{z}{z^2 - h^2}, \qquad
+c = \frac{z^2 - h^2}{z}, \qquad \rho = \frac{h^2}{z},
+\]
+with $h = \num{5000}$: \usd{1250} at a wealth of \usd{20000}, \usd{500} at \usd{50000}. With CARA and $a =
+\num{0.0001}$ per dollar (the absolute \omterm{def:b2:expected-utility:risk-aversion}{risk aversion} of CRRA $\gamma = 2$ at \usd{20000}), $\rho = \ln\cosh(ah)/a = \ln\cosh(0.5)/\num{0.0001} \approx \usd{1201}$ at every wealth
+(\cref{exo:b2:expected-utility:8} derives the formula).
+The figure below plots both. Under CARA a household with \usd{1000000} and one
+with \usd{15000} pay the same premium to shed the same risk; part IV of the weekend problem turns this
+difference between the two families into a test.
+\end{example}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, width=0.7\linewidth, height=0.44\linewidth, xmin=10000, xmax=60000, ymin=0,
+    ymax=2600, xlabel={Wealth $z$ (dollars)}, ylabel={Risk premium $\rho$ (dollars)}, grid=none,
+    legend pos=north east, xtick={10000,20000,30000,40000,50000,60000}]
+  \addplot[omDef, thick, domain=10000:60000, samples=100] {25e6/x};
+  \addplot[omThm, thick, dashed, domain=10000:60000, samples=2] {ln(cosh(0.5))/0.0001};
+  \legend{CRRA $\gamma = 2$, CARA $a = \num{0.0001}$}
+  \draw[guide] (axis cs:20000,0) -- (axis cs:20000,1250);
+\end{axis}
+\end{tikzpicture}
+
+{\small The \omterm{def:b2:expected-utility:risk-premium}{risk premium} of a 50--50 gain or loss of \usd{5000}. Under CRRA with $\gamma = 2$ it is
+$h^2/z$ and falls as wealth rises; under CARA it is the same at every wealth. The two utilities have
+the same absolute \omterm{def:b2:expected-utility:risk-aversion}{risk aversion} at \usd{20000} (dotted line), where their premiums nearly agree.}
+\end{omfigure}
+
+The coefficients also compare two people.
+
+\begin{proposition}[Comparing risk aversion (Pratt)]\label{prop:b2:expected-utility:pratt}
+Let $u$ and $v$ be twice differentiable, increasing utilities of money. The following are equivalent:
+\begin{enumerate}
+  \item $\mathcal{A}_u(z) \ge \mathcal{A}_v(z)$ for every $z$;
+  \item $u = \varphi \circ v$ for an increasing concave function $\varphi$;
+  \item for every wealth and every risk, the \omterm{def:b2:expected-utility:risk-premium}{risk premium} under $u$ is at least the one under $v$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(1)$\iff$(2). Since $v$ is increasing, $\varphi = u \circ v^{-1}$ exists, is increasing and twice
+differentiable, and $u = \varphi(v)$. Differentiating twice, $u' = \varphi'(v)v'$ and $u'' =
+\varphi''(v)v'^2 + \varphi'(v)v''$, so
+\[
+\mathcal{A}_u = -\frac{u''}{u'} = \mathcal{A}_v - \frac{\varphi''(v)}{\varphi'(v)}\,v' ,
+\]
+and $\mathcal{A}_u \ge \mathcal{A}_v$ everywhere if and only if $\varphi'' \le 0$. (2)$\Rightarrow$(3).
+By Jensen, $u(c_u) = \mathbb{E}[\varphi(v(\tilde z))] \le \varphi(\mathbb{E}[v(\tilde z)]) =
+\varphi(v(c_v)) = u(c_v)$, so $c_u \le c_v$ and $\rho_u \ge \rho_v$. (3)$\Rightarrow$(1). Apply (3) to
+small risks: by \cref{prop:b2:expected-utility:small-risk}, $\tfrac12\mathcal{A}_u(z)\sigma^2 \ge
+\tfrac12\mathcal{A}_v(z)\sigma^2$ up to terms of higher order, which gives (1) as $\sigma \to 0$.
+\end{proof}
+
+\section{Where the model is tested, and where it breaks}\label{sec:b2:expected-utility:tests}
+
+\begin{model}{Expected utility}
+\assumes A person ranks lotteries by a complete, transitive and continuous preference that satisfies
+independence, and cares only about the reduced \omterm{def:b2:expected-utility:lottery}{lottery} over final outcomes.
+\predicts Choices are linear in probabilities: straight parallel indifference lines in the triangle;
+the same choice in both questions of an Allais pair; \omterm{def:b2:expected-utility:risk-premium}{risk premiums} that shrink like the variance for
+small risks; full insurance when it is sold at its expected cost.
+\tested In laboratory choices between gambles, where most respondents break it in the Allais pairs
+(Kahneman and Tversky 1979); in home and flood insurance, where deductible choices imply implausibly
+high \omterm{def:b2:expected-utility:risk-aversion}{risk aversion} (Sydnor 2010; Collier et al.\ 2018).
+\breaks Near certainty (the certainty effect of the Allais pairs), and for small stakes, where the
+curvature needed to explain the choices implies absurd choices over larger stakes.
+\end{model}
+
+\subsection{The Allais pairs}
+
+\begin{proposition}[Common consequence]\label{prop:b2:expected-utility:common-consequence}
+Under expected utility, $\ell^{A} \succ \ell^{B}$ if and only if $\ell^{C} \succ \ell^{D}$ in the
+lotteries of \cref{ex:b2:expected-utility:allais-lotteries}.
+\end{proposition}
+
+\begin{proof}
+Directly: $U(\ell^{A}) - U(\ell^{B}) = 0.01\,u(0) + 0.66\,u(\num{2400}) + 0.33\,u(\num{2500}) -
+u(\num{2400}) = 0.01\,u(0) - 0.34\,u(\num{2400}) + 0.33\,u(\num{2500})$, and $U(\ell^{C}) - U(\ell^{D})
+= 0.67\,u(0) + 0.33\,u(\num{2500}) - 0.66\,u(0) - 0.34\,u(\num{2400})$ is the same number. Or by
+independence: both pairs mix $\ell^{*}$ against $\delta_2$ with weight $0.34$.
+\end{proof}
+
+\begin{proposition}[Common ratio]\label{prop:b2:expected-utility:common-ratio}
+Let $\ell^{A'}$ pay \num{4000} with probability $0.8$, $\ell^{B'}$ pay \num{3000} for sure,
+$\ell^{C'}$ pay \num{4000} with probability $0.2$ and $\ell^{D'}$ pay \num{3000} with probability
+$0.25$ (otherwise nothing). Under expected utility, $\ell^{A'} \succ \ell^{B'} \iff \ell^{C'} \succ
+\ell^{D'}$.
+\end{proposition}
+
+\begin{proof}
+$\ell^{C'} = 0.25\,\ell^{A'} + 0.75\,\delta_0$ and $\ell^{D'} = 0.25\,\ell^{B'} + 0.75\,\delta_0$, where
+$\delta_0$ pays nothing; apply independence with $\theta = 0.25$.
+\end{proof}
+
+\begin{record}[The Allais pairs]
+The pairs are variants of a counter-example put forward by Allais (1953). Kahneman and Tversky (1979)
+asked them with moderate prizes. In the common-consequence pair (Problems 1 and 2, 72 respondents),
+82 per cent chose $\ell^{B}$, the sure \num{2400}, and 83 per cent chose $\ell^{C}$.
+% ledger: b2:kt1979-p1, b2:kt1979-p2
+In the common-ratio pair (Problems 3 and 4, 95 respondents), 80 per cent chose the sure \num{3000} and
+65 per cent chose the \num{4000} at probability $0.2$.
+% ledger: b2:kt1979-p3, b2:kt1979-p4
+Both modal patterns contradict \cref{prop:b2:expected-utility:common-consequence} and
+\cref{prop:b2:expected-utility:common-ratio}. What the record says: people value the step from a
+probability of $0.99$ to certainty far more than the step from $0.33$ to $0.34$; the theory, linear in
+probabilities, gives the two steps of $0.01$ the same weight. Kahneman and Tversky named this the
+certainty effect. The choices were hypothetical, a limit the authors discuss: the method assumes that people know how
+they would choose.
+\end{record}
+
+In the triangle, the modal choices say that the indifference line through $\ell^{B}$ is steeper than
+the segment from $\ell^{B}$ to $\ell^{A}$ (slope $33$), while the line through $\ell^{D}$ is flatter
+than the parallel segment from $\ell^{D}$ to $\ell^{C}$. Indifference curves that are steeper on the
+left of the triangle than on its right are said to \emph{fan out}; \cref{exo:b2:expected-utility:11}
+works the geometry. Chapter~\ref{ch:b2:behavioural-evidence} takes up the models built to fit this
+pattern and their own tests.
+
+\subsection{Small stakes}
+
+Turn down a coin toss that loses \usd{100} or wins \usd{110}? Many people do, and it seems a mild
+caution. Expected utility turns it into a strong statement.
+
+\begin{proposition}[A calibration bound]\label{prop:b2:expected-utility:calibration}
+Let $u$ be increasing, concave and differentiable. If a person turns down the 50--50 gamble that loses
+\usd{100} or gains \usd{110} at every level of wealth, then for every $z$,
+\[
+u'(z + 210) \le \tfrac{10}{11}\,u'(z), \qquad\text{hence}\qquad u'(z + 210k) \le
+\bigl(\tfrac{10}{11}\bigr)^{k} u'(z) \quad (k = 1, 2, \dots),
+\]
+and she turns down every 50--50 gamble that loses \usd{2400}, however large the gain.
+\end{proposition}
+
+\begin{proof}
+Turning the gamble down at wealth $x$ means $\tfrac12 u(x - 100) + \tfrac12 u(x + 110) \le u(x)$,
+that is, $u(x + 110) - u(x) \le u(x) - u(x - 100)$. By concavity, the slope of a chord lies between the
+derivatives at its ends: $u(x + 110) - u(x) \ge 110\,u'(x + 110)$ and $u(x) - u(x - 100) \le
+100\,u'(x - 100)$. So $110\,u'(x + 110) \le 100\,u'(x - 100)$; put $x = z + 100$. Iterate for the
+second inequality. For the gain $G$, cut $[z, z + G]$ into pieces of length $210$; on the $k$-th piece
+($k = 0, 1, \dots$) the slope is at most $u'(z + 210k)$, so
+\[
+u(z + G) - u(z) \le \sum_{k \ge 0} 210\,\bigl(\tfrac{10}{11}\bigr)^{k} u'(z) = 210 \times 11\,u'(z) =
+\num{2310}\,u'(z).
+\]
+For the loss, concavity gives $u(z) - u(z - \num{2400}) \ge \num{2400}\,u'(z)$. Then $\tfrac12 u(z -
+\num{2400}) + \tfrac12 u(z + G) - u(z) \le \tfrac12(\num{2310} - \num{2400})\,u'(z) < 0$.
+\end{proof}
+
+The bound says that every \usd{210} of extra wealth cuts the value of a marginal dollar by at least a
+tenth. Over \usd{21000} ($k = 100$) the factor is $(10/11)^{100} \approx \num{7.3e-5}$: a dollar at
+% code: exercises/solutions.py ex_calibration
+the higher wealth is worth less than one thirteen-thousandth of a dollar at the lower one. No one's
+marginal utility of money behaves like that over a range of \usd{21000}. The calibration result of
+Rabin (2000) sharpens the bound in the same way; its conclusion is that, under expected utility,
+aversion to small gambles cannot come from the curvature of the utility of wealth.
+% ledger: b2:rabin2000
+
+\begin{example}[The curvature it takes]\label{ex:b2:expected-utility:rabin-gamma}
+With CRRA utility and a wealth of \usd{100000}, the coefficient that makes the \usd{100}/\usd{110}
+gamble a tie is $\gamma \approx 91$ (the small-risk approximation, mean gain $5$ against $\tfrac12
+\tfrac{\gamma}{z}\,105^2$, gives the same $91$). Such a person turns down a 50--50 gamble that loses
+% code: exercises/solutions.py ex_rabin_gamma
+\usd{769} whatever it pays: with $\gamma > 1$, utility is bounded above by $0$, so she rejects it as
+soon as $\tfrac12 u(z - L) < u(z)$, that is, $L > z\bigl(1 - 2^{-1/(\gamma - 1)}\bigr)$. With
+$\gamma = 2$ instead, the premium of the coin toss at the same wealth is about $\tfrac12 \times
+(2/\num{100000}) \times 105^2 \approx \usd{0.11}$, far below its mean gain of \usd{5}: she takes it.
+\end{example}
+
+\begin{measure}[Reading risk aversion off insurance deductibles]
+A deductible is the part of a claim the household pays itself. A lower deductible costs a higher
+premium. Suppose a household pays an extra premium $\nu$ to lower its deductible from $d_h$ to
+$d_\ell$, and it files a claim in a year with probability $\mu$. The expected saving is $\mu(d_h -
+d_\ell)$, and the ratio $\nu / (\mu(d_h - d_\ell))$ is the load: what each dollar of expected
+saving costs. Under CARA, the household's choice brackets $a$: it chose the low deductible only if
+\[
+e^{a\,\nu}\bigl(1 - \mu + \mu e^{a d_\ell}\bigr) \le 1 - \mu + \mu e^{a d_h} ,
+\]
+which sets a lower bound on $a$, and a \omterm{def:b2:expected-utility:rra}{coefficient of relative risk aversion} follows once a wealth is
+chosen. The claim rate comes from the insurer's records for similar homes. Sydnor (2010), with the
+records of a large US home insurer, found that most customers choose low deductibles at premiums far
+above their expected value, which a standard model of \omterm{def:b2:expected-utility:risk-aversion}{risk aversion} fits only with implausibly large
+coefficients.
+% ledger: b2:sydnor2010
+Collier et al.\ (2018) studied the flood-insurance choices of over \num{100000} US households: over 94
+% ledger: b2:cskm2018-households, b2:cskm2018-lowdeduct
+per cent chose one of the two lowest of six deductibles, the median premium was 2.7 times the expected
+% ledger: b2:cskm2018-load
+claim payment, and the deductible choices imply a median \omterm{def:b2:expected-utility:rra}{coefficient of relative risk aversion} of 108.
+% ledger: b2:cskm2018-rra
+\end{measure}
+
+The two kinds of evidence point the same way. A coefficient near $100$ explains a low deductible or a
+refused coin toss, and predicts absurd refusals of larger gambles; a coefficient of $2$ predicts that
+the coin toss is taken and that a low deductible at a load of $2.7$ is not bought. One utility of final
+wealth cannot do both. The alternatives that fit small stakes (losses weighed more than gains, measured from a
+reference point, and probabilities weighted non-linearly) are taken up with their evidence in
+\cref{ch:b2:behavioural-evidence}.
+
+\begin{remark}[What is kept]\label{rem:b2:expected-utility:kept}
+For decisions whose stakes are a sizeable share of wealth (insurance of a home or a harvest, saving
+for retirement, the choice of a portfolio) expected utility with a moderate coefficient remains the
+model of the next three chapters, because it gives sharp predictions that the data can check: full
+insurance at a fair price, a premium that shrinks with wealth under decreasing absolute \omterm{def:b2:expected-utility:risk-aversion}{risk aversion},
+a portfolio share that rises with the excess return. Where its predictions fail, the failure is
+recorded with the model.
+\end{remark}
+
+\section{Exercises}\label{sec:b2:expected-utility:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:expected-utility:1}
+Read the opening chart. In each pair, a respondent who obeys expected utility chooses either the less
+risky option twice or the riskier option twice. What is the smallest percentage of respondents who
+broke expected utility in the first pair? In the second? Why is it only a lower bound?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:expected-utility:2}
+A \omterm{def:b2:expected-utility:compound-lottery}{compound lottery} gives, with probability $\tfrac12$ each, the \omterm{def:b2:expected-utility:lottery}{lottery} $\ell$ (0 with probability $0.2$,
+\num{100} with probability $0.8$) or the \omterm{def:b2:expected-utility:lottery}{lottery} $\ell'$ (0 with probability $0.6$, \num{100} with
+probability $0.4$). Find the reduced \omterm{def:b2:expected-utility:lottery}{lottery} and its expected value. With $u(z) = \sqrt z$, find its
+expected utility and its \omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalent}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:expected-utility:3}
+With $u(z) = \ln z$, a \omterm{def:b2:expected-utility:lottery}{lottery} pays \num{50} or \num{200} with probability $\tfrac12$ each. Find its
+expected value, \omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalent} and \omterm{def:b2:expected-utility:risk-premium}{risk premium}. Compare the premium with the small-risk
+approximation at the mean.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:expected-utility:4}
+Compute $\mathcal{A}(z)$ and $\mathcal{R}(z)$ for $u(z) = -e^{-0.002z}$, $\sqrt z$, $\ln z$ and $-1/z$,
+and their values at $z = \num{1000}$. Which are CARA, which CRRA? Which shows absolute \omterm{def:b2:expected-utility:risk-aversion}{risk aversion}
+that falls with wealth?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:expected-utility:5}
+In Problems 1 and 2, normalise $u(0) = 0$ and $u(\num{2400}) = 1$ (why is this allowed?). Find the set
+of values of $u(\num{2500})$ for which an expected-utility maximiser chooses $\ell^{B}$ in Problem 1,
+and the set for which she chooses $\ell^{C}$ in Problem 2. Do the same for Problems 3 and 4 with $u(0)
+= 0$, $u(\num{4000}) = 1$. Which pair of observed choices would falsify expected utility for a single
+respondent?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:expected-utility:6}
+The \omterm{def:b2:expected-utility:lottery}{lottery} $\ell$ pays 0, \num{50} or \num{100} with probabilities $0.2$, $0.3$, $0.5$; $\ell'$ pays
+them with probabilities $0.3$, $0.3$, $0.4$; $\ell''$ with probabilities $0.1$, $0.6$, $0.3$. Which of
+these lotteries first-order dominates which? For each pair not ranked, find one increasing utility
+that prefers each \omterm{def:b2:expected-utility:lottery}{lottery} (try $u(z) = z$ and $u(z) = \sqrt z$).
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:expected-utility:7}
+A household with CRRA utility, $\gamma = 3$, and wealth \usd{50000} faces a 50--50 gain or loss of
+\usd{5000}. Predict its \omterm{def:b2:expected-utility:risk-premium}{risk premium} with the small-risk approximation, then compute it exactly. By how
+much, roughly, does the premium change if its wealth doubles, and why?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:expected-utility:8}
+Show that under CARA with coefficient $a$ the \omterm{def:b2:expected-utility:risk-premium}{risk premium} of a 50--50 gain or loss of $h$ is
+$\ln\cosh(ah)/a$ at every wealth. Evaluate it for $a = \num{0.0005}$ per dollar and $h = \usd{1000}$,
+and compare with the small-risk approximation.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:expected-utility:9}
+A household pays \usd{54} a year to lower its home-insurance deductible from \usd{2000} to \usd{1000};
+it files a claim in a year with probability $0.02$. Find the expected saving and the load, and compare
+the load with the median in the measure box. Using the inequality of the box, find the smallest CARA
+coefficient that explains the choice, and the \omterm{def:b2:expected-utility:rra}{coefficient of relative risk aversion} at a wealth of
+\usd{200000}. Is the order of magnitude that of the box?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:expected-utility:10}
+Generalise \cref{prop:b2:expected-utility:calibration}: a person with an increasing, concave and
+differentiable $u$ turns down, at every wealth, the 50--50 gamble that loses $l$ or gains $g$, with $0
+< l < g$. Prove that $u'(z + l + g) \le (l/g)\,u'(z)$, and that she turns down every 50--50 gamble that
+loses more than $(l + g)\,g/(g - l)$, whatever it gains. Check the bound \num{2310} for $l = 100$, $g =
+110$, and say what observation would show that a person's aversion to the small gamble does not come
+from the curvature of a utility of wealth.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:expected-utility:11}
+In the probability triangle with prizes $z_1 < z_2 < z_3$, show that a person with utility $u = \varphi
+\circ v$, $\varphi$ increasing and concave, has indifference lines at least as steep as those of a
+person with utility $v$. Show that the modal choices of Problems 1 and 2 require an indifference line
+through $\ell^{B}$ steeper than $33$ and one through $\ell^{D}$ flatter than $33$. What pattern of
+choices, over many pairs of lotteries placed across the triangle, would show the lines fanning out
+rather than parallel?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:expected-utility:12}
+In a list of ten rows, a respondent chooses in each row between a safer \omterm{def:b2:expected-utility:lottery}{lottery} (\dal{20} or
+\dal{16}) and a riskier one (\dal{38} or \dal{1}); in row $k$ the better prize of each comes with
+probability $k/10$. Prove that any expected-utility maximiser with an increasing utility switches at
+most once, from the safer to the riskier \omterm{def:b2:expected-utility:lottery}{lottery}, as $k$ rises. A respondent takes the safer \omterm{def:b2:expected-utility:lottery}{lottery}
+in rows 1 to 6 and the riskier in rows 7 to 10: with CRRA utility of the prize, which interval of
+$\gamma$ is consistent with her choices (solve numerically)? What would a respondent who switches back
+and forth tell you?
+\end{exercise}
+
+\section{Problem: A Brenland grain farmer's harvest}\label{sec:b2:expected-utility:problem}
+
+\begin{problem}[{Weekend problem --- a farmer in Brenland, an invented economy, whose income depends
+on the rain: the harvest as a lottery, a choice of seed, an offer of drought insurance, and what her
+savings change}]
+\label{pb:b2:expected-utility:1}
+A farmer's income is \dal{60000} after a good harvest, which comes with probability $0.7$, and
+\dal{20000} after a drought, with probability $0.3$. She has no other income and maximises the
+expected utility $\mathbb{E}[\ln \tilde z]$ of her income $\tilde z$. Amounts are in dalens; round to
+the nearest dalen.
+
+\medskip
+\noindent\textbf{Part I --- The harvest as a lottery.}
+\begin{enumerate}
+  \item Find the mean and the standard deviation of her income.
+  \item Find her expected utility.
+  \item Find the \omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalent} of the harvest.
+  \item Find its \omterm{def:b2:expected-utility:risk-premium}{risk premium}.
+  \item Compute the small-risk approximation of the premium at the mean. Why is it so far off?
+  \item A neighbour with the same harvest has $u(z) = \sqrt z$. Find his \omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalent} and \omterm{def:b2:expected-utility:risk-premium}{risk
+        premium}, and explain the ranking with \cref{prop:b2:expected-utility:pratt}.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Choosing a seed.}
+The farmer's usual seed is the one above (call it T). A hardier seed S yields \dal{55000} in a good
+year and \dal{30000} in a drought.
+\begin{enumerate}[resume]
+  \item Find the mean income with S. Which seed would a risk-neutral farmer choose?
+  \item Does either seed first-order dominate the other?
+  \item Find her expected utility and \omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalent} with S. Which seed does she choose?
+  \item For which CRRA coefficient $\gamma$ is a farmer indifferent between S and T (solve
+        numerically)? Which seed do more risk-averse farmers choose?
+  \item A seed V yields \dal{61000} and \dal{20000}. Without computing, rank V and T for every farmer
+        who prefers more income to less.
+  \item She plants half her land with T and half with S. Find her income in each state, her expected
+        utility and her \omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalent}. Compare with planting all S, and explain.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- An offer of drought insurance.}
+She plants T. An insurer offers to pay \dal{40000} in a drought, for a premium paid in every year.
+\begin{enumerate}[resume]
+  \item Find the premium equal to the expected payment (the fair premium) and her income in each state
+        if she buys at that premium. Does she buy?
+  \item Find the largest premium she is willing to pay for this cover.
+  \item The loading is the premium divided by the expected payment, minus one. Find the largest loading
+        she accepts.
+  \item The insurer now sells any amount of cover $\chi$ (dalens paid in a drought) at a price $\psi$ per
+        dalen of cover. Write her income in each state and show that her best cover is $\chi^{*} =
+        (\num{18000} - \num{32000}\,\psi)/(\psi (1-\psi))$, as long as this lies between $0$ and \num{40000}.
+  \item Find $\chi^{*}$ at the fair price $\psi  = 0.3$, and explain the result.
+  \item Find $\chi^{*}$ at a loading of 20 per cent ($\psi  = 0.36$).
+  \item Above which price does she buy no cover at all? Express it as a loading, and explain why it is
+        higher than the answer to question 15.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Savings, and a test.}
+\begin{enumerate}[resume]
+  \item A second farmer has CARA utility with the coefficient $a$ that gives her the same \omterm{def:b2:expected-utility:risk-premium}{risk premium}
+        for the harvest as the first farmer. Find $a$ numerically, and compare it with $\mathcal{A}$ of
+        $\ln z$ at the mean income.
+  \item Both farmers now hold \dal{30000} of savings, paid in both states. Find the \omterm{def:b2:expected-utility:risk-premium}{risk premium} of the
+        harvest for each.
+  \item Find, for each, the largest premium and the largest loading they accept for the cover of Part
+        III.
+  \item An insurer offers the cover at a loading of 30 per cent to farmers with and without savings.
+        What does each model predict about who buys? What data on take-up would reject each?
+  \item State the result: the harvest's \omterm{def:b2:expected-utility:risk-premium}{risk premium}, and the largest loading the farmer accepts for
+        full drought cover, without savings and with \dal{30000} of savings.
+\end{enumerate}
+\end{problem}

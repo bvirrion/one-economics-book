@@ -1,0 +1,11 @@
+study,ols,iv,iv_se,ledger
+Angrist-Krueger (1920-29 cohort),0.070,0.101,0.033,b3hc:card.ak
+Staiger-Stock (1930-39 cohort),0.063,0.098,0.015,b3hc:card.ss
+Kane-Rouse (women),0.080,0.091,0.033,b3hc:card.kr
+Card (college proximity),0.073,0.132,0.049,b3hc:card.c95
+Conneely-Uusitalo (Finland),0.085,0.110,0.024,b3hc:card.cu
+Harmon-Walker (Britain),0.061,0.153,0.015,b3hc:card.hw
+Lemieux-Card (Canada 1971),0.070,0.164,0.053,b3hc:card.lc
+Meghir-Palme (Sweden),0.028,0.036,0.021,b3hc:card.mp
+Maluccio (Philippines),0.073,0.145,0.041,b3hc:card.ma
+Duflo (Indonesia),0.078,0.064,0.025,b3hc:card.du

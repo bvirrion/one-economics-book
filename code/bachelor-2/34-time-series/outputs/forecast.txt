@@ -1,0 +1,4 @@
+$ python forecast.py
+regression   RMSE 1.772, mean error -0.722
+random walk  RMSE 1.624, mean error -0.178
+forecasts: 95

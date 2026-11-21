@@ -1,0 +1,524 @@
+\chapter{Technology}\label{ch:b1:technology}
+
+Two bakeries make the same bread. One uses eight bakers and two ovens, the
+other four bakers and four ovens, and each turns out a few hundred loaves a
+day. Neither is wasteful: each gets as much bread as it can from what it
+uses. They differ because they pay different prices for bakers and ovens.
+Across whole economies the same pattern is large and regular: where labour
+is dear, each hour of work is done with more capital. This chapter
+describes what a firm can make from its inputs --- its technology --- in the
+language of \cref{ch:b1:preferences-and-utility}: \omterm{def:b1:technology:isoquant}{isoquants} instead of
+\omterm{def:b1:preferences-and-utility:indifference-curve}{indifference curves}, a rate of technical substitution instead of a rate of
+substitution. The next chapter adds prices.
+
+\begin{openingchart}{Capital per hour worked against labour compensation per
+hour, 2019, 112 countries, logarithmic axes (2021 US dollars at purchasing
+power parity), with the least-squares line of the logarithms.}{Penn World
+Table 11.0: capital stock at current PPPs divided by total hours (persons
+engaged times average annual hours); labour share times output-side GDP at
+current PPPs divided by total hours}
+\begin{tikzpicture}
+\begin{loglogaxis}[omscatter, log ticks with fixed point, xtickten={-1,...,2}, ytickten={0,...,3}, xmin=0.03, xmax=100, ymin=2, ymax=1000,
+  xlabel={Labour compensation per hour (dollars)}, ylabel={Capital per hour worked (dollars)},
+  width=0.7\linewidth, height=0.5\linewidth]
+  \addplot[only marks, mark=*, mark size=1.3pt, omDef] table[x=wph, y=kph, col sep=comma]
+    {figdata/bachelor-1/09-technology/out/capital_wage_2019.csv};
+  \addplot[no marks, sharp plot, thick, omThm] table[x=wph, y=fit, col sep=comma]
+    {figdata/bachelor-1/09-technology/out/capital_wage_fit.csv};
+  \node[font=\footnotesize, anchor=west] at (axis cs:0.06,400) {slope $0.94$};
+\end{loglogaxis}
+\end{tikzpicture}
+\end{openingchart}
+
+The 112 countries lie close to a straight line with a slope of $0.94$ (the
+correlation of the logarithms is $0.91$): a country where an hour of work
+costs ten times more uses about $10^{0.94} = 8.7$ times more capital per hour.
+% figdata: capital_wage_stats
+An hour of work in the United States was paid 45.86 dollars and used 256.58
+dollars of capital; in India it was paid 3.97 dollars and used 27.98.
+% figdata: capital_wage_2019
+The chart compares whole economies, not one industry, and capital is
+measured in money, not in ovens; but the pattern is the one the bakeries
+show, and this chapter gives the tools to read it.
+
+\begin{recall}
+A \omterm{def:b1:technology:production-function}{production function} with one variable input, and the diminishing
+\omterm{def:b1:technology:marginal-product}{marginal product} of that input, were met at school, as was the aggregate
+\omterm{def:b1:technology:production-function}{production function} $Y = AK^\alpha L^{1-\alpha}$ of growth accounting. A partial
+derivative holds the other variables fixed; the chain rule along a level
+curve gives its slope (\cref{ch:b1:constrained-optimisation}). \omterm{def:b1:preferences-and-utility:indifference-curve}{Indifference
+curves} and the \omterm{def:b1:preferences-and-utility:mrs}{marginal rate of substitution} are in
+\cref{ch:b1:preferences-and-utility}.
+\end{recall}
+
+\section{Production functions and isoquants}\label{sec:b1:technology:isoquants}
+
+A firm turns inputs into output. With two inputs, capital $K$ (machine
+hours, ovens) and labour $L$ (hours of work), a \emph{production plan}
+$(K, L, Y)$ lists the inputs used and the output made.
+
+\begin{definition}[Production function]\label{def:b1:technology:production-function}
+\index{production function}\index{technically efficient}
+A production plan is \emph{technically efficient} if no other plan makes
+more output with no more of any input. The \emph{production function}
+$Y = f(K, L)$ gives the largest output that the inputs $(K, L)$ can make: it
+lists the technically efficient plans.
+\end{definition}
+
+\begin{definition}[Isoquant]\label{def:b1:technology:isoquant}
+\index{isoquant}
+An \emph{isoquant} is the set of input bundles that make the same output
+$Y_0$: $\{(K, L) : f(K, L) = Y_0\}$.
+\end{definition}
+
+\begin{definition}[Marginal product]\label{def:b1:technology:marginal-product}
+\index{marginal product}
+The \emph{marginal product} of an input is the partial derivative of the
+\omterm{def:b1:technology:production-function}{production function} with respect to it, $f_L = \partial f/\partial L$ and
+$f_K = \partial f/\partial K$: the extra output from one more unit of the input,
+the other held fixed. It is \emph{diminishing} if it falls as the input
+rises, $f_{LL} < 0$.
+\end{definition}
+
+Unlike utility, output is measured in loaves: a \omterm{def:b1:technology:production-function}{production function} is
+cardinal, and doubling it means twice the bread. \omterm{def:b1:technology:isoquant}{Isoquants} play the role of
+\omterm{def:b1:preferences-and-utility:indifference-curve}{indifference curves}, but each carries a number that matters.
+
+\section{The marginal rate of technical substitution}\label{sec:b1:technology:mrts}
+
+\begin{definition}[Marginal rate of technical substitution]\label{def:b1:technology:mrts}
+\index{marginal rate of technical substitution}\index{MRTS}
+The \emph{marginal rate of technical substitution} at $(K, L)$ is the amount
+of capital that can replace one unit of labour with output unchanged:
+minus the slope $\dd K/\dd L$ of the \omterm{def:b1:technology:isoquant}{isoquant}, with $L$ on the horizontal
+axis. By the chain rule along $f(K, L) = Y_0$,
+\[
+\mathrm{MRTS} = -\frac{\dd K}{\dd L}\bigg|_{Y = Y_0} = \frac{f_L}{f_K}.
+\]
+\end{definition}
+
+The proof is that of the \omterm{def:b1:preferences-and-utility:mrs}{marginal rate of substitution}:
+$f_K\,\dd K + f_L\,\dd L = 0$ along the \omterm{def:b1:technology:isoquant}{isoquant}. For $Y = K^{1/2}L^{1/2}$,
+$f_L/f_K = K/L$: at $(K, L) = (16, 4)$ one hour of work replaces four machine
+hours; at $(4, 16)$ it replaces a quarter. \omterm{def:b1:technology:isoquant}{Isoquants} are \emph{convex} when
+the \omterm{def:b1:technology:mrts}{MRTS} falls as labour replaces capital along them, as here. Convexity
+says that mixed plans do at least as well as extreme ones; it holds for
+most technologies observed, though some inputs (two kinds of fuel) are
+close to \omterm{def:b1:preferences-and-utility:perfect}{perfect substitutes}.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Labour $L$}, ylabel={Capital $K$}, xmin=0, xmax=20,
+  ymin=0, ymax=20, width=0.5\linewidth, height=0.44\linewidth, samples=80]
+  \addplot[demand, domain=0.8:20] {16/x};
+  \addplot[demand, domain=1.8:20] {36/x};
+  \addplot[demand, domain=3.2:20] {64/x};
+  \addplot[guide, domain=0:8] {8 - x};
+  \addplot[only marks, mark=*, black] coordinates {(4,4)};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:4,4) {$\mathrm{MRTS} = 1$};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:12,1.33) {$Y = 4$};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:12,3) {$Y = 6$};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:12,5.33) {$Y = 8$};
+\end{axis}
+\end{tikzpicture}
+
+{\small \omterm{def:b1:technology:isoquant}{Isoquants} of $Y = K^{1/2}L^{1/2}$ for outputs 4, 6 and 8. At $(4, 4)$ on
+the \omterm{def:b1:technology:isoquant}{isoquant} $Y = 4$ the slope is $-1$ (the tangent is drawn dotted): one hour of
+labour replaces one machine hour.}
+\end{omfigure}
+
+Three families of technologies recur. They differ in how easily one input
+replaces the other.
+
+\begin{definition}[Cobb--Douglas production function]\label{def:b1:technology:cobb-douglas}
+\index{Cobb--Douglas production function}
+A \emph{Cobb--Douglas \omterm{def:b1:technology:production-function}{production function}} is $f(K, L) = AK^\alpha L^\beta$ with
+$A, \alpha, \beta > 0$. Its \omterm{def:b1:technology:mrts}{MRTS} is $(\beta/\alpha)(K/L)$.
+\end{definition}
+
+\begin{definition}[Fixed-proportions production function]\label{def:b1:technology:leontief}
+\index{fixed-proportions production function}\index{Leontief production function}
+A \emph{fixed-proportions} (Leontief) \omterm{def:b1:technology:production-function}{production function} is
+$f(K, L) = \min(K/a, L/b)$: each unit of output needs $a$ units of capital and
+$b$ of labour, and an extra unit of either input alone adds nothing. Its
+\omterm{def:b1:technology:isoquant}{isoquants} are right angles with corners on the ray $K/L = a/b$.
+\end{definition}
+
+\omterm{def:b1:preferences-and-utility:perfect}{Perfect substitutes}, $f = aK + bL$, have straight \omterm{def:b1:technology:isoquant}{isoquants} and a constant
+\omterm{def:b1:technology:mrts}{MRTS} $b/a$.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=3 by 1, horizontal sep=10mm}, omrecord, grid=none,
+  xmin=0, xmax=10, ymin=0, ymax=10, width=0.345\linewidth, height=0.34\linewidth, samples=60,
+  xlabel={$L$}, ylabel={$K$}]
+\nextgroupplot[title={\small Cobb--Douglas}, width=0.345\linewidth]
+  \addplot[demand, domain=0.45:10] {4/x};
+  \addplot[demand, domain=0.9:10] {9/x};
+\nextgroupplot[title={\small Fixed proportions}, width=0.345\linewidth]
+  \addplot[demand] coordinates {(2,10) (2,2) (10,2)};
+  \addplot[demand] coordinates {(4,10) (4,4) (10,4)};
+  \addplot[guide, domain=0:10] {x};
+\nextgroupplot[title={\small Perfect substitutes}, width=0.345\linewidth]
+  \addplot[demand, domain=0:4] {4 - x};
+  \addplot[demand, domain=0:7] {7 - x};
+\end{groupplot}
+\end{tikzpicture}
+
+{\small Two \omterm{def:b1:technology:isoquant}{isoquants} of $K^{1/2}L^{1/2}$, of $\min(K, L)$ (corners on the ray
+$K = L$, dotted) and of $K + L$.}
+\end{omfigure}
+
+\section{Returns to scale}\label{sec:b1:technology:scale}
+
+What happens when every input is scaled up together?
+
+\begin{definition}[Returns to scale]\label{def:b1:technology:returns-to-scale}
+\index{returns to scale}\index{constant returns to scale}\index{increasing returns to scale}\index{decreasing returns to scale}
+A technology has \emph{constant}, \emph{increasing} or \emph{decreasing
+returns to scale} if, for every $t > 1$ and every $(K, L)$,
+$f(tK, tL)$ is equal to, greater than or less than $tf(K, L)$. A function is
+\emph{homogeneous of degree $k$} if $f(tK, tL) = t^kf(K, L)$ for all $t > 0$; it
+has constant returns if $k = 1$, increasing if $k > 1$, decreasing if $k < 1$.
+\end{definition}
+
+The Cobb--Douglas function $AK^\alpha L^\beta$ is homogeneous of degree $\alpha + \beta$.
+\omterm{def:b1:technology:returns-to-scale}{Returns to scale} need not be the same at every size: for
+$f = K^{1/2}L^{1/2} - 2$, doubling $(4, 4)$ to $(8, 8)$ raises output from 2 to 6.
+The \emph{local} \omterm{def:b1:technology:returns-to-scale}{returns to scale} at a point are measured by the elasticity
+of scale, $(Kf_K + Lf_L)/f$, the percentage rise of output when all inputs
+rise by one per cent; for a homogeneous function it equals $k$ everywhere,
+by the next theorem.
+
+\begin{theorem}[Euler's theorem]\label{thm:b1:technology:euler}
+If $f$ is differentiable and homogeneous of degree $k$, then
+$Kf_K(K, L) + Lf_L(K, L) = kf(K, L)$.
+\end{theorem}
+
+\begin{proof}
+Differentiate $f(tK, tL) = t^kf(K, L)$ with respect to $t$:
+$Kf_K(tK, tL) + Lf_L(tK, tL) = kt^{k-1}f(K, L)$. Set $t = 1$.
+\end{proof}
+
+With constant returns, paying each input its \omterm{def:b1:technology:marginal-product}{marginal product} uses up the
+output exactly: $Kf_K + Lf_L = f$. \Cref{ch:b1:factor-markets} returns to
+this.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 1, horizontal sep=16mm}, omrecord, grid=none,
+  xmin=0, xmax=35, ymin=0, ymax=35, width=0.46\linewidth, height=0.42\linewidth, samples=80,
+  xlabel={Labour $L$}, ylabel={Capital $K$}]
+\nextgroupplot[title={\small Returns to scale on a ray}, width=0.46\linewidth]
+  \addplot[demand, domain=2.9:35] {100/x};
+  \addplot[demand, domain=11.5:35] {400/x};
+  \addplot[demand, domain=25.8:35] {900/x};
+  \addplot[shifted, domain=0.7:35] {21.54/x};
+  \addplot[shifted, domain=1.6:35] {54.29/x};
+  \addplot[shifted, domain=2.7:35] {93.22/x};
+  \addplot[guide, domain=0:35] {x};
+  \addplot[only marks, mark=*, black] coordinates {(10,10) (20,20) (30,30)};
+  \addplot[only marks, mark=o, black] coordinates {(4.64,4.64) (7.37,7.37) (9.65,9.65)};
+\nextgroupplot[title={\small Technical progress}, width=0.46\linewidth, xmax=20, ymax=20]
+  \addplot[demand, domain=3.6:20, restrict y to domain=0:40] {(2*10^(-2/3) - x^(-2/3))^(-1.5)};
+  \addplot[shifted, domain=2.86:20, restrict y to domain=0:40] {(2*8^(-2/3) - x^(-2/3))^(-1.5)};
+  \addplot[supply, domain=2.4:20, restrict y to domain=0:40] {(2*10^(-2/3) - (1.5*x)^(-2/3))^(-1.5)};
+\end{groupplot}
+\end{tikzpicture}
+
+{\small Left: \omterm{def:b1:technology:isoquant}{isoquants} for outputs 10, 20 and 30 of $(KL)^{1/2}$ (solid,
+constant returns: evenly spaced on the ray $K = L$) and of $(KL)^{3/4}$
+(dashed, increasing returns: closer and closer). Right: the \omterm{def:b1:technology:isoquant}{isoquant}
+$Y = 10$ of a CES technology with $\sigma = 0.6$ (blue), after Hicks-neutral
+progress of $25\%$ (dashed: it moves in towards the origin along every ray)
+and after labour-augmenting progress of $50\%$ (red: every point moves left,
+to two-thirds of its labour, which shifts the steep part of the \omterm{def:b1:technology:isoquant}{isoquant} a
+long way and its flat part hardly at all).}
+\end{omfigure}
+
+\section{The elasticity of substitution}\label{sec:b1:technology:sigma}
+
+The \omterm{def:b1:technology:mrts}{MRTS} falls as labour replaces capital along a convex \omterm{def:b1:technology:isoquant}{isoquant}. How
+fast it falls says how easy the replacement is: when it falls slowly, a
+small change in relative prices moves the firm far along the \omterm{def:b1:technology:isoquant}{isoquant}.
+
+\begin{definition}[Elasticity of substitution]\label{def:b1:technology:sigma}
+\index{elasticity of substitution}
+The \emph{elasticity of substitution} at a point of an \omterm{def:b1:technology:isoquant}{isoquant} is the
+percentage change in the capital--labour ratio per percentage change in the
+\omterm{def:b1:technology:mrts}{MRTS}, along the \omterm{def:b1:technology:isoquant}{isoquant}:
+\[
+\sigma = \frac{\dd\ln(K/L)}{\dd\ln\mathrm{MRTS}}.
+\]
+\end{definition}
+
+For Cobb--Douglas, $\mathrm{MRTS} = (\beta/\alpha)(K/L)$, so $\ln(K/L)$ and
+$\ln\mathrm{MRTS}$ differ by a constant and $\sigma = 1$. For fixed proportions
+the ratio $K/L$ never changes at efficient points, $\sigma = 0$; for \omterm{def:b1:preferences-and-utility:perfect}{perfect
+substitutes} $\sigma$ is infinite. One family spans the range.
+
+\begin{definition}[CES production function]\label{def:b1:technology:ces}
+\index{CES production function}
+A \emph{constant-elasticity-of-substitution} (CES) \omterm{def:b1:technology:production-function}{production function} is
+\[
+f(K, L) = A\bigl(\alpha K^\rho + (1 - \alpha)L^\rho\bigr)^{\nu/\rho},\qquad \rho < 1,\ \rho \ne 0,
+\]
+with $A > 0$, $0 < \alpha < 1$ and $\nu > 0$, the degree of homogeneity.
+\end{definition}
+
+\begin{proposition}[The CES elasticity]\label{prop:b1:technology:ces-sigma}
+The CES function has $\sigma = 1/(1 - \rho)$ at every point. It tends to the
+Cobb--Douglas function as $\rho \to 0$, to fixed proportions as $\rho \to -\infty$
+and to \omterm{def:b1:preferences-and-utility:perfect}{perfect substitutes} as $\rho \to 1$.
+\end{proposition}
+
+\begin{proof}
+The common factor $A\nu(\cdots)^{\nu/\rho - 1}$ cancels in the ratio of \omterm{def:b1:technology:marginal-product}{marginal
+products}:
+$\mathrm{MRTS} = f_L/f_K = \bigl((1 - \alpha)/\alpha\bigr)(K/L)^{1-\rho}$. So
+$\ln\mathrm{MRTS} = \ln\bigl((1 - \alpha)/\alpha\bigr) + (1 - \rho)\ln(K/L)$, and
+$\sigma = \dd\ln(K/L)/\dd\ln\mathrm{MRTS} = 1/(1 - \rho)$. The limits of $\sigma$ are 1, 0 and
+infinity; the limit of the function as $\rho \to 0$ is
+\cref{exo:b1:technology:cd-limit}.
+\end{proof}
+
+A firm that minimises cost sets the \omterm{def:b1:technology:mrts}{MRTS} equal to the ratio of the wage $w$
+to the rental of capital $r$ (\cref{ch:b1:cost-minimisation}). So $\sigma$ is
+also the elasticity of the chosen $K/L$ with respect to $w/r$: with
+$\sigma = 0.5$, a doubling of the wage--rental ratio raises capital per worker
+by $2^{0.5} - 1 = 41\%$; with $\sigma = 1$ it doubles it. In the opening chart,
+if all countries had one CES technology and paid one rental for capital,
+the slope would estimate $\sigma$. They do not, and the slope of $0.94$ mixes
+substitution with differences in technology and in the price of capital.
+
+\begin{omchart}{The capital--labour ratio against the wage--rental ratio,
+Korea and the United States, 1953--2019 (Korea from 1970, its first observed
+labour share), both indexed to 1980 = 1,
+logarithmic axes; the dotted line has slope 1.}{Penn World Table 11.0:
+capital stock at constant national prices per hour worked; wage--rental
+ratio $= \text{labour share}/(1 - \text{labour share}) \times K/L$}
+\begin{tikzpicture}
+\begin{loglogaxis}[omrecord, log ticks with fixed point, xtick={0.5,1,2,5,10}, ytick={0.5,1,2,5,10}, xmin=0.3, xmax=20, ymin=0.3, ymax=20,
+  xlabel={Wage--rental ratio (1980 = 1)}, ylabel={Capital per hour (1980 = 1)},
+  width=0.6\linewidth, height=0.5\linewidth, legend pos=north west]
+  \addplot[demand, mark=none] table[x=wr_kor, y=kl_kor, col sep=comma]
+    {figdata/bachelor-1/09-technology/out/kl_wr_paths.csv};
+  \addplot[supply, mark=none] table[x=wr_usa, y=kl_usa, col sep=comma]
+    {figdata/bachelor-1/09-technology/out/kl_wr_paths.csv};
+  \addplot[guide, domain=0.3:20, forget plot] {x};
+  \legend{Korea, United States}
+\end{loglogaxis}
+\end{tikzpicture}
+\end{omchart}
+
+The rental of capital is not observed directly. The chart backs it out:
+with constant returns and inputs paid their \omterm{def:b1:technology:marginal-product}{marginal products}, the ratio
+of the wage bill to the capital income, $wL/(rK)$, is the labour share over
+its complement, so $w/r$ is that ratio times $K/L$. From 1980 to 2019 Korea's
+capital per hour rose 12.9 times and its wage--rental ratio 15.6 times: a
+slope of $0.93$. In the United States the two rose 1.66 and 1.45 times, a
+slope of $1.37$. % figdata: kl_wr_slopes
+Read as estimates of $\sigma$, these numbers assume that the technology stood
+still; it did not, and the next section shows how \omterm{def:b1:technology:technical-progress}{technical progress} moves
+both ratios.
+
+\begin{record}[The elasticity of substitution]
+Seventy-five years of estimates of the \omterm{def:b1:technology:sigma}{elasticity of substitution} between
+capital and labour, from time series of industries, panels of firms and
+cross-sections of countries, vary widely. A survey of them concludes that
+the weight of the evidence suggests a value of $\sigma$ between $0.40$ and
+$0.60$, and that there is little evidence for the Cobb--Douglas function's
+$\sigma = 1$ (Chirinko 2008). % ledger: b1:chirinko2008
+Short-run data understate the long-run elasticity, because firms take
+years to change their machines; regressions over long periods mix
+substitution with technical change. Both problems are visible in the
+second chart.
+\end{record}
+
+\begin{model}{The Cobb--Douglas technology}
+\assumes $Y = AK^\alpha L^{1-\alpha}$ with $0 < \alpha < 1$: constant returns and an \omterm{def:b1:technology:sigma}{elasticity
+of substitution} of one.
+\predicts Under cost minimisation the shares of capital and labour in costs
+are $\alpha$ and $1 - \alpha$ whatever the wage and the rental (\cref{ch:b1:cost-minimisation});
+across economies with one rental of capital, capital per hour rises in
+proportion to the wage.
+\tested Consistent with it, but not a test: across 112 countries in 2019,
+capital per hour rises with the wage with a slope of $0.94$ in logarithms,
+close to one, though the slope also mixes in differences in technology and
+in the price of capital. % figdata: capital_wage_stats
+Factor shares were roughly stable for decades in many countries
+(\cref{ch:b1:factor-markets}).
+\breaks Labour shares in the same data range from 0.33 to 0.63 (tenth to
+ninetieth percentile), % figdata: capital_wage_stats
+which one Cobb--Douglas technology with one $\alpha$ cannot produce. Most firm and industry estimates put $\sigma$ between $0.4$ and $0.6$
+(Chirinko 2008); % ledger: b1:chirinko2008
+labour shares have fallen in many countries since 1980
+(\cref{ch:b1:factor-markets}), which one Cobb--Douglas function cannot
+produce.
+\end{model}
+
+\begin{measure}[A capital stock]
+A country's capital stock is not counted; it is built up from investment by
+the \emph{perpetual inventory method}: this year's stock of an asset is
+last year's, minus depreciation, plus this year's investment at constant
+prices, $K_t = (1 - \delta)K_{t-1} + I_t$. The Penn World Table does this for up
+to six kinds of asset, each with its own geometric depreciation rate,
+assumed the same in every country and every year: $2\%$ a year for
+structures, $11.5\%$ for communication equipment, $12.6\%$ for other
+machinery, $18.9\%$ for transport equipment and $31.5\%$ for computers and
+software (Inklaar and Timmer 2013). % ledger: b1:pwt-capital
+A country that invests more in computers therefore has a capital stock
+that wears out faster; and a stock measured in money adds up ovens,
+roads and software by their prices.
+\end{measure}
+
+\section{Technical progress}\label{sec:b1:technology:progress}
+
+A better recipe, a faster oven or a better-trained baker changes the
+\omterm{def:b1:technology:production-function}{production function} itself.
+
+\begin{definition}[Technical progress]\label{def:b1:technology:technical-progress}
+\index{technical progress}\index{Hicks-neutral technical progress}\index{labour-augmenting technical progress}\index{capital-augmenting technical progress}
+\emph{Technical progress} is a change in the \omterm{def:b1:technology:production-function}{production function} that
+raises the output of some input bundles and lowers that of none. It is
+\emph{Hicks-neutral} if $f$ becomes $Af$ with $A > 1$, leaving every \omterm{def:b1:technology:mrts}{MRTS}
+unchanged; \emph{labour-augmenting} if $f(K, L)$ becomes $f(K, bL)$ with
+$b > 1$, as if each hour did the work of $b$ hours; and
+\emph{capital-augmenting} if it becomes $f(bK, L)$.
+\end{definition}
+
+For Cobb--Douglas the three are the same thing: $f(K, bL) = b^{1-\alpha}f(K, L)$.
+For other technologies they differ, and the difference shows in factor
+shares. With $\sigma < 1$, labour-augmenting progress is like a fall in the
+price of labour per effective hour; since inputs substitute badly, the firm
+raises its effective hours per unit of capital by less than their price
+falls (and uses fewer physical hours per unit of capital), so the cost
+share of capital \emph{rises} (\cref{exo:b1:technology:augmenting}). A measured
+productivity rise therefore says that output per unit of input went up,
+not which input became more productive; and a change in factor shares can
+come from technology as well as from prices.
+
+\section*{Exercises}\label{sec:b1:technology:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:technology:mrts-cd}
+Compute the \omterm{def:b1:technology:mrts}{MRTS} of $f = K^{0.3}L^{0.7}$ at $(K, L) = (8, 27)$, and say what it means.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:technology:three}
+Give the \omterm{def:b1:technology:returns-to-scale}{returns to scale} of $f_1 = K^{0.5}L^{0.5}$, $f_2 = K^{0.6}L^{0.6}$ and
+$f_3 = \bigl(\min(K, 2L)\bigr)^{0.8}$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:technology:read}
+From the opening chart's table, an hour of work was paid 45.86 dollars and
+used 256.58 dollars of capital in the United States, against 3.97 and
+27.98 in India. % figdata: capital_wage_2019
+Compute the two ratios. What would they be if both countries used one
+Cobb--Douglas technology and paid one rental for capital?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:technology:shapes}
+Each table gives three input bundles $(K, L)$ that make the same output.
+Which shape does each technology look like: (a) $(1, 9)$, $(3, 3)$, $(9, 1)$;
+(b) $(2, 8)$, $(5, 5)$, $(8, 2)$; (c) $(2, 4)$, $(2, 9)$, $(7, 4)$?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:technology:ces-sigma}
+Compute the \omterm{def:b1:technology:mrts}{MRTS} of $f = (0.3K^{-1} + 0.7L^{-1})^{-1}$ and its \omterm{def:b1:technology:sigma}{elasticity of
+substitution}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:technology:cd-limit}
+Show that $\bigl(\alpha K^\rho + (1 - \alpha)L^\rho\bigr)^{1/\rho} \to K^\alpha L^{1-\alpha}$ as $\rho \to 0$. (Take
+logarithms and use l'H\^opital's rule.)
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:technology:predict}
+The wage--rental ratio doubles. Predict the percentage change in a
+cost-minimising firm's capital per worker for $\sigma = 0.5$ and $\sigma = 1$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:technology:local}
+Compute the elasticity of scale of $f = K^{0.5}L^{0.5} - 2$ at $(4, 4)$ and at
+$(16, 16)$. Where are returns increasing?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:technology:estimate}
+From the second chart's table, between 1980 and 2019 capital per hour rose
+12.872 times in Korea and 1.656 times in the United States, and the
+wage--rental ratio 15.61 and 1.445 times. % figdata: kl_wr_slopes
+Estimate $\sigma$ for each. Why might these be poor estimates?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:technology:euler-proof}
+Prove the converse of Euler's theorem: if $Kf_K + Lf_L = kf$ for all
+$(K, L)$, then $f$ is homogeneous of degree $k$. (Study
+$g(t) = t^{-k}f(tK, tL)$.)
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:technology:augmenting}
+A firm with the CES technology $\bigl(\alpha K^\rho + (1 - \alpha)(bL)^\rho\bigr)^{1/\rho}$ minimises
+cost at given $w$ and $r$. Show that the ratio of its capital cost to its
+labour cost is $\bigl(\alpha/(1 - \alpha)\bigr)^\sigma\bigl(w/(br)\bigr)^{\sigma - 1}$. Does the
+capital share rise or fall when $b$ rises, for $\sigma < 1$?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:technology:refute}
+What evidence in the opening chart's data would refute ``all these
+countries use the same Cobb--Douglas technology and pay the same rental for
+capital''? Is the slope of $0.94$ such evidence?
+\end{exercise}
+
+\section{Problem: Two Bakeries and a New Oven}\label{sec:b1:technology:problem}
+
+\begin{problem}[{Weekend problem --- the elasticity of substitution revealed by two bakeries}]\label{pb:b1:technology:bakeries}
+Two bakeries (invented) have the same technology,
+\[
+Y = 100\bigl(\tfrac12K^\rho + \tfrac12L^\rho\bigr)^{1/\rho},\qquad \rho = -\tfrac23,
+\]
+where $K$ is ovens, $L$ bakers and $Y$ loaves a day. Bakery A, in Kestria,
+uses 2 ovens and 8 bakers; bakery B, in Brenland, 4 ovens and 4 bakers.
+
+\medskip\noindent\textbf{Part I --- Isoquants.}
+\begin{enumerate}
+  \item Compute each bakery's output.
+  \item Show that the \omterm{def:b1:technology:mrts}{MRTS} is $(K/L)^{5/3}$ and compute it for each bakery.
+  \item How many ovens would bakery A need to bake B's 400 loaves with its 8 bakers?
+  \item Show that no number of bakers can bake 400 loaves with fewer than $4 \times 2^{-3/2} = 1.414$ ovens. How does this \omterm{def:b1:technology:isoquant}{isoquant} differ from a Cobb--Douglas one?
+  \item Compute bakery A's average products of bakers and of ovens.
+  \item Compute bakery A's \omterm{def:b1:technology:marginal-product}{marginal products}, $f_L = \tfrac12 \cdot 100^\rho(Y/L)^{1-\rho}$ and the same for $K$, and check their ratio against question~2.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- Scale.}
+\begin{enumerate}[resume]
+  \item Compute the output of a bakery with twice A's inputs. What are the \omterm{def:b1:technology:returns-to-scale}{returns to scale}?
+  \item Check Euler's theorem at bakery A.
+  \item A larger bakery uses $Y = 100\bigl(\tfrac12K^\rho + \tfrac12L^\rho\bigr)^{1.2/\rho}$. Compute its output with B's inputs.
+  \item Compute its output with half of B's inputs, and compare two such half-size bakeries with one at B's size.
+  \item What does the exponent 1.2 mean?
+  \item Why do bakeries stop growing, if the second technology holds?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- Substitution.} In Kestria an oven rents
+for ten times a baker's daily wage, $w/r = 0.1$; in Brenland they cost the
+same, $w/r = 1$. Each bakery minimises cost.
+\begin{enumerate}[resume]
+  \item Compute $\sigma$ from $\rho$.
+  \item Show that a cost-minimising bakery chooses $K/L = (w/r)^\sigma$.
+  \item An economist sees only the two choices, $K/L = 1/4$ and $1$, and the two wage--rental ratios. What \omterm{def:b1:technology:sigma}{elasticity of substitution} do they reveal?
+  \item Check bakery A's choice against the technology's prediction.
+  \item Brenland's wage--rental ratio rises by $10\%$. Predict the change in bakery B's ovens per baker.
+  \item Compute the share of ovens in each bakery's costs, $rK/(rK + wL)$, and explain why it is larger in Kestria.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- A new oven.} A new oven bakes like 1.5 old
+ones and rents for the same price: capital is augmented, $b = 1.5$.
+\begin{enumerate}[resume]
+  \item Compute bakery A's output with new ovens and its old inputs.
+  \item What is the rental of one unit of \emph{effective} oven, $bK$? Compute the cost-minimising effective ovens per baker in each country.
+  \item Compute the new physical ovens per baker in each country. Do the bakeries rent more or fewer ovens per baker?
+  \item Compute the new oven cost shares.
+  \item Explain why an improvement in ovens lowers the share of ovens in costs.
+  \item State the result: the \omterm{def:b1:technology:sigma}{elasticity of substitution} revealed by the two bakeries.
+\end{enumerate}
+\end{problem}

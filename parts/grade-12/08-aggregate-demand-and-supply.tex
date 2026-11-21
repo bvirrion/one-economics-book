@@ -1,0 +1,316 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g12-08. The business cycle; potential output and the output gap; the
+% long-run aggregate model and the neutrality of money; the short-run AD-AS model with sticky prices; demand and supply
+% shocks; the return to the long run. Real numbers: figdata/grade-12/08-aggregate-demand-and-supply/ (WDI US real GDP
+% 1960-2024 with a Hodrick-Prescott trend, lambda 100; WDI CPI inflation and GDP growth; NBER peaks and troughs as a cited
+% table, src/recessions.csv). Ledger: NBER dates and FAQ, Office of the Historian on the 1973-74 embargo, and the g12-07 rows
+% on 2007-09. Kestria's curves in the problem are invented.
+\chapter{Aggregate Demand and Supply}\label{ch:g12:aggregate-demand-and-supply}
+
+From 1960 to 2024, American output grew about six and a half times, but not smoothly. Nine times in those years output and jobs fell across the economy for months on
+end, and each time they recovered. The shortest of these falls lasted two months, in the spring of 2020; the longest lasted eighteen, from December 2007 to June 2009.
+% figdata: gdp (3.431 to 22.731 trillion); recessions (9 rows); ledger: g12:nber-2020, g12:nber-2007
+
+The previous chapters explained the long upward path: capital, ideas and institutions. This chapter is about the swings around it. It shows how they are measured, then
+gives two models: one for the long run, in which prices have time to adjust, and one for the short run, in which they do not.
+
+\begin{openingchart}{United States: real GDP (solid) and its trend (dashed), trillions of 2015 dollars, 1960--2024, logarithmic scale. Shaded: recessions, from the
+peak month to the trough month.}{World Bank, World Development Indicators (NY.GDP.MKTP.KD); trend computed in this book; \omterm{def:g12:aggregate-demand-and-supply:recession}{recession} dates from the NBER Business Cycle
+Dating Committee}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.9\linewidth, height=6.0cm, xmin=1960, xmax=2024, ymode=log, ymin=3, ymax=25, log ticks with fixed point,
+  ytick={3,5,10,20}, ylabel={trillions of 2015 dollars}]
+\omshadeperiods{figdata/grade-12/08-aggregate-demand-and-supply/out/recessions.csv}
+\addplot[omDef, thick] table[x=year, y=gdp] {figdata/grade-12/08-aggregate-demand-and-supply/out/gdp.csv};
+\addplot[black, dashed] table[x=year, y=trend] {figdata/grade-12/08-aggregate-demand-and-supply/out/gdp.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: shocks, and the growth of output over time. From \cref{ch:g10:national-accounts}: real GDP. From \cref{ch:g12:inflation-and-money}: the
+\omterm{def:g12:inflation-and-money:quantity-equation}{quantity equation} $MV = PY$, and the long-run link between money and prices. From \cref{ch:g12:growth-and-production-function}: output as a function of capital, labour
+and technology.
+\end{recall}
+
+\section{The facts of the business cycle}\label{sec:g12:aggregate-demand-and-supply:facts}
+
+\begin{definition}[Business cycle]\label{def:g12:aggregate-demand-and-supply:business-cycle}
+The \emph{business cycle}\index{business cycle} is the repeated, irregular rise and fall of output, employment and spending around their long-run path.
+\end{definition}
+
+\begin{definition}[Recession and expansion]\label{def:g12:aggregate-demand-and-supply:recession}
+A \emph{recession}\index{recession} is a period in which economic activity falls significantly across the economy for more than a few months; it runs from a peak to a
+trough. An \emph{expansion}\index{expansion}\phantomsection\label{def:g12:aggregate-demand-and-supply:expansion} runs from a trough to the next peak.
+\end{definition}
+
+\begin{measure}[How a recession is dated]
+% ledger: g12:nber-def
+In the United States, a committee of economists at a private research organisation, the NBER, dates peaks and troughs. Its definition is a significant decline in activity,
+spread across the economy, lasting more than a few months: depth, diffusion and duration must each be met to some degree. It looks at monthly series: real income less
+transfers, two measures of employment, real consumption, real sales of manufacturers and traders, and industrial production. There is no fixed rule, and the committee waits
+until the data are clear: it has announced a peak four months after it happened (February 2020) and a trough twenty-one months after (March 1991). A common shortcut,
+two quarters of falling GDP, is not its rule.
+\end{measure}
+
+\begin{definition}[Potential output and output gap]\label{def:g12:aggregate-demand-and-supply:potential-output}
+\emph{Potential output}\index{potential output} is the output the economy produces when its labour and capital are used at normal rates. The \emph{output gap}\index{output
+gap}\phantomsection\label{def:g12:aggregate-demand-and-supply:output-gap} is the difference between actual and potential output, as a percentage of potential: negative
+in a slump, positive in a boom.
+\end{definition}
+
+\omterm{def:g12:aggregate-demand-and-supply:potential-output}{Potential output} cannot be observed; it must be estimated. The opening chart's trend is one estimate: a smooth line drawn through the data by a standard statistical
+filter. Its growth slows from 4.3\,\% a year in the 1960s to 2.0\,\% in the 2010s.
+% figdata: adas_key (hp_growth_1960s 4.3, hp_growth_2010s 2)
+
+\begin{omchart}{United States: output gap, actual real GDP minus its trend, in per cent of trend, 1960--2024. Shaded: recessions.}{World Bank, World Development Indicators
+(NY.GDP.MKTP.KD); trend computed in this book; NBER}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.9\linewidth, height=5.0cm, xmin=1959, xmax=2025, ymin=-6, ymax=4, ytick={-6,-4,...,4}, ylabel={per cent of trend},
+  ybar, /pgf/bar width=2.4pt]
+\omshadeperiods{figdata/grade-12/08-aggregate-demand-and-supply/out/recessions.csv}
+\addplot[fill=omDef!70, draw=none] table[x=year, y=gap] {figdata/grade-12/08-aggregate-demand-and-supply/out/gap.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: adas_key (gap1975 -3.8, gap1982 -5.2, gap2007 2.9, gap2009 -2.9, gap2020 -3.3)
+
+Every \omterm{def:g12:aggregate-demand-and-supply:recession}{recession} on the chart is followed by a negative gap, the deepest $-5.2\,\%$ in 1982; booms, such as the late 1990s or 2007, open positive ones. The gap
+closes again, sometimes quickly, sometimes over years.
+
+\section{The long run: output set by resources}\label{sec:g12:aggregate-demand-and-supply:long-run}
+
+\begin{definition}[Long-run aggregate supply]\label{def:g12:aggregate-demand-and-supply:lras}
+The \emph{long-run aggregate supply}\index{long-run aggregate supply} curve shows the output produced at each price level once all prices and wages have adjusted: a
+vertical line at \omterm{def:g12:aggregate-demand-and-supply:potential-output}{potential output}, which depends on labour, capital and technology, not on the price level.
+\end{definition}
+
+\begin{definition}[Neutrality of money]\label{def:g12:aggregate-demand-and-supply:neutrality}
+The \emph{neutrality of money}\index{neutrality of money} is the proposition that a change in the quantity of money changes prices in the same proportion and leaves output,
+employment and relative prices unchanged.
+\end{definition}
+
+\begin{model}{The long-run aggregate model}
+\assumes Prices and wages are flexible; output is set by labour, capital and technology.
+\predicts Output is at potential; a rise in the quantity of money raises the price level in the same proportion and changes nothing real.
+\tested Consistent with it: across 123 countries over decades, money growth and inflation move almost one for one (\cref{ch:g12:inflation-and-money}),
+  though output and velocity are not held fixed across them.
+\breaks Within a year or two: output falls in \omterm{def:g12:aggregate-demand-and-supply:recession}{recessions} while prices barely move, which flexible prices would not allow.
+\end{model}
+
+\section{The short run: sticky prices}\label{sec:g12:aggregate-demand-and-supply:short-run}
+
+\begin{definition}[Sticky price]\label{def:g12:aggregate-demand-and-supply:sticky-price}
+A \emph{sticky price}\index{sticky price} is a price, or a wage, that changes only at intervals, because contracts fix it, price lists are costly to change, or sellers
+wait to see whether a change in demand will last.
+\end{definition}
+
+\begin{definition}[Aggregate demand]\label{def:g12:aggregate-demand-and-supply:ad}
+\emph{Aggregate demand}\index{aggregate demand} is the total quantity of output that households, firms, the government and foreigners want to buy at each price level.
+\end{definition}
+
+The \omterm{def:g12:aggregate-demand-and-supply:ad}{aggregate demand} curve slopes down. With a given quantity of money and velocity, the \omterm{def:g12:inflation-and-money:quantity-equation}{quantity equation} $PY = MV$ says that spending in money is fixed: a higher price
+level leaves room for less real output. Higher prices also make domestic goods dearer than foreign ones.
+
+\begin{definition}[Short-run aggregate supply]\label{def:g12:aggregate-demand-and-supply:sras}
+The \emph{short-run aggregate supply}\index{short-run aggregate supply} curve shows the output firms produce at each price level while some prices and wages are fixed:
+it slopes up, because a higher price level, with wages and other costs fixed for a time, makes more production worth while.
+\end{definition}
+
+\begin{definition}[Aggregate demand and supply shocks]\label{def:g12:aggregate-demand-and-supply:ad-shock}
+An \emph{aggregate demand shock}\index{aggregate demand shock} is an event that shifts the \omterm{def:g12:aggregate-demand-and-supply:ad}{aggregate demand} curve, such as a fall in household or business spending. An
+\emph{aggregate supply shock}\index{aggregate supply shock}\phantomsection\label{def:g12:aggregate-demand-and-supply:as-shock} is an event that shifts the aggregate supply
+curves, such as a rise in the price of an input or a bad harvest.
+\end{definition}
+
+\section{Demand shocks and supply shocks}\label{sec:g12:aggregate-demand-and-supply:shocks}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=3 by 1, horizontal sep=0.5cm}, width=0.37\linewidth, height=4.6cm, xmin=70, xmax=125, ymin=60, ymax=140,
+  xtick={90,100}, ytick={80,90,100,110}, xlabel={output}, tick label style={font=\scriptsize}, label style={font=\scriptsize}, grid=major, grid style={gray!20}]
+\nextgroupplot[title={\scriptsize a demand shock}, ylabel={price level}]
+\addplot[gray, thick] coordinates {(100,60) (100,140)};
+\addplot[omThm, thick, domain=70:125, samples=2] {x};
+\addplot[omDef, thick, domain=70:125, samples=2] {200 - x};
+\addplot[omDef, thick, dashed, domain=70:115, samples=2] {180 - x};
+\node[font=\tiny, omThm, anchor=east] at (axis cs:110,118) {SRAS};
+\node[font=\tiny, omDef, anchor=south west] at (axis cs:114,87) {AD};
+\node[font=\tiny, omDef, anchor=west] at (axis cs:106,68) {AD$'$};
+\fill (axis cs:100,100) circle (1.4pt) (axis cs:90,90) circle (1.4pt);
+\nextgroupplot[title={\scriptsize a supply shock}, yticklabels={}]
+\addplot[gray, thick] coordinates {(100,60) (100,140)};
+\addplot[omThm, thick, domain=70:125, samples=2] {x};
+\addplot[omThm, thick, dashed, domain=70:115, samples=2] {x + 20};
+\addplot[omDef, thick, domain=70:125, samples=2] {200 - x};
+\node[font=\tiny, omThm, anchor=north west] at (axis cs:112,108) {SRAS};
+\node[font=\tiny, omThm, anchor=east] at (axis cs:96,123) {SRAS$'$};
+\node[font=\tiny, omDef, anchor=south west] at (axis cs:114,87) {AD};
+\fill (axis cs:100,100) circle (1.4pt) (axis cs:90,110) circle (1.4pt);
+\nextgroupplot[title={\scriptsize the return to the long run}, yticklabels={}]
+\addplot[gray, thick] coordinates {(100,60) (100,140)};
+\addplot[omThm, thick, domain=70:125, samples=2] {x};
+\addplot[omThm, thick, dashed, domain=80:125, samples=2] {x - 20};
+\addplot[omDef, thick, dashed, domain=70:115, samples=2] {180 - x};
+\node[font=\tiny, anchor=west] at (axis cs:100,134) {LRAS};
+\node[font=\tiny, omThm, anchor=east] at (axis cs:110,118) {SRAS};
+\node[font=\tiny, omThm, anchor=north west] at (axis cs:112,90) {SRAS$''$};
+\node[font=\tiny, omDef, anchor=west] at (axis cs:106,68) {AD$'$};
+\fill (axis cs:90,90) circle (1.4pt) (axis cs:100,80) circle (1.4pt);
+\end{groupplot}
+\end{tikzpicture}
+
+{\small Left: a fall in demand from AD to AD$'$ lowers output from 100 to 90 and the price level from 100 to 90. Centre: a rise in costs shifts SRAS up by 20; output falls
+to 90 and prices rise to 110. Right: after the demand shock, wages and prices fall over time, SRAS shifts down, and output returns to potential at a price level of 80.}
+\end{omfigure}
+
+The two shocks have different signatures. A demand shock moves output and prices in the same direction; a supply shock moves them in opposite directions, the combination
+called stagflation. The record shows both.
+
+\begin{record}[2008--09: a fall in demand]
+% ledger: g12:nber-2007, g12:gr2007; figdata: adas_key (growth2009 -2.6, cpi2009 -0.4, gap2009 -2.9)
+After the fall in house prices and the bank failures of \cref{ch:g12:saving-and-investment}, households and firms cut their spending. The \omterm{def:g12:aggregate-demand-and-supply:recession}{recession} ran from December 2007
+to June 2009. Real GDP fell by 2.6\,\% over the year 2009, and consumer prices fell by 0.4\,\%: output and prices moved down together, as a fall in demand predicts. The
+\omterm{def:g12:aggregate-demand-and-supply:potential-output}{output gap} reached $-2.9\,\%$.
+\end{record}
+
+\begin{record}[1973--74: a supply shock]
+% ledger: g12:embargo1973, g12:nber-1973; figdata: adas_key (cpi1973 6.2, cpi1974 11.1, growth1974 -0.5, growth1975 -0.2)
+During the Arab--Israeli war of 1973, Arab members of OPEC placed an embargo on oil sales to the United States, lifted in March 1974; the price of a barrel of oil first
+doubled, then quadrupled. Oil is an input to almost everything. American consumer price inflation rose from 6.2\,\% in 1973 to 11.1\,\% in 1974 while real GDP fell by
+0.5\,\% in 1974 and by 0.2\,\% in 1975; the \omterm{def:g12:aggregate-demand-and-supply:recession}{recession} ran from November 1973 to March 1975. Prices up, output down: the signature of a supply shock.
+\end{record}
+
+In 2020 the two kinds of shock arrived together: lockdowns stopped production and spending at once. The \omterm{def:g12:aggregate-demand-and-supply:recession}{recession} lasted only two months, February to April, but real GDP
+fell by 2.1\,\% over the year. In 2021 and 2022 output recovered fast while inflation rose to 4.7\,\% and then 8.0\,\%: strong spending met supplies that had not
+recovered.
+% ledger: g12:nber-2020; figdata: adas_key (growth2020 -2.1, cpi2021 4.7, cpi2022 8)
+
+\section{The return to the long run}\label{sec:g12:aggregate-demand-and-supply:return}
+
+\omterm{def:g12:aggregate-demand-and-supply:sticky-price}{Sticky prices} do not stay stuck. When output is below potential, unemployed workers and idle machines push wages and costs down; the short-run supply curve shifts down,
+the price level falls, and output rises back towards potential (the right panel of the figure). When output is above potential, the shift goes the other way. In the
+long run, a demand shock changes only the price level, as in the long-run model; in the short run, it changes output.
+
+\begin{model}{The short-run AD--AS model}
+\assumes Some prices and wages are sticky; \omterm{def:g12:aggregate-demand-and-supply:ad}{aggregate demand} slopes down, short-run supply slopes up, and long-run supply is vertical at \omterm{def:g12:aggregate-demand-and-supply:potential-output}{potential output}.
+\predicts A fall in demand lowers output and prices; a supply shock raises prices and lowers output; with time, output returns to potential.
+\tested Consistent with it: 2008--09 (output and prices down together) and 1973--74 (prices up, output down) fit its signatures; in 2021 a demand recovery met a supply shock, and both
+  inflation and output rose.
+\breaks It does not say how long prices take to adjust, which is the heart of the matter; and expectations of inflation shift the curves themselves, as a later chapter
+  shows.
+\end{model}
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g12:aggregate-demand-and-supply:1}
+From the opening chart, name the \omterm{def:g12:aggregate-demand-and-supply:recession}{recessions} since 2000, with their years.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:aggregate-demand-and-supply:2}
+From the dates in this chapter, how long, in months, were the \omterm{def:g12:aggregate-demand-and-supply:recession}{recessions} of 1973--75 and 2007--09, counted from the peak to the trough?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:aggregate-demand-and-supply:3}
+\omterm{def:g12:aggregate-demand-and-supply:potential-output}{Potential output} is 100 and actual output 95. Find the \omterm{def:g12:aggregate-demand-and-supply:potential-output}{output gap}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:aggregate-demand-and-supply:4}
+\omterm{def:g12:aggregate-demand-and-supply:potential-output}{Potential output} is 10 trillion and actual output 10.6 trillion. Find the \omterm{def:g12:aggregate-demand-and-supply:potential-output}{output gap}, and say whether the economy is in a slump or a boom.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:aggregate-demand-and-supply:5}
+Classify each shock as a demand shock, a supply shock, or both: a stock-market crash that makes households spend less; a harvest failure; a rise in orders from abroad;
+a rise in the price of oil; a lockdown that closes shops and factories.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:aggregate-demand-and-supply:6}
+\omterm{def:g12:aggregate-demand-and-supply:ad}{Aggregate demand} is $Y = 300 - 2P$ and short-run supply $Y = 2P - 100$. Find the price level and output.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:aggregate-demand-and-supply:7}
+In \cref{exo:g12:aggregate-demand-and-supply:6}, demand falls to $Y = 260 - 2P$. Find the new short-run price level and output.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:aggregate-demand-and-supply:8}
+In \cref{exo:g12:aggregate-demand-and-supply:7}, \omterm{def:g12:aggregate-demand-and-supply:potential-output}{potential output} is 100. Find the \omterm{def:g12:aggregate-demand-and-supply:potential-output}{output gap} in the short run, and the price level and output in the long run.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:aggregate-demand-and-supply:9}
+The quantity of money rises by 10\,\%. What happens to prices and output in the long-run model? And in the short run, with \omterm{def:g12:aggregate-demand-and-supply:sticky-price}{sticky prices}?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:aggregate-demand-and-supply:10}
+American real GDP was 3.431 trillion 2015 dollars in 1960 and 22.731 trillion in 2024. Find its average annual growth rate.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:aggregate-demand-and-supply:11}
+From the output-gap chart, which year since 1960 had the most negative gap? Give the gaps of 1975, 2009 and 2020.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:aggregate-demand-and-supply:12}
+In 2009 American real GDP fell by 2.6\,\% and consumer prices by only 0.4\,\%. What does the long-run model, with flexible prices, predict a fall in demand does to output?
+What part of the model does 2009 contradict, and which part does it leave standing?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:aggregate-demand-and-supply:13}
+In 2021 American real GDP grew by 6.2\,\% and inflation was 4.7\,\%. What would a supply shock alone predict? A demand recovery alone? Which shift was larger in its effect on
+output, and how can both prices and output rise?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:aggregate-demand-and-supply:14}
+After the demand fall of \cref{exo:g12:aggregate-demand-and-supply:7}, the \omterm{def:g12:aggregate-demand-and-supply:potential-output}{output gap} halves each year as wages and prices adjust. Starting from the short-run equilibrium,
+give output and the price level (on AD $Y = 260 - 2P$) for three years.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:aggregate-demand-and-supply:15}
+A straight trend fitted on the logarithm of American GDP from 1960 to 2024 grows by 2.92\,\% a year; measured from it, the gap is $-12.5\,\%$ in 1960, $+10.6\,\%$ in 2000 and
+$-8.2\,\%$ in 2024. Why are these not good measures of the \omterm{def:g12:aggregate-demand-and-supply:potential-output}{output gap}? Why is even the smooth trend of the opening chart not the same thing as \omterm{def:g12:aggregate-demand-and-supply:potential-output}{potential output}?
+\end{exercise}
+
+\section{Problem: A Drought in Kestria}
+
+\begin{problem}[{Weekend problem --- a supply shock and the return to the long run}]
+\label{pb:g12:aggregate-demand-and-supply:1}
+In Kestria, output $Y$ is measured as an index, 100 at potential, and $P$ is the price level. \omterm{def:g12:aggregate-demand-and-supply:ad}{Aggregate demand} is $Y = 200 - P$, and short-run supply is $P = Y + z$, where
+$z$ is a cost shift, zero in normal times.
+
+\medskip
+\noindent\textbf{Part I --- Normal times.}
+\begin{enumerate}
+\item With $z = 0$, find output and the price level.
+\item What is the \omterm{def:g12:aggregate-demand-and-supply:potential-output}{output gap}?
+\item Draw, or describe, the long-run supply curve.
+\item Why does \omterm{def:g12:aggregate-demand-and-supply:ad}{aggregate demand} slope down?
+\item Why does short-run supply slope up?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The drought.}
+\begin{enumerate}[resume]
+\item A drought raises the costs of food and of everything made from it: in year 1, $z = 20$. Find output and the price level.
+\item Find the \omterm{def:g12:aggregate-demand-and-supply:potential-output}{output gap} in year 1.
+\item By how much has the price level risen? Is this the signature of a demand or a supply shock?
+\item If the government raised demand to bring output back to 100 at once, what would the price level be?
+\item Without such a response, what moves the economy back?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Five years.}
+\begin{enumerate}[resume]
+\item Each year, wages and other costs adjust so that the cost shift falls by 40\,\% of what remains: $z_t = 20 \times 0.6^{t-1}$. Find $z$ in years 1 to 5.
+\item Show that output is $Y_t = 100 - z_t/2$.
+\item Find output and the \omterm{def:g12:aggregate-demand-and-supply:potential-output}{output gap} in each of the five years.
+\item Find the price level in each year.
+\item Add up the output lost over the five years, in per cent of a year's \omterm{def:g12:aggregate-demand-and-supply:potential-output}{potential output}.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Interpretation.}
+\begin{enumerate}[resume]
+\item If costs adjusted by 80\,\% a year instead of 40\,\%, what would the gap be in year 2?
+\item How does the speed of adjustment change the output lost?
+\item If instead demand had fallen to $Y = 180 - P$ with $z = 0$, find output and prices in the short run and the long run.
+\item Compare the price movements in the two shocks.
+\item State the result of the problem: the \omterm{def:g12:aggregate-demand-and-supply:potential-output}{output gap} in each of five years, and the cumulative output lost.
+\end{enumerate}
+\end{problem}

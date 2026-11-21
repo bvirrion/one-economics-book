@@ -1,0 +1,405 @@
+\chapter{Environmental and Resource Economics}\label{ch:b3:environmental-and-resource-economics}
+
+The Year 2 volume set out the tools for an externality: a corrective tax, tradable
+permits, bargaining when rights are clear, and the choice between prices and
+quantities when costs are uncertain. This chapter takes them to the evidence. How
+are damages valued? Did trading cut the cost of cleaning the air? Does pollution
+fall as countries grow richer? What is a tonne of carbon dioxide worth, and why do
+the estimates differ so much? And what does theory say about the price of a resource
+that runs out --- and why does the record disagree? The physical science of the
+climate is the Earth and space sciences books'; here it is taken as given.
+
+\begin{openingchart}{Sulphur dioxide emitted per person against GDP per person (logarithmic
+scale, 2011 dollars), six economies, every fifth year from 1850 (or the first year with
+data) to 2019; an annual peak can fall between two points.}{Community Emissions Data System (CEDS); Maddison Project Database 2023}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.72\linewidth, height=0.46\linewidth, xmin=2.85,
+  xmax=4.85, ymin=0, ymax=200, xtick={3,3.5,4,4.5}, xticklabels={1{,}000, 3{,}000, 10{,}000, 30{,}000},
+  xlabel={GDP per person, dollars}, ylabel={SO$_2$, kg per person},
+  legend pos=north west, legend style={font=\footnotesize}, legend columns=2]
+  \addplot[black, thick, mark=*, mark size=0.8pt] table[x=lx, y=kg] {figdata/bachelor-3/35-environmental-and-resource-economics/out/so2_GBR.csv};
+  \addplot[omDef, thick, mark=*, mark size=0.8pt] table[x=lx, y=kg] {figdata/bachelor-3/35-environmental-and-resource-economics/out/so2_USA.csv};
+  \addplot[omDef, dashed, thick] table[x=lx, y=kg] {figdata/bachelor-3/35-environmental-and-resource-economics/out/so2_DEU.csv};
+  \addplot[omThm, thick] table[x=lx, y=kg] {figdata/bachelor-3/35-environmental-and-resource-economics/out/so2_JPN.csv};
+  \addplot[omThm, dashed, thick] table[x=lx, y=kg] {figdata/bachelor-3/35-environmental-and-resource-economics/out/so2_KOR.csv};
+  \addplot[black!50, dotted, very thick] table[x=lx, y=kg] {figdata/bachelor-3/35-environmental-and-resource-economics/out/so2_CHN.csv};
+  \legend{United Kingdom, United States, Germany, Japan, South Korea, China}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: so2_stats
+Each economy's emissions per person rose, peaked and fell. The United Kingdom peaked in 1907 at 134 kg per
+person, with income at 7{,}855 dollars; the United States in 1918 at 191 kg; Germany in 1973 and Japan in 1969, at 107
+and 51 kg; South Korea in 1979 and China in 2006, at incomes of 6{,}266 and 7{,}271 dollars. In 2019 all six were below 9 kg.
+The peaks came at very different incomes.
+
+\begin{recall}
+Externalities are the grades 10--12 volume's. The corrective tax, Coase's theorem,
+tradable permits and the comparison of prices and quantities are the Year 2
+volume's; learning by doing is the Year 1 volume's. Discounting and the \omterm{def:b3:cost-benefit-analysis:vsl}{value of a
+statistical life} are \cref{ch:b3:cost-benefit-analysis}'s.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:environmental-and-resource-economics:symbols}
+$x_i$ is firm $i$'s abatement; $\mathrm{MAC}_i$ its \omterm{def:b3:environmental-and-resource-economics:abatement}{marginal abatement cost}; $\mathrm{MD}$ the marginal
+damage; $\rho$ the rate of pure time preference; $\eta$ the elasticity of marginal utility;
+$g$ the growth of consumption per person; $P_t$ a resource price; $c$ its extraction cost.
+\end{notation}
+
+\section{Valuing damages}\label{sec:b3:environmental-and-resource-economics:damages}
+
+\begin{definition}[Damage function; marginal abatement cost]\label{def:b3:environmental-and-resource-economics:abatement}
+\index{damage function}\index{marginal abatement cost}
+A \emph{damage function} gives the money value of the harm done by a level of
+emissions. A firm's \emph{marginal abatement cost} is the cost of cutting its
+emissions by one more unit, given what it has already cut.
+\end{definition}
+
+\begin{measure}[How damages are valued]
+Damages are built from three pieces: the change in exposure (a pollutant's
+concentration where people live), a dose--response relation from epidemiology
+(extra deaths or illnesses per unit of exposure), and a money value for each
+outcome --- for deaths, the \omterm{def:b3:cost-benefit-analysis:vsl}{value of a statistical life} of
+\cref{ch:b3:cost-benefit-analysis}. Hedonic house prices give a second route, for
+damages that people can see and move away from. The first route is only as good as
+its dose--response study; the second misses harms people do not know about.
+The sulphur dioxide record below shows how much the first route can move an answer:
+when the market was created, its benefits were expected to be about equal to its
+costs; once epidemiology linked fine sulphate particles to deaths, the estimated
+health benefits alone reached 50 to more than 100 billion dollars a year.
+% ledger: b3er:ss.benefit
+\end{measure}
+
+\section{Taxes, permits and standards}\label{sec:b3:environmental-and-resource-economics:instruments}
+
+\begin{definition}[Emission standard]\label{def:b3:environmental-and-resource-economics:standard}
+\index{emission standard}
+An \emph{emission standard} limits each source directly: a \emph{performance
+standard} caps emissions per unit of output; a \emph{technology standard} requires a
+given technique, such as a scrubber.
+\end{definition}
+
+\begin{proposition}[Equal marginal costs]\label{prop:b3:environmental-and-resource-economics:equal-mac}
+A total cut $X$ shared among firms with increasing \omterm{def:b3:environmental-and-resource-economics:abatement}{marginal abatement costs} costs least when every
+firm's \omterm{def:b3:environmental-and-resource-economics:abatement}{marginal abatement cost} is the same. A uniform tax $t$ achieves it, since each firm
+abates until $\mathrm{MAC}_i = t$; so does a market in permits, at the permit price. A standard that requires
+the same cut of every firm does not, unless their costs are the same.
+\end{proposition}
+
+\begin{proof}
+Minimise $\sum_i C_i(x_i)$ subject to $\sum_i x_i = X$. The Lagrangian conditions are $C_i'(x_i) = \lambda$ for every $i$, and with convex $C_i$
+they are sufficient. If $C_i'(x_i) < C_j'(x_j)$, moving a small amount of abatement from $j$ to $i$ keeps $X$ and lowers the
+total cost. A firm facing a tax $t$ minimises $C_i(x_i) + t(e_i - x_i)$ and sets $C_i' = t$; a firm in a permit market sets $C_i'$ equal to
+the permit price for the same reason. Equal cuts give $C_i'(X/n)$, which differ across $i$ unless the $C_i$ do.
+\end{proof}
+
+\begin{record}[The U.S. sulphur dioxide market]
+The Clean Air Act Amendments of 1990 created a cap-and-trade market for sulphur dioxide from
+power plants, to curb acid rain. It worked well, with surprises: its main benefits
+were not the ones it was designed for; much of its low cost came from the earlier
+deregulation of railways, which made low-sulphur coal cheaper to ship; and later
+court decisions and rules led to the collapse of the market. % ledger: b3er:ss
+From 1990 to 2004 power plants' emissions fell 36~\%, from 15.9 to 10.2 million tons,
+while coal-fired generation rose 25~\%, and compliance was nearly complete. Against
+rules that would have prescribed how each plant cut, the market's cost savings are
+estimated at at least 15~\% and perhaps as much as 90~\%, depending on the rule it is
+compared with. Annual benefits are put at 59 to 116 billion dollars against costs of
+0.5 to 2 billion; more than 95~\% of the benefits are to health, from fewer fine
+particles, not to the lakes and forests the law was written for.
+% ledger: b3er:ss.cost, b3er:ss.benefit
+\end{record}
+
+\section{Pollution and income}\label{sec:b3:environmental-and-resource-economics:ekc}
+
+\begin{definition}[Environmental Kuznets curve]\label{def:b3:environmental-and-resource-economics:ekc}
+\index{environmental Kuznets curve}
+An \emph{environmental Kuznets curve} is an inverted-U relation between a pollutant
+and income per person: emissions first rise with income and then fall.
+\end{definition}
+
+\begin{model}{The environmental Kuznets curve}
+\assumes As income grows, the economy first expands dirty industry, then demands
+cleaner air, shifts to services and adopts cleaner techniques.
+\predicts Local pollutants rise and then fall with income.
+\tested Across urban air pollution and river quality, most indicators first worsen
+and then improve with income, with turning points mostly below 8{,}000 dollars per person (Grossman and
+Krueger 1994). % ledger: b3er:gk
+Sulphur dioxide per person in the opening chart has the same shape.
+\breaks The turning points differ widely: in the opening chart, emissions per person
+peaked at about 6{,}300 dollars in Korea, 10{,}500 in the United States, 14{,}100 in Japan
+and 19{,}100 in Germany; and the United Kingdom and China, which peaked at similar
+incomes (7{,}900 and 7{,}300 dollars) a century apart, did so at levels nearly five times apart,
+134 and 29 kilograms per person. Income alone sets neither the turning point nor the
+height of the peak; laws and the move away from coal are the obvious candidates
+(exercise 9). % figdata: so2_stats Carbon dioxide, whose damage falls on everyone and is
+not felt locally, rises with income across countries (next chart).
+\end{model}
+
+\begin{omchart}{Carbon dioxide emitted per person against GDP per person, 2019, 152 countries
+of over one million people (both logarithmic scales), with the least-squares line.}{Community
+Emissions Data System (CEDS); Maddison Project Database 2023}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.6\linewidth, height=0.42\linewidth,
+  xlabel={GDP per person, dollars}, ylabel={CO$_2$, tonnes per person},
+  xtick={3,4,5}, xticklabels={1{,}000, 10{,}000, 100{,}000},
+  ytick={-2,-1,0,1}, yticklabels={0.01, 0.1, 1, 10}]
+  \addplot table[x=lx, y=ly] {figdata/bachelor-3/35-environmental-and-resource-economics/out/co2.csv};
+  \addplot[black!60, thick, no marks, sharp plot] table[x=lx, y=ly] {figdata/bachelor-3/35-environmental-and-resource-economics/out/co2_fit.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: co2_stats
+
+Across 152 countries in 2019, emissions per person rise in proportion to income or a little faster:
+the elasticity is 1.11. The median is 0.29 tonnes per person in the poorest fifth and 8.4 in the richest.
+There is no hump.
+
+\section{The social cost of carbon}\label{sec:b3:environmental-and-resource-economics:scc}
+
+\begin{definition}[Social cost of carbon]\label{def:b3:environmental-and-resource-economics:scc}
+\index{social cost of carbon}
+The \emph{social cost of carbon} is the present value of the damages caused by one
+more tonne of carbon dioxide emitted in a given year: $\mathrm{SCC}_0 = \sum_{t \ge 1} \mathrm{MD}_t/\prod_{s \le t}(1 + r_s)$, where $\mathrm{MD}_t$ is the extra
+damage in year $t$ from the tonne and $r_s$ the discount rate.
+\end{definition}
+
+\begin{definition}[Ramsey formula (discounting)]\label{def:b3:environmental-and-resource-economics:ramsey-discount}
+\index{Ramsey formula (discounting)}
+The \emph{Ramsey formula} sets the consumption discount rate to $r = \rho + \eta g$, the rate of pure time
+preference plus the elasticity of marginal utility times the growth of consumption
+per person.
+\end{definition}
+
+\begin{proposition}[The discount rate from the Euler equation]\label{prop:b3:environmental-and-resource-economics:ramsey}
+With utility $\sum_t e^{-\rho t} u(c_t)$ and $u(c) = c^{1 - \eta}/(1 - \eta)$, a dollar at date $t$ is worth $e^{-\rho t}(c_t/c_0)^{-\eta}$ dollars today; with consumption growing at $g$,
+this is $e^{-(\rho + \eta g)t}$: the discount rate is $\rho + \eta g$.
+\end{proposition}
+
+\begin{proof}
+A small transfer $\varepsilon$ from date 0 to date $t$ changes welfare by $\varepsilon[e^{-\rho t}u'(c_t) - u'(c_0)]$ per unit, so a unit at $t$ is worth $e^{-\rho t}u'(c_t)/u'(c_0)$ units at 0.
+With $u'(c) = c^{-\eta}$ and $c_t = c_0e^{gt}$, $u'(c_t)/u'(c_0) = e^{-\eta gt}$, and the value is $e^{-(\rho + \eta g)t}$. This is the Euler equation of the Year 2
+volume's Ramsey model read as a price.
+\end{proof}
+
+The two parameters do different work: $\rho$ says how much a later generation counts
+because it is later, $\eta$ how much an extra dollar is worth to someone richer. With $\rho = 0.1~\%$, $\eta = 1$ and
+$g = 1.3~\%$, $r = 1.4~\%$; with $\rho = 1.5~\%$ and $\eta = 2$, $r = 4.1~\%$. Because a tonne does harm for centuries, that difference multiplies
+the \omterm{def:b3:environmental-and-resource-economics:scc}{social cost of carbon} several times over (exercise 5).
+
+\begin{omchart}{The social cost of carbon dioxide by year of emission at three near-term
+discount rates (2020 dollars per tonne; values rounded to two significant
+figures).}{U.S. Environmental Protection Agency (2023), Report on the Social Cost of
+Greenhouse Gases, Table ES.1}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.62\linewidth, height=0.4\linewidth, xmin=2020,
+  xmax=2080, ymin=0, ymax=650, ylabel={Dollars per tonne},
+  legend pos=north west, legend style={font=\footnotesize}]
+  \addplot[omThm, thick, mark=*, mark size=1.2pt] table[x=year, y=r15] {figdata/bachelor-3/35-environmental-and-resource-economics/out/scc.csv};
+  \addplot[omDef, thick, mark=square*, mark size=1.2pt] table[x=year, y=r20] {figdata/bachelor-3/35-environmental-and-resource-economics/out/scc.csv};
+  \addplot[black, thick, mark=triangle*, mark size=1.4pt] table[x=year, y=r25] {figdata/bachelor-3/35-environmental-and-resource-economics/out/scc.csv};
+  \legend{1.5~\%, 2.0~\%, 2.5~\%}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: scc
+% ledger: b3er:epa
+
+For a tonne emitted in 2020, the estimate is 120 dollars at a near-term rate of 2.5~\%, 190 at 2.0~\% and 340 at 1.5~\%: one point of discounting
+nearly triples it. The estimates rise with the year of emission, to 280, 410 and 600 dollars in 2080, because damages
+grow with the size of the economy.
+
+\begin{record}[Discount rates in climate assessments]
+A widely read review of the economics of climate change concluded that sharp and immediate cuts in emissions
+were warranted. Its conclusion depends decisively on a near-zero rate of pure time
+preference combined with a particular utility function; with assumptions consistent
+with market real interest rates and saving rates it does not hold. % ledger: b3er:nordhaus
+Defenders of a low rate reply that the rate of pure time preference is an ethical
+choice about the weight of people not yet born, which market rates, set by people
+saving for themselves, do not reveal. And another critic of the review's model,
+sceptical of its low rate, argued that the case for early action may rest elsewhere:
+on insurance against a small chance of ruinous catastrophe, which a calculation built
+on expected damages understates. % ledger: b3er:weitzman
+The disagreement is not about the climate model but about $\rho$ and $\eta$: the \omterm{def:b3:environmental-and-resource-economics:scc}{social cost of
+carbon} is a calculation whose range is mostly a choice of these two numbers, and an
+honest estimate states them.
+\end{record}
+
+\section{Exhaustible resources}\label{sec:b3:environmental-and-resource-economics:hotelling}
+
+\begin{definition}[Hotelling rule; scarcity rent; backstop technology]\label{def:b3:environmental-and-resource-economics:hotelling}
+\index{Hotelling rule}\index{scarcity rent}\index{backstop technology}
+For an exhaustible resource extracted at cost $c$ a unit, the \emph{scarcity rent} is the
+net price $P_t - c$. The \emph{Hotelling rule} says that in a competitive market with a known
+stock it rises at the rate of interest. A \emph{backstop technology} is a substitute
+available in unlimited quantity at a constant price, which caps the resource's price.
+\end{definition}
+
+\begin{proposition}[The Hotelling rule by arbitrage]\label{prop:b3:environmental-and-resource-economics:hotelling}
+If owners can extract a unit now or later and the market is competitive, any path
+on which both now and later extraction take place has $P_{t+1} - c = (1 + r)(P_t - c)$. With demand $q(P)$ and a backstop at price $\bar P$, the
+initial rent is the one at which cumulative extraction equals the stock exactly when
+the price reaches $\bar P$.
+\end{proposition}
+
+\begin{proof}
+A unit left in the ground is an asset. Extracting it at $t$ yields $P_t - c$, which invested
+gives $(1 + r)(P_t - c)$ at $t + 1$; extracting it at $t + 1$ yields $P_{t+1} - c$. If the second exceeded the first,
+no owner would extract at $t$; if it fell short, none would wait. Extraction in both
+periods requires equality. If the stock ran out before the price reached $\bar P$, the
+price would jump at exhaustion, so owners would hold back; if it lasted beyond, the
+resource would be unsold at $\bar P$ and the rent would fall. Only the rent that exhausts the
+stock at $\bar P$ survives.
+\end{proof}
+
+\begin{model}{The Hotelling rule}
+\assumes A known stock; competitive owners; extraction cost constant over time.
+\predicts Real resource prices, net of extraction cost, rising at the rate of
+interest.
+\tested Observed prices are often inconsistent with the rule: over long periods
+real prices of many minerals have not risen at the rate of interest (Krautkraemer
+1998). % ledger: b3er:kra
+In 1980 two scholars bet on whether the real price of a bundle of five metals would
+rise or fall over the decade; it fell, and the one who bet on falling prices won.
+Over the price history of the same bundle from 1900 to 2008, ten-year bets on rising
+prices would have won a majority of the time, by a wide margin
+(Kiel, Matheson and Golembiewski 2010): the record has no single direction, as the
+breaks below suggest. % ledger: b3er:kmg
+\breaks Exploration adds to known stocks, ores differ in quality, technical change
+lowers extraction costs, and capital in mines makes extraction slow to adjust; all
+change the price path. % ledger: b3er:kra
+\end{model}
+
+\section{Learning curves in energy}\label{sec:b3:environmental-and-resource-economics:learning}
+
+\begin{definition}[Learning rate]\label{def:b3:environmental-and-resource-economics:learning-rate}
+\index{learning rate}
+If unit cost falls with cumulative output $Q$ as $C = C_1 Q^{-b}$, the \emph{learning rate} is the
+fraction by which cost falls with each doubling of cumulative output, $1 - 2^{-b}$.
+\end{definition}
+
+The derivation is one line: $C(2Q)/C(Q) = 2^{-b}$, whatever $Q$. A \omterm{def:b3:environmental-and-resource-economics:learning-rate}{learning rate} of 20~\% means $b = -\log_2 0.8 = 0.32$. Forecasts of
+energy costs built on such curves, and tested on more than 50 technologies, imply that most
+energy--economy models overestimated the cost of moving away from fossil fuels,
+because they underestimated how fast the costs of renewables would fall and how fast
+they would be deployed. % ledger: b3er:way
+Learning curves are fitted on the past, and nothing guarantees that a rate holds
+for another doubling; the forecasts are distributions for that reason.
+
+\section{Exercises}\label{sec:b3:environmental-and-resource-economics:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:environmental-and-resource-economics:1}
+From the opening chart, give the peak year and level of emissions per person for the
+United Kingdom and China, and the incomes at the two peaks.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:environmental-and-resource-economics:2}
+Two firms have \omterm{def:b3:environmental-and-resource-economics:abatement}{marginal abatement costs} $2x_1$ and $3x_2$ (dollars a tonne, $x$ in tonnes). Find the cheapest way to cut
+100 tonnes, and the tax that achieves it.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:environmental-and-resource-economics:3}
+A mineral's net price is 50 dollars a tonne and the interest rate 3~\%. Under the \omterm{def:b3:environmental-and-resource-economics:hotelling}{Hotelling rule}, what is it in ten
+years?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:environmental-and-resource-economics:4}
+What price data would contradict the \omterm{def:b3:environmental-and-resource-economics:hotelling}{Hotelling rule}, and what would you check
+before concluding that they do?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:environmental-and-resource-economics:5}
+A tonne of CO$_2$ causes 1 dollar of damage a year forever. Find its social cost at constant
+discount rates of 1.4, 3 and 5~\%.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:environmental-and-resource-economics:6}
+Find the Ramsey discount rate for $\rho = 0.1~\%$, $\eta = 1$, $g = 1.3~\%$, and for $\rho = 1.5~\%$, $\eta = 2$, $g = 1.3~\%$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:environmental-and-resource-economics:7}
+Find the year, the level and the income per person at the peak of sulphur dioxide
+emissions per person in France, Italy and Spain.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:environmental-and-resource-economics:8}
+Under uncertainty about \omterm{def:b3:environmental-and-resource-economics:abatement}{marginal abatement cost} (a shift of variance $\sigma^2$), a tax beats a cap by
+$\sigma^2(s_C - s_D)/(2s_C^2)$, where $s_C$ and $s_D$ are the slopes of \omterm{def:b3:environmental-and-resource-economics:abatement}{marginal abatement cost} and marginal damage. With $\sigma = 10$
+and $s_C = 8$, find the advantage when $s_D = 2$ and when $s_D = 20$. Which pollutant is each like?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:environmental-and-resource-economics:9}
+What data would show that the fall of sulphur dioxide is due to regulation, not to
+income itself?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:environmental-and-resource-economics:10}
+Prove the \omterm{def:b3:environmental-and-resource-economics:hotelling}{Hotelling rule} in continuous time: show that an owner indifferent between
+extracting at $t$ and at $t + dt$ needs $\dot P/(P - c) = r$, and solve for $P_t$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:environmental-and-resource-economics:11}
+A technology's unit cost fell from 4 to 0.4 dollars while cumulative output grew a thousandfold. Find $b$ and the
+\omterm{def:b3:environmental-and-resource-economics:learning-rate}{learning rate}.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:environmental-and-resource-economics:12}
+A tonne emitted today causes 1.5 dollars of damage in a year's time, growing 2~\% a year, for 300 years. Find its
+present value at constant rates of 1.4, 3 and 5~\%, and with a rate that falls from 3 to 1.5~\% over the first
+century.
+\end{exercise}
+
+\section{Problem: Brenland's Coal and Its Smoke}\label{sec:b3:environmental-and-resource-economics:problem}
+
+\begin{problem}[{Weekend problem --- Brenland's coal and its smoke}]\label{pb:b3:environmental-and-resource-economics:coal}
+An invented Brenland has 600 million tonnes of coal in 2025, extracted at 20 dalens a tonne. Demand is
+$q = 40 - 0.25P$ million tonnes a year; a backstop supplies the same energy at a coal-equivalent 100 dalens; the
+interest rate is 4~\%. Each tonne of coal burnt emits 0.02 tonnes of sulphur dioxide; each kilotonne of it a
+year causes 0.4 deaths; the \omterm{def:b3:cost-benefit-analysis:vsl}{value of a statistical life} is 3.0 million dalens. Two power firms abate with marginal
+costs $10x_1$ and $30x_2$ dalens a tonne ($x$ in kilotonnes). Brenland emits 40 million tonnes of CO$_2$ a year. % figdata: coal_stats
+
+\medskip\noindent\textbf{Part I --- the Hotelling path.}
+\begin{enumerate}
+\item Write the price path and the condition that fixes the initial rent.
+\item Find the rent and the price in 2025.
+\item Find extraction in 2025.
+\item Find the rent, the price and extraction in 2035.
+\item When does the coal run out?
+\item What would a discovery of more coal do to the rent and the date?
+\item What would a cheaper backstop do?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- the smoke.}
+\begin{enumerate}[resume]
+\item Find sulphur dioxide emissions in 2025.
+\item Find the deaths they cause each year.
+\item Find the marginal damage of a tonne.
+\item Find the total yearly damage.
+\item Which number in the chain is the most uncertain?
+\item Why should the Hotelling path change once the smoke is priced?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- tax, permits or standards.}
+\begin{enumerate}[resume]
+\item Find the efficient tax on sulphur dioxide.
+\item Find each firm's abatement under it.
+\item Find the total abatement cost.
+\item Find the cost of the same total cut split equally, and the saving from the tax.
+\item What cap and permit price give the same result?
+\item Find the deaths avoided and the money value of the abatement's benefit.
+\item Why might a regulator still choose uniform standards?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- carbon.} Value Brenland's emissions with the EPA's 2023 figures for 2020
+emissions, read as dalens per tonne.
+\begin{enumerate}[resume]
+\item Find the yearly social cost at a near-term rate of 2~\%.
+\item Find it at 2.5 and 1.5~\%.
+\item Express the 2~\% figure as a share of Brenland's 2025 GDP (\code{load("accounts")}).
+\item With $g = 1.3~\%$, give two pairs $(\rho, \eta)$ that give about 2~\%.
+\item The \omterm{def:b3:environmental-and-resource-economics:scc}{social cost of carbon} counts damages everywhere. Why does that matter for
+the tax a single country would choose for itself?
+\item State the result: the efficient sulphur dioxide tax and the year Brenland's coal is
+exhausted.
+\end{enumerate}
+\end{problem}

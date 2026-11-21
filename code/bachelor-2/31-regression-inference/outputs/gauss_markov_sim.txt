@@ -1,0 +1,4 @@
+$ python gauss_markov_sim.py
+            mean    variance (simulated)   variance (formula)
+OLS       0.5006       0.01145               0.01141
+groups    0.4998       0.01508               0.01521

@@ -1,0 +1,384 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g10-07. Arc and point elasticity, elasticity along a
+% line, revenue, income and cross-price elasticities, supply elasticity. Real numbers:
+% figdata/grade-10/07-elasticities/ (WDI health spending and GDP per person, 2019); Brenland households
+% (invented). Published estimates: ledger g10:gasoline-elasticity, g10:cigarette-elasticity.
+\chapter{Elasticities}\label{ch:g10:elasticities}
+
+Line up the countries of the world by income. In 2019 a person in Burundi had an income of about \usd{870} a year, measured
+at the prices of a common basket, and the health care spent on him or her came to about \usd{71}. A person in Germany had
+\usd{59311} and \usd{6780} of health care. Across the 186 countries of the opening chart, a country with ten times the income
+per person spends, on average, about thirteen times as much on health per person. Health care takes a larger share of the income
+of rich countries than of poor ones.
+% figdata: health (BDI 868, 70.5; DEU 59311, 6779.5); health_fit (n 186, slope 1.12, times 13.2)
+
+``Thirteen times for ten times'' is a ratio of two proportional changes. Economists call such a ratio an elasticity. The grades 6--9
+volume measured how strongly the quantity bought responds to the price. This chapter makes that measure precise, shows how it changes
+along a demand curve and what it says about the sellers' revenue, and applies the same idea to income, to the prices of other goods
+and to supply.
+
+\begin{openingchart}{Health spending per person against GDP per person, 186 countries, 2019, both on times-ten scales, in current
+dollars at purchasing-power parity. The line is the straight line, on these scales, that passes closest to the points.}{World Bank,
+World Development Indicators: current health expenditure per capita, PPP; GDP per capita, PPP}
+\begin{tikzpicture}
+\begin{loglogaxis}[omscatter, log basis x=10, log basis y=10, log ticks with fixed point,
+  xtickten={3,...,5}, ytickten={1,...,4}, width=0.84\linewidth, height=7.2cm, xmin=600, xmax=150000,
+  ymin=10, ymax=20000, xlabel={GDP per person (dollars a year)}, ylabel={health spending per person (dollars a year)}]
+\addplot[omDef, only marks, mark=*, mark size=1.2pt, fill opacity=0.7]
+  table[x=gdppc, y=health] {figdata/grade-10/07-elasticities/out/health.csv};
+\addplot[black, thick, no markers, sharp plot] table[x=gdppc, y=health] {figdata/grade-10/07-elasticities/out/health_line.csv};
+\addplot[omThm, only marks, mark=square*, mark size=1.8pt, nodes near coords, point meta=explicit symbolic,
+  nodes near coords style={font=\scriptsize, anchor=south east, text=omThm!80!black}]
+  table[x=gdppc, y=health, meta=iso3] {figdata/grade-10/07-elasticities/out/health_marked.csv};
+\end{loglogaxis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: the \emph{price elasticity of demand} is the percentage change in the quantity demanded divided by the
+percentage change in the price that causes it. Demand is \emph{elastic} when its size is above 1, \emph{inelastic} when below 1, and
+\emph{unit-elastic} when it equals 1. A seller's \emph{revenue} is price times quantity. From \cref{ch:g10:demand}: \omterm{def:g10:demand:substitutes}{substitutes},
+\omterm{def:g10:demand:substitutes}{complements}, normal and \omterm{def:g10:demand:normal}{inferior goods}. From the grades 6--9 volume
+again: a \emph{necessity} takes a smaller share of the budget as income rises, a \emph{luxury} a larger one.
+\end{recall}
+
+\begin{notation}
+In this chapter $\varepsilon_d$ is a price elasticity of demand, $\varepsilon_s$ a \omterm{def:g10:elasticities:supply}{price elasticity of supply}, $\varepsilon_I$ an
+income elasticity and $\varepsilon_{XY}$ the \omterm{def:g10:elasticities:cross-price}{cross-price elasticity} of the demand for $X$ with respect to the price of $Y$. A bar marks a
+mean: $\bar Q$ is the mean of two quantities.
+\end{notation}
+
+\section{Measuring the response: between two points, and at a point}\label{sec:g10:elasticities:measure}
+
+A bus company raises its fare from 2 to 2.5 dalens, and daily rides fall from \num{1000} to 900, \omterm{def:g10:economic-models:other-things-equal}{other things equal}. In percentages,
+the price rose by 25\,\% and rides fell by 10\,\%: the elasticity is $-10/25 = -0.4$. But had the fare fallen from 2.5 to 2, rides would
+have risen from 900 to \num{1000}, by 11.1\,\%, while the price fell by 20\,\%: $11.1/(-20) \approx -0.56$. The same two points give two
+answers, depending on the starting point. Measuring each change against the mean of the two values removes the problem.
+
+\begin{definition}[Arc elasticity]\label{def:g10:elasticities:arc}
+Between two points $(p_1, Q_1)$ and $(p_2, Q_2)$ of a demand curve, the \emph{arc elasticity}\index{arc elasticity} of demand is
+\[
+  \varepsilon_d = \frac{(Q_2 - Q_1)/\bar Q}{(p_2 - p_1)/\bar p}, \qquad \bar Q = \frac{Q_1 + Q_2}{2}, \quad \bar p = \frac{p_1 + p_2}{2}.
+\]
+\end{definition}
+
+For the bus: $\bar Q = 950$ and $\bar p = 2.25$, so $\varepsilon_d = (-100/950)/(0.5/2.25) = -0.1053/0.2222 \approx -0.47$, whichever way
+the fare moved. Demand for these rides is inelastic.
+
+When the demand curve is known, the response can be measured at a single point, by letting the two points come close together. On a
+straight line $Q = a - bp$, the quantity changes by $-b$ for each dalen of price, everywhere.
+
+\begin{definition}[Point elasticity]\label{def:g10:elasticities:point}
+At a point $(p, Q)$ of the straight demand line $Q = a - b\,p$, the \emph{point elasticity}\index{point elasticity} of demand is
+\[
+  \varepsilon_d = -b \, \frac{p}{Q}.
+\]
+For a curve that is not straight, $-b$ is replaced by the slope $\mathrm{d}Q/\mathrm{d}p$ of the curve at that point.
+\end{definition}
+
+\begin{example}[One line, three elasticities]\label{ex:g10:elasticities:line}
+For $Q = 120 - 4p$: at $p = 5$, $Q = 100$ and $\varepsilon_d = -4 \times 5/100 = -0.2$; at $p = 15$, $Q = 60$ and $\varepsilon_d = -60/60 =
+-1$; at $p = 25$, $Q = 20$ and $\varepsilon_d = -100/20 = -5$. The slope is the same everywhere; the elasticity is not.
+\end{example}
+
+Slope and elasticity are different things. The slope says how many units are lost per dalen; it depends on the units in which the good
+and the money are measured. The elasticity compares percentages, so it has no unit: it is the same whether bread is counted in loaves or
+in tonnes, and prices in dalens or in kests. That is why elasticities can be compared across goods and across countries.
+
+\section{Along a straight demand line}\label{sec:g10:elasticities:line}
+
+\begin{proposition}[Elasticity along a straight line]\label{prop:g10:elasticities:midpoint}
+On the demand line $Q = a - b\,p$ (with $a, b > 0$), for $0 < p < a/b$, the size of the \omterm{def:g10:elasticities:point}{point elasticity} is $|\varepsilon_d| = b\,p/(a -
+b\,p)$. It rises with the price; it is below 1 when $p < a/(2b)$, equal to 1 at $p = a/(2b)$, the midpoint of the line, and above 1 when $p >
+a/(2b)$.
+\end{proposition}
+\begin{proof}
+$|\varepsilon_d| = bp/Q = bp/(a - bp)$. As $p$ rises, the numerator rises and the positive denominator falls, so the ratio rises.
+$bp/(a - bp) < 1$ means $bp < a - bp$, that is $p < a/(2b)$; equality holds at $p = a/(2b)$, and the reverse inequality above it. At $p =
+a/(2b)$, $Q = a/2$: the point lies halfway between the line's ends, $(0, a/b)$ and $(a, 0)$.
+\end{proof}
+
+Near the top of the line the quantity is small, so each lost unit is a large percentage of it, while the price is high, so each dalen is a
+small percentage of it: demand is elastic. Near the bottom the reverse holds. Two extreme cases have their own names.
+
+\begin{definition}[Perfectly elastic and perfectly inelastic]\label{def:g10:elasticities:perfectly-elastic}
+Demand (or supply) is \emph{perfectly elastic}\index{perfectly elastic} when the curve is horizontal: at one price any quantity is bought,
+and at any higher price nothing. It is \emph{perfectly inelastic}\index{perfectly inelastic} when the curve is vertical: the same quantity
+is bought whatever the price.
+\end{definition}
+\phantomsection\label{def:g10:elasticities:perfectly-inelastic}
+
+A single price-taking farmer faces a \omterm{def:g10:elasticities:perfectly-elastic}{perfectly elastic} demand for his wheat: he can sell all he grows at the market price and nothing above
+it. A \omterm{def:g10:elasticities:perfectly-elastic}{perfectly inelastic} demand is a limit that real goods only approach: a patient's demand for a life-saving dose, over a short time.
+
+\section{Elasticity and revenue}\label{sec:g10:elasticities:revenue}
+
+When a seller raises the price, each unit sold brings more but fewer units are sold. Which effect wins depends on the elasticity.
+
+\begin{proposition}[Revenue along a straight demand line]\label{prop:g10:elasticities:revenue}
+On the demand line $Q = a - b\,p$, revenue $R(p) = p\,(a - b\,p)$ rises with the price where demand is inelastic, falls where it is elastic,
+and is largest at the unit-elastic price $p = a/(2b)$, where it equals $a^2/(4b)$.
+\end{proposition}
+\begin{proof}
+$R(p) = ap - bp^2 = -b\,(p - \tfrac{a}{2b})^2 + \tfrac{a^2}{4b}$. This is a parabola open downward with its top at $p = a/(2b)$: it rises for
+$p < a/(2b)$ and falls for $p > a/(2b)$. By \cref{prop:g10:elasticities:midpoint}, the first range is where demand is inelastic and the second
+where it is elastic. At the top, $R = a^2/(4b)$.
+\end{proof}
+
+For $Q = 120 - 4p$, revenue is largest at $p = 15$, with $Q = 60$ and $R = 900$. At $p = 10$ revenue is $10 \times 80 = 800$, and at $p = 20$ it
+is $20 \times 40 = 800$ too.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.075cm, y=0.12cm]
+\begin{scope}
+\draw[econ axes] (0,33) node[left, font=\small] {$p$} |- (130,0) node[below left=12pt and 0pt, font=\small] {$Q$};
+\draw[demand] (0,30) -- (120,0);
+\draw[guide] (0,15) -- (60,15) -- (60,0);
+\node[eqpoint] at (60,15) {};
+\foreach \y in {15,30} \draw (0,\y) -- (-1.5,\y) node[left, font=\footnotesize] {\y};
+\foreach \x in {60,120} \draw (\x,0) -- (\x,-0.6) node[below, font=\footnotesize] {\x};
+\node[font=\footnotesize, anchor=south west] at (22,25) {elastic, $|\varepsilon_d| > 1$};
+\node[font=\footnotesize, anchor=south west] at (62,15.5) {unit-elastic};
+\node[font=\footnotesize, anchor=south west] at (88,8) {inelastic, $|\varepsilon_d| < 1$};
+\end{scope}
+\begin{scope}[yshift=-5.6cm, y=0.0042cm]
+\draw[econ axes] (0,1000) node[left, font=\small] {$R$} |- (130,0) node[below left=12pt and 0pt, font=\small] {$Q$};
+\draw[curve, domain=0:120, samples=60] plot (\x, {\x*(30 - \x/4)});
+\draw[guide] (0,900) -- (60,900) -- (60,0);
+\node[eqpoint] at (60,900) {};
+\foreach \y in {800,900} \draw (0,\y) -- (-1.5,\y) node[left, font=\footnotesize] {\y};
+\draw[guide] (0,800) -- (40,800) -- (40,0);
+\draw[guide] (40,800) -- (80,800) -- (80,0);
+\foreach \x in {40,60,80,120} \draw (\x,0) -- (\x,-14) node[below, font=\footnotesize] {\x};
+\end{scope}
+\end{tikzpicture}
+
+{\small Top: the demand line $Q = 120 - 4p$, elastic above its midpoint and inelastic below it. Bottom: revenue $R = pQ$ for each quantity on the
+line. Revenue is largest, 900, at the midpoint (60 units at 15 dalens), and equal, 800, at 40 and 80 units.}
+\end{omfigure}
+
+The rule gives practical answers. A theatre with empty seats has no reason to cut its prices if demand for its seats is inelastic: it would
+fill few more seats and earn less. A government that taxes a good with inelastic demand, such as cigarettes, raises revenue without cutting
+consumption much; a tax on a good with elastic demand cuts consumption a lot and raises less. Which goal matters is a separate question; the
+elasticity says what each choice does.
+
+\section{Income and other prices}\label{sec:g10:elasticities:income}
+
+The same ratio of percentages measures the response to any cause.
+
+\begin{definition}[Income elasticity of demand]\label{def:g10:elasticities:income}
+The \emph{income elasticity of demand}\index{income elasticity of demand} for a good is the percentage change in the quantity demanded (or in
+spending on it, prices held fixed) divided by the percentage change in income that causes it, prices held fixed:
+$\varepsilon_I = (\Delta Q/\bar Q)/(\Delta I/\bar I)$.
+\end{definition}
+
+A \omterm{def:g10:demand:normal}{normal good} has $\varepsilon_I > 0$ and an \omterm{def:g10:demand:normal}{inferior good} $\varepsilon_I < 0$. In these terms, a necessity, defined in the grades 6--9 volume,
+has $0 < \varepsilon_I < 1$: its share of the budget falls as income rises; a luxury has $\varepsilon_I > 1$: its share rises.
+
+\begin{omchart}{Brenland: food spending against disposable income, \num{2000} households, one year, in dalens. The share of food falls from
+the poorest fifth of households to the richest.}{Brenland household survey (invented data)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.8\linewidth, height=6cm, xmin=0, xmax=90000, ymin=0, ymax=10000,
+  xlabel={disposable income (dalens a year)}, ylabel={food spending (dalens a year)},
+  scaled ticks=false, xticklabel style={/pgf/number format/1000 sep={\,}}, yticklabel style={/pgf/number format/1000 sep={\,}}]
+\addplot[omDef, only marks, mark=*, mark size=0.6pt, fill opacity=0.4, draw opacity=0.4]
+  table[x=disposable, y=food] {figdata/grade-10/07-elasticities/out/food.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+In the Brenland survey, the poorest fifth of households had a mean disposable income of \dal{13870} and spent \dal{3940} on food, 28.4\,\% of their
+income; the richest fifth had \dal{41790} and spent \dal{5340}, 12.8\,\%. Between the two, the arc income elasticity of food spending is
+\[
+  \varepsilon_I = \frac{1400/4640}{27920/27830} \approx \frac{0.302}{1.003} \approx 0.30 .
+\]
+A household three times richer spends about a third more on food. Food is a necessity, and Brenland behaves like the real household surveys
+described in the grades 6--9 volume.
+% figdata: food_fit (inc_low 13870, inc_high 41790, food_low 3940, food_high 5340, shares 28.4 and 12.8, arc 0.30)
+
+The opening chart reads the same way across countries: a slope of 1.12 on the two times-ten scales says that 1\,\% more income per person goes
+with 1.12\,\% more health spending per person, so health care behaves there like a luxury. That reading needs care. The chart compares
+different countries, not one country whose income grew: richer countries also have older populations, dearer doctors and different
+systems of paying for care. It is a pattern across countries, not a demand curve.
+% figdata: health_fit (slope 1.12)
+
+\begin{definition}[Cross-price elasticity]\label{def:g10:elasticities:cross-price}
+The \emph{cross-price elasticity}\index{cross-price elasticity} of the demand for good $X$ with respect to the price of good $Y$ is the percentage
+change in the quantity of $X$ demanded divided by the percentage change in the price of $Y$: $\varepsilon_{XY} = (\Delta Q_X/\bar Q_X)/(\Delta
+p_Y/\bar p_Y)$.
+\end{definition}
+
+It is positive for \omterm{def:g10:demand:substitutes}{substitutes} (a dearer bus sends people to the tram) and negative for \omterm{def:g10:demand:substitutes}{complements} (dearer petrol means fewer car journeys).
+Close to zero, the two goods hardly affect each other.
+
+\section{Supply, time and what makes demand elastic}\label{sec:g10:elasticities:supply}
+
+\begin{definition}[Price elasticity of supply]\label{def:g10:elasticities:supply}
+The \emph{price elasticity of supply}\index{price elasticity of supply} is the percentage change in the quantity supplied divided by the percentage
+change in the price that causes it: $\varepsilon_s = (\Delta Q^s/\bar Q^s)/(\Delta p/\bar p)$, or, on a supply line $Q = c + d\,p$, $\varepsilon_s =
+d\,p/Q$ at a point.
+\end{definition}
+
+It is positive for an upward-sloping supply curve. \Cref{ch:g10:supply} showed why it grows with time: the long-run supply of crude oil or of soya
+responds far more than the short-run one. The same holds for demand. Three things make demand for a good more elastic.
+
+\begin{itemize}
+\item \textbf{Close \omterm{def:g10:demand:substitutes}{substitutes}.} The demand for one brand of petrol is very elastic, because the station across the road sells nearly the same
+  thing; the demand for petrol as a whole is not.
+\item \textbf{A large share of the budget.} A 10\,\% rise in the price of salt is hardly noticed; a 10\,\% rise in rents changes where people live.
+\item \textbf{Time.} In a week, drivers can only drive a little less. In ten years they can buy smaller cars, move closer to work, or take a job
+  nearer home.
+\end{itemize}
+
+\begin{measure}[How an elasticity is estimated: comparing like with like]
+Joining two observed points of price and quantity gives an elasticity only if nothing else moved demand between them. \Cref{ch:g10:demand} showed
+that the yearly points of the oil market mix moves along the demand curve with shifts of it. Careful studies look for price changes that came from
+the supply side and say nothing about buyers: a tax change, a frost, a strike at a refinery. They compare the quantities before and after with the
+quantities of similar buyers whom the change did not touch. A survey of many studies of petrol, of every design, gives a size near 0.09 within a year and
+near 0.31 in the long run, once it corrects for the habit of publishing large estimates; for cigarettes in the United States, 0.3 to 0.6 for adults and 0.6 to 0.7 for young people. The estimates differ from
+study to study, and reporting them as a range is honest.
+\end{measure}
+% ledger: g10:gasoline-elasticity (-0.09 short run, -0.31 long run); g10:cigarette-elasticity (-0.3 to -0.6 general, -0.6 to -0.7 youth)
+
+\begin{omfigure}
+\small
+\begin{tabular}{l c c}
+\toprule
+good & price elasticity of demand & time span \\
+\midrule
+car fuel (many countries) & $-0.09$ & short run \\
+car fuel (many countries) & $-0.31$ & long run \\
+cigarettes (United States, all) & $-0.3$ to $-0.6$ & --- \\
+cigarettes (United States, young people) & $-0.6$ to $-0.7$ & --- \\
+\bottomrule
+\end{tabular}
+
+{\small Published estimates of price elasticities of demand. Sources: a survey of studies of car-fuel demand (Havranek, Irsova and Janda 2012);
+a textbook summary of cigarette studies (Perloff 2008).}
+\end{omfigure}
+% ledger: g10:gasoline-elasticity; g10:cigarette-elasticity
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g10:elasticities:1}
+When the price of a ticket rises from 4 to 5 dalens, the number sold falls from 600 to 500. Compute the \omterm{def:g10:elasticities:arc}{arc elasticity} of demand. Is demand elastic
+or inelastic in this range?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:elasticities:2}
+When the price of a sandwich falls from 10 to 8 dalens, sales rise from 200 to 260 a day. Compute the \omterm{def:g10:elasticities:arc}{arc elasticity}. Does the shop's revenue rise or
+fall?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:elasticities:3}
+Read the labelled points of the opening chart: the United States (GDP per person \usd{65228}, health spending \usd{10550}) and India (\usd{6945} and
+\usd{211}). How many times higher are US income and US health spending per person? Is the United States above or below the line?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:elasticities:4}
+Give the sign of the \omterm{def:g10:elasticities:cross-price}{cross-price elasticity} of the demand for the first good with respect to the price of the second: (a) tea and coffee; (b) cars and
+petrol; (c) bread and butter; (d) bus tickets and train tickets between the same two towns.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:elasticities:5}
+Classify a demand with each price elasticity: $-0.2$; $-1$; $-3$; $0$; a horizontal demand curve.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:elasticities:6}
+For the demand line $Q = 200 - 5p$, compute the \omterm{def:g10:elasticities:point}{point elasticity} at $p = 10$, $p = 20$ and $p = 30$. At which price is demand unit-elastic?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:elasticities:7}
+For the supply line $Q = -20 + 4p$, compute the \omterm{def:g10:elasticities:point}{point elasticity} of supply at $p = 10$ and at $p = 20$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:elasticities:8}
+For the demand line $Q = 90 - 3p$, find the price that gives the largest revenue, the quantity sold and the revenue. Check that demand is
+unit-elastic there.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:elasticities:9}
+Using the fifth means of the Brenland survey given in the text, compute the food share of the poorest and of the richest fifth, and the arc income
+elasticity of food spending between them. What would the elasticity have been if the richest fifth had spent the same share of its income on food as
+the poorest?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:elasticities:10}
+A museum sells \num{5000} tickets a month at 10 dalens. Its demand has a price elasticity of $-0.4$. It raises the price by 10\,\%. Treating the
+elasticity as the ratio of the two percentage changes, estimate the new number of tickets and the change in revenue.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:elasticities:11}
+Use the table of published estimates. (a) A lasting 10\,\% rise in the price of car fuel: by about how much does fuel use fall within a year, and in the
+long run? (b) A tax raises the price of cigarettes by 20\,\%: by how much does adult smoking fall, at the two ends of the range, and young people's?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:elasticities:12}
+A study claims that the demand for a good is inelastic. Describe an observation that would contradict this claim, and say what you would check about how
+the observation was made.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:elasticities:13}
+On the line $Q = a - b\,p$, let $P = a/b$ be the price at which nobody buys. Prove that the \omterm{def:g10:elasticities:point}{point elasticity} at a price $p$ is $\varepsilon_d = -p/(P - p)$.
+Deduce, without computing $Q$, the price at which demand is unit-elastic and the elasticity at a price of $3P/4$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:elasticities:14}
+The demand for a good is $Q = 1200/p$. Show that buyers spend the same amount whatever the price, and that the \omterm{def:g10:elasticities:arc}{arc elasticity} between $p = 2$ and $p = 3$ is
+exactly $-1$. Describe in words a demand curve whose elasticity is the same at every point, and say why it is not a straight line.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:elasticities:15}
+Explain, with car fuel as the example, why long-run price elasticities of demand are larger than short-run ones. Then explain, with
+\cref{ex:g10:supply:two-curves}, why the same holds for supply.
+\end{exercise}
+
+\section{Problem: The Toll Bridge}
+
+\begin{problem}[{Weekend problem --- a toll bridge, a revenue-maximising toll and a new ferry}]
+\label{pb:g10:elasticities:1}
+A river town in Brenland owns a toll bridge. In one year the toll was 4 dalens and there were \num{9000} crossings a day; the next year the toll was 5
+dalens and there were \num{8000}. Nothing else that matters to travellers changed. The town treats demand as a straight line through these two points.
+
+\medskip
+\noindent\textbf{Part I --- The demand for crossings.}
+\begin{enumerate}
+\item Find the demand line $Q = a - b\,p$ through the two points.
+\item At what toll would nobody cross? How many crossings would there be with no toll?
+\item Compute the \omterm{def:g10:elasticities:point}{point elasticity} of demand at a toll of 5 dalens.
+\item Compute the \omterm{def:g10:elasticities:arc}{arc elasticity} between the two years.
+\item Compute the town's revenue in each year. Is this consistent with the elasticity?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The revenue-maximising toll.}
+\begin{enumerate}[resume]
+\item Write the revenue $R(p)$ as a function of the toll.
+\item Find the toll that brings the largest revenue, and the number of crossings at that toll.
+\item Compute that revenue and the elasticity at that toll.
+\item Check: compute the revenue at 6 and at 7 dalens.
+\item Compute the revenue at 8 dalens. Why does a higher toll eventually bring less?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- The ferry.}
+\begin{enumerate}[resume]
+\item A ferry starts to cross the river, with a fare of 3 dalens, and the demand for the bridge becomes $Q = 12000 - 1200\,p$. How many crossings does the
+  bridge lose at a toll of 5 dalens?
+\item Compute the \omterm{def:g10:elasticities:point}{point elasticity} at 5 dalens now.
+\item Find the revenue-maximising toll and the revenue it brings.
+\item If the town had already moved the toll to the value found in question 7, what would its revenue be with the ferry? Compare with question 13.
+\item Explain why the ferry made the demand for the bridge more elastic.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Other prices and incomes.}
+\begin{enumerate}[resume]
+\item With a ferry fare of $f$ dalens, the demand for the bridge is $Q = 10800 - 1200\,p + 400\,f$. Check that this gives the demand of question 11 when $f
+  = 3$.
+\item Compute the \omterm{def:g10:elasticities:cross-price}{cross-price elasticity} of bridge crossings with respect to the ferry fare, at $p = 5$ and $f = 3$. What does its sign say?
+\item The ferry raises its fare to 4 dalens. How many crossings, and what revenue, at a toll of 5?
+\item The incomes of the town's travellers rise by 10\,\%, and at every toll and fare the number of crossings rises by 3\,\%. Estimate the income elasticity
+  of crossings. Is a bridge crossing a \omterm{def:g10:demand:normal}{normal good} here, and a necessity or a luxury?
+\item State the result of the problem: the revenue-maximising toll and the revenue it brings, before and after the ferry.
+\end{enumerate}
+\end{problem}

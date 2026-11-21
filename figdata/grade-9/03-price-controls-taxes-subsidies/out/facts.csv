@@ -1,0 +1,12 @@
+name,value
+base_p,10
+base_q,80
+tax5_p,13
+tax5_q,68
+sub5_p,7
+sub5_q,92
+tax10_p,16
+tax10_q,56
+milk_unsold_1,100
+milk_unsold_8,281
+milk_stock_8,1495

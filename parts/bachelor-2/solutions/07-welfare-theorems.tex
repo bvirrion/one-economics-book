@@ -1,0 +1,150 @@
+\section*{Chapter \ref{ch:b2:welfare-theorems} --- The Two Welfare Theorems}
+
+\begin{solution}{exo:b2:welfare-theorems:1}
+% code: exercises/solutions.py crusoe
+The planner's condition $1/(2L) = 1/(16 - L)$ gives $L = 16/3 = 5.333$ and $c = 4\sqrt{5.333} = 9.238$.
+The firm sets $w = 2/\sqrt L = 0.866$ and earns $9.238 - 0.866 \times 5.333 = 4.619$. The household's
+full income is $16 \times 0.866 + 4.619 = 18.475$; it spends half on leisure, $18.475/(2 \times 0.866) =
+10.667$ hours, so it works $16 - 10.667 = 5.333$ hours and consumes $9.238$.
+\end{solution}
+
+\begin{solution}{exo:b2:welfare-theorems:2}
+% code: exercises/solutions.py ex_gap
+% ledger: b2:persson2002-t3
+The gap fell from 22.0 to 13.9 per cent, by 8.1 points; freight fell from 9.9 to 7.6, by 2.3 points, which
+is $2.3/8.1 = 28$ per cent of the fall. The residual fell from 8.4 to 3.5 per cent: it more than halved.
+\end{solution}
+
+\begin{solution}{exo:b2:welfare-theorems:3}
+% code: exercises/solutions.py ex_profit
+Profit $3 \times 2\sqrt L - L$ is maximised where $3/\sqrt L = 1$: $L = 9$, $y = 6$, profit $18 - 9 = 9$.
+\end{solution}
+
+\begin{solution}{exo:b2:welfare-theorems:4}
+Prices of the same quality in two markets between which the good is being shipped, with a gap that stays
+above the full cost of shipping (freight, insurance, port charges, interest on the cargo during the
+voyage) for long periods. Before concluding, one must check that the qualities are the same, that the
+prices are for the same dates allowing for the voyage, that all costs are measured, and that trade was
+actually flowing: without shipments the proposition allows any gap up to $t$.
+\end{solution}
+
+\begin{solution}{exo:b2:welfare-theorems:5}
+% code: exercises/solutions.py crusoe
+The planner maximises $a\ln(A\sqrt L) + (1 - a)\ln(T - L)$: $a/(2L) = (1 - a)/(T - L)$, so $a(T - L) = 2(1
+- a)L$ and $L = aT/(2 - a)$. With $a = \tfrac23$: $L = (32/3)/(4/3) = 8$, $c = 4\sqrt8 = 11.31$ and $w =
+2/\sqrt8 = 0.707$.
+\end{solution}
+
+\begin{solution}{exo:b2:welfare-theorems:6}
+% code: exercises/solutions.py ex_tech
+Hours do not depend on $A$ ($L = aT/(2 - a)$), so they stay at 5.333. Consumption and the real wage rise in
+proportion to $A$, by 25 per cent: $c = 5\sqrt{5.333} = 11.547$ and $w = 5/(2\sqrt{5.333}) = 1.083$. With
+log utility the higher wage makes leisure dearer (substitution effect, more work) and makes the household
+richer (income effect, less work), and the two cancel.
+\end{solution}
+
+\begin{solution}{exo:b2:welfare-theorems:7}
+(a) An external effect: the smoke enters the laundry's technology without a price. (b) Price taking: the
+owner of the only source sets the price. (c) \omterm{def:b2:welfare-theorems:complete-markets}{Complete markets}: there is no market for grain delivered
+in the state ``poor harvest''. (d) Convexity: a large fixed cost and a near-zero marginal cost make the
+technology non-convex, and a price equal to marginal cost would not cover the cost of building.
+\end{solution}
+
+\begin{solution}{exo:b2:welfare-theorems:8}
+% code: exercises/solutions.py ex_transfer
+On the \omterm{def:b2:exchange-economies:contract-curve}{contract curve} $x_{A2} = 20 \times 6/16 = 7.5$, so $x_A = (6, 7.5)$ and $x_B = (4, 2.5)$. The
+supporting price is $\mathit{MRS}_A = 7.5/6 = 1.25$. $A$'s bundle costs $1.25 \times 6 + 7.5 = 15$ and her
+\omterm{def:b2:exchange-economies:endowment}{endowment} is worth $1.25 \times 8 + 2 = 12$: $B$ must give her 3 units of good 2. $B$'s wealth is then
+$1.25 \times 2 + 8 - 3 = 7.5$, and he demands $x_{B1} = \tfrac23 \times 7.5/1.25 = 4$ and $x_{B2} =
+\tfrac13 \times 7.5 = 2.5$, as required.
+\end{solution}
+
+\begin{solution}{exo:b2:welfare-theorems:9}
+Farmers who would pay more than the expected cost of the indemnity plus the cost of running the insurance,
+and potential insurers who could pool harvests whose failures are not all correlated: for instance,
+regions whose harvests fail in different years, and farmers who cut consumption sharply after bad
+harvests or hold costly precautionary stocks. If instead the bad harvests hit every farmer in every region
+at once, or insurers cannot observe the harvest, the absence of the market may reflect a risk that cannot
+be pooled or an information problem (\cref{ch:b2:adverse-selection}), not an inefficiency that a market
+would remove.
+\end{solution}
+
+\begin{solution}{exo:b2:welfare-theorems:10}
+Suppose $(x', y')$ is feasible, $\sum_i x'_i = \sum_i \omega_i + \sum_j y'_j$, every consumer weakly
+prefers $x'_i$ and some consumer $k$ strictly. As in the exchange case, $p \cdot x'_k > p \cdot \omega_k +
+\sum_j \theta_{kj}\,p \cdot y^*_j$ and $p \cdot x'_i \ge p \cdot \omega_i + \sum_j \theta_{ij}\,p \cdot
+y^*_j$ for every $i$, by \omterm{def:b2:welfare-theorems:lns}{local non-satiation}. Summing and using $\sum_i \theta_{ij} = 1$: $p \cdot \sum_i
+x'_i > p \cdot \sum_i \omega_i + \sum_j p \cdot y^*_j$. Each firm maximises profit at $p$, so $p \cdot y^*_j
+\ge p \cdot y'_j$ for every $y'_j \in Y_j$. Hence $p \cdot \sum_i x'_i > p \cdot \sum_i \omega_i + \sum_j
+p \cdot y'_j = p \cdot \sum_i x'_i$, a contradiction.
+\end{solution}
+
+\begin{solution}{exo:b2:welfare-theorems:11}
+At $p = (1, 1)$ each consumer's wealth is 6. $A$ attains her maximum utility 4 with any affordable bundle
+whose goods sum to at least 4, so $(3, 3)$ is a best choice; $B$ is indifferent among all bundles costing
+6, so $(3, 3)$ is a best choice for him too. Markets clear with no trade: an equilibrium. Moving one unit of
+good 1 from $A$ to $B$ gives $A$ $(2, 3)$, still worth 4 to her, and $B$ $(4, 3)$, worth $7 > 6$: a Pareto
+improvement. The failing step is ``$p \cdot x'_i \ge p \cdot \omega_i$ for every consumer who is not
+worse off'': $A$'s new bundle costs $5 < 6$ and is no worse for her, because she is satiated and \omterm{def:b2:welfare-theorems:lns}{local
+non-satiation} fails.
+\end{solution}
+
+\begin{solution}{exo:b2:welfare-theorems:12}
+% code: exercises/solutions.py ex_second
+The target is on the \omterm{def:b2:exchange-economies:contract-curve}{contract curve}, so $x_{A2}$ follows from \eqref{eq:b2:exchange-economies:contract};
+the supporting price is $A$'s marginal rate of substitution, $p = \frac{a}{1 - a}\,x_{A2}/x_{A1}$. $A$ spends
+the share $a$ of her wealth $m_A$ on good 1, so she buys $x_{A1}$ exactly when $m_A = px_{A1}/a$. The
+transfer to $A$ is $\tau_A = px_{A1}/a - (p\omega_{A1} + \omega_{A2})$, and $B$ gives it. With the numbers:
+$x_{A2} = 12.5 \times 40/(0.375 \times 60 + 0.125 \times 40) = 500/27.5 = 18.18$, $p = 18.18/40 = 0.4545$,
+$m_A = 0.4545 \times 40/0.5 = 36.36$, and $\tau_A = 36.36 - (0.4545 \times 80 + 10) = 36.36 - 46.36 = -10$:
+$A$ gives 10 units of good 2.
+\end{solution}
+
+\begin{solution}{pb:b2:welfare-theorems:1}
+% code: exercises/solutions.py problem
+\textbf{Part I.}
+1. If grain is shipped, $p_B = p_A + t$; if not, $p_B - p_A \le t$ (\cref{prop:b2:welfare-theorems:one-price}).
+2. Ardel: $10p_A = 100 - 10p_A + s$. Brenmoor: $s = 200 - 10p_B$.
+3. With $p_B = p_A + 6$: $s = 140 - 10p_A$, so $20p_A - 100 = 140 - 10p_A$ and $p_A = 8$, $p_B = 14$, $s =
+60$ tonnes.
+4. Without the road, $10p_A = 100 - 10p_A$ gives $p_A = 5$; Brenmoor consumes no grain.
+5. $6 \times 60 = 360$ dalens a week.
+6. Yes: it is a \omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium} with price-taking farms, households and carriers, no external
+effects and a market for grain in each town, so the first welfare theorem applies. The freight is a real
+cost of moving grain, not a waste the theorem ignores.
+\textbf{Part II.}
+7. Profit $p_A\sqrt{20L} - L$ is maximised where $p_A\sqrt{20}/(2\sqrt L) = 1$, so $L = 5p_A^2$ and $q =
+\sqrt{100p_A^2} = 10p_A$.
+8. $q = 80$ tonnes, $L = 5 \times 64 = 320$ hours, profit $8 \times 80 - 320 = 320$ dalens.
+9. Ardel's households own the farms; the profit is part of their income, alongside their wages, and it is
+what lets \omterm{def:b2:exchange-economies:walras-law}{Walras' law} hold in an economy with firms.
+10. Ardel's consumers: $\tfrac12 \times 20 \times (10 - 8) = 20$. Brenmoor's: $\tfrac12 \times 60 \times (20
+- 14) = 180$. Profit 320. Total 520 dalens.
+\textbf{Part III.}
+11. $s = 180 - 10p_A$ and $20p_A - 100 = 180 - 10p_A$: $p_A = 28/3 = 9.33$ and $p_B = 11.33$.
+12. $s = 200 - 113.33 = 86.67$ tonnes; output $93.33$; Ardel consumes $100 - 93.33 = 6.67$.
+13. $11.33 - 9.33 = 2 = t$.
+14. In fractions, $p_A = 28/3$, $p_B = 34/3$ and $s = 260/3$. Ardel's consumers: $\tfrac12 \times \tfrac{20}{3}
+\times \tfrac23 = 2.22$. Brenmoor's: $\tfrac12 \times \tfrac{260}{3} \times \tfrac{26}{3} = 375.56$. Profit:
+$5 \times (28/3)^2 = 435.56$. Total $813.33$, a gain of $293.33$ dalens a week.
+15. Ardel's consumers lose $20 - 2.22 = 17.78$: they now pay a price close to the city's.
+16. Yes: the farms gain $115.56$ and Brenmoor's consumers $195.56$, far more than $17.78$. A \omterm{def:b2:welfare-theorems:lump-sum}{lump-sum
+transfer}, fixed in advance and independent of how much grain anyone buys or grows, could compensate
+Ardel's consumers without changing any choice.
+17. In this model a gap above the transport cost is impossible when grain is shipped. A positive residual
+would be either a cost the measure leaves out or a profit that competition has not removed.
+18. A gap between the two prices close to the rail cost, prices that move together week by week, and
+shipments that respond quickly when the gap widens.
+\textbf{Part IV.}
+19. $p = (\tfrac12 \times 10 + \tfrac14 \times 90)/(\tfrac12 \times 80 + \tfrac34 \times 20) = 27.5/55 = 0.5$
+bolts per tonne. Ardel's wealth is $0.5 \times 80 + 10 = 50$: it consumes $(50, 25)$; Brenmoor $(50, 75)$.
+20. Ardel's grain is 40, so its cloth is $12.5 \times 40/(0.375 \times 60 + 0.125 \times 40) = 18.18$;
+Brenmoor gets $(60, 81.82)$.
+21. $p = 18.18/40 = 0.4545$.
+22. Ardel's bundle costs $0.4545 \times 40 + 18.18 = 36.36$; its \omterm{def:b2:exchange-economies:endowment}{endowment} is worth $0.4545 \times 80 + 10 =
+46.36$. Ardel gives Brenmoor 10 bolts of cloth.
+23. \omterm{def:b2:exchange-economies:endowment}{Endowments} become $(80, 0)$ and $(20, 100)$: $p = (\tfrac12 \times 0 + \tfrac14 \times 100)/55 = 0.4545$;
+Ardel's wealth $36.36$ buys $\tfrac12 \times 36.36/0.4545 = 40$ tonnes and $18.18$ bolts. The target.
+24. After the railway grain costs 9.33 dalens a tonne in Ardel and 11.33 in Brenmoor; a transfer of 10 bolts
+of cloth from Ardel to Brenmoor delivers the council's \omterm{def:b2:exchange-economies:allocation}{allocation}.
+\end{solution}

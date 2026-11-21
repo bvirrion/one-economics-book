@@ -1,0 +1,411 @@
+% Provenance (never printed): the demography strand of ../economics_series.md; urbanisation
+% added from the geography programme (one paragraph). Brief: sources/book1/BRIEFS.md, g6-04.
+% Chart data: figdata/grade-6/04-health-and-population (Gapminder lex and pop before 1950;
+% WDI SP.DYN.LE00.IN, SP.POP.TOTL, SH.DYN.MORT, NY.GDP.PCAP.PP.KD, SP.DYN.TFRT.IN,
+% SP.URB.TOTL.IN.ZS, SP.POP.DPND.OL).
+\chapter{Longer Lives, Smaller Families}\label{ch:g6:health-and-population}
+
+The world's population rose from one billion to eight billion in two
+centuries. One might guess that families had more children. The opposite
+happened: families now have far fewer children than in 1800. What changed is
+that most children now live to grow up, and most adults live to grow old. This
+chapter measures both changes, and then follows what came next --- smaller
+families and older populations.
+
+\begin{omfigure}
+\includegraphics[width=0.62\linewidth]{images/book1/ai/g6-health-and-population-family.jpg}
+
+{\small Three generations at one table. In 1800, few children knew their
+grandparents for long; today most do.}
+\end{omfigure}
+
+\begin{recall}
+A \omterm{def:g6:reading-economic-charts:per-person}{per-person value} and a share were defined in
+\cref{ch:g6:reading-economic-charts}, with the \omterm{def:g6:reading-economic-charts:times-ten-scale}{times-ten scale}; \omterm{def:g6:living-standards:income-per-person}{income per
+person} in \cref{ch:g6:living-standards}.
+\end{recall}
+
+\section{Life expectancy at birth}
+
+\begin{definition}[Life expectancy at birth]\label{def:g6:health-and-population:life-expectancy}
+The \emph{life expectancy at birth}\index{life expectancy at birth} of a
+country in a year is the average number of years that a newborn baby would
+live if, all through its life, people of each age kept dying at the rates
+observed in that country in that year.
+\end{definition}
+
+\begin{measure}[Life expectancy at birth]
+Statisticians count, for each age, how many people of that age died during the
+year and how many were alive. From these death rates they build a \emph{life
+table}: out of 100\,000 imaginary babies, how many would die before age one,
+between one and two, and so on, up to the oldest ages. Life expectancy is the
+average age at death in that table. Two things follow. It is an average:
+many deaths of young children pull it down a great deal, even if the adults
+live long. And it is a snapshot of one year: in a year of war or epidemic it
+falls sharply, although the babies born that year will not live through the
+war or the epidemic all their lives.
+\end{measure}
+
+\begin{omchart}{Life expectancy at birth, 1800--2024, in years, in six world regions
+and the world. Before 1950 the values are Gapminder's estimates; from 1960 they
+are the World Bank's. The years 1950--1959 are left empty.}{Gapminder
+Foundation (life expectancy and population), 1800--1949; World Bank, World
+Development Indicators, SP.DYN.LE00.IN and SP.POP.TOTL, 1960--2024; regional
+values weighted by population}
+\begin{tikzpicture}
+\begin{axis}[omtime, xmin=1800, xmax=2024, ymin=0, ymax=85,
+  xtick={1800,1850,1900,1950,2000}, xlabel={Year}, ylabel={Years},
+  height=0.6\linewidth, legend style={at={(0.5,-0.2)}, anchor=north, legend columns=3},
+  ]
+\addplot[omDef, thick] table[x=year, y=america]
+  {figdata/grade-6/04-health-and-population/out/life_expectancy_early.csv};
+\addplot[omMeth, thick] table[x=year, y=east_asia_pacific]
+  {figdata/grade-6/04-health-and-population/out/life_expectancy_early.csv};
+\addplot[omProp, thick] table[x=year, y=europe_central_asia]
+  {figdata/grade-6/04-health-and-population/out/life_expectancy_early.csv};
+\addplot[omDebate, thick] table[x=year, y=middle_east_north_africa]
+  {figdata/grade-6/04-health-and-population/out/life_expectancy_early.csv};
+\addplot[omExo, thick] table[x=year, y=south_asia]
+  {figdata/grade-6/04-health-and-population/out/life_expectancy_early.csv};
+\addplot[omThm, thick] table[x=year, y=sub_saharan_africa]
+  {figdata/grade-6/04-health-and-population/out/life_expectancy_early.csv};
+\addplot[black, thick, densely dashed] table[x=year, y=world]
+  {figdata/grade-6/04-health-and-population/out/life_expectancy_early.csv};
+\legend{America, East Asia and Pacific, Europe and Central Asia,
+  Middle East and North Africa, South Asia, Sub-Saharan Africa, World}
+\addplot[omDef, thick, forget plot] table[x=year, y=america]
+  {figdata/grade-6/04-health-and-population/out/life_expectancy_late.csv};
+\addplot[omMeth, thick, forget plot] table[x=year, y=east_asia_pacific]
+  {figdata/grade-6/04-health-and-population/out/life_expectancy_late.csv};
+\addplot[omProp, thick, forget plot] table[x=year, y=europe_central_asia]
+  {figdata/grade-6/04-health-and-population/out/life_expectancy_late.csv};
+\addplot[omDebate, thick, forget plot] table[x=year, y=middle_east_north_africa]
+  {figdata/grade-6/04-health-and-population/out/life_expectancy_late.csv};
+\addplot[omExo, thick, forget plot] table[x=year, y=south_asia]
+  {figdata/grade-6/04-health-and-population/out/life_expectancy_late.csv};
+\addplot[omThm, thick, forget plot] table[x=year, y=sub_saharan_africa]
+  {figdata/grade-6/04-health-and-population/out/life_expectancy_late.csv};
+\addplot[black, thick, densely dashed, forget plot] table[x=year, y=world]
+  {figdata/grade-6/04-health-and-population/out/life_expectancy_late.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: life_expectancy_early (world 1800 30.6, 1900 33.6, 1917 35.7, 1918 24.3, 1949 50.7;
+% 1800 regions 25.7 to 33.9; south_asia 1918 9.8)
+% figdata: life_expectancy_late (world 1960 50.9, 2019 72.9, 2021 71.2, 2024 73.5;
+% 2024: europe_central_asia 78.6, sub_saharan_africa 62.8)
+In 1800, \omterm{def:g6:health-and-population:life-expectancy}{life expectancy at birth} was between 26 and 34 years in every region,
+and $30.6$ years for the world. It barely moved for a century: $33.6$ years in
+1900. Then it rose almost everywhere: $50.9$ years for the world in 1960 and
+$73.5$ years in 2024. The highest regional value in 2024 was $78.6$ years
+(Europe and Central Asia), the lowest $62.8$ years (Sub-Saharan Africa) --- far
+above any region in 1800.
+
+The deep notch in 1918 is the influenza pandemic of 1918--1919, which killed
+tens of millions of people in a few months. The world's life expectancy fell
+from $35.7$ years in 1917 to $24.3$ in 1918, then came back the next year.
+The estimates for South Asia fall to about 10 years in 1918. A smaller dip in
+2020 and 2021 is the COVID-19 pandemic: from $72.9$ years in 2019 to $71.2$ in
+2021.
+
+\section{Child mortality}
+
+\begin{definition}[Child mortality rate]\label{def:g6:health-and-population:child-mortality}
+The \emph{child mortality rate}\index{child mortality rate} is the number of
+children who die before their fifth birthday, for every 1\,000 children born
+alive.
+\end{definition}
+
+A \omterm{def:g6:health-and-population:child-mortality}{child mortality rate} of 100 means that one child in ten dies before the age
+of five. Around 1800, the estimates for every country are several hundred:
+% figdata: facts (cm_1800_min 322, cm_1800_max 540)
+from 322 to 540 deaths per 1\,000 births, so that between a third and a half of
+all children died before five.
+This is the main reason why \omterm{def:g6:health-and-population:life-expectancy}{life expectancy at birth} was so low.
+
+\begin{omchart}{Child mortality and income per person in 2024, one dot per
+country: deaths before age five per 1\,000 births, against income per person in
+dollars of 2021 on a times-ten scale.}{World Bank, World Development Indicators,
+SH.DYN.MORT and NY.GDP.PCAP.PP.KD, 2024}
+\begin{tikzpicture}
+\begin{semilogxaxis}[omincomex, xmin=700, xmax=200000, ymin=0, ymax=120,
+  xlabel={Income per person (dollars of 2021, times-ten scale)},
+  ylabel={Deaths before age 5 per 1\,000 births}]
+\addplot table[x=income, y=mortality]
+  {figdata/grade-6/04-health-and-population/out/child_mortality_income.csv};
+\end{semilogxaxis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: child_mortality_income (median under 3000: 62; above 30000: 4.3)
+% figdata: child_mortality_pairs (GNQ 14998 68; LKA 13793 5.9; DOM 24230 30.6; MKD 24203 2.8)
+The dots fall from left to right: the richer a country, the fewer of its children
+die. In the countries with less than 3\,000 dollars per person, the middle
+value is about 62 deaths per 1\,000 births; in those with more than 30\,000
+dollars, about 4. But at the same income the dots spread widely. Equatorial
+Guinea, with $14\,998$ dollars per person, had 68 deaths per 1\,000 births; Sri
+Lanka, with $13\,793$ dollars, had $5.9$. Income helps a great deal, and it is
+not the whole story: clean water, vaccines, clinics and the schooling of mothers
+matter too.
+
+\section{Births per woman}
+
+\begin{definition}[Births per woman]\label{def:g6:health-and-population:births-per-woman}
+The number of \emph{births per woman}\index{births per woman (fertility rate)}
+in a country in a year, also called its \emph{fertility rate}, is the number
+of children a woman would have in her life if, at each age, she had children
+at the rates observed among women of that age in that year.
+\end{definition}
+
+\begin{measure}[Births per woman]
+For each age from 15 to 49, the statistical office divides the births to
+mothers of that age by the number of women of that age. Adding up these rates
+over all ages gives the number of \omterm{def:g6:health-and-population:births-per-woman}{births per woman}. A value of about $2.1$ is
+the \emph{replacement level}: each generation of parents is just replaced by its
+children (a little more than 2, because some children die before they have
+children of their own).
+\end{measure}
+
+\begin{omchart}{Births per woman by world region and in the world, 1960--2024.}{World
+Bank, World Development Indicators, SP.DYN.TFRT.IN, World Bank regions}
+\begin{tikzpicture}
+\begin{axis}[omtime, xmin=1960, xmax=2024, ymin=0, ymax=8,
+  xtick={1960,1970,1980,1990,2000,2010,2020}, xlabel={Year}, ylabel={Births per woman},
+  height=0.6\linewidth, legend style={at={(0.5,-0.2)}, anchor=north, legend columns=2},
+  cycle list={{omDef, thick}, {omMeth, thick}, {omProp, thick}, {omDebate, thick},
+    {omDef, thick, densely dotted}, {omExo, thick}, {omThm, thick}, {black, thick, densely dashed}}]
+\pgfplotsforeachungrouped \col in {eas, ecs, lcn, mea, nac, sas, ssf, wld} {
+  \addplot table[x=year, y=\col]
+    {figdata/grade-6/04-health-and-population/out/fertility_regions.csv};
+}
+\legend{East Asia and Pacific, Europe and Central Asia, Latin America and Caribbean,
+  {Middle East, North Africa, Afghanistan, Pakistan}, North America, South Asia,
+  Sub-Saharan Africa, World}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: fertility_regions (wld 1960 4.69, 2024 2.19, first below 3 in 1993; ssf 1960 6.57, 2024 4.26;
+% eas 2024 1.34; sas 1960 6.00, 2024 1.98)
+In 1960, a woman had on average $4.69$ children in the world as a whole. In
+2024, $2.19$. The fall was largest in East Asia, now the region with the fewest
+births ($1.34$ per woman), and in South Asia, from $6.00$ to $1.98$. Sub-Saharan
+Africa's rate has fallen too, from $6.57$ to $4.26$, but it is still the
+highest. In most regions, women now have fewer children than the replacement
+level.
+
+\section{Why population grew fast, and why its growth is slowing}
+
+A population is like a tank of water. Births flow in; deaths flow out. People
+also move from one country to another, but for the world as a whole they cancel.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=1cm, y=1cm]
+  % invented town: 10 000 people, 300 births and 100 deaths a year
+  \draw[thick] (0,0) -- (0,3) (4,3) -- (4,0) -- (0,0);
+  \fill[omDef!20] (0,0) rectangle (4,2.2);
+  \node[font=\footnotesize, align=center] at (2,1.1) {population\\10\,000};
+  \draw[omMeth, -{Stealth[length=3mm]}, line width=2.5pt] (-1.6,3.6) to[out=0, in=120] (0.8,2.4);
+  \node[font=\footnotesize, text=omMeth, align=center] at (-1.8,4.0) {births: 300 a year};
+  \draw[omThm, -{Stealth[length=3mm]}, line width=1.2pt] (4,0.4) -- (5.6,0.4);
+  \node[font=\footnotesize, text=omThm, anchor=west] at (5.7,0.4) {deaths: 100 a year};
+  \node[font=\footnotesize, align=left, anchor=west] at (5.7,2.2) {one year later:\\$10\,000 + 300 - 100 = 10\,200$};
+\end{tikzpicture}
+
+{\small A population as a tank (an invented town). Its change in a year is the
+births minus the deaths, plus the people who arrive minus those who leave.}
+\end{omfigure}
+
+Before 1800, births and deaths were both high, about equal on average, and the
+tank barely rose. Then deaths fell, first among children: clean water, better
+food, vaccines. Births stayed high for a generation or more, because families
+were used to having many children, many of whom used to die. For those decades
+the tank filled fast: this is why the world's population rose from 2.5 billion
+in 1950 to 6 billion in 2000. Then births fell too. Parents whose children
+survive have fewer of them, and parents who move to towns, where children go to
+school instead of working on a farm, have fewer still. With fewer births, the
+population grows more slowly.
+
+% figdata: facts (urban_1960 34.2, urban_2025 57.8)
+The move to towns is itself one of the large changes of these years. In 1960,
+$34.2\,\%$ of the world's people lived in towns and cities; in 2025, $57.8\,\%$.
+
+\section{An ageing population}
+
+When fewer children are born and adults live longer, the share of older people
+in the population rises. Economists watch one ratio closely, because people of
+working age produce most of what everyone, young and old, consumes.
+
+\begin{definition}[Old-age dependency ratio]\label{def:g6:health-and-population:old-age-dependency}
+The \emph{old-age dependency ratio}\index{old-age dependency ratio} of a
+population is the number of people aged 65 and over for every 100 people aged
+15 to 64.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=1cm, y=1cm]
+  % invented towns of 10 000; bars: thousands of people by age group (scale 0.5 cm per 1 000)
+  \foreach \i/\g/\a/\b in {0/{0--14}/4.0/1.5, 1/{15--39}/3.5/2.8, 2/{40--64}/2.0/3.2,
+      3/{65--79}/0.4/1.9, 4/{80+}/0.1/0.6} {
+    \fill[omDef!50] (0,{\i*0.6}) rectangle ({\a*0.5},{\i*0.6+0.45});
+    \node[left, font=\scriptsize] at (-0.1,{\i*0.6+0.22}) {\g};
+    \fill[omThm!50] (6.2,{\i*0.6}) rectangle ({6.2+\b*0.5},{\i*0.6+0.45});
+    \node[left, font=\scriptsize] at (6.1,{\i*0.6+0.22}) {\g};
+  }
+  \node[font=\footnotesize, align=center] at (1.2,-0.6) {young town:\\65+: 500;\quad 15--64: 5\,500};
+  \node[font=\footnotesize, align=center] at (7.4,-0.6) {ageing town:\\65+: 2\,500;\quad 15--64: 6\,000};
+  \node[font=\scriptsize] at (1.2,3.25) {age group};
+  \node[font=\scriptsize] at (7.4,3.25) {age group};
+\end{tikzpicture}
+
+{\small Two invented towns of 10\,000 people, by age group: each bar is the
+number of people in the group. The young town has 9 people aged 65 and over for
+every 100 of working age ($500 \div 5\,500 \times 100 \approx 9$); the ageing
+town has 42 ($2\,500 \div 6\,000 \times 100 \approx 42$).}
+\end{omfigure}
+
+% figdata: facts (old_dep_1960 8.6, old_dep_2024 15.7)
+For the world as a whole, the \omterm{def:g6:health-and-population:old-age-dependency}{old-age dependency ratio} rose from $8.6$ in 1960
+to $15.7$ in 2024: from about one older person for every twelve of working age
+to about one for every six. In countries where births fell early, it is much
+higher. An ageing population is a success --- people live longer --- and it
+raises new questions: who will care for the old, and how will pensions be paid?
+Later books of this course return to them.
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g6:health-and-population:1}
+Use the chart of life expectancy. About what was the world's \omterm{def:g6:health-and-population:life-expectancy}{life expectancy at
+birth} in 1900, and in 2024?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g6:health-and-population:2}
+Use the chart of \omterm{def:g6:health-and-population:births-per-woman}{births per woman}. Which region had the fewest \omterm{def:g6:health-and-population:births-per-woman}{births per woman}
+in 2024? Which had the most?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g6:health-and-population:3}
+In an invented country, 37 children die before age five for every 1\,000 born.
+(a) What percentage of children is that? (b) Out of 50\,000 children born in a
+year, about how many will die before five?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g6:health-and-population:4}
+Use the chart of child mortality and income. (a) Roughly how many children per
+1\,000 die before five in the countries near 2\,000 dollars per person? (b) In
+the countries near 50\,000 dollars?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g6:health-and-population:5}
+In an invented village, ten people died one year, at these ages: 0, 0, 0, 2, 4,
+40, 55, 60, 68 and 71. (a) Compute the average age at death. (b) How many of the
+ten died at about that age? (c) Compute the average age at death of those who
+reached the age of five. What does this tell you about ``a life expectancy of
+30 years''?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g6:health-and-population:6}
+An invented town has 1\,200 people aged 65 and over, and 4\,800 people aged 15 to
+64. Compute its \omterm{def:g6:health-and-population:old-age-dependency}{old-age dependency ratio}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g6:health-and-population:7}
+Use the chart of \omterm{def:g6:health-and-population:births-per-woman}{births per woman}. In about which year did the world's line fall
+below 3 \omterm{def:g6:health-and-population:births-per-woman}{births per woman}?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g6:health-and-population:8}
+Someone says: ``A richer country always has a lower \omterm{def:g6:health-and-population:child-mortality}{child mortality rate} than a
+poorer one.'' (a) What two dots on the chart of child mortality would contradict
+this sentence? (b) Does the chart contain such dots? (c) Write a sentence that
+the chart does support.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g6:health-and-population:9}
+An invented town has 5\,000 people. In the first year there are 150 births and 60
+deaths; in the second, 140 births and 65 deaths; in the third, 130 births and 70
+deaths. Nobody arrives or leaves. (a) Compute the population at the end of each
+year. (b) Is the population still growing? Is its growth speeding up or slowing
+down?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g6:health-and-population:10}
+% figdata: child_mortality_pairs (DOM 24230 30.6; MKD 24203 2.8)
+In 2024, the Dominican Republic had an \omterm{def:g6:living-standards:income-per-person}{income per person} of $24\,230$ dollars and
+$30.6$ deaths before age five per 1\,000 births; North Macedonia had $24\,203$
+dollars and $2.8$ deaths. (a) By how many dollars do their incomes differ?
+(b) How many times higher is the Dominican Republic's child mortality? Round to
+one decimal. (c) Name two things, other than \omterm{def:g6:living-standards:income-per-person}{income per person}, that could
+explain such a gap.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g6:health-and-population:11}
+An invented town has 2\,000 people aged 65 and over and 6\,000 aged 15 to 64.
+Every five years, the number aged 65 and over rises by 300 and the number aged 15
+to 64 falls by 200. Compute the \omterm{def:g6:health-and-population:old-age-dependency}{old-age dependency ratio} now and after 5, 10, 15
+and 20 years, to one decimal. Is it rising by the same amount every five years?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g6:health-and-population:12}
+The chart of life expectancy gives one value per region and year. (a) Name two
+groups of people, inside one country, whose life expectancies could be very
+different. (b) What data would you need to compare them? (c) Can the regional
+chart tell you whether the gap between them is widening?
+\end{exercise}
+
+\section{Problem: The Village Register}
+
+\begin{problem}[{Weekend problem --- child mortality and average age at death from
+a register, a village over thirty years, and the dependency ratio now and
+later}]
+\label{pb:g6:health-and-population:1}
+The register of an invented village records 40 births in the year 1825 and 20
+deaths, at these ages (in years):
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Children under five & 0, 0, 0, 0, 0, 1, 1, 2, 3, 4 \\
+Older people        & 15, 28, 35, 42, 50, 58, 63, 67, 72, 81 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent\textbf{Part I --- One year of the register.}
+\begin{enumerate}
+  \item How many children under five died in 1825?
+  \item Use the deaths under five and the births of the year to estimate the
+        \omterm{def:g6:health-and-population:child-mortality}{child mortality rate}, per 1\,000 births.
+  \item Compute the average age at death of the 20 people, to one decimal.
+  \item Compute the average age at death of the 10 people who had reached five.
+        Explain the difference with question 3.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Thirty years.} The village had 800 people in 1825.
+From 1825 to 1835 it had 40 births and 20 deaths every year; from 1835 to 1845,
+40 births and 12 deaths every year; from 1845 to 1855, 30 births and 12 deaths
+every year. Nobody arrived or left.
+\begin{enumerate}[resume]
+  \item What was the population in 1835?
+  \item In 1845?
+  \item In 1855?
+  \item Compute the \omterm{def:g6:reading-economic-charts:rate-of-change}{rate of change} of the population from 1825 to 1855. In which
+        decade did it grow fastest, and why?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- The village today.} Today the village has 220
+people aged 0 to 14, 900 aged 15 to 64 and 380 aged 65 and over. In twenty
+years, the town hall expects 180, 800 and 480.
+\begin{enumerate}[resume]
+  \item Compute the \omterm{def:g6:health-and-population:old-age-dependency}{old-age dependency ratio} today, to one decimal.
+  \item Compute it in twenty years.
+  \item How many people of working age are there for each person aged 65 and
+        over, today and in twenty years? Round to two decimals.
+  \item Give one reason why the town hall cares about the answer to
+        question 11.
+\end{enumerate}
+\end{problem}

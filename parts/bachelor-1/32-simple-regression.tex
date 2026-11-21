@@ -1,0 +1,477 @@
+\chapter{Simple Regression}\label{ch:b1:simple-regression}
+
+Among the 2,204 men of the PSID sample with positive earnings in 1978, each
+extra year of schooling goes with log earnings higher by $0.0885$: about $9\%$
+more earnings. % figdata: fit
+Does a year of school raise earnings by $9\%$? The line through the data does
+not say. This chapter builds the line --- least squares --- and shows how to
+read it, how precise it is, when it estimates what we want, and two
+reasons, \omterm{def:b1:simple-regression:toward-mean}{regression toward the mean} and \omterm{def:b1:simple-regression:omitted}{omitted variables}, why it often
+does not.
+
+\begin{openingchart}{Mean log earnings in 1978 by years of schooling, PSID comparison
+sample, men with positive earnings and 8 to 17 years of schooling (counts
+above the points), and the least-squares line fitted on all 2,204 men.}{National
+Supported Work comparison sample (PSID), as assembled by LaLonde (1986) and Dehejia and Wahba (1999)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xlabel={Years of schooling}, ylabel={Log earnings}, xmin=7.5, xmax=17.5, ymin=9.3,
+  ymax=10.5, xtick={8,...,17}, width=0.66\linewidth, height=0.38\linewidth]
+  \addplot[omThm, thick, sharp plot, mark=none] table[x=education, y=line, col sep=comma] {figdata/bachelor-1/32-simple-regression/out/school.csv};
+  \addplot[only marks, mark=*, mark size=2pt, omDef, nodes near coords, point meta=explicit symbolic,
+    nodes near coords style={font=\tiny, black, above=1pt}] table[x=education, y=mean, meta=count, col sep=comma] {figdata/bachelor-1/32-simple-regression/out/school.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+The means rise with schooling and lie close to the line; the line explains
+$13\%$ of the variance of log earnings across men, and the rest is everything
+else. % figdata: fit
+
+\begin{recall}
+Covariance, correlation and \omterm{def:b1:describing-data:conditional-mean}{conditional means} are \cref{ch:b1:describing-data};
+\omterm{def:b1:random-variables-for-econometrics:conditional-expectation}{conditional expectation} and its best-predictor property,
+\cref{ch:b1:random-variables-for-econometrics}; \omterm{def:b1:sampling-and-inference:standard-error}{standard errors} and tests, \cref{ch:b1:sampling-and-inference}.
+That a correlation is not a cause was met at school.
+\end{recall}
+
+\begin{measure}[Earnings in the PSID and CPS samples]
+The two samples are comparison groups drawn from two large US surveys and
+assembled to evaluate a job-training experiment (LaLonde 1986; Dehejia and
+Wahba 1999): men's earnings in 1974, 1975 and 1978, in dollars of 1982, with
+age, schooling and a few other traits. % ledger: b1:lalonde1986
+% ledger: b1:nsw-1982dollars
+% ledger: b1:dehejia1999
+The CPS sample's earnings are capped (\cref{ch:b1:describing-data}); the PSID
+sample's are not.
+\end{measure}
+
+\section{The conditional expectation function and its best line}\label{sec:b1:simple-regression:population}
+
+\begin{definition}[Population regression line]\label{def:b1:simple-regression:population-line}
+\index{population regression line}\index{best linear predictor}
+The \emph{population regression line}, or \emph{best linear predictor}, of $Y$ given $X$ is
+the line $\beta_0 + \beta_1 X$ that minimises $\E[(Y - b_0 - b_1X)^2]$ over $b_0$ and $b_1$.
+\end{definition}
+
+\begin{proposition}[Its coefficients]\label{prop:b1:simple-regression:population}
+$\beta_1 = \Cov(X, Y)/\Var(X)$ and $\beta_0 = \E[Y] - \beta_1\E[X]$.
+\end{proposition}
+
+\begin{proof}
+Setting the derivatives with respect to $b_0$ and $b_1$ to zero gives $\E[Y - b_0 - b_1X] = 0$
+and $\E[X(Y - b_0 - b_1X)] = 0$. The first gives $\beta_0$. Substituting it into the second,
+$\E[X(Y - \E Y)] - b_1\E[X(X - \E X)] = 0$, that is $\Cov(X, Y) = b_1\Var(X)$. The function is convex in
+$(b_0, b_1)$, so this is the minimum.
+\end{proof}
+
+The \omterm{def:b1:random-variables-for-econometrics:conditional-expectation}{conditional expectation} function is the best predictor of all
+(\cref{prop:b1:random-variables-for-econometrics:best}); the regression line is the best straight line. When the
+\omterm{def:b1:random-variables-for-econometrics:conditional-expectation}{conditional expectation} function is a line, the two coincide; otherwise
+the line is the best linear approximation to it, as in the opening chart.
+
+\section{Least squares}\label{sec:b1:simple-regression:ols}
+
+\begin{definition}[Ordinary least squares estimator]\label{def:b1:simple-regression:ols}
+\index{ordinary least squares}\index{OLS}
+The \emph{ordinary least squares} (OLS) \omterm{def:b1:sampling-and-inference:estimator}{estimator} of the line in a sample $(x_i, y_i)$ minimises
+$\sum_i (y_i - b_0 - b_1x_i)^2$; it is
+\[
+  \hat\beta_1 = \frac{\sum_i (x_i - \bar x)(y_i - \bar y)}{\sum_i (x_i - \bar x)^2}, \qquad \hat\beta_0 = \bar y - \hat\beta_1\bar x,
+\]
+the sample analogue of \cref{prop:b1:simple-regression:population}.
+\end{definition}
+
+\begin{definition}[Fitted value, residual]\label{def:b1:simple-regression:residual}
+\index{fitted value}\index{residual}
+The \emph{fitted value} of observation $i$ is $\hat y_i = \hat\beta_0 + \hat\beta_1x_i$; its \emph{residual} is
+$\hat u_i = y_i - \hat y_i$.
+\end{definition}
+
+\begin{proposition}[Residuals]\label{prop:b1:simple-regression:residuals}
+$\sum_i \hat u_i = 0$ and $\sum_i x_i\hat u_i = 0$: the \omterm{def:b1:simple-regression:residual}{residuals} have mean zero and are
+uncorrelated with $x$ in the sample.
+\end{proposition}
+
+\begin{proof}
+These are the two first-order conditions of the minimisation, $\sum_i (y_i - \hat\beta_0 - \hat\beta_1x_i) = 0$
+and $\sum_i x_i(y_i - \hat\beta_0 - \hat\beta_1x_i) = 0$. Since the \omterm{def:b1:simple-regression:residual}{residuals} sum to zero, their sample
+covariance with $x$ is $\frac1{n-1}\sum_i x_i\hat u_i = 0$.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[scale=0.9, font=\small]
+  \draw[->] (0,0) -- (7,0) node[right] {$x$};
+  \draw[->] (0,0) -- (0,4.4) node[above] {$y$};
+  \draw[omThm, thick] (0.3,0.9) -- (6.7,3.8) node[right] {$\hat y = \hat\beta_0 + \hat\beta_1 x$};
+  \foreach \x/\y in {1/1.9, 2/1.2, 3/2.6, 4/2.0, 5/3.5, 6/2.9} {
+    \pgfmathsetmacro{\f}{0.9 + (\x - 0.3)*2.9/6.4}
+    \draw[gray, dashed] (\x,\y) -- (\x,\f);
+    \fill[omDef] (\x,\y) circle (2pt);
+  }
+  \node[gray, font=\scriptsize, right] at (5.05,3.0) {$\hat u_i$};
+\end{tikzpicture}
+
+{\small Least squares chooses the line that makes the sum of the squared
+vertical distances (the \omterm{def:b1:simple-regression:residual}{residuals}, dashed) as small as possible.}
+\end{omfigure}
+
+\omcode{code/bachelor-1/32-simple-regression/listings/ols_by_hand.py}{1}{13}{Least squares from
+sums.}\label{lst:b1:simple-regression:by-hand}
+
+\omoutput{code/bachelor-1/32-simple-regression/outputs/ols_by_hand.txt}{The slope, and the two
+properties of the \omterm{def:b1:simple-regression:residual}{residuals} up to rounding error.}\label{out:b1:simple-regression:by-hand}
+
+\omcode{code/bachelor-1/32-simple-regression/listings/ols_statsmodels.py}{1}{10}{The same regression
+with statsmodels.}\label{lst:b1:simple-regression:statsmodels}
+
+\omoutput{code/bachelor-1/32-simple-regression/outputs/ols_statsmodels.txt}{Coefficients,
+\omterm{def:b1:sampling-and-inference:standard-error}{standard errors}, $t$ statistics, $p$-values and $95\%$ intervals.}\label{out:b1:simple-regression:statsmodels}
+
+\section{Reading a slope}\label{sec:b1:simple-regression:reading}
+
+The slope's meaning depends on whether each variable enters in levels or
+in logarithms. With $\log y$ and $x$ in levels, one more unit of $x$ goes with
+$100\beta_1$ per cent more $y$ (approximately, for small $\beta_1$; exactly $100(e^{\beta_1} - 1)$). With
+$y$ and $\log x$, $1\%$ more $x$ goes with $\beta_1/100$ more units of $y$. With both in logs, $\beta_1$ is
+an elasticity: $1\%$ more $x$ goes with $\beta_1$ per cent more $y$.
+
+\omcode{code/bachelor-1/32-simple-regression/listings/reading_slopes.py}{1}{16}{Four functional forms,
+one pair of variables.}\label{lst:b1:simple-regression:reading}
+
+\omoutput{code/bachelor-1/32-simple-regression/outputs/reading_slopes.txt}{1,849 dollars a year
+of schooling; $8.75\%$; 168 dollars per $1\%$; an elasticity of $0.83$ (men with at least
+one year of schooling).}\label{out:b1:simple-regression:reading}
+
+\section{Fit}\label{sec:b1:simple-regression:fit}
+
+\begin{definition}[Coefficient of determination]\label{def:b1:simple-regression:r2}
+\index{coefficient of determination}
+The \emph{coefficient of determination} is $R^2 = \sum_i (\hat y_i - \bar y)^2 / \sum_i (y_i - \bar y)^2 = 1 - \sum_i \hat u_i^2/\sum_i (y_i - \bar y)^2$: the
+share of the sample variance of $y$ that the \omterm{def:b1:simple-regression:residual}{fitted values} reproduce. In a simple
+regression it equals the squared correlation of $x$ and $y$.
+\end{definition}
+
+\omcode{code/bachelor-1/32-simple-regression/listings/r_squared.py}{1}{15}{$R^2$ three
+ways.}\label{lst:b1:simple-regression:r2}
+
+\omoutput{code/bachelor-1/32-simple-regression/outputs/r_squared.txt}{The same number three
+times.}\label{out:b1:simple-regression:r2}
+
+A low $R^2$ says that $x$ leaves much of the variation in $y$ unexplained; it does
+not say that the slope is small, badly estimated or unimportant. Schooling
+explains $13\%$ of the variance of log earnings, and the slope is still
+measured with a $t$ statistic of 18.
+
+\section{When is the slope unbiased?}\label{sec:b1:simple-regression:unbiased}
+
+\begin{definition}[Error term]\label{def:b1:simple-regression:error}
+\index{error term}
+In the model $Y = \beta_0 + \beta_1X + u$, the \emph{error term} $u$ collects everything other than $X$
+that affects $Y$. For observation $i$ it is $u_i$, unobserved; the \omterm{def:b1:simple-regression:residual}{residual} $\hat u_i$ is
+its estimate.
+\end{definition}
+
+\begin{definition}[Zero conditional mean assumption]\label{def:b1:simple-regression:zcm}
+\index{zero conditional mean assumption}
+The \emph{zero \omterm{def:b1:describing-data:conditional-mean}{conditional mean} assumption} is $\E[u \mid X] = 0$: whatever the value of $X$,
+the other influences on $Y$ average to zero.
+\end{definition}
+
+\begin{model}{The simple linear regression model}
+\index{simple linear regression model}
+\assumes $Y = \beta_0 + \beta_1X + u$ with $\E[u \mid X] = 0$; a \omterm{def:b1:random-variables-for-econometrics:random-sample}{random sample} $(x_i, y_i)$; some
+variation in $x$.
+\predicts $\hat\beta_1$ is unbiased for $\beta_1$, with the \omterm{def:b1:sampling-and-inference:standard-error}{standard error} of
+\cref{prop:b1:simple-regression:se} when the variance of $u$ does not depend on $X$.
+\tested Consistent with the published estimates: the log-earnings slope
+of $0.0885$ is close to those of studies that do not rest on the
+zero-conditional-mean assumption (the record \emph{Returns to schooling}
+below). % ledger: b1:card1999
+\breaks When ability or family background are in $u$ and also move schooling
+(the third university year returns to schooling with instruments), or
+when $X$ is measured with error (second university year).
+\end{model}
+
+\begin{proposition}[Unbiasedness]\label{prop:b1:simple-regression:unbiased}
+Under the model's assumptions, $\E[\hat\beta_1 \mid x_1, \dots, x_n] = \beta_1$.
+\end{proposition}
+
+\begin{proof}
+Substituting $y_i - \bar y = \beta_1(x_i - \bar x) + (u_i - \bar u)$ into $\hat\beta_1$ gives
+$\hat\beta_1 = \beta_1 + \sum_i (x_i - \bar x)u_i / \sum_i (x_i - \bar x)^2$, since $\sum_i (x_i - \bar x)\bar u = 0$. Given the $x_i$, the
+weights are numbers and $\E[u_i \mid x_1, \dots, x_n] = 0$ by \omterm{def:b1:random-variables-for-econometrics:random-sample}{random sampling} and the \omterm{def:b1:simple-regression:zcm}{zero
+conditional mean assumption}, so the second term has expectation zero.
+\end{proof}
+
+\begin{proposition}[Standard error of the slope]\label{prop:b1:simple-regression:se}
+If moreover $\Var(u \mid X) = \sigma^2$, then $\Var(\hat\beta_1 \mid x) = \sigma^2/\sum_i (x_i - \bar x)^2$, and the \omterm{def:b1:sampling-and-inference:standard-error}{standard error} is
+estimated by $\sqrt{\hat\sigma^2/\sum_i (x_i - \bar x)^2}$ with $\hat\sigma^2 = \sum_i \hat u_i^2/(n - 2)$.
+\end{proposition}
+
+\admitted{The variance follows from the expression for $\hat\beta_1$ in the previous proof; the
+$n - 2$ and the case of a variance that changes with $X$ are derived in the second
+university year.}
+
+\omcode{code/bachelor-1/32-simple-regression/listings/slope_se.py}{1}{14}{The formula against
+statsmodels, and two $t$ tests.}\label{lst:b1:simple-regression:se}
+
+\omoutput{code/bachelor-1/32-simple-regression/outputs/slope_se.txt}{The slope is far from zero,
+and also significantly below $0.10$.}\label{out:b1:simple-regression:se}
+
+\section{Regression toward the mean}\label{sec:b1:simple-regression:toward}
+
+\begin{definition}[Regression toward the mean]\label{def:b1:simple-regression:toward-mean}
+\index{regression toward the mean}
+\emph{Regression toward the mean} is the tendency of units with extreme values of a
+variable at one date to have values closer to the mean at another, whenever
+the two are imperfectly correlated: with equal variances, the slope of one
+on the other is $r < 1$.
+\end{definition}
+
+\omcode{code/bachelor-1/32-simple-regression/listings/toward_mean.py}{1}{16}{Earnings in 1978 on
+1975, and 1975 on 1978.}\label{lst:b1:simple-regression:toward}
+
+\omoutput{code/bachelor-1/32-simple-regression/outputs/toward_mean.txt}{Both slopes below one;
+their product is $r^2$.}\label{out:b1:simple-regression:toward}
+
+\begin{omchart}{Mean earnings in 1978 against mean earnings in 1975, by bins of 1975
+earnings (5,000 dollars wide, bins of 20 men or more), PSID comparison sample, and the 45-degree line
+(dashed).}{National Supported Work comparison sample (PSID)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xlabel={Earnings in 1975 (dollars of 1982)}, ylabel={Mean earnings in 1978 (dollars of 1982)}, xmin=0,
+  xmax=55000, ymin=0, ymax=55000, width=0.56\linewidth, height=0.46\linewidth, scaled ticks=false]
+  \addplot[black, dashed, sharp plot, mark=none, domain=0:55000] {x};
+  \addplot[only marks, mark=*, mark size=2pt, omDef] table[x=re75, y=re78, col sep=comma] {figdata/bachelor-1/32-simple-regression/out/toward.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+Average earnings rose between the two years, yet the gains were largest at
+the bottom, and in the highest bins they mostly turned into losses (three of
+the five bins above 30,000 dollars lost): the men of the lowest bin went
+from 946 to 6,525 dollars on average, those of the highest from 52,086 to
+47,719. % figdata: toward
+Nothing pulled them together. A man's earnings in one year combine a lasting
+part and a transitory part; men selected for high 1975 earnings include many
+with a lucky year, which does not repeat. Reverse the regression and the
+same happens backwards: the slope of 1975 on 1978 is also below one.
+
+\begin{record}[The regression fallacy]
+In 1933 a book claimed that business enterprises were converging towards
+the average: groups of firms ranked by their first-year value moved towards the
+average. A review answered that ranked by their last-year value the lines
+would diverge, and that the real test of convergence is a consistent
+decline in the variance among individual enterprises. Friedman (1992)
+quotes the review and finds the same fallacy in comparisons of countries'
+growth sixty years later. % ledger: b1:friedman1992
+\end{record}
+
+\section{A regression is not a cause}\label{sec:b1:simple-regression:cause}
+
+\begin{definition}[Omitted variable, confounder]\label{def:b1:simple-regression:omitted}
+\index{omitted variable}\index{confounder}
+An \emph{omitted variable}, or \emph{confounder}, is a variable left out of the regression
+that affects $Y$ and is correlated with $X$. It sits in $u$ and breaks the \omterm{def:b1:simple-regression:zcm}{zero
+conditional mean assumption}.
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}[font=\small, every node/.style={draw, rounded corners, minimum width=2.2cm, minimum height=0.8cm}]
+  \node (a) at (2.5,1.8) {Ability};
+  \node (s) at (0,0) {Schooling};
+  \node (y) at (5,0) {Earnings};
+  \draw[->, thick] (a) -- (s);
+  \draw[->, thick] (a) -- (y);
+  \draw[->, thick, omThm] (s) -- node[draw=none, below] {the effect sought} (y);
+\end{tikzpicture}
+\end{center}
+
+\omcode{code/bachelor-1/32-simple-regression/listings/omitted.py}{1}{17}{Ability left out: a
+simulation with a known answer.}\label{lst:b1:simple-regression:omitted}
+
+\omoutput{code/bachelor-1/32-simple-regression/outputs/omitted.txt}{A true effect of $0.060$
+estimated as $0.084$ on average.}\label{out:b1:simple-regression:omitted}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xlabel={Estimated slope}, ylabel={Density}, xmin=0.03, xmax=0.11, ymin=0, ymax=62,
+  width=0.6\linewidth, height=0.34\linewidth, scaled x ticks=false,
+  xticklabel style={/pgf/number format/.cd, fixed, precision=2},
+  legend style={font=\scriptsize, at={(0.98,0.96)}, anchor=north east}]
+  \addplot[omDef, thick, const plot mark mid] table[x=mid, y=long, col sep=comma] {figdata/bachelor-1/32-simple-regression/out/omitted.csv};
+  \addplot[omThm, thick, const plot mark mid] table[x=mid, y=short, col sep=comma] {figdata/bachelor-1/32-simple-regression/out/omitted.csv};
+  \draw[black, dashed] (axis cs:0.06,0) -- (axis cs:0.06,58);
+  \legend{ability included, ability left out}
+\end{axis}
+\end{tikzpicture}
+
+{\small Slopes from 1,000 simulated samples of 500 people: with ability in the
+regression they centre on the true $0.060$ (dashed); left out, on $0.084$.
+% figdata: omitted_means
+}
+\end{omfigure}
+
+The bias is the \omterm{def:b1:simple-regression:omitted}{omitted variable}'s effect on $Y$ times the slope of the \omterm{def:b1:simple-regression:omitted}{omitted
+variable} on $X$: $0.10 \times 1.5/(1.5^2 + 2^2) = 0.024$. The second university year derives this
+formula in general.
+
+\begin{definition}[Reverse causation]\label{def:b1:simple-regression:reverse}
+\index{reverse causation}
+There is \emph{reverse causation} when $Y$ affects $X$, so that a slope of $Y$ on $X$ mixes
+the effect of $X$ on $Y$ with the effect of $Y$ on $X$.
+\end{definition}
+
+\omcode{code/bachelor-1/32-simple-regression/listings/reverse.py}{1}{12}{Prices and quantities
+moved by both curves.}\label{lst:b1:simple-regression:reverse}
+
+\omoutput{code/bachelor-1/32-simple-regression/outputs/reverse.txt}{A slope of $-0.6$: neither the
+demand curve's $-1$ nor the supply curve's $+1$.}\label{out:b1:simple-regression:reverse}
+
+Price and quantity are set together by supply and demand. Regressing one on
+the other gives a mixture of the two curves, weighted by which one the
+shocks moved more. In this market the supply shocks have twice the standard
+deviation of the demand shocks, so the points trace out mainly the demand
+curve, and the slope is $(1 - 4)/(1 + 4) = -0.6$.
+
+\omcode{code/bachelor-1/32-simple-regression/listings/cps_cap.py}{1}{22}{The same regression on
+the capped sample, and the PSID sample capped at the same level.}\label{lst:b1:simple-regression:cps}
+
+\omoutput{code/bachelor-1/32-simple-regression/outputs/cps_cap.txt}{Capping flattens the line:
+the PSID slope falls from $0.0885$ to $0.0621$ when its earnings are capped at
+the CPS maximum.}\label{out:b1:simple-regression:cps}
+
+Data problems bias slopes too. In the CPS sample $30\%$ of the men with
+earnings sit at the maximum the survey records, and its slope, $0.0433$, is
+half the PSID's. But the two samples are different populations, so that
+comparison mixes the cap with everything else that differs between them.
+The cap's own effect is measured within one sample: capping the PSID men at
+the CPS maximum, which binds for $40.7\%$ of them, lowers the slope from
+$0.0885$ to $0.0621$. Capping the highest earnings, which are those of the
+most schooled, flattens the line. % computed: code/bachelor-1/32-simple-regression/outputs/cps_cap.txt
+
+\begin{record}[Returns to schooling]
+A regression of log earnings on schooling across people gives slopes like
+the opening chart's. Card (1999) reviews the attempts to estimate the
+causal return: studies that use changes in the schooling system as
+natural experiments find returns $20$--$40\%$ above the corresponding \omterm{def:b1:simple-regression:ols}{OLS}
+estimates, and studies of twins suggest an upward ability bias of about
+$10\%$. % ledger: b1:card1999
+The cross-sectional slope is not the causal effect, but for the standard
+samples of these studies it is not far from it. The next volumes treat experiments, instruments and
+panels, the tools behind those estimates.
+\end{record}
+
+\section*{Exercises}\label{sec:b1:simple-regression:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:simple-regression:five}
+Find the \omterm{def:b1:simple-regression:ols}{OLS} slope and intercept for the points $(8, 9.4)$, $(10, 9.6)$, $(12, 9.9)$,
+$(14, 10.0)$, $(16, 10.3)$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:simple-regression:read}
+From \cref{out:b1:simple-regression:statsmodels}, give the slope, its \omterm{def:b1:sampling-and-inference:standard-error}{standard error} and $R^2$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:simple-regression:interpret}
+A regression of log wages on years of experience has a slope of $0.06$.
+Interpret it.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:simple-regression:predict}
+Predict the fitted log earnings of a PSID man with 16 years of schooling, and
+the earnings it corresponds to.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:simple-regression:residuals}
+Prove that the \omterm{def:b1:simple-regression:residual}{residuals} of an \omterm{def:b1:simple-regression:ols}{OLS} regression with an intercept are
+uncorrelated with the \omterm{def:b1:simple-regression:residual}{fitted values}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:simple-regression:ages}
+Run the regression of log earnings on schooling for PSID men under 30 and for
+men over 40. Compare the slopes, with their \omterm{def:b1:sampling-and-inference:standard-error}{standard errors}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:simple-regression:energy}
+Estimate the income elasticity of energy use in 2019 by a log--log regression
+on the countries of \cref{ch:b1:comparative-statics}, with its \omterm{def:b1:sampling-and-inference:standard-error}{standard error}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:simple-regression:direction}
+Family wealth raises both children's schooling and their later earnings,
+through contacts. Predict the direction of the bias in the slope of earnings
+on schooling.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:simple-regression:test}
+Test at $5\%$ whether the PSID slope equals $0.10$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:simple-regression:derive}
+Derive the \omterm{def:b1:simple-regression:ols}{OLS} \omterm{def:b1:sampling-and-inference:estimator}{estimator} by minimising the sum of squared \omterm{def:b1:simple-regression:residual}{residuals}, and
+prove \cref{prop:b1:simple-regression:unbiased} in your own steps.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:simple-regression:product}
+Show that the slope of $y$ on $x$ times the slope of $x$ on $y$ equals $r^2$, and use it to
+explain why both slopes in \cref{out:b1:simple-regression:toward} are below one.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:simple-regression:refute}
+What evidence would refute reading the $0.0885$ slope as the effect of a year
+of school?
+\end{exercise}
+
+\section{Problem: Schooling and Earnings in Brenland}\label{sec:b1:simple-regression:problem}
+
+\begin{problem}[{Weekend problem --- the Brenland return to a year of school}]\label{pb:b1:simple-regression:brenland}
+Brenland's household survey (invented) records the head's years of
+schooling and the household's gross income. Use the households with
+positive gross income. Part III uses a simulated cohort with an ability
+score, written by the same script with a fixed seed: true return $0.05$,
+ability effect $0.08$.
+
+\medskip\noindent\textbf{Part I --- The regression.}
+\begin{enumerate}
+  \item How many households have positive gross income?
+  \item Give the mean and standard deviation of schooling.
+  \item Regress log gross income on schooling: give the slope and intercept.
+  \item Check that the \omterm{def:b1:simple-regression:residual}{residuals} sum to zero.
+  \item Give the fitted log income at 12 and at 16 years.
+  \item By what factor does fitted income rise from 12 to 16 years?
+  \item Give the slope of income in dalens on schooling.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- Reading, fit and precision.}
+\begin{enumerate}[resume]
+  \item Interpret the slope of item 3.
+  \item Give the exact percentage it implies.
+  \item Give $R^2$.
+  \item Does a low $R^2$ mean that schooling matters little for income?
+  \item Give the \omterm{def:b1:sampling-and-inference:standard-error}{standard error} and the $t$ statistic of the slope.
+  \item Give a $95\%$ interval.
+  \item Test whether the slope equals $0.10$.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- Hidden ability (simulated cohort).}
+\begin{enumerate}[resume]
+  \item Give the slope of ability on schooling.
+  \item Give the slope of log income on schooling alone.
+  \item Give the slopes of schooling and ability when both enter.
+  \item Check that the short slope minus the long one equals the ability
+    coefficient times the slope of item 15.
+  \item By how much does the short slope overstate the true $0.05$?
+  \item Why is the bias upward?
+  \item Could the survey's slope of item 3 be biased in the same way?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- A second variable (reported, not solved).}
+\begin{enumerate}[resume]
+  \item Add the head's age to the regression: give the new schooling slope.
+  \item Give the age coefficient.
+  \item Give the correlation of schooling and age, and say why the slope
+    barely moves.
+  \item When would adding a variable change the slope a lot?
+  \item State the result.
+\end{enumerate}
+\end{problem}

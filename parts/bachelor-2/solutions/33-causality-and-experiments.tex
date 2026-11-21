@@ -1,0 +1,117 @@
+\section*{Chapter \ref{ch:b2:causality-and-experiments} --- Causality and the Experimental Ideal}
+
+\begin{solution}{exo:b2:causality-and-experiments:1}
+% figdata: means
+Control 4,555 dollars (3,888 to 5,221); trained 6,349 (5,215 to 7,483); difference 1,794. The intervals overlap, by six
+dollars, yet the difference is significant (Exercise 5): overlapping intervals for two means do not imply that their
+difference is insignificant, since the interval of a difference is narrower than the sum of the two half-widths.
+\end{solution}
+
+\begin{solution}{exo:b2:causality-and-experiments:2}
+The patients who go to hospital are sicker than those who stay home: their health without the hospital, $Y(0)$, is worse.
+The \omterm{def:b2:causality-and-experiments:selection-bias}{selection bias} is negative, and a raw comparison of the health of patients and non-patients can make the hospital look
+harmful even if it helps.
+\end{solution}
+
+\begin{solution}{exo:b2:causality-and-experiments:3}
+Not by itself: with eight comparisons the chance of at least one significant difference is 0.34 under perfect
+randomisation. Check how the randomisation was done, report the table, and show the estimate with the diploma (and the
+other pre-treatment variables) as controls: 1,676 dollars, close to 1,794.
+\end{solution}
+
+\begin{solution}{exo:b2:causality-and-experiments:4}
+Participants may find jobs partly by taking them from non-participants, an effect the local comparison does not see (a
+failure of the \omterm{def:b2:causality-and-experiments:sutva}{stable unit treatment value assumption}); and the volunteers of one town may gain more than the population
+at large.
+\end{solution}
+
+\begin{solution}{exo:b2:causality-and-experiments:5}
+% code: listings/nsw_experiment.py
+$1{,}794.3 \pm 1.96 \times 671.0$: from 479 to 3,110 dollars. Zero is outside it.
+\end{solution}
+
+\begin{solution}{exo:b2:causality-and-experiments:6}
+% code: listings/selection_sim.py
+ATE 1.001, ATT 1.284. The effect is $1 - 0.5 \times \mathit{skill}$ plus noise, and those who take the training have low
+skill, so their mean effect is higher. If the more skilled took it, their untreated earnings would be higher than the
+others': the \omterm{def:b2:causality-and-experiments:selection-bias}{selection bias} would be positive and the raw difference would overstate the effect, while the ATT would fall
+below the ATE.
+\end{solution}
+
+\begin{solution}{exo:b2:causality-and-experiments:7}
+% code: exercises/solutions.py low_earners
+4,231 survey men earned less than 5,000 dollars in 1975. The raw difference becomes 127 dollars (s.e.\ 588) and the
+adjusted one 1,193 (s.e.\ 654). The cut trims only the comparison group: it drops survey men with 1975 earnings above those of almost all
+trainees, and keeps the 20 trainees above 5,000 dollars. That makes the comparison group more like the trained men, so the controls have less to do; the estimate moves toward the experimental 1,794, without
+reaching it.
+\end{solution}
+
+\begin{solution}{exo:b2:causality-and-experiments:8}
+In the experiment the controls are independent of treatment, so they change the estimate only through chance imbalances
+such as the diploma. In the survey comparison the groups differ enormously in age, schooling, marriage and past earnings,
+which also predict 1978 earnings: the \omterm{def:b2:multiple-regression:ovb}{omitted-variable bias} is large, and the controls remove most of it.
+\end{solution}
+
+\begin{solution}{exo:b2:causality-and-experiments:9}
+Pupils who chose the programme may be more motivated; their parents may be more involved; their schools may have more
+resources. An experiment: among pupils (or classes, to avoid spillovers) whose parents agree to take part, draw by lottery
+who gets the programme, and compare scores after a year, with standard errors clustered by class if classes are drawn.
+\end{solution}
+
+\begin{solution}{exo:b2:causality-and-experiments:10}
+Under random assignment of $n_1$ of $n$ units, each unit is treated with probability $n_1/n$, so $E[\bar Y_1] =
+E[Y(1)]$ and $E[\bar Y_0] = E[Y(0)]$; the difference has expectation $E[Y(1) - Y(0)] = \mathit{ATE}$. With
+independent draws from a large population, $\operatorname{Var}(\bar Y_1 - \bar Y_0) = \sigma_1^2/n_1 + \sigma_0^2/n_0$,
+where $\sigma_d^2$ is the variance of $Y(d)$; it is estimated by the sample variances, as in the listing.
+\end{solution}
+
+\begin{solution}{exo:b2:causality-and-experiments:11}
+Difference $= \mathit{ATE} + \text{selection bias} + (1 - p)(\mathit{ATT} - \mathit{ATU})$, with $p$ the share treated and
+$\mathit{ATU}$ the effect on the untreated: since $\mathit{ATE} = p\,\mathit{ATT} + (1 - p)\mathit{ATU}$, $\mathit{ATT} =
+\mathit{ATE} + (1 - p)(\mathit{ATT} - \mathit{ATU})$. The third term is the bias from heterogeneous effects: if those who
+are treated gain more than those who are not, the difference overstates the ATE even without selection on $Y(0)$.
+\end{solution}
+
+\begin{solution}{exo:b2:causality-and-experiments:12}
+Given $X_i = x$, treatment is independent of $(Y(0), Y(1))$, so $E[Y \mid D = 1, X = x] = E[Y(1) \mid X = x]$ and $E[Y
+\mid D = 0, X = x] = E[Y(0) \mid X = x]$. Their difference is the effect for units with $X = x$. Averaging over the
+distribution of $X$ gives $E[Y(1) - Y(0)] = \mathit{ATE}$ by the law of iterated expectations.
+\end{solution}
+
+\begin{solution}{pb:b2:causality-and-experiments:1}
+% code: exercises/solutions.py population, rct, rollout, n_per_arm, power
+\textbf{Part I.}
+1. $Y_i(1) = 25{,}500 + 3{,}500m_i + 4{,}000\varepsilon_i$.
+2. 1,500 dalens, since $E[m_i] = 0$.
+3. Those with more drive.
+4. 1,499 dalens.
+5. Each worker is observed either with or without a voucher, never both.
+6. Trained workers may take jobs that untrained ones would have had; vouchers given to many may raise the price of
+courses.
+\textbf{Part II.}
+7. 1,100 dalens.
+8. 362; from 389 to 1,810.
+9. Yes: 1,499 is inside it.
+10. Which workers got a voucher was drawn at random; another draw would give another estimate. The standard error measures
+that spread.
+11. Random assignment makes voucher holders a random half of the 800, so their mean effect equals the mean effect of all.
+12. Leave the expected estimate unchanged and, since earlier earnings predict later earnings, shrink the standard error.
+\textbf{Part III.}
+13. 51 per cent.
+14. 5,272 dalens.
+15. 1,782 dalens.
+16. 3,491 dalens: applicants have more drive, so they would have earned more anyway; $1{,}781.6 + 3{,}490.7 = 5{,}272.3$.
+17. The effect rises with drive, and applicants have more of it.
+18. Only if, among workers with the same education, applying were unrelated to drive: the \omterm{def:b2:causality-and-experiments:cia}{conditional independence
+assumption}. Since drive is not measured, there is no reason to believe it.
+\textbf{Part IV.}
+19. $z_{0.025} = 1.96$, $z_{0.2} = 0.84$: $n = 2 \times 2.80^2\sigma^2/\delta^2 = 15.7\sigma^2/\delta^2$.
+20. $15.7 \times 5{,}000^2/1{,}500^2 = 174.4$: 175 per arm.
+21. With $\sigma = 5{,}217$: 190 per arm.
+22. With $\sigma = 5{,}000$: $15.7 \times 5{,}000^2/750^2 = 698$ per arm.
+23. $n$ is proportional to $1/\delta^2$.
+24. Yes: with 400 per arm the power to detect 1,500 dalens is 0.98.
+25. The pilot's estimate of the voucher's effect is 1,100 dalens a year (95 per cent interval 389 to 1,810), consistent with
+the true 1,499; a roll-out to applicants would have shown 5,272, a bias of 3,491; 190 workers per arm suffice for 80 per
+cent power against an effect of 1,500.
+\end{solution}

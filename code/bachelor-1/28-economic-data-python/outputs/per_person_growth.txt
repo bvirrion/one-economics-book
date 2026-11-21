@@ -1,0 +1,4 @@
+$ python per_person_growth.py
+GDP, current prices     3.24 % a year
+GDP, volumes            1.23 % a year
+GDP per person, volumes 0.95 % a year

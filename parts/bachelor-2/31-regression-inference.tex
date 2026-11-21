@@ -1,0 +1,377 @@
+\chapter{Inference in Regression}\label{ch:b2:regression-inference}
+
+A regression coefficient is an estimate; its standard error says how far it might be from what it estimates. The standard
+errors printed by default rest on assumptions about the errors that real data often break: that they all have the same
+variance, and that they are independent of each other. This chapter states those assumptions, shows why least squares is
+the best linear estimator when they hold, and builds the standard errors that remain valid when they do not. The chart
+shows how much the answer can change.
+
+\begin{openingchart}{Heteroskedasticity-robust standard error divided by the classical standard error, for each
+  coefficient of a regression of outpatient visits to a doctor on insurance-plan and health variables; 20,190
+  person-years.}{RAND Health Insurance Experiment, statsmodels randhie dataset; our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.72\linewidth, height=0.4\linewidth, ybar, bar width=10pt, xmin=-0.6, xmax=9.6,
+    ymin=0, ymax=1.8, xtick={0,...,9}, xticklabels from table={figdata/bachelor-2/31-regression-inference/out/se.csv}{label},
+    xticklabel style={rotate=35, anchor=north east, font=\scriptsize}, ylabel={Robust / classical},
+    nodes near coords, nodes near coords style={font=\scriptsize, fill=white, inner sep=1pt, yshift=1pt,
+    /pgf/number format/.cd, fixed, precision=2}]
+  \draw[guide] (axis cs:-0.6,1) -- (axis cs:9.6,1);
+  \addplot[fill=omDef!70, draw=omDef] table[x expr=\coordindex, y=ratio]
+    {figdata/bachelor-2/31-regression-inference/out/se.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: se (ratio hlthp 1.55, disea 1.29, physlm 1.25, hlthf 1.18, lncoins 0.93, hlthg 0.92)
+For most coefficients the two standard errors are within 10 per cent of each other. For four they are not: the robust
+standard error is 1.55 times the classical one for poor self-rated health, 1.29 times for the number of chronic diseases,
+1.25 times for a physical limitation and 1.18 times for fair health. The classical formula assumes that every person's visits are equally
+unpredictable; the sick are much less predictable than the healthy.
+
+\begin{recall}
+From the Year 1 volume: estimators, unbiased and consistent estimators, standard errors, confidence intervals, the $t$ and
+$F$ distributions, tests and $p$-values, and the central limit theorem. From \cref{ch:b2:multiple-regression}: the
+matrix form, the \omterm{def:b2:multiple-regression:normal-equations}{normal equations} and the \omterm{def:b2:multiple-regression:fwl}{Frisch--Waugh--Lovell theorem}.
+\end{recall}
+
+\section{The Gauss--Markov theorem}\label{sec:b2:regression-inference:gm}
+
+\begin{definition}[Gauss--Markov assumptions]\label{def:b2:regression-inference:gm-assumptions}
+The \emph{Gauss--Markov assumptions}\index{Gauss--Markov assumptions} for $y = X\beta + u$ are: $X$ has full column rank;
+$E[u \mid X] = 0$; and $\operatorname{Var}(u \mid X) = \sigma^2I$, so that the errors are uncorrelated with each other and
+all have the same variance.
+\end{definition}
+
+\begin{definition}[Homoskedasticity]\label{def:b2:regression-inference:homoskedasticity}
+Errors are \emph{homoskedastic}\index{homoskedasticity} if their variance given the regressors is the same for every
+observation, $\operatorname{Var}(u_i \mid X) = \sigma^2$; they are \emph{heteroskedastic}\index{heteroskedasticity} if it
+varies across observations.
+\end{definition}
+
+Under the first two assumptions $\hat\beta = (X'X)^{-1}X'y = \beta + (X'X)^{-1}X'u$ is unbiased. Under the third,
+$\operatorname{Var}(\hat\beta \mid X) = (X'X)^{-1}X'(\sigma^2I)X(X'X)^{-1} = \sigma^2(X'X)^{-1}$, and $\sigma^2$ is
+estimated by $s^2 = e'e/(n - k)$. These are the classical standard errors.
+
+\begin{definition}[Best linear unbiased estimator]\label{def:b2:regression-inference:blue}
+An estimator of $\beta$ is the \emph{best linear unbiased estimator}\index{best linear unbiased estimator} if it is linear
+in $y$, unbiased, and has a variance matrix no larger, in the sense of positive semi-definite matrices, than that of any
+other linear unbiased estimator.
+\end{definition}
+
+\begin{theorem}[Gauss--Markov]\label{thm:b2:regression-inference:gauss-markov}
+Under the \omterm{def:b2:regression-inference:gm-assumptions}{Gauss--Markov assumptions}, the least-squares estimator is the \omterm{def:b2:regression-inference:blue}{best linear unbiased estimator} of $\beta$.
+\end{theorem}
+
+\begin{proof}
+Let $\tilde\beta = Cy$ be linear, and write $C = (X'X)^{-1}X' + D$. Then $E[\tilde\beta \mid X] = \beta + DX\beta$, so
+unbiasedness for every $\beta$ requires $DX = 0$. Then $\tilde\beta - \beta = Cu$, and
+$\operatorname{Var}(\tilde\beta \mid X) = \sigma^2CC' = \sigma^2\bigl((X'X)^{-1} + (X'X)^{-1}X'D' + DX(X'X)^{-1} +
+DD'\bigr) = \sigma^2(X'X)^{-1} + \sigma^2DD'$, since $DX = 0$. The difference from the least-squares variance is
+$\sigma^2DD'$, which is positive semi-definite.
+\end{proof}
+
+The listing compares least squares with another linear unbiased estimator of a slope: the difference between the mean
+outcomes of the upper and lower halves of the regressor, divided by the difference of their mean regressors.
+
+\omcode{code/bachelor-2/31-regression-inference/listings/gauss_markov_sim.py}{1}{29}{Least squares and the grouping
+estimator of a slope, over 20,000 simulated samples.}\label{lst:b2:regression-inference:gm}
+
+\omoutput{code/bachelor-2/31-regression-inference/outputs/gauss_markov_sim.txt}{Both are centred on the true slope 0.5;
+least squares has the smaller variance, as the theorem says.}\label{out:b2:regression-inference:gm}
+
+% code: listings/gauss_markov_sim.py
+The variances are 0.01145 and 0.01508 in the simulation, against 0.01141 and 0.01521 by the formulas. The theorem says
+nothing about estimators that are biased or non-linear, and nothing at all once the errors are \omterm{def:b2:regression-inference:homoskedasticity}{heteroskedastic}.
+
+\section{Normal errors: $t$ and $F$}\label{sec:b2:regression-inference:tf}
+
+If, in addition, the errors are normal given $X$, then $(\hat\beta_j - \beta_j)/\operatorname{se}(\hat\beta_j)$ has a $t$
+distribution with $n - k$ degrees of freedom, and confidence intervals and tests on one coefficient follow as in the Year 1
+volume. Several restrictions at once need another statistic.
+
+\begin{definition}[Joint hypothesis]\label{def:b2:regression-inference:joint-hypothesis}
+A \emph{joint hypothesis}\index{joint hypothesis} is a set of $q \geq 2$ restrictions on the coefficients tested together,
+such as $\beta_2 = \beta_3 = \beta_4 = 0$.
+\end{definition}
+
+\begin{definition}[F statistic]\label{def:b2:regression-inference:f-statistic}
+The \emph{F statistic}\index{F statistic} for $q$ linear restrictions is $F = \dfrac{(\mathit{SSR}_r -
+\mathit{SSR}_u)/q}{\mathit{SSR}_u/(n - k)}$, where $\mathit{SSR}_r$ and $\mathit{SSR}_u$ are the sums of squared residuals of the
+regressions with and without the restrictions. Under the classical assumptions with normal errors it has an $F(q, n - k)$
+distribution when the restrictions hold.
+\end{definition}
+
+The $F$ statistic asks whether imposing the restrictions raises the sum of squared residuals by more than chance would. The
+listing applies it to the RAND Health Insurance Experiment, in which families were assigned at random to insurance plans
+that made them pay different shares of their medical bills.
+
+\omcode{code/bachelor-2/31-regression-inference/listings/t_and_f.py}{1}{25}{Doctor visits on plan and health variables;
+the joint test of the three health dummies, by hand and with statsmodels.}\label{lst:b2:regression-inference:tf}
+
+\omoutput{code/bachelor-2/31-regression-inference/outputs/t_and_f.txt}{Coefficient, classical standard error and $t$
+statistic for each term; the $F$ statistic of the joint test.}\label{out:b2:regression-inference:tf}
+
+% code: listings/t_and_f.py; ledger: b2:randhie-data, b2:randhie2006
+Each unit of log coinsurance goes with 0.17 fewer visits, holding the other plan variables and health fixed ($t = -8.41$).
+The health dummies, measured against excellent health, have $t$ statistics of $-0.73$, $1.81$ and $5.53$; jointly they
+raise the sum of squared residuals by 667.9 and give $F = 11.78$, far above the 5 per cent critical value of 2.605. Both
+calculations used the classical variance. The next section asks whether it was right to.
+
+\section{Unequal error variances}\label{sec:b2:regression-inference:robust}
+
+\begin{omchart}{Standard deviation of the residuals in twenty equal groups of person-years sorted by fitted number of
+  visits, against the mean fitted value of each group.}{RAND Health Insurance Experiment, statsmodels randhie dataset; our
+  computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.6\linewidth, height=0.38\linewidth, xmin=0.5, xmax=6.5, ymin=0, ymax=9,
+    xlabel={Mean fitted visits}, ylabel={S.d. of residuals}]
+  \addplot[omDef, thick, mark=*, mark size=1.3pt] table[x=fitted, y=sd]
+    {figdata/bachelor-2/31-regression-inference/out/spread.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: spread (first bin sd 2.443 at fitted 0.95; last bin 8.197 at fitted 6.135)
+Among the person-years with the fewest predicted visits the residuals have a standard deviation of 2.44; among those with
+the most, 8.20. The errors are \omterm{def:b2:regression-inference:homoskedasticity}{heteroskedastic}, and the classical variance formula does not apply. Least squares is still
+unbiased, but its variance is now
+\begin{equation}\label{eq:b2:regression-inference:sandwich}
+\operatorname{Var}(\hat\beta \mid X) = (X'X)^{-1}\Bigl(\sum_i\sigma_i^2x_ix_i'\Bigr)(X'X)^{-1},
+\end{equation}
+with $x_i'$ the $i$th row of $X$ and $\sigma_i^2 = \operatorname{Var}(u_i \mid X)$ (Exercise 11). Its shape gives it the
+name of a sandwich.
+
+\begin{definition}[Heteroskedasticity-robust standard error]\label{def:b2:regression-inference:robust-se}
+A \emph{heteroskedasticity-robust standard error}\index{heteroskedasticity-robust standard error} is the square root of a
+diagonal element of \eqref{eq:b2:regression-inference:sandwich} with each $\sigma_i^2$ replaced by the squared residual
+$e_i^2$ (HC0), often multiplied by $n/(n - k)$ (HC1).
+\end{definition}
+
+Each $e_i^2$ is a poor estimate of its $\sigma_i^2$, but the sum in the middle averages over many observations, and in
+large samples the robust variance is consistent whatever the form of \omterm{def:b2:regression-inference:homoskedasticity}{heteroskedasticity}.
+
+\omcode{code/bachelor-2/31-regression-inference/listings/robust_se.py}{1}{27}{The sandwich by hand, against
+statsmodels.}\label{lst:b2:regression-inference:robust}
+
+\omoutput{code/bachelor-2/31-regression-inference/outputs/robust_se.txt}{Classical, HC0 and HC1 standard errors; with
+20,190 observations HC0 and HC1 differ only in the fourth decimal.}\label{out:b2:regression-inference:robust}
+
+What happens to a test when the wrong standard error is used? The next listing draws samples in which the true slope is
+zero and the error spread grows with the regressor, and counts how often a nominal 5 per cent test rejects.
+
+\omcode{code/bachelor-2/31-regression-inference/listings/size_sim.py}{1}{18}{The rejection rate of a true null, with
+classical and robust standard errors.}\label{lst:b2:regression-inference:size}
+
+\omoutput{code/bachelor-2/31-regression-inference/outputs/size_sim.txt}{The classical test rejects a true null a quarter
+of the time; the robust test close to the nominal 5 per cent.}\label{out:b2:regression-inference:size}
+
+% code: listings/size_sim.py
+The classical test rejects in 25.4 per cent of samples, five times as often as it claims; the robust test in 5.7 per cent.
+With a \omterm{def:b2:regression-inference:joint-hypothesis}{joint hypothesis} the robust version of the $F$ statistic uses the robust variance matrix; on the RAND data the
+test of the health dummies falls from 11.78 to 5.40, still above the critical value (Exercise 6).
+
+\section{Clustered errors}\label{sec:b2:regression-inference:cluster}
+
+Observations often come in groups: pupils in a class, workers in a firm, families in a town, the same person in several
+years. Anything shared by the group (a teacher, a manager, a local shock) puts a common component in the errors of its
+members. If the regressor is also shared within the group, the sample contains much less independent information than its
+size suggests.
+
+Suppose there are $G$ groups of $m$ members, the regressor $x$ is the same for every member of a group, and the errors
+have variance $\sigma^2$ and correlation $\rho$ between members of the same group. Then (Exercise 12)
+\begin{equation}\label{eq:b2:regression-inference:moulton}
+\operatorname{Var}(\hat\beta_1 \mid X) = \frac{\sigma^2}{\sum_i(x_i - \bar x)^2}\,\bigl(1 + (m - 1)\rho\bigr).
+\end{equation}
+
+\begin{definition}[Moulton factor]\label{def:b2:regression-inference:moulton}
+The \emph{Moulton factor}\index{Moulton factor} is the ratio of the true standard error of a coefficient to the classical
+one when errors are correlated within groups; for groups of equal size $m$, a regressor constant within groups and an
+error correlation $\rho$, it is $\sqrt{1 + (m - 1)\rho}$.
+\end{definition}
+
+With groups of 20 and a correlation of only 0.2, the factor is 2.19: classical standard errors are less than half what
+they should be.
+
+\begin{definition}[Cluster-robust standard error]\label{def:b2:regression-inference:cluster-se}
+A \emph{cluster-robust standard error}\index{cluster-robust standard error} replaces the middle of the sandwich by
+$\sum_g\bigl(\sum_{i \in g}e_ix_i\bigr)\bigl(\sum_{i \in g}e_ix_i\bigr)'$, summing within each group first, so that the
+errors may be correlated in any way within groups but are independent across them.
+\end{definition}
+
+\omcode{code/bachelor-2/31-regression-inference/listings/cluster_sim.py}{1}{26}{Fifty groups of twenty: classical,
+robust and \omterm{def:b2:regression-inference:cluster-se}{cluster-robust standard errors} against the true spread of the estimate.}\label{lst:b2:regression-inference:cluster}
+
+\omoutput{code/bachelor-2/31-regression-inference/outputs/cluster_sim.txt}{Only the \omterm{def:b2:regression-inference:cluster-se}{cluster-robust standard error} is close
+to the true standard deviation of the estimate.}\label{out:b2:regression-inference:cluster}
+
+% code: listings/cluster_sim.py
+Across 500 samples the slope has a standard deviation of 0.0696. The classical standard errors average 0.0323, and the
+robust ones 0.0322: robustness to unequal variances does nothing for correlation within groups. The
+\omterm{def:b2:regression-inference:cluster-se}{cluster-robust standard error} averages 0.0684, 2.115 times the classical one, close to the \omterm{def:b2:regression-inference:moulton}{Moulton factor} of 2.191.
+\omterm{def:b2:regression-inference:cluster-se}{Cluster-robust standard errors} need many clusters: their middle term is an average over groups, and with few groups it is
+itself very noisy, and often too small (the weekend problem has three).
+
+The RAND data of this chapter are such a case. The experiment assigned insurance plans to families, not to persons, and
+kept each family on its plan for several years, so the plan variables are the same for every member and every year of a
+family, and one person's errors are correlated across years. The standard errors of the plan coefficients should then be
+clustered by family; the classical and the robust ones printed above are both likely too small. The file used here has
+no family or person identifier, so the clustering cannot be done with it.
+
+\section{Large-sample results}\label{sec:b2:regression-inference:asymptotic}
+
+Without normal errors, the $t$ and $F$ distributions are not exact. Large samples give approximations that need neither
+normality nor \omterm{def:b2:regression-inference:homoskedasticity}{homoskedasticity}.
+
+\begin{definition}[Asymptotic normality]\label{def:b2:regression-inference:asymptotic-normality}
+An estimator $\hat\theta$ is \emph{asymptotically normal}\index{asymptotic normality} if $\sqrt n(\hat\theta - \theta)$
+converges in distribution to a normal distribution with mean zero as $n \to \infty$.
+\end{definition}
+
+\begin{theorem}[Large-sample distribution of least squares]\label{thm:b2:regression-inference:asymptotic}
+If the observations $(y_i, x_i)$ are independent and identically distributed, $E[x_iu_i] = 0$, $Q = E[x_ix_i']$ is
+invertible and the relevant moments are finite, then $\hat\beta$ is consistent and $\sqrt n(\hat\beta - \beta)$ converges
+in distribution to $N\bigl(0, Q^{-1}E[u_i^2x_ix_i']Q^{-1}\bigr)$.
+\end{theorem}
+\admitted
+
+The variance in the theorem is the sandwich again; its sample version is the robust variance matrix. So $t$ statistics
+built with robust standard errors are approximately standard normal in large samples, which is why the robust test of the
+listing rejected close to 5 per cent of the time.
+
+\section{The bootstrap}\label{sec:b2:regression-inference:bootstrap}
+
+\begin{definition}[Bootstrap]\label{def:b2:regression-inference:bootstrap}
+The \emph{bootstrap}\index{bootstrap} estimates the sampling distribution of a statistic by recomputing it on many samples
+drawn with replacement from the data, treating the sample as if it were the population.
+\end{definition}
+
+To \omterm{def:b2:regression-inference:bootstrap}{bootstrap} a regression coefficient, draw $n$ observations (rows) with replacement, run the regression, keep the
+coefficient, and repeat a thousand times or more; the standard deviation of the kept coefficients is a standard error.
+Drawing rows keeps each observation's regressors and error together, so the result is robust to \omterm{def:b2:regression-inference:homoskedasticity}{heteroskedasticity}; with
+grouped data whole groups must be drawn. The \omterm{def:b2:regression-inference:bootstrap}{bootstrap} is useful for statistics without a simple variance formula. It does
+not repair a bad design: drawing from a sample that has three clusters still gives three clusters.
+
+\begin{model}{The classical linear model}
+\assumes The \omterm{def:b2:regression-inference:gm-assumptions}{Gauss--Markov assumptions} and, for exact $t$ and $F$ distributions, normal errors.
+\predicts Least squares is the \omterm{def:b2:regression-inference:blue}{best linear unbiased estimator}; classical standard errors and $t$ and $F$ tests have their
+stated properties in any sample size.
+\tested The spread of residuals against fitted values, and the comparison of classical with robust and \omterm{def:b2:regression-inference:cluster-se}{cluster-robust
+standard errors}: on the RAND data the residual spread rises more than threefold across fitted values.
+\breaks \omterm{def:b2:regression-inference:homoskedasticity}{Heteroskedasticity} makes classical standard errors wrong in either direction (25.4 per cent rejections in the
+simulation); correlation within groups makes them too small by the \omterm{def:b2:regression-inference:moulton}{Moulton factor}; robust and \omterm{def:b2:regression-inference:cluster-se}{cluster-robust standard
+errors} repair these in large samples and with many clusters, not with few.
+\end{model}
+
+\section{Exercises}\label{sec:b2:regression-inference:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:regression-inference:1}
+Read the opening chart. For which coefficients is the robust standard error larger than the classical one by more than 20
+per cent? For which is it smaller?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:regression-inference:2}
+In the regression of the listing \texttt{t\_and\_f.py}, interpret the coefficient on \texttt{physlm} and its $t$
+statistic, with classical and with robust standard errors.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:regression-inference:3}
+A test at the 5 per cent level rejects a true null in 25.4 per cent of simulated samples. What does that mean for a
+researcher who reports a ``significant'' coefficient with classical standard errors in such data?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:regression-inference:4}
+Pupils are taught in classes of 25, and the error correlation within a class is 0.1. A regressor is the same for every
+pupil in a class. Compute the \omterm{def:b2:regression-inference:moulton}{Moulton factor}, and say how many independent pupils the sample is worth per class.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:regression-inference:5}
+From the listing's output, compute the $F$ statistic of the health dummies by hand from the two sums of squared residuals.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:regression-inference:6}
+\textbf{(D)} With the RAND data, test jointly that the three health dummies are zero and, separately, that the four plan
+variables are zero, with classical and with robust variance matrices.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:regression-inference:7}
+In the Gauss--Markov listing, use the bottom and top quarters of $x$ instead of the halves. Predict, then compute, the
+variance of the grouping estimator. Does it beat least squares?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:regression-inference:8}
+Change the size listing so that the errors are \omterm{def:b2:regression-inference:homoskedasticity}{homoskedastic}. Predict, then compute, the two rejection rates.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:regression-inference:9}
+In the cluster listing, what would the \omterm{def:b2:regression-inference:moulton}{Moulton factor} be if the errors were uncorrelated within groups? If the regressor
+varied within groups and were uncorrelated between members of a group?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:regression-inference:10}
+Show that the least-squares estimator of $\beta_1$ in $y_i = \beta_0 + \beta_1x_i + u_i$ is a linear function of the $y_i$
+with weights that sum to zero and satisfy $\sum_iw_ix_i = 1$, and show directly that any other set of such weights gives a
+larger variance under \omterm{def:b2:regression-inference:homoskedasticity}{homoskedasticity}.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:regression-inference:11}
+Derive \eqref{eq:b2:regression-inference:sandwich} from $\hat\beta - \beta = (X'X)^{-1}X'u$, and show that it reduces to
+$\sigma^2(X'X)^{-1}$ under \omterm{def:b2:regression-inference:homoskedasticity}{homoskedasticity}.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:regression-inference:12}
+Derive \eqref{eq:b2:regression-inference:moulton}.
+\end{exercise}
+
+\section{Problem: Brenland's census of firms}\label{sec:b2:regression-inference:problem}
+
+\begin{problem}[{Weekend problem --- Brenland's census of firms: a log production function, robust and clustered
+intervals, the test of constant returns, and three clusters}]
+\label{pb:b2:regression-inference:1}
+Brenland's census of 2025 covers 500 firms in three sectors: 51 in farming, 123 in manufacturing and 326 in services. Let
+$y$ be log output, $l$ log workers and $k$ log capital, and estimate $y = \beta_0 + \beta_ll + \beta_kk + u$.
+
+\medskip
+\noindent\textbf{Part I --- A log production function.}
+\begin{enumerate}
+  \item What production function does the regression correspond to?
+  \item What do $\beta_l$ and $\beta_k$ measure?
+  \item Give the estimates and $R^2$.
+  \item What does $\beta_l + \beta_k$ measure?
+  \item Why might firms with a high error $u$ also choose more workers, and what would that do to $\hat\beta_l$?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Robust and clustered intervals.}
+\begin{enumerate}[resume]
+  \item Give the classical standard error of $\hat\beta_k$.
+  \item Give the heteroskedasticity-robust one, and a 95 per cent interval.
+  \item Give the standard error clustered by sector.
+  \item With three clusters, which critical value should the interval use?
+  \item Give the clustered 95 per cent interval.
+  \item Compare the three standard errors. Which is smallest, and should that reassure?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- The test of constant returns.}
+\begin{enumerate}[resume]
+  \item Write the hypothesis of constant returns as a restriction.
+  \item Write the restricted regression.
+  \item Give the two sums of squared residuals.
+  \item Compute the $F$ statistic.
+  \item Compare it with the 5 per cent critical value of $F(1, 497)$, 3.86.
+  \item Give the robust version of the test.
+  \item State the verdict.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- What changes with three clusters.}
+\begin{enumerate}[resume]
+  \item Why is a cluster-robust variance from three clusters unreliable?
+  \item How many degrees of freedom does a $t$ test with three clusters have?
+  \item Why can the clustered standard error be smaller than the robust one here?
+  \item What could replace sector clustering with so few sectors?
+  \item If the census had 300 villages, each with a few firms, would clustering by village help?
+  \item Does the \omterm{def:b2:regression-inference:bootstrap}{bootstrap} solve the problem of three clusters?
+  \item State the result: the capital elasticity with robust and clustered intervals, and the verdict on constant returns.
+\end{enumerate}
+\end{problem}

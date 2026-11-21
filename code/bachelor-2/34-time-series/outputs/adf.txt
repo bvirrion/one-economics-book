@@ -1,0 +1,3 @@
+$ python adf.py
+log real GDP  ADF  -2.38, 5 % critical value -3.43, p-value 0.389, lags 2
+GDP growth    ADF  -6.97, 5 % critical value -2.88, p-value 0.000, lags 1

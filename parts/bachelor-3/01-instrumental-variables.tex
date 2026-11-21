@@ -1,0 +1,1055 @@
+\chapter{Instrumental Variables}\label{ch:b3:instrumental-variables}
+
+Countries that trade more are richer. In 2019, across 157 countries, a
+least-squares line through the logarithm of output per worker and the
+logarithm of the trade share says that ten per cent more trade comes with
+about eight per cent more output. % output: ex08_no_population (OLS 0.833)
+Nobody can read that slope as the effect of trade. Rich countries can afford
+ports, roads and the institutions that make trading cheap, so income may
+cause trade as much as trade causes income, and whatever makes a country
+productive may make it open too. The Year 2 volume met the same trap in a
+single equation and called it omitted-variable bias. This chapter is about
+the oldest way out of it: find something that moves the cause and touches the
+outcome through no other channel. For trade, that something can be geography.
+A country cannot choose its distance from its neighbours, and distance,
+population and shared borders predict a good part of who trades with whom.
+
+\begin{openingchart}{A first stage: the trade share a gravity regression
+predicts from geography and population alone (horizontal), against the
+actual trade share in goods and services (vertical), 2019, 157 countries,
+both in per cent of GDP, on logarithmic scales. The line is the least-squares
+fit of one logarithm on the other.}{CEPII Gravity database (BACI flows,
+population-weighted distance, contiguity, population); World Bank, World
+Development Indicators (NE.TRD.GNFS.ZS); Penn World Table 11.0 (country
+coverage); our gravity fit}
+\begin{tikzpicture}
+\begin{loglogaxis}[omscatter, xlabel={Predicted trade share from geography (\% of GDP, log scale)},
+  ylabel={Actual trade share (\% of GDP, log scale)}, xmin=1, xmax=1000, ymin=10, ymax=1000,
+  xtick={1,10,100,1000}, ytick={10,100,1000}, log ticks with fixed point,
+  height=0.6\linewidth]
+  \addplot table[x=built, y=trade] {figdata/bachelor-3/01-instrumental-variables/out/first_stage.csv};
+  \addplot[omThm, thick, no marks, sharp plot] table[x=built, y=trade] {figdata/bachelor-3/01-instrumental-variables/out/first_stage_line.csv};
+  \node[font=\footnotesize, anchor=east] at (axis cs:470,80) {Congo};
+  \node[font=\footnotesize, anchor=west] at (axis cs:2.4,118) {Fiji};
+  \node[font=\footnotesize, anchor=west] at (axis cs:21,330) {Singapore};
+  \node[font=\footnotesize, anchor=north] at (axis cs:5.1,25) {United States};
+\end{loglogaxis}
+\end{tikzpicture}
+\end{openingchart}
+
+Each dot is a country. The horizontal position is not a measurement of trade:
+it is what a regression that knows only distances, borders and populations
+predicts that country's trade to be. The vertical position is the trade the
+country actually did. The cloud slopes up. A country whose geography predicts
+ten per cent more trade trades, on average, about 2.4 per cent more
+% figdata: first_stage_stats (slope 0.235)
+(slope 0.235, standard error 0.058), and the $F$ statistic of that slope is
+16.7. % figdata: first_stage_stats
+The cloud is wide: Fiji, far from everyone, trades more than its geography
+predicts, and Singapore and Hong Kong trade far more, because they re-export
+what passes through their ports. Congo is the other extreme: its capital faces
+Kinshasa across a river, so its predicted share is huge.
+% figdata: first_stage (COG 490, FJI 2.3, SGP 20, USA 5.1)
+That upward slope is the first of two things an instrument needs. The second
+cannot be seen on any chart, and most of this chapter is about it.
+
+\begin{recall}
+The Year 2 volume wrote the multiple regression $y = X\beta + u$, solved the
+normal equations, $\hat\beta = (X'X)^{-1}X'y$, and proved that OLS is
+consistent when $\E[u \mid X] = 0$. When a regressor that matters is left in
+the error, $\plim \hat\beta_1 = \beta_1 + \gamma\,\Cov(x, a)/\Var(x)$:
+omitted-variable bias. It also defined potential outcomes $Y_i(1)$ and
+$Y_i(0)$, the average treatment effect, selection bias, natural experiments,
+classical measurement error and its attenuation bias, the $F$ statistic and
+heteroskedasticity-robust standard errors. The Year 1 volume posed the
+identification problem: a cloud of prices and quantities is not a curve.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:instrumental-variables:symbols}
+In this chapter $z$ is an instrument and $Z$ the matrix of instruments, $\ell$
+the number of columns of $Z$, and $W$ the matrix of exogenous controls (not a
+nominal wage). A first-stage coefficient is written $\pi$, and $\pi_c$, $\pi_d$
+are shares of compliance types: none of them is inflation. $D_i$ is a binary
+treatment (in a diagram, the curve $D$ is still a demand curve); $s$ is years
+of schooling and $a$ ability. In the supply-and-demand example, $\alpha_0$,
+$\alpha_1$, $\gamma_0$ and $\gamma_1$ are the curves' coefficients, not a capital share.
+\end{notation}
+
+\section{Endogenous regressors}\label{sec:b3:instrumental-variables:endogenous}
+
+Throughout this section the model is the simple linear regression
+\begin{equation}\label{eq:b3:iv:model}
+  y_i = \beta_0 + \beta_1 x_i + u_i, \qquad i = 1, \dots, n,
+\end{equation}
+with independent and identically distributed draws. The coefficient $\beta_1$
+is a causal effect: the change in $y$ that a unit change in $x$ would cause
+with $u$ held fixed. The question is whether OLS recovers it.
+
+\begin{definition}[Endogenous regressor]\label{def:b3:instrumental-variables:endogenous}
+\index{endogenous regressor}
+In model~\eqref{eq:b3:iv:model}, the regressor $x$ is an \emph{endogenous
+regressor} when $\Cov(x_i, u_i) \neq 0$, and an exogenous regressor when
+$\Cov(x_i, u_i) = 0$.
+\end{definition}
+
+The word is borrowed from the Year 1 volume's models, where an endogenous
+variable is one the model solves for. Here it means something narrower: a
+regressor correlated with the error. The two senses meet in the first of three
+classic cases.
+
+\begin{enumerate}
+\item \textbf{Simultaneity.} In a market, the price and the quantity are both
+solved for by supply and demand. A regression of quantity on price mixes the
+two curves, which is the Year 1 volume's identification problem in a
+regression's clothes. The end of \cref{sec:b3:instrumental-variables:tsls}
+draws it.
+\item \textbf{Omitted variables.} A worker's ability raises both her schooling
+and her wage. If ability is not measured, it sits in $u$, and schooling is
+correlated with $u$. This is ability bias.
+\item \textbf{Measurement error.} If schooling is recorded with a classical
+error, the recorded value is correlated with the error of the regression on
+the recorded value, and OLS is attenuated towards zero.
+\end{enumerate}
+
+In each case OLS converges to the wrong number. With $\hat\beta_1 =
+\widehat{\Cov}(x, y)/\widehat{\Var}(x)$,
+\[
+  \plim \hat\beta_1^{\mathrm{OLS}} = \beta_1 + \frac{\Cov(x, u)}{\Var(x)},
+\]
+and the second term is the bias. No amount of data removes it: a larger sample
+only estimates the wrong number more precisely.
+
+\subsection*{A simulated town}
+
+A simulation shows the size of the problem when the truth is known. In
+\cref{lst:b3:instrumental-variables:data}, ability $a$ is a standard normal
+variable that the economist never sees. Schooling is twelve years, plus one
+year per standard deviation of ability, plus $0.8$ of a year for people who
+grew up near a college, plus noise. The log wage rises by $0.08$ per year of
+school, the true return, and by $0.10$ per standard deviation of ability.
+
+\omcode{code/bachelor-3/01-instrumental-variables/listings/schooling_data.py}{1}{12}{The simulated town. Ability is drawn, used, and then hidden from the regressions.}\label{lst:b3:instrumental-variables:data}
+
+\omcode{code/bachelor-3/01-instrumental-variables/listings/ability_bias.py}{1}{16}{OLS on the simulated town, and the omitted-variable formula.}\label{lst:b3:instrumental-variables:ability}
+
+\omoutput{code/bachelor-3/01-instrumental-variables/outputs/ability_bias.txt}{OLS overstates the return by more than half.}\label{out:b3:instrumental-variables:ability}
+
+The OLS slope is 0.1259 against a true 0.08. % output: ability_bias
+The formula of the Year 2 volume predicts the gap. The variance of schooling
+is $0.8^2 \times 0.25 + 1 + 1 = 2.16$ and its covariance with ability is 1, so
+the limit of OLS is $0.08 + 0.10/2.16 \approx 0.126$. A regression with more
+controls would not help unless one of them were ability itself. What helps is
+a variable that moves schooling for reasons that have nothing to do with
+ability. Growing up near a college is such a variable in this town, by
+construction.
+
+\section{The instrument and the Wald estimator}\label{sec:b3:instrumental-variables:instrument}
+
+\begin{definition}[Instrumental variable]\label{def:b3:instrumental-variables:instrument}
+\index{instrumental variable}\index{relevance condition}\index{exclusion restriction}
+In model~\eqref{eq:b3:iv:model}, a variable $z$ is an \emph{instrumental
+variable} (an instrument) for $x$ when it satisfies two conditions:
+\begin{enumerate}
+\item the \emph{relevance condition}, $\Cov(z_i, x_i) \neq 0$;
+\item the \emph{exclusion restriction}, $\Cov(z_i, u_i) = 0$: the instrument
+is uncorrelated with every other cause of $y$, so it affects $y$ only through
+$x$.
+\end{enumerate}
+\end{definition}
+
+Relevance is a statement about two observed variables and can be checked; the
+opening chart checks it for geography. The \omterm{def:b3:instrumental-variables:instrument}{exclusion restriction} is a
+statement about $u$, which is never observed. It is argued, not tested, and
+every application of the method stands or falls on that argument. The
+argument has two halves. The instrument must be as good as randomly assigned,
+so that it is not correlated with the unobserved causes; and it must have no
+path to $y$ of its own.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, every node/.style={font=\small},
+  var/.style={draw, thick, circle, minimum size=10mm}]
+  \node[var] (z) at (0,0) {$z$};
+  \node[var] (x) at (3,0) {$x$};
+  \node[var] (y) at (6,0) {$y$};
+  \node[var, dashed] (u) at (4.5,2) {$u$};
+  \draw[->, thick] (z) -- node[below] {relevance} (x);
+  \draw[->, thick] (x) -- node[below] {$\beta_1$} (y);
+  \draw[->, thick, dashed] (u) -- (x);
+  \draw[->, thick, dashed] (u) -- (y);
+  \draw[->, thick, omDebate, dotted] (z) to[bend right=40] node[below] {no direct path} (y);
+  \draw[omDebate, thick] (2.85,-1.25) -- (3.15,-0.95) (2.85,-0.95) -- (3.15,-1.25);
+  \draw[omDebate, thick, dotted] (z) -- node[above left] {no link} (u);
+  \draw[omDebate, thick] (2.1,0.85) -- (2.4,1.15) (2.1,1.15) -- (2.4,0.85);
+\end{tikzpicture}
+\par\smallskip{\small The instrument $z$ moves $x$; the unobserved $u$ moves
+both $x$ and $y$. The \omterm{def:b3:instrumental-variables:instrument}{exclusion restriction} removes the two crossed links: $z$
+is unrelated to $u$, and $z$ reaches $y$ only through $x$.}
+\end{omfigure}
+
+\begin{proposition}[Consistency of the instrumental-variables estimator]\label{prop:b3:instrumental-variables:consistency}
+Let $z$ be an instrument for $x$ in model~\eqref{eq:b3:iv:model}, and let
+\[
+  \hat\beta_1^{\mathrm{IV}} = \frac{\sum_i (z_i - \bar z)(y_i - \bar y)}{\sum_i (z_i - \bar z)(x_i - \bar x)}.
+\]
+Then $\plim \hat\beta_1^{\mathrm{IV}} = \beta_1$. If the \omterm{def:b3:instrumental-variables:instrument}{exclusion restriction}
+fails, $\plim \hat\beta_1^{\mathrm{IV}} = \beta_1 + \Cov(z, u)/\Cov(z, x)$.
+\end{proposition}
+
+\begin{proof}
+Substitute $y_i - \bar y = \beta_1 (x_i - \bar x) + (u_i - \bar u)$ in the
+numerator:
+\[
+  \hat\beta_1^{\mathrm{IV}} = \beta_1 + \frac{\frac1n \sum_i (z_i - \bar z)(u_i - \bar u)}{\frac1n \sum_i (z_i - \bar z)(x_i - \bar x)}.
+\]
+By the law of large numbers the sample covariances converge in probability to
+$\Cov(z, u)$ and $\Cov(z, x)$. The second is not zero by relevance, so the
+ratio converges to $\Cov(z, u)/\Cov(z, x)$ (a continuous function of the two
+limits). It is zero under the \omterm{def:b3:instrumental-variables:instrument}{exclusion restriction}.
+\end{proof}
+
+The second sentence of the proposition is the one to remember. A failure of
+the \omterm{def:b3:instrumental-variables:instrument}{exclusion restriction}, $\Cov(z, u)$, is divided by the strength of the
+\omterm{def:b3:instrumental-variables:tsls}{first stage}, $\Cov(z, x)$. With a strong instrument a small violation does
+small harm. With a weak one, the same small violation is magnified:
+\cref{sec:b3:instrumental-variables:weak} returns to it.
+
+When the instrument takes two values, as an offer, a lottery or a birth date
+before or after a cut-off does, the estimator has a simple form.
+
+\begin{definition}[Wald estimator]\label{def:b3:instrumental-variables:wald}
+\index{Wald estimator}
+When the instrument $z$ is binary, the \emph{Wald estimator} is the ratio of
+the difference in mean outcomes to the difference in mean regressors between
+the two groups:
+\[
+  \hat\beta^{\mathrm{W}} = \frac{\bar y_1 - \bar y_0}{\bar x_1 - \bar x_0},
+\]
+where $\bar y_k$ and $\bar x_k$ are the sample means among the observations
+with $z = k$.
+\end{definition}
+
+\begin{proposition}[The Wald estimator is the IV estimator]\label{prop:b3:instrumental-variables:wald}
+With a binary instrument, $\hat\beta^{\mathrm{W}} = \hat\beta_1^{\mathrm{IV}}$.
+\end{proposition}
+
+\begin{proof}
+Let $n_1$ observations have $z = 1$ and $n_0$ have $z = 0$, and let $f = n_1/n$,
+so $\bar z = f$. For any variable $\xi$,
+\[
+  \sum_i (z_i - \bar z)(\xi_i - \bar\xi) = \sum_i (z_i - f) \xi_i = (1 - f)\,n_1 \bar\xi_1 - f\, n_0 \bar\xi_0
+  = n f (1 - f)(\bar\xi_1 - \bar\xi_0),
+\]
+using $\sum_i (z_i - f) = 0$, then $(1-f) n_1 = n f (1 - f)$ and $f n_0 = n f
+(1 - f)$. Apply this with $\xi = y$ and $\xi = x$; the factor $nf(1-f)$ cancels in
+the ratio.
+\end{proof}
+
+\begin{example}[The Wald estimate of the return to schooling, from four means]\label{ex:b3:instrumental-variables:ak}
+In the United States, a child must usually start school in the calendar year
+in which she turns six and may leave on her sixteenth or seventeenth birthday.
+A child born in January therefore reaches the leaving age with a little less
+schooling than a child born in December. Angrist and Krueger (1991) used the
+quarter of birth as an instrument for years of education. Their published
+means for 327{,}509 men born 1930--1939, from the 1980 census, are:
+% ledger: b3iv:ak91.panelB
+\begin{center}
+\begin{tabular}{lccc}
+  & Born in quarter 1 & Born in quarters 2--4 & Difference (s.e.) \\ \hline
+  Log weekly wage & 5.8916 & 5.9027 & $-0.01110$ (0.00274) \\
+  Years of education & 12.6881 & 12.7969 & $-0.1088$ (0.0132) \\ \hline
+\end{tabular}
+\end{center}
+The Wald estimate is $(-0.01110)/(-0.1088) = 0.1020$: one more year of
+schooling raises the weekly wage by about ten log points. The authors report
+it with a standard error of 0.0239, against an OLS estimate of 0.0709 (0.0003)
+in the same sample. % ledger: b3iv:ak91.panelB
+The ratio uses only the two differences. Every unobserved cause of wages that
+is spread evenly over birth dates cancels from both.
+\end{example}
+
+The instrumental-variables estimate is larger than OLS, not smaller, though
+ability bias pushes OLS up. Two readings compete. Measurement error in
+reported schooling pulls OLS down, and the instrument corrects that too. Or
+the men moved by compulsory schooling laws, who leave as soon as they may,
+have a higher return to a year than the average man.
+\Cref{sec:b3:instrumental-variables:late} makes the second reading exact.
+
+\section{Two-stage least squares}\label{sec:b3:instrumental-variables:tsls}
+
+Applied work rarely has one instrument and no controls. Write the model in
+matrix form,
+\begin{equation}\label{eq:b3:iv:matrix}
+  y = X\beta + u,
+\end{equation}
+where $X$ is $n \times k$ and holds the constant, the exogenous controls and
+the \omterm{def:b3:instrumental-variables:endogenous}{endogenous regressors}. Let $Z$ be $n \times \ell$, holding the constant,
+the same exogenous controls (each is its own instrument) and the excluded
+instruments, the variables that appear in $Z$ but not in $X$. The conditions
+of the definition become $\E[Z'u] = 0$ (exclusion and exogeneity of the
+controls) and $\operatorname{rank} \E[Z'X] = k$ (relevance), which requires
+$\ell \geq k$: at least as many excluded instruments as \omterm{def:b3:instrumental-variables:endogenous}{endogenous
+regressors}. With $\ell = k$ the model is just identified; with $\ell > k$ it
+is over-identified. Let $P_Z = Z(Z'Z)^{-1}Z'$, the matrix that projects on the
+columns of $Z$; it is symmetric and idempotent, $P_Z' = P_Z = P_Z^2$.
+
+\begin{definition}[First stage, reduced form, two-stage least squares]\label{def:b3:instrumental-variables:tsls}
+\index{first stage}\index{reduced form}\index{two-stage least squares}
+In model~\eqref{eq:b3:iv:matrix} with instruments $Z$:
+\begin{enumerate}
+\item the \emph{first stage} is the regression of each \omterm{def:b3:instrumental-variables:endogenous}{endogenous regressor} on
+all the columns of $Z$; its fitted values are $\hat X = P_Z X$ (the exogenous
+columns of $X$ are their own fitted values);
+\item the \emph{reduced form} is the regression of $y$ on all the columns of
+$Z$;
+\item the \emph{two-stage least squares} (2SLS) estimator is
+\[
+  \hat\beta^{\mathrm{2SLS}} = (X' P_Z X)^{-1} X' P_Z y .
+\]
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}[What two-stage least squares does]\label{prop:b3:instrumental-variables:tsls}
+\begin{enumerate}
+\item $\hat\beta^{\mathrm{2SLS}}$ is the OLS coefficient of $y$ on the
+first-stage fitted values $\hat X$.
+\item If $\ell = k$ and $Z'X$ is invertible, $\hat\beta^{\mathrm{2SLS}} =
+(Z'X)^{-1} Z'y$; with one regressor and a constant this is the estimator of
+\cref{prop:b3:instrumental-variables:consistency}.
+\item If $\E[Z'u] = 0$ and the rank condition holds, $\hat\beta^{\mathrm{2SLS}}$
+is consistent.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(1) OLS of $y$ on $\hat X$ is $(\hat X'\hat X)^{-1}\hat X' y$. Since $P_Z$ is
+symmetric and idempotent, $\hat X'\hat X = X'P_Z'P_Z X = X'P_Z X$ and $\hat X' y =
+X'P_Z y$.
+(2) With $\ell = k$, $Z'X$ is square and invertible, so
+$X'P_Z X = X'Z(Z'Z)^{-1}Z'X$ has the inverse $(Z'X)^{-1}(Z'Z)(X'Z)^{-1}$.
+Multiply by $X'P_Z y = X'Z(Z'Z)^{-1}Z'y$: the factors $(X'Z)^{-1}X'Z$ and
+$(Z'Z)(Z'Z)^{-1}$ cancel and leave $(Z'X)^{-1}Z'y$. With $Z = [\mathbf 1, z]$
+and $X = [\mathbf 1, x]$, solving the two equations $Z'(y - Xb) = 0$ gives the
+ratio of covariances.
+(3) Substitute $y = X\beta + u$:
+\[
+  \hat\beta^{\mathrm{2SLS}} - \beta = \Bigl[\tfrac{X'Z}{n}\bigl(\tfrac{Z'Z}{n}\bigr)^{-1}\tfrac{Z'X}{n}\Bigr]^{-1}
+  \tfrac{X'Z}{n}\bigl(\tfrac{Z'Z}{n}\bigr)^{-1}\tfrac{Z'u}{n}.
+\]
+Each sample moment converges to its expectation; $Z'u/n \to \E[z_i u_i] = 0$,
+and the matrix in brackets converges to an invertible limit by the rank
+condition. The product converges to zero.
+\end{proof}
+
+The name comes from part (1): regress each \omterm{def:b3:instrumental-variables:endogenous}{endogenous regressor} on the
+instruments, then regress $y$ on the fitted values. Done literally, the second
+step gives the right coefficients and the wrong standard errors, because its
+residuals are $y - \hat X\hat\beta$, while the error of the model is $y -
+X\beta$, with the actual regressor. Under homoskedasticity the variance is
+estimated by
+\[
+  \widehat{\Var}\bigl(\hat\beta^{\mathrm{2SLS}}\bigr) = \hat\sigma^2 (\hat X'\hat X)^{-1},
+  \qquad \hat\sigma^2 = \frac{1}{n - k}\sum_i \bigl(y_i - x_i'\hat\beta^{\mathrm{2SLS}}\bigr)^2,
+\]
+and the heteroskedasticity-robust version replaces $\hat\sigma^2 \hat X'\hat X$
+by $\sum_i \hat u_i^2 \hat x_i \hat x_i'$ inside the sandwich of the Year 2
+volume. The estimator is asymptotically normal with this variance.
+\admitted
+A proof follows the Year 2 volume's proof for OLS, with $\hat X$ in the place
+of $X$; graduate texts on econometrics give it with the conditions on the
+moments of $Z$.
+
+\Cref{lst:b3:instrumental-variables:tsls} computes everything by hand on the
+simulated town, with the college nearby as the instrument.
+
+\omcode{code/bachelor-3/01-instrumental-variables/listings/tsls_by_hand.py}{1}{32}{The Wald ratio, \omterm{def:b3:instrumental-variables:tsls}{two-stage least squares} in matrices, the two standard errors and the first-stage $F$.}\label{lst:b3:instrumental-variables:tsls}
+
+\omoutput{code/bachelor-3/01-instrumental-variables/outputs/tsls_by_hand.txt}{The instrument removes the ability bias; the naive second stage misstates the standard error.}\label{out:b3:instrumental-variables:tsls}
+
+The four group means give a \omterm{def:b3:instrumental-variables:tsls}{first stage} of 0.7811 years and a \omterm{def:b3:instrumental-variables:tsls}{reduced form} of
+0.0610 log points. Their ratio, 0.0781, is also the 2SLS slope, to every digit
+printed, as \cref{prop:b3:instrumental-variables:tsls} says it must be; it lies
+within one standard error (0.0081) of the true 0.08, where OLS gave 0.1259.
+% output: tsls_by_hand, ability_bias
+The naive standard error, 0.0091, is wrong by about an eighth. % output: tsls_by_hand
+In real data the gap can go either way and be much larger; no applied paper
+reports it, and no reader should compute 2SLS in two literal steps.
+
+\subsection*{More instruments than regressors}
+
+When $\ell > k$, each subset of $k$ instruments gives its own just-identified
+estimate, and 2SLS combines them, weighting each instrument by how much of the
+regressor it predicts. If all the instruments are valid, the estimates differ
+only by sampling error. The over-identification test (Sargan's test) asks
+whether they do: it regresses the 2SLS residuals on $Z$ and compares $n R^2$
+with a $\chi^2_{\ell - k}$ distribution. The test can reject a set of
+instruments that disagree. It can never accept the \omterm{def:b3:instrumental-variables:instrument}{exclusion restriction}: if
+all the instruments share the same violation, they agree on the same wrong
+number. It also assumes that every instrument estimates the same effect, which
+\cref{sec:b3:instrumental-variables:late} will drop.
+
+\subsection*{Simultaneity in supply and demand}
+
+The oldest use of instruments is the market of the Year 1 volume. A demand
+curve $q = \alpha_0 - \alpha_1 p + u^d$ and a supply curve $q = \gamma_0 +
+\gamma_1 p + \delta h + u^s$, where $h$ is the weather in the growing region,
+are solved together for the price and the quantity. Both depend on both
+errors, so price is an \omterm{def:b3:instrumental-variables:endogenous}{endogenous regressor} in either equation. Weather moves
+the supply curve and, being weather, nothing else. It is excluded from the
+demand equation, and it is relevant to price. The equilibria it generates
+slide along a fixed demand curve, and the Wald ratio of the change in quantity
+to the change in price, between good and bad seasons, is the slope of demand,
+$-\alpha_1$. A shifter of supply identifies demand; a shifter of demand would
+identify supply.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, scale=0.9]
+  \draw[econ axes] (0,5.2) node[above] {$p$} |- (7,0) node[right] {$q$};
+  \draw[demand] (0.6,4.8) -- (6.4,0.6) node[right] {$D$};
+  \draw[supply] (0.6,0.6) -- (5.4,4.8) node[above] {$S$ (bad season)};
+  \draw[supply, shifted] (1.9,0.3) -- (6.6,4.4) node[right] {$S'$ (good season)};
+  \coordinate (A) at (3.226,2.898);
+  \coordinate (B) at (4.129,2.244);
+  \node[eqpoint] at (A) {};
+  \node[eqpoint] at (B) {};
+  \draw[guide] (A) -- (A |- 0,0) node[below] {$q_0$};
+  \draw[guide] (B) -- (B |- 0,0) node[below] {$q_1$};
+  \draw[guide] (A) -- (A -| 0,0) node[left] {$p_0$};
+  \draw[guide] (B) -- (B -| 0,0) node[left] {$p_1$};
+  \draw[phase arrow] (3.45,2.62) -- (3.98,2.25);
+\end{tikzpicture}
+\par\smallskip{\small Weather shifts supply from $S$ to $S'$ and leaves demand
+alone, so the two equilibria lie on the demand curve. The ratio
+$(q_1 - q_0)/(p_1 - p_0)$ is its slope; a regression of $q$ on $p$ over
+seasons in which both curves moved would be neither curve.}
+\end{omfigure}
+
+\section{Weak instruments}\label{sec:b3:instrumental-variables:weak}
+
+\Cref{prop:b3:instrumental-variables:consistency} is a statement about the
+limit. In a finite sample, the denominator of the IV estimator, the sample
+covariance of $z$ and $x$, is itself noisy. When its true value is small, the
+noise dominates.
+
+\begin{definition}[Weak instrument]\label{def:b3:instrumental-variables:weak}
+\index{weak instrument}
+An instrument is a \emph{weak instrument} when the \omterm{def:b3:instrumental-variables:tsls}{first stage} explains so
+little of the \omterm{def:b3:instrumental-variables:endogenous}{endogenous regressor} that the sampling distribution of the 2SLS
+estimator is far from its normal approximation. In practice an instrument is
+called weak when the $F$ statistic of the excluded instruments in the \omterm{def:b3:instrumental-variables:tsls}{first
+stage} is small; \emph{How it is measured} below gives the thresholds.
+\end{definition}
+
+The mechanism is visible in the just-identified case. Write the \omterm{def:b3:instrumental-variables:tsls}{first stage} as
+$x = \pi z + v$, where the error $v$ is correlated with $u$ (that correlation
+is why $x$ is endogenous). The IV estimate minus the truth is
+$\widehat{\Cov}(z, u) / (\pi \widehat{\Var}(z) + \widehat{\Cov}(z, v))$. When
+$\pi$ is small, the term $\pi\widehat{\Var}(z)$ is no longer large next to the
+noise $\widehat{\Cov}(z, v)$, and the noise in the numerator and the noise in
+the denominator are correlated, because $u$ and $v$ are. The ratio then leans
+toward $\Cov(u, v)/\Var(v)$, which is the OLS bias. A \omterm{def:b3:instrumental-variables:weak}{weak instrument} does not
+merely add noise: it pulls the estimate back toward the very bias it was meant
+to remove, and its usual standard error does not warn of it.
+\admitted
+The exact statement uses an asymptotic theory in which $\pi$ shrinks with $n$
+(Staiger and Stock 1997), beyond this volume; the simulation below shows the
+result.
+
+\Cref{lst:b3:instrumental-variables:weak} sets the true effect to zero, the
+correlation of $u$ and $v$ to 0.8, and $n = 200$, and chooses $\pi$ so that the
+expected first-stage $F$ is 2, 10 or 50. It repeats the experiment 2{,}000
+times for each.
+
+\omcode{code/bachelor-3/01-instrumental-variables/listings/weak_iv.py}{1}{27}{2{,}000 samples at each strength of the \omterm{def:b3:instrumental-variables:tsls}{first stage}.}\label{lst:b3:instrumental-variables:weak}
+
+\omoutput{code/bachelor-3/01-instrumental-variables/outputs/weak_iv.txt}{With $F$ near 2 the median estimate is a third of the way to OLS and a 5~\% test rejects the truth twice as often as it claims.}\label{out:b3:instrumental-variables:weak}
+
+At an $F$ of 2 the median 2SLS estimate is 0.266, about a third of the way
+from the truth, zero, to the OLS mean, 0.796; a test at 5~\% rejects the true
+value in 10.7~\% of the samples. At an $F$ of 50 the median is 0.004 and the
+rejection rate 4.5~\%. % output: weak_iv
+With one instrument the median moves only when the instrument is very weak.
+The spread is the larger damage: the chart below shows how wide the
+distribution becomes.
+
+\begin{omchart}{Sampling distribution of the 2SLS estimate when the true effect
+is zero, for three strengths of the first stage (4{,}000 simulated samples of
+200 each; density of the estimates in bins of 0.05). The OLS estimates of the
+same samples centre near 0.77.}{simulated data, the chapter's seeded script}
+\begin{tikzpicture}
+\begin{axis}[omtime, xlabel={2SLS estimate (true value 0)}, ylabel={Density},
+  xmin=-1, xmax=1.5, ymin=0, ymax=3.2, legend pos=north east,
+  x tick label style={/pgf/number format/.cd, fixed, precision=1},
+  height=0.5\linewidth]
+  \addplot+[no marks, const plot mark mid] table[x=mid, y=f2] {figdata/bachelor-3/01-instrumental-variables/out/weak_iv_density.csv};
+  \addplot+[no marks, const plot mark mid] table[x=mid, y=f10] {figdata/bachelor-3/01-instrumental-variables/out/weak_iv_density.csv};
+  \addplot+[no marks, const plot mark mid] table[x=mid, y=f50] {figdata/bachelor-3/01-instrumental-variables/out/weak_iv_density.csv};
+  \legend{$F \approx 2$, $F \approx 10$, $F \approx 50$}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+At $F \approx 50$ the estimates gather tightly around zero. At $F \approx 2$
+they spread over the whole window and beyond, with a lump between zero and the
+OLS value; 27~\% of them fall outside the window altogether (against 6~\% at
+$F \approx 10$), because the denominator can come close to zero. The test is the most practical worry. The second chart
+runs the experiment at eleven strengths and records how often a test of
+nominal size 5~\% rejects the true value.
+
+\begin{omchart}{The size of a nominal 5~\% $t$-test of the true value after
+2SLS, against the expected first-stage $F$ (4{,}000 simulated samples at each
+of eleven strengths; logarithmic horizontal scale). The dotted line is
+5~\%.}{simulated data, the chapter's seeded script}
+\begin{tikzpicture}
+\begin{semilogxaxis}[omrecord, xlabel={Expected first-stage $F$ (log scale)},
+  ylabel={Share of tests rejecting the truth (\%)}, xmin=1, xmax=100, ymin=0, ymax=16,
+  xtick={1,2,5,10,20,50,100}, log ticks with fixed point, height=0.45\linewidth]
+  \addplot+[mark=*, mark size=1.4pt] table[x=F, y expr=100*\thisrow{reject}] {figdata/bachelor-3/01-instrumental-variables/out/weak_iv_size.csv};
+  \addplot[guide, thick, domain=1:100, samples=2] {5};
+\end{semilogxaxis}
+\end{tikzpicture}
+\end{omchart}
+
+The rejection rate is 13.9~\% at $F = 1.5$ and 7.0~\% at $F = 10$, and it
+reaches the nominal 5~\% only when $F$ is several tens.
+% figdata: weak_iv_size
+How fast it falls depends on the correlation between $u$ and $v$, which is
+0.8 here; with a smaller correlation the test is less distorted. A reader
+cannot know that correlation in real data, so the thresholds below are set for
+the worst case.
+
+\begin{measure}[The first-stage $F$ statistic]
+The first-stage $F$ statistic tests that the coefficients of the excluded
+instruments are all zero in the \omterm{def:b3:instrumental-variables:tsls}{first stage}; with one instrument it is the
+square of that coefficient's $t$ statistic. Three thresholds are in use.
+\begin{itemize}
+\item \textbf{The rule of thumb.} Staiger and Stock (1997) proposed calling
+instruments weak when $F < 10$. % ledger: b3iv:sy.rule
+\item \textbf{Critical values.} Stock and Yogo (2005) tabulated the $F$ needed
+for the actual size of a nominal 5~\% test to be at most a chosen level. With
+one \omterm{def:b3:instrumental-variables:endogenous}{endogenous regressor} and one instrument, a size of at most 10~\% needs
+$F > 16.38$; at most 15~\% needs $F > 8.96$; at most 20~\%, $F > 6.66$; at most 25~\%, $F > 5.53$. % ledger: b3iv:sy.crit
+\item \textbf{The $tF$ procedure.} Lee, McCrary, Moreira and Porter (2022)
+showed that the usual 1.96 is valid at 5~\% only when $F > 104.7$, and that a
+researcher who keeps 10 as the threshold must use 3.43 in place of 1.96.
+% ledger: b3iv:lmmp22.tf
+\end{itemize}
+With heteroskedastic or clustered errors the $F$ must itself be robust; the
+classical $F$ can overstate strength. An $F$ above every threshold does not
+make an instrument valid. It says only that the \omterm{def:b3:instrumental-variables:tsls}{first stage} is not the
+problem.
+\end{measure}
+
+\begin{record}[Quarter of birth, examined]
+Angrist and Krueger (1991) also ran regressions with many instruments: the
+quarter of birth interacted with the year of birth, and with the state of
+birth, up to 180 excluded instruments. Bound, Jaeger and Baker (1995)
+re-examined them. With 28 instruments and controls for age within the year,
+the first-stage $F$ was 1.613 and the IV estimate 0.060 (0.029), close to the
+OLS estimate of 0.063; with the three quarter dummies alone the $F$ was 13.486
+and the estimate 0.142 (0.033). % ledger: b3iv:bjb95.t1
+They then replaced the true quarter of birth with a random draw, 500 times.
+With instruments that by construction carry no information, the mean estimate
+was 0.061 and the mean reported standard error 0.039, estimates that look
+reasonable and are the OLS bias in disguise. % ledger: b3iv:bjb95.t3
+The lesson is now part of every applied paper: report the \omterm{def:b3:instrumental-variables:tsls}{first stage}, and
+add instruments only when each adds strength.
+\end{record}
+
+\section{Local average treatment effects}\label{sec:b3:instrumental-variables:late}
+
+The model of \cref{sec:b3:instrumental-variables:endogenous} gives every
+person the same $\beta_1$. Most treatments do not work that way: a year of
+college pays more for some than for others, and people who expect a high
+return are more likely to go. With unequal effects, what does an instrument
+estimate? The answer uses the potential outcomes of the Year 2 volume, for a
+binary treatment $D_i$ (going to college) and a binary instrument $Z_i$ (an
+offer). Each person has two potential outcomes, $Y_i(1)$ and $Y_i(0)$, and two
+potential treatments: $D_i(1)$, whether she would go if offered, and $D_i(0)$,
+whether she would go if not. The observed treatment is $D_i = D_i(Z_i)$ and the
+observed outcome $Y_i = Y_i(D_i)$.
+
+\begin{definition}[Compliance types and monotonicity]\label{def:b3:instrumental-variables:compliance}
+\index{complier}\index{always-taker}\index{never-taker}\index{defier}\index{monotonicity}
+With a binary instrument and a binary treatment, each person has one of four
+types, fixed by the pair $(D_i(0), D_i(1))$:
+\begin{itemize}
+\item a \emph{complier} has $D_i(0) = 0$ and $D_i(1) = 1$: treated if and only
+if offered;
+\item an \emph{always-taker} has $D_i(0) = D_i(1) = 1$;
+\item a \emph{never-taker} has $D_i(0) = D_i(1) = 0$;
+\item a \emph{defier} has $D_i(0) = 1$ and $D_i(1) = 0$: treated if and only
+if not offered.
+\end{itemize}
+The instrument satisfies \emph{monotonicity} when there are no defiers:
+$D_i(1) \geq D_i(0)$ for every $i$.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, every node/.style={font=\small},
+  cell/.style={draw, thick, minimum width=34mm, minimum height=12mm, align=center}]
+  \node[cell, fill=omDef!10] at (0,0) {never-taker};
+  \node[cell, fill=omThm!14] at (3.4,0) {complier};
+  \node[cell, fill=omDebate!12] at (0,-1.2) {defier\\(ruled out)};
+  \node[cell, fill=omMeth!12] at (3.4,-1.2) {always-taker};
+  \node at (0,0.95) {$D_i(1) = 0$};
+  \node at (3.4,0.95) {$D_i(1) = 1$};
+  \node[anchor=east] at (-1.8,0) {$D_i(0) = 0$};
+  \node[anchor=east] at (-1.8,-1.2) {$D_i(0) = 1$};
+\end{tikzpicture}
+\par\smallskip{\small The four compliance types. Columns: treated if offered?
+Rows: treated if not offered? \omterm{def:b3:instrumental-variables:compliance}{Monotonicity} empties the lower-left cell.}
+\end{omfigure}
+
+The observed data never reveal a person's type: someone treated without an
+offer is an \omterm{def:b3:instrumental-variables:compliance}{always-taker}, someone untreated with an offer is a \omterm{def:b3:instrumental-variables:compliance}{never-taker}, but
+someone treated with an offer may be a \omterm{def:b3:instrumental-variables:compliance}{complier} or an \omterm{def:b3:instrumental-variables:compliance}{always-taker}. The
+shares of the types are identified all the same.
+
+\begin{theorem}[The local average treatment effect theorem]\label{thm:b3:instrumental-variables:late}
+Suppose that
+\begin{enumerate}
+\item (independence) $Z_i$ is independent of $(Y_i(1), Y_i(0), D_i(1), D_i(0))$;
+\item (exclusion) the instrument affects the outcome only through the
+treatment, which the notation $Y_i(d)$, with no $z$ in it, already assumes;
+\item (relevance) $\E[D_i \mid Z_i = 1] \neq \E[D_i \mid Z_i = 0]$;
+\item (\omterm{def:b3:instrumental-variables:compliance}{monotonicity}) $D_i(1) \geq D_i(0)$ for every $i$.
+\end{enumerate}
+Then
+\[
+  \frac{\E[Y_i \mid Z_i = 1] - \E[Y_i \mid Z_i = 0]}{\E[D_i \mid Z_i = 1] - \E[D_i \mid Z_i = 0]}
+  = \E\bigl[Y_i(1) - Y_i(0) \,\big|\, D_i(1) > D_i(0)\bigr],
+\]
+and the denominator is the share of \omterm{def:b3:instrumental-variables:compliance}{compliers}.
+\end{theorem}
+
+\begin{proof}
+By exclusion, $Y_i = Y_i(0) + D_i\,(Y_i(1) - Y_i(0))$ with $D_i = D_i(Z_i)$. By
+independence,
+\[
+  \E[Y_i \mid Z_i = 1] = \E\bigl[Y_i(0) + D_i(1)(Y_i(1) - Y_i(0))\bigr],
+  \qquad
+  \E[Y_i \mid Z_i = 0] = \E\bigl[Y_i(0) + D_i(0)(Y_i(1) - Y_i(0))\bigr],
+\]
+so the numerator is $\E\bigl[(D_i(1) - D_i(0))(Y_i(1) - Y_i(0))\bigr]$. The
+difference $D_i(1) - D_i(0)$ is 1 for \omterm{def:b3:instrumental-variables:compliance}{compliers}, $-1$ for \omterm{def:b3:instrumental-variables:compliance}{defiers} and 0 for
+everyone else. \omterm{def:b3:instrumental-variables:compliance}{Monotonicity} rules out \omterm{def:b3:instrumental-variables:compliance}{defiers}, so the numerator equals
+$\P(\text{complier})\,\E[Y_i(1) - Y_i(0) \mid \text{complier}]$. By the same
+argument, the denominator is $\E[D_i(1) - D_i(0)] = \P(\text{complier})$, which
+is not zero by relevance. Divide.
+\end{proof}
+
+\begin{definition}[Local average treatment effect]\label{def:b3:instrumental-variables:late}
+\index{local average treatment effect}
+The \emph{local average treatment effect} (LATE) of a binary instrument is the
+average treatment effect among its \omterm{def:b3:instrumental-variables:compliance}{compliers}, $\E[Y_i(1) - Y_i(0) \mid D_i(1)
+> D_i(0)]$.
+\end{definition}
+
+\begin{corollary}[The shares of the types]\label{cor:b3:instrumental-variables:shares}
+Under the assumptions of \cref{thm:b3:instrumental-variables:late}, the share
+of \omterm{def:b3:instrumental-variables:compliance}{always-takers} is $\E[D_i \mid Z_i = 0]$, the share of \omterm{def:b3:instrumental-variables:compliance}{never-takers} is
+$1 - \E[D_i \mid Z_i = 1]$, and the share of \omterm{def:b3:instrumental-variables:compliance}{compliers} is the \omterm{def:b3:instrumental-variables:tsls}{first stage}.
+\end{corollary}
+
+\begin{proof}
+With no \omterm{def:b3:instrumental-variables:compliance}{defiers}, the people treated without an offer are exactly the
+\omterm{def:b3:instrumental-variables:compliance}{always-takers}, and by independence their share in the group $Z_i = 0$ is their
+share in the population. Likewise the people untreated with an offer are
+exactly the \omterm{def:b3:instrumental-variables:compliance}{never-takers}. The three shares sum to one.
+\end{proof}
+
+\begin{model}{The local average treatment effect}
+\assumes An instrument assigned as if at random, which moves the treatment in
+one direction only and touches the outcome only through it; effects may differ
+from person to person.
+\predicts The Wald ratio equals the average effect among \omterm{def:b3:instrumental-variables:compliance}{compliers}. Two valid
+instruments that move different people may give different, equally correct,
+estimates. The \omterm{def:b3:instrumental-variables:tsls}{first stage} measures the share of \omterm{def:b3:instrumental-variables:compliance}{compliers}.
+\tested In simulations with known effects, such as
+\cref{lst:b3:instrumental-variables:late}, and in lottery and randomised-offer
+studies, where independence holds by design: there the shares of the types and
+the characteristics of the \omterm{def:b3:instrumental-variables:compliance}{compliers} can be computed and compared across sites
+and years.
+\breaks When some people do the opposite of what the instrument pushes
+(\omterm{def:b3:instrumental-variables:compliance}{defiers}), the ratio mixes effects with opposite signs and can lie outside the
+range of every person's effect. When the policy question is about people who
+are not \omterm{def:b3:instrumental-variables:compliance}{compliers}, the LATE does not answer it.
+\end{model}
+
+\Cref{lst:b3:instrumental-variables:late} builds a population with 20~\%
+\omterm{def:b3:instrumental-variables:compliance}{always-takers}, whose gain from treatment is 0.30, 30~\% \omterm{def:b3:instrumental-variables:compliance}{compliers}, whose gain
+is 0.15, and 50~\% \omterm{def:b3:instrumental-variables:compliance}{never-takers}, whose gain is 0.02. The \omterm{def:b3:instrumental-variables:compliance}{always-takers} also
+start from a higher untreated outcome.
+
+\omcode{code/bachelor-3/01-instrumental-variables/listings/late_sim.py}{1}{22}{Unequal gains and three compliance types; the offer is random.}\label{lst:b3:instrumental-variables:late}
+
+\omoutput{code/bachelor-3/01-instrumental-variables/outputs/late_sim.txt}{The Wald ratio recovers the \omterm{def:b3:instrumental-variables:compliance}{compliers}' gain, not the average gain.}\label{out:b3:instrumental-variables:late}
+
+The treated share is 0.499 with an offer and 0.198 without, so the \omterm{def:b3:instrumental-variables:tsls}{first stage},
+0.301, is the share of \omterm{def:b3:instrumental-variables:compliance}{compliers} and the share treated without an offer is the
+share of \omterm{def:b3:instrumental-variables:compliance}{always-takers}. The Wald estimate, 0.143, is within sampling error of
+the \omterm{def:b3:instrumental-variables:compliance}{compliers}' mean gain, 0.150; the average gain over everyone is 0.115, and
+the naive comparison of treated and untreated, 0.351, adds the \omterm{def:b3:instrumental-variables:compliance}{always-takers}'
+head start to their larger gain. % output: late_sim
+Nothing in the data distinguishes the 0.143 from an average effect: the
+assumptions do.
+
+The theorem changes how the Wald estimate of
+\cref{ex:b3:instrumental-variables:ak} reads. Its \omterm{def:b3:instrumental-variables:compliance}{compliers} are men whom the
+school-leaving age kept in school for a few extra months, men who would have
+left at the first chance. Their return to a year, about ten per cent, need not
+be the return for a man choosing between college and work. An instrument
+answers the question it was given, about the people it moves.
+
+\section{Instruments examined}\label{sec:b3:instrumental-variables:examined}
+
+Every instrument in applied economics has been attacked on its \omterm{def:b3:instrumental-variables:instrument}{exclusion
+restriction}, and the attacks follow a few patterns. The method below collects
+them.
+
+\begin{method}[Examining an instrument]\label{met:b3:instrumental-variables:examine}
+\begin{enumerate}
+\item Report the \omterm{def:b3:instrumental-variables:tsls}{first stage}, its sign, its size and its robust $F$, and
+compare the $F$ with the thresholds of \emph{How it is measured}.
+\item Report the \omterm{def:b3:instrumental-variables:tsls}{reduced form}. If the instrument has no effect on the
+outcome, the IV estimate is zero or undefined, whatever the regressions say.
+\item State the story of the \omterm{def:b3:instrumental-variables:instrument}{exclusion restriction}: why the instrument is as
+good as random, and why it has no path of its own to the outcome. List the
+other channels and say which data could rule each out.
+\item Test what can be tested: balance of the instrument across predetermined
+characteristics, and placebo outcomes that the treatment cannot affect but the
+other channels would.
+\item Say who the \omterm{def:b3:instrumental-variables:compliance}{compliers} are, and whether the policy question is about
+them.
+\end{enumerate}
+\end{method}
+
+\subsection*{Geography and trade}
+
+The opening chart is the \omterm{def:b3:instrumental-variables:tsls}{first stage} of a design due to Frankel and Romer
+(1999). \Cref{lst:b3:instrumental-variables:geography} rebuilds it for 2019 and
+carries it through. The gravity regression, over the 29{,}083 country pairs
+that trade at all, finds a distance elasticity of $-1.40$ and a contiguity
+coefficient of 0.96. % figdata: first_stage_stats
+The 2SLS regression of log output per worker on the log trade share controls
+for log population in both stages, because large countries trade less with
+others for reasons of size alone, and size may affect productivity directly.
+
+\omcodes{code/bachelor-3/01-instrumental-variables/listings/geography_iv.py}{1-20,21-37}{The geographic instrument, 2019: the gravity fit (lines 1--20), then the two regressions (lines 21--37).}\label{lst:b3:instrumental-variables:geography}
+
+\omoutput{code/bachelor-3/01-instrumental-variables/outputs/geography_iv.txt}{Robust standard errors in parentheses; 157 countries.}\label{out:b3:instrumental-variables:geography}
+
+With the population control the first-stage $F$ is 35.4, above every
+threshold but the $tF$ one. OLS gives an elasticity of 0.866 (0.149) and 2SLS
+gives 0.428 (0.382). % output: geography_iv
+The point estimate halves, and its 95~\% interval, from about $-0.32$ to
+$1.18$, includes both zero and the OLS value. On these data, geography cannot
+tell whether trade raises output per worker. That is a result, not a failure:
+it says how much the instrument can and cannot carry.
+
+\begin{debate}[Does trade raise income?]
+\begin{itemize}
+\item Frankel and Romer (1999) estimated, with geography as the instrument for
+trade in 1985, an effect of trade on income at least as large as OLS, though
+imprecise. % ledger: b3iv:fr
+\emph{Grade 3 on the evidence scale of
+\cref{ch:b3:credible-empirical-work}}: a correlation with controls and a
+plausible mechanism, since the \omterm{def:b3:instrumental-variables:instrument}{exclusion restriction} is disputed.
+\item Rodríguez and Rodrik (2000) argued that the openness measures and
+methods of this literature leave its findings open to other interpretations,
+and found little evidence that open trade policies are associated with
+growth; the same doubt applies to geography, which can reach income through
+climate, disease and institutions as well as trade. \emph{Grade 3}. % ledger: b3iv:rr
+\item The refit in this chapter, with 2019 data, finds a positive point
+estimate that is not distinguishable from zero. \emph{Grade 3}.
+\item Designs built on changes over time answer narrower questions. Feyrer
+(2021) used the closing of the Suez Canal from 1967 to 1975, which lengthened
+some countries' sea routes and not others', and Donaldson (2018) the arrival of
+railways in the districts of colonial India; both find that lower trade costs
+raised income (\cref{ch:b3:difference-in-differences} has the tools). % ledger: b3iv:feyrer, b3iv:donaldson
+\emph{Grade 2} for the episodes they study, which are not the cross-country
+question.
+\end{itemize}
+\end{debate}
+
+\begin{record}[Rainfall, growth and conflict]
+Miguel, Satyanath and Sergenti (2004) used rainfall as an instrument for
+economic growth in 41 African countries over 1981--1999, arguing that rain
+moves farm output and touches civil conflict through income alone. They found
+that a negative growth shock of five percentage points raised the likelihood
+of conflict in the following year by about one-half. % ledger: b3iv:mss04.conflict
+The design was then examined on both of its conditions. On relevance, Miguel
+and Satyanath (2011) reported that the \omterm{def:b3:instrumental-variables:tsls}{first stage}, the effect of rainfall on
+growth, is weaker in the years after 2000. % ledger: b3iv:ms2011
+On exclusion, Sarsons (2015) studied
+Indian districts downstream of dams, where rainfall moves farm income much
+less, and found that riots responded to rainfall there as much as elsewhere:
+rain reaches conflict through some channel other than income. % ledger: b3iv:sarsons
+A rainy day
+also keeps people indoors.
+\end{record}
+
+The two records share a pattern. A design is proposed with a plausible story,
+the \omterm{def:b3:instrumental-variables:tsls}{first stage} is measured, and later work finds either that the \omterm{def:b3:instrumental-variables:tsls}{first stage}
+is weaker than it looked or a channel the story left out. Neither invalidates
+the method. They are the method doing its work, in public.
+
+\section{Exercises}\label{sec:b3:instrumental-variables:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:instrumental-variables:1}
+Read the opening chart and its table.
+\begin{enumerate}
+\item The slope of the line is 0.235. Say in one sentence what it means for
+two countries whose predicted trade shares differ by 20~\%.
+\item Fiji's predicted share is 2.3~\% and its actual share 111~\%; the United
+States' are 5.1~\% and 26~\%. Which of the two lies further from the line, in
+logarithms?
+\item Does the strength of this \omterm{def:b3:instrumental-variables:tsls}{first stage} say anything about whether
+geography affects output per worker only through trade? Explain.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:instrumental-variables:2}
+Angrist and Krueger (1991) also report means for 247{,}199 men born 1920--1929,
+from the 1970 census: the log weekly wage is 5.1484 for men born in the first
+quarter and 5.1574 for the others, a difference of $-0.00898$; years of
+education are 11.3996 and 11.5252, a difference of $-0.1256$.
+% ledger: b3iv:ak91.panelA
+\begin{enumerate}
+\item Compute the Wald estimate of the return to a year of education from the
+two printed differences.
+\item The OLS estimate in the same sample is 0.0801. Is the Wald estimate
+above or below it, and how does that compare with the 1980 sample of
+\cref{ex:b3:instrumental-variables:ak}?
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:instrumental-variables:3}
+In a population, $\ln w = \beta_0 + 0.06\, s + 0.12\, a + u$, where $s$ is
+schooling, $a$ is unmeasured ability, and $u$ is uncorrelated with both. The
+slope of a regression of $a$ on $s$ is 0.25.
+\begin{enumerate}
+\item Compute the probability limit of the OLS slope of $\ln w$ on $s$.
+\item By how much, in per cent, does OLS overstate the return?
+\item What would the limit be if ability raised schooling but not wages?
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:instrumental-variables:4}
+A study uses the distance from a person's childhood home to the nearest
+college as an instrument for her years of schooling.
+\begin{enumerate}
+\item State the \omterm{def:b3:instrumental-variables:instrument}{relevance condition} and the \omterm{def:b3:instrumental-variables:instrument}{exclusion restriction} for this
+instrument in words.
+\item Give two channels through which distance to a college could affect
+adult wages other than through schooling.
+\item For one of them, say what data would show that the channel is at
+work.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:instrumental-variables:5}
+In a sample of $n = 1{,}000$, the sample moments of an instrument $z$, a
+regressor $x$ and an outcome $y$ are $\widehat{\Var}(z) = 0.25$,
+$\widehat{\Cov}(z, x) = 0.40$ and $\widehat{\Cov}(z, y) = 0.06$.
+\begin{enumerate}
+\item Compute the first-stage slope, the reduced-form slope and the IV
+estimate.
+\item The residuals $y_i - \hat\beta_0 - \hat\beta_1 x_i$ have variance
+$\hat\sigma^2 = 0.36$. Under homoskedasticity the standard error of the IV
+slope is $\sqrt{\hat\sigma^2 \widehat{\Var}(z) / (n\, \widehat{\Cov}(z,
+x)^2)}$. Compute it and a 95~\% confidence interval.
+\item Show that the formula in (2) is the $(2,2)$ entry of $\hat\sigma^2(\hat
+X'\hat X)^{-1}$ when $\hat X = [\mathbf 1, \hat x]$.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:instrumental-variables:6}
+In \cref{ex:b3:instrumental-variables:ak}, IV (0.1020) exceeds OLS (0.0709).
+\begin{enumerate}
+\item Suppose recorded schooling is the true schooling plus a classical error
+whose variance is 10~\% of the variance of recorded schooling, and there is no
+ability bias. What does OLS converge to, if the true return is $\beta$? What
+does IV with a valid instrument converge to?
+\item Ability bias alone would make OLS exceed IV. Combine (1) with an
+ability bias of $+0.01$: for which values of $\beta$ would OLS fall below IV?
+\item Give a third reason, not about bias, why a valid IV estimate can exceed
+OLS.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:instrumental-variables:7}
+A charity offered free tutoring, by lottery, to half of the applicants of a
+Brenland school. Of the pupils offered, 62~\% took it up; of those not offered,
+14~\% found a tutor elsewhere. The share passing the final examination was
+0.53 among the pupils offered and 0.47 among the others.
+\begin{enumerate}
+\item Compute the \omterm{def:b3:instrumental-variables:tsls}{first stage}, the \omterm{def:b3:instrumental-variables:tsls}{reduced form} and the Wald estimate, and
+state what the Wald estimate measures.
+\item Compute the shares of \omterm{def:b3:instrumental-variables:compliance}{always-takers}, \omterm{def:b3:instrumental-variables:compliance}{never-takers} and \omterm{def:b3:instrumental-variables:compliance}{compliers}.
+\item What assumption makes the share of \omterm{def:b3:instrumental-variables:compliance}{compliers} in (2) correct? Give an
+example of a pupil who would violate it.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:instrumental-variables:8}
+Run \cref{lst:b3:instrumental-variables:geography} without the population
+control: drop $\log$ population from both $X$ and $Z$.
+\begin{enumerate}
+\item Report the first-stage $F$, the OLS and the 2SLS elasticities with their
+robust standard errors.
+\item The first-stage $F$ falls by about half. Compute the correlations of log
+population with the log built share and with the log actual share, and
+explain why controlling for population strengthens the \omterm{def:b3:instrumental-variables:tsls}{first stage}.
+\item Without the control, is the \omterm{def:b3:instrumental-variables:instrument}{exclusion restriction} more or less
+plausible? Explain.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:instrumental-variables:9}
+In the rainfall design of the \emph{On the record} box, rainfall in year $t$
+instruments growth in year $t$, and the outcome is conflict in year $t+1$.
+\begin{enumerate}
+\item Propose a placebo outcome: a variable that rainfall in year $t$ should
+not predict if the \omterm{def:b3:instrumental-variables:instrument}{exclusion restriction} holds.
+\item Sarsons's districts downstream of dams have a weaker \omterm{def:b3:instrumental-variables:tsls}{first stage}. If the
+\omterm{def:b3:instrumental-variables:instrument}{exclusion restriction} held, what should the \omterm{def:b3:instrumental-variables:tsls}{reduced form} be in those
+districts, compared with the others? What did she find, and what does it
+imply?
+\item Suppose rainfall affects conflict directly with a coefficient $c$ in
+the \omterm{def:b3:instrumental-variables:tsls}{reduced form}, and the \omterm{def:b3:instrumental-variables:tsls}{first stage} is $\pi$. Write the probability limit of
+the IV estimate, and say what happens to the bias when $\pi$ falls.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:instrumental-variables:10}
+Adapt \cref{lst:b3:instrumental-variables:weak} to a single strength, an
+expected first-stage $F$ of 5, with 4{,}000 samples.
+\begin{enumerate}
+\item Report the mean first-stage $F$, the median 2SLS estimate, the mean OLS
+estimate and the rejection rate of the true value at 5~\%.
+\item What share of the samples has a first-stage $F$ above 10? Report the
+median 2SLS estimate among those samples and among the others. A literature
+that publishes only studies with $F > 10$ selects on the \omterm{def:b3:instrumental-variables:tsls}{first stage}: explain
+the direction in which that selection moves the published estimates.
+\item Compare the rejection rate with the Stock--Yogo critical values of
+\emph{How it is measured}.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:instrumental-variables:11}
+In model~\eqref{eq:b3:iv:matrix}, let $X = [W, x]$ and $Z = [W, z]$, where $W$
+holds the constant and the exogenous controls and $x$ and $z$ are single
+columns.
+\begin{enumerate}
+\item Show that the 2SLS coefficient on $x$ equals the ratio of the
+reduced-form coefficient on $z$ to the first-stage coefficient on $z$. (Hint:
+use part (1) of \cref{prop:b3:instrumental-variables:tsls}, write the
+first-stage fitted value as $\hat x = W a + \hat\pi z$, and apply the
+Frisch--Waugh--Lovell theorem of the Year 2 volume.)
+\item Deduce that the 2SLS estimate is zero whenever the reduced-form
+coefficient is zero, whatever the \omterm{def:b3:instrumental-variables:tsls}{first stage}.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:instrumental-variables:12}
+Drop \omterm{def:b3:instrumental-variables:compliance}{monotonicity} from \cref{thm:b3:instrumental-variables:late}, keeping the
+other three assumptions.
+\begin{enumerate}
+\item Show that the Wald ratio equals $(\pi_c \Delta_c - \pi_d
+\Delta_d)/(\pi_c - \pi_d)$, where $\pi_c$ and $\pi_d$ are the shares of
+\omterm{def:b3:instrumental-variables:compliance}{compliers} and \omterm{def:b3:instrumental-variables:compliance}{defiers} and $\Delta_c$ and $\Delta_d$ their average effects.
+\item With $\pi_c = 0.3$, $\Delta_c = 0.1$, $\pi_d = 0.2$ and $\Delta_d = 0.5$,
+compute the Wald ratio. Every person's effect is positive: comment.
+\item Give a setting where \omterm{def:b3:instrumental-variables:compliance}{defiers} are plausible.
+\end{enumerate}
+\end{exercise}
+
+\section{Problem: The Brenland College Lottery}\label{sec:b3:instrumental-variables:problem}
+
+\begin{problem}[{Weekend problem --- the Brenland college lottery}]\label{pb:b3:instrumental-variables:lottery}
+Brenland (invented) opened a new college in 2010 with more applicants than
+places, and allocated the places by lottery. Ten years later a survey
+followed all 4{,}000 applicants: the 2{,}000 who won a place and the 2{,}000
+who did not. Some losers enrolled later through a waiting list or another
+route; some winners never took up their place. Earnings at age thirty are in
+logarithms of dalens per year.
+
+\begin{center}
+\begin{tabular}{lccccc}
+  & & & \multicolumn{3}{c}{Mean log earnings} \\
+  & Applicants & Enrolled & all & enrolled & not enrolled \\ \hline
+  Lottery winners & 2{,}000 & 1{,}400 & 10.095 & 10.2214 & 9.80 \\
+  Lottery losers & 2{,}000 & 400 & 9.995 & 10.40 & 9.89375 \\ \hline
+\end{tabular}
+\end{center}
+The standard deviation of log earnings is 0.60 within each lottery group.
+
+\medskip\noindent\textbf{Part I --- the naive comparison.}
+\begin{enumerate}
+\item Compute the share enrolled among all applicants and the mean log
+earnings of all enrolled and of all non-enrolled applicants.
+\item Compute the naive difference in mean log earnings between enrolled and
+non-enrolled applicants.
+\item Name two reasons why this difference need not be the effect of college.
+\item Would a regression of log earnings on enrolment and the applicants'
+school grades remove the bias? Explain in two sentences.
+\item The college's prospectus quotes the naive difference as the gain from
+studying there. Convert it to a percentage gain in earnings.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- the lottery as an instrument.}
+\begin{enumerate}[resume]
+\item State the \omterm{def:b3:instrumental-variables:instrument}{relevance condition} and the \omterm{def:b3:instrumental-variables:instrument}{exclusion restriction} for the
+lottery, and say why the lottery makes independence credible.
+\item Compute the \omterm{def:b3:instrumental-variables:tsls}{first stage} and the \omterm{def:b3:instrumental-variables:tsls}{reduced form}.
+\item Compute the Wald estimate.
+\item The standard error of the \omterm{def:b3:instrumental-variables:tsls}{first stage} is
+$\sqrt{0.7 \times 0.3 / 2000 + 0.2 \times 0.8 / 2000}$. Compute it and the
+first-stage $F$. Is the instrument weak?
+\item Compute the standard error of the \omterm{def:b3:instrumental-variables:tsls}{reduced form} from the standard
+deviation of log earnings within groups.
+\item When the \omterm{def:b3:instrumental-variables:tsls}{first stage} is precisely estimated, the standard error of the
+Wald estimate is approximately the standard error of the \omterm{def:b3:instrumental-variables:tsls}{reduced form} divided
+by the \omterm{def:b3:instrumental-variables:tsls}{first stage}. Compute it.
+\item Give the 95~\% confidence interval of the Wald estimate.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- who the compliers are.}
+\begin{enumerate}[resume]
+\item Assuming \omterm{def:b3:instrumental-variables:compliance}{monotonicity}, compute the shares of \omterm{def:b3:instrumental-variables:compliance}{always-takers}, \omterm{def:b3:instrumental-variables:compliance}{never-takers}
+and \omterm{def:b3:instrumental-variables:compliance}{compliers}.
+\item What is the mean log earnings of \omterm{def:b3:instrumental-variables:compliance}{always-takers}? Of \omterm{def:b3:instrumental-variables:compliance}{never-takers}?
+\item The enrolled winners are a mix of \omterm{def:b3:instrumental-variables:compliance}{always-takers} and \omterm{def:b3:instrumental-variables:compliance}{compliers}. Use the
+shares of Question~13 to show that the \omterm{def:b3:instrumental-variables:compliance}{compliers}' mean of $Y(1)$ is
+$(0.7 \times 10.2214 - 0.2 \times 10.40)/0.5$, and compute it.
+\item In the same way, compute the \omterm{def:b3:instrumental-variables:compliance}{compliers}' mean of $Y(0)$ from the
+non-enrolled losers and the non-enrolled winners.
+\item Check that the difference of the answers to Questions~15 and~16 equals
+the Wald estimate.
+\item Compare the \omterm{def:b3:instrumental-variables:compliance}{compliers}' mean of $Y(0)$ with the \omterm{def:b3:instrumental-variables:compliance}{never-takers}' mean, and
+the \omterm{def:b3:instrumental-variables:compliance}{compliers}' mean of $Y(1)$ with the \omterm{def:b3:instrumental-variables:compliance}{always-takers}' mean. What do the two
+comparisons say about who enrols, and about the naive comparison of Part I?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- a second campus.}
+\begin{enumerate}[resume]
+\item A smaller campus held its own lottery among 1{,}200 applicants, 600
+winners and 600 losers. Of the winners 26~\% enrolled, of the losers 20~\%.
+Compute its \omterm{def:b3:instrumental-variables:tsls}{first stage} and the standard error
+$\sqrt{0.26 \times 0.74/600 + 0.2 \times 0.8/600}$, and its first-stage $F$.
+\item The \omterm{def:b3:instrumental-variables:tsls}{reduced form} at the second campus is 0.02. Compute its Wald estimate.
+\item With the same within-group standard deviation of 0.60, compute the
+standard error of the \omterm{def:b3:instrumental-variables:tsls}{reduced form} and, by the approximation of Question~11,
+of the Wald estimate.
+\item Is the second campus's estimate statistically different from the first
+campus's? Compute the standard error of the difference, treating the two as
+independent.
+\item By the \emph{How it is measured} thresholds, how would you describe the
+second instrument? Should a study pool the two lotteries as two instruments in
+one 2SLS regression?
+\item Even if both lotteries were strong, why might their LATEs differ? State
+the effect of college that this problem estimates, with its 95~\% interval,
+and for whom.
+\end{enumerate}
+\end{problem}

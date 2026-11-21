@@ -1,0 +1,389 @@
+\chapter{The IS--LM Model}\label{ch:b1:is-lm}
+
+On 16 December 2008 the Federal Reserve set a target range of 0 to 1/4 per
+cent for its policy rate, and it kept it there until 16 December 2015.
+% ledger: b1:fed-zlb-2008
+% ledger: b1:fed-liftoff-2015
+Over those seven years the effective rate never rose above $0.22\%$, while
+the Federal Reserve's balance sheet grew from 0.891 trillion dollars at the
+end of 2007 to 4.498 trillion at the end of 2014. % figdata: zlb_stats
+% figdata: assets_points
+A central-bank balance sheet five times as large did not push the interest rate
+below zero. This chapter builds the short-run model in which that is the
+expected result: output set by demand, at a price level that has not yet
+moved.
+
+\begin{openingchart}{The effective federal funds rate (per cent, left axis,
+blue) and the Federal Reserve's total assets (trillions of dollars, right
+axis, red), monthly, 2003--2025.}{Board of Governors of the Federal
+Reserve System, H.15 and H.4.1}
+\begin{tikzpicture}
+\begin{axis}[omtime, xlabel={Year}, ylabel={Federal funds rate (\%)}, xmin=2003, xmax=2026, ymin=0, ymax=6,
+  width=0.72\linewidth, height=0.4\linewidth, axis y line*=left]
+  \addplot+[thick, no marks, omDef] table[x=t, y=ffr, col sep=comma] {figdata/bachelor-1/24-is-lm/out/fedzlb.csv};
+\end{axis}
+\begin{axis}[omtime, xmin=2003, xmax=2026, ymin=0, ymax=10, width=0.72\linewidth, height=0.4\linewidth,
+  axis y line*=right, axis x line=none, ylabel={Total assets (trillion \$)}, grid=none]
+  \addplot+[thick, no marks, omThm] table[x=t, y=assets, col sep=comma] {figdata/bachelor-1/24-is-lm/out/fedzlb.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+The rate fell to its floor in late 2008 and stayed there for seven years; it
+fell there again in 2020. The balance sheet grew in steps during the first
+episode, and to 8.939 trillion dollars in April 2022 after the second.
+% figdata: assets_points
+In Japan the short-term rate was $0.059\%$ in 1999, $0.473\%$ in 2007 and $0.073\%$
+in 2015. % figdata: jst_rates
+
+\begin{recall}
+The Keynesian cross and the multiplier, with its limits, and the policy
+rate were met at school. Money demand is
+\cref{def:b1:money-and-inflation:money-demand}; the \omterm{def:b1:long-run-model:loanable-funds}{loanable funds market}
+of the long run is \cref{def:b1:long-run-model:loanable-funds}; implicit
+differentiation is \cref{prop:b1:comparative-statics:implicit}.
+\end{recall}
+
+\section{The goods market and the IS curve}\label{sec:b1:is-lm:is}
+
+In the short run the price level $P$ is fixed and output is whatever is
+demanded. Planned spending in a closed economy is
+\[
+E = C(Y - T) + I(r) + G,
+\]
+with $0 < C' < 1$ and $I' < 0$. The goods market is in \omterm{def:b1:models-and-data:equilibrium}{equilibrium} when output
+equals planned spending, $Y = E$.
+
+\begin{definition}[IS curve]\label{def:b1:is-lm:is}
+\index{IS curve}
+The \emph{IS curve} is the set of pairs $(Y, r)$ at which the goods market is
+in \omterm{def:b1:models-and-data:equilibrium}{equilibrium}: $Y = C(Y - T) + I(r) + G$.
+\end{definition}
+
+Differentiating, $dY = C'dY + I'dr$, so along the curve
+\[
+\frac{dr}{dY} = \frac{1 - C'}{I'} < 0 :
+\]
+a lower interest rate raises investment, and output rises by the
+multiplier $1/(1 - C')$ times the extra investment. A rise in $G$ shifts the
+curve to the right by $\Delta G/(1 - C')$; a rise in $T$ shifts it to the left by
+$C'\Delta T/(1 - C')$.
+
+\section{The money market and the LM curve}\label{sec:b1:is-lm:lm}
+
+With $P$ fixed and expected inflation zero, the nominal and real interest
+rates coincide, and the money market clears when $M/P = L(r, Y)$, with
+$L_r < 0 < L_Y$.
+
+\begin{definition}[LM curve]\label{def:b1:is-lm:lm}
+\index{LM curve}
+The \emph{LM curve} is the set of pairs $(Y, r)$ at which the money market is
+in \omterm{def:b1:models-and-data:equilibrium}{equilibrium} for a given real money supply: $M/P = L(r, Y)$.
+\end{definition}
+
+Along it, $0 = L_r dr + L_Y dY$, so $dr/dY = -L_Y/L_r > 0$: more output raises money
+demand, and with a given money supply the interest rate must rise to
+choke it off. A larger $M$ shifts the curve down.
+
+\begin{measure}[A policy rate and a market rate]
+The rate a central bank sets is an overnight rate at which banks lend
+reserves to one another. The rates that matter for investment --- on loans,
+bonds, mortgages --- add a premium for time and for risk. The model has a
+single $r$; in the data the spread between the two moves, and in 2008 it
+widened sharply.
+\end{measure}
+
+\section{Equilibrium and policy}\label{sec:b1:is-lm:equilibrium}
+
+\begin{model}{The IS--LM model}
+\index{IS--LM model}
+\assumes A fixed price level; a closed economy; no expectations; a money
+supply (LM) or an interest rate (MP) set by the central bank.
+\predicts A fiscal expansion raises output and the interest rate (with
+LM), or output alone (with MP); a monetary expansion lowers the interest
+rate and raises output, except in a \omterm{def:b1:is-lm:liquidity-trap}{liquidity trap}.
+\tested The signs of the responses to monetary shocks: identified from the
+Federal Reserve's own records for 1969--1996, policy shocks have large,
+fairly rapid effects on output and inflation (Romer and Romer 2004).
+% ledger: b1:romer2004
+At the \omterm{def:b1:is-lm:liquidity-trap}{zero lower bound}, more central-bank money left the policy rate at
+its floor (opening chart).
+\breaks Prices move (\cref{ch:b1:aggregate-supply}); economies are open
+(\cref{ch:b1:open-economy}); expectations matter and finance can break, as
+in 2008 --- subjects of the second university year. It is a toy model: its
+signs are informative, the size of its multipliers is not to be trusted
+(\cref{ch:b1:stabilisation-policy}).
+\end{model}
+
+\begin{proposition}[Policy multipliers]\label{prop:b1:is-lm:multipliers}
+In the IS--LM model,
+\[
+\frac{dY}{dG} = \frac{1}{1 - C' + I'L_Y/L_r}, \qquad
+\frac{dY}{d(M/P)} = \frac{I'/L_r}{1 - C' + I'L_Y/L_r}.
+\]
+Both are positive, and $0 < dY/dG < 1/(1 - C')$: \omterm{def:b1:long-run-model:crowding-out}{crowding out} is partial.
+\end{proposition}
+
+\begin{proof}
+Differentiate the two equations: $(1 - C')dY - I'dr = dG$ and $L_Y dY + L_r dr = d(M/P)$.
+From the second, $dr = (d(M/P) - L_Y dY)/L_r$; substituting,
+$(1 - C' + I'L_Y/L_r)dY = dG + (I'/L_r)d(M/P)$. Since $I' < 0$ and $L_r < 0$, $I'L_Y/L_r > 0$, so the
+denominator exceeds $1 - C' > 0$, and $I'/L_r > 0$.
+\end{proof}
+
+\begin{definition}[Fiscal multiplier]\label{def:b1:is-lm:fiscal-multiplier}
+\index{fiscal multiplier}
+The \emph{fiscal multiplier} is the change in output per unit change in
+government purchases, $dY/dG$, all else given; in IS--LM it is smaller than
+the Keynesian-cross multiplier $1/(1 - C')$ because the interest rate rises and
+investment falls.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Output $Y$ (billion dalens)}, ylabel={Interest rate $r$ (\%)},
+  xmin=340, xmax=420, ymin=-1, ymax=6, width=0.58\linewidth, height=0.42\linewidth]
+  \addplot[demand, domain=340:420] {(430.765 - x)/12.5};
+  \addplot[shifted, domain=340:420] {(405.765 - x)/12.5};
+  \addplot[supply, domain=340:420] {0.1*x - 36.326};
+  \addplot[guide] coordinates {(393.264,-1) (393.264,3)};
+  \addplot[guide] coordinates {(382.153,-1) (382.153,1.889)};
+  \node[font=\footnotesize, anchor=west] at (axis cs:407,1.25) {IS};
+  \node[font=\footnotesize, anchor=north east] at (axis cs:356,3.5) {IS$'$};
+  \node[font=\footnotesize, anchor=north west] at (axis cs:405,4.4) {LM};
+\end{axis}
+\end{tikzpicture}
+
+{\small The weekend problem's economy: IS (blue) and LM (red) cross at
+$Y = 393.264$ and $r = 3\%$. A fall of 10 billion in exports shifts IS to the left by
+25 (dashed); the new \omterm{def:b1:models-and-data:equilibrium}{equilibrium} is $Y = 382.153$ and $r = 1.889\%$: the fall in the
+rate saves part of the output.}
+\end{omfigure}
+
+With the weekend problem's numbers ($C' = 0.6$, $I' = -5$ billion per point,
+$L_Y = 0.5$, $L_r = -5$) the Keynesian-cross multiplier is $2.5$ and the IS--LM
+multiplier $1/(0.4 + 0.5) = 1.111$. % computed: code/bachelor-1/24-is-lm/exercises/solutions.py
+
+\section{The liquidity trap}\label{sec:b1:is-lm:trap}
+
+The nominal interest rate cannot fall much below zero: people can hold
+currency, which pays zero. When the \omterm{def:b1:is-lm:is}{IS curve} crosses the \omterm{def:b1:is-lm:lm}{LM curve} at a
+negative rate, the rate stops at the floor.
+
+\begin{definition}[Liquidity trap, zero lower bound]\label{def:b1:is-lm:liquidity-trap}
+\index{liquidity trap}\index{zero lower bound}
+The \emph{zero lower bound} is the floor, at or near zero, below which the
+nominal interest rate cannot be pushed. An economy is in a \emph{liquidity
+trap} when the interest rate is at that floor: money and bonds are then
+\omterm{def:b1:preferences-and-utility:perfect}{perfect substitutes}, and more money is held without lowering the rate.
+\end{definition}
+
+In a trap the \omterm{def:b1:is-lm:lm}{LM curve} is flat at the floor. A larger money supply moves
+the flat part to the right and leaves the \omterm{def:b1:models-and-data:equilibrium}{equilibrium} unchanged; a fiscal
+expansion raises output by the full Keynesian-cross multiplier, since the
+rate does not rise and nothing is crowded out.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Output $Y$ (billion dalens)}, ylabel={Interest rate $r$ (\%)},
+  xmin=330, xmax=420, ymin=-1, ymax=5, width=0.58\linewidth, height=0.42\linewidth]
+  \addplot[supply, domain=330:420] {max(0, 0.1*x - 36.326)};
+  \addplot[demand, domain=330:420] {(430.765 - 25 - 50 - x)/12.5};
+  \addplot[shifted, domain=330:420] {(430.765 - 25 - 50 + 7.5 - x)/12.5};
+  \addplot[guide] coordinates {(355.764,-1) (355.764,0)};
+  \node[font=\footnotesize, anchor=north] at (axis cs:355.764,-0.15) {$355.8$};
+  \node[font=\footnotesize, anchor=south east] at (axis cs:418,4) {LM};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:331,1.5) {IS};
+\end{axis}
+\end{tikzpicture}
+
+{\small A \omterm{def:b1:is-lm:liquidity-trap}{liquidity trap} in the weekend problem: after a fall in exports and
+in investment demand, IS (blue) crosses the \omterm{def:b1:is-lm:lm}{LM curve} (red) on its flat part
+at $r = 0$, at $Y = 355.764$. A rise of 3 billion in $G$ (dashed) raises output by
+7.5, the full multiplier of $2.5$; more money would not move the flat part
+of LM.}
+\end{omfigure}
+
+\begin{record}[The zero lower bound, 2008--2015]
+On 16 December 2008 the Federal Reserve set the target range for its
+policy rate at 0 to 1/4 per cent, and raised it to 1/4 to 1/2 per cent only
+on 16 December 2015. % ledger: b1:fed-zlb-2008
+% ledger: b1:fed-liftoff-2015
+In between, the effective rate stayed between $0.07\%$ and $0.22\%$ for 84
+months, while total assets, already 2.5 times their end-2007 level, doubled
+again. % figdata: zlb_stats, assets_points
+In Japan the short-term rate was below $0.5\%$ from 1999 on. % figdata: jst_rates
+As the model predicts, more money did not lower the rate. Whether it
+raised output through other channels --- longer-term rates, asset prices,
+expectations --- is a question for the second university year.
+\end{record}
+
+\section{The version with an interest-rate rule}\label{sec:b1:is-lm:mp}
+
+Central banks do not set the money supply; they set an interest rate and
+supply whatever money is demanded at it.
+
+\begin{definition}[MP curve, interest-rate rule]\label{def:b1:is-lm:mp}
+\index{MP curve}\index{interest-rate rule}
+An \emph{interest-rate rule} gives the interest rate the central bank sets
+as a function of the state of the economy. The \emph{MP curve} is that rule in
+the $(Y, r)$ plane; in its simplest form it is horizontal at the rate the
+bank has chosen, $r = \bar r$.
+\end{definition}
+
+With a horizontal \omterm{def:b1:is-lm:mp}{MP curve}, a fiscal expansion raises output by the full
+multiplier unless the bank raises its rate; a fall in investment demand
+lowers output unless the bank cuts. The model then reads as central banks
+describe themselves: shocks shift IS, the bank moves MP, and output
+responds. It is the starting point of the models of the second university
+year.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Output $Y$}, ylabel={Interest rate $r$ (\%)},
+  xmin=800, xmax=1300, ymin=0, ymax=8, width=0.56\linewidth, height=0.4\linewidth]
+  \addplot[demand, domain=800:1300] {(1500 - x)/100};
+  \addplot[shifted, domain=800:1300] {(1340 - x)/100};
+  \addplot[supply, domain=800:1300] {5};
+  \addplot[supply, dashed, domain=800:1300] {3.4};
+  \addplot[guide] coordinates {(1000,0) (1000,5)};
+  \node[font=\footnotesize, anchor=south east] at (axis cs:1290,5) {MP};
+  \node[font=\footnotesize, anchor=south east] at (axis cs:1290,3.4) {MP$'$};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:1160,3.45) {IS};
+  \node[font=\footnotesize, anchor=north east] at (axis cs:1150,1.85) {IS$'$};
+\end{axis}
+\end{tikzpicture}
+
+{\small IS--MP with the exercises' numbers: a fall of 40 in investment demand
+shifts IS from $Y = 1500 - 100r$ to $Y = 1340 - 100r$ (dashed). Keeping output at 1,000
+requires a rate cut from $5\%$ to $3.4\%$.}
+\end{omfigure}
+
+\section{The toy model in its frame}\label{sec:b1:is-lm:frame}
+
+IS--LM holds the price level fixed, ignores what people expect, and treats
+the economy as closed. Its predictions are signs: a fiscal expansion raises
+output; a monetary expansion raises output except in a trap; a fall in
+private demand lowers output unless policy offsets it. The signs survive
+much better than the sizes. Its multipliers depend on slopes that are hard
+to measure and that change when expectations do; the evidence on \omterm{def:b1:is-lm:fiscal-multiplier}{fiscal
+multipliers} is the subject of the stabilisation chapter.
+
+\section*{Exercises}\label{sec:b1:is-lm:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:is-lm:is-ex}
+With $C = 50 + 0.75(Y - T)$, $I = 300 - 25r$ and $G = T = 100$, derive the \omterm{def:b1:is-lm:is}{IS curve}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:is-lm:lm-ex}
+With $M/P = 500$ and $L = Y - 100r$, derive the \omterm{def:b1:is-lm:lm}{LM curve}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:is-lm:read}
+The short-term rate was $5.02\%$ in the United States and $3.859\%$ in Germany in
+2007, and $0.13\%$ and $-0.108\%$ in 2015. % figdata: jst_rates
+Which were at or near the \omterm{def:b1:is-lm:liquidity-trap}{zero lower bound}? What does a negative rate say
+about the bound?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:is-lm:sign}
+Predict the sign of the change in $r$ after a rise in $G$ with an \omterm{def:b1:is-lm:lm}{LM curve} and
+with an \omterm{def:b1:is-lm:mp}{MP curve}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:is-lm:eq}
+Find the \omterm{def:b1:models-and-data:equilibrium}{equilibrium} of \cref{exo:b1:is-lm:is-ex,exo:b1:is-lm:lm-ex} and the \omterm{def:b1:is-lm:fiscal-multiplier}{fiscal
+multiplier}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:is-lm:monetary}
+In the same economy, find the monetary multiplier $dY/d(M/P)$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:is-lm:trap-ex}
+Investment demand collapses and the \omterm{def:b1:is-lm:is}{IS curve} becomes $Y = 400 - 100r$; the
+interest rate cannot fall below zero. Find the \omterm{def:b1:models-and-data:equilibrium}{equilibrium}, and the effect
+of doubling $M$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:is-lm:mp-ex}
+In the economy of \cref{exo:b1:is-lm:is-ex}, the central bank sets $r = 5$. A fall
+in confidence lowers investment demand by 40 at every rate. Find the rate
+cut that keeps output at 1,000.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:is-lm:assets}
+The Federal Reserve's total assets were 0.891 trillion dollars at the end of
+2007, 2.239 trillion at the end of 2008 and 4.487 trillion at the end of
+2015. % figdata: assets_points
+Compute the growth factors, and say what the LM model predicts for the
+interest rate.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:is-lm:general}
+Derive \cref{prop:b1:is-lm:multipliers} by implicit differentiation, and the
+effect of $G$ on $r$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:is-lm:crowding}
+Using the multipliers, show when \omterm{def:b1:long-run-model:crowding-out}{crowding out} vanishes and when it is
+complete, in terms of $L_r$ and $I'$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:is-lm:refute}
+What observation in 2008--2015 would have refuted the liquidity-trap
+prediction?
+\end{exercise}
+
+\section{Problem: Brenland's Recession}\label{sec:b1:is-lm:problem}
+
+\begin{problem}[{Weekend problem --- a recession in a toy model}]\label{pb:b1:is-lm:brenland}
+Take Brenland's 2025 accounts (invented), in billions of dalens: $Y = 393.264$,
+$C = 225.014$, $I = 88.484$, $G = 78.653$ and net exports $NX = 1.113$; the interest rate is
+$r = 3\%$. Model them with $C = c_0 + 0.6(Y - T)$, $T = 80$ (a round figure for
+the model, not the net taxes of the accounts, 70.788), $I = I_0 - 5r$, and money demand
+$L = 0.5Y - 5r$; net exports are given. The price level is fixed and $r \ge 0$.
+
+\medskip\noindent\textbf{Part I --- IS and LM.}
+\begin{enumerate}
+  \item Calibrate $c_0$ so that the consumption function fits 2025.
+  \item Calibrate $I_0$.
+  \item Find the real money supply that makes $r = 3$ an \omterm{def:b1:models-and-data:equilibrium}{equilibrium}.
+  \item Write the \omterm{def:b1:is-lm:is}{IS curve}.
+  \item Write the \omterm{def:b1:is-lm:lm}{LM curve}.
+  \item Give the slopes $dr/dY$ of both curves.
+  \item Compute the Keynesian-cross multiplier.
+  \item Compute the IS--LM fiscal and monetary multipliers.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- A fall in exports.} Net exports fall by 10.
+\begin{enumerate}[resume]
+  \item By how much does the \omterm{def:b1:is-lm:is}{IS curve} shift?
+  \item Find the new $Y$ and $r$.
+  \item By how much does investment change, and why?
+  \item What would the fall in output be with the interest rate held at $3\%$?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- Monetary and fiscal answers.}
+\begin{enumerate}[resume]
+  \item Find the rise in $M/P$ that restores output to 393.264.
+  \item Find the interest rate then, and investment.
+  \item Find instead the rise in $G$ that restores output.
+  \item Find the interest rate then, and investment.
+  \item Compare the two answers: what does each leave different?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- The rate hits zero.} On top of the fall in
+exports, investment demand falls by 20 at every rate.
+\begin{enumerate}[resume]
+  \item Find the \omterm{def:b1:models-and-data:equilibrium}{equilibrium} ignoring the floor.
+  \item Find the \omterm{def:b1:models-and-data:equilibrium}{equilibrium} with the floor.
+  \item What does a rise in $M/P$ do?
+  \item Find the multiplier of a small rise in $G$.
+  \item By how much can $G$ rise before the rate leaves zero?
+  \item Find the rise in $G$ that restores output to 393.264.
+  \item Why is the average multiplier of that rise smaller than 2.5?
+  \item Which features of the toy model make the multiplier at the floor so large?
+  \item State the result: what happens to the \omterm{def:b1:is-lm:fiscal-multiplier}{fiscal multiplier} at the zero bound, and why is that number the model's, not the economy's?
+\end{enumerate}
+\end{problem}

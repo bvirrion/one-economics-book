@@ -1,0 +1,691 @@
+\chapter{Behavioural Evidence: Where Rational Choice Breaks}\label{ch:b2:behavioural-evidence}
+
+Eighteen laboratory experiments published in two leading economics journals between 2011 and 2014 were
+% ledger: b2:camerer2016
+run again, with new participants, a plan of analysis posted in advance and samples large enough to detect
+the original effect nine times out of ten. Each dot in the chart below is one of them: the original
+effect on the horizontal axis, the replication's on the vertical. Had every effect been reproduced
+exactly, the dots would lie on the diagonal. Most lie below it.
+
+\begin{openingchart}{Original against replication effect sizes for 18 laboratory experiments in
+  economics, each measured as a correlation coefficient $r$. Filled dots: the replication found a
+  significant effect in the original direction; open dots: it did not. The diagonal marks a replication
+  equal to the original; the dotted line, an effect of zero.}{Camerer et al.\ (2016), Science,
+  Table~S1 of the supplementary materials}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=1, ymin=-0.2, ymax=1, xtick={0,0.2,0.4,0.6,0.8,1},
+    ytick={-0.2,0,0.2,0.4,0.6,0.8,1}, xlabel={Original effect size ($r$)},
+    ylabel={Replication effect size ($r$)}, width=0.62\linewidth, height=0.62\linewidth,
+    legend style={at={(0.03,0.97)}, anchor=north west, font=\footnotesize}]
+  \addplot[only marks, mark=*, mark size=2.2pt, omDef] table[x=orig_r, y=rep_r]
+    {figdata/bachelor-2/05-behavioural-evidence/out/replication_yes.csv};
+  \addplot[only marks, mark=o, mark size=2.4pt, omThm, thick] table[x=orig_r, y=rep_r]
+    {figdata/bachelor-2/05-behavioural-evidence/out/replication_no.csv};
+  \legend{Replicated, Not replicated}
+  \draw[black!60] (axis cs:0,0) -- (axis cs:1,1);
+  \draw[black!60, densely dotted, thick] (axis cs:0,0) -- (axis cs:1,0);
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: replication_summary (n 18, n_replicated 11, n_smaller 15, n_negative 3)
+Eleven of the 18 replications found a significant effect in the original direction. Fifteen found a
+smaller effect than the original, and three found an effect of the opposite sign. Most of the 18 studies
+are not about the choices of this chapter, but the record sets its standard. Expected utility (\cref{ch:b2:expected-utility}) and exponential
+discounting (\cref{ch:b2:intertemporal-choice}) describe a chooser whose preferences over final outcomes
+are fixed and who uses every piece of information that is free. A large body of evidence finds choices
+that these models do not predict. This chapter asks which of those findings hold up when they are
+repeated, when stakes rise and when the people choosing have experience, and it states the best-known
+alternative model, \omterm{def:b2:behavioural-evidence:prospect-theory}{prospect theory}, in the same frame as every other model of the book: what it assumes,
+what it predicts, how it was tested and where it breaks.
+
+\begin{recall}
+From \cref{ch:b2:expected-utility}: the \omterm{def:b2:expected-utility:independence-axiom}{independence axiom}, the Allais pairs and the common-ratio
+pattern (\cref{prop:b2:expected-utility:common-ratio}), and the calibration bound
+(\cref{prop:b2:expected-utility:calibration}): a person who turns down a small 50--50 gamble at every
+level of wealth must turn down very large ones. From \cref{ch:b2:intertemporal-choice}: \omterm{def:b2:intertemporal-choice:present-bias}{present bias}
+(\cref{def:b2:intertemporal-choice:present-bias}), the quasi-hyperbolic factor $\varphi$, and the field
+evidence on gym contracts and on effort. From the school volumes: a correlation coefficient, a standard
+error and a significance test.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:behavioural-evidence:symbols}
+Outcomes are $z$; $z_0$ is a \omterm{def:b2:behavioural-evidence:reference-point}{reference point}. $v$ is the \omterm{def:b2:behavioural-evidence:value-function}{value function} of \omterm{def:b2:behavioural-evidence:prospect-theory}{prospect theory}, $\kappa$ the
+loss-aversion coefficient and $\eta$ the curvature of $v$; $\omega(p)$ is a \omterm{def:b2:behavioural-evidence:weighting}{probability weighting
+function} with parameter $d$. In the model of defaults, $b_i$ is person $i$'s net benefit from joining a
+plan and $\chi$ a switching cost; in the model of attention, $\tau$ is a tax and $\theta$ the weight
+given to it. Effect sizes are correlation coefficients $r$. The literature writes the loss-aversion
+coefficient as $\lambda$; this book keeps $\lambda$ for a Lagrange multiplier.
+\end{notation}
+
+\section{What a replication counts}\label{sec:b2:behavioural-evidence:replication}
+
+A study reports an estimate, a standard error and, usually, a test of the hypothesis that the effect is
+zero. A \emph{replication} runs the same design on new data. Two quantities summarise a set of
+replications.
+
+\begin{definition}[Replication rate]\label{def:b2:behavioural-evidence:replication-rate}
+The \emph{replication rate}\index{replication rate} of a set of studies is the share of their
+replications that find an effect significant at the chosen level (usually 5 per cent) in the same
+direction as the original. The \emph{relative effect size} of a replication is its estimate divided by
+the original estimate.
+\end{definition}
+
+The \omterm{def:b2:behavioural-evidence:replication-rate}{replication rate} depends on the power of the replications as well as on the truth of the effects: a
+replication with power $0.9$ misses a true effect of the original size one time in ten. That is why the
+18 replications of the opening chart were designed with power of at least 90 per cent. If every original
+% ledger: b2:camerer2016
+effect were true and accurately estimated, about 92 per cent of them should have replicated (the mean
+power); 61.1 per cent did. The mean effect size fell from $r = 0.474$ in the originals to $0.279$ in the
+replications, and the mean relative effect size was 65.9 per cent.
+
+Why should effects shrink? The simplest reason needs no error by anyone. Journals and authors publish
+significant results more readily than null ones. If a true effect is small and the samples modest, the
+estimates that pass the significance filter are the ones that happened to come out large, so the
+published estimate exaggerates the effect, while a replication, which is reported whatever it finds, is
+unbiased.
+
+\begin{proposition}[The significance filter exaggerates]\label{prop:b2:behavioural-evidence:filter}
+Let an estimate be $\hat r = r + \sigma u$ with $r > 0$, $\sigma > 0$ and $u$ standard normal. Conditional
+on passing the one-sided test $\hat r > 1.96\,\sigma$, the expected estimate exceeds $r$. A replication
+$\hat r' = r + \sigma u'$, with $u'$ independent of $u$, has expectation $r$ whatever the first estimate
+was.
+\end{proposition}
+
+\begin{proof}
+$\mathbb{E}[\hat r \mid \hat r > c] = r + \sigma\,\mathbb{E}[u \mid u > (c - r)/\sigma]$, and the mean of
+a standard normal variable above any threshold is positive. The replication's error $u'$ is independent
+of the event that selected the original, so $\mathbb{E}[\hat r' \mid \hat r > c] = r$.
+\end{proof}
+
+The listing below simulates the proposition. A true effect of $r = 0.15$ is studied in 20,000 samples of
+100 people; only the significant estimates are published; each published study is then replicated once
+with the same sample size.
+
+\omcode{code/bachelor-2/05-behavioural-evidence/listings/winners_curse.py}{1}{19}{Publication of
+significant results only, and the replications that follow.}\label{lst:b2:behavioural-evidence:curse}
+
+\omoutput{code/bachelor-2/05-behavioural-evidence/outputs/winners_curse.txt}{The published estimates
+are inflated; the replications are not.}\label{out:b2:behavioural-evidence:curse}
+
+% code: listings/winners_curse.py
+Only about a third of the studies of the true effect pass the filter, and those that do report a mean
+effect of 0.262, three quarters larger than the truth. Their replications average 0.149, the true value,
+and only about a third of them are significant, so the field would record a \omterm{def:b2:behavioural-evidence:replication-rate}{replication rate} of about
+one third for an effect that is real. The relative effect size is 0.568. A low \omterm{def:b2:behavioural-evidence:replication-rate}{replication rate} and
+shrinking effects are therefore what a literature of small true effects and low power produces; they do
+not show that the original effects were zero. What they do show is that a single significant study is
+weak evidence of the size of an effect, and that the findings worth building a model on are those that
+come back when the study is repeated.
+
+\begin{measure}[An effect size as a correlation]
+Different experiments measure different things: effort in a task, a price, a share of cooperators. To
+compare them, a replication project converts each test statistic into a correlation coefficient $r$
+between the treatment and the outcome. A difference of means $\Delta$ between two groups of equal size,
+with a common standard deviation $s$, gives $r = \Delta/\sqrt{\Delta^2 + 4s^2}$. The conversion keeps
+the sign and the strength of an effect but not its units: $r = 0.3$ in an effort task and $r = 0.3$ in
+a market says nothing about which effect matters more for an economy.
+\end{measure}
+
+\section{Reference dependence and loss aversion}\label{sec:b2:behavioural-evidence:loss-aversion}
+
+Expected utility values final positions: a \omterm{def:b2:expected-utility:lottery}{lottery} is good or bad according to the wealth it leaves.
+Many choices look instead as if people valued changes, gains and losses measured from some point.
+
+\begin{definition}[Reference point]\label{def:b2:behavioural-evidence:reference-point}
+A \emph{reference point}\index{reference point} $z_0$ is the outcome against which a person codes
+outcomes as gains ($z > z_0$) or losses ($z < z_0$): the status quo, an expectation, a target or the
+outcome of others.
+\end{definition}
+
+\begin{definition}[Loss aversion]\label{def:b2:behavioural-evidence:loss-aversion}
+A person whose preferences depend on a \omterm{def:b2:behavioural-evidence:reference-point}{reference point} shows \emph{loss aversion}\index{loss aversion}
+if a loss reduces value by more than a gain of the same size raises it. With a \omterm{def:b2:behavioural-evidence:value-function}{value function} that is
+linear on each side, $v(z - z_0) = z - z_0$ for gains and $\kappa(z - z_0)$ for losses, loss aversion
+means $\kappa > 1$, and $\kappa$ is the \emph{loss-aversion coefficient}.
+\end{definition}
+
+The cleanest measurement uses \emph{mixed gambles}: a 50--50 chance of losing $z_-$ or gaining $z_+$. With
+the linear \omterm{def:b2:behavioural-evidence:value-function}{value function}, the gamble is accepted when $\tfrac12 z_+ - \tfrac12\kappa z_- \ge 0$, that
+is when $z_+/z_- \ge \kappa$. The smallest gain that makes a person accept, divided by the loss, measures
+her $\kappa$. Expected utility predicts almost exactly one for small stakes: a utility of wealth that is
+differentiable is nearly linear over a few hundred dalens, so any gamble with $z_+ > z_-$ should be
+accepted. The calibration bound of \cref{prop:b2:expected-utility:calibration} says more: a person who
+turns down small gambles with $z_+$ a little above $z_-$ at every level of wealth would, under expected
+utility, have to turn down gambles that no one turns down.
+
+\begin{record}[How large is loss aversion?]
+Brown, Imai, Vieider and Camerer (2024) collected 607 estimates of the loss-aversion coefficient from
+% ledger: b2:bivc2024
+150 articles in economics, psychology, neuroscience and other fields. Their meta-analytic mean is
+$1.955$, with a 95 per cent interval from $1.820$ to $2.102$: in the average study, a loss weighs about
+twice as much as a gain of the same size. Estimates differ across designs and samples, and the meta-
+analysis finds few study characteristics that predict them.
+\end{record}
+
+A coefficient of two is a summary across very different measurements: of mixed gambles, of choices
+between insurance contracts, of prices in markets. It does not say what a person's \omterm{def:b2:behavioural-evidence:reference-point}{reference point} is,
+and the estimate of $\kappa$ depends on it.
+
+\begin{definition}[Endowment effect]\label{def:b2:behavioural-evidence:endowment-effect}
+The \emph{endowment effect}\index{endowment effect} is a gap between the smallest price at which an
+owner will sell a good (willingness to accept, WTA) and the largest price at which a non-owner will buy
+it (willingness to pay, WTP), larger than income effects can explain.
+\end{definition}
+
+\omterm{def:b2:behavioural-evidence:loss-aversion}{Loss aversion} predicts the \omterm{def:b2:behavioural-evidence:endowment-effect}{endowment effect}. If giving up the good is a loss and acquiring it a gain,
+and money is coded neutrally, a good worth $u$ in gains is sold at $\mathrm{WTA} = \kappa u$ and bought
+at $\mathrm{WTP} = u$, a ratio of $\kappa$. If paying money is also felt as a loss, $\mathrm{WTP} =
+u/\kappa$ and the ratio is $\kappa^2$. Under expected utility the two prices differ only by an income
+effect, which is tiny for goods that cost a small part of wealth (\cref{exo:b2:behavioural-evidence:11}).
+
+\begin{record}[Mugs]
+Kahneman, Knetsch and Thaler (1990) gave coffee mugs at random to half the participants of an experiment
+% ledger: b2:kkt1990
+and then ran markets between owners and non-owners. Since the mugs were assigned at random, owners' and
+non-owners' valuations come from the same distribution, so about half the mugs should change hands. In
+every session, significantly fewer did: owners' willingness to accept greatly exceeded non-owners'
+willingness to pay. In markets for tokens that the experimenters redeemed at a known value, the
+predicted volume traded. Trading costs or misunderstanding the market would have reduced trade in tokens
+too, so the authors concluded that they cannot explain the gap for mugs.
+\end{record}
+
+The token design is worth remembering: it holds the market institution and its costs fixed and changes
+only whether the good has a use value of its own. It is the template for any test that separates a
+preference from a cost of trading (\cref{exo:b2:behavioural-evidence:9}).
+
+Two of the 18 replications of the opening chart tested reference dependence in the laboratory. Abeler,
+% ledger: b2:camerer2016-abeler
+Falk, Goette and Huffman (2011) found that participants worked longer at a dull task when their
+expected earnings, the presumed \omterm{def:b2:behavioural-evidence:reference-point}{reference point}, were raised; the original effect size was $r = 0.18$
+and the replication's $0.08$, not significant. Ericson and Fuster (2011) found that people asked a
+% ledger: b2:camerer2016-ericson
+higher price for a mug when they had been told they were more likely to receive it; $r = 0.21$ in the
+original, $0.12$ and not significant in the replication. Both replications point in the original
+direction with about half the effect. \omterm{def:b2:behavioural-evidence:loss-aversion}{Loss aversion} over the status quo is better established than the
+claim that expectations set the \omterm{def:b2:behavioural-evidence:reference-point}{reference point}.
+
+\section{Present bias in the field}\label{sec:b2:behavioural-evidence:present-bias}
+
+\Cref{ch:b2:intertemporal-choice} built the quasi-hyperbolic model, in which a household weights every
+future period by an extra factor $\varphi < 1$ relative to today, and found two pieces of field evidence.
+% ledger: b2:dm2006
+Gym members on flat monthly contracts paid more than \usd{17} per visit when a 10-visit pass cost
+\usd{10} per visit, as if they expected to go more often than they did. And participants allocating dull
+% ledger: b2:ans2013-beta
+tasks across dates showed a present-bias factor of $0.900$ for effort, but $0.974$ for money, close to
+no bias at all.
+
+Two lessons carry over to the rest of this chapter. First, the evidence for \omterm{def:b2:intertemporal-choice:present-bias}{present bias} is stronger for
+effort and consumption than for money, as the model predicts once money can be saved: shifting a payment
+in time shifts nothing that is consumed. Second, the field evidence is indirect. A gym contract chosen
+by someone who overestimates her future visits is consistent with \omterm{def:b2:intertemporal-choice:present-bias}{present bias} and naivety, but also
+with poor information about one's own tastes. The model earns its place when the same parameter
+predicts behaviour in another setting, here the demand for commitment, which appeared in the experiment
+% ledger: b2:ans2013-commit
+but vanished as soon as it had a price of 25 cents.
+
+\section{Defaults}\label{sec:b2:behavioural-evidence:defaults}
+
+Many decisions come with an option that takes effect if the person does nothing: a pension contribution
+rate, a mobile-phone plan, an organ-donation status, the privacy settings of a website. Firms set some of
+these defaults and governments others.
+
+\begin{definition}[Default effect]\label{def:b2:behavioural-evidence:default-effect}
+A \emph{default effect}\index{default effect} is a difference in the share of people who end up with an
+option according to whether that option applies when they make no choice, the set of options and their
+prices being the same.
+\end{definition}
+
+Under the standard model, a default can matter only through a cost of choosing. Suppose person $i$
+gains $b_i$ from joining a pension plan, with $b_i$ normally distributed with mean $\mu$ and standard
+deviation one across employees, and that acting on a form costs $\chi > 0$. Under opt-in, $i$ joins if
+$b_i > \chi$; under opt-out, $i$ stays enrolled unless $b_i < -\chi$. Participation is
+\[
+P_{\text{in}} = \Phi(\mu - \chi), \qquad P_{\text{out}} = \Phi(\mu + \chi),
+\]
+where $\Phi$ is the standard normal distribution function. The gap rises with the cost $\chi$, and two
+observed participation rates identify both $\mu$ and $\chi$ (\cref{pb:b2:behavioural-evidence:1}). The
+cost must include more than the time to fill in a form: attention, procrastination of the kind modelled
+in \cref{ch:b2:intertemporal-choice}, and the reading of the default as advice all raise the effective
+$\chi$.
+
+\begin{record}[Automatic enrolment]
+Madrian and Shea (2000) studied a large American company that changed its retirement saving plan from
+% ledger: b2:ms2000-participation
+opt-in to automatic enrolment, leaving the plan's terms otherwise unchanged. At 3--15 months of tenure,
+37 per cent of the employees hired just before the change participated, against 86 per cent of those
+hired under automatic enrolment. The default contribution rate was 3 per cent of pay, all of it placed
+% ledger: b2:ms2000-default
+in a money-market fund. Of the employees hired under automatic enrolment, 61 per cent were at both
+defaults, against 1 per cent of earlier cohorts; three quarters of the automatically enrolled
+participants contributed 3 per cent, while three quarters of the others contributed 6 per cent or more.
+\end{record}
+
+\begin{omchart}{Retirement-plan participation and the default, at one American company, in per cent of
+  employees with 3--15 months of tenure: hired just before automatic enrolment and hired under it.
+  ``At the default'': contributing 3 per cent of pay, all in the money-market fund.}{Madrian and Shea
+  (2000), NBER Working Paper 7682}
+\begin{tikzpicture}
+\begin{axis}[omrecord, ybar, bar width=22pt, xmin=0.4, xmax=2.6, ymin=0, ymax=100, xtick={1,2},
+    xticklabels={Participating, At the default}, ylabel={Per cent of employees}, grid=none,
+    ymajorgrids, width=0.62\linewidth, height=0.45\linewidth, nodes near coords,
+    every node near coord/.append style={font=\footnotesize},
+    legend style={at={(0.5,-0.2)}, anchor=north, font=\footnotesize},
+    legend columns=2]
+  \addplot[fill=omThm!60, draw=omThm] table[x=pos, y=window]
+    {figdata/bachelor-2/05-behavioural-evidence/out/defaults.csv};
+  \addplot[fill=omDef!70, draw=omDef] table[x=pos, y=new]
+    {figdata/bachelor-2/05-behavioural-evidence/out/defaults.csv};
+  \legend{Hired before, Hired under automatic enrolment}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+Both bars move. A default changes who participates, and it also changes what participants do: the
+default rate of 3 per cent was low against what earlier employees chose for themselves, so the same
+default that raised participation pulled many savers' contributions down. Which effect dominates for
+total saving is a question of numbers (\cref{pb:b2:behavioural-evidence:1}, Part III). The cost model
+also says who is affected: those whose benefit $b_i$ lies between $-\chi$ and $\chi$, who follow
+whichever default they are given. Under opt-in, some of them stay out although $b_i > 0$; under
+opt-out, some stay in although $b_i < 0$. Neither default puts everyone where they would choose to be
+if choosing were free, and the record cannot say which errors cost more. A firm that sets a default may
+also have interests of its own, such as the cost of its matching contribution, and a government that
+sets one may be wrong about what most people need; the evidence measures the effect of a default, not
+which default is best.
+
+\section{Limited attention}\label{sec:b2:behavioural-evidence:attention}
+
+The standard model assumes that a consumer uses every price she faces. A tax added at the till, a fee
+in small print, the price of ink for a printer bought cheaply: each is a price, and each may be paid
+attention to less than the price on the shelf.
+
+\begin{definition}[Salience]\label{def:b2:behavioural-evidence:salience}
+A component of a price is \emph{salient}\index{salience} if it is displayed where the choice is made.
+A consumer with \emph{limited attention} to a non-salient component $\tau$ chooses as if the price were
+$p + \theta\tau$, with $0 \le \theta \le 1$: $\theta = 1$ is full attention, $\theta = 0$ none.
+\end{definition}
+
+With linear demand $q = a - \beta_1(p + \theta\tau)$, where $\beta_1$ is the slope a regression of
+quantity on price would estimate, the effect of the tax on the quantity bought is
+$-\beta_1\theta\tau$ instead of $-\beta_1\tau$. Posting the tax-inclusive price raises $\theta$ to one
+and lowers demand; comparing the two reveals $\theta$ (\cref{exo:b2:behavioural-evidence:7}).
+
+\begin{record}[Taxes not on the price tag]
+Chetty, Looney and Kroft (2009) posted tax-inclusive price tags on some products in a grocery store, in
+% ledger: b2:clk2009
+a field experiment. Demand for those products fell by 8 per cent, although the tax paid at the till
+was unchanged. In a second test, they found that increases in taxes included in posted prices reduced
+alcohol consumption more than increases in taxes added at the register.
+\end{record}
+
+Limited attention has consequences that the standard model does not have, as Chetty, Looney and Kroft
+% ledger: b2:clk2009
+show. The share of a tax borne by buyers then depends on which side of the market is legally liable for it, and a tax that changes no one's
+behaviour can still reduce welfare, since consumers who ignore it at the till pay it out of the
+spending they had planned for other goods. Firms that sell to inattentive buyers have a reason to
+shroud prices, putting part of the price where it is not seen. In models of shrouded prices, a
+competitor who reveals the hidden part may gain little, if revealing it mainly teaches customers to buy
+the cheap base product from the rival that still shrouds; then shrouding survives competition. Governments that require prices to be posted inclusive of taxes and fees change $\theta$ by
+law.
+
+\section{Findings that did not hold up}\label{sec:b2:behavioural-evidence:failures}
+
+Seven of the 18 replications of the opening chart did not find a significant effect. They were findings
+% ledger: b2:camerer2016-chen, b2:camerer2016-duffy, b2:camerer2016-huck
+that a group identity made \omterm{def:b2:behavioural-evidence:salience}{salient} raises effort in a coordination game ($r = 0.84$ in the original,
+$0.17$ in the replication); that monetary exchange raises efficiency over gift exchange in a small
+% ledger: b2:camerer2016-ifcher, b2:camerer2016-kuziemko
+economy ($0.76$, then $-0.12$); that deferred pay raises effort ($0.83$, then $0.37$); that a positive
+mood makes people more patient ($0.28$, then $-0.01$); that people near the bottom of a ranking take
+risks to avoid last place ($0.28$, then $-0.12$); and the two findings on \omterm{def:b2:behavioural-evidence:reference-point}{reference points} of the
+previous section.
+
+Three points keep such a list in proportion. A non-significant replication is evidence of a smaller
+effect, not proof that the effect is zero: the replication of deferred pay found $r = 0.37$, a large
+% ledger: b2:camerer2016-huck
+effect by most standards, but not significant in a sample of that size. The originals that failed
+% ledger: b2:camerer2016-predictors
+were mostly those with the higher $p$-values and the smaller samples, as
+\cref{prop:b2:behavioural-evidence:filter} leads one to expect: only one of the eight originals with a
+$p$-value below $0.01$ failed. And the project's own point of comparison, a replication of 100
+% ledger: b2:camerer2016-rpp
+psychology studies, found a significant effect in the original direction for 36 per cent of those that
+had reported one, so the issue is one of method, not of one field. For economics, the consequence is practical: a model
+fitted to a single laboratory finding should be treated as provisional until the finding has been
+reproduced.
+
+\section{Prospect theory in the model frame}\label{sec:b2:behavioural-evidence:prospect-theory}
+
+\omterm{def:b2:behavioural-evidence:prospect-theory}{Prospect theory} gathers reference dependence, \omterm{def:b2:behavioural-evidence:loss-aversion}{loss aversion} and a distortion of probabilities into one
+model of choice under risk.
+
+\begin{definition}[Value function (prospect theory)]\label{def:b2:behavioural-evidence:value-function}
+A \emph{value function}\index{value function (prospect theory)} assigns a value $v(z - z_0)$ to each
+outcome relative to the \omterm{def:b2:behavioural-evidence:reference-point}{reference point}, with $v(0) = 0$, $v$ increasing, concave for gains, convex for
+losses and steeper for losses. This book uses the form $v(x) = x^{\eta}$ for $x \ge 0$ and $v(x) =
+-\kappa(-x)^{\eta}$ for $x < 0$, with $0 < \eta \le 1$ and $\kappa > 1$.
+\end{definition}
+
+\begin{definition}[Probability weighting function]\label{def:b2:behavioural-evidence:weighting}
+A \emph{probability weighting function}\index{probability weighting function} $\omega : [0, 1] \to [0,
+1]$ is increasing with $\omega(0) = 0$ and $\omega(1) = 1$; it replaces each probability by a decision
+weight. This book uses $\omega(p) = p^{d}/(p^{d} + (1 - p)^{d})^{1/d}$ with $0 < d \le 1$, which is the
+identity when $d = 1$.
+\end{definition}
+
+\begin{definition}[Prospect theory]\label{def:b2:behavioural-evidence:prospect-theory}
+Under \emph{prospect theory}\index{prospect theory}, a person facing a \omterm{def:b2:expected-utility:lottery}{lottery} with at most one gain
+$z_1 > z_0$ with probability $p_1$ and one loss $z_2 < z_0$ with probability $p_2$ values it at
+\[
+V = \omega(p_1)\,v(z_1 - z_0) + \omega(p_2)\,v(z_2 - z_0),
+\]
+and chooses the \omterm{def:b2:expected-utility:lottery}{lottery} with the highest $V$. Versions for many outcomes apply the weighting function to
+cumulative probabilities, separately for gains and for losses.
+\end{definition}
+
+The figures show the two functions with the illustrative values $\eta = 0.9$, $\kappa = 2$ and $d =
+0.65$ used in this chapter's exercises. They are not estimates; the loss-aversion coefficient is close to
+the meta-analytic mean of the record above.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, axis lines=middle, xmin=-110, xmax=110, ymin=-140, ymax=80,
+    xtick={-100,-50,50,100}, ytick={-100,-50,50}, xlabel={$z - z_0$}, ylabel={$v$},
+    x label style={anchor=north west}, y label style={anchor=south east},
+    tick label style={font=\scriptsize}, width=0.62\linewidth, height=0.52\linewidth]
+  \addplot[omDef, very thick, domain=0:105, samples=60] {x^0.9};
+  \addplot[omThm, very thick, domain=-105:0, samples=60] {-2*(-x)^0.9};
+  \addplot[guide, domain=-105:105, samples=2] {x};
+  \node[anchor=north west, font=\footnotesize, omDef] at (axis cs:55,30) {gains: $z^{0.9}$};
+  \node[anchor=north west, font=\footnotesize, omThm] at (axis cs:-80,-118) {losses: $-2(-z)^{0.9}$};
+  \node[anchor=south east, font=\footnotesize, black!60] at (axis cs:-45,-38) {$v = z - z_0$};
+\end{axis}
+\end{tikzpicture}
+
+{\small A prospect-theory \omterm{def:b2:behavioural-evidence:value-function}{value function} with $\eta = 0.9$ and $\kappa = 2$ (illustrative values). It is
+kinked at the \omterm{def:b2:behavioural-evidence:reference-point}{reference point}: the slope just below it is twice the slope just above. A loss of 100
+lowers value by about 126, a gain of 100 raises it by about 63.}
+\end{omfigure}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=1, ymin=0, ymax=1, xtick={0,0.25,0.5,0.75,1},
+    ytick={0,0.25,0.5,0.75,1}, xlabel={Probability $p$}, ylabel={Decision weight $\omega(p)$},
+    width=0.55\linewidth, height=0.55\linewidth]
+  \addplot[guide, domain=0:1, samples=2] {x};
+  \addplot[omDef, very thick, domain=0.0005:0.9995, samples=120] {x^0.65/(x^0.65 + (1-x)^0.65)^(1/0.65)};
+  \node[eqpoint] at (axis cs:0.359,0.359) {};
+  \node[anchor=north west, font=\footnotesize] at (axis cs:0.37,0.33) {$\omega(p) = p$ at $p \approx 0.36$};
+  \node[anchor=south west, font=\footnotesize, omDef] at (axis cs:0.02,0.42) {overweighted};
+  \node[anchor=north west, font=\footnotesize, omDef] at (axis cs:0.6,0.45) {underweighted};
+\end{axis}
+\end{tikzpicture}
+
+{\small A \omterm{def:b2:behavioural-evidence:weighting}{probability weighting function} with $d = 0.65$ (illustrative). Small probabilities get more
+weight than their value, large ones less; the curve crosses the diagonal at about $0.36$. The weight of
+a 1 per cent chance is $0.047$, almost five times the probability.}
+\end{omfigure}
+
+% code: exercises/solutions.py crossing, ex_fourfold
+The weighting function explains the Allais pattern of \cref{ch:b2:expected-utility} without any
+curvature of utility.
+
+\begin{proposition}[Common ratio under prospect theory]\label{prop:b2:behavioural-evidence:common-ratio}
+With the \omterm{def:b2:behavioural-evidence:reference-point}{reference point} at zero, $\eta = 0.9$ and $d = 0.65$, \omterm{def:b2:behavioural-evidence:prospect-theory}{prospect theory} ranks the lotteries of
+\cref{prop:b2:expected-utility:common-ratio} as $\ell^{B'} \succ \ell^{A'}$ and $\ell^{C'} \succ
+\ell^{D'}$, the pattern most people choose and expected utility excludes.
+\end{proposition}
+
+\begin{proof}
+% code: exercises/solutions.py allais
+$V(\ell^{A'}) = \omega(0.8)\,4000^{0.9} = 0.640 \times 1745 = 1117$ and $V(\ell^{B'}) = 3000^{0.9} = 1347$,
+so $\ell^{B'}$ is preferred. $V(\ell^{C'}) = \omega(0.2)\,4000^{0.9} = 0.260 \times 1745 = 454$ and
+$V(\ell^{D'}) = \omega(0.25)\,3000^{0.9} = 0.293 \times 1347 = 395$, so $\ell^{C'}$ is preferred. The
+ratio $\omega(0.2)/\omega(0.25) = 0.886$ is larger than $\omega(0.8)/\omega(1) = 0.640$: scaling both
+probabilities down by four makes the difference between them matter less, which is what the
+\omterm{def:b2:expected-utility:independence-axiom}{independence axiom} forbids.
+\end{proof}
+
+Combined with a \omterm{def:b2:behavioural-evidence:value-function}{value function} that is concave for gains and convex for losses, the weighting function
+also predicts a \emph{fourfold pattern} of attitudes to risk: \omterm{def:b2:expected-utility:risk-aversion}{risk aversion} for likely gains and for
+unlikely losses (people insure), risk seeking for unlikely gains (people buy \omterm{def:b2:expected-utility:lottery}{lottery} tickets) and for
+likely losses (people gamble to avoid a sure loss). \Cref{exo:b2:behavioural-evidence:10} derives it.
+
+\begin{model}{Prospect theory}
+\assumes Outcomes are valued as gains and losses from a \omterm{def:b2:behavioural-evidence:reference-point}{reference point}; losses weigh more than gains
+($\kappa > 1$); sensitivity diminishes away from the \omterm{def:b2:behavioural-evidence:reference-point}{reference point} ($\eta < 1$); probabilities are
+replaced by decision weights that overweight small probabilities.
+\predicts The Allais pattern; the \omterm{def:b2:behavioural-evidence:endowment-effect}{endowment effect}, with a WTA--WTP ratio of $\kappa$ or $\kappa^2$; the
+rejection of small mixed gambles with positive expected value; the fourfold pattern of risk attitudes;
+choices that change when the same outcomes are described as gains or as losses.
+\tested Laboratory gambles, in hundreds of studies (the meta-analysis above); the mugs experiment;
+choices of insurance \omterm{def:b2:insurance-and-risk-sharing:deductible}{deductibles}; field effects of \omterm{def:b2:behavioural-evidence:reference-point}{reference points}, such as the default in a pension
+plan.
+\breaks The theory does not say where the \omterm{def:b2:behavioural-evidence:reference-point}{reference point} is: the status quo, an expectation or a
+target can each fit a given choice, and a model that chooses its \omterm{def:b2:behavioural-evidence:reference-point}{reference point} after seeing the data
+can fit almost anything. Laboratory findings on expectations as \omterm{def:b2:behavioural-evidence:reference-point}{reference points} replicate weakly
+(\cref{sec:b2:behavioural-evidence:loss-aversion}), and experienced traders show little \omterm{def:b2:behavioural-evidence:endowment-effect}{endowment
+effect} (\cref{sec:b2:behavioural-evidence:experience}).
+\end{model}
+
+\section{Experienced traders and high stakes}\label{sec:b2:behavioural-evidence:experience}
+
+Most of the evidence above comes from students choosing over small sums for an hour. Two objections
+follow, and both can be tested. Markets give experience and feedback, and people may learn to avoid
+costly anomalies; and stakes in real decisions are larger.
+
+\begin{record}[Traders and the endowment effect]
+List (2003) studied traders in two real marketplaces, combining field observation with an
+% ledger: b2:list2003
+experiment. As market experience increased, individual behaviour converged to the prediction of the
+standard model, and the experimental test found that market experience played a significant role in
+eliminating the \omterm{def:b2:behavioural-evidence:endowment-effect}{endowment effect}.
+\end{record}
+
+Experience may teach a trader that goods bought are goods to be sold again, so that parting with them is
+no loss. The model frame then asks: is a \omterm{def:b2:behavioural-evidence:reference-point}{reference point} something a person learns? If so, \omterm{def:b2:behavioural-evidence:loss-aversion}{loss
+aversion} is real but its domain is narrower than the laboratory suggests, and its effects should be
+largest for goods held for use, by people with little practice at trading them.
+
+\begin{debate}[Do taxi drivers stop at a daily income target?]
+A driver who chooses her hours freely each day faces a wage that varies from day to day. The standard
+model of labour supply predicts that she works more on high-wage days, since an hour of leisure costs
+more then. A driver with a daily income target and \omterm{def:b2:behavioural-evidence:loss-aversion}{loss aversion} below it does the opposite: she
+reaches the target sooner on a good day and goes home. Camerer, Babcock, Loewenstein and Thaler (1997)
+% ledger: b2:cblt1997
+estimated the daily wage elasticity of hours for New York cab drivers in three samples and found it
+significantly negative in two, at about $-1$ for inexperienced drivers. Farber (2015) used the records of
+% ledger: b2:farber2015
+all New York taxi trips of 2009--2013, more than 700 million trips by about 62,000 drivers, and found
+that drivers worked more when earnings opportunities rose, whether the rise was anticipated or not; he
+found reference dependence not to be important for daily hours. The questions still open are how to measure the
+wage, since a wage computed as a day's earnings divided by its hours falls mechanically whenever hours
+are overstated, and whether a minority of drivers, or of days, does stop at a target.
+\end{debate}
+
+\Cref{exo:b2:behavioural-evidence:12} works the target model. Its prediction is precise: hours fall
+with the wage, with an elasticity of $-1$, but only over a band of wages within which the target is
+reached at the margin; outside the band, hours rise with the wage, as in the standard model. A test of
+the model is therefore a test of where most driver-days lie, and that is what the larger data set
+settled for New York.
+
+The broad lesson of the chapter fits in the model frame. \omterm{def:b2:behavioural-evidence:loss-aversion}{Loss aversion} over the status quo, the effect
+of defaults and the neglect of \omterm{def:b2:behavioural-evidence:salience}{non-salient} prices have been reproduced in many settings, in the field and
+with real stakes. \omterm{def:b2:intertemporal-choice:present-bias}{Present bias} is clearer for effort than for money. Several laboratory findings have
+not replicated, and experience removes at least one well-known \omterm{def:b2:asset-prices:anomaly}{anomaly}. Models built on these findings
+are tools like the others in this book: each predicts something the standard model does not, and each
+is kept as long as the prediction survives.
+
+\section{Exercises}\label{sec:b2:behavioural-evidence:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:behavioural-evidence:1}
+Read the opening chart. How many replications found a smaller effect than the original, and how many an
+effect of the opposite sign? Compute the \omterm{def:b2:behavioural-evidence:replication-rate}{replication rate}. Why can a \omterm{def:b2:behavioural-evidence:replication-rate}{replication rate} of 61 per cent
+coexist with every original effect being real?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:behavioural-evidence:2}
+A person with a linear \omterm{def:b2:behavioural-evidence:value-function}{value function} and $\kappa = 2$ is offered a 50--50 gamble: lose \dal{100} or win
+\dal{150}. Find its value. Does she accept? What is the smallest gain at which she accepts?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:behavioural-evidence:3}
+A mug is worth $u = 5$ dalens of gain to anyone who gets it, and $\kappa = 2$. Find WTA and WTP if only
+the mug is subject to \omterm{def:b2:behavioural-evidence:loss-aversion}{loss aversion}, then if paying money is also felt as a loss. What ratio WTA/WTP does
+each version predict?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:behavioural-evidence:4}
+Describe an observation that would show a person's rejection of a small mixed gamble is not due to \omterm{def:b2:behavioural-evidence:loss-aversion}{loss
+aversion}, and one that would show a gap between WTA and WTP is not an \omterm{def:b2:behavioural-evidence:endowment-effect}{endowment effect}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:behavioural-evidence:5}
+With $v(x) = x^{0.9}$ for gains, $v(x) = -2(-x)^{0.9}$ for losses and no probability weighting, value the
+50--50 gamble that wins \dal{1000} or loses \dal{400}. Is it accepted? What is its expected value, and
+what would expected utility with a nearly linear utility predict?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:behavioural-evidence:6}
+A firm of 2,000 employees moves its pension plan from opt-in to automatic enrolment. Using the
+participation and default rates of the automatic-enrolment record, predict the number of participants
+before and after, and the number at the default. If the average salary is \dal{30000} and the default
+rate 3 per cent, what do the employees at the default contribute in a year? What does the record say
+about the contributions of those who would have joined anyway?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:behavioural-evidence:7}
+Demand for a good is $q = 1600 - 40(p + \theta\tau)$, with $p = 20$ and a sales tax $\tau = 2$ added at
+the till. When the tax-inclusive price is posted, $\theta = 1$. Find demand when the tax is posted.
+Posting reduces demand by 8 per cent, as in the grocery experiment. Find demand without posting and the
+attention weight $\theta$ it implies.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:behavioural-evidence:8}
+In Table~S1 of the replication project, the reference-point studies of Abeler et al.\ and of Ericson and
+Fuster had original effect sizes $0.18$ and $0.21$ and replication effect sizes $0.08$ and $0.12$; the
+relative effect sizes reported are $0.43$ and $0.58$. Check the ratios. Neither replication was
+significant. Write two sentences that report these results accurately, and one that would overstate them.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:behavioural-evidence:9}
+Design an experiment that separates \omterm{def:b2:behavioural-evidence:loss-aversion}{loss aversion} from transaction costs as the cause of low trading
+volume, in the spirit of the mugs and tokens design. State what each hypothesis predicts in each
+treatment.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:behavioural-evidence:10}
+Use $\omega(p)$ with $d = 0.65$ and a \omterm{def:b2:behavioural-evidence:value-function}{value function} linear on each side. (a) Compute $\omega(0.01)$,
+$\omega(0.05)$, $\omega(0.5)$, $\omega(0.9)$ and $\omega(0.99)$. (b) Compare a 1 per cent chance of
+\dal{1000} with \dal{10} for sure, and a 99 per cent chance of \dal{1000} with \dal{990} for sure. (c) Do
+the same for losses of the same sizes. (d) State the fourfold pattern your answers display and the
+everyday choices it is used to explain.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:behavioural-evidence:11}
+A person has utility $\ln y + \gamma_m\,\mathbb{1}[\text{mug}]$ over money $y$ and owning a mug, with
+$\gamma_m > 0$, and money $m$. (a) Show that $\mathrm{WTP} = m(1 - e^{-\gamma_m})$ and $\mathrm{WTA} =
+m(e^{\gamma_m} - 1)$, so that WTA/WTP $= e^{\gamma_m}$. (b) For a mug for which she would pay \dal{5}
+out of $m = \dal{30000}$, find the ratio. (c) Prove more generally that if utility is continuously differentiable in money and owning the good
+does not change the marginal utility of money, WTA/WTP tends to one as the value of the good tends to
+zero, so that expected utility cannot produce a ratio near two for small stakes.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:behavioural-evidence:12}
+A driver earns $w$ dalens per hour and chooses her hours $h$ each day. Her daily income is $m = wh$ and
+her utility is $m - \bar m - \nu h^2/2$ if $m \ge \bar m$ and $\kappa(m - \bar m) - \nu h^2/2$ if $m <
+\bar m$, with target $\bar m = 200$, $\nu = 4$ and $\kappa = 2$. (a) Show that she stops exactly at the
+target when $w$ lies between $20$ and $\sqrt{800} = 28.28$, and find her hours at $w = 16$, $20$, $25$,
+$28$ and $32$. (b) Find the wage elasticity of hours inside and outside the band. (c) What does the
+standard model ($\kappa = 1$) predict? (d) What pattern in data on many driver-days would reject the
+target model?
+\end{exercise}
+
+\section{Problem: Brenmoor's pension plan}\label{sec:b2:behavioural-evidence:problem}
+
+\begin{problem}[{Weekend problem --- Brenmoor's town council, in Brenland, an invented economy, measures
+its residents' loss aversion, chooses between opt-in and opt-out for its employees' pension plan, and
+predicts their choice of insurance}]
+\label{pb:b2:behavioural-evidence:1}
+The council surveys 300 residents. Each is offered, for real money, 50--50 gambles that lose \dal{100}
+or win $z_+$, for $z_+ = 100, 125, \dots, 400$. The table gives the percentage who accept (invented
+data, \texttt{gamble\_survey.csv}). Round $\kappa$ to three decimals, normal quantiles and the
+parameters of the default model to four, and percentages to one decimal.
+
+\begin{center}
+\small
+\begin{tabular}{l*{7}{r}}
+\toprule
+Gain $z_+$ (dalens) & 100 & 125 & 150 & 175 & 200 & 225 & 250 \\
+% figdata: gamble_survey (accept by G)
+Accept (per cent) & 1.3 & 8.7 & 20.3 & 35.3 & 50.0 & 63.7 & 73.7 \\
+\midrule
+Gain $z_+$ (dalens) & 275 & 300 & 325 & 350 & 375 & 400 & \\
+Accept (per cent) & 82.0 & 87.7 & 90.7 & 93.7 & 96.0 & 97.3 & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent\textbf{Part I --- Loss aversion from a survey.}
+\begin{enumerate}
+  \item What share of the residents should accept the gamble with $z_+ = 125$ under expected utility
+        with a smooth utility of wealth? Why?
+  \item What share rejects it in the survey?
+  \item Find the smallest gain at which at least half accept, and the loss-aversion coefficient of the
+        median resident with a linear \omterm{def:b2:behavioural-evidence:value-function}{value function}.
+  \item With $v(x) = x^{0.9}$ for gains and $-\kappa(-x)^{0.9}$ for losses, find the median resident's
+        $\kappa$.
+  \item Compare these estimates with the meta-analytic interval of the record.
+  \item A resident turns down the gamble with $z_+ = 125$ at every level of wealth. Under expected
+        utility, using the bound of \cref{exo:b2:expected-utility:10}, $(z_- + z_+)z_+/(z_+ - z_-)$, which
+        50--50 gambles must she also turn down, whatever their gain?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- An endowment test.}
+\begin{enumerate}[resume]
+  \item The council gives a town mug to half of a class of residents at random. Owners ask \dal{8} on
+        average; non-owners offer \dal{3.5}. Find the ratio.
+  \item Find the $\kappa$ implied if only the mug is subject to \omterm{def:b2:behavioural-evidence:loss-aversion}{loss aversion}, and if money is too.
+  \item Which version agrees with Part I?
+  \item What would a token market in the same class tell the council?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Opt-in or opt-out?} Each employee gains $b_i$ from joining the plan, normal
+with mean $\mu$ and standard deviation one; acting costs $\chi$. Take the participation rates of the
+automatic-enrolment record (37 and 86 per cent) to calibrate $\chi$.
+\begin{enumerate}[resume]
+  \item Write the two participation rates as functions of $\mu$ and $\chi$.
+  \item Solve for $\chi$ and $\mu$ from the record's rates.
+  \item Brenmoor's current opt-in plan has 45 per cent participation. With the same $\chi$, find
+        Brenmoor's $\mu$.
+  \item Predict participation under opt-out, and the gap between the two defaults.
+  \item Under opt-in, participants choose 6 per cent of pay. Under opt-out, 61 per cent of employees stay
+        at the default of 3 per cent, as in the record, and the other participants choose 6 per cent.
+        Find the average contribution per employee under each default.
+  \item Under opt-out, what share of employees participates although $b_i < 0$?
+  \item Under opt-in, what share stays out although $b_i > 0$?
+  \item Does the model say which default is better? What would it need to know?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- A prediction for insurance.} Residents insure their homes. A \omterm{def:b2:insurance-and-risk-sharing:deductible}{deductible} of
+\dal{500} costs \dal{100} a year more than a \omterm{def:b2:insurance-and-risk-sharing:deductible}{deductible} of \dal{1000}; the chance of a claim in a year is
+5 per cent. Assume that residents code the premium as a cost, not a loss, but an uninsured part of a
+claim as a loss, weighted by $\kappa$ and by $\omega(p)$ with $d = 0.65$, and value linear on each side.
+\begin{enumerate}[resume]
+  \item How much does the low \omterm{def:b2:insurance-and-risk-sharing:deductible}{deductible} save in expectation each year? What does expected utility, with
+        a smooth utility and a wealth of \dal{50000}, predict?
+  \item Find $\omega(0.05)$ and the $\kappa$ above which a resident buys the low \omterm{def:b2:insurance-and-risk-sharing:deductible}{deductible}.
+  \item If $\kappa$ across residents is lognormal with median 2 and standard deviation of $\ln\kappa$
+        equal to $0.35$ (the survey's design), what share buys the low \omterm{def:b2:insurance-and-risk-sharing:deductible}{deductible}?
+  \item What data from the town's insurer would test this prediction, and what result would reject it?
+  \item What else, apart from \omterm{def:b2:behavioural-evidence:loss-aversion}{loss aversion} and probability weighting, could make residents buy low
+        \omterm{def:b2:insurance-and-risk-sharing:deductible}{deductibles}?
+  \item State the result: the estimated loss-aversion coefficient, the predicted participation gap
+        between the two defaults, and the predicted share buying the low \omterm{def:b2:insurance-and-risk-sharing:deductible}{deductible}.
+\end{enumerate}
+\end{problem}

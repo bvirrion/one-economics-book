@@ -1,0 +1,4 @@
+$ python ols_by_hand.py
+n 2204; slope 0.0885; intercept 8.8172
+sum of residuals -1.65e-12
+sum of x times residuals -1.96e-11

@@ -1,0 +1,373 @@
+\chapter{Population and the Demographic Transition}\label{ch:b3:demographic-transition}
+
+For most of history, more output meant more people, not richer ones. Then, within a
+few generations in one country after another, income per person began to rise
+steadily, death rates fell, and families became smaller. This chapter sets out the
+model that fits the first period, tests it on the data, shows where it stops
+working, and asks why fertility fell --- the question on which the evidence is most
+divided. It ends with the arithmetic of ageing that the fall in fertility brings.
+
+\begin{openingchart}{GDP per person, United Kingdom series of the Maddison Project,
+1252--1850 (2011 dollars).}{Maddison Project Database 2023}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.72\linewidth, height=0.42\linewidth, xmin=1250,
+  xmax=1850, ymin=800, ymax=4600, ylabel={Dollars},
+  xtick={1300,1400,1500,1600,1700,1800},
+  yticklabel style={/pgf/number format/1000 sep={\,}}]
+  \addplot[omDef, thick] table[x=year, y=gdppc] {figdata/bachelor-3/33-demographic-transition/out/england.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: england_stats
+The annual series swings by 10 to 15~\% from one year to the next, so the comparisons
+below use averages over the ten years around each date. Income per person averaged
+1{,}179 dollars around 1300 and 1{,}611 around 1650: 0.09~\% a year over three and a half
+centuries. It jumped from 1{,}229 in 1348 to 1{,}519 in 1351, the years of the Black Death, and stayed high for a
+century. It then rose by half between 1650 and 1700 (0.85~\% a year), and from the middle of the eighteenth century it grew
+in every half-century at more than 0.35~\% a year, reaching 4{,}332 in 1850.
+
+\begin{recall}
+Life expectancy, births per woman and ageing are the grades 6--9 volume's; the
+Solow model is the Year 1 volume's; overlapping generations, pay-as-you-go pensions
+and the old-age dependency ratio are the Year 2 volume's.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:demographic-transition:symbols}
+$L$ is population; $y$ income per person; $\bar y$ subsistence income; $A$ technology; $n$ the
+number of children; $q$ their quality (schooling); $c$ parents' consumption.
+\end{notation}
+
+\section{The Malthusian model}\label{sec:b3:demographic-transition:malthus}
+
+\begin{definition}[Malthusian model; Malthusian equilibrium]\label{def:b3:demographic-transition:malthus}
+\index{Malthusian model}\index{Malthusian equilibrium}
+The \emph{Malthusian model} combines diminishing returns to labour on a fixed area
+of land, $y = A L^{-(1 - \alpha)}$ with $0 < \alpha < 1$, and population growth that rises with income,
+$\dot L/L = \phi(\ln y - \ln \bar y)$ with $\phi > 0$. Its \emph{Malthusian equilibrium} is the steady state at
+which income equals the subsistence level $\bar y$, where population neither grows nor shrinks.
+\end{definition}
+
+\begin{proposition}[Malthusian dynamics]\label{prop:b3:demographic-transition:malthus}
+With constant $A$, the population converges to $L^* = (A/\bar y)^{1/(1 - \alpha)}$ and income to $\bar y$ from any starting
+point. A permanent rise in $A$ raises income at first and population in the long
+run, leaving long-run income at $\bar y$.
+\end{proposition}
+
+\begin{proof}
+$\ln y = \ln A - (1 - \alpha)\ln L$, so $d\ln L/dt = \phi(\ln A - \ln \bar y - (1 - \alpha)\ln L)$, a linear equation in $\ln L$ with coefficient $-\phi(1 - \alpha) < 0$. Its
+unique rest point is $\ln L^* = (\ln A - \ln \bar y)/(1 - \alpha)$, and $\ln L - \ln L^*$ decays at rate $\phi(1 - \alpha)$: the steady state is
+stable, and there $y = \bar y$. A rise in $A$ raises $y$ at the given $L$; $L$ then grows
+until $y$ is back at $\bar y$, with $L^*$ larger by the factor $(A'/A)^{1/(1 - \alpha)}$.
+\end{proof}
+
+If technology grows slowly at rate $g$, population grows at $g/(1 - \alpha)$ in the steady state and
+income settles just above subsistence, at $\bar y\, e^{g/(\phi(1 - \alpha))}$.
+
+\begin{model}{The Malthusian model}
+\assumes Diminishing returns to labour on fixed land; population growth that rises
+with income per person; slow technical change.
+\predicts Income per person without trend; population tracking technology and land;
+higher wages after a fall in population.
+\tested Across countries, from 1 to 1500 CE, better technology and more productive land raised
+population density but had no significant effect on the standard of living. % ledger: b3dt:ag
+In England, builders' real wages were without trend before 1800. % ledger: b3dt:clark
+After the Black Death income per person jumped and stayed high for a century (opening
+chart).
+\breaks Output-based estimates show modest positive growth of income per person in
+Britain well before 1800, against the stagnation of real wages; the opening chart's
+rise of half in 1650--1700 is the largest such stretch. % ledger: b3dt:bckov
+After about 1800 income and population rise together for decades, and then fertility
+falls as income rises --- the opposite of the model's second assumption.
+\end{model}
+
+The break can be described as three regimes: a Malthusian one, in which population
+growth absorbs every gain; a post-Malthusian one, in which population growth absorbs
+only part of output growth; and modern growth, after a \omterm{def:b3:demographic-transition:transition}{demographic transition}
+reverses the link between income and population growth. % ledger: b3dt:gw
+
+\section{The demographic transition}\label{sec:b3:demographic-transition:transition}
+
+\begin{definition}[Demographic transition]\label{def:b3:demographic-transition:transition}
+\index{demographic transition}
+The \emph{demographic transition} is the passage from high birth and death rates to
+low ones: death rates fall first, population grows quickly for some decades, and
+birth rates follow.
+\end{definition}
+
+\begin{definition}[Total fertility rate; net reproduction rate]\label{def:b3:demographic-transition:tfr}
+\index{total fertility rate}\index{net reproduction rate}
+The \emph{total fertility rate} of a year is the sum over ages 15 to 49 of that year's age-specific
+birth rates: the number of children a woman would have if she lived through her
+childbearing years at those rates. The \emph{net reproduction rate} counts only
+daughters and allows for mortality: the number of daughters per woman who survive to
+the mothers' ages. A net reproduction rate of 1, a total fertility rate near 2.1 where mortality is low,
+replaces the population in the long run.
+\end{definition}
+
+\begin{measure}[The total fertility rate]
+The rate is a synthetic measure: no woman lives through the rates of a single year.
+When women have children later, the rate of each year falls while the number each
+woman has over her life may not change, so the period rate understates completed
+fertility during a shift to later births. Before 1950 the rates of most countries are
+estimates reconstructed from censuses and sparse registers, with the years between
+them interpolated; a flat line before the first estimate is a fill-in, not a
+measurement of stable fertility.
+\end{measure}
+
+\begin{omchart}{Total fertility rate, 1800--2024, six countries (Gapminder to 1949; World
+Bank from 1960; the two sources are not joined across the 1950s). Each early series
+starts at the source's first estimate --- South Korea 1901, India 1880, Nigeria 1925 ---
+because the source repeats that estimate back to 1800; between estimates it
+interpolates, so the early lines are smoother than the data behind them.}{Gapminder Fast Track,
+children\_per\_woman\_total\_fertility; World Bank, World Development Indicators,
+SP.DYN.TFRT.IN}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.72\linewidth, height=0.44\linewidth, xmin=1800, xtick distance=50,
+  xmax=2024, ymin=0, ymax=7.5, ylabel={Children per woman}, ytick={0,1,3,4,5,6,7},
+  legend style={font=\footnotesize, at={(0.5,-0.2)}, anchor=north}, legend columns=3,
+  extra y ticks={2.1}, extra y tick labels={2.1}, extra y tick style={grid=major}]
+  \addplot[black, thick] table[x=year, y=tfr] {figdata/bachelor-3/33-demographic-transition/out/tfr_GBR_early.csv};
+  \addplot[omDef, thick] table[x=year, y=tfr] {figdata/bachelor-3/33-demographic-transition/out/tfr_FRA_early.csv};
+  \addplot[omThm, thick] table[x=year, y=tfr] {figdata/bachelor-3/33-demographic-transition/out/tfr_JPN_early.csv};
+  \addplot[omThm, dashed, thick] table[x=year, y=tfr] {figdata/bachelor-3/33-demographic-transition/out/tfr_KOR_early.csv};
+  \addplot[omDef, dashed, thick] table[x=year, y=tfr] {figdata/bachelor-3/33-demographic-transition/out/tfr_IND_early.csv};
+  \addplot[black!50, dotted, very thick] table[x=year, y=tfr] {figdata/bachelor-3/33-demographic-transition/out/tfr_NGA_early.csv};
+  \legend{United Kingdom, France, Japan, South Korea, India, Nigeria}
+  \addplot[black, thick, forget plot] table[x=year, y=tfr] {figdata/bachelor-3/33-demographic-transition/out/tfr_GBR_late.csv};
+  \addplot[omDef, thick, forget plot] table[x=year, y=tfr] {figdata/bachelor-3/33-demographic-transition/out/tfr_FRA_late.csv};
+  \addplot[omThm, thick, forget plot] table[x=year, y=tfr] {figdata/bachelor-3/33-demographic-transition/out/tfr_JPN_late.csv};
+  \addplot[omThm, dashed, thick, forget plot] table[x=year, y=tfr] {figdata/bachelor-3/33-demographic-transition/out/tfr_KOR_late.csv};
+  \addplot[omDef, dashed, thick, forget plot] table[x=year, y=tfr] {figdata/bachelor-3/33-demographic-transition/out/tfr_IND_late.csv};
+  \addplot[black!50, dotted, very thick, forget plot] table[x=year, y=tfr] {figdata/bachelor-3/33-demographic-transition/out/tfr_NGA_late.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: tfr_stats
+
+France's fertility fell earliest, from 4.41 in 1800 to 2.80 in 1900; the United Kingdom's fell from
+4.97 to 3.53. South Korea's was 6.0 in 1960 and fell below 2.1 in 1983; in 2024 it was 0.75. India's crossed
+2.1 only in 2020; Nigeria's was 4.4 in 2024.
+
+\begin{omchart}{Total fertility rate against GDP per person (PPP, constant 2021 dollars,
+logarithmic scale), 2023, 197 countries.}{World Bank, World Development Indicators,
+SP.DYN.TFRT.IN and NY.GDP.PCAP.PP.KD}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.6\linewidth, height=0.4\linewidth,
+  xlabel={GDP per person, dollars}, ylabel={Children per woman},
+  xtick={3,4,5}, xticklabels={1{,}000, 10{,}000, 100{,}000}, ymin=0, ymax=7]
+  \addplot table[x=lx, y=tfr] {figdata/bachelor-3/33-demographic-transition/out/fert_income.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: fert_income_stats
+
+Across countries in 2023, a tenfold difference in income goes with 2.0 fewer children per woman.
+The median rate is 4.0 in the poorest fifth and 1.5 in the richest; 54~\% of countries are below 2.1.
+
+\section{Fewer children, more schooling}\label{sec:b3:demographic-transition:quantity-quality}
+
+\begin{definition}[Quantity--quality trade-off]\label{def:b3:demographic-transition:quantity-quality}
+\index{quantity--quality trade-off}
+The \emph{quantity--quality trade-off} is the link, through the cost of raising
+children, between the number of children parents have and what they invest in each:
+because the cost of quality is incurred for every child, more children make each
+unit of quality dearer, and more quality makes each child dearer.
+\end{definition}
+
+\begin{proposition}[Becker--Lewis, Cobb--Douglas case]\label{prop:b3:demographic-transition:becker-lewis}
+Parents maximise $\ln c + a\ln n + b\ln q$, with $a > b > 0$, subject to $c + n(\tau + pq) = I$, where $\tau$ is the fixed cost of a
+child and $p$ the price of a unit of quality for one child. Then $n = I(a - b)/((1 + a)\tau)$ and $q = b\tau/((a - b)p)$. A rise
+in $b$, the weight parents put on quality --- for example because the return to
+schooling rises --- lowers $n$ and raises $q$.
+\end{proposition}
+
+\begin{proof}
+Let $x = n(\tau + pq)$ be spending on children. Given $x$, maximising $a\ln n + b\ln q$ subject to $n(\tau + pq) = x$ gives the conditions
+$a/n = \lambda(\tau + pq)$ and $b/q = \lambda np$; dividing, $a pq = b(\tau + pq)$, so $pq = b\tau/(a - b)$, independent of $x$. Then
+$a\ln n + b\ln q = a\ln x + \text{constant}$, and maximising $\ln(I - x) + a\ln x$ gives $x = aI/(1 + a)$. So $n = x/(\tau + pq) = x(a - b)/(a\tau) = I(a - b)/((1 + a)\tau)$. Both expressions
+are decreasing ($n$) and increasing ($q$) in $b$.
+\end{proof}
+
+In this case a rise in income raises the number of children: the model explains the
+fall of fertility through the value of schooling, not through income itself. The
+question is whether the trade-off exists in the data, and it is hard to test: in
+the raw data larger families have less-schooled children, but parents who choose
+more children differ in other ways.
+
+\begin{record}[Twins and family size]
+Twin births add a child that parents did not plan. In the whole population of
+Norway, the negative correlation between family size and education disappears once
+birth order is controlled for or twins are used as an instrument; birth order
+itself has a large negative effect. % ledger: b3dt:bds
+In Israel, with twins and preferences for mixed sexes as instruments, there is no
+evidence of a trade-off in schooling, fertility or earnings. % ledger: b3dt:als
+\emph{Weakness:} twins differ from other children --- lower birth weight, close
+spacing --- which can confound the estimates.
+\end{record}
+
+\begin{record}[China's birth policy]
+Using twins by birth order and netting out the birth-weight deficit of twins, an
+extra child at parity one or two lowers the schooling progress, expected college
+enrolment, grades and health of all the children in the family; but the policy's
+contribution to China's \omterm{def:b3:human-capital:human-capital}{human capital} was modest. % ledger: b3dt:rz
+Using the relaxations of the policy in rural areas, an additional child raised the
+first child's school enrolment by about 16 percentage points, more when the children were of the same sex. % ledger: b3dt:qian
+The two studies use different sources of variation and find opposite signs; with
+the Norwegian and Israeli results, the evidence for a large trade-off at the margin
+of family size is weak.
+\end{record}
+
+\section{Ageing and the dependency ratio}\label{sec:b3:demographic-transition:ageing}
+
+\begin{definition}[Demographic dividend]\label{def:b3:demographic-transition:dividend}
+\index{demographic dividend}
+The \emph{demographic dividend} is the rise in income per person that comes from a
+rise in the share of the population of working age, as fertility falls and the
+large cohorts born before the fall enter work.
+\end{definition}
+
+Income per person is output per worker times workers per person: if the working-age
+share rises from 50 to 60~\%, income per person rises by 20~\% at unchanged output per worker. The dividend is
+paid once: two generations later the same cohorts retire, and the old-age dependency
+ratio of the Year 2 volume rises.
+
+\begin{omchart}{Old-age dependency ratio (people aged 65 and over per 100 aged 15--64),
+1960--2025, six economies.}{World Bank, World Development Indicators, SP.POP.DPND.OL}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.68\linewidth, height=0.42\linewidth, xmin=1960,
+  xmax=2025, ymin=0, ymax=55, ylabel={Per 100 of working age},
+  legend pos=north west, legend style={font=\footnotesize}, legend columns=2]
+  \addplot[omThm, thick] table[x=year, y=dep] {figdata/bachelor-3/33-demographic-transition/out/dep_JPN.csv};
+  \addplot[omDef, thick] table[x=year, y=dep] {figdata/bachelor-3/33-demographic-transition/out/dep_ITA.csv};
+  \addplot[omDef, dashed, thick] table[x=year, y=dep] {figdata/bachelor-3/33-demographic-transition/out/dep_FRA.csv};
+  \addplot[black, thick] table[x=year, y=dep] {figdata/bachelor-3/33-demographic-transition/out/dep_USA.csv};
+  \addplot[omThm, dashed, thick] table[x=year, y=dep] {figdata/bachelor-3/33-demographic-transition/out/dep_CHN.csv};
+  \addplot[black!50, dotted, very thick] table[x=year, y=dep] {figdata/bachelor-3/33-demographic-transition/out/dep_NGA.csv};
+  \legend{Japan, Italy, France, United States, China, Nigeria}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: dependency_stats
+
+Japan had 9 people of 65 and over per 100 of working age in 1960 and 51 in 2025; China went from 7 to 21; Nigeria,
+where fertility is still high, went from 6.0 to 5.4. Under pay-as-you-go pensions, the Year 2
+volume's arithmetic applies: the contribution rate equals the replacement rate
+times the ratio of pensioners to contributors, so a ratio that rises from 30 to 45 per 100 raises the
+rate by half at an unchanged replacement rate.
+
+\section{Exercises}\label{sec:b3:demographic-transition:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:demographic-transition:1}
+From the opening chart's ten-year averages (1{,}179 dollars around 1300, 1{,}611 around
+1650), find the growth of income per person from 1300 to 1650 and say what happens after.
+Why would the single years 1300 and 1650 mislead?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:demographic-transition:2}
+Income per person is $y = 1{,}000 - 0.5L$ (grain per person, $L$ in thousands) and population grows at $0.0001(y - 400)$ a year. Find
+the \omterm{def:b3:demographic-transition:malthus}{Malthusian equilibrium}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:demographic-transition:3}
+There are 40 pensioners per 100 contributors and the replacement rate is 45~\%. Find the pay-as-you-go
+contribution rate.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:demographic-transition:4}
+What data from before 1800 would contradict the \omterm{def:b3:demographic-transition:malthus}{Malthusian model}?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:demographic-transition:5}
+In the model of \cref{prop:b3:demographic-transition:malthus} with $\alpha = 1/2$, technology doubles once. Describe the paths of income and
+population, and find the long-run change in population.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:demographic-transition:6}
+Age-specific birth rates per woman per year are 0.02 (15--19), 0.10 (20--24), 0.12 (25--29), 0.09 (30--34), 0.04 (35--39), 0.01 (40--44)
+and 0 (45--49). Find the \omterm{def:b3:demographic-transition:tfr}{total fertility rate}. With 48.8~\% of births girls and 98~\% of them surviving to the
+mothers' ages, find the \omterm{def:b3:demographic-transition:tfr}{net reproduction rate}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:demographic-transition:7}
+Regress the \omterm{def:b3:demographic-transition:tfr}{total fertility rate} on log income across countries in 1960 and in 2023. Compare
+the slopes and the means.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:demographic-transition:8}
+In \cref{prop:b3:demographic-transition:becker-lewis} take $a = 0.5$, and let $b$ rise from 0.2 to 0.3. By what factors do $n$ and $q$ change?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:demographic-transition:9}
+What result from twin births would contradict the \omterm{def:b3:demographic-transition:quantity-quality}{quantity--quality trade-off}, and
+what would support it?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:demographic-transition:10}
+Prove that the \omterm{def:b3:demographic-transition:malthus}{Malthusian equilibrium} is stable when population growth is any
+increasing function $h(y)$ with $h(\bar y) = 0$, and find the speed of convergence near it.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:demographic-transition:11}
+Compute the growth of income per person in each half-century from 1300 to 1850 in the
+Maddison series, between ten-year averages around each date, and find the first half-century from which growth stays above 0.3~\% a year.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:demographic-transition:12}
+The working-age share rises from 50 to 60~\% of the population over twenty years while output
+per worker grows 2~\% a year. Find the growth of income per person, and the share of it due to
+the dividend.
+\end{exercise}
+
+\section{Problem: Brenland before the Factories}\label{sec:b3:demographic-transition:problem}
+
+\begin{problem}[{Weekend problem --- Brenland before the factories}]\label{pb:b3:demographic-transition:factories}
+An invented agrarian Brenland, 1500--1900. Income per person, in kilograms of grain a
+year, is $y = A/\sqrt{L}$, with $L$ in thousands. Population grows at $0.1\ln(y/300)$ a year, at most 1.2~\% a year;
+from $y = 600$ the maximum falls in a straight line to 0.4~\% at $y = 1{,}200$. Technology grows 0.1~\% a year until 1780
+and 1.5~\% after; $A = 9{,}000$ in 1500, with the population at its steady state. A plague in 1600 kills
+40~\% of the people. % figdata: agrarian_stats
+
+\medskip\noindent\textbf{Part I --- the Malthusian economy.}
+\begin{enumerate}
+\item Find the steady-state income while technology grows at 0.1~\% a year.
+\item Why is it above 300?
+\item Find the population in 1500.
+\item Find the population in 1599 and its growth rate.
+\item In the long run, what would a doubling of $A$ do to income and population?
+\item What does this economy predict for the real wage over a century?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- the plague.}
+\begin{enumerate}[resume]
+\item Find the population just after the plague.
+\item Find income in 1600 and the plague's premium over 1599.
+\item Check the premium against $y = A/\sqrt{L}$.
+\item At what rate does the population grow just after, and why?
+\item In what year is half the log premium gone?
+\item Find income and population in 1700. Compare with England after 1348.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- the take-off.}
+\begin{enumerate}[resume]
+\item Find income and population in 1780 and 1850.
+\item In what year does income first exceed twice subsistence?
+\item Find population growth in 1850 and 1899. What has changed?
+\item Find income and population in 1900.
+\item With $a = 0.5$, $\tau = 0.04$, $p = 0.01$ and income 1, find $n$ and $q$ in \cref{prop:b3:demographic-transition:becker-lewis} for $b = 0.2$.
+\item Find them for $b = 0.35$, as the return to schooling rises.
+\item Does a rise in income alone lower the number of children in this model?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- ageing in 2025.} Brenland's accounts give employment in 2025
+(\code{load("accounts")}); 1{,}950 thousand people are 65 and over, and pensions replace 40~\% of wages.
+\begin{enumerate}[resume]
+\item Find the number of people of 65 and over per worker.
+\item Find the pay-as-you-go contribution rate.
+\item If the over-65s grow to 2{,}400 thousand with employment unchanged, find the new rate.
+\item What replacement rate would keep the contribution rate unchanged?
+\item Why would a rise in employment of older workers help on both sides of the ratio?
+\item State the result: the Malthusian steady-state income, the plague's wage premium,
+and Brenland's pay-as-you-go contribution rate in 2025.
+\end{enumerate}
+\end{problem}

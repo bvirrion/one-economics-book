@@ -1,0 +1,574 @@
+\chapter{Regression Discontinuity}\label{ch:b3:regression-discontinuity}
+
+A candidate who wins an election by a hundred votes and one who loses by a
+hundred are, for most purposes, the same: the same kind of district, the same
+campaign, the same party. One of them takes office and the other does not. If
+the party that barely won does better at the next election than the party that
+barely lost, the difference is the effect of holding the seat, and almost
+nothing else. A rule that switches a treatment on at a threshold --- a vote
+margin of zero, a pass mark, an age, an enrolment that forces a school to open a
+new class --- creates, around the threshold, something close to a randomised
+experiment. This chapter shows how to read it, how to estimate the jump, and
+how a design that looks this clean can still be fooled.
+
+\begin{openingchart}{Simulated close elections: the party's vote share at the
+next election against its winning margin at this one (6{,}000 elections; dots
+are means over bins of 0.02 in the margin; lines are local linear fits within
+0.25 of the threshold). The simulation is calibrated on a published estimate:
+a jump of 0.077 in the next vote share for a party that barely
+won.}{simulated data calibrated on Lee (2008), Table II; the chapter's seeded
+script}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.78\linewidth, height=0.45\linewidth, xmin=-0.5, xmax=0.5,
+  ymin=0, ymax=1, xlabel={Winning margin at this election},
+  ylabel={Vote share at the next election},
+  x tick label style={/pgf/number format/.cd, fixed, precision=2},
+  y tick label style={/pgf/number format/.cd, fixed, precision=1}]
+  \addplot table[x=margin, y=share] {figdata/bachelor-3/04-regression-discontinuity/out/elections_bins.csv};
+  \addplot[omThm, very thick, no marks, sharp plot] table[x=margin, y=fit] {figdata/bachelor-3/04-regression-discontinuity/out/elections_fit_left.csv};
+  \addplot[omThm, very thick, no marks, sharp plot] table[x=margin, y=fit] {figdata/bachelor-3/04-regression-discontinuity/out/elections_fit_right.csv};
+  \draw[guide] (axis cs:0,0) -- (axis cs:0,1);
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+The dots rise smoothly with the margin on both sides: parties that win big at
+one election tend to do well at the next. At zero the curve breaks. The two
+fitted lines meet the threshold at 0.4597 and 0.5353, a jump of 0.0756 in the
+vote share. % figdata: elections_fit_left, elections_fit_right
+The published estimate it is calibrated on is 0.077, with a standard error of
+0.011, from close elections to the United States House of Representatives; the
+same study finds that the party's vote share at the previous election does
+\emph{not} jump at the threshold, an estimate of $-0.002$ (0.011). % ledger: b3rd:lee08.vote
+That second number is the reason to believe the first: just above and just
+below the threshold, the districts were alike before the election.
+
+\begin{recall}
+\Cref{ch:b3:instrumental-variables} defined the \omterm{def:b3:instrumental-variables:wald}{Wald estimator}, the ratio of
+the effect of an instrument on the outcome to its effect on the treatment, and
+showed that it estimates a \omterm{def:b3:instrumental-variables:late}{local average treatment effect}: the effect on the
+units whose treatment the instrument changes.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:regression-discontinuity:symbols}
+The \omterm{def:b3:regression-discontinuity:running-variable}{running variable} is $x$, the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} $c$, and $D_i = 1$ marks treatment.
+Potential outcomes are $Y_i(1)$ and $Y_i(0)$, and $\mu_d(x) = \E[Y_i(d) \mid
+x_i = x]$ their mean at a value of the \omterm{def:b3:regression-discontinuity:running-variable}{running variable}. The window is $h$.
+\end{notation}
+
+\section{A rule that jumps}\label{sec:b3:regression-discontinuity:rule}
+
+\begin{definition}[Running variable; cutoff]\label{def:b3:regression-discontinuity:running-variable}
+\index{running variable}\index{cutoff}
+In a design where a rule assigns treatment according to whether an observed
+variable passes a threshold, the variable is the \emph{running variable} and the
+threshold the \emph{cutoff}.
+\end{definition}
+
+The examples are many because institutions love thresholds. Scholarships go to
+those who score above a mark, benefits to those below an income, drinking to
+those above an age, an extra class to schools above an enrolment. In each case
+the units on the two sides of the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} differ in their \omterm{def:b3:regression-discontinuity:running-variable}{running variable}, and
+in everything correlated with it, but only gradually; they differ in the
+treatment abruptly. If nothing else jumps at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}, a jump in the outcome
+there is the treatment's effect.
+
+\section{The sharp design}\label{sec:b3:regression-discontinuity:sharp}
+
+\begin{definition}[Sharp regression discontinuity]\label{def:b3:regression-discontinuity:sharp}
+\index{sharp regression discontinuity}
+A \emph{sharp regression discontinuity} design is one in which treatment is a
+deterministic function of the \omterm{def:b3:regression-discontinuity:running-variable}{running variable}: $D_i = 1$ if $x_i \ge c$ and
+$D_i = 0$ otherwise. Its estimand is the jump $\lim_{x \downarrow c} \E[Y_i
+\mid x_i = x] - \lim_{x \uparrow c} \E[Y_i \mid x_i = x]$.
+\end{definition}
+
+\begin{proposition}[Continuity identifies the effect at the cutoff]\label{prop:b3:regression-discontinuity:continuity}
+In a sharp design, if $\mu_0(x)$ and $\mu_1(x)$ are continuous at $x = c$, the
+jump in the mean outcome at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} equals the average treatment effect at
+the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}, $\mu_1(c) - \mu_0(c) = \E[Y_i(1) - Y_i(0) \mid x_i = c]$.
+\end{proposition}
+
+\begin{proof}
+For $x \ge c$ every unit is treated, so $\E[Y_i \mid x_i = x] = \mu_1(x)$; for $x <
+c$, $\E[Y_i \mid x_i = x] = \mu_0(x)$. The limit from above is $\mu_1(c)$ and
+the limit from below $\mu_0(c)$, both by continuity. Their difference is
+$\mu_1(c) - \mu_0(c)$, which is $\E[Y_i(1) - Y_i(0) \mid x_i = c]$ by the
+definition of $\mu_d$.
+\end{proof}
+
+The proof uses nothing about how units came to be on either side: they can
+have chosen their \omterm{def:b3:regression-discontinuity:running-variable}{running variable}, as candidates choose how hard to
+campaign. It needs only that they could not choose it \emph{precisely}. A
+candidate can raise the expected margin, but the count on the night has a
+random element, so that among races within a few votes of a tie, which side
+won is as good as a coin toss. When units can sort precisely around the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff},
+the continuity of $\mu_0$ and $\mu_1$ fails, and so does the design
+(\cref{sec:b3:regression-discontinuity:manipulation}).
+
+The other price is in the estimand: the effect at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}, for the units
+there. The effect of incumbency on parties that win by forty points, or of a
+scholarship on pupils who score twenty marks above the line, is not
+identified.
+
+\section{Estimation: local linear fits and the window}\label{sec:b3:regression-discontinuity:estimation}
+
+The jump is a difference between two limits, and data are never at the limit.
+The estimator must use observations some distance from the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}, and it must
+not mistake the slope of the curve for a jump.
+
+\begin{definition}[Window; local linear regression]\label{def:b3:regression-discontinuity:local-linear}
+\index{window (regression discontinuity)}\index{local linear regression}
+The \emph{window} (or bandwidth) $h$ is the distance from the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} within which
+observations are used. A \emph{local linear regression} estimates each limit by
+the intercept, at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}, of a weighted least-squares line fitted on that
+side of the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} to the observations within the window. With triangular
+weights, an observation at distance $|x_i - c|$ gets weight $1 - |x_i -
+c|/h$.
+\end{definition}
+
+The simplest estimator, a \emph{local constant}, compares the mean outcomes on
+the two sides within the window. If the curve slopes upward, the mean just above
+the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} sits above the curve's value at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}, and the mean just below
+sits beneath it: the difference of means overstates the jump by about the slope
+times the window. A local linear fit removes that first-order error, leaving one
+that depends on the curvature, which is of the order of $h^2$.
+
+\admitted
+The precise statements --- the bias of the local constant estimator is
+proportional to $h$ and that of the local linear estimator to $h^2$, under
+smoothness of $\mu_0$ and $\mu_1$ --- are Taylor expansions of the two limits;
+the variance of both is proportional to $1/(nh)$, the number of observations
+in the window.
+
+\omcode{code/bachelor-3/04-regression-discontinuity/listings/rd_sharp.py}{1}{18}{A sharp design on the simulated elections; \texttt{local\_linear} fits each side with triangular weights.}\label{lst:b3:regression-discontinuity:sharp}
+
+\omoutput{code/bachelor-3/04-regression-discontinuity/outputs/rd_sharp.txt}{True jump 0.077; robust standard errors.}\label{out:b3:regression-discontinuity:sharp}
+
+The three local linear estimates are 0.078, 0.081 and 0.076; the difference of
+means within 0.05 is 0.102, a third too large. % output: rd_sharp
+The last line is the balance test: the vote share at the \emph{previous}
+election, decided before anything happened at the threshold, shows no jump.
+
+\begin{definition}[Manipulation test; covariate balance test]\label{def:b3:regression-discontinuity:tests}
+\index{covariate balance test}\index{manipulation test}
+A \emph{covariate balance test} estimates the jump at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} in a variable
+determined before treatment; under the design's assumptions it is zero. A
+\emph{manipulation test} (or density test) estimates the jump at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} in
+the density of the \omterm{def:b3:regression-discontinuity:running-variable}{running variable}; a design in which units cannot sort
+precisely has none.
+\end{definition}
+
+How wide a window? A wide one uses more data and is less noisy; a narrow one is
+less biased. The chart shows the trade-off on 300 simulated samples of the
+opening chart's elections.
+
+\begin{omchart}{Estimates of a jump of 0.077 against the window, on 300 simulated
+samples of 6{,}000 elections: mean estimate (lines) and one standard deviation
+either side (bands), for the difference of means and the local linear
+fit.}{simulated data, the chapter's seeded script}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.78\linewidth, height=0.42\linewidth, xmin=0, xmax=0.52,
+  ymin=0.04, ymax=0.21, xlabel={Window $h$ (vote margin)}, ylabel={Estimated jump},
+  legend pos=north west, xtick={0,0.1,0.2,0.3,0.4,0.5},
+  x tick label style={/pgf/number format/.cd, fixed, precision=1},
+  y tick label style={/pgf/number format/.cd, fixed, precision=2}]
+  \addplot[name path=cu, draw=none, forget plot] table[x=h, y expr=\thisrow{const_mean}+\thisrow{const_sd}] {figdata/bachelor-3/04-regression-discontinuity/out/bandwidth.csv};
+  \addplot[name path=cl, draw=none, forget plot] table[x=h, y expr=\thisrow{const_mean}-\thisrow{const_sd}] {figdata/bachelor-3/04-regression-discontinuity/out/bandwidth.csv};
+  \addplot[omMeth!25, forget plot] fill between[of=cu and cl];
+  \addplot[name path=lu, draw=none, forget plot] table[x=h, y expr=\thisrow{lin_mean}+\thisrow{lin_sd}] {figdata/bachelor-3/04-regression-discontinuity/out/bandwidth.csv};
+  \addplot[name path=ll, draw=none, forget plot] table[x=h, y expr=\thisrow{lin_mean}-\thisrow{lin_sd}] {figdata/bachelor-3/04-regression-discontinuity/out/bandwidth.csv};
+  \addplot[omDef!25, forget plot] fill between[of=lu and ll];
+  \addplot[omMeth, very thick, no marks] table[x=h, y=const_mean] {figdata/bachelor-3/04-regression-discontinuity/out/bandwidth.csv};
+  \addplot[omDef, very thick, no marks] table[x=h, y=lin_mean] {figdata/bachelor-3/04-regression-discontinuity/out/bandwidth.csv};
+  \draw[guide] (axis cs:0,0.077) -- (axis cs:0.52,0.077);
+  \legend{difference of means, local linear}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+The difference of means drifts away from the truth almost linearly as the
+window widens; the local linear fit stays on it until about 0.2 and then
+bends down as the curvature of the cubic catches it. Its band, wide at small
+windows, narrows steadily. \Cref{lst:b3:regression-discontinuity:bandwidth}
+puts numbers on the picture.
+
+\omcode{code/bachelor-3/04-regression-discontinuity/listings/rd_bandwidth.py}{1}{21}{Bias, noise and their combination against the window.}\label{lst:b3:regression-discontinuity:bandwidth}
+
+\omoutput{code/bachelor-3/04-regression-discontinuity/outputs/rd_bandwidth.txt}{500 samples; true jump 0.077.}\label{out:b3:regression-discontinuity:bandwidth}
+
+The local linear fit has its smallest root mean squared error, 0.006, at a
+window of 0.25; the difference of means has its own at the narrowest window,
+0.02, and even there it does worse than the local linear fit at its best.
+% output: rd_bandwidth
+
+\begin{measure}[Choosing the window]
+The root mean squared error trades a bias that grows with $h$ against a variance
+that shrinks with it, and its minimum depends on the curvature of $\mu_0$ and
+$\mu_1$ near the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} and on the noise --- both estimable. Imbens and
+Kalyanaraman (2012) derived a window that minimises an estimate of that error;
+Calonico, Cattaneo and Titiunik (2014) showed that intervals built around an
+error-minimising window are centred on a biased estimate and cover the truth
+too rarely, and corrected them by estimating and subtracting the bias, with a
+standard error that accounts for the correction. Two habits follow. Report the
+estimate at the chosen window and at half and twice that window: an estimate
+that moves a great deal is not one to trust. And never fit one high-order
+polynomial to all the data on each side; such fits give large weight to
+observations far from the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} and produce erratic jumps
+(\cref{exo:b3:regression-discontinuity:5}).
+\end{measure}
+
+\section{The fuzzy design}\label{sec:b3:regression-discontinuity:fuzzy}
+
+Many rules do not bind exactly. A scholarship is offered above a mark, but not
+everyone takes it up, and some below the mark find funding elsewhere. Treatment
+then jumps at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} by less than one.
+
+\begin{definition}[Fuzzy regression discontinuity]\label{def:b3:regression-discontinuity:fuzzy}
+\index{fuzzy regression discontinuity}
+A \emph{fuzzy regression discontinuity} design is one in which the probability of
+treatment jumps at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} by less than one: $0 < \lim_{x \downarrow c}
+\Pr(D_i = 1 \mid x) - \lim_{x \uparrow c} \Pr(D_i = 1 \mid x) < 1$. Its estimand
+is the ratio of the jump in the mean outcome to the jump in the probability of
+treatment.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, scale=0.8]
+  \begin{scope}
+    \draw[econ axes] (0,3.2) node[above] {$\Pr(D = 1)$} |- (5.2,0) node[right] {$x$};
+    \draw[guide] (2.6,0) node[below] {$c$} -- (2.6,3);
+    \draw[curve, omDef] (0,0.05) -- (2.6,0.05);
+    \draw[curve, omDef] (2.6,2.6) -- (5,2.6);
+    \node[font=\footnotesize] at (2.5,-0.9) {sharp};
+    \node[font=\scriptsize, left] at (0,2.6) {1};
+  \end{scope}
+  \begin{scope}[xshift=7cm]
+    \draw[econ axes] (0,3.2) node[above] {$\Pr(D = 1)$} |- (5.2,0) node[right] {$x$};
+    \draw[guide] (2.6,0) node[below] {$c$} -- (2.6,3);
+    \draw[curve, omThm] (0,0.1) .. controls (1.5,0.2) .. (2.6,0.35);
+    \draw[curve, omThm] (2.6,1.9) .. controls (3.8,2.1) .. (5,2.25);
+    \draw[<->, thick] (2.85,0.35) -- node[right, font=\scriptsize] {jump $<1$} (2.85,1.9);
+    \node[font=\footnotesize] at (2.5,-0.9) {fuzzy};
+    \node[font=\scriptsize, left] at (0,2.6) {1};
+    \draw[guide] (0,2.6) -- (5,2.6);
+  \end{scope}
+\end{tikzpicture}
+\par\smallskip{\small The probability of treatment against the \omterm{def:b3:regression-discontinuity:running-variable}{running variable}.
+In a sharp design it jumps from 0 to 1 at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}; in a fuzzy design it jumps
+by less.}
+\end{omfigure}
+
+\begin{proposition}[Fuzzy regression discontinuity as a Wald ratio]\label{prop:b3:regression-discontinuity:fuzzy}
+Suppose that near the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} the jump in treatment is caused by the rule, that
+crossing the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} affects the outcome only through treatment, that no unit is
+treated below the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} and untreated above it who would have been the
+opposite way round (monotonicity), and that the mean potential outcomes and
+treatment shares of each type of unit are continuous at $c$. Then the fuzzy
+estimand equals the average treatment effect at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} for the \omterm{def:b3:instrumental-variables:compliance}{compliers},
+the units treated if and only if they are above it.
+\end{proposition}
+
+\begin{proof}
+Let $Z_i = 1$ if $x_i \ge c$: $Z$ is an instrument for $D$ for the units at the
+\omterm{def:b3:regression-discontinuity:running-variable}{cutoff}. Taking limits from each side plays the role of comparing $Z = 1$ with
+$Z = 0$ among units with the same $x = c$. The proof of the LATE theorem in
+\cref{ch:b3:instrumental-variables} then applies term by term with
+expectations replaced by these limits: the jump in $\E[Y]$ is the share of
+\omterm{def:b3:instrumental-variables:compliance}{compliers} at $c$ times their mean effect, the jump in $\Pr(D = 1)$ is the share
+of \omterm{def:b3:instrumental-variables:compliance}{compliers}, and the ratio is their mean effect.
+\end{proof}
+
+The classic fuzzy design is in schools. Angrist and Lavy (1999) noticed that
+Israeli schools split a grade into classes of at most 40, so that a grade of 40
+pupils sits in one class of 40 and a grade of 41 in two classes of 20 or 21.
+% ledger: b3rd:al.rule
+Class size predicted by the rule falls abruptly at enrolments of 41, 81 and
+121, and actual class size follows, though not exactly.
+
+\begin{omchart}{Class size against grade enrolment. Line: the size predicted by a
+cap of 40 per class, $r/(\lfloor (r-1)/40 \rfloor + 1)$. Dots: mean class size at
+each enrolment in 4{,}000 simulated schools, three quarters of which follow the
+rule and the rest a target size of their own.}{the rule as stated in
+Angrist, Lavy, Leder-Luis and Shany (2019); simulated schools, the chapter's
+seeded script}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.78\linewidth, height=0.4\linewidth, xmin=0, xmax=162,
+  ymin=0, ymax=45, xlabel={Pupils enrolled in the grade}, ylabel={Pupils per class},
+  xtick={0,40,80,120,160}, legend pos=south east]
+  \addplot[omDef, thick, no marks] table[x=enrol, y=rule] {figdata/bachelor-3/04-regression-discontinuity/out/rule.csv};
+  \addplot[omThm, only marks, mark=*, mark size=1.1pt] table[x=enrol, y=size] {figdata/bachelor-3/04-regression-discontinuity/out/schools.csv};
+  \legend{the rule, simulated schools}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\omcode{code/bachelor-3/04-regression-discontinuity/listings/rd_fuzzy.py}{1}{22}{A fuzzy design at the first \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}: \omterm{def:b3:instrumental-variables:tsls}{first stage}, \omterm{def:b3:instrumental-variables:tsls}{reduced form} and their ratio.}\label{lst:b3:regression-discontinuity:fuzzy}
+
+\omoutput{code/bachelor-3/04-regression-discontinuity/outputs/rd_fuzzy.txt}{True effect $-0.25$ points per pupil.}\label{out:b3:regression-discontinuity:fuzzy}
+
+Crossing from 40 to 41 pupils cuts class size by 14.0 pupils and raises the mean
+score by 4.0 points; the ratio is $-0.29$ points per extra pupil, against a true
+$-0.25$. % output: rd_fuzzy
+(From the printed numbers, $4.04/(-14.01) = -0.288$; the script divides the
+unrounded jumps.)
+
+\begin{record}[Class size in Israel]
+In 1991 Israeli test data, Angrist and Lavy (1999) found that the up-and-down
+pattern of class size induced by the rule was matched by a down-and-up pattern
+in test scores: smaller classes raised the reading and mathematics scores of
+fifth graders, with smaller gains for fourth graders and little for third
+graders. % ledger: b3rd:al99.result
+Twenty years later the same authors and two colleagues repeated the study on
+Israeli data from 2002--2011. The rule still moved class size strongly, but
+the estimated effect of class size on achievement was now zero. They also found
+too many schools with enrolments just above the \omterm{def:b3:regression-discontinuity:running-variable}{cutoffs} --- one pupil more
+buys a whole extra class --- and checked that this sorting did not explain
+either the old effect or the new zero. % ledger: b3rd:alls.redux
+\end{record}
+
+\section{Can the running variable be manipulated?}\label{sec:b3:regression-discontinuity:manipulation}
+
+The design's weak point is sorting. If those just above the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} got there on
+purpose --- a pupil who pleads for one more mark, a school that enrols one more
+child, a household that earns a little less to stay under a benefit threshold
+--- then those just above differ from those just below in their wish and
+ability to sort, and continuity fails. Sorting leaves a trace: too many units
+just above the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}, too few just below.
+
+\begin{omchart}{Exam scores (whole marks) of 20{,}000 simulated candidates, with
+a pass mark of 70, after a marker has moved half of the scripts on 66--69 up to
+70. Bars: the re-marked scores; line: the scores before re-marking.}{simulated
+data, the chapter's seeded script}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.78\linewidth, height=0.38\linewidth, xmin=29, xmax=96,
+  ymin=0, ymax=1700, xlabel={Score}, ylabel={Candidates}, legend pos=north east,
+  xtick={30,40,...,90}]
+  \addplot[ybar, area legend, bar width=3.5pt, fill=omDef!45, draw=omDef] table[x=score, y=remarked] {figdata/bachelor-3/04-regression-discontinuity/out/scores.csv};
+  \addplot[omThm, thick, sharp plot, no marks] table[x=score, y=clean] {figdata/bachelor-3/04-regression-discontinuity/out/scores.csv};
+  \draw[guide] (axis cs:69.5,0) -- (axis cs:69.5,1700);
+  \legend{re-marked, before}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+The density test of McCrary (2008) estimates the density of the \omterm{def:b3:regression-discontinuity:running-variable}{running variable}
+just above and just below the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} by local linear fits to a histogram, and
+tests whether the log of their ratio is zero.
+
+\omcode{code/bachelor-3/04-regression-discontinuity/listings/density_test.py}{1}{15}{The density test on the clean and the re-marked scores.}\label{lst:b3:regression-discontinuity:density}
+
+\omoutput{code/bachelor-3/04-regression-discontinuity/outputs/density_test.txt}{Log ratio of the densities just above and just below 70.}\label{out:b3:regression-discontinuity:density}
+
+On the clean scores the test finds nothing, $t = -1.1$; after 982 scripts are
+moved, the log density jumps by 1.86, $t = 29.9$. % output: density_test
+Real manipulation is rarely so blatant, and the test has an obvious blind
+spot: if some units are pushed up and an equal number pushed down, the density
+is smooth while the composition on each side is not. Balance tests on
+predetermined covariates complement it. Neither can prove the design valid; a
+failure of either is hard to explain away. When sorting is confined to a few
+units at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}, a \emph{donut} design drops the observations closest to it
+and estimates from the rest (\cref{exo:b3:regression-discontinuity:8}).
+
+\section{Thresholds in practice}\label{sec:b3:regression-discontinuity:applications}
+
+\begin{record}[The minimum legal drinking age]
+In the United States the minimum legal drinking age is 21, and age is a \omterm{def:b3:regression-discontinuity:running-variable}{running
+variable} nobody can manipulate. Carpenter and Dobkin (2009) found that at 21 the
+number of days on which young adults drink jumps by 21~\%, and the mortality
+rate jumps by 9~\%. % ledger: b3rd:cd09.mortality
+The design answers one question cleanly: what happens to people who turn 21
+under a law of 21. Whether a different age would change total mortality, or
+only move it, is a question the threshold cannot answer.
+\end{record}
+
+\begin{model}{Regression discontinuity}
+\assumes Treatment, or its probability, jumps at a known \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} of an observed
+\omterm{def:b3:regression-discontinuity:running-variable}{running variable}; units cannot place themselves precisely on one side; the
+mean potential outcomes are continuous at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}; in a fuzzy design,
+crossing the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} affects the outcome only through treatment.
+\predicts A jump in the outcome at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} equal to the effect there; no jump
+in predetermined covariates; a smooth density of the \omterm{def:b3:regression-discontinuity:running-variable}{running variable}; no jump at
+placebo \omterm{def:b3:regression-discontinuity:running-variable}{cutoffs} where nothing changes.
+\tested In close elections, the vote share before the election does not jump
+while the one after does; histograms of the \omterm{def:b3:regression-discontinuity:running-variable}{running variable} have caught real
+sorting, as at enrolment \omterm{def:b3:regression-discontinuity:running-variable}{cutoffs} in Israeli schools.
+\breaks When units sort precisely (enrolments, re-marked exams, income just under
+a threshold); when another policy uses the same \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} (the age of 21 may also
+change other rules); when the curve is fitted too far from the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}; and
+for questions about units far from the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}, where it says nothing.
+\end{model}
+
+\section{Exercises}\label{sec:b3:regression-discontinuity:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:regression-discontinuity:1}
+Read the opening chart: the values of the two fitted lines at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} and
+the jump. Why are the dots near $\pm 0.4$ more scattered than those near the
+\omterm{def:b3:regression-discontinuity:running-variable}{cutoff}?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:regression-discontinuity:2}
+Compute the class size predicted by Maimonides' rule at enrolments of 40, 41, 80,
+81 and 121. At which enrolments does it jump, and by how much at each?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:regression-discontinuity:3}
+Among applicants scoring 68 or 69 on an entrance test, 40\,\% find a job within a
+year; among those scoring 70 or 71, admitted to a training scheme, 52\,\%.
+Estimate the scheme's effect on employment. What does the estimate assume, and
+why might it overstate the effect if the employment rate rises with the score?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:regression-discontinuity:4}
+A balance test finds that parents' income jumps by 8~\% at a scholarship's
+\omterm{def:b3:regression-discontinuity:running-variable}{cutoff}. What does that suggest, and what would you look at next?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:regression-discontinuity:5}
+On 300 samples of 800 simulated elections, compare global polynomials of order
+1, 2, 4 and 6 on each side, fitted to all the data, with a local linear fit
+within 0.25. Report the bias and the standard deviation of each, and say which
+you would use.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:regression-discontinuity:6}
+At an age threshold, the share of people with health insurance jumps from 0.60
+to 0.85 and the share who visit a doctor in a year jumps from 0.70 to 0.75.
+\begin{enumerate}
+\item Estimate the effect of insurance on visits, and say for whom.
+\item Why is the ratio not the effect of insurance on the 60~\% already insured
+below the threshold?
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:regression-discontinuity:7}
+Students who score just below a scholarship's \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} can ask for their exam to
+be re-marked, and the most determined ones do. If determination raises later
+earnings, in which direction is a sharp estimate of the scholarship's effect
+biased?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:regression-discontinuity:8}
+Give the re-marked exams of \cref{lst:b3:regression-discontinuity:density} an
+outcome: log earnings that rise with the true score by 0.01 per mark and jump by
+0.10 for those who pass. Estimate the jump with all the recorded scores and with
+donuts that drop the one and two marks on each side of the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}. Explain the
+results.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:regression-discontinuity:9}
+A city announces that households below an income line will receive a subsidy,
+but sets the line only after the year's incomes have been reported. What pattern
+in the data would suggest the line was chosen to include particular
+households, and why would that matter for a regression discontinuity study?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:regression-discontinuity:10}
+Show that with uniform weights the local linear estimate of the limit from
+above, $\hat a_1$, is a weighted mean of the outcomes in the window above the
+\omterm{def:b3:regression-discontinuity:running-variable}{cutoff}, $\hat a_1 = \sum_i \omega_i Y_i$, with weights $\omega_i = (S_2 - S_1
+x_i)/(n_1 S_2 - S_1^2)$, where $x_i$ is measured from the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}, $n_1$ is the
+number of observations and $S_k = \sum_i x_i^k$. Show that the weights sum to
+one, that some are negative, and which.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:regression-discontinuity:11}
+On 500 simulated samples of the opening chart's elections, compute how often the
+95~\% interval of the local linear estimate covers the true jump, at windows
+0.02, 0.10, 0.25 and 0.50. Explain the pattern using \cref{out:b3:regression-discontinuity:bandwidth}.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:regression-discontinuity:12}
+A regression discontinuity study finds that a scholarship offered from a score
+of 70 raises earnings by 12~\% for pupils at 70. A minister proposes lowering
+the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} to 50. Give two reasons why the effect at 50 might differ, and
+describe a design that could estimate it.
+\end{exercise}
+
+\section{Problem: The Brenmoor Scholarship}\label{sec:b3:regression-discontinuity:problem}
+
+\begin{problem}[{Weekend problem --- the Brenmoor scholarship}]\label{pb:b3:regression-discontinuity:scholarship}
+Brenmoor, the capital of Brenland (invented), offers a scholarship to every
+school-leaver who scores 70 or more out of 100 in the final exam. Scores are
+whole marks. A study follows 6{,}000 school-leavers to the age of 30 and records
+their log earnings, whether they received the scholarship or an equivalent award
+from elsewhere, and their parents' log income at the time of the exam. A
+statistician fits \omterm{def:b3:regression-discontinuity:local-linear}{local linear regressions} with triangular weights, with the
+\omterm{def:b3:regression-discontinuity:running-variable}{cutoff} placed at 69.5, first for all pupils and then for all pupils except those
+of one school, where, it emerged, a teacher had re-marked scripts, moving some
+scripts marked 67--69 up to 70. Robust
+standard errors are in parentheses. % figdata: scholarship
+
+\begin{center}\small
+\pgfplotstabletypeset[col sep=comma, string type,
+  columns={quantity,window,all,without},
+  columns/quantity/.style={column name={Jump in}, column type=l},
+  columns/window/.style={column name={Window}, column type=c},
+  columns/all/.style={column name={All pupils}, column type=l},
+  columns/without/.style={column name={Without the school}, column type=l},
+  every head row/.style={after row=\hline}, every last row/.style={after row=\hline}]
+  {figdata/bachelor-3/04-regression-discontinuity/out/scholarship.csv}
+\end{center}
+``Earnings'' and ``award'' are at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} of 70; ``earnings at 60'' places
+the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} at 59.5 instead, where nothing happens. A density test at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}
+(window 10) gives a log jump in the density of scores of 0.3036 (0.0798) for all
+pupils and 0.0623 (0.0841) without the school. % figdata: scholarship_density
+
+\medskip\noindent\textbf{Part I --- the offer.}
+\begin{enumerate}
+\item Is the design sharp or fuzzy for the offer? For the award?
+\item Interpret the jump in earnings at a window of 10, for all pupils, as an
+effect of being offered the scholarship.
+\item Give its 95~\% confidence interval. Is the effect of the offer
+distinguishable from zero?
+\item Compare the estimates at windows 5, 10 and 20. What does their stability
+suggest, and why do the standard errors fall?
+\item Interpret the jump in parents' income. Why is it reassuring?
+\item Why is the effect of the offer smaller than the effect of the
+scholarship itself?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- take-up.}
+\begin{enumerate}[resume]
+\item Interpret the jump in the award at a window of 10.
+\item Compute the fuzzy estimate of the effect of the award on log earnings at
+a window of 10, and convert it into a percentage.
+\item Compute it at windows 5 and 20.
+\item Approximate the standard error of the fuzzy estimate at a window of 10 by
+dividing the standard error of the earnings jump by the award jump, and give a
+95~\% interval.
+\item For whom is the fuzzy estimate an effect? Describe the two kinds of pupil
+it leaves out.
+\item State the assumption that the offer affects earnings only through the
+award, and give one way it could fail.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- checks.}
+\begin{enumerate}[resume]
+\item Interpret the jump in earnings at 60.
+\item The placebo uses scores from 50 to 69 only. Why must the window of a
+placebo \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} stop short of the real \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}?
+\item At what window would you report the main estimate, and what else would
+you report beside it?
+\item The study's critics say the scholarship's effect is mostly the effect of
+passing a prestigious threshold, which employers see. What evidence could
+separate the two?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- the teacher.}
+\begin{enumerate}[resume]
+\item Compute the $t$-statistic of the density test for all pupils and without
+the school. What do they show?
+\item Convert the log jump for all pupils into a ratio of densities.
+\item Who are the re-marked pupils, and how do they differ from the others just
+above 70?
+\item In which direction should the re-marking bias the jump in earnings? Compare
+the estimates with and without the school at each window.
+\item Why does the jump in parents' income not reveal the re-marking?
+\item Dropping the school removes the manipulation but also some honest pupils.
+When would that be a problem?
+\item Propose a donut design for the full sample and say what it would drop.
+\item State the result: the effect of the scholarship on earnings at the
+threshold, with its interval and the evidence from the density test.
+\end{enumerate}
+\end{problem}

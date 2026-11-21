@@ -1,0 +1,492 @@
+\chapter{The Two Welfare Theorems}\label{ch:b2:welfare-theorems}
+
+In 1855--1858, American red wheat sold in London for 22.0 per cent more on average than in New York.
+% ledger: b2:persson2002-t3
+In 1892--1900 the gap was 13.9 per cent. Part of a gap between two markets is the cost of moving the
+good between them: freight, insurance, port charges. The chart splits each period's average gap into
+those costs and a residual, the part that the cost of shipping does not explain.
+
+\begin{openingchart}{The London--New York price gap for American wheat, in per cent of the New York
+  price, in four periods, split into freight, insurance and port charges (an assumed 3.75 per cent
+  before 1865 and 2.75 per cent after) and the residual.}{Persson (2002), Table~3}
+\begin{tikzpicture}
+\begin{axis}[omrecord, ybar stacked, bar width=26pt, xmin=0.4, xmax=4.6, ymin=0, ymax=30, xtick=data,
+    xticklabels from table={figdata/bachelor-2/07-welfare-theorems/out/gap.csv}{period},
+    ylabel={Per cent of the New York price}, grid=none, ymajorgrids, width=0.7\linewidth,
+    height=0.48\linewidth, legend columns=3,
+    legend style={at={(0.5,-0.16)}, anchor=north, font=\footnotesize}]
+  \addplot[fill=omDef!70, draw=omDef] table[x=pos, y=transport]
+    {figdata/bachelor-2/07-welfare-theorems/out/gap.csv};
+  \addplot[fill=black!25, draw=black!50] table[x=pos, y=charges]
+    {figdata/bachelor-2/07-welfare-theorems/out/gap.csv};
+  \addplot[fill=omThm!60, draw=omThm] table[x=pos, y=residual]
+    {figdata/bachelor-2/07-welfare-theorems/out/gap.csv};
+  \legend{Freight, Insurance and port, Residual}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: gap_summary (fall 8.1, transport_fall 2.3, share_transport 28, residual_first 8.4, residual_last 3.5)
+From the first period to the last, the gap fell by 8.1 points. Freight fell by only 2.3 points, 28 per
+cent of the fall; the residual fell from 8.4 to 3.5 points. A model of competitive markets predicts that
+when a good is shipped from one market to another, the gap between their prices equals the cost of
+shipping it: any larger gap is a profit that traders would compete away. Measured against that
+prediction, the markets of the 1850s left a large unexplained margin, and the markets of the 1890s a
+much smaller one. Persson concludes that better market and marketing efficiency did more than cheaper
+freight to bring the two prices together.
+
+That prediction is one consequence of a broader result. \Cref{ch:b2:exchange-economies} found competitive
+equilibria in economies where people only trade what they hold. This chapter adds production and proves
+the two theorems that relate \omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium} to Pareto efficiency: every \omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium}
+is efficient, and, under more assumptions, every efficient \omterm{def:b2:exchange-economies:allocation}{allocation} is a \omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium} once
+wealth has been redistributed. Each assumption the proofs use will be named, because each one fails
+somewhere, and those failures fill much of the rest of this book.
+
+\begin{recall}
+From \cref{ch:b2:exchange-economies}: exchange economies, \omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium}, \omterm{def:b2:exchange-economies:walras-law}{Walras' law}, Pareto
+efficiency and the \omterm{def:b2:exchange-economies:contract-curve}{contract curve}. From the Year 1 volume: the firm's profit maximisation, the
+production possibility frontier, and consumer and producer surplus. From the school volumes: total
+surplus as a measure of efficiency in one market.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:welfare-theorems:symbols}
+As in \cref{ch:b2:exchange-economies}, consumers are $i$, goods $\ell$, \omterm{def:b2:exchange-economies:endowment}{endowments} $\omega_i$, bundles
+$x_i$, and $p = (p_1, \dots, p_n)$ is a price vector; $p \cdot x = \sum_\ell p_\ell x_\ell$. Firms are $j$,
+with production plans $y_j$ (inputs negative, outputs positive) chosen from technology sets $Y_j$;
+$\theta_{ij}$ is consumer $i$'s share of firm $j$'s profit. In the one-consumer economy, $T$ is the time
+available, $L$ hours worked, $c$ consumption and $w$ the real wage. $\tau_i$ is a \omterm{def:b2:welfare-theorems:lump-sum}{lump-sum transfer} to
+consumer $i$, and $t$ a transport cost per unit.
+\end{notation}
+
+\section{Production added}\label{sec:b2:welfare-theorems:production}
+
+\begin{definition}[Private-ownership economy]\label{def:b2:welfare-theorems:production-economy}
+A \emph{private-ownership economy}\index{private-ownership economy} has consumers with preferences and
+\omterm{def:b2:exchange-economies:endowment}{endowments}, firms $j$ with technology sets $Y_j \subset \mathbb{R}^n$, and ownership shares $\theta_{ij}
+\ge 0$ with $\sum_i \theta_{ij} = 1$ for each firm. At prices $p$, each firm chooses $y_j \in Y_j$ to
+maximise its profit $p \cdot y_j$, and each consumer chooses the best bundle with $p \cdot x_i \le p \cdot
+\omega_i + \sum_j \theta_{ij}\,p \cdot y_j$. A \omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium} is a price vector and plans such
+that every market clears: $\sum_i x_i = \sum_i \omega_i + \sum_j y_j$.
+\end{definition}
+
+The simplest case has one consumer, who owns one firm and works for it: the \emph{Robinson Crusoe
+economy}. Crusoe has $T = 16$ hours a day, likes consumption and leisure, $u = \ln c + \ln(T - L)$, and
+produces $c = 4\sqrt L$ with $L$ hours of work. A planner who chooses $L$ directly maximises $\ln(4\sqrt L)
++ \ln(16 - L)$; the first-order condition $1/(2L) = 1/(16 - L)$ gives $L = 16/3 = 5.333$ and $c = 4\sqrt{5.333}
+= 9.238$.
+
+% code: exercises/solutions.py crusoe
+Now split Crusoe in two: a firm that hires labour at the real wage $w$ and sells output at a price of
+one, and a household that sells labour and receives the firm's profit. The firm maximises $4\sqrt L - wL$,
+so $w = 2/\sqrt L$. At $w = 0.866$ it hires $5.333$ hours, produces $9.238$ and makes a profit of $9.238 -
+0.866 \times 5.333 = 4.619$. The household's income, valued at full time, is $16w + 4.619 = 18.475$; with
+log utility it spends half on consumption and half on leisure, so it consumes $9.238$ and takes $18.475/
+(2 \times 0.866) = 10.667$ hours of leisure: it works $5.333$ hours. The market outcome is the planner's.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=17, ymin=0, ymax=17, xtick={0,4,8,12,16},
+    ytick={0,4,8,12,16}, xlabel={Leisure $T - L$ (hours)}, ylabel={Consumption $c$},
+    width=0.58\linewidth, height=0.55\linewidth]
+  \addplot[omDef, very thick, domain=0:16, samples=120] {4*sqrt(16 - x)};
+  \addplot[black, thick, domain=1:16, samples=2] {9.2376 - 0.8660*(x - 10.6667)};
+  \addplot[omThm, thick, domain=5.9:16.5, samples=80] {98.535/x};
+  \node[eqpoint] at (axis cs:10.667,9.238) {};
+  \node[anchor=south west, font=\footnotesize] at (axis cs:10.8,9.4) {equilibrium};
+  \node[eqpoint] at (axis cs:16,4.619) {};
+  \node[font=\footnotesize] (pr) at (axis cs:11.5,2.0) {profit $4.619$};
+  \draw[->, black!70] (pr.east) -- (axis cs:15.8,4.4);
+  \node[anchor=west, font=\footnotesize, omDef] at (axis cs:0.6,6.0) {frontier $c = 4\sqrt{L}$};
+  \node[anchor=south, font=\footnotesize] at (axis cs:4.0,12.0) {slope $-w$};
+\end{axis}
+\end{tikzpicture}
+
+{\small The Robinson Crusoe economy. The frontier gives the consumption that each amount of leisure
+leaves. At the real wage $w = 0.866$ the firm picks the point of the frontier where profit is highest;
+the household's budget line has the same slope and meets the axis of full leisure at the profit it
+receives. The household's indifference curve touches the same line at the same point.}
+\end{omfigure}
+
+The decentralised outcome works because the same price line is tangent to the frontier, where it
+maximises the firm's profit, and to the indifference curve, where it maximises the household's utility.
+Both facts will reappear in the proofs below, and the second will fail when the frontier is not convex.
+
+\section{The first welfare theorem}\label{sec:b2:welfare-theorems:first}
+
+\begin{definition}[Local non-satiation]\label{def:b2:welfare-theorems:lns}
+Preferences are \emph{locally non-satiated}\index{local non-satiation} if for every bundle $x_i$ and
+every distance $\varepsilon > 0$ there is a bundle within $\varepsilon$ of $x_i$ that the consumer
+strictly prefers.
+\end{definition}
+
+Monotone preferences are \omterm{def:b2:welfare-theorems:lns}{locally non-satiated}: a little more of everything is better. The assumption
+rules out a bliss point and \emph{thick} indifference curves, regions in which the consumer does not care
+what she gets.
+
+\begin{definition}[First fundamental theorem of welfare economics]\label{def:b2:welfare-theorems:first-theorem}
+The \emph{first fundamental theorem of welfare economics}\index{first fundamental theorem of welfare
+economics} is the result that every \omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium} \omterm{def:b2:exchange-economies:allocation}{allocation} is \omterm{def:b2:exchange-economies:pareto-efficient}{Pareto-efficient} when
+preferences are \omterm{def:b2:welfare-theorems:lns}{locally non-satiated} (\cref{thm:b2:welfare-theorems:first}).
+\end{definition}
+
+\begin{theorem}[First welfare theorem]\label{thm:b2:welfare-theorems:first}
+In an \omterm{def:b2:exchange-economies:exchange-economy}{exchange economy} with \omterm{def:b2:welfare-theorems:lns}{locally non-satiated} preferences, if $(p, x^*)$ is a \omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium}
+with $p \gg 0$, then $x^*$ is \omterm{def:b2:exchange-economies:pareto-efficient}{Pareto-efficient}. The same holds in a \omterm{def:b2:welfare-theorems:production-economy}{private-ownership economy} with
+production.
+\end{theorem}
+
+\begin{proof}
+\omterm{def:b2:exchange-economies:exchange-economy}{Exchange economy}. Suppose a \omterm{def:b2:exchange-economies:feasible}{feasible allocation} $x'$ makes everyone at least as well off as $x^*$ and
+consumer $k$ strictly better off. Since $x^*_k$ was the best bundle $k$ could afford, $x'_k$ was not
+affordable: $p \cdot x'_k > p \cdot \omega_k$. For every other consumer, $p \cdot x'_i \ge p \cdot
+\omega_i$: if instead $p \cdot x'_i < p \cdot \omega_i$, by \omterm{def:b2:welfare-theorems:lns}{local non-satiation} some bundle close
+enough to $x'_i$ to remain affordable would be strictly preferred to $x'_i$, hence to $x^*_i$, which
+contradicts the choice of $x^*_i$. Summing over consumers, $p \cdot \sum_i x'_i > p \cdot \sum_i
+\omega_i$. But $x'$ is feasible, $\sum_i x'_i \le \sum_i \omega_i$, and with $p \gg 0$ this gives $p \cdot
+\sum_i x'_i \le p \cdot \sum_i \omega_i$: a contradiction. The case with production is
+\cref{exo:b2:welfare-theorems:10}.
+\end{proof}
+
+The proof is the figure below in symbols. At equilibrium prices, everything a consumer prefers costs
+more than her wealth; adding up, any \omterm{def:b2:exchange-economies:allocation}{allocation} everyone prefers costs more than the economy has.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, axis lines=box, xmin=0, xmax=10, ymin=0, ymax=10, xtick={0,2,4,6,8,10},
+    ytick={0,2,4,6,8,10}, xlabel={Good 1 held by $A$}, ylabel={Good 2 held by $A$},
+    width=0.58\linewidth, height=0.58\linewidth, clip=true]
+  \addplot[omDef, thick, domain=3.05:10, samples=60] {30.4511/x};
+  \addplot[omThm, thick, domain=0:9.2, samples=60] {10 - 98.9315/(10 - x)^2};
+  \addplot[black, thick, domain=2.2:9.47, samples=2] {2 - 1.357143*(x - 8)};
+  \node[eqpoint] at (axis cs:8,2) {};
+  \node[anchor=north east, font=\footnotesize] at (axis cs:8,2) {$\omega$};
+  \node[eqpoint] at (axis cs:4.737,6.429) {};
+  \node[anchor=north east, font=\footnotesize] at (axis cs:4.6,6.3) {$x^*$};
+  \node[font=\footnotesize, omDef, align=center] at (axis cs:7.6,7.6) {$A$ prefers:\\costs more than $p \cdot \omega_A$};
+  \node[font=\footnotesize, omThm, align=center] at (axis cs:2.4,2.6) {$B$ prefers:\\costs $B$ more\\than $p \cdot \omega_B$};
+\end{axis}
+\end{tikzpicture}
+
+{\small The first welfare theorem in the box of \cref{ch:b2:exchange-economies}. The budget line through
+$\omega$ at the equilibrium price separates the bundles $A$ prefers to $x^*$ (above her indifference
+curve) from those $B$ prefers (below his, seen from $A$'s corner). No point lies in both regions, so no
+\omterm{def:b2:exchange-economies:allocation}{allocation} makes both better off.}
+\end{omfigure}
+
+The theorem extends to markets in different places. Treat wheat in New York and wheat in London as two
+goods, and shipping as a firm that turns one unit of the first into one unit of the second at a cost $t$
+per unit.
+
+\begin{proposition}[Law of one price with transport costs]\label{prop:b2:welfare-theorems:one-price}
+In a \omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium} with shipping firms that face a constant cost $t$ per unit, the prices of a
+good in two markets satisfy $p_B - p_A \le t$ and $p_A - p_B \le t$, and $p_B - p_A = t$ whenever a
+positive quantity is shipped from $A$ to $B$.
+\end{proposition}
+
+\begin{proof}
+A shipping firm that buys $s \ge 0$ units in $A$ and sells them in $B$ earns $s(p_B - p_A - t)$. If $p_B -
+p_A > t$, profit has no maximum: the firm would ship without limit, and the market for the good in $A$
+could not clear. So $p_B - p_A \le t$, and likewise in the other direction. If $s > 0$ in equilibrium,
+profit maximisation requires $p_B - p_A - t \ge 0$, so the inequality holds with equality.
+\end{proof}
+
+\begin{record}[Shipping and the law of one price]
+Persson (2002) assembled weekly wheat prices in New York and in British markets and the freight between
+% ledger: b2:persson2002-t1
+them. Freight fell as a share of the New York wheat price, from 11.0 per cent in 1852--1860 to 7.5 per cent
+in 1891--1900, a fall of almost a third (the author's own 23 per cent runs to his last, shorter period, 1896--1900,
+at 8.5 per cent); but the gap between the London and New York prices of comparable
+% ledger: b2:persson2002-t3, b2:persson2002-summary
+wheat always exceeded freight and the assumed insurance and port charges. The residual was 8.4 per cent
+of the New York price in 1855--1858 and 3.5 per cent in 1892--1900. The paper finds that comparing
+different qualities of wheat in the two markets can create spurious convergence or divergence, and
+concludes that improved market and marketing efficiency mattered more than freight.
+\end{record}
+
+The proposition gives the residual a meaning: in the model it is zero, so a positive residual is either a
+cost the measure leaves out (the merchant's time, the risk of a price change during the voyage, the
+interest on the cargo) or a profit that competition had not yet removed. Its fall says that one or the
+other shrank. Which it was the data cannot say on their own.
+
+\section{The second welfare theorem}\label{sec:b2:welfare-theorems:second}
+
+The first theorem says markets reach an efficient \omterm{def:b2:exchange-economies:allocation}{allocation}, but which one depends on the \omterm{def:b2:exchange-economies:endowment}{endowments}.
+The second asks the converse: can any efficient \omterm{def:b2:exchange-economies:allocation}{allocation} be reached by markets, if wealth is first
+redistributed?
+
+\begin{definition}[Lump-sum transfer]\label{def:b2:welfare-theorems:lump-sum}
+A \emph{lump-sum transfer}\index{lump-sum transfer} is a transfer of wealth $\tau_i$ to consumer $i$,
+with $\sum_i \tau_i = 0$, whose amount does not depend on any choice the consumer makes: not on what
+she buys, sells, earns or works.
+\end{definition}
+
+\begin{definition}[Second fundamental theorem of welfare economics]\label{def:b2:welfare-theorems:second-theorem}
+The \emph{second fundamental theorem of welfare economics}\index{second fundamental theorem of welfare
+economics} is the result that, with convex preferences and technologies, every \omterm{def:b2:exchange-economies:pareto-efficient}{Pareto-efficient
+allocation} can be reached as a \omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium} after suitable \omterm{def:b2:welfare-theorems:lump-sum}{lump-sum transfers}
+(\cref{thm:b2:welfare-theorems:second}).
+\end{definition}
+
+\begin{theorem}[Second welfare theorem]\label{thm:b2:welfare-theorems:second}
+In a \omterm{def:b2:welfare-theorems:production-economy}{private-ownership economy}, let preferences be continuous, convex and strictly monotone, and every
+technology set $Y_j$ convex. Let $x^*$ be a \omterm{def:b2:exchange-economies:pareto-efficient}{Pareto-efficient allocation}, with production plans $y^*_j$,
+in which every consumer consumes a positive amount of every good. Then there are prices $p \gg 0$ and
+\omterm{def:b2:welfare-theorems:lump-sum}{lump-sum transfers} $\tau_i$ such that, with wealth $p \cdot \omega_i + \sum_j\theta_{ij}\,p \cdot y^*_j +
+\tau_i$, each consumer's best bundle is $x^*_i$ and each firm's most profitable plan is $y^*_j$.
+\end{theorem}
+
+\admitted
+
+The missing step is geometric. The set of aggregate bundles that could make everyone at least as well off
+as at $x^*$, and someone better off, is convex, because preferences are; the set of bundles the economy
+can produce is convex, because technologies are; efficiency says the two sets do not overlap. Two convex
+sets that do not overlap can be separated by a hyperplane, and the hyperplane's normal vector is the
+price vector $p$. The transfers then give each consumer exactly the wealth $p \cdot x^*_i$.
+
+With Cobb--Douglas consumers the transfer can be computed. Take the running economy of
+\cref{ch:b2:exchange-economies}, in which the \omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium} gives $A$ 4.737 units of good 1, and
+suppose a planner wants $A$ to have 4. The listing finds the point of the \omterm{def:b2:exchange-economies:contract-curve}{contract curve}, the price that
+supports it ($A$'s marginal rate of substitution there), and the transfer of good 2 that makes $A$'s wealth
+at that price equal to the cost of her target bundle.
+
+\omcode{code/bachelor-2/07-welfare-theorems/listings/second_theorem.py}{1}{29}{The transfer that turns a
+chosen efficient \omterm{def:b2:exchange-economies:allocation}{allocation} into a \omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium}.}\label{lst:b2:welfare-theorems:second}
+
+\omoutput{code/bachelor-2/07-welfare-theorems/outputs/second_theorem.txt}{A transfer of two units of good
+2 from $A$ to $B$ moves the equilibrium to the target.}\label{out:b2:welfare-theorems:second}
+
+% code: listings/second_theorem.py
+At the price $1.4286 = 10/7$, $A$'s \omterm{def:b2:exchange-economies:endowment}{endowment} is worth $94/7$ and her target bundle costs $80/7$; taking
+two units of good 2 from her closes the gap. Recomputing the equilibrium from the new \omterm{def:b2:exchange-economies:endowment}{endowments} returns
+the same price and the target bundle: the transfer, not a change in how markets work, chose the
+\omterm{def:b2:exchange-economies:allocation}{allocation}.
+
+Convexity is where the theorem can fail. Suppose Crusoe's technology has increasing returns, $c =
+L^2/10$, with $T = 10$ hours and $u = \ln c + \ln(T - L)$. The planner's condition $2/L = 1/(10 - L)$ gives
+% code: exercises/solutions.py nonconvex
+$L = 6.667$ and $c = 4.444$, an efficient plan. The price that would support it is the slope of the
+frontier there, $w = 2L/10 = 1.333$. But at that wage the firm's profit from the efficient plan is $4.444 -
+1.333 \times 6.667 = -4.444$, and larger plans earn more: with increasing returns, profit at a fixed wage
+grows without bound. No wage makes the efficient plan the firm's choice.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=10.5, ymin=0, ymax=10.5, xtick={0,2,4,6,8,10},
+    ytick={0,2,4,6,8,10}, xlabel={Leisure $T - L$ (hours)}, ylabel={Consumption $c$},
+    width=0.55\linewidth, height=0.55\linewidth]
+  \addplot[omDef, very thick, domain=0:10, samples=100] {(10 - x)^2/10};
+  \addplot[omThm, thick, domain=1.45:10.5, samples=80] {14.815/x};
+  \addplot[black, thick, domain=0:6.67, samples=2] {4.4444 - 1.3333*(x - 3.3333)};
+  \node[eqpoint] at (axis cs:3.333,4.444) {};
+  \node[anchor=south west, font=\footnotesize] at (axis cs:3.5,4.6) {efficient plan};
+  \node[eqpoint] at (axis cs:0,10) {};
+  \node[anchor=west, font=\footnotesize, align=left] (mp) at (axis cs:4.5,9.2) {more profitable\\at the same wage};
+  \draw[->, black!70] (mp.west) -- (axis cs:0.25,9.95);
+  \node[anchor=north east, font=\footnotesize, omDef] at (axis cs:9.6,1.1) {frontier};
+\end{axis}
+\end{tikzpicture}
+
+{\small A non-convex technology, $c = L^2/10$. The efficient plan is where the indifference curve touches
+the frontier. The line through it with the frontier's slope is the only candidate price line, but the
+frontier lies above it elsewhere: at that wage the firm would rather work all ten hours, and the plan
+cannot be a \omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium}.}
+\end{omfigure}
+
+\section{Which assumption carries the result}\label{sec:b2:welfare-theorems:assumptions}
+
+The first theorem used three facts: each consumer's choice at given prices, each firm's profit
+maximisation at given prices, and that nothing affects a consumer except her own bundle. Hidden in the
+statement is a fourth: there is a market, and a price, for everything consumers and firms care about.
+
+\begin{definition}[Complete markets]\label{def:b2:welfare-theorems:complete-markets}
+Markets are \emph{complete}\index{complete markets} if every good that enters a utility function or a
+technology, at every date, in every place and in every \omterm{def:b2:insurance-and-risk-sharing:state}{state of the world}, can be traded at a price that
+every agent takes as given.
+\end{definition}
+
+Each assumption fails somewhere, and each failure is a chapter of this book or the next.
+\begin{itemize}
+  \item \emph{No external effects.} When one agent's choice enters another's utility or technology
+        without a price, as with pollution, the equilibrium is generally inefficient
+        (\cref{ch:b2:externalities-and-public-goods-theory}).
+  \item \emph{\omterm{def:b2:welfare-theorems:complete-markets}{Complete markets} and symmetric information.} When the parties to a trade know different
+        things, some markets shrink or vanish (\cref{ch:b2:adverse-selection}), and contracts must trade off
+        insurance against incentives (\cref{ch:b2:moral-hazard}). Missing markets for risk were the theme of
+        \cref{ch:b2:insurance-and-risk-sharing}.
+  \item \emph{Price taking.} A firm or consumer large enough to move prices does not trade where marginal
+        values are equal; the strategic analysis begins in \cref{ch:b2:static-games}.
+  \item \emph{Convexity.} The first theorem does not need it; the second does. Increasing returns, which
+        are central to the economics of ideas, return in \cref{ch:b2:endogenous-growth}.
+  \item \emph{\omterm{def:b2:welfare-theorems:lns}{Local non-satiation}.} Without it, an equilibrium can leave gains unclaimed
+        (\cref{exo:b2:welfare-theorems:11}).
+\end{itemize}
+A failure of an assumption shows that the theorem does not apply. It does not show that some policy would
+do better: correcting a market outcome needs information about preferences and technologies that the
+market used without anyone collecting it, and the agencies that would correct it face their own
+incentives. Both sides of that comparison are studied in the chapters just named and in the Year 3
+volume.
+
+\begin{model}{The competitive economy with production}
+\assumes Price taking by every agent; \omterm{def:b2:welfare-theorems:lns}{locally non-satiated} preferences; no external effects; \omterm{def:b2:welfare-theorems:complete-markets}{complete
+markets}; for the second theorem, convex preferences and technologies.
+\predicts \omterm{def:b2:exchange-economies:pareto-efficient}{Pareto-efficient allocations}; profit-maximising production at prices equal to marginal rates
+of transformation; price gaps between connected markets equal to the cost of moving goods between them.
+\tested Commodity markets linked by trade: price gaps narrowed as freight and trading costs fell, and
+the part of the gap that freight does not explain shrank in the second half of the nineteenth century
+(Persson 2002); laboratory markets converge to competitive prices (\cref{ch:b2:exchange-economies}).
+\breaks External effects, market power, missing markets and asymmetric information, and non-convex
+technologies; and the theorems say nothing about which efficient \omterm{def:b2:exchange-economies:allocation}{allocation} is reached.
+\end{model}
+
+\section{The theorems are silent on distribution}\label{sec:b2:welfare-theorems:distribution}
+
+The Pareto set is large: in the \omterm{def:b2:exchange-economies:edgeworth-box}{Edgeworth box} it runs from one corner to the other, from \omterm{def:b2:exchange-economies:allocation}{allocations} that
+give $A$ almost nothing to \omterm{def:b2:exchange-economies:allocation}{allocations} that give $B$ almost nothing. The first theorem says that the
+market picks one of them, the one that the \omterm{def:b2:exchange-economies:endowment}{endowments} lead to. It says nothing about whether that
+\omterm{def:b2:exchange-economies:allocation}{allocation} is fair, or better than another efficient \omterm{def:b2:exchange-economies:allocation}{allocation}. Ranking efficient \omterm{def:b2:exchange-economies:allocation}{allocations} needs a
+judgement about how to weigh one person's gain against another's loss, which economics can describe
+(\cref{ch:b2:social-choice}) but not supply.
+
+The second theorem seems to separate the two questions: choose the distribution by \omterm{def:b2:welfare-theorems:lump-sum}{lump-sum transfers},
+then let markets deliver efficiency. The difficulty is the word \emph{lump-sum}. A transfer that does not
+depend on anything a person does must be based on characteristics she cannot change, and those are the
+characteristics a government cannot observe: ability, health or tastes, as opposed to income, spending or
+hours, which respond to the transfer itself. Transfers that depend on income or spending change behaviour
+and so cost efficiency. The size of that cost, and how it compares with the value of a different
+distribution, is a question for the public economics of the Year 3 volume, not for these theorems.
+
+\section{Exercises}\label{sec:b2:welfare-theorems:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:welfare-theorems:1}
+Crusoe has $T = 16$ hours, produces $c = 4\sqrt L$ and has $u = \ln c + \ln(16 - L)$. Find the efficient
+hours, the real wage that supports them, the firm's profit, and check that the household chooses the same
+hours at that wage.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:welfare-theorems:2}
+Read the opening chart. By how much did the price gap fall between the first and the last period, and by
+how much did freight fall? What share of the fall does freight account for? What happened to the
+residual?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:welfare-theorems:3}
+A firm produces $y = 2\sqrt L$ and sells at $p = 3$; the wage is $w = 1$. Find its labour demand, output
+and profit.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:welfare-theorems:4}
+Describe price data from two connected markets that would refute \cref{prop:b2:welfare-theorems:one-price},
+and say what else you would need to measure before concluding that it is refuted.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:welfare-theorems:5}
+Crusoe's utility is $\tfrac23\ln c + \tfrac13\ln(16 - L)$, with $c = 4\sqrt L$. Find the efficient hours,
+consumption and the supporting real wage. Show that in general, with $u = a\ln c + (1 - a)\ln(T - L)$ and
+$c = A\sqrt L$, $L = aT/(2 - a)$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:welfare-theorems:6}
+In \cref{exo:b2:welfare-theorems:1}, productivity rises from $A = 4$ to $A = 5$. Predict, then compute, the
+change in hours, consumption and the real wage. Why do hours not change?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:welfare-theorems:7}
+Which assumption of the first welfare theorem fails in each case? (a) A factory's smoke soils the washing
+of a laundry next door. (b) One company owns the only water source of a town. (c) Farmers cannot buy
+insurance against a poor harvest. (d) A bridge costs a large sum to build and almost nothing to cross.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:welfare-theorems:8}
+In the running economy of \cref{ch:b2:exchange-economies}, a planner wants $A$ to have 6 units of good 1.
+Find the efficient \omterm{def:b2:exchange-economies:allocation}{allocation}, the supporting price and the transfer of good 2 that delivers it; check
+$B$'s demand at that price.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:welfare-theorems:9}
+Farmers in a region have no way to insure their harvests. Describe evidence that would show this missing
+market makes the \omterm{def:b2:exchange-economies:allocation}{allocation} inefficient, rather than reflecting a risk that no one would insure at any
+price.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:welfare-theorems:10}
+Prove the first welfare theorem for a \omterm{def:b2:welfare-theorems:production-economy}{private-ownership economy} with production: if $(p, x^*, y^*)$ is a
+\omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium} with $p \gg 0$ and preferences are \omterm{def:b2:welfare-theorems:lns}{locally non-satiated}, no \omterm{def:b2:exchange-economies:feasible}{feasible allocation}
+$(x', y')$ Pareto-dominates $(x^*, y^*)$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:welfare-theorems:11}
+Two consumers have \omterm{def:b2:exchange-economies:endowment}{endowments} $(3, 3)$ each. $B$ has $u_B = x_{B1} + x_{B2}$; $A$ has $u_A = \min(x_{A1} +
+x_{A2}, 4)$. Show that $p = (1, 1)$ with no trade is a \omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium}, that it is not
+\omterm{def:b2:exchange-economies:pareto-efficient}{Pareto-efficient}, and say which step of the proof of \cref{thm:b2:welfare-theorems:first} fails.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:welfare-theorems:12}
+Two Cobb--Douglas consumers spend shares $a$ and $b$ of their wealth on good 1; total \omterm{def:b2:exchange-economies:endowment}{endowments} are
+$(\bar\omega_1, \bar\omega_2)$ and $A$ holds $\omega_A$. Derive the transfer of good 2 to $A$ that
+delivers the efficient \omterm{def:b2:exchange-economies:allocation}{allocation} in which $A$ consumes $x_{A1}$ of good 1. Apply it with $a = \tfrac12$,
+$b = \tfrac14$, $\bar\omega = (100, 100)$, $\omega_A = (80, 10)$ and $x_{A1} = 40$.
+\end{exercise}
+
+\section{Problem: Brenland's railway}\label{sec:b2:welfare-theorems:problem}
+
+\begin{problem}[{Weekend problem --- a railway joins Ardel, a farming town of Brenland, an invented
+economy, to the city of Brenmoor: what happens to the price of grain in each town, who gains, and what
+transfer would deliver the allocation the council prefers}]
+\label{pb:b2:welfare-theorems:1}
+Ardel's farms grow grain; Ardel's households demand $100 - 10p_A$ tonnes a week at the price $p_A$ (in
+dalens per tonne). Brenmoor grows none and demands $200 - 10p_B$. Grain moves by road from Ardel to
+Brenmoor at a cost of $t = 6$ dalens a tonne, paid to competitive carriers. Round prices to two decimals.
+
+\medskip
+\noindent\textbf{Part I --- Two towns.}
+\begin{enumerate}
+  \item State the relation between $p_A$ and $p_B$ if grain is shipped, and if it is not.
+  \item Farm output is $10p_A$ (Part II derives it). Write the market-clearing condition in each town,
+        with $s$ the tonnes shipped.
+  \item Solve for $p_A$, $p_B$ and $s$.
+  \item Without the road, what would the price be in Ardel? What would Brenmoor consume?
+  \item Find the freight bill.
+  \item Given the cost of transport, is this \omterm{def:b2:exchange-economies:allocation}{allocation} efficient? Which theorem says so, and under
+        which assumptions?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Production in Ardel.} Farms produce $q = \sqrt{20L}$ tonnes with $L$ hours
+of labour, paid one dalen an hour.
+\begin{enumerate}[resume]
+  \item Derive the supply $q = 10p_A$ from profit maximisation.
+  \item Find output, hours and profit at the price of question 3.
+  \item Who receives the profit, and where does it appear in the households' budgets?
+  \item Compute consumer surplus in each town and the farms' profit, and their total.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- The railway.} The railway cuts the transport cost to $t = 2$.
+\begin{enumerate}[resume]
+  \item Find the new prices.
+  \item Find the tonnes shipped, Ardel's output and Ardel's own consumption.
+  \item Check the gap between the two prices.
+  \item Compute the new surpluses and profit, and the gain in total surplus.
+  \item Who loses? By how much?
+  \item Could the losers be compensated with the gain? What kind of transfer would do it without
+        changing anyone's choices?
+  \item In nineteenth-century data the gap between two markets exceeded the cost of shipping. What would a
+        positive residual mean in this model?
+  \item What evidence after the railway opens would show that the two markets had become one?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- A transfer.} Once a week, Ardel and Brenmoor also trade grain against cloth
+(the \omterm{def:b2:exchange-economies:numeraire}{numeraire}). Ardel holds 80 tonnes of grain and 10 bolts of cloth, Brenmoor 20 tonnes and 90 bolts;
+Ardel spends half its wealth on grain and Brenmoor a quarter (Cobb--Douglas).
+\begin{enumerate}[resume]
+  \item Find the \omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium} price of grain in cloth and the \omterm{def:b2:exchange-economies:allocation}{allocation}.
+  \item The council wants Brenmoor to consume 60 tonnes of grain, at an efficient \omterm{def:b2:exchange-economies:allocation}{allocation}. Find
+        Ardel's cloth at that \omterm{def:b2:exchange-economies:allocation}{allocation}.
+  \item Find the price that supports it.
+  \item Find the transfer of cloth between the towns that delivers it.
+  \item Check by solving the equilibrium after the transfer.
+  \item State the result: the prices in the two towns after the railway, and the transfer that delivers
+        the council's \omterm{def:b2:exchange-economies:allocation}{allocation}.
+\end{enumerate}
+\end{problem}

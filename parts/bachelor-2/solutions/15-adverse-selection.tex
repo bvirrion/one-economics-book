@@ -1,0 +1,109 @@
+\section*{Chapter \ref{ch:b2:adverse-selection} --- Adverse Selection}
+
+\begin{solution}{exo:b2:adverse-selection:1}
+% code: exercises/solutions.py lemons
+The sellers whose goods are worth at most 6{,}000, 60 per cent of them. The average quality on offer is 3{,}000, worth $1.2 \times 3{,}000 =
+3{,}600$ to a buyer, less than the price: buyers do not pay 6{,}000.
+\end{solution}
+
+\begin{solution}{exo:b2:adverse-selection:2}
+% figdata: annuities_summary
+% ledger: b2:fp2004-t2
+Buyers of index-linked and escalating annuities lived longer; buyers of guaranteed and capital-protected annuities died
+sooner. The effects are larger in the voluntary market: 18.5 and 15.2 points fewer deaths within five years, against 5.3
+and 7.2 in the compulsory market.
+\end{solution}
+
+\begin{solution}{exo:b2:adverse-selection:3}
+% code: exercises/solutions.py pooling_threshold
+A pooled premium with a share $s$ of low risks is $1{,}000s + 3{,}000(1 - s)$. Low risks buy if it is at most 1{,}500: $3{,}000 - 2{,}000s \le 1{,}500$, so $s \ge 0.75$.
+\end{solution}
+
+\begin{solution}{exo:b2:adverse-selection:4}
+Moral hazard: drivers with more cover may take less care. Characteristics that the insurer prices on: drivers who drive more,
+or in cities, may both buy more cover and have more accidents. Comparing drivers whom the insurer prices alike removes the
+second; separating the first needs variation in cover that drivers do not choose, or the timing of claims after a change
+in cover.
+\end{solution}
+
+\begin{solution}{exo:b2:adverse-selection:5}
+At a price $p \le 1$ the average quality offered is $p/2$, worth $bp/2$; buyers pay $p$ if $bp/2 \ge p$, that is, if $b \ge 2$. With $b \ge 2$ there is trade
+at any price up to 1; with $b < 2$ there is none.
+\end{solution}
+
+\begin{solution}{exo:b2:adverse-selection:6}
+% code: exercises/solutions.py spiral
+At 596, $(900 - 596)/500 = 0.608$ buy; their average cost is $800 - 300 \times 0.608 = 617.6$. At 617.6, 0.565 buy, with average cost 630.6, at which
+0.539 buy.
+\end{solution}
+
+\begin{solution}{exo:b2:adverse-selection:7}
+% code: exercises/solutions.py linear_market
+$\mathit{AC}(q) = \frac1q\int_0^q (800 - 600x)\,dx = 800 - 300q$. Equilibrium: $900 - 500q = 800 - 300q$, so $q = 0.5$ and the premium is 650. Since $D - \mathit{MC} = 100 +
+100q > 0$, everyone should be insured; the loss is $\int_{0.5}^1 (100 + 100q)\,dq = 50 + 37.5 = 87.5$ dalens a person.
+\end{solution}
+
+\begin{solution}{exo:b2:adverse-selection:8}
+% code: exercises/solutions.py linear_market
+$\mathit{AC}(q) = 300 + 100q$. Demand is at least average cost for every $q$: at $q = 1$, $400 = 400$, so everyone buys at a premium of 400. Efficient
+coverage is where $900 - 500q = 300 + 200q$, so $q = 6/7 = 0.857$. The members beyond it value cover below its cost; the loss is $\int_{6/7}^1 (700q
+- 600)\,dq = 7.14$ dalens a person: too much insurance.
+\end{solution}
+
+\begin{solution}{exo:b2:adverse-selection:9}
+Each product was priced for the average buyer of a given age and sex, but buyers knew more about their own health and chose the
+product that paid best for it. Pricing each feature on its own buyers' mortality would end the subsidy from one product to
+another, but within each product buyers would still differ in what they knew, so selection on whether to buy at all would
+remain.
+\end{solution}
+
+\begin{solution}{exo:b2:adverse-selection:10}
+At $p \le 1$ buyers value the goods offered at $bp/2 < p$ since $b < 2$; above 1, at $b/2 < 1 < p$. So no positive price clears the market. With full
+information every good would be traded, with gains $\int_0^1 (b - 1)\theta\,d\theta = (b - 1)/2$, all lost.
+\end{solution}
+
+\begin{solution}{exo:b2:adverse-selection:11}
+$\mathit{AC}(q) = m_0 - m_1q/2$. Equilibrium: $d_0 - d_1q = m_0 - m_1q/2$, so $q^* = (d_0 - m_0)/(d_1 - m_1/2)$ when $d_1 > m_1/2$, capped at 1. If $d_0 \le m_0$, demand lies at or
+below average cost at every positive share: even the person who values cover most would not pay the average cost of
+insuring her alone, and the market unravels completely.
+\end{solution}
+
+\begin{solution}{exo:b2:adverse-selection:12}
+% code: exercises/solutions.py linear_market
+With everyone insured the premium is $\mathit{AC}(1) = 500$. The person who values cover least would pay $D(1) = 400$; she buys if the penalty makes
+staying out cost more than the gap, so the penalty must be at least 100 dalens.
+\end{solution}
+
+\begin{solution}{pb:b2:adverse-selection:1}
+% code: exercises/solutions.py coop
+\textbf{Part I.}
+1. $(600 \times 400 + 400 \times 1{,}600)/1{,}000 = 880$ kests.
+2. $600 \times 200 + 400 \times 300 = 240{,}000$.
+3. Yes: each type values cover above its cost.
+4. 400 and 1{,}600.
+5. 200 for the healthy, 300 for the sick.
+6. Each member's health risk, hidden from the cooperative.
+\textbf{Part II.}
+7. Only the sick: 600 is below 880.
+8. 1{,}600; the sick buy.
+9. 400.
+10. The healthy members' surplus, $600 \times 200 = 120{,}000$.
+11. $400 \times 300 = 120{,}000$.
+12. No: breaking even with everyone insured needs 880, more than the healthy will pay.
+\textbf{Part III.}
+13. $1{,}500 - 600q$.
+14. $1{,}800 - 1{,}000q = 1{,}500 - 600q$: $q = 0.75$, premium 1{,}050.
+15. All members: $1{,}800 - 1{,}000q$ exceeds $1{,}500 - 1{,}200q$ by $300 + 200q$.
+16. $1{,}000 \times \int_{0.75}^1 (300 + 200q)\,dq = 1{,}000 \times (75 + 43.75) = 118{,}750$ kests.
+17. At 900, 0.9 buy, with average cost 960; at 960, 0.84 buy, with average cost 996; at 996, 0.804 buy.
+18. Demand stays above average cost up to 0.75, so the members who remain there will pay the average cost of the group.
+\textbf{Part IV.}
+19. $\mathit{AC}(1) = 900$; the gain is the 118{,}750 lost in Part III.
+20. Members ranked above 0.9, whose willingness to pay is below 900: 100 members.
+21. 100 kests: the gap between 900 and the lowest willingness to pay, 800.
+22. Everyone, since each values cover above its cost; the highest-cost member pays 1{,}500.
+23. 1{,}050 with no intervention, 900 under the mandate, 1{,}500 under risk rating.
+24. Without intervention 75 per cent of members are insured at 1{,}050 kests and selection costs 118{,}750 kests a year; a mandate with a
+penalty of at least 100 insures everyone at 900; risk-rated premiums insure everyone at premiums from 300 to 1{,}500, the sickest
+paying most.
+\end{solution}

@@ -1,0 +1,480 @@
+\chapter{Dynamic Games}\label{ch:b2:dynamic-games}
+
+In the \omterm{def:b2:dynamic-games:ultimatum}{ultimatum game} one player proposes how to split a sum of money and the other accepts, in which case
+the split is carried out, or rejects, in which case both get nothing. A responder who cares only about
+money accepts any positive offer, so a proposer who knows this offers almost nothing. The chart shows what
+happened when anthropologists and economists ran the game in eighteen groups from fifteen small-scale
+societies, for stakes of about a day or two's wages.
+
+\begin{openingchart}{Ultimatum game in eighteen groups from fifteen small-scale societies: mean offer and
+  rejection rate, per cent of the stake. Groups sorted by mean offer; two groups have no rejection
+  rate.}{Henrich et al. (2001), Table~1}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.72\linewidth, height=0.85\linewidth, xmin=0, xmax=65, ymin=0.4,
+    ymax=18.6, ymajorgrids=false, clip=false, xlabel={Per cent of the stake},
+    ytick=data, yticklabels from table={figdata/bachelor-2/12-dynamic-games/out/ultimatum.csv}{group},
+    y tick label style={font=\footnotesize}, legend style={at={(0.5,-0.12)}, anchor=north,
+    legend columns=2, /tikz/every even column/.append style={column sep=10pt}}]
+  \addplot[xbar, bar width=6pt, fill=omDef!55, draw=omDef] table[x=offer, y=pos]
+    {figdata/bachelor-2/12-dynamic-games/out/ultimatum.csv};
+  \addplot[only marks, mark=diamond*, mark size=2.4pt, omThm] table[x=rejection, y=pos]
+    {figdata/bachelor-2/12-dynamic-games/out/ultimatum.csv};
+  \legend{Mean offer, Rejection rate}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% ledger: b2:henrich2001-t1, b2:henrich2001-text
+% figdata: ultimatum_summary (lowest 26, highest 58, median 40.5, zero_rejection 3, groups 18)
+No group's mean offer is close to zero: the lowest is 26 per cent, the highest 58, and half the groups offer
+more than 40 per cent. Rejections are rare in some groups and frequent in others: the Tsimane, Achuar and
+Ache rejected none of 70, 16 and 51 offers, while the Gnau rejected 10 of 25.
+
+This chapter studies games in which players move in turn and see what was done before. Their solution,
+\omterm{def:b2:dynamic-games:spe}{subgame-perfect equilibrium}, rules out threats that a player would not carry out, and it gives sharp
+predictions for bargaining: who gets what, and that agreement is immediate. The \omterm{def:b2:dynamic-games:ultimatum}{ultimatum game} is the
+simplest bargaining game, and the chart is where its prediction fails.
+
+\begin{recall}
+From \cref{ch:b2:static-games}: \omterm{def:b2:static-games:normal-form}{normal-form games}, \omterm{def:b2:static-games:best-response}{best responses} and \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium}. From the Year 1
+volume: the leader--follower (Stackelberg) model of quantity competition, with linear demand. From
+\cref{ch:b2:intertemporal-choice}: \omterm{def:b2:intertemporal-choice:discount-factor}{discount factors}.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:dynamic-games:symbols}
+In bargaining, the pie has size 1, $x_i$ is player $i$'s share when she proposes, and $\beta_i$ is her \omterm{def:b2:intertemporal-choice:discount-factor}{discount
+factor} per round of bargaining, the value today of one dalen received one round later. In the entry model,
+$q_I$ and $q_E$ are the outputs of the incumbent and of the entrant, $F$ is the entrant's fixed cost, and demand
+is linear with $a - c = 12$.
+\end{notation}
+
+\section{Games in extensive form}\label{sec:b2:dynamic-games:extensive}
+
+\begin{definition}[Extensive-form game]\label{def:b2:dynamic-games:extensive-form}
+An \emph{extensive-form game}\index{extensive-form game} is described by a tree: each node where a decision
+is taken is labelled with the player who moves there, each branch with an action, and each end node with
+the players' payoffs. It has \emph{perfect information} if every player, when she moves, knows every
+action taken before.
+\end{definition}
+
+A strategy in an \omterm{def:b2:dynamic-games:extensive-form}{extensive-form game} is a complete plan: it says what the player does at \emph{every}
+node where she moves, including nodes that will not be reached if she follows it. Take an industry with
+one incumbent firm and a potential entrant. The entrant moves first: it stays out, and the incumbent keeps
+its monopoly, or enters. After entry the incumbent either accommodates, sharing the market, or fights with
+a price war that hurts both.
+
+\begin{omfigure}
+\begin{minipage}[b]{0.48\linewidth}\centering
+\begin{forest}
+for tree={circle, fill=black, inner sep=1.4pt, s sep=18mm, l sep=13mm, edge={thick},
+  font=\footnotesize}
+[, label={above:Entrant}
+  [{$(0, 9)$}, fill=none, rectangle, inner sep=1pt,
+    edge label={node[midway, left, xshift=-3pt]{Out}}]
+  [, label={right:Incumbent}, edge label={node[midway, right, xshift=3pt]{In}}
+    [{$(2, 4)$}, fill=none, rectangle, inner sep=1pt,
+      edge label={node[midway, left, xshift=-3pt]{Accommodate}}]
+    [{$(-1, 1)$}, fill=none, rectangle, inner sep=1pt,
+      edge label={node[midway, right, xshift=3pt]{Fight}}]
+  ]
+]
+\end{forest}
+\end{minipage}\hfill
+\begin{minipage}[b]{0.48\linewidth}\centering
+\begin{tikzpicture}[econ, font=\footnotesize]
+  \node[circle, fill=black, inner sep=1.4pt, label={above:Proposer}] (p) at (0,0) {};
+  \draw[thick] (p) -- (-1.6,-1.0);
+  \draw[thick] (p) -- (1.6,-1.0);
+  \draw[thick, densely dotted] (212:1.5) arc[start angle=212, end angle=328, radius=1.5];
+  \node[anchor=east] at (-1.6,-1.0) {0};
+  \node[anchor=west] at (1.6,-1.0) {1};
+  \node[circle, fill=black, inner sep=1.4pt, label={right:Responder}] (r) at (0.4,-1.7) {};
+  \draw[thick] (p) -- node[pos=0.35, right] {$x$} (r);
+  \draw[thick] (r) -- node[midway, left, xshift=-2pt] {Accept} (-0.5,-2.9);
+  \draw[thick] (r) -- node[midway, right, xshift=2pt] {Reject} (1.3,-2.9);
+  \node[below] at (-0.5,-2.9) {$(1 - x, x)$};
+  \node[below] at (1.3,-2.9) {$(0, 0)$};
+\end{tikzpicture}
+\end{minipage}
+
+{\small Two games in extensive form. Left: the entry game; payoffs are the entrant's first and the
+incumbent's second. Right: the \omterm{def:b2:dynamic-games:ultimatum}{ultimatum game} over a pie of 1; the proposer chooses any offer $x$ between 0
+and 1, the arc marking the continuum of offers, and the responder accepts or rejects it.}
+\end{omfigure}
+
+The entry game has two Nash equilibria in pure strategies. In one, the entrant enters and the incumbent
+accommodates: payoffs $(2, 4)$. In the other, the entrant stays out and the incumbent's strategy is ``fight
+if it enters'': payoffs $(0, 9)$. The second is a \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium}, since against that plan staying out is
+the entrant's \omterm{def:b2:static-games:best-response}{best response}, and the incumbent loses nothing by planning to fight at a node that is never
+reached. But the plan is not believable: if entry happened, fighting would earn the incumbent 1 instead of
+4.
+
+\section{Backward induction}\label{sec:b2:dynamic-games:backward}
+
+\begin{definition}[Backward induction]\label{def:b2:dynamic-games:backward-induction}
+\emph{Backward induction}\index{backward induction} solves a finite game of perfect information from its
+end: at each last decision node the mover's best action is chosen; each such node is replaced by the
+payoffs it leads to; and the process is repeated until the first node is reached.
+\end{definition}
+
+In the entry game, the incumbent accommodates after entry, so entry earns the entrant 2 against 0 for
+staying out: it enters. \omterm{def:b2:dynamic-games:backward-induction}{Backward induction} picks the first of the two Nash equilibria and discards the
+second.
+
+\begin{definition}[Credible threat]\label{def:b2:dynamic-games:credible-threat}
+A threat to take an action at some node is a \emph{credible threat}\index{credible threat} if, were that
+node reached, taking the action would be a \omterm{def:b2:static-games:best-response}{best response} for the player who threatens.
+\end{definition}
+
+``Fight if you enter'' is not a \omterm{def:b2:dynamic-games:credible-threat}{credible threat}. The idea of ruling out threats that are not credible is
+made general by asking for equilibrium play not only in the game as a whole but in every part of it that
+could be reached.
+
+\section{Subgame-perfect equilibrium}\label{sec:b2:dynamic-games:spe}
+
+\begin{definition}[Subgame]\label{def:b2:dynamic-games:subgame}
+A \emph{subgame}\index{subgame} of a game of perfect information is the part of the tree that starts at one
+decision node and contains everything that follows it. The whole game is a subgame of itself.
+\end{definition}
+
+\begin{definition}[Subgame-perfect equilibrium]\label{def:b2:dynamic-games:spe}
+A \emph{subgame-perfect equilibrium}\index{subgame-perfect equilibrium} is a profile of strategies whose
+restriction to every \omterm{def:b2:dynamic-games:subgame}{subgame} is a \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} of that \omterm{def:b2:dynamic-games:subgame}{subgame}.
+\end{definition}
+
+\begin{proposition}[Backward induction gives subgame-perfect equilibria]\label{prop:b2:dynamic-games:backward}
+In a finite game of perfect information, the strategies found by \omterm{def:b2:dynamic-games:backward-induction}{backward induction} form a
+\omterm{def:b2:dynamic-games:spe}{subgame-perfect equilibrium}. If no player has the same payoff at two different end nodes, it is the only
+one.
+\end{proposition}
+
+\begin{proof}
+By induction on the length of the longest path in a \omterm{def:b2:dynamic-games:subgame}{subgame}. A \omterm{def:b2:dynamic-games:subgame}{subgame} with one decision node is a choice by
+one player, and the best action is the only \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} (with distinct payoffs). Suppose the claim
+holds for all \omterm{def:b2:dynamic-games:subgame}{subgames} shorter than $n$ and take one of length $n$, starting with a move by player $i$. Every
+\omterm{def:b2:dynamic-games:subgame}{subgame} that follows her move is shorter, so by the induction hypothesis the backward-induction strategies
+are an equilibrium there and fix the payoffs each of her actions leads to. \omterm{def:b2:dynamic-games:backward-induction}{Backward induction} gives her the
+action with the highest of these payoffs, so no player can gain by deviating, in the \omterm{def:b2:dynamic-games:subgame}{subgame} or after: the
+profile is a \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} of it. With distinct payoffs every choice is strict, so the profile is unique.
+\end{proof}
+
+A finite game of perfect information therefore always has a \omterm{def:b2:dynamic-games:spe}{subgame-perfect equilibrium} in pure
+strategies, which the method computes. Its prediction can be stark. In the \omterm{def:b2:dynamic-games:ultimatum}{ultimatum game}, the responder
+accepts every positive offer, since something beats nothing; with money divisible down to a smallest unit,
+the proposer offers that unit or nothing (\cref{exo:b2:dynamic-games:6}). The opening chart is the test.
+
+\section{Commitment}\label{sec:b2:dynamic-games:commitment}
+
+\begin{definition}[Strategic commitment]\label{def:b2:dynamic-games:commitment}
+A \emph{strategic commitment}\index{strategic commitment} is an action taken early in a game that cannot be
+reversed and that changes the later payoffs of the player who takes it, so that a different action becomes
+her \omterm{def:b2:static-games:best-response}{best response} later.
+\end{definition}
+
+A commitment works through the other players: by limiting her own future choices, a player changes what
+they expect her to do, and so what they do. The leader--follower model of the Year 1 volume is the example:
+with demand $p = a - Q$ and $a - c = 12$, a leader that fixes its output first produces 6 and earns 18, more than the 16
+each firm earns when both choose at once (4 each). Once the leader's 6 units are produced, the follower can only
+make the best of them.
+
+\begin{definition}[Entry deterrence]\label{def:b2:dynamic-games:entry-deterrence}
+\emph{Entry deterrence}\index{entry deterrence} is an action by an incumbent firm, taken before a potential
+entrant decides, that makes entry unprofitable so that the entrant stays out.
+\end{definition}
+
+Let the incumbent choose its output $q_I$ first, by building capacity that it will use. The entrant then
+decides whether to enter, at a fixed cost $F$, and if it enters chooses $q_E$. Its \omterm{def:b2:static-games:best-response}{best response} is $q_E = (12 -
+q_I)/2$, which earns it $\big((12 - q_I)/2\big)^2 - F$; it stays out when this is not positive.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=12.5, ymin=0, ymax=6.8, width=0.62\linewidth,
+    height=0.42\linewidth, xlabel={$q_I$: incumbent's output}, ylabel={$q_E$: entrant's output},
+    xtick={0,4,6,8,12}, ytick={0,2,3,6}]
+  \addplot[omDef, very thick, domain=0:8, samples=2] {(12 - x)/2};
+  \addplot[omDef, very thick, domain=8:12, samples=2] {0};
+  \addplot[omDef, densely dotted, domain=8:12, samples=2, forget plot] {(12 - x)/2};
+  \draw[guide] (axis cs:8,0) -- (axis cs:8,2);
+  \node[eqpoint] at (axis cs:6,3) {};
+  \node[eqpoint] at (axis cs:8,0) {};
+  \node[anchor=south west, font=\footnotesize] at (axis cs:6.1,3.05) {accommodate: leader at 6};
+  \node[anchor=south west, font=\footnotesize] at (axis cs:8.1,0.15) {deter: 8};
+  \node[anchor=north west, font=\footnotesize, omDef] at (axis cs:0.4,3.2)
+    {entrant's best response};
+\end{axis}
+\end{tikzpicture}
+
+{\small The entrant's \omterm{def:b2:static-games:best-response}{best response} to the incumbent's committed output, with a fixed cost $F = 4$. Below
+$q_I = 8$ the entrant enters and produces $(12 - q_I)/2$; from 8 on its profit would not cover the fixed cost
+and it stays out. The incumbent compares the leader's point, where it earns 18, with deterrence at 8, where it
+earns 32.}
+\end{omfigure}
+
+With $F = 4$ the entrant stays out once $q_I \ge 8$. The incumbent can accommodate, choosing the leader's output 6, at
+which the entrant enters with 3 and the price is 3 above cost: profit 18. Or it can deter, choosing 8, at which the
+price is 4 above cost and the entrant stays out: profit 32. It deters. With a larger fixed cost the monopoly
+output 6 already deters, and entry is blockaded; with a much smaller one, deterrence needs so much output that
+accommodating pays more (\cref{exo:b2:dynamic-games:11}). The output deters only because it is committed: an
+incumbent that could cut back after entry would do so, and the entrant, knowing it, would enter.
+
+\section{Bargaining by alternating offers}\label{sec:b2:dynamic-games:bargaining}
+
+\begin{definition}[Ultimatum game]\label{def:b2:dynamic-games:ultimatum}
+The \emph{ultimatum game}\index{ultimatum game} is a two-player game in which a proposer offers a division
+of a fixed sum and a responder either accepts, and the division is carried out, or rejects, and both
+receive nothing.
+\end{definition}
+
+\begin{definition}[Alternating-offers bargaining model]\label{def:b2:dynamic-games:alternating-offers}
+In the \emph{alternating-offers bargaining model}\index{alternating-offers bargaining model} two players
+divide a pie of size 1. In round 1 player 1 proposes a division and player 2 accepts or rejects it; after a
+rejection, player 2 proposes in round 2 and player 1 responds, and so on. A share $s$ agreed in round $t$ is
+worth $\beta_i^{\,t-1} s$ to player $i$, with $0 < \beta_i < 1$. Bargaining may end after a fixed number of rounds, with
+nothing for either player, or go on without limit.
+\end{definition}
+
+The \omterm{def:b2:dynamic-games:ultimatum}{ultimatum game} is the model with one round. With two rounds, player 2 will take the whole pie in round 2,
+which is worth $\beta_2$ to her today; so in round 1 she accepts any offer giving her $\beta_2$, and player 1 keeps $1 -
+\beta_2$. Each extra round adds one step of the same argument. The listing runs the steps for \omterm{def:b2:intertemporal-choice:discount-factor}{discount factors}
+$\beta_1 = 0.95$ and $\beta_2 = 0.90$.
+
+\begin{omfigure}
+\begin{forest}
+for tree={circle, fill=black, inner sep=1.4pt, s sep=22mm, l sep=11mm, edge={thick}, font=\footnotesize}
+[, label={above:Player 1 proposes}
+  [, label={right:2}, edge label={node[midway, right, xshift=2pt]{$(x, 1 - x)$}}
+    [{$(x, 1 - x)$}, fill=none, rectangle, inner sep=1pt,
+      edge label={node[midway, left, xshift=-3pt]{Accept}}]
+    [, label={right:2 proposes}, edge label={node[midway, right, xshift=3pt]{Reject}}
+      [, label={right:1}, edge label={node[midway, right, xshift=2pt]{$(1 - y, y)$}}
+        [{$(\beta_1(1 - y), \beta_2 y)$}, fill=none, rectangle, inner sep=1pt,
+          edge label={node[midway, left, xshift=-3pt]{Accept}}]
+        [{$(0, 0)$}, fill=none, rectangle, inner sep=1pt,
+          edge label={node[midway, right, xshift=3pt]{Reject}}]
+      ]
+    ]
+  ]
+]
+\end{forest}
+
+{\small Alternating offers with two rounds. Player 1 proposes a division, which player 2 accepts or rejects;
+after a rejection player 2 proposes and player 1 responds. Payoffs are valued in round 1: a share received in round 2 is
+discounted by each player's $\beta_i$. \omterm{def:b2:dynamic-games:backward-induction}{Backward induction}: in round 2 player 2 offers $y = 1$, which player 1 accepts
+(or is indifferent about); so in round 1 player 2 accepts any $1 - x \ge \beta_2$, and player 1 offers $x = 1 - \beta_2$.}
+\end{omfigure}
+
+\omcode{code/bachelor-2/12-dynamic-games/listings/bargaining.py}{1}{20}{Alternating offers with a final round,
+solved backwards, for longer and longer deadlines.}\label{lst:b2:dynamic-games:bargaining}
+
+\omoutput{code/bachelor-2/12-dynamic-games/outputs/bargaining.txt}{With a short deadline the last proposer gets
+most of the pie; as the deadline recedes, the split settles down.}\label{out:b2:dynamic-games:bargaining}
+
+% code: listings/bargaining.py
+With a deadline of one or three rounds, player 1 makes the last offer and gets most of the pie; with two or
+four, player 2 does. The deadline decides, which is unsatisfactory when real negotiations have none. As the
+number of rounds grows, the effect of the last round is discounted away and the share settles at 0.6897.
+That limit is the equilibrium of the game without a deadline.
+
+\begin{theorem}[Alternating offers without a deadline]\label{thm:b2:dynamic-games:rubinstein}
+The \omterm{def:b2:dynamic-games:alternating-offers}{alternating-offers bargaining model} without a deadline has a unique \omterm{def:b2:dynamic-games:spe}{subgame-perfect equilibrium}. Each
+player, when she proposes, offers the other exactly what the other would get by rejecting and proposing
+next round; each accepts any offer at least that large. Player 1's offer is accepted at once and gives her
+\[
+x_1 = \frac{1 - \beta_2}{1 - \beta_1 \beta_2}.
+\]
+\end{theorem}
+
+\begin{proof}[Proof that these strategies form an equilibrium, and the formula]
+Suppose each player, when she proposes, asks for a share $x_i$ that does not depend on the history, and accepts
+any offer worth at least what she would get by rejecting. Rejecting an offer from player 1 earns player 2 her
+own share next round, worth $\beta_2 x_2$ today, so player 1 must leave her that: $1 - x_1 = \beta_2 x_2$. In the same
+way $1 - x_2 = \beta_1 x_1$. Substituting, $x_1 = 1 - \beta_2(1 - \beta_1 x_1)$, which gives the formula. No player gains
+from a single deviation at any node: asking for more is rejected and leaves her, as next round's responder,
+$\beta_i(1 - x_j) = \beta_i^2 x_i < x_i$ in today's value; asking for less gives away share for nothing; rejecting an
+offer that meets her threshold earns her no more. Because payoffs are discounted, a strategy that gains from no
+single deviation gains from none. Uniqueness is \admitted; \cref{exo:b2:dynamic-games:10} sketches it.
+\end{proof}
+
+The theorem's predictions are sharp. Agreement is immediate, so no pie is wasted. Patience is power: with
+$\beta_1 = 0.95$ and $\beta_2 = 0.90$, player 1 gets 0.69. With equal patience the first proposer gets $1/(1 + \beta)$, a
+small advantage that vanishes as the time between offers shrinks and $\beta$ approaches 1, leaving an even
+split (\cref{exo:b2:dynamic-games:3}).
+
+\begin{model}{Alternating-offers bargaining}
+\assumes Two players who maximise discounted shares, each knowing the other's \omterm{def:b2:intertemporal-choice:discount-factor}{discount factor}, with no
+outside options.
+\predicts Immediate agreement; a larger share for the more patient player; a first-mover advantage that
+vanishes as offers come faster.
+\tested Most directly through its one-round case, the \omterm{def:b2:dynamic-games:ultimatum}{ultimatum game} (Henrich et al. 2001; Andersen et al.
+2011).
+\breaks The model cannot produce a delay: every negotiation that takes time, or breaks down for a while,
+lies outside it. Delays appear in versions in which each side is unsure of the other's patience or costs.
+\end{model}
+
+\section{Ultimatum experiments: where the model breaks}\label{sec:b2:dynamic-games:ultimatum}
+
+The \omterm{def:b2:dynamic-games:ultimatum}{ultimatum game} has been run with student subjects in many countries, and its prediction --- a tiny
+offer, accepted --- fails there too.
+% ledger: b2:henrich2001-text
+Offers in industrial societies typically average close to 44 per cent of the stake with a mode at 50, and
+offers below 20 per cent are rejected with probability 0.40 to 0.60 (Henrich et al. 2001, summarising earlier
+studies). A responder who rejects 20 per cent gives up money to deny the proposer 80; a proposer who expects
+this offers more than the minimum, and may also care about fairness himself.
+
+\begin{record}[Ultimatum offers in fifteen societies]
+% ledger: b2:henrich2001-t1, b2:henrich2001-text
+Henrich et al. (2001) ran the game in eighteen groups from fifteen small-scale societies, mostly with money,
+for stakes worth about a day or two's wages. Mean offers ranged from 26 per cent (Machiguenga, Peru) to 58 per
+cent (Lamelara, Indonesia), wider than among students. Rejections varied as much: the Tsimane of Bolivia
+rejected none of 70 offers, although nearly half of the offers were 30 per cent or less, while the Au and Gnau
+of Papua New Guinea rejected 8 of 30 and 10 of 25. No group behaved as the \omterm{def:b2:dynamic-games:spe}{subgame-perfect equilibrium} with
+money-maximising players predicts.
+\end{record}
+
+\begin{model}{Subgame-perfect equilibrium with money-maximising players}
+\assumes Each player maximises her own money payoff, and this is common knowledge.
+\predicts In the \omterm{def:b2:dynamic-games:ultimatum}{ultimatum game}, the smallest possible offer, accepted.
+\tested Ultimatum experiments with students and in small-scale societies (Henrich et al. 2001); at stakes up to
+1{,}600 hours of work (Andersen et al. 2011).
+\breaks Mean offers of 26 to 58 per cent; rejections of positive offers, which fall significantly only at the highest
+stakes.
+\end{model}
+
+The failure is of the payoff assumption, not of \omterm{def:b2:dynamic-games:backward-induction}{backward induction} itself: if a responder dislikes unequal
+splits enough to reject small offers, a proposer reasoning backwards should offer more, as the data show. The
+open question is how large the stakes must be before money dominates.
+
+\begin{debate}[Do higher stakes change ultimatum behaviour?]
+% ledger: b2:aeghl2011-design, b2:aeghl2011-t2
+Earlier experiments found that responders did not markedly change their behaviour as the stakes rose
+(Slonim and Roth 1998; Cameron 1999; both as summarised by Andersen et al. 2011). Andersen et al. (2011) ran the game in
+eight villages of Meghalaya, in Northeast India, for 20, 200, 2{,}000 or 20{,}000 rupees, from 1.6 to 1{,}600 hours of
+work, with instructions that drew many low offers. Rejection rates were 36 per cent at 20 rupees, 43 at 200, 28 at
+2{,}000 and 4 at 20{,}000; only the drop to the highest stakes was statistically significant. One reading: fairness matters
+at the stakes of most experiments and of much everyday bargaining, and money dominates only far beyond them.
+Another: the highest stakes were played by only 24 responders, in one region, and the earlier results stand for the
+stakes people usually face.
+\end{debate}
+
+\section{Exercises}\label{sec:b2:dynamic-games:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:dynamic-games:1}
+Player 1 chooses Out, ending the game with payoffs $(2, 2)$, or In. After In, player 2 chooses Low, ending with
+$(1, 3)$, or High, after which player 1 chooses $a$, giving $(4, 1)$, or $b$, giving $(0, 5)$. Payoffs are player 1's first.
+Solve the game by \omterm{def:b2:dynamic-games:backward-induction}{backward induction}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:dynamic-games:2}
+Read the opening chart. What are the lowest and highest mean offers? How many groups made mean offers below
+30 per cent, and how many rejected no offer at all?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:dynamic-games:3}
+Predict, then compute: two equally patient players, $\beta_1 = \beta_2 = 0.9$, bargain by alternating offers without a
+deadline. What does the first proposer get? What happens to her share as $\beta$ approaches 1?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:dynamic-games:4}
+A union and an employer bargain for six weeks before agreeing. Does this refute the alternating-offers model?
+What would a test of the model need to observe?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:dynamic-games:5}
+Write the entry game in normal form, find all its Nash equilibria in pure strategies, and say which are
+\omterm{def:b2:dynamic-games:subgame}{subgame} perfect.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:dynamic-games:6}
+In an \omterm{def:b2:dynamic-games:ultimatum}{ultimatum game} over 10 coins, offers must be whole coins. Find every \omterm{def:b2:dynamic-games:spe}{subgame-perfect equilibrium}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:dynamic-games:7}
+Solve the alternating-offers game with three rounds and $\beta_1 = \beta_2 = 0.9$ by \omterm{def:b2:dynamic-games:backward-induction}{backward induction}. Compare with
+\cref{exo:b2:dynamic-games:3}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:dynamic-games:8}
+Use the rejection rates of Andersen et al.\ (2011) in the debate box. What does the \omterm{def:b2:dynamic-games:spe}{subgame-perfect equilibrium}
+with money-maximising responders predict for them? Do the data move toward the prediction as the stakes rise,
+and steadily?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:dynamic-games:9}
+In the entry model with $F = 4$, check that output 8 deters entry and that the incumbent prefers it to the
+leader's output. Why must the output be chosen before the entrant decides and be impossible to reduce?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:dynamic-games:10}
+Let $M_1$ and $m_1$ be the largest and smallest payoffs player 1 gets in any \omterm{def:b2:dynamic-games:spe}{subgame-perfect equilibrium} of the
+alternating-offers game without a deadline, in a \omterm{def:b2:dynamic-games:subgame}{subgame} where she proposes, and $M_2$, $m_2$ the same for player 2.
+Show that $m_1 \ge 1 - \beta_2 M_2$ and $M_2 \le 1 - \beta_1 m_1$, and the same with the roles exchanged, and deduce that $M_1 = m_1
+= x_1$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:dynamic-games:11}
+In the entry model, find the fixed cost $F$ below which the incumbent prefers to accommodate, and the fixed cost
+above which entry is blockaded.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:dynamic-games:12}
+An incumbent has a store in each of 20 towns, and in each town in turn a different entrant plays the entry game
+of this chapter. Use \omterm{def:b2:dynamic-games:backward-induction}{backward induction} to show that every entrant enters and the incumbent always
+accommodates. Why might a reputation for fighting still pay if the entrants were unsure of the incumbent's
+payoffs?
+\end{exercise}
+
+\section{Problem: harbour wages in Brenmoor}\label{sec:b2:dynamic-games:problem}
+
+\begin{problem}[{Weekend problem --- the dockworkers' union and the harbour employer of Brenmoor, the capital of
+Brenland, an invented economy, bargain over a wage premium: how is it split, why is there no strike, and what
+moves the split}]
+\label{pb:b2:dynamic-games:1}
+The premium to be divided is 1{,}000 dalens per worker per month above what the workers would earn elsewhere.
+Each day without agreement the harbour is shut. The employer values a share received one day later at 0.98 of its
+value today, the union at 0.95. The employer proposes on day 1, the union on day 2, and so on.
+
+\medskip
+\noindent\textbf{Part I --- The cost of a strike.}
+\begin{enumerate}
+  \item What is a premium of 1{,}000 dalens received tomorrow worth to the union today?
+  \item Which side is more patient?
+  \item What does one day of disagreement cost each side on a premium worth 1{,}000 to it?
+  \item If the union could get the whole premium tomorrow, what is the least it would accept today?
+  \item Why does a day of strike cost the employer anything?
+  \item Name one thing that could raise the union's \omterm{def:b2:intertemporal-choice:discount-factor}{discount factor}.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- A deadline.} Suppose talks must end on day 2, after the union's offer.
+\begin{enumerate}[resume]
+  \item What does the union propose on day 2?
+  \item What is the least the union accepts on day 1?
+  \item What does the employer offer on day 1, and what is the split?
+  \item Is there a strike?
+  \item Find the split if instead the talks end on day 3, after a second offer by the employer.
+  \item What do these two answers show about deadlines?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- No deadline.}
+\begin{enumerate}[resume]
+  \item Write the two conditions that fix the shares each side asks for when it proposes.
+  \item Solve them: what does each side get, in dalens?
+  \item Is there a strike in equilibrium?
+  \item Find the split if the union proposed first. How large is the first-mover advantage?
+  \item A strike fund raises the union's \omterm{def:b2:intertemporal-choice:discount-factor}{discount factor} to 0.97. Find the new split.
+  \item The union's members have run down their savings, and its \omterm{def:b2:intertemporal-choice:discount-factor}{discount factor} falls to 0.90. Find the split.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- An outside option.} After rejecting an offer of the employer, the workers can leave for
+other jobs that are worth $O$ dalens of the premium to them; then talks end and the employer gets nothing.
+\begin{enumerate}[resume]
+  \item With $O = 200$, does the split of Part III change?
+  \item With $O = 350$, find the split.
+  \item Why does an outside option matter only when it is large enough?
+  \item Which gives the union more: the strike fund of question 17 or an outside option of 350?
+  \item How many dalens does the strike fund move to the union?
+  \item State the result: the split, and how the union's cost of a strike day moves it.
+\end{enumerate}
+\end{problem}

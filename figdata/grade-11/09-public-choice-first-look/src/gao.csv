@@ -1,0 +1,5 @@
+item,value,ledger
+cost_1998_bn,1.9,g11:gao-sugar-cost
+benefit_1998_bn,1.0,g11:gao-sugar-benefit
+cane_farms,973,g11:gao-sugar-farms
+beet_farms,"7,097",g11:gao-sugar-farms

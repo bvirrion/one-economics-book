@@ -1,0 +1,3 @@
+$ python reverse.py
+demand slope -1, supply slope +1
+regression of quantity on price: slope -0.599

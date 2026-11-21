@@ -1,0 +1,10 @@
+sample,cartels,mean_years,range_lo,range_hi,ledger
+International 1819-1964 (A),23,3.8,1,18,b2:ls2006-t1
+International 1819-1964 (B),29,4.6,0,18,b2:ls2006-t1
+International 1888-1984,54,7.3,1,29,b2:ls2006-t1
+International 1920-1939,71,3.7,1,13,b2:ls2006-t1
+US prosecutions 1950-1969,989,7.5,,,b2:ls2006-t1
+US export associations 1918-1965,125,5.3,,,b2:ls2006-t1
+US prosecutions 1955-1997,1348,5.4,,,b2:ls2006-t1
+Japanese export cartels 1967-1972,40,10,1,19,b2:ls2006-t1
+International 1990s,42,5,0,20,b2:ls2006-t1

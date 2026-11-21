@@ -1,0 +1,12 @@
+name,value
+cex_units_thousands,137994
+cex_income_lowest,18125
+cex_income_highest,286188
+cex_spend_lowest,37935
+cex_spend_highest,159512
+cex_food_lowest,5156
+cex_food_highest,18415
+n_hh,2000
+cut_q1,17920
+cut_median,22260
+cut_q3,29740

@@ -1,0 +1,602 @@
+\chapter{Binary Outcomes and Maximum Likelihood}\label{ch:b3:binary-outcomes}
+
+Many of the outcomes economists care about are yes or no. A person works or
+does not; a household buys a car or does not; a commuter takes the bus or
+drives. The regression methods of the earlier chapters can be applied to a
+variable that takes the values 0 and 1, and often that is the right thing to
+do. But a probability cannot exceed one, the effect of a variable on a
+probability cannot be the same at 2~\% as at 98~\%, and a choice among several
+options has a structure that a regression ignores. This chapter builds the
+models that respect those facts, the method that estimates them --- maximum
+likelihood --- and the model of choice among options that economists use to
+forecast demand for products that do not yet exist.
+
+\begin{openingchart}{Share of men with any earnings in 1978 against their
+earnings in 1975, in thousands of dollars (15{,}992 men of a 1970s United
+States population survey, the comparison sample of the job-training study of
+\cref{ch:b3:difference-in-differences}; dots are shares in bins, the first one
+the 1{,}748 men with no earnings in 1975). Lines: three models of the probability
+on 1975 earnings alone. Earnings above about \usd{25,000} are
+top-coded.}{Dehejia and Wahba's NSW files (survey comparison sample); our
+computation}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.78\linewidth, height=0.45\linewidth, xmin=-0.5, xmax=26.5,
+  ymin=0.4, ymax=1.05, xlabel={Earnings in 1975 (thousands of dollars)},
+  ylabel={Share with earnings in 1978}, legend pos=south east,
+  y tick label style={/pgf/number format/.cd, fixed, precision=1}]
+  \addplot+[mark size=2pt] table[x=earn75, y=share] {figdata/bachelor-3/05-binary-outcomes/out/work_bins.csv};
+  \addplot[omDef, thick, no marks, sharp plot] table[x=earn75, y=lpm] {figdata/bachelor-3/05-binary-outcomes/out/work_fits.csv};
+  \addplot[omThm, thick, no marks, sharp plot] table[x=earn75, y=logit] {figdata/bachelor-3/05-binary-outcomes/out/work_fits.csv};
+  \addplot[omMeth, thick, dashed, no marks, sharp plot] table[x=earn75, y=probit] {figdata/bachelor-3/05-binary-outcomes/out/work_fits.csv};
+  \draw[guide] (axis cs:-0.5,1) -- (axis cs:26.5,1);
+  \legend{share in the bin, linear, logit, probit}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+Read the chart from the left. Of the men with no earnings in 1975, 44~\% had some
+in 1978; of those who earned a few thousand dollars, 85--87~\%; of those near
+the top, about 95~\%. % figdata: work_bins
+The straight line rises at the same rate everywhere and passes 1 at the top
+of the range. The logit and probit curves bend toward 1 and are hard to tell
+apart. And all three miss the first dot badly: they predict 66--70~\% for men
+with no earnings, % figdata: work_fits
+against an observed 44~\%. Men with no earnings at all are not simply men with
+low earnings, and no choice of curve fixes a model that treats them as if they
+were (\cref{exo:b3:binary-outcomes:5}). The chapter's tools are worth
+learning, but the chart's first lesson is that the specification matters more
+than the curve.
+
+\begin{recall}
+The Year 2 volume estimated regressions by least squares, with
+heteroskedasticity-robust standard errors. Logistic regression as a tool for
+classifying is treated in the artificial-intelligence volumes; this chapter
+reads the same model as an economist does, for its marginal effects, its
+inference and the choice behaviour behind it.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:binary-outcomes:symbols}
+$y_i \in \{0, 1\}$ is the outcome and $x_i$ the vector of regressors, with a
+constant; $y_i^*$ is a \omterm{def:b3:binary-outcomes:logit-probit}{latent variable}. $\Lambda(z) = 1/(1 + \eu^{-z})$ is the
+logistic and $\Phi$ the standard normal distribution function; $p_i$ is a
+fitted probability. In the choice models, $U_{ij}$ is the utility of option
+$j$ for person $i$ (a number, not a utility function of goods), $V_{ij}$ its
+systematic part and $\eta_{ij}$ a taste shock. In demand, $\delta_j$ is a
+product's mean utility (not depreciation) and $\alpha$ the price coefficient
+(not a capital share).
+\end{notation}
+
+\section{The linear probability model}\label{sec:b3:binary-outcomes:lpm}
+
+\begin{definition}[Linear probability model]\label{def:b3:binary-outcomes:lpm}
+\index{linear probability model}
+The \emph{linear probability model} is the regression of a binary outcome on
+regressors, $y_i = x_i'\beta + u_i$, estimated by OLS. Since $\E[y_i \mid x_i] =
+\Pr(y_i = 1 \mid x_i)$, its coefficients are changes in the probability.
+\end{definition}
+
+The model has real virtues. Its coefficients are read directly as effects on the
+probability; it is the regression of the earlier chapters, so instruments, fixed
+effects and differences in differences carry over unchanged; and as a linear
+approximation to the conditional probability it is often good where most of the
+data lie. Its errors are heteroskedastic by construction --- $\Var(u_i \mid
+x_i) = p_i(1 - p_i)$ --- so robust standard errors are required. Its weakness is
+at the edges: fitted values can fall below 0 or above 1, and a constant slope
+is implausible for a probability near either.
+
+\section{Logit and probit}\label{sec:b3:binary-outcomes:logit-probit}
+
+\begin{definition}[Latent variable; probit model; logit model]\label{def:b3:binary-outcomes:logit-probit}
+\index{latent variable}\index{probit model}\index{logit model}
+Suppose $y_i = 1$ if a \emph{latent variable} $y_i^* = x_i'\beta + \eta_i$ is
+positive and $y_i = 0$ otherwise, with $\eta_i$ independent of $x_i$ and
+symmetric about zero with distribution function $F$. Then $\Pr(y_i = 1 \mid x_i)
+= F(x_i'\beta)$. The \emph{probit model} takes $F = \Phi$, the standard normal;
+the \emph{logit model} takes $F = \Lambda$, the logistic.
+\end{definition}
+
+The \omterm{def:b3:binary-outcomes:logit-probit}{latent variable} is a device, and sometimes an interpretation: the gain from
+working, the net value of buying. Its scale is not identified --- multiplying
+$\beta$ and the spread of $\eta$ by the same number changes nothing observed ---
+so the variance of $\eta$ is fixed by convention: 1 for the probit, $\pi^2/3$ for
+the logit (here $\pi$ is the circle's constant, not inflation). That is why logit
+coefficients are larger than probit coefficients on the same data --- by a factor
+between 1.80 and 1.95 in \cref{out:b3:binary-outcomes:three} below --- and why
+neither set is comparable with the linear model's.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, xscale=1.1, yscale=2.2]
+  \draw[econ axes] (-3.2,0) -- (3.4,0) node[right] {$\eta$};
+  \draw[curve, domain=-3:3, samples=60, omDef] plot (\x, {exp(-\x*\x/2)/sqrt(2*pi)*2});
+  \fill[omDef!20, domain=-0.8:3, samples=40] (-0.8,0) -- plot (\x, {exp(-\x*\x/2)/sqrt(2*pi)*2}) -- (3,0) -- cycle;
+  \draw[guide] (-0.8,0) node[below] {$-x_i'\beta$} -- (-0.8,0.95);
+  \node[font=\footnotesize, align=left, anchor=west] (lab) at (2.0,0.62) {$\Pr(y_i = 1)$\\$= \Pr(\eta_i > -x_i'\beta)$};
+  \draw[->, thin] (lab.south west) ++(0.1,0) -- (1.3,0.18);
+\end{tikzpicture}
+\par\smallskip{\small The latent-variable picture. The outcome is 1 when the
+shock $\eta_i$ exceeds $-x_i'\beta$; the shaded area is $F(x_i'\beta)$. A larger
+$x_i'\beta$ moves the threshold left and raises the probability.}
+\end{omfigure}
+
+\section{The likelihood and its maximum}\label{sec:b3:binary-outcomes:likelihood}
+
+\begin{definition}[Likelihood function; log-likelihood; maximum likelihood estimator]\label{def:b3:binary-outcomes:mle}
+\index{likelihood function}\index{log-likelihood}\index{maximum likelihood estimator}
+For independent observations with densities or probabilities $f(y_i \mid x_i;
+\theta)$, the \emph{likelihood function} is $L(\theta) = \prod_i f(y_i \mid x_i;
+\theta)$, the probability of the observed data as a function of the
+parameters; the \emph{log-likelihood} is $\ell(\theta) = \ln L(\theta)$; and the
+\emph{maximum likelihood estimator} $\hat\theta$ maximises it.
+\end{definition}
+
+For a binary model with $p_i = F(x_i'\beta)$, each observation contributes $p_i$
+if $y_i = 1$ and $1 - p_i$ if not:
+\begin{equation}\label{eq:b3:bo:loglik}
+  \ell(\beta) = \sum_i \bigl[\, y_i \ln p_i + (1 - y_i) \ln(1 - p_i) \bigr].
+\end{equation}
+
+\begin{proposition}[The logit log-likelihood is concave; its score equations]\label{prop:b3:binary-outcomes:concave}
+For the \omterm{def:b3:binary-outcomes:logit-probit}{logit model}, the gradient (the score) and the Hessian of $\ell$ are
+\[
+  \nabla \ell(\beta) = \sum_i (y_i - p_i)\, x_i, \qquad
+  \nabla^2 \ell(\beta) = -\sum_i p_i (1 - p_i)\, x_i x_i'.
+\]
+The Hessian is negative semidefinite, so $\ell$ is concave, and any solution of
+the score equations $\sum_i (y_i - p_i) x_i = 0$ is a global maximum. If $x_i$
+contains a constant, the fitted probabilities average to the observed share of
+ones; if it contains a dummy for a group, they do so within the group.
+\end{proposition}
+
+\begin{proof}
+With $z_i = x_i'\beta$ and $p_i = \Lambda(z_i)$, $\Lambda'(z) = \Lambda(z)(1 -
+\Lambda(z))$, so $\partial \ln p_i/\partial z_i = 1 - p_i$ and $\partial \ln(1 -
+p_i)/\partial z_i = -p_i$. The derivative of observation $i$'s term with respect
+to $z_i$ is $y_i(1 - p_i) - (1 - y_i)p_i = y_i - p_i$; the chain rule gives the
+score. Differentiating again, $\partial (y_i - p_i)/\partial z_i = -p_i(1 - p_i)$,
+which gives the Hessian. For any vector $v$, $v' \nabla^2\ell\, v = -\sum_i
+p_i(1 - p_i)(x_i'v)^2 \le 0$. A concave function's stationary points are global
+maxima. Finally, the score equation for the coefficient on a regressor that
+equals 1 in a group and 0 elsewhere reads $\sum_{i \in \text{group}} (y_i - p_i) =
+0$.
+\end{proof}
+
+\begin{proposition}[Properties of the maximum likelihood estimator]\label{prop:b3:binary-outcomes:mle}
+If the model is correctly specified and regularity conditions hold, the \omterm{def:b3:binary-outcomes:mle}{maximum
+likelihood estimator} is consistent and asymptotically normal, with variance
+estimated by the inverse of minus the Hessian at $\hat\theta$ (the inverse of
+the observed information).
+\end{proposition}
+
+\admitted
+The proof expands the score around the true parameter and applies the law of
+large numbers and the central limit theorem to its terms; it is in graduate
+texts on econometric theory.
+
+There is no formula for the maximum, so it is found by iteration. Newton's
+method replaces the \omterm{def:b3:binary-outcomes:mle}{log-likelihood} near the current guess by its second-order
+Taylor expansion and jumps to that quadratic's maximum: $\beta_{k+1} = \beta_k -
+[\nabla^2\ell(\beta_k)]^{-1} \nabla\ell(\beta_k)$. The chart shows the simplest
+case, a logit with only a constant $b$ on the opening chart's data, where the
+maximum is the log of the odds of working, $\ln(13{,}820/2{,}172) = 1.8505$.
+% figdata: newton
+
+\begin{omchart}{The log-likelihood of a logit with only a constant $b$, on the
+15{,}992 men of the opening chart, and Newton's steps from $b = 0$.}{Dehejia and
+Wahba's NSW files (survey comparison sample); our computation}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.7\linewidth, height=0.4\linewidth, xmin=-0.5, xmax=3.5,
+  ymin=-16000, ymax=-5000, xtick={0,0.5,...,3}, xlabel={Constant $b$}, ylabel={Log-likelihood},
+  x tick label style={/pgf/number format/.cd, fixed, precision=1},
+  scaled y ticks=false, y tick label style={/pgf/number format/.cd, fixed, 1000 sep={\,}}]
+  \addplot[omDef, thick, no marks, sharp plot] table[x=b, y=ll] {figdata/bachelor-3/05-binary-outcomes/out/loglik.csv};
+  \addplot[omThm, only marks, mark=*, mark size=2pt,
+    restrict expr to domain={\thisrow{step}}{0:1},
+    nodes near coords={\pgfmathprintnumber[fixed, precision=0]{\pgfplotspointmeta}},
+    point meta=\thisrow{step}, every node near coord/.append style={font=\scriptsize, anchor=south east}]
+    table[x=b, y=ll] {figdata/bachelor-3/05-binary-outcomes/out/newton.csv};
+  \addplot[omThm, only marks, mark=*, mark size=2pt, restrict expr to domain={\thisrow{step}}{2:9}]
+    table[x=b, y=ll] {figdata/bachelor-3/05-binary-outcomes/out/newton.csv};
+  \node[font=\scriptsize, anchor=south west, omThm] at (axis cs:1.9,-6400) {steps 2--4};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+From $b = 0$ (every probability one half) the first step lands at 1.46, the
+second at 1.80, the third at 1.850, and the fourth agrees with the maximum to
+four decimals. % figdata: newton
+\Cref{lst:b3:binary-outcomes:newton} runs the same method on the five-parameter
+model of \cref{lst:b3:binary-outcomes:three}.
+
+\omcode{code/bachelor-3/05-binary-outcomes/listings/lpm_logit_probit.py}{1}{25}{Three models of the same outcome, with \omterm{def:b3:binary-outcomes:ame}{average marginal effects}.}\label{lst:b3:binary-outcomes:three}
+
+\omoutput{code/bachelor-3/05-binary-outcomes/outputs/lpm_logit_probit.txt}{Coefficients; then \omterm{def:b3:binary-outcomes:ame}{average marginal effects} of the logit and probit.}\label{out:b3:binary-outcomes:three}
+
+\omcode{code/bachelor-3/05-binary-outcomes/listings/newton_logit.py}{1}{21}{Newton--Raphson by hand, with the library function \texttt{logit\_newton}.}\label{lst:b3:binary-outcomes:newton}
+
+\omoutput{code/bachelor-3/05-binary-outcomes/outputs/newton_logit.txt}{The \omterm{def:b3:binary-outcomes:mle}{log-likelihood} climbs, then stops moving.}\label{out:b3:binary-outcomes:newton}
+
+The \omterm{def:b3:binary-outcomes:mle}{log-likelihood} rises from $-11{,}084.8$ to $-5{,}147.84$ in five steps; the
+last two change nothing that is printed, the quadratic convergence of
+Newton's method. The hand-made estimates and standard errors agree with the
+library's to every digit. % output: newton_logit
+
+\section{Marginal effects and how to report them}\label{sec:b3:binary-outcomes:marginal}
+
+A logit coefficient is the change in the log odds, $\ln[p/(1 - p)]$, for a unit
+change in a regressor. Few readers think in log odds. The change in the
+probability itself depends on where one starts: $\partial p_i/\partial x_{ik} =
+F'(x_i'\beta)\,\beta_k$, which is largest when $p_i$ is one half and vanishes at
+the edges.
+
+\begin{definition}[Average marginal effect]\label{def:b3:binary-outcomes:ame}
+\index{average marginal effect}
+The \emph{average marginal effect} of a continuous regressor $x_k$ in a binary
+model is the sample average of $F'(x_i'\hat\beta)\,\hat\beta_k$; for a dummy, the
+average over the sample of the change in the fitted probability when the dummy
+is switched from 0 to 1.
+\end{definition}
+
+In \cref{out:b3:binary-outcomes:three} the logit and probit coefficients differ
+by a factor of about two, as their scales require, but their \omterm{def:b3:binary-outcomes:ame}{average marginal
+effects} agree to within 0.002: a thousand dollars more of 1975 earnings goes with
+a probability of working in 1978 higher by 1.35 points (logit) or 1.31 (probit).
+The linear model's coefficient, 1.60 points, is larger: it is a single slope
+for everyone, and fits the steep rise near zero earnings as well as the flat top.
+And 15.7~\% of its fitted probabilities exceed one. % output: lpm_logit_probit
+
+\begin{measure}[Reporting a logit: odds ratios and marginal effects]
+Three numbers are reported for a logit coefficient, and they answer different
+questions. The coefficient $\beta_k$ is the change in the log odds. Its
+exponential $\eu^{\beta_k}$ is the odds ratio: the factor by which the odds
+$p/(1 - p)$ are multiplied when $x_k$ rises by one, the same for everyone in the
+model; it is the standard in medicine. The \omterm{def:b3:binary-outcomes:ame}{average marginal effect} is the
+change in the probability, averaged over the people in the sample; it is the
+standard in economics, because policy questions are about how many more
+people will work, buy or move. The effect at the mean, computed at the average
+values of the regressors, is a fourth number, often close to the average effect
+and sometimes far from it, because the average person may resemble no one:
+the average of a dummy for marriage is a person 0.7 married.
+\end{measure}
+
+\section{Discrete choice from random utility}\label{sec:b3:binary-outcomes:choice}
+
+With more than two options --- car, bus, train, air; four brands of a good ---
+the \omterm{def:b3:binary-outcomes:logit-probit}{latent variable} becomes a utility for each option.
+
+\begin{definition}[Random utility model; multinomial logit]\label{def:b3:binary-outcomes:random-utility}
+\index{random utility model}\index{multinomial logit}
+In a \emph{random utility model}, person $i$ facing options $j = 1, \dots, J$
+derives utility $U_{ij} = V_{ij} + \eta_{ij}$ from option $j$, where $V_{ij}$
+depends on observed characteristics of the option and the person and
+$\eta_{ij}$ is a taste shock, and chooses the option with the highest utility.
+When the $\eta_{ij}$ are independent across options and people with the
+extreme-value (Gumbel) distribution, $\Pr(\eta \le t) = \exp(-\eu^{-t})$, the
+model is the \emph{multinomial logit} (or conditional logit when $V_{ij}$
+depends on characteristics of the options).
+\end{definition}
+
+\begin{proposition}[Logit choice probabilities]\label{prop:b3:binary-outcomes:gumbel}
+In the \omterm{def:b3:binary-outcomes:random-utility}{multinomial logit}, $\Pr(i \text{ chooses } j) = \eu^{V_{ij}} / \sum_k
+\eu^{V_{ik}}$.
+\end{proposition}
+
+\begin{proof}
+We prove it for two options; the general case follows by the same
+integration over all options. Option 1 is chosen when $\eta_2 < V_1 - V_2 +
+\eta_1$. Conditional on $\eta_1 = t$, this has probability $\exp(-\eu^{-(V_1 - V_2
++ t)})$. The density of $\eta_1$ is $\eu^{-t}\exp(-\eu^{-t})$. Writing $c = 1 +
+\eu^{-(V_1 - V_2)}$, the probability is
+\[
+  \int_{-\infty}^{\infty} \eu^{-t} \exp(-c\,\eu^{-t})\, dt
+  = \Bigl[\tfrac{1}{c}\exp(-c\,\eu^{-t})\Bigr]_{-\infty}^{\infty} = \frac1c
+  = \frac{\eu^{V_1}}{\eu^{V_1} + \eu^{V_2}},
+\]
+substituting $s = \eu^{-t}$ in the integral if one prefers.
+\end{proof}
+
+\begin{definition}[Independence of irrelevant alternatives]\label{def:b3:binary-outcomes:iia}
+\index{independence of irrelevant alternatives}
+A choice model has the property of \emph{independence of irrelevant
+alternatives} (IIA) if the ratio of the probabilities of any two options does not
+depend on which other options are available or on their characteristics.
+\end{definition}
+
+\begin{proposition}[Logit has IIA]\label{prop:b3:binary-outcomes:iia}
+In the \omterm{def:b3:binary-outcomes:random-utility}{multinomial logit}, $\Pr(j)/\Pr(k) = \eu^{V_{ij} - V_{ik}}$. Adding or
+removing an option, or changing its characteristics, leaves the ratio unchanged;
+a new option draws its users from the others in proportion to their
+probabilities.
+\end{proposition}
+
+\begin{proof}
+The denominators of $\Pr(j)$ and $\Pr(k)$ are the same sum and cancel. The
+ratio involves only $V_{ij}$ and $V_{ik}$. If a new option takes probability
+$q$, every other probability is multiplied by $1 - q$, since the ratios among
+them are fixed and they sum to $1 - q$.
+\end{proof}
+
+The textbook warning is the red bus and the blue bus. If commuters split evenly
+between a car and a red bus, and an identical blue bus is added, common sense
+says the buses share the bus riders: car one half, each bus one quarter. Logit
+says each option gets one third, because the new bus must take from the car in
+proportion. Whenever options are closer substitutes for some than for others,
+IIA misleads; nested logit, which groups similar options, and models whose
+taste coefficients vary across people relax it.
+
+\Cref{lst:b3:binary-outcomes:travel} estimates a conditional logit on real
+data: 210 travellers, each choosing air, train, bus or car for one journey,
+with each option's cost, time in the vehicle and time waiting at the terminal.
+
+\omcode{code/bachelor-3/05-binary-outcomes/listings/travel_mode.py}{1}{22}{A conditional logit by Newton's method (\texttt{clogit}), and the forecast without air travel.}\label{lst:b3:binary-outcomes:travel}
+
+\omoutput{code/bachelor-3/05-binary-outcomes/outputs/travel_mode.txt}{Coefficients with standard errors; car is the base mode.}\label{out:b3:binary-outcomes:travel}
+
+The ratio of the time and cost coefficients is a price of time: travellers
+trade an hour in the vehicle for 17.2 dollars. % output: travel_mode
+The model fits the four shares exactly, a consequence of the mode constants:
+the multinomial analogue of the score equations in
+\cref{prop:b3:binary-outcomes:concave}. Without air travel, it sends the air
+travellers to the other modes in proportion, for each traveller, to their
+probabilities. In these data the households of air travellers have incomes
+like those of car travellers and well above those of bus travellers; common
+sense would send many of them to the car and few to the bus, and IIA cannot.
+
+\begin{record}[Forecasting a new rail line from a logit model]
+Before the Bay Area Rapid Transit system opened in San Francisco, McFadden's
+group surveyed commuters in 1972, estimated a \omterm{def:b3:binary-outcomes:random-utility}{multinomial logit} of their
+journey to work, and used it to forecast the choices of 631 commuters surveyed
+again in 1975, after the new line opened. The forecast share of work trips by
+the new line was 6.3~\% (standard error 2.5~\%); the realised share was
+6.2~\%. % ledger: b3bo:mcf.bart
+The forecasts for driving alone (55.8~\% against 59.9~\%) and for the bus
+(14.9~\% against 12.2~\%) were less exact, and McFadden notes that the model
+overestimated people's willingness to walk to the new stations.
+\end{record}
+
+\subsection*{Logit demand for products}
+
+The same model, applied to the market shares of differentiated products, is the
+workhorse of empirical industrial organisation. Each consumer buys one of $J$
+products or nothing (option 0, with $V_0 = 0$), and $V_j = \delta_j = x_j'\gamma
++ \alpha p_j + \xi_j$, where $\xi_j$ is quality seen by consumers but not by the
+economist.
+
+\begin{definition}[Log-share inversion]\label{def:b3:binary-outcomes:inversion}
+\index{log-share inversion}
+In the logit demand model, the \emph{log-share inversion} recovers each
+product's mean utility from its market share and the outside share: $\ln s_j -
+\ln s_0 = \delta_j = x_j'\gamma + \alpha p_j + \xi_j$, a linear equation that can be
+estimated by regression across products and markets (Berry 1994).
+\end{definition}
+
+The inversion follows from $s_j/s_0 = \eu^{\delta_j}/\eu^{0}$. Its value is
+that it turns a nonlinear choice model into a regression, so that the tools of
+\cref{ch:b3:instrumental-variables} apply: prices are set by firms that know
+$\xi_j$, so $p_j$ is correlated with the error, and OLS is biased toward zero
+(\cref{exo:b3:binary-outcomes:11}). Instruments are costs, or characteristics
+of rival products.
+
+\omcode{code/bachelor-3/05-binary-outcomes/listings/logit_demand.py}{1}{27}{Logit demand on 300 simulated markets: the inversion and the elasticities.}\label{lst:b3:binary-outcomes:demand}
+
+\omoutput{code/bachelor-3/05-binary-outcomes/outputs/logit_demand.txt}{Own and cross price elasticities in one town.}\label{out:b3:binary-outcomes:demand}
+
+The own elasticity is $\alpha p_j(1 - s_j)$ and the cross elasticity of $j$'s
+share with respect to $k$'s price is $-\alpha p_k s_k$, the same for every $j$:
+in each column of \cref{out:b3:binary-outcomes:demand}, a rise in product
+$k$'s price raises every rival's share by the same percentage. That is IIA again,
+and it is why logit demand, used to judge a merger, says that two products
+that are close substitutes compete no harder than two that are not.
+
+\begin{model}{Random utility and logit demand}
+\assumes Each person chooses the option with the highest utility, a mean
+utility depending on observed characteristics plus a taste shock independent
+across options and people with the extreme-value distribution.
+\predicts Choice probabilities $\eu^{V_j}/\sum_k \eu^{V_k}$; fitted shares equal to
+observed shares when each option has a constant; substitution in proportion to
+shares (IIA); a price of time equal to the ratio of time and cost coefficients.
+\tested In forecasting the share of a new rail line in 1975 from 1972 data, the
+logit came within 0.1 percentage point; its forecasts for other modes were
+off by up to four points.
+\breaks When options are close substitutes for each other (two buses, two
+similar cars), IIA sends too many customers to unlike options; nested logit and
+random-coefficient models relax it. When prices respond to unobserved quality,
+estimates of the price coefficient need instruments.
+\end{model}
+
+\section{Exercises}\label{sec:b3:binary-outcomes:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:binary-outcomes:1}
+In the opening chart, where do the three fitted lines differ most, and where do
+all three fail? Which feature of the data explains the failure?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:binary-outcomes:2}
+A logit has $x'\hat\beta = 0.8$ for a person, and the coefficient on a regressor
+is 0.5. Compute the person's probability and the marginal effect of the
+regressor on it. Repeat for $x'\hat\beta = 3$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:binary-outcomes:3}
+The logit coefficient on being married in \cref{out:b3:binary-outcomes:three}
+is $-0.2981$. Compute the odds ratio and say what it means.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:binary-outcomes:4}
+Describe data on commuters' choices before and after a new tram line opened
+that would contradict IIA.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:binary-outcomes:5}
+Add a dummy for no earnings in 1975 to the logit of the opening chart.
+\begin{enumerate}
+\item Compare the \omterm{def:b3:binary-outcomes:mle}{log-likelihoods} and the mean fitted probability for men with no
+earnings in 1975 with the observed share.
+\item With controls for age, education and marriage, report the \omterm{def:b3:binary-outcomes:ame}{average marginal
+effect} of the dummy and of 1975 earnings.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:binary-outcomes:6}
+Five observations have $y = (1, 0, 1, 1, 0)$ and fitted logit probabilities
+$p = (0.8, 0.3, 0.6, 0.9, 0.5)$. Compute the \omterm{def:b3:binary-outcomes:mle}{log-likelihood}. Which observation
+contributes the most to it in absolute value, and why?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:binary-outcomes:7}
+Using the elasticities printed in \cref{out:b3:binary-outcomes:demand}, by how
+many percent do the shares of products 2 and 3 change if product 1's price rises
+by 1~\%? And if product 4's price rises by 1~\%? Why are the answers the same for
+products 2 and 3?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:binary-outcomes:8}
+A logit with only a constant is fitted to $n$ observations with $n_1$ ones.
+\begin{enumerate}
+\item Write the \omterm{def:b3:binary-outcomes:mle}{log-likelihood} and the Newton step from $b$.
+\item With $n = 100$ and $n_1 = 80$, compute two Newton steps from $b = 0$ and
+compare with the maximum, $\ln 4$.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:binary-outcomes:9}
+How would you check, in the \omterm{def:b3:binary-outcomes:lpm}{linear probability model} of
+\cref{lst:b3:binary-outcomes:three}, that the linear form is wrong? Give two
+checks that use only its fitted values and the data.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:binary-outcomes:10}
+Show that in a logit with a constant, the fitted probabilities average to the
+observed share, and that in a logit whose only regressors are dummies for
+mutually exclusive groups (and no constant), the maximum likelihood fitted
+probability in each group is the group's observed share. What does that say
+about the opening chart's first dot in \cref{exo:b3:binary-outcomes:5}?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:binary-outcomes:11}
+Repeat the simulation of \cref{lst:b3:binary-outcomes:demand}, but let firms
+raise the price of products with high unobserved quality: $p_j = 1 + 0.3 x_j +
+c_j + 0.8\,\xi_j$, where $c_j$ is a cost that does not enter demand.
+\begin{enumerate}
+\item Estimate the price coefficient by OLS on the \omterm{def:b3:binary-outcomes:inversion}{log-share inversion}. In which
+direction is it biased, and why?
+\item Estimate it by \omterm{def:b3:instrumental-variables:tsls}{two-stage least squares} with $c_j$ as the instrument.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:binary-outcomes:12}
+In a town, 60~\% of commuters drive, 30~\% take the bus and 10~\% cycle. A new
+cycle lane will make cycling attractive enough to take 10~\% of all commuters
+from the other modes (a new option, ``cycle lane'').
+\begin{enumerate}
+\item Under IIA, what are the new shares?
+\item Why is that forecast doubtful, and in which direction is it likely to err
+for each mode?
+\end{enumerate}
+\end{exercise}
+
+\section{Problem: A New Bus Line in Brenmoor}\label{sec:b3:binary-outcomes:problem}
+
+\begin{problem}[{Weekend problem --- a new bus line in Brenmoor}]\label{pb:b3:binary-outcomes:bus}
+Brenmoor (invented) surveys 1{,}500 commuters. Each commutes by car, bus or
+bicycle; the survey records, for each commuter and each mode, the cost of the
+trip in dalens (the bus fare is \dal{2.5}, cycling costs nothing) and the
+door-to-door time in minutes. Of the 1{,}500, 992 chose the car or the bus.
+% figdata: commuters_meta
+A statistician estimates two models by maximum likelihood. The first is a binary
+logit of choosing the car rather than the bus, among those 992, on the
+differences car minus bus in cost and in time. The second is a three-way
+conditional logit with a constant for the car and for the bicycle (the bus is
+the base), a cost and a time coefficient. % figdata: commuters_binary, commuters_mnl
+
+\begin{center}\small
+\begin{minipage}[t]{0.47\linewidth}\centering
+Binary logit, car against bus\par\smallskip
+\pgfplotstabletypeset[col sep=comma,
+  columns/term/.style={column name={Term}, string type, column type=l},
+  columns/est/.style={column name={Estimate}, fixed, precision=4, zerofill},
+  columns/se/.style={column name={s.e.}, fixed, precision=4, zerofill},
+  every head row/.style={after row=\hline}, every last row/.style={after row=\hline}]
+  {figdata/bachelor-3/05-binary-outcomes/out/commuters_binary.csv}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.47\linewidth}\centering
+Three-way logit\par\smallskip
+\pgfplotstabletypeset[col sep=comma,
+  columns/term/.style={column name={Term}, string type, column type=l},
+  columns/est/.style={column name={Estimate}, fixed, precision=4, zerofill},
+  columns/se/.style={column name={s.e.}, fixed, precision=4, zerofill},
+  every head row/.style={after row=\hline}, every last row/.style={after row=\hline}]
+  {figdata/bachelor-3/05-binary-outcomes/out/commuters_mnl.csv}
+\end{minipage}
+
+\medskip
+\pgfplotstabletypeset[col sep=comma,
+  columns/mode/.style={column name={Mode}, string type, column type=l},
+  columns/actual/.style={column name={Observed share}, fixed, precision=3, zerofill, empty cells with={---}},
+  columns/fitted/.style={column name={Fitted, three-way logit}, fixed, precision=3, zerofill, empty cells with={---}},
+  columns/forecast/.style={column name={Forecast with the express}, fixed, precision=3, zerofill},
+  every head row/.style={after row=\hline}, every last row/.style={after row=\hline}]
+  {figdata/bachelor-3/05-binary-outcomes/out/commuters_shares.csv}
+\end{center}
+The forecast adds to the three-way model an express bus with the ordinary bus
+fare, the bus constant and a door-to-door time 10 minutes shorter than the bus
+for every commuter.
+
+\medskip\noindent\textbf{Part I --- car or bus.}
+\begin{enumerate}
+\item Write the probability of choosing the car in the binary logit, in terms of
+the cost and time differences.
+\item A commuter's car trip costs \dal{4.5} and takes 30 minutes; the bus costs
+\dal{2.5} and takes 45 minutes. Compute $x'\hat\beta$ and the probability that she
+drives.
+\item Interpret the constant. Why does it matter that the bus is the base?
+\item Is the cost coefficient significantly different from zero? Give its
+$t$-statistic.
+\item Why does the logit need no assumption about the variance of the taste
+shocks to be estimated, but fix it anyway?
+\item Why might estimating on the 992 car and bus users only, leaving out the
+cyclists, still give consistent estimates in this model?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- marginal effects and the value of time.}
+\begin{enumerate}[resume]
+\item For the commuter of Question 2, compute the marginal effect of the bus
+fare on her probability of driving.
+\item Compute the effect of cutting the bus time by 10 minutes on the same
+probability, using the marginal effect, and then exactly. Why do they differ?
+\item Compute the value of travel time from the binary logit, in dalens per hour.
+\item Compute it from the three-way logit.
+\item Give one reason why the two estimates differ.
+\item A road scheme would save each of 20{,}000 car commuters 5 minutes a day
+for 220 days a year. Value the saving with the three-way estimate.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- three modes.}
+\begin{enumerate}[resume]
+\item Write the probability of cycling in the three-way logit.
+\item Check that the fitted shares equal the observed shares, and explain why.
+\item Interpret the bicycle constant.
+\item For a commuter with $V_{\text{car}} = -2.0$, $V_{\text{bus}} = -3.0$ and
+$V_{\text{bicycle}} = -2.5$, compute the three probabilities.
+\item For the same commuter, compute the ratio of the car and bus probabilities.
+What happens to it if the bicycle becomes unavailable?
+\item Is the time coefficient the same for the three modes? Is that a
+reasonable assumption for cycling?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- the express line.}
+\begin{enumerate}[resume]
+\item What share does the model forecast for the express?
+\item From which mode does it take the most riders, in percentage points, and in
+percent of each mode's share?
+\item Why does the model take riders from each mode in nearly equal proportions?
+\item Which mode would you expect the express to take most of its riders from in
+fact, and why?
+\item How would a nested logit, with the two buses in one nest, change the
+forecast?
+\item What survey, run after the express opens, would test the forecast, as
+McFadden's group did for a new rail line?
+\item State the results: the commuters' value of travel time, in dalens per hour,
+from the three-way model, and the express line's forecast share, with the
+caveat that applies to it.
+\end{enumerate}
+\end{problem}

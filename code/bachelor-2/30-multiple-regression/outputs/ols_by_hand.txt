@@ -1,0 +1,11 @@
+$ python ols_by_hand.py
+const          7.100734     7.100734
+education      0.038343     0.038343
+age            0.098755     0.098755
+age2          -0.001202    -0.001202
+black         -0.170828    -0.170828
+hispanic      -0.052405    -0.052405
+married        0.262576     0.262576
+same coefficients to 1e-8: True
+residuals orthogonal to every column: True
+R2 0.1181 (0.1181), adjusted 0.1177 (0.1177)

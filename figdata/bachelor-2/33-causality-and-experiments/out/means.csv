@@ -1,0 +1,3 @@
+group,label,mean,se,lo,hi,n
+0,control,4555,340,3888,5221,260
+1,treated,6349,578,5215,7483,185

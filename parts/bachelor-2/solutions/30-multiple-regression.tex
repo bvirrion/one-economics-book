@@ -1,0 +1,125 @@
+\section*{Chapter \ref{ch:b2:multiple-regression} --- Multiple Regression}
+
+\begin{solution}{exo:b2:multiple-regression:1}
+% figdata: steps
+4.10 per cent with no control, 5.22 after adding age, 2.04 with every control. The largest single move is the last,
+adding log 1975 earnings: from 3.83 to 2.04, 1.79 points; adding age squared moves it 1.23 points, adding age 1.12.
+\end{solution}
+
+\begin{solution}{exo:b2:multiple-regression:2}
+Men above the cap are recorded at the cap, so high earners appear to earn less than they do. Men with much schooling are
+more often above the cap, so the cap compresses the gap between them and men with little schooling: the measured return to
+schooling is likely too small.
+\end{solution}
+
+\begin{solution}{exo:b2:multiple-regression:3}
+% code: exercises/solutions.py adj_r2
+$1 - (1 - 0.1181) \times 13{,}054/13{,}048 = 1 - 0.8819 \times 1.00046 = 0.1177$.
+\end{solution}
+
+\begin{solution}{exo:b2:multiple-regression:4}
+Schooling raises 1975 earnings, and 1975 earnings predict 1978 earnings. Holding 1975 earnings fixed compares men with
+different schooling but the same 1975 earnings, which removes the part of the effect of schooling that works through
+earlier earnings. A control is bad if it is itself affected by the regressor: evidence would be that the regressor
+predicts the control (here a year of schooling goes with 4.5 per cent higher 1975 earnings), or, better, that the control
+was measured after the regressor was set.
+\end{solution}
+
+\begin{solution}{exo:b2:multiple-regression:5}
+% code: exercises/solutions.py X5, Y5, ols, r2, adj_r2
+$X'X = \begin{pmatrix}5 & 15 & 3\\ 15 & 55 & 12\\ 3 & 12 & 3\end{pmatrix}$, $X'y = (44, 161, 36)'$. The solution is
+$b = (1, 2, 3)'$: check $5 + 30 + 9 = 44$, $15 + 110 + 36 = 161$, $3 + 24 + 9 = 36$. Fitted values $3, 5, 10, 12, 14$;
+residuals $1, -1, -1, 1, 0$, so $e'e = 4$. With $\bar y = 8.8$, $\sum(y_i - \bar y)^2 = 90.8$, so $R^2 = 1 - 4/90.8 = 0.956$
+and $\bar R^2 = 1 - (4/2)/(90.8/4) = 0.912$.
+\end{solution}
+
+\begin{solution}{exo:b2:multiple-regression:6}
+% code: tests/test_solutions.py test_age_example
+Earnings rise with age ($\gamma > 0$) and older men have less schooling ($\delta < 0$), so leaving age out biases the
+schooling coefficient down. The formula: $0.0522 + 0.0192 \times (-0.585) = 0.0522 - 0.0112 = 0.0410$, the short
+coefficient.
+\end{solution}
+
+\begin{solution}{exo:b2:multiple-regression:7}
+% code: exercises/solutions.py brenland, cps
+(a) 5.80 per cent per year of schooling with no control, $R^2 = 0.108$; 5.84 per cent with age and age squared,
+$R^2 = 0.309$. (b) With \texttt{nodegree} the schooling coefficient falls from 3.83 to 2.16 per cent; men without a
+diploma earn 14.8 log points less at the same years of schooling. The standard error rises from 0.0028 to 0.0039, and the
+VIF of schooling from 1.14 to 2.24: years of schooling and having a diploma are strongly related.
+\end{solution}
+
+\begin{solution}{exo:b2:multiple-regression:8}
+% code: exercises/solutions.py collinearity_table
+By \eqref{eq:b2:multiple-regression:var} the standard error falls as $1/\sqrt n$: by a factor of 2. The output gives 0.022,
+0.025, 0.052 and 0.160 against 0.045, 0.057, 0.103 and 0.311. The ratios are close to 2, though not exactly, because new
+draws give new sample correlations.
+\end{solution}
+
+\begin{solution}{exo:b2:multiple-regression:9}
+The column of ones equals the sum of the two indicators, so the three columns are linearly dependent and the rank is 2.
+Either drop one indicator: the constant is then the mean for the omitted group (other regressors fixed) and the remaining
+coefficient the difference between the groups. Or drop the constant: each indicator's coefficient is its group's mean.
+\end{solution}
+
+\begin{solution}{exo:b2:multiple-regression:10}
+Let $P = W(W'W)^{-1}W'$. Then $P' = W((W'W)^{-1})'W' = P$, since $W'W$ is symmetric, and
+\[PP = W(W'W)^{-1}W'W(W'W)^{-1}W' = P.\]
+So
+$M = I - P$ is symmetric and $MM = I - 2P + P = M$. $MW = W - W(W'W)^{-1}W'W = 0$. The regression of $y$ on $W$ has
+coefficients $(W'W)^{-1}W'y$ and fitted values $Py$, so its residual is $y - Py = My$.
+\end{solution}
+
+\begin{solution}{exo:b2:multiple-regression:11}
+Let $Z = (x, W)$ and $A = (Z'Z)^{-1}Z'$, so that the short regression's coefficients are $Ay$. From the long regression,
+$y = Z\hat b + z\hat\gamma + e$, where $\hat b$ collects $\hat\beta_1$ and $\hat\beta_W$. Then $Ay = AZ\hat b + Az\,\hat\gamma
++ Ae = \hat b + \hat\gamma Az$, since $AZ = I$ and $Z'e = 0$. The first element of $Az$ is $\hat\delta$, so
+$\hat\beta_1^{\text{short}} = \hat\beta_1^{\text{long}} + \hat\gamma\hat\delta$.
+\end{solution}
+
+\begin{solution}{exo:b2:multiple-regression:12}
+By the theorem $\hat\beta_j = \tilde x_j'y/\tilde x_j'\tilde x_j$ with $\tilde x_j = Mx_j$, a function of $X$ only. With
+$y = X\beta + u$, $\tilde x_j'y = \tilde x_j'x_j\beta_j + \tilde x_j'u$ (since $\tilde x_j$ is orthogonal to the other
+columns), and $\tilde x_j'x_j = \tilde x_j'\tilde x_j$. So $\hat\beta_j - \beta_j = \tilde x_j'u/\tilde x_j'\tilde x_j$ and
+$\operatorname{Var}(\hat\beta_j \mid X) = \sigma^2\tilde x_j'\tilde x_j/(\tilde x_j'\tilde x_j)^2 = \sigma^2/\tilde
+x_j'\tilde x_j$. The sum of squared residuals of $x_j$ on the others is $(1 - R_j^2)\sum_i(x_{ij} - \bar x_j)^2 =
+(1 - R_j^2)ns_j^2$.
+\end{solution}
+
+\begin{solution}{pb:b2:multiple-regression:1}
+% code: exercises/solutions.py brenland, brenland_ovb, vif; tests/test_solutions.py test_brenland
+\textbf{Part I.}
+1. $X$ is $1{,}922 \times 4$; row $i$ is $(1, s_i, a_i, a_i^2)$.
+2. $4 \times 4$; $4 \times 1$.
+3. The number of heads, 1,922; the sum of $y_i$.
+4. The estimator is $(X'X)^{-1}X'y$; if $X'X$ is singular some coefficients are not identified.
+5. The residuals sum to zero.
+\textbf{Part II.}
+6. 0.0580; $R^2 = 0.108$.
+7. 0.0584, interval 0.0518 to 0.0649; $R^2 = 0.309$, $\bar R^2 = 0.308$.
+8. Among heads of the same age, a year more schooling goes with gross income about 5.8 per cent higher.
+9. The coefficients are 0.0724 on $a$ and $-0.000755$ on $a^2$; the peak is at $0.0724/(2 \times 0.000755) = 48$ years.
+10. In the survey schooling and age are almost uncorrelated, so leaving age out removes little.
+\textbf{Part III.}
+11. The variance of $s$ is 6.728, of $\tilde s$ 6.712: age predicts almost none of schooling.
+12. 0.0584, the long coefficient, as the theorem says.
+13. $\delta_a = 0.318$ and $\delta_{a^2} = 30.99$.
+14. $\hat\beta_s^{\text{short}} = \hat\beta_s^{\text{long}} + \hat\gamma_a\hat\delta_a + \hat\gamma_{a^2}\hat\delta_{a^2}$.
+15. $0.0724 \times 0.318 - 0.000755 \times 30.99 = 0.0230 - 0.0234 = -0.0004$; $0.0584 - 0.0004 = 0.0580$, the short
+coefficient.
+16. $a^2$ is measured in squared years, so its coefficients are small and its $\delta$ large; the two terms have opposite
+signs and nearly cancel.
+\textbf{Part IV.}
+17. Experience is an exact linear combination of the constant, $s$ and $a$: $X$ has rank 3 with 4 columns, and the
+coefficients are not identified.
+18. 3.
+19. Only combinations such as $\beta_s - \beta_e$ and $\beta_a + \beta_e$: the effect of schooling at a given age, or of age
+at given schooling; never the three separately.
+20. 1.00 for $s$, 43.5 for $a$ and for $a^2$.
+21. The VIF of $s$ is 1.00: $s$ is almost uncorrelated with $a$ and $a^2$, and its variance does not depend on how well $a$
+and $a^2$ can be told apart.
+22. By about $\sqrt2 = 1.41$.
+23. Upwards: $\gamma > 0$ and $\delta > 0$.
+24. No: hours do not measure ability. They may be a bad control, since schooling may change hours worked.
+25. The return to a year of schooling in Brenland is 5.84 per cent (95 per cent interval 5.18 to 6.49) holding age fixed;
+leaving age out changes it by $-0.04$ points, because age and schooling are almost uncorrelated in the survey.
+\end{solution}

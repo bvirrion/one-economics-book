@@ -1,0 +1,206 @@
+\section*{Chapter \ref{ch:b2:expected-utility} --- Expected Utility}
+
+\begin{solution}{exo:b2:expected-utility:1}
+First pair: 82 per cent chose $\ell^{B}$ and 83 per cent chose $\ell^{C}$; the two groups together
+% figdata: allais; ledger: b2:kt1979-p1, b2:kt1979-p2
+make up $82 + 83 = 165$ per cent, so at least $165 - 100 = 65$ per cent of respondents chose both
+$\ell^{B}$ and $\ell^{C}$, a pattern no expected-utility maximiser makes (the chart's gap, $82 - 17$).
+Second pair: $80 + 65 - 100 = 45$ per cent. It is a lower bound because the chart reports each
+question's shares, not each person's pair of answers: more people may have made one of the two
+inconsistent patterns ($\ell^{A}$ with $\ell^{D}$ is the other).
+\end{solution}
+
+\begin{solution}{exo:b2:expected-utility:2}
+Reduced \omterm{def:b2:expected-utility:lottery}{lottery}: $0$ with probability $\tfrac12(0.2 + 0.6) = 0.4$, \num{100} with probability $0.6$.
+Expected value $60$. Expected utility $0.6 \times \sqrt{100} = 6$; \omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalent} $6^2 = 36$.
+\end{solution}
+
+\begin{solution}{exo:b2:expected-utility:3}
+$\mathbb{E}[\tilde z] = 125$. $\mathbb{E}[\ln\tilde z] = \tfrac12(\ln 50 + \ln 200) = \ln 100$, so $c =
+100$ (the geometric mean) and $\rho = 25$. Approximation: $\sigma = 75$, $\mathcal{A}(125) = 1/125$,
+$\tfrac12 \times 5625/125 = 22.5$, a little below the exact $25$: the risk is not small.
+\end{solution}
+
+\begin{solution}{exo:b2:expected-utility:4}
+$-e^{-0.002z}$: $\mathcal{A} = 0.002$, $\mathcal{R} = 0.002z$ ($= 2$ at \num{1000}); CARA.
+$\sqrt z$: $u' = \tfrac12 z^{-1/2}$, $u'' = -\tfrac14 z^{-3/2}$, $\mathcal{A} = 1/(2z)$ ($= 0.0005$),
+$\mathcal{R} = \tfrac12$. $\ln z$: $\mathcal{A} = 1/z$ ($= 0.001$), $\mathcal{R} = 1$. $-1/z$: $u' =
+z^{-2}$, $u'' = -2z^{-3}$, $\mathcal{A} = 2/z$ ($= 0.002$), $\mathcal{R} = 2$. The last three are CRRA
+with $\gamma = \tfrac12, 1, 2$, and their absolute \omterm{def:b2:expected-utility:risk-aversion}{risk aversion} $\gamma/z$ falls with wealth.
+\end{solution}
+
+\begin{solution}{exo:b2:expected-utility:5}
+\Cref{prop:b2:expected-utility:affine} allows any increasing affine change of $u$, and two values with
+$u(0) < u(\num{2400})$ can be sent to $0$ and $1$. Write $x = u(\num{2500})$. Problem 1: $\ell^{B}
+\succ \ell^{A} \iff 1 > 0.66 + 0.33x \iff x < 34/33 \approx 1.030$. Problem 2: $\ell^{C} \succ \ell^{D}
+\iff 0.33x > 0.34 \iff x > 34/33$. The two sets are disjoint. With $y = u(\num{3000})$: Problem 3,
+$\ell^{B'} \succ \ell^{A'} \iff y > 0.8$; Problem 4, $\ell^{C'} \succ \ell^{D'} \iff 0.2 > 0.25y \iff y <
+0.8$. For one respondent, strict choices of $\ell^{B}$ and $\ell^{C}$ (or of $\ell^{A}$ and $\ell^{D}$)
+falsify expected utility; so do $\ell^{B'}$ with $\ell^{C'}$, or $\ell^{A'}$ with $\ell^{D'}$.
+\end{solution}
+
+\begin{solution}{exo:b2:expected-utility:6}
+Distribution functions at $0$ and $50$: $\ell$: $0.2, 0.5$; $\ell'$: $0.3, 0.6$; $\ell''$: $0.1, 0.7$.
+$\ell$ first-order dominates $\ell'$ ($0.2 \le 0.3$, $0.5 \le 0.6$). $\ell$ and $\ell''$ are not ranked
+($0.2 > 0.1$ but $0.5 < 0.7$), nor are $\ell'$ and $\ell''$ ($0.3 > 0.1$, $0.6 < 0.7$). Means: $65$,
+$55$, $60$. With $u(z) = z$, $\ell \succ \ell''$; with $\sqrt z$, $\mathbb{E}[\sqrt{\cdot}] = 7.12$ for
+$\ell$ and $7.24$ for $\ell''$, so $\ell'' \succ \ell$. For $\ell'$ against $\ell''$, both $z$ and
+$\sqrt z$ prefer $\ell''$ (means $55 < 60$; $6.12 < 7.24$); the increasing $u(z) = z^2$ prefers
+$\ell'$ ($\num{4750} > \num{4500}$).
+\end{solution}
+
+\begin{solution}{exo:b2:expected-utility:7}
+Approximation: $\tfrac12 \times (3/\num{50000}) \times \num{5000}^2 = \usd{750}$. Exactly, $c =
+\bigl[\tfrac12(\num{45000}^{-2} + \num{55000}^{-2})\bigr]^{-1/2}$ and $\rho = \usd{746}$. With wealth
+\usd{100000}, $\mathcal{A} = \gamma/z$ halves, so the premium roughly halves: approximation \usd{375},
+exact \usd{374}. Under CRRA the same risk weighs less on a richer household.
+\end{solution}
+
+\begin{solution}{exo:b2:expected-utility:8}
+$\mathbb{E}[u(z + \tilde\varepsilon)] = -\tfrac{1}{a}e^{-az}\tfrac12(e^{-ah} + e^{ah}) =
+-\tfrac{1}{a}e^{-az}\cosh(ah)$, and $u(z - \rho) = -\tfrac1a e^{-az}e^{a\rho}$. Equal when $e^{a\rho} =
+\cosh(ah)$: $\rho = \ln\cosh(ah)/a$, free of $z$. With $ah = 0.5$, $\ln\cosh 0.5 = 0.1201$ and $\rho =
+\usd{240.23}$; the approximation gives $\tfrac12 \times \num{0.0005} \times \num{1000}^2 = \usd{250}$.
+\end{solution}
+
+\begin{solution}{exo:b2:expected-utility:9}
+Expected saving $0.02 \times \num{1000} = \usd{20}$; load $54/20 = 2.7$, the same number as the median load of
+% ledger: b2:cskm2018-load
+Collier et al.\ (2018), although theirs is a different ratio (total premium over expected claims), not the price of a
+lower deductible. The smallest $a$ solves $e^{54a}(0.98 + 0.02e^{1000a}) = 0.98 + 0.02e^{2000a}$; numerically
+% code: exercises/solutions.py ex_deductible
+$a = \num{6.74e-4}$ per dollar, so $\mathcal{R} = \num{200000}\,a = 135$ at \usd{200000}. Same order as
+the median of 108: a coefficient of this size predicts absurd refusals of larger gambles
+(\cref{ex:b2:expected-utility:rabin-gamma}).
+\end{solution}
+
+\begin{solution}{exo:b2:expected-utility:10}
+Turning down the gamble at $x$: $u(x + g) - u(x) \le u(x) - u(x - l)$. Concavity: $g\,u'(x + g) \le u(x
++ g) - u(x)$ and $u(x) - u(x - l) \le l\,u'(x - l)$. So $u'(x + g) \le (l/g)\,u'(x - l)$; with $x = z +
+l$, $u'(z + l + g) \le (l/g)\,u'(z)$. For a gain $G$, cutting $[z, z + G]$ into pieces of length $l +
+g$, $u(z + G) - u(z) \le (l + g)\,u'(z)\sum_{k \ge 0}(l/g)^k = (l + g)\,g\,u'(z)/(g - l)$, while a loss
+$L$ costs at least $L\,u'(z)$. The gamble loses on balance when $L > (l + g)g/(g - l)$. For $l = 100$,
+$g = 110$: $210 \times 110/10 = \num{2310}$. The observation: a person who turns down the small gamble
+over a wide range of wealth but accepts a 50--50 gamble that loses \usd{2400} and gains, say, a million
+dollars. No concave utility of wealth makes both choices; the small-stakes aversion must come from
+something else, such as weighing losses more than gains.
+\end{solution}
+
+\begin{solution}{exo:b2:expected-utility:11}
+The slope is $s_u = (u_2 - u_1)/(u_3 - u_2)$ with $u_i = u(z_i)$. With $u = \varphi(v)$,
+\[
+s_u = \frac{(\varphi(v_2) - \varphi(v_1))/(v_2 - v_1)}{(\varphi(v_3) - \varphi(v_2))/(v_3 - v_2)} \cdot
+\frac{v_2 - v_1}{v_3 - v_2} \ge s_v,
+\]
+because the chord slopes of a concave function fall from left to right, so the first fraction is at
+least $1$. From $\ell^{B}$ to $\ell^{A}$ the move is $(+0.01, +0.33)$, so $U(\ell^{A}) - U(\ell^{B}) =
+-0.01(u_2 - u_1) + 0.33(u_3 - u_2)$, negative if and only if $s > 33$; the move from $\ell^{D}$ to
+$\ell^{C}$ is the same vector, and $\ell^{C} \succ \ell^{D}$ needs $s < 33$ there. Fanning out shows up
+when the same pair of lotteries (the same vector between them) is placed at several points of the
+triangle: the share of respondents choosing the riskier option rises as the pair is moved to the right,
+towards a higher chance of the worst prize. Under expected utility that share would not depend on the
+placement.
+\end{solution}
+
+\begin{solution}{exo:b2:expected-utility:12}
+In row $k$, with $p = k/10$, the riskier \omterm{def:b2:expected-utility:lottery}{lottery} is better by $d(p) = p\,[u(38) - u(20)] + (1 -
+p)\,[u(1) - u(16)]$, which is affine and strictly increasing in $p$ (the first bracket is positive and
+the second negative). So $d$ changes sign at most once, from negative to positive: once the riskier
+\omterm{def:b2:expected-utility:lottery}{lottery} is chosen, it is chosen in every later row. In row 10 both pay the better prize for sure, and
+everyone takes \dal{38}. For CRRA, the $\gamma$ making row $k$ a tie rises with $k$; numerically it is
+% code: exercises/solutions.py price_list_gamma
+$0.40$ for row 6 and $0.66$ for row 7. Taking the safer \omterm{def:b2:expected-utility:lottery}{lottery} in row 6 needs $\gamma > 0.40$, and the
+riskier in row 7 needs $\gamma < 0.66$: the respondent's $\gamma$ lies between $0.40$ and $0.66$. A
+respondent who switches back and forth breaks expected utility with every increasing utility (or
+answers with noise), and no coefficient can be read off her choices.
+\end{solution}
+
+\begin{solution}{pb:b2:expected-utility:1}
+% code: exercises/solutions.py problem
+\textbf{1.} Mean $0.7 \times \num{60000} + 0.3 \times \num{20000} = \dal{48000}$; standard deviation
+$\sqrt{0.7 \times 0.3} \times \num{40000} = \dal{18330}$.
+
+\textbf{2.} $0.7\ln\num{60000} + 0.3\ln\num{20000} = 10.6725$.
+
+\textbf{3.} $c = e^{10.6725} = \num{60000}^{0.7} \times \num{20000}^{0.3} = \dal{43153}$.
+
+\textbf{4.} $\rho = \num{48000} - \num{43153} = \dal{4847}$.
+
+\textbf{5.} $\tfrac12 \times \tfrac{1}{\num{48000}} \times \num{18330}^2 = \dal{3500}$, 28 per cent too
+low. The risk is not small: its standard deviation is 38 per cent of the mean, and a drought takes
+two thirds of the good year's income, so the terms beyond the second order, which the approximation
+drops, add to the premium.
+
+\textbf{6.} $c = (0.7\sqrt{\num{60000}} + 0.3\sqrt{\num{20000}})^2 = (171.46 + 42.43)^2 = \dal{45749}$;
+$\rho = \dal{2251}$. $\ln z$ has $\mathcal{A} = 1/z$, more than $\sqrt z$'s $1/(2z)$ at every income,
+so by \cref{prop:b2:expected-utility:pratt} its premium is larger for every risk.
+
+\textbf{7.} $0.7 \times \num{55000} + 0.3 \times \num{30000} = \dal{47500} < \dal{48000}$: a
+risk-neutral farmer plants T.
+
+\textbf{8.} No. $F_S(\num{20000}) = 0 < 0.3 = F_T(\num{20000})$, but $F_S(\num{55000}) = 1 > 0.3 =
+F_T(\num{55000})$.
+
+\textbf{9.} $0.7\ln\num{55000} + 0.3\ln\num{30000} = 10.7332$; $c = \dal{45855}$, above T's
+\dal{43153}: she plants S.
+
+\textbf{10.} The two \omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalents} are equal at $\gamma \approx 0.18$. Above it a farmer plants
+S, below it T: more risk-averse farmers choose the hardier seed, at the cost of \dal{500} of expected
+income.
+
+\textbf{11.} V pays as much as T in a drought and more in a good year, so $F_V \le F_T$ everywhere:
+V first-order dominates T, and by \cref{prop:b2:expected-utility:fosd} every farmer who prefers more to
+less chooses V.
+
+\textbf{12.} Income \dal{57500} in a good year, \dal{25000} in a drought; expected utility
+$0.7\ln\num{57500} + 0.3\ln\num{25000} = 10.7097$; $c = \dal{44787}$. That is better than all T but
+worse than all S. For her, the hardier seed's lower risk is worth more than T's higher mean: the
+derivative of her expected utility with respect to the share planted with S, $-0.7 \times
+\num{5000}/\num{55000} + 0.3 \times \num{10000}/\num{30000} = 0.036 > 0$ at a share of one, is still
+positive, so she wants all of her land in S.
+
+\textbf{13.} Fair premium $0.3 \times \num{40000} = \dal{12000}$. Insured, she has \dal{48000} in both
+states, with $\ln\num{48000} = 10.7790 > 10.6725$: she buys.
+
+\textbf{14.} Insured at a premium $\nu$, her income is $\num{60000} - \nu$ in both states; she buys while $\num{60000}
+- \nu \ge c = \num{43153}$: $\nu \le \dal{16847}$.
+
+\textbf{15.} $\num{16847}/\num{12000} - 1 = 40.4$ per cent.
+
+\textbf{16.} Income $\num{60000} - \psi\chi$ in a good year and $\num{20000} + (1 - \psi)\chi$ in a drought. Expected
+utility is concave in $\chi$; its derivative is zero when $0.3(1 - \psi)/(\num{20000} + (1 - \psi)\chi) =
+0.7\psi/(\num{60000} - \psi\chi)$. Cross-multiplying, $\num{18000}(1 - \psi) - 0.3\psi (1 - \psi)\chi  = \num{14000}\psi  + 0.7\psi (1 -
+\psi)\chi$, so $\psi (1 - \psi)\chi  = \num{18000} - \num{32000}\psi$.
+
+\textbf{17.} $\chi^{*} = (\num{18000} - \num{9600})/0.21 = \num{40000}$: full cover. At the fair price,
+cover moves income between states at the rate of their probabilities, and a risk-averse farmer evens
+her income out completely.
+
+\textbf{18.} $\chi^{*} = (\num{18000} - \num{11520})/(0.36 \times 0.64) = \num{6480}/0.2304 =
+\dal{28125}$: partial cover.
+
+\textbf{19.} $\chi^{*} = 0$ at $\psi  = \num{18000}/\num{32000} = 0.5625$, a loading of $0.5625/0.3 - 1 = 87.5$
+per cent. Question 15 is about all-or-nothing full cover; here the first dalen of cover is bought at
+the margin, where it moves income from the good year, with marginal utility $1/\num{60000}$, to the
+drought, with marginal utility $1/\num{20000}$, three times higher. A small amount of cover is worth a
+much higher price than full cover.
+
+\textbf{20.} Solving $\num{48000} - c_{\mathrm{CARA}}(a) = \num{4847}$ numerically: $a =
+\num{2.61e-5}$ per dalen, against $1/\num{48000} = \num{2.08e-5}$ for $\ln z$ at the mean.
+
+\textbf{21.} Income \dal{90000} or \dal{50000}. With $\ln$: $c = \num{90000}^{0.7} \times
+\num{50000}^{0.3} = \dal{75450}$, mean \dal{78000}, $\rho = \dal{2550}$. With CARA the premium is
+unchanged, \dal{4847} (\cref{prop:b2:expected-utility:cara-crra}).
+
+\textbf{22.} $\ln$: largest premium $\num{90000} - \num{75450} = \dal{14550}$, loading 21.2 per cent.
+CARA: unchanged, \dal{16847} and 40.4 per cent.
+
+\textbf{23.} At a 30 per cent loading (a premium of \dal{15600}), the $\ln$ model predicts that farmers
+without savings buy ($30 < 40.4$) and farmers with \dal{30000} of savings do not ($30 > 21.2$); the
+CARA model predicts that both buy. Among farmers facing the same harvest risk, a take-up rate that does
+not fall with savings rejects the $\ln$ model; one that falls with savings rejects CARA.
+
+\textbf{24.} The harvest's \omterm{def:b2:expected-utility:risk-premium}{risk premium} is \dal{4847}, and the farmer accepts full drought cover at a
+loading of at most 40.4 per cent (a premium of \dal{16847}). With \dal{30000} of savings, the premium
+falls to \dal{2550} and the largest loading to 21.2 per cent.
+\end{solution}

@@ -1,0 +1,401 @@
+\chapter{Income, Wellbeing and What Economics Measures}\label{ch:b3:income-and-wellbeing-evidence}
+
+The series has measured living standards by income: GDP per person, consumption,
+wages. People can also be asked how their lives are going, and the answers can be
+set against their incomes. Do richer countries report better lives? Do people
+inside a country report better lives as it grows? Does the relation flatten, so
+that beyond some income money stops helping? And can income be corrected for what
+it leaves out --- longer lives, more leisure, a more equal spread --- in a single
+number? This last chapter takes the evidence on these questions, and then looks back
+at the series as a whole: which of its models explained the charts it opened with,
+and which questions the evidence still leaves open.
+
+\begin{openingchart}{Mean life satisfaction (0 to 10, people aged 16 and over) against GDP per person
+(purchasing-power parity, constant 2021 dollars, logarithmic scale), 32 European countries: each
+arrow runs from 2013 (circle) to 2024 (dot).}{Eurostat (ilc\_pw01), from the EU statistics on
+income and living conditions; World Bank, World Development Indicators}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.72\linewidth, height=0.46\linewidth, xmin=4.2, xmax=5.16,
+  ymin=4.5, ymax=8.4, xtick={4.30103,4.60206,4.90309}, xticklabels={20{,}000, 40{,}000, 80{,}000},
+  xlabel={GDP per person, dollars}, ylabel={Life satisfaction, 0--10}]
+  \addplot[black!45, -stealth, no marks, quiver={u=\thisrow{dx}, v=\thisrow{dy}}]
+    table[x=x, y=y] {figdata/bachelor-3/36-income-and-wellbeing-evidence/out/sat_arrows.csv};
+  \addplot[only marks, mark=o, mark size=1.4pt, black!55] table[x=lx13, y=s13]
+    {figdata/bachelor-3/36-income-and-wellbeing-evidence/out/sat_2013.csv};
+  \addplot[only marks, mark=*, mark size=1.4pt, omDef] table[x=lx24, y=s24]
+    {figdata/bachelor-3/36-income-and-wellbeing-evidence/out/sat_2024.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: sat_stats, sat_table
+Two facts sit in the chart. Across countries, the richer report more satisfied
+lives, in both years. Inside countries, the arrows point up and to the right where
+income grew fast from a low level --- Bulgaria from 4.8 to 6.2, Serbia from 5.0 to 6.5 --- and flat or slightly down in
+the rich countries where income grew slowly: Denmark from 8.0 to 7.6, Sweden from 7.9 to 7.4. Satisfaction rose in 20 of
+the 32 countries. The chapter asks what these facts mean.
+
+\begin{recall}
+Income and wellbeing are first compared in the grades 10--12 volume; what GDP leaves
+out is the grades 6--9, grades 10--12 and Year 1 volumes'. The \omterm{def:b3:credible-empirical-work:evidence-scale}{evidence scale} used by
+every \emph{debate} box is \cref{ch:b3:credible-empirical-work}'s; the \omterm{def:b3:cost-benefit-analysis:vsl}{value of a
+statistical life} is \cref{ch:b3:cost-benefit-analysis}'s.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:income-and-wellbeing-evidence:symbols}
+$S$ is mean \omterm{def:b3:income-and-wellbeing-evidence:life-satisfaction}{life satisfaction}; $y$ income per person; $c$ consumption per person; $e$ life
+expectancy; $h$ hours worked per person as a share of 5{,}840 a year; $\sigma$ the standard
+deviation of log consumption; $\lambda$ \omterm{def:b3:income-and-wellbeing-evidence:welfare}{consumption-equivalent welfare}.
+\end{notation}
+
+\section{Life satisfaction and income}\label{sec:b3:income-and-wellbeing-evidence:satisfaction}
+
+\begin{definition}[Life satisfaction]\label{def:b3:income-and-wellbeing-evidence:life-satisfaction}
+\index{life satisfaction}\index{Cantril ladder}
+\emph{Life satisfaction} is a person's answer, on a scale usually from 0 to 10, to a
+survey question asking them to evaluate their life as a whole. In the \emph{Cantril
+ladder} version, 0 is the worst possible life for them and 10 the best. It is a
+measure of \emph{life evaluation}, distinct from \emph{emotional wellbeing}: the
+feelings of a day, asked about separately.
+\end{definition}
+
+\begin{measure}[How life satisfaction is asked]
+The European survey of the opening chart asks adults to rate their satisfaction
+with their life on a 0--10 scale; world surveys use the ladder. Three features shape
+what the answers can show. The scale is bounded: an average of 7.6 cannot rise
+much. Scale use may differ: two people with the same life may pick different numbers,
+and if that differs between countries, part of a gap is a difference in language or
+habit. And the question is short and depends on its place in the questionnaire. The
+answers are informative nonetheless: in the same survey, people with a degree reported
+7.6 on average across the European Union in 2024, people with at most lower secondary schooling 6.8.
+% figdata: sat_stats
+\end{measure}
+
+\begin{definition}[Easterlin paradox]\label{def:b3:income-and-wellbeing-evidence:easterlin}
+\index{Easterlin paradox}
+The \emph{Easterlin paradox} is the claim that, while richer people and richer
+countries report higher satisfaction at a point in time, a country's average
+satisfaction does not rise as its income grows over the long run.
+\end{definition}
+
+In the opening chart's 32 countries, one more unit of log income per person is associated with 0.69 more
+points of satisfaction across countries in 2024, against 1.53 in 2013. Within countries, the change in satisfaction
+from 2013 to 2024 is associated with the change in log income with a slope of 1.83. One
+arrow runs almost flat from about 60{,}000 to 119{,}000 dollars: Ireland, where much of GDP is
+profit generated by multinational firms that goes straight to their owners abroad;
+its statistics office publishes a modified national income that leaves these effects
+out. % ledger: b3iw:cso.gni
+Without Ireland the slope is 2.74. But
+the change is strongly tied to the 2013 level (correlation $-0.87$): the countries that
+started lowest rose most. Eleven years is about the shortest span the paradox speaks
+of, and 2013 came at a low point for several of the countries in the chart, so a
+recovery is mixed into the within-country slope.
+
+\begin{proposition}[Equal percentage raises, equal gains]\label{prop:b3:income-and-wellbeing-evidence:log-linear}
+If $S = a + b\ln y$, a raise of a given percentage $x$ raises satisfaction by $b\ln(1 + x)$ at every income; the
+gain from one more dollar, $b/y$, falls as income rises. A relation that flattens when
+satisfaction is plotted against income in dollars is a straight line against log
+income: flattening in levels is not flattening in logs.
+\end{proposition}
+
+\begin{proof}
+$S(y(1 + x)) - S(y) = b[\ln y + \ln(1 + x) - \ln y] = b\ln(1 + x)$, free of $y$. And $dS/dy = b/y$, which falls in $y$. A satiation point
+would require the slope against $\ln y$ itself to fall to zero, which is a different and
+testable claim.
+\end{proof}
+
+\section{Does the relation flatten?}\label{sec:b3:income-and-wellbeing-evidence:flatten}
+
+\begin{debate}[Does wellbeing stop rising with income?]
+\textbf{No long-run relation within countries.} Over ten years or more, happiness
+does not rise as a country's income rises, in developed and developing countries and
+in the transition economies; over shorter spans it rises in expansions and falls in
+contractions (\emph{Grade 3}). % ledger: b3iw:emssz
+\emph{Weakness:} short series from surveys whose questions changed, and few
+countries.
+
+\textbf{A positive relation everywhere.} With more countries and many datasets,
+average satisfaction rises with GDP per person across countries with no satiation
+point, the slope is similar to the one within countries, and growth over time goes
+with rising satisfaction (\emph{Grade 3}). % ledger: b3iw:sw
+\emph{Weakness:} cross-country correlations; the within-country series are short.
+
+\textbf{Feelings plateau, evaluations do not.} In more than 450{,}000 responses to a daily U.S. survey of 1{,}000
+residents, life evaluation on the \omterm{def:b3:income-and-wellbeing-evidence:life-satisfaction}{Cantril ladder} rises steadily with log income;
+emotional wellbeing rises too, but not beyond about 75{,}000 dollars a year (\emph{Grade 3}). % ledger: b3iw:kd
+\emph{Weakness:} the emotion questions were yes or no about the day before.
+
+\textbf{No plateau.} In 1{,}725{,}994 reports sampled during the day from 33{,}391 employed U.S. adults, both
+feelings and evaluations rise linearly with log income, as steeply above 75{,}000 dollars
+as below (\emph{Grade 3}). % ledger: b3iw:kil
+\emph{Weakness:} employed people who use a phone application, a selected group.
+
+\textbf{A conflict resolved.} The two sets of authors reanalysed the second dataset
+together. The flattening holds only for the least happy people; among happier people,
+happiness rises steadily with log income, and faster among the happiest. The earlier
+plateau came from yes-or-no questions that could not tell degrees of happiness apart
+(\emph{Grade 3}). % ledger: b3iw:kkm
+\emph{Weakness:} still a correlation of income with wellbeing, not an effect of
+income on it.
+\end{debate}
+
+Across these studies, the relation between income and evaluated wellbeing is
+close to log-linear and does not stop; whether a country's \emph{growth} raises its
+average over decades remains disputed, because the series that could answer it are
+short. Hedonic adaptation --- the measured tendency of satisfaction to return part of
+the way towards its earlier level after a change in circumstances --- is one reason
+offered for the paradox; it is a pattern in panel data, not a law.
+
+\section{Welfare in one number}\label{sec:b3:income-and-wellbeing-evidence:welfare}
+
+\begin{definition}[Consumption-equivalent welfare; equivalent income]\label{def:b3:income-and-wellbeing-evidence:welfare}
+\index{consumption-equivalent welfare}\index{equivalent income}
+A country's \emph{consumption-equivalent welfare} relative to a reference country is
+the factor $\lambda$ by which consumption in the reference country, at every date and for
+everyone, would have to be multiplied to give a person there the same expected
+lifetime utility as being born in the country compared, with its consumption, leisure,
+mortality and inequality. More generally, a person's \emph{equivalent income} is the
+income that, under reference values of the things other than income, gives them the
+same welfare as their actual situation.
+\end{definition}
+
+\begin{proposition}[The Jones--Klenow decomposition]\label{prop:b3:income-and-wellbeing-evidence:jk}
+Let a year of life give flow utility $u = \bar u + \ln c - v(h)$, with $v(h) = \theta h^2/2$; let consumption across people be
+lognormal with mean $c$ and log variance $\sigma^2$; and let lifetime utility be $e$ times the expected flow.
+Then country $i$'s welfare relative to country $0$ is
+\begin{equation*}
+\ln\lambda_i = \underbrace{\frac{e_i - e_0}{e_0}\,u_i}_{\text{life expectancy}} + \underbrace{\ln\frac{c_i}{c_0}}_{\text{consumption}}
+\underbrace{-\,[v(h_i) - v(h_0)]}_{\text{leisure}} \underbrace{-\,\frac{\sigma_i^2 - \sigma_0^2}{2}}_{\text{inequality}},
+\end{equation*}
+where $u_i = \bar u + \ln c_i - v(h_i) - \sigma_i^2/2$ is country $i$'s expected flow utility.
+\end{proposition}
+
+\begin{proof}
+If $\ln c \sim N(\mu, \sigma^2)$ with mean $c$, then $c = e^{\mu + \sigma^2/2}$, so $E\ln c = \ln c - \sigma^2/2$ and expected flow utility is $u = \bar u + \ln c - v(h) - \sigma^2/2$.
+Multiplying the reference consumption by $\lambda$ adds $\ln\lambda$ to its flow, so $\lambda_i$ solves $e_0(u_0 + \ln\lambda_i) = e_iu_i$, that is,
+$\ln\lambda_i = (e_i/e_0)u_i - u_0 = (e_i - e_0)u_i/e_0 + (u_i - u_0)$. The last bracket is the sum of the consumption, leisure and inequality terms.
+\end{proof}
+
+The life-expectancy term depends on the level of $u$, not only on differences: what
+a year of life is worth must be chosen, and with log utility that choice is the
+constant $\bar u$. Here $\bar u$ is set so that a U.S. year is worth 5 in units of log consumption ---
+five years of consumption at U.S. levels, of the order of the values of a statistical
+life in \cref{ch:b3:cost-benefit-analysis} --- and $\theta$ so that, in the United States, the disutility of
+the last hour worked equals what that hour earns, with labour taking 0.6 of income. A lognormal
+spread with Gini coefficient $G$ has $\sigma = \sqrt2\,\Phi^{-1}((1 + G)/2)$.
+
+\begin{omchart}{Consumption-equivalent welfare against GDP per person, both as a share of the
+United States, 2019, 115 countries (logarithmic scales), with the line of equality.}{Penn World
+Table 11.0 (GDP, consumption share, hours, employment); World Bank, World Development
+Indicators (life expectancy; Gini index, latest 2010--2019); author's calculation}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.6\linewidth, height=0.46\linewidth, xmin=-1.9, xmax=0.3,
+  ymin=-1.9, ymax=0.3, xtick={-1.69897,-1.30103,-1,-0.69897,-0.30103,0},
+  xticklabels={2, 5, 10, 20, 50, 100}, ytick={-1.69897,-1.30103,-1,-0.69897,-0.30103,0},
+  yticklabels={2, 5, 10, 20, 50, 100}, xlabel={GDP per person, \% of the U.S.},
+  ylabel={Welfare, \% of the U.S.}]
+  \addplot table[x=lx, y=lw] {figdata/bachelor-3/36-income-and-wellbeing-evidence/out/welfare.csv};
+  \draw[black!50, dashed] (axis cs:-1.9,-1.9) -- (axis cs:0.3,0.3);
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: welfare_stats
+
+Across 115 countries the correlation between log welfare and log GDP per person is 0.94, but 70~\% of the
+countries lie below the line: relative to the United States, their welfare is lower than
+their GDP. The components show why.
+
+\begin{center}
+\begin{tabular}{lcccccc}
+  & GDP & Welfare & \multicolumn{4}{c}{Terms of $\ln\lambda$} \\
+  & \% of U.S. & \% of U.S. & life & consumption & leisure & inequality \\ \hline
+  France & 76.1 & 103.8 & 0.246 & $-0.552$ & 0.201 & 0.143 \\
+  Germany & 87.8 & 101.4 & 0.154 & $-0.388$ & 0.115 & 0.132 \\
+  Japan & 63.4 & 69.6 & 0.306 & $-0.768$ & $-0.024$ & 0.123 \\
+  Brazil & 24.8 & 16.0 & $-0.124$ & $-1.455$ & $-0.024$ & $-0.229$ \\
+  China$^\dagger$ & 25.9 & 9.7 & $-0.029$ & $-1.872$ & $-0.484$ & 0.056 \\
+  India$^\dagger$ & 10.8 & 7.9 & $-0.279$ & $-2.283$ & $-0.151$ & 0.168 \\ \hline
+\end{tabular}
+
+\smallskip{\small $^\dagger$ Gini index from a consumption survey; the others, and the
+United States (41.9), from income surveys.}
+\end{center}
+% figdata: welfare_parts
+
+France and Germany reach the United States in welfare: they live longer, work fewer
+hours per person and are more equal, which more than offsets lower consumption. China
+falls from a quarter of U.S. GDP to a tenth in welfare: its consumption share is low
+and hours per person are long. Brazil's high inequality costs it a fifth of its consumption.
+India's inequality term, the largest in the table, is mostly a difference of measure:
+its Gini of 28.8 is of consumption, which varies less than income, and it is set
+against an income Gini of 41.9 for the United States. Of the 115 countries, 57 measure
+inequality by consumption. % figdata: welfare_stats
+
+\begin{measure}[Welfare in one number]
+The original measure combines consumption, leisure, mortality and inequality, first
+for a few countries with detailed household data and then for many. Welfare is highly
+correlated with GDP per person but often far from it: Western Europe is considerably
+closer to the United States, emerging Asia has caught up less, and many developing
+countries are further behind; mortality matters most. % ledger: b3iw:jk
+The calculation here is a simpler one --- one year, no age structure, inequality from
+the Gini index --- and it reproduces those three patterns. Its weakest numbers are the
+value of a year of life, which exercise 11 varies; hours: few hours per person are
+counted as leisure even when they reflect unemployment, and hours compare poorly
+across countries; and inequality, whose Gini indices mix consumption surveys and
+income surveys, as \cref{ch:b3:development-microeconomics} warned.
+\end{measure}
+
+\section{What the series explained, and what stays open}\label{sec:b3:income-and-wellbeing-evidence:return}
+
+The grades 6--9 volume opened with twenty-one charts and no model: living
+standards, poverty, health and population, school and work, food and energy, a
+connected world, and the rest. Every later chapter opened with a chart and set a
+model against it. The table gives, for each theme of those charts, a model this
+volume tested and what the record showed.
+
+\begin{center}
+\small
+\begin{tabular}{p{0.17\linewidth}p{0.27\linewidth}p{0.47\linewidth}}
+  Theme & Model (chapter) & The record \\ \hline
+  Living standards & Augmented Solow (\ref{ch:b3:growth-empirics}) & Explains most of the gaps in income; convergence only conditional, or in groups alike to start with \\
+  Poverty & Poverty trap (\ref{ch:b3:development-microeconomics}) & Livestock and skills moved the poorest out of poverty, gains sustained after seven years; traps rare outside remote areas \\
+  Inequality & Education and technology (\ref{ch:b3:wage-structure}) & The college premium follows relative supply over a century \\
+  Health and population & Malthusian (\ref{ch:b3:demographic-transition}) & Before 1500, better technology raised density, not living standards \\
+  Education & Mincer equation (\ref{ch:b3:human-capital}) & About 9~\% a year of schooling on average, stable over decades, higher in poor countries \\
+  Work & Competitive market and monopsony (\ref{ch:b3:minimum-wage}) & Small employment effects of moderate minimum wages; large markdowns on some platforms \\
+  Food & Random-utility demand (\ref{ch:b3:binary-outcomes}) & Forecast a new line's share within a tenth of a point \\
+  Trade & Ricardo, Heckscher--Ohlin, gravity (\ref{ch:b3:ricardian-trade}, \ref{ch:b3:factor-endowments}, \ref{ch:b3:gravity}) & Ricardo fits; pure factor content fails; gravity fits best of all \\
+  Prices and money & Quantity theory (\ref{ch:b3:inflation-evidence}) & Slope near 1 over decades, driven by high-inflation countries \\
+  Government & Median voter, taxable income (\ref{ch:b3:public-choice-voting}, \ref{ch:b3:efficiency-cost-of-taxation}) & Close elections: winners' votes do not move toward the median \\
+  Energy and environment & Kuznets curve, Hotelling (\ref{ch:b3:environmental-and-resource-economics}) & Local pollutants fall with laws; resource prices rarely follow the rule \\
+  Institutions & Institutions as cause (\ref{ch:b3:institutions}) & Divided countries; the size of the effect debated \\
+  Wellbeing & Log-linear satisfaction (this chapter) & Close to log-linear in income; long-run growth disputed \\ \hline
+\end{tabular}
+\end{center}
+
+What stays open is what this volume's debate boxes left open, each at the grade of its
+strongest evidence on the scale of \cref{ch:b3:credible-empirical-work}: whether trade raises income
+(\cref{ch:b3:instrumental-variables}, grade 2); how much import competition lowered wages
+(\cref{ch:b3:trade-policy}, grade 2); what caused the inflation of 2021--2023 (\cref{ch:b3:central-banking},
+grade 3); whether a survey can value what is not sold (\cref{ch:b3:cost-benefit-analysis}, grade 2);
+immigration and local wages (\cref{ch:b3:wage-structure}, grade 2); the employment effect of a
+minimum wage (\cref{ch:b3:minimum-wage}, grade 2); geography, institutions or culture
+(\cref{ch:b3:institutions}, grade 2); aid and growth (\cref{ch:b3:development-microeconomics}, grade 2); and
+whether growth raises wellbeing (this chapter, grade 3). For each, the boxes name the
+observation that would settle it.
+
+\section{Exercises}\label{sec:b3:income-and-wellbeing-evidence:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:income-and-wellbeing-evidence:1}
+From the opening chart and its data, give \omterm{def:b3:income-and-wellbeing-evidence:life-satisfaction}{life satisfaction} and GDP per person in 2013 and
+2024 for Bulgaria and Denmark. Which way do their arrows point?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:income-and-wellbeing-evidence:2}
+With $S = a + 0.69\ln y$, find the change in satisfaction from a 10~\% raise, at an income of 20{,}000 and at 80{,}000 dollars, and
+the change from one more dollar at each.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:income-and-wellbeing-evidence:3}
+A country's people live 78 years, the reference country's 81. With its flow utility $u_i = 5$, find the
+life-expectancy term of $\ln\lambda$ and the welfare loss it implies, in per cent.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:income-and-wellbeing-evidence:4}
+What data would contradict hedonic adaptation to a large rise in income?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:income-and-wellbeing-evidence:5}
+Rank the chapter's 115 countries by GDP per person and by welfare. Which five rise most in the
+welfare ranking and which five fall most? Why?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:income-and-wellbeing-evidence:6}
+Country A consumes 40{,}000 a person and works $h = 0.15$; country B consumes 36{,}000 and works $h = 0.12$; $\theta = 40$. Find B's
+equivalent consumption at A's hours.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:income-and-wellbeing-evidence:7}
+With the mean fixed, the Gini index of consumption falls from 0.40 to 0.30. Under lognormality, find the change in
+welfare, in per cent of consumption.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:income-and-wellbeing-evidence:8}
+Three countries have mean log income 9, 10 and 11 and mean satisfaction 5.0, 6.0 and 6.7. Find the least-squares slope and the
+satisfaction gain from doubling income.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:income-and-wellbeing-evidence:9}
+What would show that a gap in reported satisfaction between two countries comes
+from a difference in how people use the scale?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:income-and-wellbeing-evidence:10}
+Derive the decomposition of \cref{prop:b3:income-and-wellbeing-evidence:jk}, including the inequality term, and
+show that $\sigma = \sqrt2\,\Phi^{-1}((1 + G)/2)$ for a lognormal distribution.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:income-and-wellbeing-evidence:11}
+Recompute welfare relative to the United States for France, Germany, Japan, Brazil, China
+and India with the value of a U.S. year of life set at 3, 5 and 7. Which countries gain as it rises, and why?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:income-and-wellbeing-evidence:12}
+Choose two themes of the closing table. For each, say which model explains it, what
+it predicts that the record could have contradicted, and what observation would
+refute it now.
+\end{exercise}
+
+\section{Problem: Fifty Years of Brenland, in One Number}\label{sec:b3:income-and-wellbeing-evidence:problem}
+
+\begin{problem}[{Weekend problem --- Fifty years of Brenland, in one number}]\label{pb:b3:income-and-wellbeing-evidence:brenland}
+Brenland's GDP per person in 1975 is the one found in \cref{ch:b3:growth-empirics}'s problem; in 2025 it comes
+from \code{load("accounts")}, and the 1975 consumption share is taken equal to the 2000 one. The household
+survey is \code{load("households")}. Invented: life expectancy 72.0 years in 1975 and 81.0 in 2025;
+hours worked per person 900 a year in 1975 and 760 in 2025; the Gini index of consumption per person 0.27 in
+1975. Kestria in 2025: 27{,}700 dalens of 2015 per person, consumption share 0.60, life expectancy 79.0, hours 820, Gini
+0.33. Use the chapter's formula with Brenland in 2025 as the reference, a reference year of life worth 5, and
+$\theta$ set as in the chapter. % figdata: brenland_stats
+
+\medskip\noindent\textbf{Part I --- GDP.}
+\begin{enumerate}
+\item Find GDP per person in 1975 and 2025, and its growth rate a year.
+\item Find consumption per person in both years.
+\item Find the growth rate of consumption per person.
+\item Why might the two growth rates overstate or understate the change in welfare?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- leisure and mortality.}
+\begin{enumerate}[resume]
+\item Write $\ln\lambda$ for 1975 relative to 2025.
+\item Find $\theta$.
+\item Find $h$ in both years.
+\item Find the leisure term.
+\item Find the consumption term.
+\item Find the 1975 flow utility $u$ and the life-expectancy term.
+\item Why does the life-expectancy term, unlike the others, depend on the value of a year?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- inequality.}
+\begin{enumerate}[resume]
+\item Find the Gini index of consumption per person in 2025 from the survey, weighting each household by
+its size.
+\item Find $\sigma$ in 1975 and 2025.
+\item Find the inequality term, and explain its sign.
+\item Find $\ln\lambda$ and $\lambda$.
+\item Find the growth rate of \omterm{def:b3:income-and-wellbeing-evidence:welfare}{consumption-equivalent welfare} a year.
+\item Which term adds most to welfare growth beyond consumption?
+\item Find the welfare growth rate when a year is worth 3 and when it is worth 7.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- Brenland and Kestria.}
+\begin{enumerate}[resume]
+\item Find Kestria's GDP per person as a share of Brenland's.
+\item Find the four terms of Kestria's $\ln\lambda$.
+\item Find Kestria's welfare as a share of Brenland's.
+\item Which term accounts for most of the gap beyond GDP?
+\item What would life-satisfaction surveys add to this comparison, and what could
+they not settle?
+\item State the result: Brenland's \omterm{def:b3:income-and-wellbeing-evidence:welfare}{consumption-equivalent welfare} growth 1975--2025, against its GDP growth.
+\end{enumerate}
+\end{problem}

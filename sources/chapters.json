@@ -1,0 +1,1550 @@
+[
+ {
+  "book": 1,
+  "year": "grade-6",
+  "prefix": "g6",
+  "num": 1,
+  "slug": "reading-economic-charts",
+  "title": "Reading Economic Charts",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-6",
+  "prefix": "g6",
+  "num": 2,
+  "slug": "living-standards",
+  "title": "Two Hundred Years of Living Standards",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-6",
+  "prefix": "g6",
+  "num": 3,
+  "slug": "poverty",
+  "title": "Poverty and How It Is Counted",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-6",
+  "prefix": "g6",
+  "num": 4,
+  "slug": "health-and-population",
+  "title": "Longer Lives, Smaller Families",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-6",
+  "prefix": "g6",
+  "num": 5,
+  "slug": "school-and-work",
+  "title": "School and Work",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-6",
+  "prefix": "g6",
+  "num": 6,
+  "slug": "food-and-energy",
+  "title": "Food and Energy",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-6",
+  "prefix": "g6",
+  "num": 7,
+  "slug": "a-connected-world",
+  "title": "A Connected World",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-7",
+  "prefix": "g7",
+  "num": 1,
+  "slug": "scarcity-and-opportunity-cost",
+  "title": "Scarcity and Opportunity Cost",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-7",
+  "prefix": "g7",
+  "num": 2,
+  "slug": "specialisation",
+  "title": "Specialisation and the Division of Labour",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-7",
+  "prefix": "g7",
+  "num": 3,
+  "slug": "comparative-advantage",
+  "title": "Gains from Trade: Comparative Advantage",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-7",
+  "prefix": "g7",
+  "num": 4,
+  "slug": "money",
+  "title": "Money",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-7",
+  "prefix": "g7",
+  "num": 5,
+  "slug": "markets-and-prices",
+  "title": "Markets and Prices",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-7",
+  "prefix": "g7",
+  "num": 6,
+  "slug": "demand-and-supply-first-look",
+  "title": "Demand and Supply: A First Look",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-7",
+  "prefix": "g7",
+  "num": 7,
+  "slug": "households",
+  "title": "Households: Income, Spending and Saving",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-7",
+  "prefix": "g7",
+  "num": 8,
+  "slug": "firms",
+  "title": "Firms: Costs, Revenue and Profit",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-8",
+  "prefix": "g8",
+  "num": 1,
+  "slug": "production-and-productivity",
+  "title": "Production and Productivity",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-8",
+  "prefix": "g8",
+  "num": 2,
+  "slug": "gdp",
+  "title": "Measuring an Economy: GDP",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-8",
+  "prefix": "g8",
+  "num": 3,
+  "slug": "inflation-and-price-indices",
+  "title": "Inflation and Price Indices",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-8",
+  "prefix": "g8",
+  "num": 4,
+  "slug": "growth-and-compounding",
+  "title": "Growth and Compounding",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-8",
+  "prefix": "g8",
+  "num": 5,
+  "slug": "jobs-wages-unemployment",
+  "title": "Jobs, Wages and Unemployment",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-8",
+  "prefix": "g8",
+  "num": 6,
+  "slug": "banks-saving-interest",
+  "title": "Banks, Saving and Interest",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-8",
+  "prefix": "g8",
+  "num": 7,
+  "slug": "taxes-and-public-spending",
+  "title": "Taxes and Public Spending",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-8",
+  "prefix": "g8",
+  "num": 8,
+  "slug": "competition-and-monopoly-first-look",
+  "title": "Competition and Monopoly: A First Look",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-9",
+  "prefix": "g9",
+  "num": 1,
+  "slug": "demand-and-supply-equations",
+  "title": "Demand and Supply with Equations",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-9",
+  "prefix": "g9",
+  "num": 2,
+  "slug": "elasticity-first-look",
+  "title": "Elasticity: A First Look",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-9",
+  "prefix": "g9",
+  "num": 3,
+  "slug": "price-controls-taxes-subsidies",
+  "title": "Price Controls, Taxes and Subsidies",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-9",
+  "prefix": "g9",
+  "num": 4,
+  "slug": "international-trade",
+  "title": "International Trade",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-9",
+  "prefix": "g9",
+  "num": 5,
+  "slug": "exchange-rates-and-purchasing-power",
+  "title": "Exchange Rates and Purchasing Power",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-9",
+  "prefix": "g9",
+  "num": 6,
+  "slug": "institutions-and-prosperity",
+  "title": "Why Some Countries Are Rich: Institutions",
+  "part": null
+ },
+ {
+  "book": 1,
+  "year": "grade-9",
+  "prefix": "g9",
+  "num": 7,
+  "slug": "income-distribution",
+  "title": "Who Earns What: Income Distribution",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-10",
+  "prefix": "g10",
+  "num": 1,
+  "slug": "economic-models",
+  "title": "Economic Models",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-10",
+  "prefix": "g10",
+  "num": 2,
+  "slug": "production-possibility-frontier",
+  "title": "The Production Possibility Frontier",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-10",
+  "prefix": "g10",
+  "num": 3,
+  "slug": "ricardo-model",
+  "title": "Ricardo's Model of Comparative Advantage",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-10",
+  "prefix": "g10",
+  "num": 4,
+  "slug": "demand",
+  "title": "Demand",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-10",
+  "prefix": "g10",
+  "num": 5,
+  "slug": "supply",
+  "title": "Supply",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-10",
+  "prefix": "g10",
+  "num": 6,
+  "slug": "market-equilibrium",
+  "title": "Market Equilibrium",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-10",
+  "prefix": "g10",
+  "num": 7,
+  "slug": "elasticities",
+  "title": "Elasticities",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-10",
+  "prefix": "g10",
+  "num": 8,
+  "slug": "surplus-and-efficiency",
+  "title": "Surplus and Efficiency",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-10",
+  "prefix": "g10",
+  "num": 9,
+  "slug": "what-prices-do",
+  "title": "What Prices Do",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-10",
+  "prefix": "g10",
+  "num": 10,
+  "slug": "tax-incidence",
+  "title": "Tax Incidence and Deadweight Loss",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-10",
+  "prefix": "g10",
+  "num": 11,
+  "slug": "national-accounts",
+  "title": "National Accounts",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-10",
+  "prefix": "g10",
+  "num": 12,
+  "slug": "price-indices",
+  "title": "Price Indices and the Cost of Living",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-11",
+  "prefix": "g11",
+  "num": 1,
+  "slug": "marginal-reasoning",
+  "title": "Marginal Reasoning",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-11",
+  "prefix": "g11",
+  "num": 2,
+  "slug": "production-and-costs",
+  "title": "Production and Costs",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-11",
+  "prefix": "g11",
+  "num": 3,
+  "slug": "perfect-competition",
+  "title": "Perfect Competition",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-11",
+  "prefix": "g11",
+  "num": 4,
+  "slug": "monopoly",
+  "title": "Monopoly",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-11",
+  "prefix": "g11",
+  "num": 5,
+  "slug": "oligopoly-and-games",
+  "title": "Oligopoly and a First Look at Games",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-11",
+  "prefix": "g11",
+  "num": 6,
+  "slug": "externalities",
+  "title": "Externalities",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-11",
+  "prefix": "g11",
+  "num": 7,
+  "slug": "public-goods-and-commons",
+  "title": "Public Goods and Common Resources",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-11",
+  "prefix": "g11",
+  "num": 8,
+  "slug": "asymmetric-information",
+  "title": "Asymmetric Information",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-11",
+  "prefix": "g11",
+  "num": 9,
+  "slug": "public-choice-first-look",
+  "title": "Public Choice: A First Look",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-11",
+  "prefix": "g11",
+  "num": 10,
+  "slug": "labour-market",
+  "title": "The Labour Market",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-11",
+  "prefix": "g11",
+  "num": 11,
+  "slug": "inequality",
+  "title": "Inequality",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-11",
+  "prefix": "g11",
+  "num": 12,
+  "slug": "unemployment",
+  "title": "Unemployment",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-11",
+  "prefix": "g11",
+  "num": 13,
+  "slug": "money-and-banking",
+  "title": "Money and Banking",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-12",
+  "prefix": "g12",
+  "num": 1,
+  "slug": "present-value",
+  "title": "Present Value",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-12",
+  "prefix": "g12",
+  "num": 2,
+  "slug": "risk-and-insurance",
+  "title": "Risk and Insurance",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-12",
+  "prefix": "g12",
+  "num": 3,
+  "slug": "inflation-and-money",
+  "title": "Inflation and the Quantity of Money",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-12",
+  "prefix": "g12",
+  "num": 4,
+  "slug": "growth-and-production-function",
+  "title": "Growth and the Production Function",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-12",
+  "prefix": "g12",
+  "num": 5,
+  "slug": "solow-first-look",
+  "title": "The Solow Model: A First Look",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-12",
+  "prefix": "g12",
+  "num": 6,
+  "slug": "ideas-institutions-growth",
+  "title": "Ideas, Institutions and Growth",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-12",
+  "prefix": "g12",
+  "num": 7,
+  "slug": "saving-and-investment",
+  "title": "Saving, Investment and the Financial System",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-12",
+  "prefix": "g12",
+  "num": 8,
+  "slug": "aggregate-demand-and-supply",
+  "title": "Aggregate Demand and Supply",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-12",
+  "prefix": "g12",
+  "num": 9,
+  "slug": "keynesian-cross",
+  "title": "The Keynesian Cross and the Multiplier",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-12",
+  "prefix": "g12",
+  "num": 10,
+  "slug": "monetary-policy",
+  "title": "Monetary Policy",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-12",
+  "prefix": "g12",
+  "num": 11,
+  "slug": "fiscal-policy-and-debt",
+  "title": "Fiscal Policy and Public Debt",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-12",
+  "prefix": "g12",
+  "num": 12,
+  "slug": "phillips-curve",
+  "title": "The Phillips Curve and Its Breakdown",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-12",
+  "prefix": "g12",
+  "num": 13,
+  "slug": "trade-and-trade-policy",
+  "title": "Trade beyond Ricardo, and Trade Policy",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-12",
+  "prefix": "g12",
+  "num": 14,
+  "slug": "exchange-rates-and-balance-of-payments",
+  "title": "Exchange Rates and the Balance of Payments",
+  "part": null
+ },
+ {
+  "book": 2,
+  "year": "grade-12",
+  "prefix": "g12",
+  "num": 15,
+  "slug": "income-and-wellbeing",
+  "title": "Income and Wellbeing",
+  "part": null
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 1,
+  "slug": "models-and-data",
+  "title": "Models and Data",
+  "part": "b1.method"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 2,
+  "slug": "constrained-optimisation",
+  "title": "Optimisation under Constraint",
+  "part": "b1.method"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 3,
+  "slug": "comparative-statics",
+  "title": "Comparative Statics",
+  "part": "b1.method"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 4,
+  "slug": "preferences-and-utility",
+  "title": "Preferences and Utility",
+  "part": "b1.consumer"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 5,
+  "slug": "consumer-choice",
+  "title": "Consumer Choice",
+  "part": "b1.consumer"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 6,
+  "slug": "income-and-substitution-effects",
+  "title": "Income and Substitution Effects",
+  "part": "b1.consumer"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 7,
+  "slug": "consumer-welfare",
+  "title": "Consumer Welfare",
+  "part": "b1.consumer"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 8,
+  "slug": "labour-supply-and-saving",
+  "title": "Labour Supply and Saving",
+  "part": "b1.consumer"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 9,
+  "slug": "technology",
+  "title": "Technology",
+  "part": "b1.firm"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 10,
+  "slug": "cost-minimisation",
+  "title": "Cost Minimisation",
+  "part": "b1.firm"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 11,
+  "slug": "profit-maximisation",
+  "title": "Profit Maximisation and Supply",
+  "part": "b1.firm"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 12,
+  "slug": "competitive-industry",
+  "title": "The Competitive Industry",
+  "part": "b1.firm"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 13,
+  "slug": "partial-equilibrium-welfare",
+  "title": "Partial Equilibrium and Welfare",
+  "part": "b1.markets"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 14,
+  "slug": "price-theory-at-work",
+  "title": "Price Theory at Work",
+  "part": "b1.markets"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 15,
+  "slug": "monopoly-pricing",
+  "title": "Monopoly and Pricing",
+  "part": "b1.markets"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 16,
+  "slug": "factor-markets",
+  "title": "Factor Markets",
+  "part": "b1.markets"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 17,
+  "slug": "cournot-and-bertrand",
+  "title": "Oligopoly: Cournot and Bertrand",
+  "part": "b1.markets"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 18,
+  "slug": "national-accounts-in-depth",
+  "title": "National Accounts in Depth",
+  "part": "b1.longrun"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 19,
+  "slug": "long-run-model",
+  "title": "The Long-Run Model",
+  "part": "b1.longrun"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 20,
+  "slug": "solow-model",
+  "title": "The Solow Model",
+  "part": "b1.longrun"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 21,
+  "slug": "growth-accounting",
+  "title": "Growth and Development Accounting",
+  "part": "b1.longrun"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 22,
+  "slug": "unemployment-flows",
+  "title": "Unemployment: Stocks and Flows",
+  "part": "b1.longrun"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 23,
+  "slug": "money-and-inflation",
+  "title": "Money and Inflation",
+  "part": "b1.longrun"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 24,
+  "slug": "is-lm",
+  "title": "The IS\u2013LM Model",
+  "part": "b1.shortrun"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 25,
+  "slug": "aggregate-supply",
+  "title": "Aggregate Supply and the Phillips Curve",
+  "part": "b1.shortrun"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 26,
+  "slug": "stabilisation-policy",
+  "title": "Stabilisation Policy and Its Limits",
+  "part": "b1.shortrun"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 27,
+  "slug": "open-economy",
+  "title": "The Open Economy",
+  "part": "b1.shortrun"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 28,
+  "slug": "economic-data-python",
+  "title": "Economic Data with Python",
+  "part": "b1.data"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 29,
+  "slug": "describing-data",
+  "title": "Describing Data",
+  "part": "b1.data"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 30,
+  "slug": "random-variables-for-econometrics",
+  "title": "Random Variables for Econometrics",
+  "part": "b1.data"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 31,
+  "slug": "sampling-and-inference",
+  "title": "Sampling and Inference",
+  "part": "b1.data"
+ },
+ {
+  "book": 3,
+  "year": "bachelor-1",
+  "prefix": "b1",
+  "num": 32,
+  "slug": "simple-regression",
+  "title": "Simple Regression",
+  "part": "b1.data"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 1,
+  "slug": "expected-utility",
+  "title": "Expected Utility",
+  "part": "b2.uncertainty"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 2,
+  "slug": "insurance-and-risk-sharing",
+  "title": "Insurance and Risk Sharing",
+  "part": "b2.uncertainty"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 3,
+  "slug": "intertemporal-choice",
+  "title": "Intertemporal Choice",
+  "part": "b2.uncertainty"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 4,
+  "slug": "asset-prices",
+  "title": "Asset Prices: A First Model",
+  "part": "b2.uncertainty"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 5,
+  "slug": "behavioural-evidence",
+  "title": "Behavioural Evidence: Where Rational Choice Breaks",
+  "part": "b2.uncertainty"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 6,
+  "slug": "exchange-economies",
+  "title": "Exchange Economies",
+  "part": "b2.equilibrium"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 7,
+  "slug": "welfare-theorems",
+  "title": "The Two Welfare Theorems",
+  "part": "b2.equilibrium"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 8,
+  "slug": "prices-as-information",
+  "title": "Prices as Information",
+  "part": "b2.equilibrium"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 9,
+  "slug": "social-choice",
+  "title": "Social Choice",
+  "part": "b2.equilibrium"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 10,
+  "slug": "static-games",
+  "title": "Static Games",
+  "part": "b2.games"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 11,
+  "slug": "mixed-strategies",
+  "title": "Mixed Strategies",
+  "part": "b2.games"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 12,
+  "slug": "dynamic-games",
+  "title": "Dynamic Games",
+  "part": "b2.games"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 13,
+  "slug": "repeated-games",
+  "title": "Repeated Games",
+  "part": "b2.games"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 14,
+  "slug": "bayesian-games",
+  "title": "Games of Incomplete Information",
+  "part": "b2.games"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 15,
+  "slug": "adverse-selection",
+  "title": "Adverse Selection",
+  "part": "b2.information"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 16,
+  "slug": "signalling-and-screening",
+  "title": "Signalling and Screening",
+  "part": "b2.information"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 17,
+  "slug": "moral-hazard",
+  "title": "Moral Hazard and Contracts",
+  "part": "b2.information"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 18,
+  "slug": "externalities-and-public-goods-theory",
+  "title": "Externalities and Public Goods: The Formal Theory",
+  "part": "b2.information"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 19,
+  "slug": "consumption",
+  "title": "Consumption",
+  "part": "b2.dynamics"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 20,
+  "slug": "investment",
+  "title": "Investment",
+  "part": "b2.dynamics"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 21,
+  "slug": "government-debt",
+  "title": "Government Debt and Ricardian Equivalence",
+  "part": "b2.dynamics"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 22,
+  "slug": "overlapping-generations",
+  "title": "Overlapping Generations",
+  "part": "b2.dynamics"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 23,
+  "slug": "ramsey-model",
+  "title": "The Ramsey Model",
+  "part": "b2.dynamics"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 24,
+  "slug": "endogenous-growth",
+  "title": "Ideas and Endogenous Growth",
+  "part": "b2.dynamics"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 25,
+  "slug": "expectations-and-lucas-critique",
+  "title": "Expectations and the Lucas Critique",
+  "part": "b2.dynamics"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 26,
+  "slug": "search-and-unemployment",
+  "title": "Search and Unemployment",
+  "part": "b2.dynamics"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 27,
+  "slug": "three-equation-model",
+  "title": "The Three-Equation Model",
+  "part": "b2.dynamics"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 28,
+  "slug": "business-cycles",
+  "title": "Business Cycles and Shocks",
+  "part": "b2.dynamics"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 29,
+  "slug": "banks-and-crises",
+  "title": "Banks, Runs and Financial Crises",
+  "part": "b2.dynamics"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 30,
+  "slug": "multiple-regression",
+  "title": "Multiple Regression",
+  "part": "b2.econometrics"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 31,
+  "slug": "regression-inference",
+  "title": "Inference in Regression",
+  "part": "b2.econometrics"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 32,
+  "slug": "specification",
+  "title": "Specification",
+  "part": "b2.econometrics"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 33,
+  "slug": "causality-and-experiments",
+  "title": "Causality and the Experimental Ideal",
+  "part": "b2.econometrics"
+ },
+ {
+  "book": 4,
+  "year": "bachelor-2",
+  "prefix": "b2",
+  "num": 34,
+  "slug": "time-series",
+  "title": "Time Series: A First Course",
+  "part": "b2.econometrics"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 1,
+  "slug": "instrumental-variables",
+  "title": "Instrumental Variables",
+  "part": "b3.econometrics"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 2,
+  "slug": "panel-data",
+  "title": "Panel Data",
+  "part": "b3.econometrics"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 3,
+  "slug": "difference-in-differences",
+  "title": "Difference-in-Differences",
+  "part": "b3.econometrics"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 4,
+  "slug": "regression-discontinuity",
+  "title": "Regression Discontinuity",
+  "part": "b3.econometrics"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 5,
+  "slug": "binary-outcomes",
+  "title": "Binary Outcomes and Maximum Likelihood",
+  "part": "b3.econometrics"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 6,
+  "slug": "credible-empirical-work",
+  "title": "Credible Empirical Work",
+  "part": "b3.econometrics"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 7,
+  "slug": "ricardian-trade",
+  "title": "Ricardian Trade in Full",
+  "part": "b3.trade"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 8,
+  "slug": "factor-endowments",
+  "title": "Factor Endowments",
+  "part": "b3.trade"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 9,
+  "slug": "scale-variety-firms",
+  "title": "Scale, Variety and Firms",
+  "part": "b3.trade"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 10,
+  "slug": "gravity",
+  "title": "Gravity and the Trade Data",
+  "part": "b3.trade"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 11,
+  "slug": "trade-policy",
+  "title": "Trade Policy",
+  "part": "b3.trade"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 12,
+  "slug": "current-account",
+  "title": "The Current Account",
+  "part": "b3.intlmacro"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 13,
+  "slug": "exchange-rates",
+  "title": "Exchange Rates",
+  "part": "b3.intlmacro"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 14,
+  "slug": "exchange-rate-regimes",
+  "title": "Exchange-Rate Regimes and Currency Unions",
+  "part": "b3.intlmacro"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 15,
+  "slug": "central-banking",
+  "title": "Central Banking in Practice",
+  "part": "b3.money"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 16,
+  "slug": "inflation-evidence",
+  "title": "Inflation: The Evidence across Time and Countries",
+  "part": "b3.money"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 17,
+  "slug": "efficiency-cost-of-taxation",
+  "title": "The Efficiency Cost of Taxation",
+  "part": "b3.public"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 18,
+  "slug": "transfers-and-incentives",
+  "title": "Transfers, Incentives and Redistribution",
+  "part": "b3.public"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 19,
+  "slug": "social-insurance",
+  "title": "Social Insurance",
+  "part": "b3.public"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 20,
+  "slug": "cost-benefit-analysis",
+  "title": "Cost\u2013Benefit Analysis",
+  "part": "b3.public"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 21,
+  "slug": "public-choice-voting",
+  "title": "Public Choice: Voting",
+  "part": "b3.public"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 22,
+  "slug": "interest-groups-and-regulation",
+  "title": "Interest Groups, Bureaucracy and Regulation",
+  "part": "b3.public"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 23,
+  "slug": "labour-supply-and-demand",
+  "title": "Labour Supply and Demand in the Data",
+  "part": "b3.labour"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 24,
+  "slug": "human-capital",
+  "title": "Human Capital and the Returns to Schooling",
+  "part": "b3.labour"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 25,
+  "slug": "wage-structure",
+  "title": "The Wage Structure",
+  "part": "b3.labour"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 26,
+  "slug": "minimum-wage",
+  "title": "Minimum Wages and Monopsony",
+  "part": "b3.labour"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 27,
+  "slug": "oligopoly-and-collusion",
+  "title": "Oligopoly and Collusion",
+  "part": "b3.io"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 28,
+  "slug": "auctions-and-market-design",
+  "title": "Auctions and Market Design",
+  "part": "b3.io"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 29,
+  "slug": "platforms-and-innovation",
+  "title": "Platforms and Innovation",
+  "part": "b3.io"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 30,
+  "slug": "competition-policy",
+  "title": "Competition Policy and Regulation",
+  "part": "b3.io"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 31,
+  "slug": "growth-empirics",
+  "title": "Growth Empirics and Convergence",
+  "part": "b3.growth"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 32,
+  "slug": "institutions",
+  "title": "Institutions and Long-Run Prosperity",
+  "part": "b3.growth"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 33,
+  "slug": "demographic-transition",
+  "title": "Population and the Demographic Transition",
+  "part": "b3.growth"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 34,
+  "slug": "development-microeconomics",
+  "title": "Development Microeconomics",
+  "part": "b3.growth"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 35,
+  "slug": "environmental-and-resource-economics",
+  "title": "Environmental and Resource Economics",
+  "part": "b3.growth"
+ },
+ {
+  "book": 5,
+  "year": "bachelor-3",
+  "prefix": "b3",
+  "num": 36,
+  "slug": "income-and-wellbeing-evidence",
+  "title": "Income, Wellbeing and What Economics Measures",
+  "part": "b3.growth"
+ }
+]

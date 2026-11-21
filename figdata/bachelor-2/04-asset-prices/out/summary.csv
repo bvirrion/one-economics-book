@@ -1,0 +1,2 @@
+n_countries,years,band,n_outside_band,median_eq_mean,median_bill_mean,median_premium,eq_sd_mean_corr,usa_premium,usa_eq_sd,usa_dc_sd,usa_corr,usa_cov,usa_gamma,usa_sharpe,usa_gamma_bound,usa_eq_final,usa_bill_final
+15,71,0.237,2,8.74,0.97,7.75,0.01,7.64,16.29,1.87,0.08,2.45,312.1,0.469,25.1,177.6,2.37

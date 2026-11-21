@@ -1,0 +1,132 @@
+% ============================================================================
+% English UI and structural strings for the One Economics Book series.
+% Loaded by styles/oneeconomics.sty when \booklang is en (default).
+% ============================================================================
+
+% Theorem / statement environment titles
+\newcommand{\omnameDefinition}{Definition}
+\newcommand{\omnameTheorem}{Theorem}
+\newcommand{\omnameProposition}{Proposition}
+\newcommand{\omnameLemma}{Lemma}
+\newcommand{\omnameCorollary}{Corollary}
+\newcommand{\omnameMethod}{Method}
+\newcommand{\omnameExample}{Example}
+\newcommand{\omnameNotation}{Notation}
+\newcommand{\omnameRemark}{Remark}
+\newcommand{\omnameExercise}{Exercise}
+\newcommand{\omnameExercises}{Exercises}
+\newcommand{\omnameProblem}{Problem}
+\newcommand{\omnameProblems}{Problems}
+\newcommand{\omnameProof}{Proof}
+
+% Admitted results and solutions appendix headers
+\newcommand{\omadmittedtext}{Admitted at this level.}
+\newcommand{\omsolutionof}{Solution of}
+\newcommand{\ompage}{page}
+\newcommand{\omnameGotoSolution}{Solution p.}
+
+% Misc text macros
+\newcommand{\st}{\text{ such that }}
+
+% Cover / title page
+\newcommand{\bookmaintitle}{One Economics Book}
+\newcommand{\booktagline}{The One Economics Book to Rule Them All}
+\newcommand{\bookdescription}{Economics from sixth grade to the end of the bachelor's degree}
+\newcommand{\bookcontributors}{The One Economics Book contributors}
+\newcommand{\bookversionlabel}{Version}
+
+% Colophon
+\newcommand{\omcolophonsource}{Source code, issues and contributions:}
+\newcommand{\omcolophonlicense}{Except where otherwise noted, this book is licensed under Creative Commons CC BY-NC-SA 4.0:}
+\newcommand{\omcolophoncredit}{Please credit: One Economics Book, One Course (one-course.com).}
+
+% Boxes (styles/oneeconomics.sty): the recall box that opens a chapter
+% building on another one, the dated box (its title reads "Facts as of 2026"),
+% the model box and its four fields, the debate, record and measure boxes, and
+% the source line under a chart.
+\newcommand{\omnameRecall}{You already know}
+\newcommand{\omnameDated}{Facts as of}
+\newcommand{\omnameModel}{Model}
+\newcommand{\omnameAssumes}{Assumes.}
+\newcommand{\omnamePredicts}{Predicts.}
+\newcommand{\omnameTested}{Tested.}
+\newcommand{\omnameBreaks}{Breaks.}
+\newcommand{\omnameDebate}{Open question}
+\newcommand{\omnameRecord}{On the record}
+\newcommand{\omnameMeasure}{How it is measured}
+\newcommand{\omnameSource}{Source}
+% Listings and captured outputs (\omcode, \omoutput).
+\newcommand{\omnameListing}{Listing}
+\newcommand{\omnameListings}{Listings}
+\newcommand{\omnameOutput}{Output}
+\newcommand{\omnameOutputs}{Outputs}
+\newcommand{\omnameSomeLinesOut}{Some lines are left out.}
+
+% Solutions appendix part title
+\newcommand{\omsolutionspart}{Solutions to the Exercises}
+
+% Part titles (Grades 6–12; used by shared part.tex files)
+\@namedef{omstr@part.grade6}{Grade 6 (Age 11--12)}
+\@namedef{omstr@part.grade7}{Grade 7 (Age 12--13)}
+\@namedef{omstr@part.grade8}{Grade 8 (Age 13--14)}
+\@namedef{omstr@part.grade9}{Grade 9 (Age 14--15)}
+\@namedef{omstr@part.grade10}{Grade 10 (Age 15--16)}
+\@namedef{omstr@part.grade11}{Grade 11 (Age 16--17)}
+\@namedef{omstr@part.grade12}{Grade 12 (Age 17--18)}
+
+% Part titles (Bachelor Years 1–3; used by parts/bachelor-N/part.tex)
+\@namedef{omstr@part.bachelor1}{Bachelor Year 1 (Age 18--19)}
+\@namedef{omstr@part.bachelor2}{Bachelor Year 2 (Age 19--20)}
+\@namedef{omstr@part.bachelor3}{Bachelor Year 3 (Age 20--21)}
+
+% Parts inside the university volumes (parts/bachelor-N/part.tex).
+\@namedef{omstr@part.b1.method}{Method}
+\@namedef{omstr@part.b1.consumer}{The Consumer}
+\@namedef{omstr@part.b1.firm}{The Firm}
+\@namedef{omstr@part.b1.markets}{Markets and Price Theory}
+\@namedef{omstr@part.b1.longrun}{Macroeconomics: the Long Run}
+\@namedef{omstr@part.b1.shortrun}{The Short Run}
+\@namedef{omstr@part.b1.data}{Data and Statistics, in Python}
+\@namedef{omstr@part.b2.uncertainty}{Uncertainty and Time}
+\@namedef{omstr@part.b2.equilibrium}{General Equilibrium and Welfare}
+\@namedef{omstr@part.b2.games}{Game Theory}
+\@namedef{omstr@part.b2.information}{Information and Incentives}
+\@namedef{omstr@part.b2.dynamics}{Macroeconomic Dynamics}
+\@namedef{omstr@part.b2.econometrics}{Econometrics I, in Python}
+\@namedef{omstr@part.b3.econometrics}{Econometrics II: Establishing Cause}
+\@namedef{omstr@part.b3.trade}{International Trade}
+\@namedef{omstr@part.b3.intlmacro}{International Macroeconomics}
+\@namedef{omstr@part.b3.money}{Money and Banking}
+\@namedef{omstr@part.b3.public}{Public Economics and Public Choice}
+\@namedef{omstr@part.b3.labour}{Labour Economics}
+\@namedef{omstr@part.b3.io}{Industrial Organisation}
+\@namedef{omstr@part.b3.growth}{Growth, Development and Environment}
+
+% Plural names + \omnameChapter, used by the \crefname declarations in
+% oneeconomics.sty. Without these, cleveref falls back to its English built-ins and
+% a French book says "Theorem 3.1" / "Chapter 5" in the middle of French prose.
+\newcommand{\omnameDefinitions}{Definitions}
+\newcommand{\omnameTheorems}{Theorems}
+\newcommand{\omnamePropositions}{Propositions}
+\newcommand{\omnameLemmas}{Lemmas}
+\newcommand{\omnameCorollarys}{Corollaries}
+\newcommand{\omnameMethods}{Methods}
+\newcommand{\omnameExamples}{Examples}
+\newcommand{\omnameNotations}{Notations}
+\newcommand{\omnameRemarks}{Remarks}
+\newcommand{\omnameChapter}{Chapter}
+\newcommand{\omnameChapters}{Chapters}
+% Section, for \cref{sec:…} (2026-10-04: it had no \crefname, so cleveref
+% printed its English built-in "Section" in every edition).
+\newcommand{\omnameSection}{Section}
+\newcommand{\omnameSections}{Sections}
+
+% LaTeX's own structural names. babel would normally localise these, but it is
+% optional here (see oneeconomics.sty) — so without these a French book prints
+% "Chapter 1" above every chapter title and "Appendix A" over the solutions.
+\renewcommand{\chaptername}{Chapter}
+\renewcommand{\partname}{Part}
+\renewcommand{\contentsname}{Contents}
+\renewcommand{\appendixname}{Appendix}
+\renewcommand{\indexname}{Index}
+

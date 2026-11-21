@@ -1,0 +1,276 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g12-04. The aggregate production function; constant and diminishing
+% returns; factor shares; growth accounting with logarithms; what the accounts show. Real numbers:
+% figdata/grade-12/04-growth-and-production-function/ (PWT 11.0: cgdpo, cn, emp 2019; labsh 1950-2023; rgdpna, rnna, emp,
+% labsh 1960-2019 for five countries; Brenland accounts.csv, invented). Ledger: Young 1995 and Karabarbounis-Neiman 2014
+% abstracts. Capital per worker and the average annual growth rate are Book 1's (recalled, not defined).
+\chapter{Growth and the Production Function}\label{ch:g12:growth-and-production-function}
+
+In 2019 an American worker produced, on average, about 139\,000 dollars of output; an Indian worker about 19\,000, a seventh as much. Behind the American worker stood
+about 461\,000 dollars of capital, buildings, machines, roads and software; behind the Indian worker about 73\,000. More capital goes with more output. But the
+American worker had six times the capital and produced seven times the output, and the question of this chapter is how much of such gaps, and of growth over time, capital
+explains.
+% figdata: cross_key (usa_y 139214, usa_k 460976, ind_y 19409, ind_k 72907)
+
+The tool is the \omterm{def:g12:growth-and-production-function:apf}{aggregate production function}, a formula linking a country's output to its capital, its labour and its technology. With it one can split the growth of
+output per worker into a part due to more capital and a remainder, and measure that remainder.
+
+\begin{openingchart}{Output per worker against capital per worker, 149 countries with at least one million people, 2019, thousands of 2021 dollars at purchasing power
+parity, logarithmic scales.}{Penn World Table 11.0 (cgdpo, cn, emp)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.8\linewidth, height=6.2cm, xmode=log, ymode=log, xmin=1000, xmax=2000000, ymin=1000, ymax=400000, log ticks with fixed point,
+  xtick={1000,10000,100000,1000000}, xticklabels={1, 10, 100, 1000}, ytick={1000,10000,100000}, yticklabels={1, 10, 100},
+  xlabel={capital per worker, thousands of dollars}, ylabel={output per worker, thousands of dollars}]
+\addplot+[omDef, mark=*, mark size=1.2pt, only marks] table[x=k, y=y] {figdata/grade-12/04-growth-and-production-function/out/cross.csv};
+\node[font=\scriptsize, anchor=south east] at (axis cs:460976,139214) {United States};
+\node[font=\scriptsize, anchor=north west] at (axis cs:72907,19409) {India};
+\node[font=\scriptsize, anchor=north west] at (axis cs:4370,2369) {Burundi};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: the factors of production, labour productivity, capital per worker, the growth rate and the average annual growth rate. From
+\cref{ch:g10:national-accounts}: depreciation of capital. From \cref{ch:g11:labour-market}: \omterm{def:g11:labour-market:human-capital}{human capital}. From \cref{ch:g12:inflation-and-money}: growth rates of a
+product add, in logarithms.
+\end{recall}
+
+\section{The aggregate production function}\label{sec:g12:growth-and-production-function:apf}
+
+\begin{definition}[Aggregate production function]\label{def:g12:growth-and-production-function:apf}
+An \emph{aggregate production function}\index{aggregate production function} gives a country's real output $Y$ as a function of its capital stock $K$, its labour $L$ and
+its technology $A$: $Y = F(K, L, A)$.
+\end{definition}
+
+\begin{definition}[Constant returns and diminishing returns]\label{def:g12:growth-and-production-function:crs}
+A \omterm{def:g11:production-and-costs:production-function}{production function} has \emph{constant returns to scale}\index{constant returns to scale} if multiplying all inputs by $\lambda > 0$ multiplies output by $\lambda$. It
+shows \emph{diminishing returns to capital}\index{diminishing returns to capital}\phantomsection\label{def:g12:growth-and-production-function:diminishing-returns} if each
+added unit of capital, with labour fixed, adds less output than the one before.
+\end{definition}
+
+\begin{definition}[Cobb--Douglas production function]\label{def:g12:growth-and-production-function:cobb-douglas}
+A \emph{Cobb--Douglas production function}\index{Cobb--Douglas production function} has the form $Y = AK^{\alpha}L^{1 - \alpha}$, with $0 < \alpha < 1$.
+\end{definition}
+
+\begin{proposition}[Properties of the Cobb--Douglas function]\label{prop:g12:growth-and-production-function:cd}
+The function $Y = AK^{\alpha}L^{1 - \alpha}$ has \omterm{def:g12:growth-and-production-function:crs}{constant returns to scale}; output per worker is $y = Ak^{\alpha}$, where $k = K/L$; and it shows \omterm{def:g12:growth-and-production-function:crs}{diminishing returns to
+capital}.
+\end{proposition}
+\begin{proof}
+$A(\lambda K)^{\alpha}(\lambda L)^{1 - \alpha} = \lambda^{\alpha + 1 - \alpha}AK^{\alpha}L^{1 - \alpha} = \lambda Y$. Dividing by $L$: $Y/L = AK^{\alpha}L^{-\alpha} = A(K/L)^{\alpha}$.
+With $L$ fixed, the derivative of $Y$ with respect to $K$ is $\alpha AK^{\alpha - 1}L^{1 - \alpha}$, which decreases as $K$ rises because $\alpha - 1 < 0$.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[width=0.66\linewidth, height=5.2cm, xmin=0, xmax=100, ymin=0, ymax=10, xlabel={capital per worker $k$}, ylabel={output per worker $y$},
+  grid=major, grid style={gray!20}]
+\addplot[omDef, thick, domain=0:100, samples=120] {1.5*x^(1/3)} node[pos=0.85, above, font=\scriptsize] {$A = 1.5$};
+\addplot[omThm, thick, domain=0:100, samples=120] {x^(1/3)} node[pos=0.85, below, font=\scriptsize] {$A = 1$};
+\end{axis}
+\end{tikzpicture}
+
+{\small Output per worker $y = Ak^{1/3}$ for two levels of technology. Along a curve, each extra unit of capital adds less: going from 8 to 27 raises $y$ from 2 to 3 when $A = 1$,
+going from 27 to 64 only from 3 to 4. A higher $A$ lifts the whole curve.}
+\end{omfigure}
+
+\section{Who gets the output}\label{sec:g12:growth-and-production-function:shares}
+
+\begin{definition}[Labour share of income]\label{def:g12:growth-and-production-function:labour-share}
+The \emph{labour share of income}\index{labour share of income} is the share of output paid to labour as wages, salaries and other compensation; the rest goes to capital
+as profits, interest and rents.
+\end{definition}
+
+Under competition, firms hire labour until the wage equals what a last worker adds to output. With the Cobb--Douglas function that is the derivative of $Y$ with respect to $L$, with $K$ fixed,
+$(1 - \alpha)AK^{\alpha}L^{-\alpha} = (1 - \alpha)Y/L$, so the wage bill $wL$ is $(1 - \alpha)Y$: labour's share is $1 - \alpha$, and capital's is $\alpha$, whatever the amounts of capital and labour. This
+gives a way to measure $\alpha$: look at the share of income that goes to capital.
+
+\begin{model}{The Cobb--Douglas aggregate production function}
+\assumes \omterm{def:g12:growth-and-production-function:crs}{Constant returns to scale}; capital and labour substitute smoothly for each other; competitive factor markets.
+\predicts Income shares that stay the same as capital per worker grows; \omterm{def:g12:growth-and-production-function:crs}{diminishing returns to capital} per worker.
+\tested Consistent with it: labour shares stayed near 0.6 to 0.7 for decades in the United States, Britain and France (the chart below), though they have
+  fallen since the 1980s in many countries (Karabarbounis and Neiman 2014), which a fixed $\alpha$ does not allow.
+% ledger: g12:kn2014
+\breaks The labour share has fallen since the early 1980s in most countries and industries, and roughly half of the fall has been traced to cheaper investment goods,
+  which led firms to replace labour with capital more than the Cobb--Douglas form allows (Karabarbounis and Neiman 2014).
+\end{model}
+% ledger: g12:kn2014
+
+\begin{omchart}{Labour share of income (labour compensation over GDP at current national prices), five countries, 1950--2023; each line starts in the first year with an observed share.}{Penn World Table 11.0 (labsh)}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.86\linewidth, height=5.4cm, xmin=1950, xmax=2023, ymin=0.35, ymax=0.75, xtick={1950,1960,...,2020}, ylabel={share of GDP},
+  y tick label style={/pgf/number format/.cd, fixed, precision=2}, unbounded coords=jump]
+\addplot[omDef, thick] table[x=year, y=USA] {figdata/grade-12/04-growth-and-production-function/out/labsh.csv};
+\addplot[omThm, thick] table[x=year, y=GBR] {figdata/grade-12/04-growth-and-production-function/out/labsh.csv};
+\addplot[omProp, thick] table[x=year, y=FRA] {figdata/grade-12/04-growth-and-production-function/out/labsh.csv};
+\addplot[black, thick, dashed] table[x=year, y=JPN] {figdata/grade-12/04-growth-and-production-function/out/labsh.csv};
+\addplot[omMeth, thick] table[x=year, y=KOR] {figdata/grade-12/04-growth-and-production-function/out/labsh.csv};
+\node[omProp, font=\scriptsize, anchor=south] at (axis cs:1958,0.705) {France};
+\node[omDef, font=\scriptsize, anchor=west] at (axis cs:1951,0.66) {United States};
+\node[omThm, font=\scriptsize, anchor=east] at (axis cs:1969.5,0.612) {United Kingdom};
+\node[black, font=\scriptsize, anchor=east] at (axis cs:1969.5,0.508) {Japan};
+\node[omMeth, font=\scriptsize, anchor=north] at (axis cs:1992,0.48) {Korea};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: labsh (USA 1950 0.628, 2000 0.637, 2023 0.568)
+
+\section{Growth accounting}\label{sec:g12:growth-and-production-function:accounting}
+
+\begin{definition}[Total factor productivity and growth accounting]\label{def:g12:growth-and-production-function:tfp}
+\emph{Total factor productivity}\index{total factor productivity} is the term $A$ of the \omterm{def:g11:production-and-costs:production-function}{production function}: output not explained by the measured inputs. \emph{Growth
+accounting}\index{growth accounting}\phantomsection\label{def:g12:growth-and-production-function:growth-accounting} splits the growth of output into the contributions of
+the growth of each input and, as the remainder, the growth of total factor productivity.
+\end{definition}
+
+\begin{proposition}[The growth-accounting equation]\label{prop:g12:growth-and-production-function:accounting}
+If $y = Ak^{\alpha}$ and $g$ denotes logarithmic growth rates, then $g_y = g_A + \alpha g_k$, so that $g_A = g_y - \alpha g_k$.
+\end{proposition}
+\begin{proof}
+$\ln y = \ln A + \alpha \ln k$ at each date; subtracting the equation at one date from that at the next gives the result.
+\end{proof}
+
+Output and capital are measured; $\alpha$ is taken from the capital share; $g_A$ is what is left. It is often called the residual: a measure of everything that raises
+output other than more capital per worker, from better technology to better organisation, and it also collects every error in measuring the rest.
+
+\begin{measure}[How a capital stock is measured]
+No one counts a country's machines. Statisticians start from an estimate of the stock in some early year and add each year's investment, at constant prices, after
+subtracting depreciation: $K_{t+1} = (1 - \delta)K_t + I_t$. This is the perpetual inventory method. The longer the run of investment data, the less the starting guess
+matters; the depreciation rates, which differ for buildings, machines and software, are estimated from how long such assets last.
+\end{measure}
+
+\begin{omchart}{Average annual growth of output per worker, 1960--2019, in per cent, split into the contribution of capital per worker ($\alpha g_k$, with $\alpha$ one minus
+the average labour share) and the residual, total factor productivity.}{Penn World Table 11.0 (rgdpna, rnna, emp, labsh); computed}
+\begin{tikzpicture}
+\begin{axis}[omrecord, ybar stacked, /pgf/bar width=18pt, width=0.7\linewidth, height=5.2cm, ymin=0, ymax=5, xtick={0,...,4},
+  xticklabels={United States, Japan, Korea, United Kingdom, France}, x tick label style={/tikz/font=\scriptsize}, enlarge x limits=0.15,
+  ylabel={per cent a year}, legend style={at={(0.02,0.98)}, anchor=north west, font=\scriptsize, draw=none}]
+\addplot[fill=omThm!60, draw=omThm] table[x=x, y=cap] {figdata/grade-12/04-growth-and-production-function/out/accounts.csv};
+\addplot[fill=omDef!60, draw=omDef] table[x=x, y=tfp] {figdata/grade-12/04-growth-and-production-function/out/accounts.csv};
+\legend{capital per worker, total factor productivity}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: accounts (USA 1.59 = 0.52 + 1.07; JPN 2.96 = 1.89 + 1.07; KOR 4.55 = 2.50 + 2.06; GBR 1.78; FRA 2.17)
+
+\begin{record}[Korea: accumulation and productivity]
+% ledger: g12:young1995
+% figdata: accounts (KOR gy 4.55, cap 2.50, tfp 2.06, alpha 0.503)
+A study of the fast growth of Hong Kong, Singapore, South Korea and Taiwan (Young 1995) concluded that it came above all from the
+accumulation of inputs, capital, more workers and more schooling: once that was accounted for, their productivity growth was close to that of many rich and Latin American
+economies. The accounts in the chart above, which leave out schooling, give Korea from 1960 to 2019 growth of output per worker of 4.55\,\% a year, of which 2.50 points came
+from capital per worker and 2.06 from the residual, the largest residual of the five, but less than half the total.
+\end{record}
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g12:growth-and-production-function:1}
+With $Y = AK^{1/3}L^{2/3}$, $A = 2$, $K = 64$ and $L = 8$, find output.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:growth-and-production-function:2}
+With $y = k^{1/3}$, find output per worker when $k = 27$ and when $k = 125$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:growth-and-production-function:3}
+From the opening chart and the figures of the text, compute the ratio of American to Indian capital per worker, and of output per worker, in 2019.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:growth-and-production-function:4}
+Output per worker rose from 100 to 150 in 20 years. Find the average annual growth rate.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:growth-and-production-function:5}
+Output per worker doubled in 35 years. Find the average annual growth rate.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:growth-and-production-function:6}
+Do $F(K, L) = K^{0.3}L^{0.7}$ and $G(K, L) = K^{0.5}L^{0.6}$ have \omterm{def:g12:growth-and-production-function:crs}{constant returns to scale}? Show by multiplying both inputs by $\lambda$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:growth-and-production-function:7}
+What are the returns to scale of $F(K, L) = K + 2L$ and of $G(K, L) = \sqrt{K} + \sqrt{L}$?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:growth-and-production-function:8}
+Output per worker grows by 3\,\% a year, capital per worker by 4\,\%, and $\alpha = 0.3$. Find the growth of \omterm{def:g12:growth-and-production-function:tfp}{total factor productivity}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:growth-and-production-function:9}
+From the growth-accounting chart, Korea's output per worker grew by 4.55\,\% a year and capital contributed 2.50 points. Find the residual and its share of growth.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:growth-and-production-function:10}
+With $y = Ak^{1/3}$, by what percentage does output per worker rise when capital per worker doubles? When it doubles again?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:growth-and-production-function:11}
+From the labour-share chart, give the American share in 1950, 2000 and 2023, and Korea's in 1970, its first observed year, and in 2023.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:growth-and-production-function:12}
+What evidence contradicts the Cobb--Douglas assumption of constant income shares? Use the labour-share chart and the chapter's model box.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:growth-and-production-function:13}
+With $y = Ak^{\alpha}h^{1 - \alpha}$, where $h$ is \omterm{def:g11:labour-market:human-capital}{human capital} per worker, write the growth-accounting equation. With $g_y = 2$, $g_k = 2.5$, $g_h = 0.6$ (per cent a year) and
+$\alpha = 1/3$, find $g_A$, and compare with the residual when $h$ is left out.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:growth-and-production-function:14}
+In 2019 American capital per worker was 6.32 times India's. If both countries had the same $A$ and $y = Ak^{1/3}$, what ratio of output per worker would follow? The actual
+ratio was 7.17: what ratio of $A$ does that imply?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:growth-and-production-function:15}
+Take $Y = K^{0.5}L^{0.6}$. By what factor does output rise when both inputs double? Show that paying each input what its last unit adds would cost more than total output,
+and say what that implies for competition.
+\end{exercise}
+
+\section{Problem: Brenland's Growth Accounts, 2000--2025}
+
+\begin{problem}[{Weekend problem --- building a capital stock and finding the residual}]
+\label{pb:g12:growth-and-production-function:1}
+Brenland's accounts give real GDP, employment and investment each year. Real GDP was 197\,403 million 2015 dalens in 2000 and 292\,390 million in 2025; employment 3760 and
+4366 thousand. Investment in 2000 was 34\,200 million current dalens, with a \omterm{def:g10:national-accounts:nominal-gdp}{GDP deflator} of 77 (2015 = 100). Take $\alpha = 0.35$ and a depreciation rate of 5\,\% a year,
+and start the capital stock at three times real GDP in 2000. Carried through to 2025, the method gives a capital stock of 953\,616 million 2015 dalens.
+
+\medskip
+\noindent\textbf{Part I --- The capital stock.}
+\begin{enumerate}
+\item Find real investment in 2000, in 2015 dalens.
+\item Find the capital stock in 2000 and in 2001.
+\item Why is depreciation subtracted each year?
+\item Find capital per worker in 2000 and in 2025, in thousands of 2015 dalens.
+\item Find output per worker in 2000 and in 2025.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The accounts.}
+\begin{enumerate}[resume]
+\item Find the average annual logarithmic growth of output per worker over the 25 years.
+\item Find that of capital per worker.
+\item Find the contribution of capital per worker.
+\item Find the growth of \omterm{def:g12:growth-and-production-function:tfp}{total factor productivity}.
+\item What share of the growth of output per worker does it account for?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- What the function implies.}
+\begin{enumerate}[resume]
+\item \omterm{def:g10:national-accounts:nominal-gdp}{Nominal GDP} in 2025 was 393\,264 million dalens. Under competition, what was the wage bill?
+\item Find the \omterm{def:g11:production-and-costs:marginal-product}{marginal product} of capital, $\alpha Y/K$, in 2025, and the return after depreciation.
+\item By what percentage would output per worker rise if capital per worker doubled, with $A$ unchanged?
+\item How fast would capital per worker have had to grow, with $A$ constant, to give the same growth of output per worker?
+\item Why does growth that relies on capital alone slow down?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- How much to trust the residual.}
+\begin{enumerate}[resume]
+\item Starting the capital stock at 2.5 times real GDP instead, the same method gives a residual share of 31\,\%. Explain why the share falls.
+\item What share of the starting stock is still in the 2025 stock, after 25 years of 5\,\% depreciation? Why does the starting guess matter less over a longer run?
+\item List three things besides technology that the residual can contain.
+\item Why do the accounts of the chapter's five countries cover sixty years, rather than a few?
+\item State the result of the problem: the share of Brenland's growth of output per worker due to \omterm{def:g12:growth-and-production-function:tfp}{total factor productivity}.
+\end{enumerate}
+\end{problem}

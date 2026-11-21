@@ -1,0 +1,329 @@
+\chapter{Ideas and Endogenous Growth}\label{ch:b2:endogenous-growth}
+
+In the Solow and \omterm{def:b2:ramsey-model:ramsey}{Ramsey models}, growth of income per person in the long run comes from technology, and technology is
+left unexplained. This chapter models where it comes from: ideas, produced by people who work on them. The chart sets two
+facts side by side: how fast American productivity has grown, decade by decade, and how many people the large economies
+now employ in research.
+
+\begin{openingchart}{Left: average annual growth of total factor productivity, United States, by decade, 1954--2023, per
+  cent. Right: researchers in research and development per million people, 1996 to the latest year.}{Penn World Table
+  (rtfpna); World Bank, World Development Indicators (SP.POP.SCIE.RD.P6); our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, name=tfp, ybar, bar width=9pt, width=0.47\linewidth, height=0.44\linewidth, xmin=0.4,
+    xmax=7.6, ymin=-0.5, ymax=1.6, xtick={1,...,7}, xticklabels={1954--63,1963--73,1973--83,1983--93,1993--03,
+    2003--13,2013--23}, xticklabel style={rotate=60, anchor=east, font=\scriptsize}, ylabel={Per cent a year},
+    xmajorgrids=false]
+  \addplot[fill=omDef!50, draw=omDef] table[x=pos, y=growth] {figdata/bachelor-2/24-endogenous-growth/out/tfp.csv};
+\end{axis}
+\begin{axis}[omrecord, at={(tfp.east)}, anchor=west, xshift=2.3cm, width=0.44\linewidth, height=0.44\linewidth,
+    xmin=1996, xmax=2023, ymin=0, ymax=10000, xtick={2000,2010,2020}, xticklabel style={/pgf/number format/1000 sep=},
+    scaled y ticks=false, yticklabel style={/pgf/number format/1000 sep={\,}}, ylabel={Per million people},
+    unbounded coords=jump, legend style={at={(0.5,-0.32)}, anchor=north, legend columns=3, font=\scriptsize}]
+  \addplot[omDef, thick] table[x=year, y=USA] {figdata/bachelor-2/24-endogenous-growth/out/researchers.csv};
+  \addplot[omThm, thick, dashed] table[x=year, y=DEU] {figdata/bachelor-2/24-endogenous-growth/out/researchers.csv};
+  \addplot[omMeth, thick, dotted] table[x=year, y=JPN] {figdata/bachelor-2/24-endogenous-growth/out/researchers.csv};
+  \addplot[black!70, thick, dashdotted] table[x=year, y=KOR] {figdata/bachelor-2/24-endogenous-growth/out/researchers.csv};
+  \addplot[omProp, thick] table[x=year, y=CHN] {figdata/bachelor-2/24-endogenous-growth/out/researchers.csv};
+  \legend{United States, Germany, Japan, Korea, China}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: tfp (1.33, 0.86, -0.23, 0.75, 0.96, 0.38, 0.53); res_summary (USA 3207 -> 4937 in 2022, ratio 1.54; DEU 2.11; JPN 1.14; KOR 4.33; CHN 4.71)
+American productivity grew 1.33 per cent a year in 1954--63 and 0.53 per cent a year in 2013--23, with no upward trend in between. Meanwhile research effort
+rose: researchers per million people grew by half in the United States between 1996 and 2022, doubled in Germany, and more
+than quadrupled in Korea and China. A model in which growth rises with the number of researchers must explain why the right
+panel rose while the left panel did not.
+
+\begin{recall}
+From the school volumes: ideas, institutions and growth, and creative destruction, the replacement of old products and
+firms by new ones. From the Year 1 volume: the Solow model and total factor productivity. From \cref{ch:b2:externalities-and-public-goods-theory}: rivalry and
+excludability. From \cref{ch:b2:ramsey-model}: balanced growth and the steady state.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:endogenous-growth:symbols}
+$A$ is the stock of ideas (technology); $L$ the workforce, growing at rate $n$; $L_A = s_RL$ the researchers, $s_R$ the research share; $\nu$ the productivity of research;
+$\phi$ the strength of the effect of existing ideas on new ones; $g_x = \dot x/x$ the growth rate of $x$.
+\end{notation}
+
+\section{Constant returns to capital}\label{sec:b2:endogenous-growth:ak}
+
+\begin{definition}[AK model]\label{def:b2:endogenous-growth:ak}
+The \emph{AK model}\index{AK model} is a growth model in which output is proportional to a broad measure of capital, $Y = AK$,
+so that capital faces no diminishing returns and its growth does not slow down.
+\end{definition}
+
+With saving rate $s$ and depreciation $\delta$, $\dot K = sAK - \delta K$, so $g_Y = g_K = sA - \delta$: growth rises with saving for ever. With $A = 0.5$ and $\delta = 0.05$, a saving rate of 20 per cent gives growth of 5 per cent a
+year and a saving rate of 25 per cent gives 7.5 per cent.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=0.4, ymin=-0.06, ymax=0.16, width=0.5\linewidth, height=0.4\linewidth,
+    xlabel={Saving rate, $s$}, ylabel={Growth rate}, scaled x ticks=false, scaled y ticks=false,
+    xticklabel style={/pgf/number format/fixed}, yticklabel style={/pgf/number format/fixed}]
+  \addplot[omDef, very thick, domain=0:0.4, samples=2] {0.5*x - 0.05};
+  \draw[black!40] (axis cs:0,0) -- (axis cs:0.4,0);
+  \node[eqpoint] at (axis cs:0.2,0.05) {};
+  \node[eqpoint] at (axis cs:0.25,0.075) {};
+  \draw[guide] (axis cs:0.2,0.05) -- (axis cs:0.2,-0.06);
+  \draw[guide] (axis cs:0.25,0.075) -- (axis cs:0.25,-0.06);
+\end{axis}
+\end{tikzpicture}
+
+{\small Growth in the \omterm{def:b2:endogenous-growth:ak}{AK model}, $g = sA - \delta$, with $A = 0.5$ and $\delta = 0.05$: each extra point of saving adds half a point of growth, permanently.}
+\end{omfigure}
+
+\begin{model}{AK model}
+\assumes Constant returns to a broad capital stock that includes knowledge and skills, so that accumulation never runs
+into diminishing returns.
+\predicts Permanent differences in growth rates between economies that save at different rates; a permanent change in
+the saving rate changes growth permanently.
+\tested On American time series: persistent changes in the determinants the model names should appear as persistent
+changes in the growth rate (Jones 1995).
+\breaks American growth rates show no large persistent changes, and many AK-style models fail that test.
+\end{model}
+
+\section{Ideas used by all at once}\label{sec:b2:endogenous-growth:nonrival}
+
+\begin{definition}[Nonrival good]\label{def:b2:endogenous-growth:nonrival}
+A \emph{nonrival good}\index{nonrival good} is a good whose use by one person does not reduce the amount available to
+others.
+\end{definition}
+
+A design, a formula or a method is nonrival: once found, it can be used by every worker in every firm at once. This has
+two consequences. Production with ideas has increasing returns: doubling workers and machines doubles output with the same
+ideas, so doubling ideas as well more than doubles it. And a market in which ideas are sold at marginal cost, which is near
+zero, cannot pay for their discovery. Some excludability, through patents or secrecy and the market power they give, is
+needed for private research to pay; the models of this chapter therefore have monopolistic firms selling designs at a
+price above marginal cost.
+
+\section{The research-sector model}\label{sec:b2:endogenous-growth:research}
+
+\begin{definition}[Research sector]\label{def:b2:endogenous-growth:research-sector}
+The \emph{research sector}\index{research sector} of a growth model is the part of the economy that employs workers to
+produce new ideas rather than goods.
+\end{definition}
+
+\begin{definition}[Ideas production function]\label{def:b2:endogenous-growth:ideas-production}
+An \emph{ideas production function}\index{ideas production function} gives the flow of new ideas as a function of the
+researchers employed and the existing stock of ideas: $\dot A = \nu L_AA^\phi$.
+\end{definition}
+
+Goods are produced with ideas and the remaining workers: $Y = A(1 - s_R)L$, so output per worker is $y = A(1 - s_R)$ and its growth rate equals that of $A$. With $\phi = 1$,
+standing on the shoulders of giants exactly offsets the fishing out of easy ideas, and $g_A = \dot A/A = \nu s_RL$: growth is proportional to the number of
+researchers. A society that doubles its research share doubles its growth rate, for ever.
+
+\begin{definition}[Scale effect]\label{def:b2:endogenous-growth:scale-effect}
+A growth model has a \emph{scale effect}\index{scale effect (growth models)} when its long-run growth rate rises with the
+size of the economy, usually through the number of researchers.
+\end{definition}
+
+\begin{model}{The research-sector model}
+\assumes Ideas produced by researchers with $\phi = 1$, nonrival ideas sold by firms with market power, a constant share of
+workers in research.
+\predicts Long-run growth proportional to the number of researchers; larger economies grow faster.
+\tested On the post-war record of research effort and growth in the United States (Jones 1995; the opening chart).
+\breaks Researchers multiplied while American growth stayed flat: the time series reject these models particularly
+strongly.
+\end{model}
+
+\section{The scale effect and its refutation}\label{sec:b2:endogenous-growth:scale}
+
+\begin{record}[The scale effect and the post-war data]
+% ledger: b2:jones1995
+Jones (1995) put the endogenous growth models to a simple test. In these models, permanent changes in variables such as
+the number of researchers or the investment rate change the growth rate permanently. American growth rates show no large
+persistent changes. So the variables the models name must show no persistent changes either, or their changes must
+offset. Many AK-style models and models with a \omterm{def:b2:endogenous-growth:research-sector}{research sector} fail this test, the latter particularly
+strongly. The opening chart shows the same pattern in recent decades: research effort up, productivity
+growth not up.
+\end{record}
+
+\section{The semi-endogenous version}\label{sec:b2:endogenous-growth:semi}
+
+\begin{definition}[Semi-endogenous growth model]\label{def:b2:endogenous-growth:semi-endogenous}
+A \emph{semi-endogenous growth model}\index{semi-endogenous growth model} is a growth model with a \omterm{def:b2:endogenous-growth:research-sector}{research sector} in
+which ideas become harder to find as they accumulate, $\phi < 1$, so that long-run growth depends on the growth of the number of
+researchers, not on its level or share.
+\end{definition}
+
+With $\phi < 1$ and a constant research share, $g_A = \nu s_RLA^{\phi - 1}$. Along a balanced growth path $g_A$ is constant, so $L$ and $A^{1-\phi}$ grow at the same rate: $n = (1 - \phi)g_A$, and
+\begin{equation}\label{eq:b2:endogenous-growth:semi}
+g_A = \frac{n}{1 - \phi}.
+\end{equation}
+With $n = 1$ per cent and $\phi = 0.5$, ideas and output per worker grow 2 per cent a year. Policy that raises the research share does not change this rate:
+it raises growth for a time and leaves a higher level of output per worker.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=10, ymin=0, ymax=0.06, width=0.55\linewidth, height=0.4\linewidth,
+    xlabel={Stock of ideas, $A$ (researchers held fixed)}, ylabel={$g_A$}, scaled y ticks=false,
+    yticklabel style={/pgf/number format/fixed}, legend style={at={(1.03,0.5)}, anchor=west}]
+  \addplot[omDef, very thick, domain=0:10, samples=2] {0.03};
+  \addplot[omThm, very thick, domain=0.25:10, samples=80] {0.03/sqrt(x)};
+  \legend{$\phi = 1$, $\phi = 0.5$}
+\end{axis}
+\end{tikzpicture}
+
+{\small The growth of ideas with a fixed number of researchers. With $\phi = 1$ it does not fall as ideas accumulate; with $\phi < 1$ it falls, and sustained
+growth needs a growing number of researchers.}
+\end{omfigure}
+
+The listing doubles the research share, from 2 to 4 per cent, in an economy on its balanced growth path, and follows growth
+and output per worker relative to the economy that kept 2 per cent.
+
+\omcode{code/bachelor-2/24-endogenous-growth/listings/ideas.py}{1}{28}{Doubling the research share in the
+semi-endogenous model.}\label{lst:b2:endogenous-growth:ideas}
+
+\omoutput{code/bachelor-2/24-endogenous-growth/outputs/ideas.txt}{Growth jumps to 4 per cent and falls back toward 2;
+output per worker ends almost four times higher, but only after centuries.}\label{out:b2:endogenous-growth:ideas}
+
+% code: listings/ideas.py
+At first output per worker falls by 2 per cent, since workers leave goods production for research. Growth doubles, then falls back: after
+50 years it is still 2.87 per cent, and the level of output per worker is 1.9 times the baseline. In the long run the level gain is $2^{1/(1-\phi)} \times 0.96/0.98 = 3.918$, reached only
+over centuries. The semi-endogenous model fits flat growth with rising research effort; its price is that long-run growth
+is tied to population growth, which policy does not usually aim at.
+
+\begin{model}{Semi-endogenous growth}
+\assumes A \omterm{def:b2:endogenous-growth:research-sector}{research sector} in which ideas become harder to find ($\phi < 1$), and a workforce that grows.
+\predicts Long-run growth $n/(1 - \phi)$ independent of policy; research subsidies raise levels, not long-run growth; \omterm{def:b2:endogenous-growth:research-productivity}{research productivity}
+falling while research effort rises.
+\tested Consistent with flat American growth alongside rising research effort, and with falling \omterm{def:b2:endogenous-growth:research-productivity}{research productivity}
+(Bloom, Jones, Van Reenen and Webb 2020).
+\breaks Long-run growth tied to population growth implies that growth ends when population stops growing, a prediction
+the data cannot yet test.
+\end{model}
+
+\section{Growth through replacement}\label{sec:b2:endogenous-growth:replacement}
+
+Another family of models makes growth come from new products that replace old ones: each innovation makes the previous
+version obsolete, and the innovator earns the profits of the market until the next innovation replaces it. This is
+the creative destruction of the school volumes, in formal dress. Two features distinguish these models. Growth destroys
+firms and jobs as well as creating them, so the gains from growth come with reallocation. And an innovator does not count
+the profits it takes from the firm it displaces, so private research may be larger or smaller than the level that
+maximises welfare: the business-stealing effect pushes it up, the fact that innovators capture only part of the value of
+the ideas later research builds on pushes it down.
+
+\section{Are ideas getting harder to find?}\label{sec:b2:endogenous-growth:harder}
+
+\begin{definition}[Research productivity]\label{def:b2:endogenous-growth:research-productivity}
+\emph{Research productivity}\index{research productivity} is the growth rate of ideas divided by the number of
+researchers producing them, $g_A/L_A$.
+\end{definition}
+
+\begin{record}[Ideas are getting harder to find]
+% ledger: b2:bloom2020
+Bloom, Jones, Van Reenen and Webb (2020) measured \omterm{def:b2:endogenous-growth:research-productivity}{research productivity} directly, field by field. Their best-known case is
+computer chips: keeping chip density doubling every two years required more than 18 times as many researchers in their latest
+years as in the early 1970s. Across their cases, research effort rose substantially and \omterm{def:b2:endogenous-growth:research-productivity}{research productivity} fell
+sharply: everywhere they looked, ideas were getting harder to find. Growth was sustained by putting ever more
+people to work on it, the pattern the semi-endogenous model predicts.
+\end{record}
+
+If growth is held constant while researchers multiply by 18, \omterm{def:b2:endogenous-growth:research-productivity}{research productivity} falls to one eighteenth. If growth halves while researchers
+quadruple, it falls to an eighth. In the semi-endogenous model this is the expected state of affairs, not a crisis: $\phi < 1$ means each idea makes
+the next one harder.
+
+\section{Exercises}\label{sec:b2:endogenous-growth:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:endogenous-growth:1}
+Read the opening chart. In which decade did American productivity grow fastest, and in which slowest? By what factor did
+researchers per million people rise in each country?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:endogenous-growth:2}
+In the \omterm{def:b2:endogenous-growth:ak}{AK model} with $A = 0.5$ and $\delta = 0.05$, compute growth at saving rates of 20 and 25 per cent.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:endogenous-growth:3}
+Classify as rival or nonrival: a recipe, a meal, a computer program, a computer, a vaccine's formula, a dose of vaccine.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:endogenous-growth:4}
+State an observation that would falsify the research-sector model with $\phi = 1$. Has it been made?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:endogenous-growth:5}
+Predict, then compute: with $n = 1$ per cent, what is long-run growth when $\phi = 0.75$? Compare with $\phi = 0.5$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:endogenous-growth:6}
+With $\phi = 0.5$, the research share rises from 2 to 3 per cent. Find the long-run ratio of output per worker to the baseline.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:endogenous-growth:7}
+Growth of ideas halves while the number of researchers quadruples. By what factor does \omterm{def:b2:endogenous-growth:research-productivity}{research productivity} change?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:endogenous-growth:8}
+Modify the listing to set $\phi = 0.75$. What changes in the long-run growth rate, the level gain, and the speed of the transition?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:endogenous-growth:9}
+Explain why a market in which designs sell at marginal cost cannot pay for research, and why patents trade one inefficiency
+for another.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:endogenous-growth:10}
+Derive \eqref{eq:b2:endogenous-growth:semi} from $\dot A = \nu s_RLA^\phi$ with a constant $s_R$, assuming growth of $A$ is constant.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:endogenous-growth:11}
+Let $z = g_A$. Show that $\dot z = z(n - (1 - \phi)z)$, and solve this equation from $z_0$. With $n = 0.01$ and $\phi = 0.5$, how long does growth take to fall from 4 to 3 per cent?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:endogenous-growth:12}
+On a balanced growth path, show that $A^{1-\phi} = \nu s_RL/g_A$, and hence that doubling $s_R$ multiplies the long-run level of $A$ by $2^{1/(1-\phi)}$.
+\end{exercise}
+
+\section{Problem: Brenland's research labs}\label{sec:b2:endogenous-growth:problem}
+
+\begin{problem}[{Weekend problem --- Brenland's research labs: the ideas function, balanced growth, doubling the research
+share, and the gain in the level of income}]
+\label{pb:b2:endogenous-growth:1}
+Brenland's ideas grow as $\dot A = \nu s_RLA^{0.5}$; its workforce grows 1 per cent a year; 2 per cent of workers do research; output per worker is $A(1 - s_R)$.
+
+\medskip
+\noindent\textbf{Part I --- The ideas function.}
+\begin{enumerate}
+  \item What is $\phi$, and what does $\phi < 1$ say about research?
+  \item Write the growth rate of ideas.
+  \item With researchers held fixed, what happens to $g_A$ as $A$ grows?
+  \item Why must the number of researchers grow for growth to continue?
+  \item Define \omterm{def:b2:endogenous-growth:research-productivity}{research productivity} in this model.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Balanced growth.}
+\begin{enumerate}[resume]
+  \item What is the long-run growth rate of ideas?
+  \item Of output per worker?
+  \item Would it differ if 5 per cent of workers did research?
+  \item What would it be if the workforce stopped growing?
+  \item What would it be with $\phi = 0.75$?
+  \item If $\phi$ were 1, what would happen to growth as the workforce grows?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Doubling the research share.} Brenland raises $s_R$ to 4 per cent.
+\begin{enumerate}[resume]
+  \item What happens to output per worker at once?
+  \item What happens to the growth rate of ideas at once?
+  \item Write the equation for $g_A$ over time, and find how long it takes to fall to 3 per cent.
+  \item What is growth after 50 years?
+  \item What is the long-run growth rate?
+  \item Why does growth fall back?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- The level effect.}
+\begin{enumerate}[resume]
+  \item By what factor does the long-run level of $A$ rise?
+  \item And output per worker, after the cost of the extra researchers?
+  \item How much of the gain is reached after 50 years (use the listing)?
+  \item With $\phi = 0.75$, what would the long-run level gain be?
+  \item Why might Brenland choose to double research even though long-run growth is unchanged?
+  \item What observation would show that Brenland's $\phi$ is larger than 0.5?
+  \item State the result: the balanced growth rate and the long-run level gain from doubling the research share.
+\end{enumerate}
+\end{problem}

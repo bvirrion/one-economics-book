@@ -1,0 +1,6 @@
+$ python attenuation.py
+error variance   slope (x noisy)   lambda * beta   slope (y noisy)
+          0.00             2.000           2.000            2.000
+          0.25             1.605           1.600            1.998
+          1.00             1.006           1.000            1.995
+          4.00             0.402           0.400            2.002

@@ -1,0 +1,296 @@
+\section*{Chapter \ref{ch:b3:instrumental-variables} --- Instrumental Variables}
+
+\begin{solution}{exo:b3:instrumental-variables:1}
+\begin{enumerate}
+\item The slope is an elasticity: a country whose predicted share is 20~\%
+higher trades, on average, $1.2^{0.235} - 1 \approx 4.4$~\% more (the linear
+approximation $0.235 \times 20 = 4.7$~\% is close).
+\item The line predicts $50.0$~\% for a built share of $2.33$~\% (the left end
+of the line) and about $60.2$~\% at $5.11$~\%. % figdata: first_stage_line
+In logarithms Fiji lies $\ln(110.7/50.0) \approx 0.79$ above the line and the
+United States $\ln(26.3/60.2) \approx -0.83$ below it: the United States is
+slightly further away, on the other side. Large economies trade less with
+others than geography predicts, because so much of their trade is internal.
+\item No. The \omterm{def:b3:instrumental-variables:tsls}{first stage} measures relevance, the correlation of the instrument
+with trade. The \omterm{def:b3:instrumental-variables:instrument}{exclusion restriction} is about the unobserved causes of output
+per worker, which the chart does not show; a strong \omterm{def:b3:instrumental-variables:tsls}{first stage} and a direct
+effect of geography on output can coexist.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:instrumental-variables:2}
+\begin{enumerate}
+\item $\hat\beta^{\mathrm{W}} = (-0.00898)/(-0.1256) = 0.0715$. % ledger: b3iv:ak91.panelA
+\item It is below OLS (0.0801) in the 1970 sample, whereas in the 1980 sample
+IV (0.1020) was above OLS (0.0709). The two cohorts disagree on the sign of
+the gap, which is a reminder that a gap of this size between IV and OLS is
+within the IV estimates' sampling error (standard errors 0.0219 and 0.0239).
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:instrumental-variables:3}
+\begin{enumerate}
+\item By the omitted-variable formula, $\plim \hat\beta_1 = 0.06 + 0.12 \times
+0.25 = 0.09$.
+\item By $(0.09 - 0.06)/0.06 = 50$~\%.
+\item $0.06$: the omitted variable biases OLS only if it enters the wage
+equation ($\gamma \neq 0$) and is correlated with schooling.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:instrumental-variables:4}
+\begin{enumerate}
+\item Relevance: people who grew up closer to a college get, on average, more
+schooling. Exclusion: distance to a college is unrelated to the other causes
+of adult wages and affects wages only through schooling.
+\item Colleges are built in towns, so a short distance means an urban
+childhood, with its better schools and denser job networks; and families who
+value education may choose to live near a college, so distance is correlated
+with parental background.
+\item For the urban channel: compare the wages of people who grew up near and
+far from a college among those who never attended any college. If distance
+affected wages only through schooling, the gap within this group, conditional
+on schooling, would be zero; a gap shows the other channel. For the family
+channel: check whether distance predicts parents' education, which schooling
+cannot have caused.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:instrumental-variables:5}
+\begin{enumerate}
+\item \omterm{def:b3:instrumental-variables:tsls}{First stage} $0.40/0.25 = 1.6$; \omterm{def:b3:instrumental-variables:tsls}{reduced form} $0.06/0.25 = 0.24$; IV
+estimate $0.06/0.40 = 0.15$, which is also $0.24/1.6$.
+\item $\sqrt{0.36 \times 0.25/(1000 \times 0.16)} = \sqrt{0.0005625} = 0.0237$;
+the interval is $0.15 \pm 1.96 \times 0.0237 = 0.15 \pm 0.0465$, from 0.104 to
+0.196.
+\item The fitted value is $\hat x_i = \hat a + \hat\pi z_i$ with $\hat\pi =
+\widehat{\Cov}(z, x)/\widehat{\Var}(z)$. For a regression on a constant and one
+variable, the $(2,2)$ entry of $(\hat X'\hat X)^{-1}$ is $1/\sum_i (\hat x_i -
+\bar{\hat x})^2 = 1/(n \hat\pi^2 \widehat{\Var}(z))$ (variances with divisor
+$n$). Substituting $\hat\pi$ gives $\widehat{\Var}(z)/(n\,\widehat{\Cov}(z,
+x)^2)$, and multiplying by $\hat\sigma^2$ gives the formula.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:instrumental-variables:6}
+\begin{enumerate}
+\item With classical error the OLS slope converges to $\lambda\beta$, where
+$\lambda$ is the share of the variance of recorded schooling that is true
+variance: $\lambda = 0.9$, so OLS converges to $0.9\beta$. A valid instrument
+is uncorrelated with the measurement error, so IV converges to $\beta$.
+\item OLS converges to $0.9\beta + 0.01$, which is below $\beta$ when $0.1\beta
+> 0.01$, that is $\beta > 0.1$.
+\item With unequal returns, IV estimates the average return among \omterm{def:b3:instrumental-variables:compliance}{compliers},
+which can be larger than the average return that OLS (if it were unbiased)
+would weight differently. Men kept in school by the leaving age may gain more
+from a year than the average man.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:instrumental-variables:7}
+\begin{enumerate}
+\item \omterm{def:b3:instrumental-variables:tsls}{First stage} $0.62 - 0.14 = 0.48$; \omterm{def:b3:instrumental-variables:tsls}{reduced form} $0.53 - 0.47 = 0.06$;
+Wald estimate $0.06/0.48 = 0.125$. Among pupils who take tutoring if and only
+if offered it, tutoring raises the chance of passing by 12.5 percentage points.
+\item \omterm{def:b3:instrumental-variables:compliance}{Always-takers} $0.14$, \omterm{def:b3:instrumental-variables:compliance}{never-takers} $1 - 0.62 = 0.38$, \omterm{def:b3:instrumental-variables:compliance}{compliers} $0.48$.
+\item \omterm{def:b3:instrumental-variables:compliance}{Monotonicity}: no pupil is tutored if not offered but untutored if
+offered. A violation: a family that would have paid a private tutor, but
+accepts the charity's offer, then finds the charity's sessions at an
+impossible time and stops.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:instrumental-variables:8}
+The tested solution is \code{ex08_no_population.py}, in the chapter's
+\code{exercises/} folder.
+\begin{enumerate}
+\item First-stage $F$ 16.7; OLS 0.833 (0.124); 2SLS 0.376 (0.451).
+% output: ex08_no_population
+\item The correlation of log population with the log built share is 0.092 and
+with the log actual share $-0.544$. Population explains much of the actual
+trade share and almost none of the built share. Controlling for it removes a
+large part of the \omterm{def:b3:instrumental-variables:tsls}{first stage}'s residual variance without changing much the
+variation of the instrument, so the $t$ statistic of the instrument, and its
+$F$, rise.
+\item Less plausible. Large countries trade less and may have different
+productivity for reasons of size (larger markets, more varied industries);
+without the control, those channels sit in the error. Since the built share is
+nearly uncorrelated with population the damage is small here, but the control
+is the safer specification.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:instrumental-variables:9}
+\begin{enumerate}
+\item Conflict in year $t - 1$: rainfall in year $t$ cannot have caused it
+through growth in year $t$. If rainfall in $t$ predicts conflict in $t - 1$,
+rainfall is correlated with persistent causes of conflict.
+\item The \omterm{def:b3:instrumental-variables:tsls}{reduced form} is the \omterm{def:b3:instrumental-variables:tsls}{first stage} times the effect of growth on
+conflict, so with a weaker \omterm{def:b3:instrumental-variables:tsls}{first stage} the \omterm{def:b3:instrumental-variables:tsls}{reduced form} should be smaller
+downstream of dams. Sarsons found that riots responded as much there as
+elsewhere: rainfall reaches conflict through another channel, and the
+\omterm{def:b3:instrumental-variables:instrument}{exclusion restriction} fails.
+\item The \omterm{def:b3:instrumental-variables:tsls}{reduced form} is $\pi\beta + c$, so the IV estimate converges to
+$(\pi\beta + c)/\pi = \beta + c/\pi$. The bias $c/\pi$ grows without bound as
+the \omterm{def:b3:instrumental-variables:tsls}{first stage} weakens: the weaker the rainfall--growth link becomes, the more
+a small direct effect of rain distorts the estimate.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:instrumental-variables:10}
+The tested solution is \code{ex10_weak_f5.py}, in the chapter's
+\code{exercises/} folder.
+\begin{enumerate}
+\item Mean first-stage $F$ 5.06; median 2SLS 0.028; mean OLS 0.784; the 5~\%
+test rejects the true value in 9.0~\% of the samples. % output: ex10_weak_f5
+\item 13.0~\% of the samples have $F > 10$. Their median 2SLS estimate is
+0.357, against $-0.059$ in the others. % output: ex10_weak_f5
+A large sample \omterm{def:b3:instrumental-variables:tsls}{first stage}, $\widehat{\Cov}(z, x)$, is often large because
+$\widehat{\Cov}(z, v)$ happens to be large; since $u$ and $v$ are correlated,
+$\widehat{\Cov}(z, u)$ is then large too, with the sign of the OLS bias.
+Selecting on the \omterm{def:b3:instrumental-variables:tsls}{first stage} therefore selects samples whose estimates lean
+toward OLS, and a literature filtered on $F > 10$ is biased toward OLS.
+\item An $F$ of 5 is below every critical value of the table, including the
+5.53 needed for a size of at most 25~\%: the table cannot promise even that.
+The 9.0~\% found here is for a correlation of 0.8 between $u$ and $v$; the
+critical values guard against the worst correlation.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:instrumental-variables:11}
+\begin{enumerate}
+\item By part (1) of \cref{prop:b3:instrumental-variables:tsls}, 2SLS is OLS of
+$y$ on $[W, \hat x]$, where $\hat x = Wa + \hat\pi z$ is the first-stage fitted
+value and $\hat\pi$ its coefficient on $z$. Let $M_W$ be the matrix that
+residualises on $W$ and write $\tilde w = M_W w$. By the Frisch--Waugh--Lovell
+theorem, the coefficient on $\hat x$ is $\tilde{\hat x}'\tilde y/\tilde{\hat
+x}'\tilde{\hat x}$. Since $M_W W = 0$, $\tilde{\hat x} = \hat\pi\tilde z$, so
+the coefficient is
+\[
+  \frac{\hat\pi\,\tilde z'\tilde y}{\hat\pi^2\,\tilde z'\tilde z} = \frac{1}{\hat\pi}\cdot\frac{\tilde z'\tilde y}{\tilde z'\tilde z}.
+\]
+By the same theorem, $\tilde z'\tilde y/\tilde z'\tilde z$ is the reduced-form
+coefficient on $z$. The 2SLS coefficient is the reduced-form coefficient
+divided by the first-stage coefficient.
+\item If the reduced-form coefficient is zero, the ratio is zero, whatever the
+value of $\hat\pi \neq 0$. An instrument that does not move the outcome cannot
+produce an effect.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:instrumental-variables:12}
+\begin{enumerate}
+\item As in the proof of \cref{thm:b3:instrumental-variables:late}, the
+numerator is $\E[(D_i(1) - D_i(0))(Y_i(1) - Y_i(0))]$. The factor is 1 for
+\omterm{def:b3:instrumental-variables:compliance}{compliers} and $-1$ for \omterm{def:b3:instrumental-variables:compliance}{defiers}, so the numerator is $\pi_c\Delta_c -
+\pi_d\Delta_d$. The denominator is $\E[D_i(1) - D_i(0)] = \pi_c - \pi_d$.
+\item $(0.3 \times 0.1 - 0.2 \times 0.5)/(0.3 - 0.2) = (0.03 - 0.10)/0.1 =
+-0.7$. Every effect is positive and the ratio is negative, outside the range of
+every individual effect: without \omterm{def:b3:instrumental-variables:compliance}{monotonicity}, the Wald ratio is not an
+average effect of anyone.
+\item Defendants assigned at random to judges: a judge who is lenient on
+average may still be harsher than another judge towards some kinds of case, so
+some defendants would be jailed by the lenient judge and freed by the strict
+one.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{pb:b3:instrumental-variables:lottery}
+\textbf{1.} $1{,}800/4{,}000 = 0.45$ enrolled. The enrolled mean is
+$(1{,}400 \times 10.2214 + 400 \times 10.40)/1{,}800 = 18{,}469.96/1{,}800 =
+10.261$; the non-enrolled mean is $(600 \times 9.80 + 1{,}600 \times
+9.89375)/2{,}200 = 21{,}710/2{,}200 = 9.868$.
+
+\textbf{2.} $10.261 - 9.868 = 0.393$.
+
+\textbf{3.} Applicants who enrol differ from those who do not in ways that
+matter for earnings: those who enrol after losing (\omterm{def:b3:instrumental-variables:compliance}{always-takers}) are
+determined or well-connected, and those who decline a place they won
+(\omterm{def:b3:instrumental-variables:compliance}{never-takers}) may have good alternatives or poor prospects. And the gain from
+college may differ between those who choose it and those who do not.
+
+\textbf{4.} No. Grades capture part of what the applicants differ in, but the
+selection runs on motivation, family resources and alternatives, which grades
+do not measure; the residual difference is still not the effect of college.
+
+\textbf{5.} $\eu^{0.393} - 1 = 0.48$: the prospectus claims earnings 48~\%
+higher.
+
+\textbf{6.} Relevance: winning raises the chance of enrolling. Exclusion:
+winning affects earnings only through enrolment, not, for instance, through
+the encouragement of having won. The lottery assigns winning by chance, so
+winners and losers have the same distribution of potential outcomes and
+potential enrolments: independence holds by design.
+
+\textbf{7.} \omterm{def:b3:instrumental-variables:tsls}{First stage} $1{,}400/2{,}000 - 400/2{,}000 = 0.70 - 0.20 = 0.50$;
+\omterm{def:b3:instrumental-variables:tsls}{reduced form} $10.095 - 9.995 = 0.100$.
+
+\textbf{8.} $0.100/0.50 = 0.200$.
+
+\textbf{9.} $\sqrt{0.000105 + 0.00008} = \sqrt{0.000185} = 0.0136$; $t =
+0.50/0.0136 = 36.8$ and $F = t^2 \approx 1{,}350$. Not weak: far above every
+threshold.
+
+\textbf{10.} $0.60 \sqrt{1/2{,}000 + 1/2{,}000} = 0.60 \times 0.0316 = 0.0190$.
+
+\textbf{11.} $0.0190/0.50 = 0.0380$.
+
+\textbf{12.} $0.200 \pm 1.96 \times 0.0380 = 0.200 \pm 0.074$, from 0.126 to
+0.274.
+
+\textbf{13.} \omterm{def:b3:instrumental-variables:compliance}{Always-takers}: the enrolled share among losers, 0.20.
+\omterm{def:b3:instrumental-variables:compliance}{Never-takers}: the non-enrolled share among winners, 0.30. \omterm{def:b3:instrumental-variables:compliance}{Compliers}: the \omterm{def:b3:instrumental-variables:tsls}{first
+stage}, 0.50.
+
+\textbf{14.} The enrolled losers are all \omterm{def:b3:instrumental-variables:compliance}{always-takers}: their mean of $Y(1)$ is
+10.40. The non-enrolled winners are all \omterm{def:b3:instrumental-variables:compliance}{never-takers}: their mean of $Y(0)$ is
+9.80. (The \omterm{def:b3:instrumental-variables:compliance}{always-takers}' $Y(0)$ and the \omterm{def:b3:instrumental-variables:compliance}{never-takers}' $Y(1)$ are never seen.)
+
+\textbf{15.} Among winners, $0.7 \times 10.2214$ is the share-weighted mean
+of $Y(1)$ of the \omterm{def:b3:instrumental-variables:compliance}{always-takers} (share 0.2, mean 10.40) and the \omterm{def:b3:instrumental-variables:compliance}{compliers}
+(share 0.5), by independence. So the \omterm{def:b3:instrumental-variables:compliance}{compliers}' mean is $(0.7 \times 10.2214 -
+0.2 \times 10.40)/0.5 = (7.155 - 2.080)/0.5 = 10.150$.
+
+\textbf{16.} Among losers, the non-enrolled are \omterm{def:b3:instrumental-variables:compliance}{never-takers} (share 0.3, mean
+9.80) and \omterm{def:b3:instrumental-variables:compliance}{compliers} (share 0.5): $(0.8 \times 9.89375 - 0.3 \times 9.80)/0.5
+= (7.915 - 2.940)/0.5 = 9.950$.
+
+\textbf{17.} $10.150 - 9.950 = 0.200$, the Wald estimate.
+
+\textbf{18.} Without college the \omterm{def:b3:instrumental-variables:compliance}{compliers} earn more than the \omterm{def:b3:instrumental-variables:compliance}{never-takers}
+(9.95 against 9.80), and with college less than the \omterm{def:b3:instrumental-variables:compliance}{always-takers} (10.15
+against 10.40). Enrolment rises with earnings potential: the people who enrol
+whatever happens are the highest earners, those who never enrol the lowest.
+The naive comparison of Part I adds that ordering to the effect of college,
+which is why it is about twice the Wald estimate.
+
+\textbf{19.} \omterm{def:b3:instrumental-variables:tsls}{First stage} $0.26 - 0.20 = 0.06$; standard error $\sqrt{0.1924/600
++ 0.16/600} = \sqrt{0.000587} = 0.0242$; $t = 0.06/0.0242 = 2.48$ and $F = 2.48^2
+\approx 6.2$.
+
+\textbf{20.} $0.02/0.06 = 0.333$.
+
+\textbf{21.} $0.60\sqrt{2/600} = 0.60 \times 0.0577 = 0.0346$; the Wald
+estimate's standard error is about $0.0346/0.06 = 0.577$.
+
+\textbf{22.} The difference is $0.333 - 0.200 = 0.133$, with standard error
+$\sqrt{0.0380^2 + 0.577^2} = 0.578$; the $z$ statistic is 0.23. The two
+estimates are not distinguishable: the second campus's is too imprecise to
+agree or disagree with anything.
+
+\textbf{23.} Weak: an $F$ of about 6.2 is below the rule of thumb of 10 and
+below the Stock--Yogo critical values for a size of 10~\%, 15~\% and 20~\%;
+its $t$-test could be badly oversized, and the normal approximation behind
+Question~21 is itself unreliable. Pooling adds almost no information, because
+2SLS weights each instrument by its first-stage strength, and adding a \omterm{def:b3:instrumental-variables:weak}{weak
+instrument} moves 2SLS toward OLS in finite samples. Report the main campus,
+and the second campus separately as a weak, uninformative estimate.
+
+\textbf{24.} The two lotteries may move different people: the \omterm{def:b3:instrumental-variables:compliance}{compliers} at a
+small campus, those who enrol only if they win a place there, may have
+different gains from those at the main campus. Two valid LATEs can differ
+without either being wrong. The named result: for applicants to the main
+campus who enrol if and only if they win a place, college raises log earnings
+at thirty by 0.200, about 22~\% ($\eu^{0.2} - 1$), with a 95~\% interval of
+0.126 to 0.274 log points.
+\end{solution}

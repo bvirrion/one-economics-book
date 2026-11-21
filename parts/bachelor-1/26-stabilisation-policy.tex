@@ -1,0 +1,405 @@
+\chapter{Stabilisation Policy and Its Limits}\label{ch:b1:stabilisation-policy}
+
+Between 1992 and 2014, 63 economies went through 153 recessions, counting
+a recession as a year in which output fell. In April of the year before,
+forecasters expected output to fall in 5 of them; by October of the
+recession year itself, in 118. % ledger: b1:an2018
+The last two chapters showed how policy can move output in a model. This
+one asks what stands between the model and a policy that works: late
+information, slow decisions, effects that arrive later still, and
+uncertainty about the model itself.
+
+\begin{openingchart}{Change in the general-government balance (points of GDP)
+against the change in real GDP growth (points), 2007 to 2009, 27 European
+Union countries, with the fitted line.}{Eurostat (gov\_10dd\_edpt1,
+nama\_10\_gdp)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xlabel={Change in GDP growth, 2007 to 2009 (points)},
+  ylabel={Change in budget balance (points of GDP)}, xmin=-28, xmax=-2, ymin=-16, ymax=2,
+  width=0.62\linewidth, height=0.45\linewidth]
+  \addplot[only marks, mark=*, mark size=1.5pt, omDef] table[x=dgr, y=dbal, col sep=comma] {figdata/bachelor-1/26-stabilisation-policy/out/budget.csv};
+  \addplot[only marks, mark=none, nodes near coords, point meta=explicit symbolic, nodes near coords style={font=\scriptsize, anchor=west}]
+    table[x=dgr, y=dbal, meta=geo, col sep=comma] {figdata/bachelor-1/26-stabilisation-policy/out/budget_labels.csv};
+  \addplot[omThm, thick, sharp plot, mark=none] table[x=x, y=fit, col sep=comma] {figdata/bachelor-1/26-stabilisation-policy/out/budget_fit.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+From 2007 to 2009 the budget balance fell in 26 of the 27 countries. The
+fitted line rises by only $0.122$ points of GDP per point of growth lost, with
+a correlation of $0.235$: the size of the fall in growth explains little of
+the size of the fall in the balance. % figdata: budget_stats
+Part of each fall came by itself, as tax receipts fell and benefits rose;
+part came from decisions and from revenue tied to particular sectors ---
+Ireland's balance fell by $14.2$ points and Spain's by $13.1$, for falls in growth
+of $10.4$ and $7.3$ points. % figdata: budget
+
+\begin{recall}
+Monetary policy, rules and \omterm{def:b1:stabilisation-policy:rule}{discretion}, the Taylor rule, fiscal policy and
+public debt, automatic stabilisers and the output gap were met at school.
+IS--LM is \cref{ch:b1:is-lm}; AD--AS and the Phillips curve are
+\cref{ch:b1:aggregate-supply}.
+\end{recall}
+
+\section{Delays}\label{sec:b1:stabilisation-policy:lags}
+
+A shock happens; it shows up in the data a quarter or two later, and in
+revised data later still; a decision is taken; the measure is put in
+place; and its effect on spending builds over several quarters.
+
+\begin{definition}[Policy lag]\label{def:b1:stabilisation-policy:lags}
+\index{policy lag}\index{inside lag}\index{outside lag}
+A \emph{policy lag} is the time between a shock and the effect of the policy
+that responds to it. The \emph{inside lag} runs from the shock to the action
+(recognition, decision, implementation); the \emph{outside lag} from the
+action to its effect on the economy.
+\end{definition}
+
+Monetary policy has a short \omterm{def:b1:stabilisation-policy:lags}{inside lag} --- a committee meets every few
+weeks --- and a long \omterm{def:b1:stabilisation-policy:lags}{outside lag}; fiscal policy usually the reverse.
+
+\begin{proposition}[A lagged response can amplify a cycle]\label{prop:b1:stabilisation-policy:cycle}
+Let the output gap without policy be a cycle $x_t = A\sin(2\pi t/T)$, and let policy add
+$-\theta x_{t-k}$, a response of size $\theta > 0$ to the gap of $k$ periods earlier. Then the gap
+with policy is a cycle of the same period whose variance is
+\[
+1 + \theta^2 - 2\theta\cos(2\pi k/T)
+\]
+times the variance without policy. Policy raises the variance when $\cos(2\pi k/T) < \theta/2$.
+\end{proposition}
+
+\begin{proof}
+$x_t - \theta x_{t-k} = A[\sin\phi_t - \theta\sin(\phi_t - \psi)]$ with $\phi_t = 2\pi t/T$ and $\psi = 2\pi k/T$. Expanding,
+this is $A[(1 - \theta\cos\psi)\sin\phi_t + \theta\sin\psi\cos\phi_t]$, a sine of amplitude
+$A\sqrt{(1 - \theta\cos\psi)^2 + \theta^2\sin^2\psi} = A\sqrt{1 + \theta^2 - 2\theta\cos\psi}$. The variance of a sine is half the
+squared amplitude, so the ratio is $1 + \theta^2 - 2\theta\cos\psi$, which exceeds 1 when $\cos\psi < \theta/2$.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Quarter}, ylabel={Output gap (\%)}, xmin=0, xmax=16, ymin=-2, ymax=2,
+  width=0.62\linewidth, height=0.38\linewidth, samples=97, domain=0:16, xtick={0,4,...,16}]
+  \addplot[black, thick] {sin(deg(2*pi*x/8))};
+  \addplot[omThm, thick] {sin(deg(2*pi*x/8)) - 0.5*sin(deg(2*pi*(x-4)/8))};
+  \addplot[omDef, thick, dashed] {sin(deg(2*pi*x/8)) - 0.5*sin(deg(2*pi*(x-1)/8))};
+  \node[font=\scriptsize, anchor=south] at (axis cs:10,1.5) {lag 4: amplitude $1.5$};
+  \node[font=\scriptsize, anchor=west] at (axis cs:1.6,-1.7) {dashed, lag 1: amplitude $0.74$};
+\end{axis}
+\end{tikzpicture}
+
+{\small A cycle of eight quarters (black) and the same cycle with a policy
+response of half the gap ($\theta = 0.5$). With a lag of one quarter (dashed blue) the
+variance falls to $0.543$ of its value; with a lag of four quarters, half the
+cycle (red), policy pushes in the wrong direction every quarter and the
+variance rises to $2.25$ times.}
+\end{omfigure}
+
+\begin{model}{Stabilisation with lags}
+\index{stabilisation policy}
+\assumes The economy of \cref{ch:b1:is-lm,ch:b1:aggregate-supply}; policy
+responds to the gap of $k$ periods earlier, by an amount $\theta$.
+\predicts A countercyclical policy can raise the volatility of output
+when the lag is long relative to the cycle, or when the response is too
+strong for the persistence of the shocks.
+\tested Forecasts made in April of the year before missed 148 of 153
+recessions (An, Jalles and Loungani 2018); % ledger: b1:an2018
+policy recommendations computed from real-time data differ considerably
+from those computed with revised data (Orphanides 2001). % ledger: b1:orphanides2001
+The lags and errors the model assumes are real.
+\breaks When policy responds to forecasts rather than to past gaps; when
+its effect on expectations is immediate, as with announcements of future
+policy; and when the cycle is not a regular wave of fixed length.
+\end{model}
+
+\section{Uncertainty about the model}\label{sec:b1:stabilisation-policy:uncertainty}
+
+Even with the gap known, the effect of policy is not. Let the gap be $x + mp$,
+where $p$ is policy and $m$ its effect, a random variable with mean $\mu$ and
+variance $\sigma^2$, and let the loss be the expected squared gap.
+
+\begin{proposition}[Act less under uncertainty]\label{prop:b1:stabilisation-policy:brainard}
+$E[(x + mp)^2] = (x + \mu p)^2 + \sigma^2p^2$ is minimised at $p^* = -\mu x/(\mu^2 + \sigma^2)$, smaller in absolute value
+than the response $-x/\mu$ that closes the gap on average.
+\end{proposition}
+
+\begin{proof}
+The derivative is $2\mu(x + \mu p) + 2\sigma^2p$, zero at $p^*$; since $\mu^2/(\mu^2 + \sigma^2) < 1$, $|p^*| < |x/\mu|$.
+\end{proof}
+
+The more uncertain the effect, the more of the gap it pays to leave open:
+a full response adds its own risk. With a gap of $-4$, $\mu = 1$ and $\sigma^2 = 0.5$, the full
+response $p = 4$ leaves an expected loss of $8$; the optimal $p^* = 2.667$ leaves $5.333$;
+doing nothing, $16$. % computed: code/bachelor-1/26-stabilisation-policy/exercises/solutions.py
+
+\section{The record of fine-tuning}\label{sec:b1:stabilisation-policy:finetuning}
+
+\begin{record}[Fine-tuning]
+In the 1960s it was widely held that policy could keep output close to its
+potential quarter by quarter, by adjusting spending, taxes and money as
+forecasts required. The following decade combined high inflation with
+recessions (\cref{ch:b1:aggregate-supply}). Estimates made in real time,
+the kind policy relies on, can differ considerably from those computed
+once the data are revised, and so can the policy they recommend
+(Orphanides 2001). % ledger: b1:orphanides2001
+The claim that policy could fine-tune output was refuted: the lags, the
+errors in real-time data and the response of expectations were all larger
+than assumed.
+\end{record}
+
+\section{Automatic stabilisers}\label{sec:b1:stabilisation-policy:automatic}
+
+Income taxes fall when incomes fall, and benefits rise when people lose
+their jobs. Both soften a fall in income without a decision, and so
+without an \omterm{def:b1:stabilisation-policy:lags}{inside lag}. Their size depends on how progressive the tax is
+and how generous the benefits; the opening chart shows the balance falling
+in nearly every European country in 2008--09, partly through them.
+
+Brenland's household survey shows how much (weekend problem): a fall of
+$10\%$ in the earnings of every working household lowers \omterm{def:b1:national-accounts-in-depth:gni}{disposable income} by
+only $68.8\%$ of the fall in market income. Taxes absorb $24.7\%$ of it and
+transfers $6.5\%$. % computed: code/bachelor-1/26-stabilisation-policy/exercises/solutions.py
+
+\section{Rules and discretion}\label{sec:b1:stabilisation-policy:rules}
+
+\begin{definition}[Policy rule and discretion]\label{def:b1:stabilisation-policy:rule}
+\index{policy rule}\index{discretion}
+A \emph{policy rule} fixes in advance how a policy instrument responds to
+the state of the economy. Policy is made with \emph{discretion} when the
+instrument is set case by case, with no commitment to a rule.
+\end{definition}
+
+\omterm{def:b1:stabilisation-policy:rule}{Discretion} can respond to shocks
+a rule did not foresee; a rule can be known in advance, which helps the
+public form its expectations, and is harder to bend. The best-known
+example is the Taylor rule (Taylor 1993), % ledger: b1:taylor1993
+\[
+i = \pi + 0.5(y - y^*) + 0.5(\pi - 2) + 2,
+\]
+where $i$ is the policy rate, $\pi$ inflation and $y - y^*$ the output gap, all in per
+cent. It raises the real rate when inflation is above $2\%$ or output above
+potential. A rule needs the gap, and the gap is known only with error; the
+rule inherits the error (\cref{exo:b1:stabilisation-policy:realtime}).
+
+A further argument for rules --- that a policy-maker free to choose each
+period has an incentive to surprise, which the public anticipates --- is
+time inconsistency, a subject of the second university year.
+
+\section{How multipliers are measured}\label{sec:b1:stabilisation-policy:multipliers}
+
+The IS--LM multiplier of \cref{ch:b1:is-lm} depends on slopes; the
+evidence uses three designs. \emph{Narrative shocks} use changes in
+spending decided for reasons unrelated to the state of the economy, such
+as wars. \emph{Regional cross-sections} compare regions that received
+different amounts of the same national spending. \emph{Structural models}
+estimate the slopes and compute the multiplier.
+
+\begin{definition}[Local multiplier]\label{def:b1:stabilisation-policy:local-multiplier}
+\index{local multiplier}\index{relative multiplier}
+A \emph{local} (or \emph{relative}) \emph{multiplier} is the effect on a region's output,
+relative to other regions, of spending in that region, relative to other
+regions. National monetary policy and national taxes are common to all
+regions and drop out of the comparison.
+\end{definition}
+
+\begin{debate}[How large are fiscal multipliers?]
+With quarterly American data covering several large wars and deep
+recessions, Ramey and Zubairy (2018) find spending multipliers below 1,
+whether or not the economy has slack; near the \omterm{def:b1:is-lm:liquidity-trap}{zero lower bound} the
+results are mixed, a few specifications giving 1.5. % ledger: b1:ramey2018
+With regime-switching models on post-war data, Auerbach and Gorodnichenko
+(2012) find multipliers much larger in recessions than in expansions.
+% ledger: b1:auerbach2012
+Using regional differences in military build-ups, Nakamura and Steinsson
+(2014) estimate a \omterm{def:b1:stabilisation-policy:local-multiplier}{local multiplier} of about 1.5. % ledger: b1:nakamura2014
+Each design has its weakness: wars are few and differ from peacetime
+spending; regime-switching results depend on how a recession is dated;
+a \omterm{def:b1:stabilisation-policy:local-multiplier}{local multiplier} is not the national one, since it differences out the
+monetary and tax response. What the evidence has refuted is a large
+multiplier, fixed at all times, of the kind the Keynesian cross gives.
+\end{debate}
+
+\begin{omchart}{Consumer prices, United States, 12-month change, monthly,
+2019--2024, with the three largest relief packages marked.}{Bureau of
+Labor Statistics, CPI-U all items; package dates and sizes from Barnichon,
+Oliveira and Shapiro (2021)}
+\begin{tikzpicture}
+\begin{axis}[omtime, xlabel={Year}, ylabel={CPI, 12-month change (\%)}, xmin=2019, xmax=2025, ymin=0, ymax=10,
+  width=0.66\linewidth, height=0.38\linewidth]
+  \addplot+[thick, no marks, omDef] table[x=t, y=yoy, col sep=comma] {figdata/bachelor-1/26-stabilisation-policy/out/cpi.csv};
+  \draw[gray, dashed] (axis cs:2020.21,0) -- (axis cs:2020.21,8.4);
+  \draw[gray, dashed] (axis cs:2020.96,0) -- (axis cs:2020.96,8.4);
+  \draw[gray, dashed] (axis cs:2021.21,0) -- (axis cs:2021.21,8.4);
+  \node[font=\scriptsize, anchor=south, align=center] at (axis cs:2020.21,8.4) {2.2};
+  \node[font=\scriptsize, anchor=south, align=center] at (axis cs:2020.9,8.4) {0.9};
+  \node[font=\scriptsize, anchor=south, align=center] at (axis cs:2021.27,8.4) {1.9};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\begin{record}[2020--23]
+The United States enacted relief of 2.2 trillion dollars in March 2020, 0.9
+trillion more in December 2020 and 1.9 trillion in March 2021, the
+dashed lines of the chart (trillions of dollars above them).
+% ledger: b1:frbsf-packages
+Consumer-price inflation rose to $9.1\%$ over the twelve months to June
+2022, then fell to $2.9\%$ by December 2024. % figdata: cpi
+The first transfers supported incomes when output fell; the later ones came
+when the gap was closing.
+\end{record}
+
+\begin{debate}[What caused the inflation of 2021--23?]
+Estimates of the stimulus's effect range widely, and measure different
+things. One put the
+effect of the third package alone at about $0.3$ points of inflation a year
+through 2022 (Barnichon, Oliveira and Shapiro 2021); % ledger: b1:frbsf-packages
+another, comparing the United States with other advanced economies, found
+that all pandemic fiscal support may have raised American inflation by
+about 3 points by the end of 2021, with considerable uncertainty (Jordà,
+Liu, Nechio and Rivera-Reyes 2022). % ledger: b1:jlnr2022
+Decompositions of the inflation itself also differ. Sorting price changes
+by whether prices and quantities moved together, one study attributes
+about half of the run-up to supply factors and about a third to demand,
+the rest being ambiguous (Shapiro 2022); % ledger: b1:shapiro2022
+another finds that most of the surge came from shocks to prices given
+wages --- commodity prices pushed up by strong demand, and shortages in
+particular sectors --- rather than from tight labour markets, whose effect
+was smaller but more persistent (Blanchard and Bernanke 2023). % ledger: b1:bb2023
+The estimates use different designs, periods and definitions of demand;
+none settles the share of each cause.
+\end{debate}
+
+\section*{Exercises}\label{sec:b1:stabilisation-policy:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:stabilisation-policy:three}
+Output starts falling in January. The statistics office reports the fall
+in April; the parliament votes a spending package in September; the
+spending starts in January of the next year and has most of its effect by
+the summer. Name and date the lags.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:stabilisation-policy:read}
+In the opening chart's table, Germany's balance fell by $3.4$ points for a fall
+in growth of $8.5$ points, and Ireland's by $14.2$ for a fall of $10.4$.
+% figdata: budget
+Compare the two, and say what besides automatic stabilisers can explain
+the difference.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:stabilisation-policy:taylor}
+With the Taylor rule of \cref{sec:b1:stabilisation-policy:rules}, find the
+policy rate when inflation is $4\%$ and the output gap $-1\%$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:stabilisation-policy:sign}
+In a recession with no discretionary change in policy, predict the sign of
+the change in the budget balance, and say why.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:stabilisation-policy:cycle-ex}
+With the cycle of \cref{prop:b1:stabilisation-policy:cycle}, $T = 8$ and $\theta = 0.5$,
+compute the variance ratio for lags of 1, 2 and 4 quarters.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:stabilisation-policy:uncertain}
+The gap is $-4$, the effect of policy has mean 1 and variance $0.5$. Find the
+optimal response and the expected loss of the optimal response, of the full
+response and of no response.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:stabilisation-policy:slope}
+The fitted line of the opening chart has slope $0.122$ and correlation $0.235$.
+% figdata: budget_stats
+What would the slope be if the balance moved only through stabilisers that
+offset a fixed share of the fall in output? Why is the measured slope a
+poor measure of their size?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:stabilisation-policy:realtime}
+A central bank follows the Taylor rule, but its real-time estimate of the
+gap is $-3\%$ when the true gap is $-1\%$. By how much is its rate too low, and
+what does the Phillips curve predict for inflation if the error lasts?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:stabilisation-policy:local}
+A study finds a \omterm{def:b1:stabilisation-policy:local-multiplier}{local multiplier} of 1.5. Give two reasons why the national
+multiplier of the same spending could be smaller, and one why it could be
+larger.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:stabilisation-policy:ar}
+The gap follows $y_t = \rho y_{t-1} + \varepsilon_t + p_t$, with $\varepsilon_t$ independent with variance $\sigma^2$
+and $0 < \rho < 1$. Policy sets $p_t = -\theta y_{t-1}$. Find the variance of $y$, and show that
+policy raises it if $\theta > 2\rho$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:stabilisation-policy:rule-disc}
+Under \omterm{def:b1:stabilisation-policy:rule}{discretion} the loss from each period is $4$, the cost of an inflation
+bias the public expects. A rule removes the bias, but ignores a shock that
+costs $9$ when it occurs, with probability $q$. For which $q$ is the rule better?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:stabilisation-policy:refute}
+What evidence would refute the claim that \omterm{def:b1:is-lm:fiscal-multiplier}{fiscal multipliers} are larger at
+the \omterm{def:b1:is-lm:liquidity-trap}{zero lower bound}?
+\end{exercise}
+
+\section{Problem: Brenland's Finance Minister}\label{sec:b1:stabilisation-policy:problem}
+
+\begin{problem}[{Weekend problem --- a forecast, a lag and the stabilisers}]\label{pb:b1:stabilisation-policy:brenland}
+Brenland's output gap without policy follows $y_t = \rho y_{t-1} + e_t$, in per cent and by
+quarter. A shock $e_1 = -5$ hits in quarter 1, with no shock afterwards. Policy, if
+used, adds $p_t = -0.5y_{t-k}$ to the gap of quarter $t$: half the gap that would have
+occurred $k$ quarters before without policy. The effect of each $p_t$ lasts one
+quarter. The loss is the sum of squared gaps over quarters 1 to 8.
+
+\medskip\noindent\textbf{Part I --- A forecast.} Take $\rho = 0.6$.
+\begin{enumerate}
+  \item Give the gap path for quarters 1 to 8 without policy.
+  \item Compute the loss.
+  \item The forecast made before quarter 1 was a shock of $-2$. Give the forecast path.
+  \item What is the forecast error in quarter 1?
+  \item How often did forecasts made in April of the year before foresee recessions in 1992--2014?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- Acting with a lag of two quarters.} Take $k = 2$.
+\begin{enumerate}[resume]
+  \item With $\rho = 0.6$, give the gap path with policy.
+  \item Compute the loss, and compare with question 2.
+  \item With $\rho = 0.9$, give the losses with and without policy.
+  \item With $\rho = 0$, a shock that vanishes at once, give the losses.
+  \item Explain the case $\rho = 0$.
+  \item What must a minister know to decide whether to act?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- The automatic stabilisers.} Brenland's 2025
+income tax has bands of $0\%$ to 12,000 dalens, $20\%$ to 40,000, $35\%$ to 100,000 and $45\%$
+above; households with gross income below 12,000 receive $6{,}000 + 1{,}500(n - 1)$ dalens,
+and every household $1{,}200$ per member beyond two. The survey has 2,000
+households, 1,439 of them working.
+\begin{enumerate}[resume]
+  \item What tax does a household with 30,000 dalens pay?
+  \item What does it pay if its income falls by $10\%$, and what is the
+    fall in its \omterm{def:b1:national-accounts-in-depth:gni}{disposable income}?
+  \item What is its marginal tax rate, and what share of its loss do taxes absorb?
+  \item For a working household that falls below 12,000, why can \omterm{def:b1:national-accounts-in-depth:gni}{disposable income} fall by less still?
+  \item Every working household loses $10\%$ of its earnings. The average fall in
+    market income is 2,226.9 dalens per household; that of \omterm{def:b1:national-accounts-in-depth:gni}{disposable income}
+    1,532.3. What share do the stabilisers offset?
+  \item How much of it comes from taxes and how much from transfers?
+  \item With a propensity to consume of $0.8$ out of \omterm{def:b1:national-accounts-in-depth:gni}{disposable income}, compare
+    the fall in consumption with and without the stabilisers.
+  \item Why does this offset need no forecast?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- A rule.} Spending is tied to last quarter's gap: $k = 1$.
+\begin{enumerate}[resume]
+  \item With $\rho = 0.6$, give the gap path and the loss.
+  \item With $\rho = 0.9$, give the loss.
+  \item With $\rho = 0$, give the loss.
+  \item Compare the rule's losses with those of Part II.
+  \item Why can a rule act after one quarter where a decision takes two?
+  \item What does the case $\rho = 0$ say about any policy that responds to past gaps?
+  \item Which instrument of Part III responds within the quarter?
+  \item State the result: what share of a fall in market income do Brenland's automatic stabilisers offset?
+\end{enumerate}
+\end{problem}

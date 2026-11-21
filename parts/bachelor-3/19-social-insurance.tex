@@ -1,0 +1,437 @@
+\chapter{Social Insurance}\label{ch:b3:social-insurance}
+
+Most of what governments spend on people is insurance: against losing a job,
+falling ill, becoming disabled, living longer than one's savings. This chapter asks
+why these risks are insured by the state rather than by markets, and measures the
+trade-off every such programme faces: the more completely it insures, the more it
+changes the behaviour whose cost it covers.
+
+\begin{openingchart}{Extra weeks out of work per extra week of potential
+unemployment benefit, five estimates from three studies (bars show a range where
+the study gives one; Lalive's estimates are lower bounds).}{Katz and Meyer (1990);
+Lalive (2008); Johnston and Mas (2018): abstracts of their working papers (1988,
+2006, 2016)}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.5\linewidth, height=0.36\linewidth, xmin=0, xmax=0.6,
+  ymin=-0.6, ymax=4.6, ytick={0,...,4}, y dir=reverse,
+  yticklabels={Katz--Meyer (United States), Lalive: men (Austria), Lalive: women
+    (Austria), Johnston--Mas: out of work (Missouri), Johnston--Mas: on benefits
+    (Missouri)}, yticklabel style={font=\scriptsize, align=right, text width=4.4cm},
+  xlabel={Weeks per extra week of entitlement}, grid=none, xmajorgrids]
+  \addplot[omDef, only marks, mark=*, error bars/.cd, x dir=both, x explicit]
+    table[x=mid, y=pos, x error=err] {figdata/bachelor-3/19-social-insurance/out/duration.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: duration
+A week more of entitlement keeps people out of work between 0.09 and 0.32 weeks
+longer in these studies, and on benefits about half a week longer. The response is
+real and less than one for one: most of the extra entitlement is paid to people who
+would have been out of work anyway, or who are not yet near its end.
+
+\begin{recall}
+The Year 2 volume showed how adverse selection can unravel an insurance market
+and how moral hazard limits insurance, defined the replacement rate, and set
+pay-as-you-go pensions against funded ones in the overlapping-generations model.
+The regression discontinuity design is chapter 4's.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:social-insurance:symbols}
+$b$ is a benefit and $r = b/w$ the replacement rate; $D$ the share of time unemployed;
+$\varepsilon$ the elasticity of $D$ with respect to $b$; $\gamma$ relative risk aversion; $p$ a survival
+probability.
+\end{notation}
+
+\section{Why markets for some risks stay thin}\label{sec:b3:social-insurance:why}
+
+\begin{definition}[Social insurance]\label{def:b3:social-insurance:social-insurance}
+\index{social insurance}
+\emph{Social insurance} is insurance provided or mandated by the state, with
+contributions that do not depend on the individual's own risk, against events such
+as unemployment, illness, disability, old age and death.
+\end{definition}
+
+Three reasons recur. Adverse selection: an insurer who cannot tell high risks from
+low ones prices for the average, the low risks leave, and the market shrinks. Risks
+that strike many at once, such as a recession, cannot be pooled by a private insurer
+whose own capital falls with them. And some risks, such as being born with a
+disability, are realised before anyone could buy cover. Mandating cover answers the
+first, a state that can borrow answers the second, and only a programme that
+covers people from birth answers the third. None answers moral hazard, which
+grows with the cover.
+
+\section{Unemployment insurance}\label{sec:b3:social-insurance:ui}
+
+\begin{definition}[Potential benefit duration]\label{def:b3:social-insurance:benefit-duration}
+\index{potential benefit duration}
+The \emph{potential benefit duration} is the longest period for which an unemployed
+person can draw benefits under the rules.
+\end{definition}
+
+A worker moves between two states. Employed, she loses her job at the separation
+rate $s$ a year; unemployed, she finds one at the job-finding rate $f$. In a steady
+state the flows balance, $s(1 - D) = fD$, so the share of time she spends unemployed is
+$D = s/(s + f)$. Benefits work on $f$: by lowering the cost of searching less hard or
+of turning offers down, they lower the rate at which spells end and raise $D$.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, font=\footnotesize]
+  \node[draw, rounded corners, minimum width=2.4cm, minimum height=0.9cm] (E) at (0,0) {employed, $1 - D$};
+  \node[draw, rounded corners, minimum width=2.4cm, minimum height=0.9cm] (U) at (5,0) {unemployed, $D$};
+  \draw[->, thick, omDef] (E.north east) to[bend left=25] node[above] {separation, $s$} (U.north west);
+  \draw[->, thick, omThm] (U.south west) to[bend left=25] node[below] {job finding, $f$; benefits lower it} (E.south east);
+\end{tikzpicture}
+\par\smallskip{\small The two states of a worker. In a steady state the flows are equal,
+$s(1 - D) = fD$, so $D = s/(s + f)$: a lower job-finding rate raises the share of time
+unemployed.}
+\end{omfigure}
+
+\begin{definition}[Baily--Chetty formula]\label{def:b3:social-insurance:baily-chetty}
+\index{Baily--Chetty formula}
+The \emph{Baily--Chetty formula} states the condition for the optimal unemployment
+benefit: the gain from moving one more dalen to the unemployed, measured by the gap
+in marginal utility between unemployment and work, equals the cost to the fund from
+the longer spells the dalen causes.
+\end{definition}
+
+\begin{proposition}[The Baily--Chetty condition]\label{prop:b3:social-insurance:baily-chetty}
+A worker is unemployed a share $D$ of the time, which she chooses by her search, and
+receives $b$ when unemployed; a balanced fund levies $t = bD/(1 - D)$ when she works. At
+the optimal $b$, $\big(u'(c_u) - u'(c_e)\big)/u'(c_e) = \varepsilon/(1 - D)$. With relative risk aversion $\gamma$ and a consumption
+drop $\Delta c/c$, approximately $\gamma\,\Delta c/c = \varepsilon/(1 - D)$.
+\end{proposition}
+
+\begin{proof}
+Welfare is $W = (1 - D)u(w - t) + Du(b) - \psi(D)$, with $\psi$ the cost of search. Because the worker
+chose $D$, the envelope theorem removes $dD/db$ from her own utility, and
+$dW/db = Du'(c_u) - (1 - D)u'(c_e)\,dt/db$. From the budget, $(1 - D)\,dt/db = D + (b/(1 - D))\,dD/db = D\big(1 + \varepsilon/(1 - D)\big)$. Setting
+$dW/db = 0$ and dividing by $Du'(c_e)$ gives the condition. A first-order expansion of $u'$ gives
+$\big(u'(c_u) - u'(c_e)\big)/u'(c_e) \approx \gamma\,\Delta c/c$.
+\end{proof}
+
+The formula needs three numbers, all measurable: how much consumption falls on
+losing a job, how risk-averse people are, and how much benefits lengthen spells.
+It says nothing of the model's details --- what search costs, how wages are set ---
+because the measured elasticity summarises them.
+
+\begin{record}[Consumption on losing a job]
+Gruber followed the food spending of households in the United States from 1968 to
+1987 and matched each spell of unemployment with the benefit the household could
+claim under its state's rules. Food spending fell by 7~\% on average when a head of
+household became unemployed, and a replacement rate higher by 10 points made the
+fall 2.7~\% smaller; without benefits, the fall would have been more than three
+times as large. % ledger: b3si:gru.drop
+A survey of the labour-supply evidence puts the elasticity of time out of work with
+respect to the benefit close to 1.0. % ledger: b3si:km.elast
+\end{record}
+
+Put the numbers in the condition. With a drop of 7~\% and relative risk aversion of 2
+(an assumption; the problem below uses 3), the left side is $2 \times 0.07 = 0.14$. With $\varepsilon = 1.0$ and $D$ near 5~\%, the
+right side is $1.0/0.95 = 1.05$. Taken at face value, the gain from a dalen more of
+benefits is a seventh of its cost, and benefits are above the optimum unless risk
+aversion is about 15. Three things soften the verdict: food is a necessity, so the
+fall in total consumption is larger than the fall in food; part of $\varepsilon$ is not moral
+hazard, as the Austrian severance evidence below shows, and that part is a gain;
+and the condition holds at the margin, around current benefits. The calculation
+shows which number decides the answer: here it is the elasticity.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.17cm, y=2.4cm]
+  \draw[econ axes] (0,0) -- (42,0) node[right, font=\scriptsize] {weeks unemployed};
+  \draw[econ axes] (0,0) -- (0,1.25) node[above, font=\scriptsize] {exit rate};
+  \draw[curve, omDef] plot[domain=1:24.5, samples=30] (\x, {0.55*exp(-\x/30)+0.12})
+    -- (25,0.95) -- (26.5,0.30) -- plot[domain=26.5:40, samples=10] (\x, {0.18+0.1*exp(-(\x-26.5)/6)});
+  \draw[curve, omThm, dashed] plot[domain=1:40, samples=40] (\x, {0.50*exp(-\x/30)+0.14});
+  \draw[guide] (25,0) node[below, font=\scriptsize] {benefits end} -- (25,1.0);
+  \node[font=\scriptsize, omDef, anchor=west] at (27,0.85) {recipients};
+  \node[font=\scriptsize, omThm, anchor=west] at (31,0.47) {non-recipients};
+\end{tikzpicture}
+\par\smallskip{\small A sketch of the prediction, not data: the rate at which recipients
+leave unemployment jumps in the weeks benefits run out, while that of people who
+never drew benefits does not. The record in the model box below found this pattern
+in United States administrative data.}
+\end{omfigure}
+
+\begin{model}{Unemployment insurance and search}
+\assumes The unemployed choose how hard to search and which offers to accept;
+benefits lower the cost of staying unemployed.
+\predicts Longer or higher benefits lengthen spells, and the rate at which people
+find work jumps when benefits run out.
+\tested In United States administrative data, the rate of leaving unemployment
+jumps for recipients around the time benefits lapse, but not for nonrecipients;
+a week more of entitlement adds 0.16 to 0.20 weeks to a spell. % ledger: b3si:km
+In Germany, where entitlement depends on exact age, discontinuities over twenty
+years show that the non-employment effect of a month more of benefits is at most
+slightly smaller in recessions than in booms, while many more people exhaust their
+benefits in recessions. % ledger: b3si:svb
+\breaks Part of the response is not moral hazard. In Austria, a severance payment
+of two months' earnings, which does not depend on staying unemployed, cut the rate
+of finding a job by 8--12~\%, and extending benefits from 20 to 30 weeks cut it by
+5--9~\%: people without savings search harder than they would like to, and benefits
+let them take longer. % ledger: b3si:ccw
+That share of the response is a gain, not a cost, and the formula must count it.
+\end{model}
+
+\begin{measure}[The replacement rate]
+The replacement rate is the benefit as a share of the previous wage. Rules state
+a gross rate, before caps; what matters to behaviour is the
+net rate, after the taxes on wages and benefits, often capped at a maximum benefit
+and differing with family type and with the length of the spell. Two countries with
+the same statutory rate can replace very different shares of what a worker took
+home.
+\end{measure}
+
+\section{Health insurance: the randomised evidence}\label{sec:b3:social-insurance:health}
+
+\begin{record}[The RAND Health Insurance Experiment, 1974--1981]
+More than 5{,}800 people from about 2{,}000 households in six locations in the United
+States were randomly assigned to insurance plans that differed in what share of the
+bill they paid. Spending fell as the share rose; the experiment's summary elasticity
+of medical spending with respect to its out-of-pocket price, $-0.2$, is still the
+benchmark, though a single elasticity summarises plans with deductibles and caps
+poorly. % ledger: b3si:rand
+\end{record}
+
+\begin{record}[The Oregon lottery, 2008]
+Oregon drew 30{,}000 names from 90{,}000 low-income adults who had applied, to decide
+who could apply for public insurance. In the first year, those drawn were about 25
+percentage points more likely to be insured; they used more care, had lower
+out-of-pocket spending and medical debt, and reported better physical and mental
+health. % ledger: b3si:oregon1
+Measured physical health --- blood pressure, cholesterol, blood sugar --- did not
+change significantly over about two years, while diabetes diagnoses rose and
+depression and financial hardship fell. % ledger: b3si:oregon2
+\end{record}
+
+Both experiments find moral hazard in the narrow sense --- people use more care
+when it is cheaper --- and both find the main benefit of insurance where insurance
+theory puts it: in financial protection, not in measured health over a few years.
+
+\section{Pensions, saving and ageing}\label{sec:b3:social-insurance:pensions}
+
+\begin{definition}[Annuity]\label{def:b3:social-insurance:annuity}
+\index{annuity}
+An \emph{annuity} is a contract that pays a fixed income for as long as the holder
+lives, in exchange for a sum paid in advance.
+\end{definition}
+
+\begin{proposition}[Full annuitisation]\label{prop:b3:social-insurance:yaari}
+A retiree with wealth $W$ lives one period for sure and a second with probability $p$,
+has no bequest motive, and can buy an actuarially fair \omterm{def:b3:social-insurance:annuity}{annuity} or a bond, both at
+interest rate zero. If she is risk-averse, she puts all her savings in the \omterm{def:b3:social-insurance:annuity}{annuity}.
+\end{proposition}
+
+\begin{proof}
+A dalen in the bond pays 1 in period 2 whether she lives or not; a dalen in the fair
+\omterm{def:b3:social-insurance:annuity}{annuity} pays $1/p$ if she lives and nothing if she dies. Without a bequest motive,
+the payment at death is worth nothing to her. Her budget with the \omterm{def:b3:social-insurance:annuity}{annuity} is
+$c_1 + pc_2 = W$; with the bond, $c_1 + c_2 = W$. The \omterm{def:b3:social-insurance:annuity}{annuity}'s budget set contains the bond's,
+so she does at least as well with it, and strictly better whenever she saves: the
+\omterm{def:b3:social-insurance:annuity}{annuity} raises consumption in the only state in which she consumes.
+\end{proof}
+
+Few people buy annuities voluntarily: private annuities are priced for those who
+expect to live long (adverse selection again), and public pensions already pay
+one. A pay-as-you-go pension is itself an \omterm{def:b3:social-insurance:annuity}{annuity}, financed by current workers,
+whose return is the growth of the wage bill: population growth plus productivity
+growth.
+
+\begin{omchart}{Old-age dependency ratio (population aged 65 and over per 100 aged
+15--64), six economies, 1960--2025.}{World Bank, World Development Indicators
+(SP.POP.DPND.OL)}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.66\linewidth, height=0.4\linewidth, xmin=1958, xmax=2027,
+  ymin=0, ymax=55, ylabel={Per 100 of working age}, legend pos=north west,
+  legend style={font=\footnotesize, legend columns=2}]
+  \addplot[omDef, thick, mark=none] table[x=year, y=JPN] {figdata/bachelor-3/19-social-insurance/out/dependency.csv};
+  \addplot[omThm, thick, mark=none] table[x=year, y=ITA] {figdata/bachelor-3/19-social-insurance/out/dependency.csv};
+  \addplot[black, thick, mark=none] table[x=year, y=DEU] {figdata/bachelor-3/19-social-insurance/out/dependency.csv};
+  \addplot[black, thick, dashed, mark=none] table[x=year, y=USA] {figdata/bachelor-3/19-social-insurance/out/dependency.csv};
+  \addplot[omProp, thick, mark=none] table[x=year, y=KOR] {figdata/bachelor-3/19-social-insurance/out/dependency.csv};
+  \addplot[omDef, thick, dashed, mark=none] table[x=year, y=CHN] {figdata/bachelor-3/19-social-insurance/out/dependency.csv};
+  \legend{Japan, Italy, Germany, United States, Korea, China}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: dependency_points
+Japan had 9 people of 65 and over per 100 of working age in 1960 and 51 in 2025;
+Korea, 6 and 29. A pay-as-you-go pension whose benefits are fixed as a share of
+wages needs a contribution rate proportional to this ratio: Japan's has risen
+nearly sixfold. Raising the retirement age, cutting replacement rates and building
+funded savings are the ways out, and every ageing country uses some mix of them.
+
+\begin{definition}[Crowd-out]\label{def:b3:social-insurance:crowd-out}
+\index{crowd-out}
+\emph{Crowd-out} is the reduction in private saving or private insurance caused by
+a public programme that provides the same protection.
+\end{definition}
+
+\begin{record}[Crowd-out measured]
+When Medicaid, the United States' public health insurance for low-income families,
+was extended between 1987 and 1992, the eligibility of children rose by half and
+that of pregnant women doubled. Cutler and Gruber estimated that between 50~\% and
+75~\% of the rise in Medicaid coverage was matched by a fall in private coverage:
+most of the new public insurance replaced insurance people already had.
+% ledger: b3si:cg.crowdout
+In Denmark, using 41 million observations on savings, Chetty and co-authors found
+that each dollar's worth of government spending on subsidies to retirement accounts
+raised total saving by about 1 cent: only some 15~\% of people, the active savers,
+respond to subsidies at all, and the other 85~\% do not. Contributions made
+automatically raised saving more.
+% ledger: b3si:cflno.denmark
+\end{record}
+
+\omterm{def:b3:social-insurance:crowd-out}{Crowd-out} decides what a programme adds. A subsidy that buys saving people would
+have done anyway, or insurance they already held, costs its full price and adds
+little; the same money spent on people who had no protection adds all of it.
+
+\section{Disability insurance}\label{sec:b3:social-insurance:disability}
+
+\begin{definition}[Disability insurance]\label{def:b3:social-insurance:disability}
+\index{disability insurance}
+\emph{Disability insurance} pays an income to people whose health keeps them from
+working, after a test of their capacity to work.
+\end{definition}
+
+The test is the programme's hardest part: health is not observed as precisely as
+unemployment, and the line between those who cannot work and those for whom
+working does not pay moves with the labour market.
+
+\begin{record}[The United States disability rolls after 1984]
+Between 1984 and 2000, the share of adults below retirement age receiving federal
+disability benefits rose from 3.1~\% to 5.3~\%. Screening had been loosened in 1984, and
+benefits replaced a rising share of the falling wages of the less skilled; after
+1984, applications became two to three times as responsive to local falls in labour
+demand, and less-skilled workers who lost their jobs left the labour force
+instead of becoming unemployed. Without the change, the measured unemployment
+rate would have been about two-thirds of a point higher. % ledger: b3si:ad
+\end{record}
+
+\section{Exercises}\label{sec:b3:social-insurance:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:social-insurance:1}
+In the opening chart, what is the range of estimates? Why might the effect on time
+on benefits exceed the effect on time out of work?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:social-insurance:2}
+A worker earned 2{,}500 dalens a month. The benefit replaces 60~\% of the wage up to a
+maximum of 1{,}800. Find her benefit and her replacement rate; then those of a worker
+who earned 4{,}000.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:social-insurance:3}
+Population grows by 0.5~\% a year and productivity by 1.5~\%. What return does a
+pay-as-you-go pension pay? What does it pay if population starts to shrink by 0.5~\%?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:social-insurance:4}
+What evidence would contradict the claim that unemployment benefits lengthen spells?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:social-insurance:5}
+Relative risk aversion is 2, the elasticity of unemployment duration with respect to
+the benefit is 0.5, and the unemployment rate is 5~\%. Consumption falls by 10~\% on
+losing a job. Should benefits rise or fall? What consumption drop would make them
+optimal?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:social-insurance:6}
+Potential duration is extended from 26 to 39 weeks. Using the range of the Katz--Meyer
+estimate, how much longer are the spells of recipients?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:social-insurance:7}
+A retiree survives to the second period with probability 0.8 and the interest rate is
+3~\%. What is the fair price of an \omterm{def:b3:social-insurance:annuity}{annuity} paying 1 dalen in period 2? What does a bond
+paying 1 dalen cost?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:social-insurance:8}
+With the WDI data, find the five countries whose old-age dependency ratio rose most
+between 2000 and 2025.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:social-insurance:9}
+What would the Oregon data have shown if insurance improved physical health within
+two years?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:social-insurance:10}
+Prove the Baily--Chetty condition, and show where the envelope theorem enters. Why
+does the condition hold whatever the cost of search?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:social-insurance:11}
+Half of the retirees survive to period 2 with probability 0.5, half with 0.9; each
+knows her type and the insurer does not. Each values an \omterm{def:b3:social-insurance:annuity}{annuity} at her own fair
+price and buys only if the price does not exceed it. Show that a pooled fair price
+unravels, and find the price at which the market settles.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:social-insurance:12}
+Simulate 20{,}000 job losers aged 40 to 60 whose potential duration is 12 months below 50
+and 18 months from 50, with non-employment duration rising by 0.15 months per month of
+entitlement, and estimate the jump at 50 with \omterm{def:b3:regression-discontinuity:local-linear}{local linear regressions}. Recover the
+per-month effect.
+\end{exercise}
+
+\section{Problem: Brenland's Unemployment Fund}\label{sec:b3:social-insurance:problem}
+
+\begin{problem}[{Weekend problem --- Brenland's unemployment fund}]\label{pb:b3:social-insurance:fund}
+Brenland's fund pays 60~\% of the previous wage and is financed by a contribution on
+wages; take the mean wage as 31{,}000 dalens a year and the 2025 labour-force data of
+\code{load("accounts")}. A survey finds that consumption falls on becoming
+unemployed by $0.24 - 0.28r$, with $r$ the replacement rate. Relative risk aversion is 3, and
+the elasticity of unemployment duration with respect to the benefit is 0.4.
+% figdata: fund_stats, fund_curve
+
+\medskip\noindent\textbf{Part I --- the fund.}
+\begin{enumerate}
+\item How many people were unemployed in 2025, and at what rate?
+\item Compute the annual benefit at 60~\%.
+\item Compute the fund's spending, treating every unemployed person as unemployed
+all year.
+\item Find the contribution rate that balances the fund.
+\item Compute the consumption drop at 60~\% and with no insurance.
+\item Why do the unemployed not smooth consumption on their own savings?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- search.}
+\begin{enumerate}[resume]
+\item By how much does unemployment duration change if $r$ falls from 60~\% to 35~\%?
+\item If the unemployment rate moves in proportion, what does it become?
+\item What happens to the contribution rate, and why is this a fiscal externality?
+\item Give two reasons why higher benefits lengthen spells.
+\item What does the Austrian severance-pay result say about these reasons?
+\item Why does the distinction matter for welfare?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- the optimum.}
+\begin{enumerate}[resume]
+\item Compute the left side of the approximate Baily--Chetty condition at 60~\%.
+\item Compute the right side.
+\item Are benefits too generous or too low at 60~\%?
+\item Find the optimal replacement rate, holding the unemployment share at 6~\% in
+$\varepsilon/(1 - D)$ (at 4.8~\% the right side changes by 1.3~\%).
+\item Compute the contribution rate at that rate, with the unemployment rate of
+question 8. How much of the fall from question 4 comes from lower unemployment?
+\item Compute the consumption drop at that rate.
+\item Solve the exact condition with $u'(c) = c^{-3}$. Why is the answer higher?
+\item Redo question 16 with an elasticity of 0.2.
+\item Redo it with relative risk aversion 2.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- duration.} A regression discontinuity at age 50,
+where potential duration rises by 6 months, finds that non-employment lengthens by
+0.9 months.
+\begin{enumerate}[resume]
+\item Compute the effect per month of entitlement.
+\item Compare it with the opening chart.
+\item What makes the age threshold credible, and what limits the estimate?
+\item State the result: Brenland's optimal replacement rate under the measured
+elasticity.
+\end{enumerate}
+\end{problem}

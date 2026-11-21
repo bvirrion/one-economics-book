@@ -1,0 +1,494 @@
+\chapter{Preferences and Utility}\label{ch:b1:preferences-and-utility}
+
+Between 1996 and 2024 the prices that households in the euro area paid
+moved far apart. Electricity cost two and a half times as much at the end
+as at the start; televisions, cameras and other audio-visual equipment cost
+less than a fifth as much. A household that spent the same income in both
+years could not have bought the same basket, and would not have wanted to.
+To say what it would do instead, a model needs a description of what the
+household wants that does not change when prices change. This chapter
+builds that description: a preference ordering over baskets, the axioms
+that make it usable, and the \omterm{def:b1:preferences-and-utility:utility}{utility functions} that represent it. The
+next chapter puts it to work against a budget.
+
+\begin{openingchart}{Consumer prices in the euro area, five categories and all
+items, 1996--2024, annual average indices with 2015 = 100, on a logarithmic
+axis.}{Eurostat, harmonised index of consumer prices, annual data
+(\code{prc_hicp_aind}), euro area}
+\begin{tikzpicture}
+\begin{semilogyaxis}[omtimesten, xlabel={Year}, ylabel={Index, 2015 = 100},
+  xmin=1996, xmax=2024, ymin=50, ymax=500, ytick={50,100,200,500},
+  yticklabels={50,100,200,500}, width=0.72\linewidth,
+  height=0.5\linewidth, legend pos=outer north east]
+  \addplot+[very thick, black] table[x=year, y=all] {figdata/bachelor-1/04-preferences-and-utility/out/hicp_categories.csv};
+  \addplot table[x=year, y=electricity] {figdata/bachelor-1/04-preferences-and-utility/out/hicp_categories.csv};
+  \addplot table[x=year, y=bread] {figdata/bachelor-1/04-preferences-and-utility/out/hicp_categories.csv};
+  \addplot table[x=year, y=transport] {figdata/bachelor-1/04-preferences-and-utility/out/hicp_categories.csv};
+  \addplot table[x=year, y=rent] {figdata/bachelor-1/04-preferences-and-utility/out/hicp_categories.csv};
+  \addplot table[x=year, y=audiovisual] {figdata/bachelor-1/04-preferences-and-utility/out/hicp_categories.csv};
+  \legend{All items, Electricity, Bread and cereals, Transport services, Rents, Audio-visual}
+\end{semilogyaxis}
+\end{tikzpicture}
+\end{openingchart}
+
+All six series are set to 100 in 2015, so the chart compares changes, not
+levels. From 1996 to 2024 the index of all items rose by a factor of 1.757.
+Electricity rose by a factor of 2.547, bread and cereals by 1.932, rents by
+1.603, and audio-visual equipment fell to 0.188 of its 1996
+level. % figdata: hicp_ratios
+Relative to audio-visual equipment, electricity became
+$2.547/0.188 = 13.5$ times dearer. % figdata: hicp_ratios
+A household that kept its 1996 basket through 2024 would have bought too
+much of what had become dear and too little of what had become cheap. How
+much it moves away from that basket depends on how willing it is to
+substitute one good for another, and that is a property of its
+preferences, which the chapter now defines.
+
+\begin{recall}
+Two goods are substitutes when a rise in the price of one raises the demand
+for the other, and complements when it lowers it. The law of demand says
+that the quantity demanded falls when the good's own price rises. A
+household's budget is the income it can spend.
+\end{recall}
+
+\section{Preference relations}\label{sec:b1:preferences-and-utility:relations}
+
+A \emph{bundle} is a list of quantities $x = (x_1, x_2)$ of two goods, with
+$x_1, x_2 \ge 0$; everything in this chapter extends to $n$ goods. A
+consumer compares bundles two at a time.
+
+\begin{definition}[Preference relation]\label{def:b1:preferences-and-utility:preference}
+\index{preference relation}\index{weak preference}\index{strict preference}\index{indifference}
+A \emph{preference relation} $\succsim$ on bundles reads $x \succsim y$: ``$x$
+is at least as good as $y$'' for the consumer (\emph{weak preference}). From
+it, $x \succ y$ (\emph{strict preference}) means $x \succsim y$ and not
+$y \succsim x$, and $x \sim y$ (\emph{indifference}) means $x \succsim y$ and
+$y \succsim x$.
+\end{definition}
+
+\begin{definition}[Rational preferences]\label{def:b1:preferences-and-utility:rational}
+\index{completeness (of preferences)}\index{transitivity (of preferences)}\index{rational preferences}
+A \omterm{def:b1:preferences-and-utility:preference}{preference relation} is \emph{complete} if for any two bundles $x$, $y$,
+$x \succsim y$ or $y \succsim x$ (or both). It is \emph{transitive} if
+$x \succsim y$ and $y \succsim z$ imply $x \succsim z$. A complete and transitive
+\omterm{def:b1:preferences-and-utility:preference}{preference relation} is called \emph{rational}.
+\end{definition}
+
+Completeness rules out a consumer who cannot compare two bundles at all.
+Transitivity rules out cycles: someone who prefers tea to coffee, coffee to
+juice and juice to tea would pay a little to swap tea for juice, a little
+more to swap juice for coffee, a little more to swap coffee for tea, and end
+where they started, poorer. The word ``\omterm{def:b1:preferences-and-utility:rational}{rational}'' means only these two
+properties, nothing about whether the tastes are wise.
+
+\begin{definition}[Monotone preferences]\label{def:b1:preferences-and-utility:monotone}
+\index{monotonicity (of preferences)}
+Preferences are \emph{monotone} if more of every good is better: whenever
+$x_1 \ge y_1$ and $x_2 \ge y_2$ with at least one inequality strict,
+$x \succ y$.
+\end{definition}
+
+Monotonicity rules out satiation in the goods modelled: no bundle is so
+large that more of it is unwelcome. It is an assumption about the goods
+chosen for the model (a good that has become a nuisance is modelled as its
+removal, which is a good).
+
+\begin{definition}[Convex preferences]\label{def:b1:preferences-and-utility:convex}
+\index{convex preferences}\index{better-than set}
+For a bundle $y$, the \emph{better-than set} is $\{x : x \succsim y\}$.
+Preferences are \emph{convex} if every better-than set is convex: if
+$x \succsim y$ and $z \succsim y$, then $tx + (1 - t)z \succsim y$ for every
+$t \in [0, 1]$. They are \emph{strictly convex} if, moreover,
+$tx + (1 - t)z \succ y$ whenever $x \neq z$ and $0 < t < 1$.
+\end{definition}
+
+Convexity says that averages are at least as good as extremes: a consumer
+indifferent between four litres of milk with two loaves and two litres
+with four loaves likes three of each at least as much. It rules out a taste
+for specialising in one good.
+
+\section{Indifference curves and the marginal rate of substitution}\label{sec:b1:preferences-and-utility:curves}
+
+\begin{definition}[Indifference curve]\label{def:b1:preferences-and-utility:indifference-curve}
+\index{indifference curve}
+The \emph{\omterm{def:b1:preferences-and-utility:preference}{indifference} curve} through a bundle $y$ is the set of bundles
+indifferent to it, $\{x : x \sim y\}$.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Good 1, $x_1$}, ylabel={Good 2, $x_2$},
+  xmin=0, xmax=8, ymin=0, ymax=8, width=0.5\linewidth, height=0.42\linewidth, samples=80]
+  \fill[omDef!14] (axis cs:0,0) rectangle (axis cs:8,8);
+  \addplot[fill=white, draw=none, domain=0.01:8] {min(9/x, 8)} \closedcycle;
+  \addplot[guide] coordinates {(1.5,6) (6,1.5)};
+  \addplot[demand, domain=1.125:8] {9/x};
+  \addplot[only marks, mark=*, black] coordinates {(3,3) (1.5,6) (6,1.5)};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:3,3) {$y$};
+  \node[font=\footnotesize] at (axis cs:5.6,5.6) {better than $y$};
+\end{axis}
+\end{tikzpicture}
+
+{\small The \omterm{def:b1:preferences-and-utility:indifference-curve}{indifference curve} through $y = (3, 3)$ (blue) and the
+\omterm{def:b1:preferences-and-utility:convex}{better-than set} above it (shaded). Convexity: the segment joining
+$(1.5, 6)$ and $(6, 1.5)$ lies in the \omterm{def:b1:preferences-and-utility:convex}{better-than set}.}
+\end{omfigure}
+
+\begin{proposition}[Indifference curves do not cross]\label{prop:b1:preferences-and-utility:no-cross}
+\index{indifference curve!no crossing}
+If preferences are \omterm{def:b1:preferences-and-utility:rational}{rational}, two \omterm{def:b1:preferences-and-utility:indifference-curve}{indifference curves} are either the same
+curve or have no point in common. If preferences are also \omterm{def:b1:preferences-and-utility:monotone}{monotone}, no two
+bundles on one \omterm{def:b1:preferences-and-utility:indifference-curve}{indifference curve} have one bundle with more of both goods,
+so every \omterm{def:b1:preferences-and-utility:indifference-curve}{indifference curve} slopes downward.
+\end{proposition}
+
+\begin{proof}
+Let the curves through $y$ and $z$ share a bundle $x$: $x \sim y$ and
+$x \sim z$. By transitivity applied in both directions, $y \sim z$, and then
+every bundle indifferent to $y$ is indifferent to $z$ and conversely (again
+by transitivity): the two curves are the same set. For the second part, if
+$x$ and $x'$ lay on one curve with $x'$ larger in both goods, monotonicity
+would give $x' \succ x$, contradicting $x' \sim x$.
+\end{proof}
+
+The slope of an \omterm{def:b1:preferences-and-utility:indifference-curve}{indifference curve} is the exchange rate between the two
+goods at which the consumer is willing to trade.
+
+\begin{definition}[Marginal rate of substitution]\label{def:b1:preferences-and-utility:mrs}
+\index{marginal rate of substitution}\index{MRS}
+At a bundle where the \omterm{def:b1:preferences-and-utility:indifference-curve}{indifference curve} is a differentiable graph
+$x_2(x_1)$, the \emph{marginal rate of substitution} of good 1 for good 2 is
+$\mathrm{MRS} = -\dd x_2/\dd x_1$ along the curve: the amount of good 2 the
+consumer would give up for one more unit of good 1, in the limit of small
+trades. Its unit is units of good 2 per unit of good 1.
+\end{definition}
+
+With strictly \omterm{def:b1:preferences-and-utility:convex}{convex} and \omterm{def:b1:preferences-and-utility:monotone}{monotone} preferences the \omterm{def:b1:preferences-and-utility:mrs}{MRS} falls as the consumer
+moves down an \omterm{def:b1:preferences-and-utility:indifference-curve}{indifference curve}: the more of good 1 the consumer holds,
+the less good 2 they will give up for another unit of it. This is
+\emph{diminishing \omterm{def:b1:preferences-and-utility:mrs}{MRS}}; geometrically, the curve is \omterm{def:b1:preferences-and-utility:convex}{convex} towards the
+origin.
+
+\section{Utility functions}\label{sec:b1:preferences-and-utility:utility}
+
+Comparing bundles two at a time is cumbersome. A function that gives every
+bundle a number, larger for better bundles, turns comparisons into
+arithmetic and optimisation into calculus.
+
+\begin{definition}[Utility function]\label{def:b1:preferences-and-utility:utility}
+\index{utility function}\index{ordinal utility}
+A \emph{utility function} represents the \omterm{def:b1:preferences-and-utility:preference}{preference relation} $\succsim$ if,
+for all bundles, $u(x) \ge u(y)$ if and only if $x \succsim y$. A utility
+function in this sense is \emph{ordinal}: only the order of its values
+carries meaning, not their differences or ratios.
+\end{definition}
+
+A \omterm{def:b1:preferences-and-utility:preference}{preference relation} that has a utility representation is \omterm{def:b1:preferences-and-utility:rational}{rational}, since
+real numbers are completely and transitively ordered. The converse needs a
+little more: the preferences must be continuous (no sudden reversal for a
+small change in a bundle). One \omterm{def:b1:preferences-and-utility:rational}{rational} ordering fails it: the
+\emph{lexicographic} order that compares good 1 first and looks at good 2
+only to break ties. Each of its \omterm{def:b1:preferences-and-utility:indifference-curve}{indifference curves} is a single point, and
+there are too many such points for the real numbers to rank them all; it
+has no utility representation (a result of set theory, admitted here).
+
+\begin{proposition}[Utility is ordinal]\label{prop:b1:preferences-and-utility:ordinal}
+\index{utility function!increasing transformation}
+If $u$ represents $\succsim$ and $f$ is a strictly increasing function on the
+values of $u$, then $v = f \circ u$ represents $\succsim$. If $u$ and $f$ are
+differentiable with $f' > 0$, then $v$ and $u$ give the same \omterm{def:b1:preferences-and-utility:mrs}{marginal rate
+of substitution}:
+\[
+\mathrm{MRS} = \frac{\partial u/\partial x_1}{\partial u/\partial x_2} = \frac{\partial v/\partial x_1}{\partial v/\partial x_2}.
+\]
+\end{proposition}
+
+\begin{proof}
+$v(x) \ge v(y)$ if and only if $f(u(x)) \ge f(u(y))$, if and only if
+$u(x) \ge u(y)$, since $f$ is strictly increasing. Along an \omterm{def:b1:preferences-and-utility:indifference-curve}{indifference
+curve} $u(x_1, x_2) = c$, \cref{prop:b1:constrained-optimisation:level-slope}
+gives $\dd x_2/\dd x_1 = -u_1/u_2$, so $\mathrm{MRS} = u_1/u_2$. For $v$,
+$v_i = f'(u)u_i$, and the factor $f'(u) > 0$ cancels in $v_1/v_2$.
+\end{proof}
+
+The proposition is the reason the book never compares ``amounts of
+utility'' between two people or between two bundles of one person. What a
+\omterm{def:b1:preferences-and-utility:utility}{utility function} says about choices --- which bundle is chosen, how
+choices respond to prices --- depends only on the \omterm{def:b1:preferences-and-utility:mrs}{MRS}, and the \omterm{def:b1:preferences-and-utility:mrs}{MRS} is the
+same for every representation.
+
+\section{The standard forms}\label{sec:b1:preferences-and-utility:forms}
+
+Four families of \omterm{def:b1:preferences-and-utility:utility}{utility functions} do most of the work in the book.
+
+\begin{definition}[Cobb--Douglas utility]\label{def:b1:preferences-and-utility:cobb-douglas}
+\index{Cobb--Douglas utility}
+A \emph{Cobb--Douglas utility} is $u(x_1, x_2) = x_1^{a}x_2^{1-a}$ with
+$0 < a < 1$. Its \omterm{def:b1:preferences-and-utility:mrs}{MRS} is $\dfrac{a}{1 - a}\,\dfrac{x_2}{x_1}$.
+\end{definition}
+
+\begin{definition}[Perfect substitutes and perfect complements]\label{def:b1:preferences-and-utility:perfect}
+\index{perfect substitutes}\index{perfect complements}
+Goods are \emph{perfect substitutes} if preferences are represented by
+$u = a x_1 + b x_2$ with $a, b > 0$: the \omterm{def:b1:preferences-and-utility:mrs}{MRS} is the constant $a/b$, and the
+\omterm{def:b1:preferences-and-utility:indifference-curve}{indifference curves} are straight lines. Goods are \emph{perfect
+complements} if preferences are represented by
+$u = \min(x_1/a, x_2/b)$: they are consumed in the fixed proportion
+$x_1 : x_2 = a : b$, and the \omterm{def:b1:preferences-and-utility:indifference-curve}{indifference curves} are right angles with their
+corners on the ray of that proportion.
+\end{definition}
+
+\begin{definition}[Quasi-linear utility]\label{def:b1:preferences-and-utility:quasi-linear}
+\index{quasi-linear utility}
+A \emph{quasi-linear utility} is $u(x_1, x_2) = v(x_1) + x_2$ with $v$
+increasing and concave. Its \omterm{def:b1:preferences-and-utility:mrs}{MRS} is $v'(x_1)$, which does not depend on $x_2$.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 2, horizontal sep=14mm, vertical sep=24mm},
+  omrecord, grid=none, width=0.42\linewidth, height=0.32\linewidth,
+  xmin=0, xmax=10, ymin=0, ymax=10, samples=60, xlabel={$x_1$}, ylabel={$x_2$}]
+\nextgroupplot[title={\small Cobb--Douglas $\sqrt{x_1x_2}$}, width=0.42\linewidth]
+  \addplot[demand, domain=0.4:10] {4/x};
+  \addplot[demand, domain=0.9:10] {9/x};
+  \addplot[demand, domain=1.6:10] {16/x};
+\nextgroupplot[title={\small Perfect substitutes $x_1 + 2x_2$}, width=0.42\linewidth]
+  \addplot[demand, domain=0:4] {(4 - x)/2};
+  \addplot[demand, domain=0:8] {(8 - x)/2};
+  \addplot[demand, domain=0:10] {(12 - x)/2};
+\nextgroupplot[title={\small Perfect complements $\min(x_1, x_2)$}, width=0.42\linewidth]
+  \addplot[demand] coordinates {(2,10) (2,2) (10,2)};
+  \addplot[demand] coordinates {(4,10) (4,4) (10,4)};
+  \addplot[demand] coordinates {(6,10) (6,6) (10,6)};
+  \addplot[guide, domain=0:10] {x};
+\nextgroupplot[title={\small Quasi-linear $4\sqrt{x_1} + x_2$}, width=0.42\linewidth]
+  \addplot[demand, domain=0:10] {8 - 4*sqrt(x)};
+  \addplot[demand, domain=0:10] {11 - 4*sqrt(x)};
+  \addplot[demand, domain=0:10] {14 - 4*sqrt(x)};
+\end{groupplot}
+\end{tikzpicture}
+
+{\small Three \omterm{def:b1:preferences-and-utility:indifference-curve}{indifference curves} of each standard form. Cobb--Douglas:
+curves \omterm{def:b1:preferences-and-utility:convex}{convex} towards the origin. Substitutes: parallel lines. Complements:
+right angles on the ray $x_2 = x_1$ (dotted). Quasi-linear: vertical shifts
+of one curve, so the \omterm{def:b1:preferences-and-utility:mrs}{MRS} at a given $x_1$ is the same on every curve.}
+\end{omfigure}
+
+Cobb--Douglas preferences are the workhorse: smooth, strictly \omterm{def:b1:preferences-and-utility:convex}{convex},
+with an \omterm{def:b1:preferences-and-utility:mrs}{MRS} that depends only on the ratio $x_2/x_1$, so that scaling a
+bundle up leaves the \omterm{def:b1:preferences-and-utility:mrs}{MRS} unchanged. \omterm{def:b1:preferences-and-utility:perfect}{Perfect substitutes} model two brands
+of the same thing. \omterm{def:b1:preferences-and-utility:perfect}{Perfect complements} model goods used together in fixed
+amounts: left and right shoes, or flour and yeast in one recipe.
+Quasi-linear preferences model a small good next to ``all other spending''
+$x_2$, measured in money: the \omterm{def:b1:preferences-and-utility:mrs}{MRS} $v'(x_1)$ is then a willingness to pay in
+money for one more unit of good 1, whatever the consumer's wealth, which is
+what makes them the basis of consumer surplus (\cref{ch:b1:consumer-welfare}).
+
+\begin{measure}[Relative prices from indices]
+A price index with 2015 = 100 says how a price changed, not what it is.
+The opening chart shows that electricity rose by a factor of 2.547 and
+audio-visual equipment fell by a factor of 0.188 between 1996 and 2024; % figdata: hicp_ratios
+it does not say that a kilowatt-hour costs more or less than a television.
+The ratio of two indices is the change in a relative price: here
+$2.547/0.188 = 13.5$. % figdata: hicp_ratios
+The change in a relative price is what a model of choice needs, because an
+\omterm{def:b1:preferences-and-utility:mrs}{MRS} is compared with a price ratio, and a price ratio that changes by a
+factor of 13.5 changes by that factor whatever the units of the two goods.
+An index of a category is itself an average over many products (and, for
+equipment whose quality improves, an attempt to price the same quality
+across years), so its ratio to another index is the relative price of two
+averages, not of two goods.
+\end{measure}
+
+\section{Testing the axioms}\label{sec:b1:preferences-and-utility:testing}
+
+Preferences are not observed; choices are. The axioms of this chapter have
+testable consequences only together with a model of choice: if a consumer
+with \omterm{def:b1:preferences-and-utility:rational}{rational}, \omterm{def:b1:preferences-and-utility:monotone}{monotone} preferences chooses the best bundle she can afford,
+her choices across different budgets must be consistent with one another.
+\Cref{ch:b1:consumer-choice} states the condition exactly (the generalised
+axiom of revealed preference). Its idea is simple: if she chose $x$ when $y$
+was affordable, she has revealed $x \succsim y$; a chain of such revelations
+must never lead back to a bundle strictly worse than where it started.
+
+\begin{model}{Rational preferences}
+\assumes A consumer's preferences over bundles are complete, transitive,
+\omterm{def:b1:preferences-and-utility:monotone}{monotone} and \omterm{def:b1:preferences-and-utility:convex}{convex}, and stable over the period studied.
+\predicts Choices from different budgets reveal no cycle; \omterm{def:b1:preferences-and-utility:indifference-curve}{indifference
+curves} slope down, do not cross and have a diminishing \omterm{def:b1:preferences-and-utility:mrs}{MRS}; a consumer
+facing a change in relative prices moves along an \omterm{def:b1:preferences-and-utility:indifference-curve}{indifference curve}
+towards the good that became cheaper.
+\tested In a laboratory experiment with 93 subjects, each choosing from 50
+budgets, 80 of the 93 scored above 0.90 on Afriat's efficiency index,
+against 12 of 25,000 simulated random choosers (see the record box). % ledger: b1:choi2007-ccei
+\breaks When the way the options are presented or a default option changes
+choices that should be the same (the Year~2 volume's chapter on behavioural
+evidence), and for goods whose consumption changes the preferences
+themselves, such as addictive goods.
+\end{model}
+
+\begin{record}[Consistent choices in the laboratory]
+Choi, Fisman, Gale and Kariv (2007; the counts below are from the
+authors' 2006 working-paper version) gave each of 93 subjects 50 budget
+lines, drawn at random, and asked them to divide tokens between two
+accounts; one account would pay off at random. % ledger: b1:choi2007-ccei
+A subject whose choices satisfy the axioms of revealed preference exactly
+has an efficiency index of 1; an index of 0.9 means that the budgets would
+have to be shrunk by $10\%$ to remove every inconsistency. 80 of the 93
+subjects scored above 0.90, and 75 above 0.95. % ledger: b1:choi2007-ccei
+Of 25,000 simulated subjects choosing at random on each line, the average
+score was 0.60 and only 12 scored above 0.90. % ledger: b1:choi2007-ccei
+Most people, given many budgets, choose as if they had stable preferences;
+a minority do not.
+\end{record}
+
+\section*{Exercises}\label{sec:b1:preferences-and-utility:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:preferences-and-utility:mrs-cd}
+Compute the \omterm{def:b1:preferences-and-utility:mrs}{MRS} of $u = x_1^{0.3}x_2^{0.7}$ at any bundle, then at $(1, 1)$
+and at $(3, 7)$. What does each number mean?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:preferences-and-utility:axioms}
+Which axiom (completeness, transitivity, monotonicity, convexity) does each
+statement contradict?
+\begin{enumerate}
+  \item ``I prefer a flat near the station to one with a garden, one with a garden to one with a view, and one with a view to one near the station.''
+  \item ``I cannot say whether I prefer a week in the mountains or a week at the sea, and I never will.''
+  \item ``Give me all bread or all cheese, but not a bit of each.''
+  \item ``Three loaves are worse than two, though I could give the third away for free.''
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:preferences-and-utility:read-chart}
+From the opening chart's table, the indices for 1996 and 2024 are: all
+items 71.74 and 126.07; rents 72.02 and 115.46; audio-visual equipment
+380.88 and 71.64. % figdata: hicp_ratios
+\begin{enumerate}
+  \item By what factor did each change, and by what percentage?
+  \item Did rents rise or fall relative to all items? By how much?
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:preferences-and-utility:log}
+A consumer's preferences are represented by $u = x_1x_2$. Does
+$v = \ln x_1 + \ln x_2$ represent the same preferences? And $w = -x_1x_2$?
+And $z = (x_1x_2)^2$ on positive bundles? Justify each.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:preferences-and-utility:complements}
+For $u = \min(x_1, x_2)$:
+\begin{enumerate}
+  \item draw three \omterm{def:b1:preferences-and-utility:indifference-curve}{indifference curves};
+  \item show that at a bundle with $x_1 > x_2$ the \omterm{def:b1:preferences-and-utility:mrs}{MRS} is 0, and that at a bundle with $x_1 < x_2$ the \omterm{def:b1:preferences-and-utility:indifference-curve}{indifference curve} is vertical, so the \omterm{def:b1:preferences-and-utility:mrs}{MRS} is not a finite number;
+  \item explain why no \omterm{def:b1:preferences-and-utility:mrs}{MRS} exists at a corner such as $(3, 3)$.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:preferences-and-utility:quasi}
+For $u = 4\sqrt{x_1} + x_2$, compute the \omterm{def:b1:preferences-and-utility:mrs}{MRS} at $(4, 1)$ and at $(4, 10)$.
+Interpret the result when $x_2$ is money.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:preferences-and-utility:predict}
+A consumer with $u = \sqrt{x_1x_2}$ buys electricity ($x_1$) and audio-visual
+equipment ($x_2$), and chooses where the \omterm{def:b1:preferences-and-utility:mrs}{MRS} equals the price ratio
+$p_1/p_2$ (\cref{prop:b1:constrained-optimisation:tangency}). Between 1996
+and 2024 the price of electricity relative to equipment rose by a factor of
+13.5. % figdata: hicp_ratios
+\begin{enumerate}
+  \item Predict the change in the ratio $x_2/x_1$ she chooses.
+  \item Predict the change in the share of her spending on electricity.
+  \item What observation in household budgets would show these predictions wrong?
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:preferences-and-utility:cycle}
+A consumer is observed three times. At prices $p^1$ she buys $x^1$ although
+$x^2$ was affordable; at $p^2$ she buys $x^2$ although $x^3$ was affordable;
+at $p^3$ she buys $x^3$ although $x^1$ was affordable, and $x^1$ cost strictly
+less than $x^3$ at $p^3$. Which axiom of the model of \omterm{def:b1:preferences-and-utility:rational}{rational preferences}, with
+\omterm{def:b1:preferences-and-utility:monotone}{monotone} preferences and choice of the best affordable bundle, do these
+choices contradict? Explain.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:preferences-and-utility:refute-convex}
+A consumer, on every straight budget line she faces, spends all her money
+on one good. Explain why this does not refute \omterm{def:b1:preferences-and-utility:convex}{convex preferences}. Then
+describe two choices between pairs of bundles, using two bundles $x$, $z$,
+their average $m = (x + z)/2$ and a slightly larger bundle $m^{+} > m$,
+that would refute \omterm{def:b1:preferences-and-utility:rational}{rational}, \omterm{def:b1:preferences-and-utility:monotone}{monotone} and \omterm{def:b1:preferences-and-utility:convex}{convex preferences} together.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:preferences-and-utility:transform}
+Let $u$ be differentiable with $u_2 > 0$ and $f$ differentiable with $f' > 0$.
+Prove that $v = f(u)$ has the same \omterm{def:b1:preferences-and-utility:mrs}{MRS} as $u$ at every bundle, and give an
+example of a transformation $f$ with $f' < 0$ somewhere for which $v$ does not
+represent the same preferences.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:preferences-and-utility:convex-not-strict}
+Show that the preferences represented by $u = \min(x_1, 2x_2)$ are \omterm{def:b1:preferences-and-utility:convex}{convex}
+but not strictly \omterm{def:b1:preferences-and-utility:convex}{convex}: find two bundles $x \neq z$, both indifferent to
+$y = (4, 2)$, whose average is also indifferent to $y$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:preferences-and-utility:design}
+Design two budget lines for two goods and a choice from each that
+would reveal a cycle, so that no \omterm{def:b1:preferences-and-utility:rational}{rational}, \omterm{def:b1:preferences-and-utility:monotone}{monotone} preference ordering
+could have produced them. Then say what the laboratory record in the
+chapter found about how often real subjects make such choices.
+\end{exercise}
+
+\section{Problem: Two Flatmates and a Fridge}\label{sec:b1:preferences-and-utility:problem}
+
+\begin{problem}[{Weekend problem --- the swap rate of milk for bread}]\label{pb:b1:preferences-and-utility:fridge}
+Ana and Ben share a fridge in Brenmoor (invented). A bundle is written
+(litres of milk, loaves of bread), $(m, b)$. Ana's preferences are represented by
+$u_A = \sqrt{mb}$ and Ben's by $u_B = m + 6\ln b$. A \omterm{def:b1:preferences-and-utility:mrs}{marginal rate of
+substitution} in this problem is in litres of milk per loaf:
+$\mathrm{MRS} = (\partial u/\partial b)/(\partial u/\partial m)$. Four
+bundles are on offer: $P = (4, 2)$, $Q = (2, 4)$, $R = (3, 3)$ and $S = (6, 1)$.
+
+\medskip\noindent\textbf{Part I --- Rankings.}
+\begin{enumerate}
+  \item Rank the four bundles for Ana, using $\succ$ and $\sim$.
+  \item Rank them for Ben (give his utility values to three decimals).
+  \item A third flatmate, Cleo, says $P \succ Q$, $Q \succ R$ and $R \succ P$. Which axiom fails? Show how a fourth flatmate could gain from her by a sequence of swaps.
+  \item $R$ is the average of $P$ and $Q$. Is Ana's ranking of $P$, $Q$, $R$ consistent with strictly \omterm{def:b1:preferences-and-utility:convex}{convex preferences}? And Ben's?
+  \item Show that Ana's and Ben's preferences are \omterm{def:b1:preferences-and-utility:monotone}{monotone}.
+  \item Can Ana and Ben disagree on a ranking and both be \omterm{def:b1:preferences-and-utility:rational}{rational}? Use your answers to questions 1 and 2.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- Utility and the MRS.}
+\begin{enumerate}[resume]
+  \item Show that $v_A = mb$ and $w_A = \ln m + \ln b$ represent Ana's preferences.
+  \item Compute Ana's \omterm{def:b1:preferences-and-utility:mrs}{MRS} at any bundle, then at $P$ and at $Q$.
+  \item Compute Ben's \omterm{def:b1:preferences-and-utility:mrs}{MRS} at any bundle, then at $P$ and at $Q$.
+  \item Write Ana's \omterm{def:b1:preferences-and-utility:indifference-curve}{indifference curve} through $R$ as a function $m(b)$, and give its slope at $R$.
+  \item Interpret Ben's \omterm{def:b1:preferences-and-utility:mrs}{MRS} at $Q$ in one sentence.
+  \item Show that Ana's \omterm{def:b1:preferences-and-utility:mrs}{MRS} diminishes as $b$ rises along an \omterm{def:b1:preferences-and-utility:indifference-curve}{indifference curve}.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- Which form?}
+\begin{enumerate}[resume]
+  \item Ana's \omterm{def:b1:preferences-and-utility:mrs}{MRS} depends only on $m/b$. Which standard form is her utility, and with which exponent?
+  \item Ben's \omterm{def:b1:preferences-and-utility:mrs}{MRS} does not depend on $m$. Which standard form is his?
+  \item Dan uses milk only with bread, two litres per loaf, and wastes the rest. Write a utility for him and say what his \omterm{def:b1:preferences-and-utility:mrs}{MRS} is.
+  \item Eva would always give three litres of milk for one loaf, or a loaf for three litres. Write a utility for her and give her \omterm{def:b1:preferences-and-utility:mrs}{MRS}.
+  \item Eva holds $(9, 1)$ and may swap milk for bread at 1.4 litres per loaf as much as she likes. What does she choose?
+  \item If every bundle of Ana's is scaled up by the same factor, what happens to her \omterm{def:b1:preferences-and-utility:mrs}{MRS}? And to Ben's?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- A swap.}
+Ana holds $(9, 1)$ and Ben holds $(1, 7)$.
+\begin{enumerate}[resume]
+  \item Compute each one's \omterm{def:b1:preferences-and-utility:mrs}{MRS} at these bundles. Who values bread more, at the margin?
+  \item They swap one loaf for 2 litres of milk. Compute both utilities before and after. Do both gain?
+  \item For a small swap of bread for milk at a rate of $r$ litres per loaf, for which rates do both gain?
+  \item At a fixed rate $r$, Ana buys bread until her \omterm{def:b1:preferences-and-utility:mrs}{MRS} equals $r$, and Ben sells until his equals $r$. Show that Ana buys $(9 - r)/(2r)$ loaves and Ben sells $7 - 6/r$.
+  \item Find the rate at which these two amounts are equal, and the swap.
+  \item Give each one's bundle and utility after the swap, and both \omterm{def:b1:preferences-and-utility:mrs}{MRS}. State the result: the swap rate they agree on.
+\end{enumerate}
+\end{problem}

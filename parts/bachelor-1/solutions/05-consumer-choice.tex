@@ -1,0 +1,201 @@
+\section*{Chapter \ref{ch:b1:consumer-choice} --- Consumer Choice}
+% Numbers recomputed in code/bachelor-1/05-consumer-choice/exercises/solutions.py (tested).
+
+\begin{solution}{exo:b1:consumer-choice:cd}
+By \cref{prop:b1:consumer-choice:cd-demand}, $x_1 = 0.25 \times 100/2 = 12.5$
+and $x_2 = 0.75 \times 100/5 = 15$. She spends $25$ on good 1 and $75$ on
+good 2: shares of $25\%$ and $75\%$, the exponents.
+\end{solution}
+
+\begin{solution}{exo:b1:consumer-choice:read}
+$3600/37935 = 9.5\%$ and $10308/159512 = 6.5\%$. The top fifth spends
+$10308/3600 = 2.86$ times as many dollars on food at home. Spending rises
+across the fifths, so food at home is \omterm{def:b1:consumer-choice:normal-inferior}{normal} there (taking prices to be the
+same for both fifths); its share falls because spending on it rises less
+than in proportion to the budget.
+\end{solution}
+
+\begin{solution}{exo:b1:consumer-choice:pivot}
+Intercepts $100/2 = 50$ and $100/5 = 20$, slope $-2/5 = -0.4$. With $p_1 = 4$:
+intercepts $25$ and $20$, slope $-0.8$. A bundle of the old line costs
+$4x_1 + 5x_2 = (2x_1 + 5x_2) + 2x_1 = 100 + 2x_1$ at the new prices, more than
+100 unless $x_1 = 0$: only $(0, 20)$ stays affordable.
+\end{solution}
+
+\begin{solution}{exo:b1:consumer-choice:normal}
+Bread rises with income, so it is \omterm{def:b1:consumer-choice:normal-inferior}{normal} over the range; bus trips fall, so
+they are inferior. With $\ln(40000/15000) = 0.981$: bread
+$\ln(140/120)/0.981 = 0.154/0.981 = 0.157$; bus trips
+$\ln(220/300)/0.981 = -0.310/0.981 = -0.316$.
+\end{solution}
+
+\begin{solution}{exo:b1:consumer-choice:min}
+The optimum is at the corner of an L, $x_1 = 3x_2$. The budget
+$p_1(3x_2) + p_2x_2 = m$ gives $x_2 = m/(3p_1 + p_2)$ and $x_1 = 3m/(3p_1 + p_2)$.
+At $p_1 = 2$, $p_2 = 1$, $m = 70$: $x_2 = 70/7 = 10$ and $x_1 = 30$.
+\end{solution}
+
+\begin{solution}{exo:b1:consumer-choice:quasi}
+The tangency $2/\sqrt{x_1} = p_1$ gives $x_1 = 4/p_1^2$, which costs
+$p_1x_1 = 4/p_1$; then $x_2 = m - 4/p_1$. This is the optimum when
+$m \ge 4/p_1$. Below that income she spends everything on good 1:
+$x_1 = m/p_1$, $x_2 = 0$ (the Kuhn--Tucker condition $u_2 = 1 \le \lambda$ holds
+because $\lambda = u_1/p_1 > 1$ there). At $p_1 = 0.5$: $x_1 = 16$, which costs 8.
+With $m = 20$, $(x_1, x_2) = (16, 12)$; with $m = 5 < 8$, $(10, 0)$.
+\end{solution}
+
+\begin{solution}{exo:b1:consumer-choice:roy}
+$\partial v/\partial p_1 = -a\,v/p_1$ and $\partial v/\partial m = v/m$, so
+$-(\partial v/\partial p_1)/(\partial v/\partial m) = (av/p_1)(m/v) = am/p_1$,
+the demand of \cref{prop:b1:consumer-choice:cd-demand}.
+\end{solution}
+
+\begin{solution}{exo:b1:consumer-choice:predict}
+A $10\%$ rise predicts $0.31 \times 10\% = 3.1\%$ more food spending:
+$4645 \times 0.031 = 144$ dalens a year. The prediction treats the
+cross-section slope as the response of one household over time. That
+fails if households with high consumption differ from the others in ways
+that also move food spending (size, age, tastes): then the slope mixes the
+effect of consumption with those differences.
+\end{solution}
+
+\begin{solution}{exo:b1:consumer-choice:warp-table}
+Costs at each observation's prices:
+at A's prices, $B$ costs 8 and $C$ costs 9, both $\le 10$, so A is directly
+revealed preferred to B and to C. At B's prices, A costs 15 $> 14$ and C
+costs $4 + 7 = 11 \le 14$, so B is directly revealed preferred to C. At C's
+prices, A costs $5 + 10 = 15 \le 16$ and B costs $6 + 4 = 10 \le 16$, so C is
+directly revealed preferred to A and to B. Pair A--B: \omterm{def:b1:consumer-choice:warp}{WARP} holds. Pair
+A--C: each is revealed preferred to the other, a violation. Pair B--C: a
+violation too.
+\end{solution}
+
+\begin{solution}{exo:b1:consumer-choice:prove}
+Homogeneity: $B(tp, tm) = B(p, m)$ for $t > 0$, and a unique best bundle in
+one set is the best bundle in the same set. Exhaustion: the proof of
+\cref{prop:b1:consumer-choice:homogeneity} uses monotonicity only to show
+that a bundle with a little more good 1 is better. Without it: take
+$u = -(x_1 - 1)^2 - (x_2 - 1)^2$, prices 1 and income 10. The bundle $(1, 1)$
+is the best of all bundles and costs 2, so the consumer spends 2 of her 10.
+\end{solution}
+
+\begin{solution}{exo:b1:consumer-choice:aggregate}
+$X_1 = (a_1m_1 + a_2m_2)/p_1$. If $a_1 = a_2 = a$, $X_1 = a(m_1 + m_2)/p_1$,
+which depends only on the total. Moving 10 from consumer 2 to consumer 1
+changes $X_1$ by $(a_1 - a_2) \times 10/p_1 = 0.2 \times 10/2 = 1$ unit: the
+consumer who spends a larger share on good 1 now has the money.
+\end{solution}
+
+\begin{solution}{exo:b1:consumer-choice:refute}
+The hypothesis predicts the same budget shares in every household,
+whatever its spending. A share that changes systematically with total
+spending refutes it, and the opening chart shows such shares: food at home
+from $9.5\%$ to $6.5\%$, shelter from $27.3\%$ to $19.4\%$ across the fifths of
+2025. The hypothesis could be saved by letting the Cobb--Douglas share
+differ between households, with poorer households happening to have higher
+food shares. Then any pattern of shares across the fifths can be produced,
+and the model predicts nothing about the chart; it can only be tested by
+following households as their spending changes.
+\end{solution}
+
+\begin{solution}{pb:b1:consumer-choice:survey}
+\textbf{1.} A: $12000/4 = 3000$ kg or $12000$ dalens of other goods; B: 5,000 kg
+or 20,000; C: 10,000 kg or 40,000. Every line has slope $-4$: four dalens
+of other goods per kilogram.
+
+\textbf{2.} $12000/5 = 2400$ kg; slope $-5$.
+
+\textbf{3.} At the new price it costs $5 \times 900 + 8400 = 12900 > 12000$: no.
+An extra 900 dalens would make it affordable.
+
+\textbf{4.} $4f + o = 4 \times 600 + 6000 = 8400$.
+
+\textbf{5.} $5f + o = 5 \times 600 + 6000 = 9000$; the point $(600, 6000)$ satisfies
+both equations. If D chose to sell food before the rise ($f < 600$), its old
+bundle costs $5f + o = (4f + o) + f = 8400 + f < 9000$ at the new prices, so
+it is still affordable with money to spare: D is better off. A net buyer of
+food may be worse off.
+
+\textbf{6.} Nothing: $1.1p_1x_1 + 1.1p_2x_2 \le 1.1m$ is the same set.
+
+\textbf{7.} With prices of 1, \cref{prop:b1:consumer-choice:cd-demand} gives
+$f = \beta c$: the share is $\beta$ in every household.
+
+\textbf{8.} $\hat\beta = 0.199$. Poorest tenth: $0.199 \times 11639 = 2316$
+against 3,726 in the survey. Richest: $0.199 \times 42736 = 8504$ against
+5,594. The model is far too low at the bottom and far too high at the top.
+
+\textbf{9.} $\ln f = \ln\beta + \ln c$: a slope of 1, against $0.31$ in the survey.
+
+\textbf{10.} The same share, 0.199, in every tenth; the survey's share falls
+from $0.320$ in the poorest tenth to $0.131$ in the richest.
+
+\textbf{11.} Yes: food spending rises from 3,726 to 5,594 between the poorest
+and the richest tenths. And it is a necessity: the elasticity $0.31$ is
+below one.
+
+\textbf{12.} Yes, if households with lower consumption happened to have
+higher shares $\beta_h$. It would require tastes that vary with consumption
+in just the way the survey shows. One cross-section cannot tell this apart
+from common preferences that are not Cobb--Douglas: both give the same
+cloud. Following the same households over time could.
+
+\textbf{13.} Yes, in the same direction: the Cobb--Douglas model predicts a
+flat share and an elasticity of 1. The American elasticity, $0.73$, is
+closer to one than Brenland's.
+
+\textbf{14.} Put $g = f - \gamma$; then $o = c - f = (c - \gamma) - g$, and the problem is
+to maximise $\beta\ln g + (1 - \beta)\ln o$ subject to $g + o = c - \gamma$: a
+Cobb--Douglas problem with income $c - \gamma$. So $g = \beta(c - \gamma)$, and
+$f = \gamma + \beta(c - \gamma)$.
+
+\textbf{15.} $f = (1 - \beta)\gamma + \beta c$: a straight line with intercept
+$(1 - \beta)\gamma$ and slope $\beta$.
+
+\textbf{16.} $\beta = 0.056$ and $(1 - \beta)\gamma = 3334$, so
+$\gamma = 3334/0.944 = 3532$ dalens a year.
+
+\textbf{17.} Poorest: $3334 + 0.056 \times 11639 = 3334 + 652 = 3986$, a share of
+$3986/11639 = 0.342$ (survey 3,726 and 0.320). Richest:
+$3334 + 0.056 \times 42736 = 3334 + 2393 = 5727$, a share of
+$5727/42736 = 0.134$ (survey 5,594 and 0.131). Far closer than the
+Cobb--Douglas predictions of question 8.
+
+\textbf{18.} Poorest: $\eta = 652/3986 = 0.164$. Richest: $\eta = 2393/5727 = 0.418$.
+The elasticity rises with consumption, while the log fit imposes $0.31$
+everywhere.
+
+\textbf{19.} $\eta = \beta c/\bigl((1 - \beta)\gamma + \beta c\bigr) < 1$ because
+$(1 - \beta)\gamma > 0$. As $c$ grows, $\eta \to 1$: far above subsistence the
+consumer behaves like a Cobb--Douglas one.
+
+\textbf{20.} The model gives them no utility at all, since $\ln(f - \gamma)$ is not
+defined for $f < \gamma$: one common $\gamma$ cannot describe 433 of the 2,000
+households. The survey records household size, and larger households need
+more food: letting $\gamma$ depend on size, $\gamma_h = \gamma_0 + \gamma_1 \times \text{size}_h$,
+would let each household have its own subsistence quantity.
+
+\textbf{21.} $1.1 \times 11639 = 12803$. Cobb--Douglas: food rises by $10\%$ too,
+$1.1 \times 3726 = 4099$, and the share stays at $0.320$.
+
+\textbf{22.} Food rises by $0.31 \times 10\% = 3.1\%$: $3726 \times 1.031 = 3842$, a share of
+$3842/12803 = 0.300$.
+
+\textbf{23.} From the line's own prediction: $3334 + 0.056 \times 12803 = 3334 + 717 = 4051$,
+a share of $4051/12803 = 0.316$ (up 65 from 3,986). From the observed
+spending: $3726 + 0.056 \times (12803 - 11639) = 3726 + 0.056 \times 1164 = 3726 + 65 = 3791$,
+a share of $3791/12803 = 0.296$.
+
+\textbf{24.} Rises of $4099 - 3726 = 373$ (Cobb--Douglas), $3842 - 3726 = 116$ (log
+slope) and 65 (straight line). The Cobb--Douglas prediction is almost six
+times the straight line's. Fitted to the same cross-section, the three
+models disagree most about how the poorest households respond.
+
+\textbf{25.} Observations of the same households before and after their
+income changes (a panel), ideally when the change has a cause unrelated to
+their tastes, such as a change in a transfer rule.
+
+\textbf{26.} The subsistence food spending that fits the survey is
+$\gamma = 3532$, about 3,530 dalens a year: the intercept of the straight-line
+\omterm{def:b1:consumer-choice:engel-curve}{Engel curve}, divided by $1 - 0.056$.
+\end{solution}

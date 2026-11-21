@@ -1,0 +1,4 @@
+$ python search.py
+best of 20 significant at 5 %:        0.640
+formula 1 - 0.95^20:                  0.642
+best of 20 below 0.05 / 20 (Bonferroni): 0.045

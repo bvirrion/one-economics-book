@@ -1,0 +1,113 @@
+\section*{Chapter \ref{ch:b2:repeated-games} --- Repeated Games}
+
+\begin{solution}{exo:b2:repeated-games:1}
+% code: exercises/solutions.py grim_threshold
+$\beta^* = (T - R)/(T - P) = (6 - 4)/(6 - 1) = 0.4$.
+\end{solution}
+
+\begin{solution}{exo:b2:repeated-games:2}
+% figdata: cartels_summary
+% ledger: b2:ls2006-t1
+Shortest: international cartels of 1920--1939, 3.7 years, for the 28 not ended by the Second World War (8.3 for all 71). Longest: Japanese export cartels of 1967--1972, 10 years.
+The longest single duration is 29 years, in the international sample of 1888--1984.
+\end{solution}
+
+\begin{solution}{exo:b2:repeated-games:3}
+% code: exercises/solutions.py bertrand_threshold
+Five firms: $1 - 1/5 = 0.8$. Two firms with a lag of three periods: $\beta^4 \ge 0.5$, so $\beta^* = 0.5^{1/4} = 0.841$.
+\end{solution}
+
+\begin{solution}{exo:b2:repeated-games:4}
+Many long-lived cartels with many members, in markets otherwise alike, would count against it. The evidence is hard
+to read because only discovered cartels are observed: if large cartels are found more easily, or fail before they
+could be found, the sample's mix of sizes says little about how often \omterm{def:b2:repeated-games:collusion}{collusion} is attempted or succeeds.
+\end{solution}
+
+\begin{solution}{exo:b2:repeated-games:5}
+In period 3 both defect, the \omterm{def:b2:repeated-games:stage-game}{stage game}'s only equilibrium. In period 2 play in period 3 does not depend on what is
+done now, so both defect; the same holds in period 1. The first step needs a last period known to both: if each
+period may be followed by another, there is no period in which the future is certainly irrelevant.
+\end{solution}
+
+\begin{solution}{exo:b2:repeated-games:6}
+% code: exercises/solutions.py alternating_average, tft_threshold
+The deviator plays D, C, D, C, \dots{} and her rival C, D, C, D, \dots, so she earns $T, S, T, S, \dots = 5, 0, 5, 0, \dots$. Its
+discounted average is $(T + \beta S)/(1 + \beta) = 5/1.6 = 3.125 > 3$: the deviation pays. It does not when $(T + \beta S)/(1 + \beta) \le R$,
+that is, $\beta \ge (T - R)/(R - S) = 2/3$. Grim trigger at $\beta = 0.6 \ge 0.5$ is an equilibrium: its harsher punishment needs less
+patience.
+\end{solution}
+
+\begin{solution}{exo:b2:repeated-games:7}
+% code: exercises/solutions.py bertrand_threshold
+\omterm{def:b2:repeated-games:collusion}{Collusion} earns $\Pi/2$ now and $\Pi\gamma^t/2$ in period $t$, worth $\Pi/(2(1 - \beta\gamma))$ if $\beta\gamma < 1$; deviating earns $\Pi$ once. The
+condition is $1/(2(1 - \beta\gamma)) \ge 1$, or $\beta\gamma \ge 1/2$: $\beta \ge 0.5/1.2 = 0.417$. Firms with $\beta = 0.45$ can collude with growth,
+but not without it, since $0.45 < 0.5$.
+\end{solution}
+
+\begin{solution}{exo:b2:repeated-games:8}
+% code: exercises/solutions.py ebay_levels
+% ledger: b2:ch2006
+Before: $e^{4 \times 0.0712} = 1.33$, a rise of a third. After: $e^{-4 \times 0.0676} = 0.76$, a fall of about a quarter. A first
+negative moves buyers' beliefs about a seller with a long clean record a lot; once beliefs have moved, a further
+negative adds less, so later negatives should have smaller effects, as the data show.
+\end{solution}
+
+\begin{solution}{exo:b2:repeated-games:9}
+% code: exercises/solutions.py survival_beta, max_firms
+$\beta = 0.9/1.05 = 0.857$. \omterm{def:b2:repeated-games:collusion}{Collusion} needs $1 - 1/n \le 0.857$, that is, $n \le 7$: at most seven firms.
+\end{solution}
+
+\begin{solution}{exo:b2:repeated-games:10}
+A player can defect in every period whatever has happened. Against any action of the other she then earns $P$ or
+$T$, at least $P$ in every period, so her discounted average is at least $P$. In a \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} her strategy is
+a \omterm{def:b2:static-games:best-response}{best response}, so it earns at least as much as this one.
+\end{solution}
+
+\begin{solution}{exo:b2:repeated-games:11}
+Let $A = a - c$. \omterm{def:b2:repeated-games:collusion}{Collusion}: each produces $A/4$, price $c + A/2$, profit $A^2/8$. Best deviation against $A/4$: $(A - A/4)/2 =
+3A/8$, price margin $A - A/4 - 3A/8 = 3A/8$, profit $9A^2/64$. Cournot: $A/3$ each, profit $A^2/9$. Then
+$\beta^* = (9/64 - 1/8)/(9/64 - 1/9) = (1/64)/(17/576) = 9/17$; $A$ cancels.
+\end{solution}
+
+\begin{solution}{exo:b2:repeated-games:12}
+% code: exercises/solutions.py max_lag
+A deviator earns $\Pi$ in each of the $L + 1$ periods before the others react, then zero: discounted average $(1 -
+\beta^{L+1})\Pi$. \omterm{def:b2:repeated-games:collusion}{Collusion} gives $\Pi/n$. The condition $\Pi/n \ge (1 - \beta^{L+1})\Pi$ is $\beta^{L+1} \ge 1 - 1/n$. With $n = 2$ and $\beta = 0.95$,
+$L + 1 \le \ln 0.5/\ln 0.95 = 13.5$, so the longest lag is 12 months.
+\end{solution}
+
+\begin{solution}{pb:b2:repeated-games:1}
+% code: exercises/solutions.py cement, highest_price
+\textbf{Part I.}
+1. Each produces $160/3 = 53.3$ thousand tonnes; the price is 93.3 dalens; each earns 2{,}844.4.
+2. Joint output 80, 40 each; price 120; each earns 3{,}200.
+3. $(160 - 40)/2 = 60$; price 100; profit 3{,}600.
+4. $40 \times (100 - 40) = 2{,}400$.
+5. No: each firm gains 400 by expanding to 60.
+6. Both prefer \omterm{def:b2:repeated-games:collusion}{collusion} to the Cournot outcome, but each gains by deviating from it, so a single play ends at the
+worse outcome.
+\textbf{Part II.}
+7. $3{,}200 \ge (1 - \beta)\,3{,}600 + \beta \times 2{,}844.4$.
+8. $\beta^* = (3{,}600 - 3{,}200)/(3{,}600 - 2{,}844.4) = 400/755.6 = 0.529$.
+9. Yes: $0.8 > 0.529$.
+10. Colluding: 3{,}200. Deviating: $0.2 \times 3{,}600 + 0.8 \times 2{,}844.4 = 720 + 2{,}275.6 = 2{,}995.6$.
+11. It also reflects the chance that the market changes: entry, a new technology, a slump, or the authorities.
+12. Yes: Cournot outputs are a \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} of the \omterm{def:b2:repeated-games:stage-game}{stage game}, so repeating them is an equilibrium of every
+\omterm{def:b2:dynamic-games:subgame}{subgame} after a deviation.
+\textbf{Part III.}
+13. $3{,}200 \ge (1 - \beta^{L+1})\,3{,}600 + \beta^{L+1} \times 2{,}844.4$, that is, $\beta^{L+1} \ge 9/17 = 0.529$.
+14. $0.8^2 = 0.64 \ge 0.529$: yes.
+15. $0.8^3 = 0.512 < 0.529$: no.
+16. With equal outputs $q$, \omterm{def:b2:repeated-games:collusion}{collusion} needs $(160 - 2q)q \ge 0.488\,\big((160 - q)/2\big)^2 + 0.512 \times 2{,}844.4$. The smallest $q$ that
+satisfies it is 40.46, so the price is $200 - 80.93 = 119.07$ dalens.
+17. $L + 1 \le \ln 0.529/\ln 0.8 = 2.85$: a lag of one year.
+18. It makes a deviation visible at once, shortening the lag.
+\textbf{Part IV.}
+19. $160/4 = 40$ each; price 80; profit 1{,}600.
+20. $80/3 = 26.7$ each; price 120; profit 2{,}133.3.
+21. Against two rivals at 26.7: $(160 - 53.3)/2 = 53.3$; price 93.3; profit 2{,}844.4.
+22. $(2{,}844.4 - 2{,}133.3)/(2{,}844.4 - 1{,}600) = 711.1/1{,}244.4 = 0.571$.
+23. No lag: $0.8 \ge 0.571$, yes. One year: $0.64 \ge 0.571$, yes. Two years: $0.512 < 0.571$, no.
+24. \omterm{def:b2:repeated-games:collusion}{Collusion} at the monopoly price needs $\beta^{L+1} \ge 9/17 = 0.529$ with two firms and $4/7 = 0.571$ with three; with two firms
+and a lag of two years the highest sustainable price is 119.07 dalens, against a monopoly price of 120.
+\end{solution}

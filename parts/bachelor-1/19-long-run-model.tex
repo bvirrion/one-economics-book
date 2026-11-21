@@ -1,0 +1,387 @@
+\chapter{The Long-Run Model}\label{ch:b1:long-run-model}
+
+Output per worker in the rich countries is several times what it was in
+1950, yet the share of national income paid to labour has moved within a
+narrow band: in the latest year of data (2023, and 2022 for Japan) it was
+between $0.568$ and $0.637$ in the United States, Japan, the United Kingdom,
+France and Germany. % figdata: labsh_points
+Why should the split of income be steadier than income itself? And what
+sets the interest rate, the price at which a country's saving is lent to
+those who invest? This chapter builds the first macroeconomic model of the
+book: an economy in the long run, with prices free to adjust, the factors
+fully employed and money left aside. It is the model the short run of
+Part~VI departs from.
+
+\begin{openingchart}{Labour's share of GDP, five countries, 1950--2023. Years
+that the table fills with a country's first or last observed value are left
+out: Germany starts in 1980, Japan and the United Kingdom in 1970, and
+Japan ends in 2022.}{Penn World Table 11.0 (labsh)}
+\begin{tikzpicture}
+\begin{axis}[omtime, xlabel={Year}, ylabel={Labour share of GDP}, xmin=1950, xmax=2023, ymin=0.45, ymax=0.75,
+  width=0.72\linewidth, height=0.42\linewidth, legend style={font=\footnotesize, at={(0.5,-0.24)}, anchor=north,
+  legend columns=5}]
+  \addplot+[thick, no marks] table[x=year, y=fra, col sep=comma] {figdata/bachelor-1/19-long-run-model/out/labsh.csv};
+  \addplot+[thick, no marks] table[x=year, y=deu, col sep=comma] {figdata/bachelor-1/19-long-run-model/out/labsh.csv};
+  \addplot+[thick, no marks] table[x=year, y=jpn, col sep=comma] {figdata/bachelor-1/19-long-run-model/out/labsh.csv};
+  \addplot+[thick, no marks] table[x=year, y=gbr, col sep=comma] {figdata/bachelor-1/19-long-run-model/out/labsh.csv};
+  \addplot+[thick, no marks] table[x=year, y=usa, col sep=comma] {figdata/bachelor-1/19-long-run-model/out/labsh.csv};
+  \legend{France, Germany, Japan, United Kingdom, United States}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+The shares are stable but not constant. Japan's rose from $0.508$ in 1970,
+its first observed year, to $0.61$ in 1980; the American share was $0.628$ in 1950 and $0.568$ in 2023.
+% figdata: labsh_points
+Since 1980 the share has fallen in four of the five countries, by $1.3$
+points a decade in Germany and $0.78$ in the United States, while it rose by
+$0.75$ points a decade in the United Kingdom. % figdata: labsh_trend
+A model with fixed shares explains the band; it does not explain the
+drift.
+
+\begin{recall}
+The aggregate \omterm{def:b1:technology:production-function}{production function} and capital's share, saving and
+investment, \omterm{def:b1:long-run-model:crowding-out}{crowding out} and the \omterm{def:b1:long-run-model:long-run}{long-run model} in words were met at
+school. Euler's theorem is \cref{thm:b1:technology:euler}; profit
+maximisation is in \cref{ch:b1:profit-maximisation}; \omterm{def:b1:factor-markets:factor-share}{factor shares} and
+their measurement are in \cref{ch:b1:factor-markets}.
+\end{recall}
+
+\section{Output from the factors}\label{sec:b1:long-run-model:output}
+
+The economy produces one good with capital $K$ and labour $L$:
+$Y = F(K, L)$, with \omterm{def:b1:technology:returns-to-scale}{constant returns to scale}. In the long run of this
+chapter, $K$ and $L$ are given: the capital stock was built in the past, and
+the labour force is set by population and by households' choice to work.
+Output is therefore given too, $\bar Y = F(\bar K, \bar L)$. What the model determines is
+how that output is divided between the factors and between its uses.
+
+\begin{definition}[Long-run equilibrium]\label{def:b1:long-run-model:long-run}
+\index{long-run equilibrium}\index{long-run model}
+A \emph{long-run \omterm{def:b1:models-and-data:equilibrium}{equilibrium}} of the economy is a state in which all
+prices --- wages, the \omterm{def:b1:factor-markets:rental-price}{rental price of capital}, the interest rate --- have
+adjusted so that the factors are fully employed and output equals the
+demand for it.
+\end{definition}
+
+\section{Factor prices}\label{sec:b1:long-run-model:factors}
+
+Competitive firms hire each factor until its \omterm{def:b1:technology:marginal-product}{marginal product} equals its
+real price (\cref{ch:b1:profit-maximisation}): $w = F_L(K, L)$ and
+$R/P = F_K(K, L)$. With constant returns, by Euler's theorem,
+\[
+F_K K + F_L L = Y:
+\]
+paying each factor its \omterm{def:b1:technology:marginal-product}{marginal product} exhausts output, and there is no
+pure profit left. For the Cobb--Douglas $Y = AK^{\alpha}L^{1-\alpha}$, $F_L L/Y = 1 - \alpha$ and
+$F_K K/Y = \alpha$: the shares are constant, whatever $K$, $L$ and $A$.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Labour $L$ (million workers)}, ylabel={Real wage},
+  xmin=0, xmax=8, ymin=0, ymax=150, width=0.5\linewidth, height=0.4\linewidth, samples=60]
+  \addplot[demand, domain=1:8] {0.65*13.6087*1000^0.35*x^(-0.35)};
+  \addplot[supply] coordinates {(4.4,0) (4.4,150)};
+  \addplot[guide] coordinates {(0,59.09) (4.4,59.09)};
+  \node[font=\footnotesize, anchor=west] at (axis cs:6,30) {$F_L(\bar K, L)$};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:4.5,120) {$\bar L$};
+  \node[font=\footnotesize, anchor=south] at (axis cs:2,60) {$w = 59.09$};
+\end{axis}
+\end{tikzpicture}
+
+{\small The labour market of the weekend problem: the \omterm{def:b1:technology:marginal-product}{marginal product} of
+labour with $\bar K = 1000$ (blue) and a fixed labour supply of 4.4 million (red).
+The real wage, 59.09 thousand dalens a year, is the \omterm{def:b1:technology:marginal-product}{marginal product} at full
+employment.}
+\end{omfigure}
+
+\begin{record}[The fall of the labour share]
+Labour's share was long taken as a constant of macroeconomics. Measured
+with care across many countries and industries, it has declined
+significantly since the early 1980s; one study attributes roughly half of
+the decline to the falling price of investment goods, which led firms to
+substitute capital for labour (Karabarbounis and Neiman 2014).
+% ledger: b1:karabarbounis2014
+With Cobb--Douglas technology that cannot happen: the shares are fixed. With
+an \omterm{def:b1:technology:sigma}{elasticity of substitution} above one, cheaper capital raises capital's
+share; the estimates of \cref{ch:b1:technology}, mostly below one, point the
+other way, and the question is open. Part of the measured fall is also a
+matter of measurement: measured shares depend on how the income of the
+self-employed is split between labour and capital (Gollin 2002, for
+differences between countries; \cref{ch:b1:factor-markets}). % ledger: b1:gollin2002
+\end{record}
+
+\section{Uses of output}\label{sec:b1:long-run-model:uses}
+
+In a closed economy output is consumed, invested or bought by the
+government: $Y = C + I + G$. In the \omterm{def:b1:long-run-model:long-run}{long-run model}:
+\begin{itemize}
+  \item consumption depends on \omterm{def:b1:national-accounts-in-depth:gni}{disposable income}, $C = C(Y - T)$, with a
+  marginal propensity to consume between 0 and 1;
+  \item investment depends on the real interest rate, $I = I(r)$, decreasing:
+  a project is worth undertaking when its return exceeds the cost of
+  borrowing;
+  \item government spending $G$ and taxes $T$ are set by policy.
+\end{itemize}
+
+\begin{definition}[National, private and public saving]\label{def:b1:long-run-model:saving}
+\index{national saving}\index{private saving}\index{public saving}
+\emph{Private saving} is \omterm{def:b1:national-accounts-in-depth:gni}{disposable income} not consumed, $Y - T - C$;
+\emph{public saving} is tax revenue less government spending, $T - G$;
+\emph{national saving} is their sum, $S = Y - C - G$.
+\end{definition}
+
+\section{The market for loanable funds}\label{sec:b1:long-run-model:loanable}
+
+\begin{definition}[Loanable funds market]\label{def:b1:long-run-model:loanable-funds}
+\index{loanable funds market}
+The \emph{loanable funds market} is the market in which \omterm{def:b1:long-run-model:saving}{national saving} is
+supplied to those who invest; its price is the real interest rate, and in
+\omterm{def:b1:models-and-data:equilibrium}{equilibrium} $S = I(r)$.
+\end{definition}
+
+The identity $Y = C + I + G$ is the same statement: $Y - C - G = I$. In the long
+run $Y$ is given and $C$ depends only on $Y - T$, so \omterm{def:b1:long-run-model:saving}{national saving} does not
+depend on $r$, and the \omterm{def:b1:models-and-data:equilibrium}{equilibrium} interest rate is the one at which
+investment demand absorbs it.
+
+\begin{definition}[Crowding out]\label{def:b1:long-run-model:crowding-out}
+\index{crowding out}
+\emph{Crowding out} is the fall in private investment (or other private
+spending) that follows a rise in government spending or borrowing, through
+a higher interest rate.
+\end{definition}
+
+\begin{proposition}[Full crowding out]\label{prop:b1:long-run-model:crowding}
+In the \omterm{def:b1:long-run-model:long-run}{long-run model}, a rise $\Delta G$ in government purchases with taxes
+unchanged lowers investment by exactly $\Delta G$ and raises the real interest
+rate by $\Delta G/|I'(r)|$. A cut $\Delta T$ in taxes lowers investment by $\mathrm{MPC}\cdot\Delta T$.
+\end{proposition}
+
+\begin{proof}
+$S = \bar Y - C(\bar Y - T) - G$ falls by $\Delta G$ when $G$ rises; in \omterm{def:b1:models-and-data:equilibrium}{equilibrium} $I = S$, so $I$
+falls by $\Delta G$, which requires $I'(r)\,\Delta r = -\Delta G$. A tax cut raises $C$ by $\mathrm{MPC}\cdot\Delta T$
+and lowers $S$, hence $I$, by the same amount.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Saving and investment (billions)}, ylabel={Real interest rate (\%)},
+  xmin=50, xmax=130, ymin=0, ymax=8, width=0.52\linewidth, height=0.42\linewidth]
+  \addplot[demand, domain=52:132] {(132 - x)/10};
+  \addplot[supply] coordinates {(92,0) (92,8)};
+  \addplot[shifted] coordinates {(84,0) (84,8)};
+  \addplot[guide] coordinates {(50,4) (92,4)};
+  \addplot[guide] coordinates {(50,4.8) (84,4.8)};
+  \node[font=\footnotesize, anchor=west] at (axis cs:110,1.7) {$I(r)$};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:92,7) {$S$};
+  \node[font=\footnotesize, anchor=south east] at (axis cs:84,7) {$S'$};
+\end{axis}
+\end{tikzpicture}
+
+{\small Loanable funds in the weekend problem: \omterm{def:b1:long-run-model:saving}{national saving} of 92 billion
+(vertical, red) and investment $I = 132 - 10r$ (blue) give $r = 4\%$. Defence
+spending of 8 billion more shifts saving to 84 (dashed): $r$ rises to $4.8\%$ and
+investment falls by 8.}
+\end{omfigure}
+
+The model predicts a link between saving, investment and the interest rate
+that is hard to see in the data, because the curves move together.
+
+\begin{omchart}{United States: investment as a share of GDP against the real
+long-term interest rate, 1950--2020; the real rate is the long-term rate
+minus average CPI inflation over the previous three years.}{Jordà--Schularick--Taylor
+Macrohistory Database, release 6}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xlabel={Real long-term rate (\%)}, ylabel={Investment (\% of GDP)}, xmin=-4, xmax=10,
+  ymin=16, ymax=24, width=0.6\linewidth, height=0.4\linewidth]
+  \addplot[only marks, mark=*, mark size=1.3pt, omDef] table[x=real, y=inv, col sep=comma] {figdata/bachelor-1/19-long-run-model/out/us_invest.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+The cloud has no slope: the correlation is $0.11$ over 71 years, and
+investment stayed between $17.98\%$ and $23.03\%$ of GDP. % figdata: us_invest_stats
+That does not refute $I'(r) < 0$: when investment demand shifts out, it raises
+both $I$ and $r$; when saving shifts, it moves them in opposite directions.
+The points mix both, as the market for fish did in \cref{ch:b1:models-and-data}.
+
+Evidence on \omterm{def:b1:long-run-model:crowding-out}{crowding out} therefore comes from designs that separate the
+curves. One holds the business cycle and monetary policy aside by using
+the interest rates expected five to ten years ahead and the budget office's
+projections of future deficits: in the United States, a projected deficit
+one point of GDP larger goes with long-term rates about 25 basis points
+higher, and a debt one point of GDP larger with rates 3 to 4 basis points
+higher (Laubach 2009). % ledger: b1:laubach2009
+Interest rates rise, as the model predicts, but by an amount that does not
+by itself show how much investment falls. Another design compares firms in
+the same country: in China from 2006 to 2013, private firms invested less in
+cities with more local public debt, which tightened their access to credit,
+while the investment of state-owned firms did not change (Huang, Pagano and
+Panizza 2020). % ledger: b1:hpp2020
+Neither study measures \omterm{def:b1:long-run-model:crowding-out}{crowding out} as a whole: the first sees the price of
+loanable funds, the second one channel and one country.
+
+\section{Money apart}\label{sec:b1:long-run-model:money}
+
+Nothing so far involved money. Output, the real wage, the real interest
+rate and the split of output are all set by technology, the factor
+supplies, preferences and fiscal policy.
+
+\begin{definition}[Neutrality of money]\label{def:b1:long-run-model:neutrality}
+\index{neutrality of money}\index{monetary neutrality}
+Money is \emph{neutral} when changes in the quantity of money change
+nominal variables --- prices, nominal wages --- but not real ones: output,
+employment, real wages and real interest rates.
+\end{definition}
+
+In the \omterm{def:b1:long-run-model:long-run}{long-run model} money only sets the price level, the subject of
+\cref{ch:b1:money-and-inflation}. In the short run wages and prices adjust
+slowly, money is not \omterm{def:b1:long-run-model:neutrality}{neutral}, and output can depart from $F(\bar K, \bar L)$: that
+is the subject of Part~VI.
+
+\begin{model}{The long-run model}
+\assumes Flexible prices and wages; full employment of given capital and
+labour; a closed economy; competitive factor markets; consumption that
+depends on \omterm{def:b1:national-accounts-in-depth:gni}{disposable income} and investment on the real interest rate.
+\predicts \omterm{def:b1:factor-markets:factor-share}{Factor shares} set by technology (constant with Cobb--Douglas); a
+real interest rate that clears the \omterm{def:b1:long-run-model:loanable-funds}{loanable funds market}; full \omterm{def:b1:long-run-model:crowding-out}{crowding out}
+of investment by government purchases; \omterm{def:b1:long-run-model:neutrality}{neutral} money.
+\tested Consistent with the shares: where they are observed, \omterm{def:b1:factor-markets:factor-share}{labour shares}
+stayed within about a tenth of GDP for five decades or more (opening
+chart), but they have declined since the early 1980s (Karabarbounis and
+Neiman 2014). % ledger: b1:karabarbounis2014
+\omterm{def:b1:long-run-model:crowding-out}{Crowding out} is tested only in part: larger projected US deficits raise
+long-term interest rates (Laubach 2009), % ledger: b1:laubach2009
+and local public debt cut private investment in Chinese cities (Huang,
+Pagano and Panizza 2020); % ledger: b1:hpp2020
+neither measures whether it is full, and the US cloud cannot separate the
+curves. Long-run \omterm{def:b1:long-run-model:neutrality}{neutrality of money} is tested in \cref{ch:b1:money-and-inflation}.
+\breaks In the short run (Part~VI); in open economies, where saving can
+come from abroad (\cref{ch:b1:open-economy}); and the decline of \omterm{def:b1:factor-markets:factor-share}{labour
+shares} since 1980 contradicts constant Cobb--Douglas shares.
+\end{model}
+
+\section*{Exercises}\label{sec:b1:long-run-model:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:long-run-model:prices}
+With $Y = 10K^{0.3}L^{0.7}$, $K = 100$ and $L = 400$, compute output, the real wage and
+the \omterm{def:b1:factor-markets:rental-price}{rental price of capital}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:long-run-model:read}
+From the opening chart's table, the \omterm{def:b1:factor-markets:factor-share}{labour share} was $0.508$ in Japan in
+1970, its first observed year, and $0.628$ in the United States in 1950; in
+the latest year it was $0.587$ in Japan (2022) and $0.568$ in the United
+States (2023).
+% figdata: labsh_points
+Describe the change in each.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:long-run-model:euler-ex}
+Check Euler's theorem on the numbers of
+\cref{exo:b1:long-run-model:prices}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:long-run-model:predict}
+The government raises its purchases and leaves taxes unchanged. Predict
+the effect on the real interest rate, investment and consumption in the
+\omterm{def:b1:long-run-model:long-run}{long-run model}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:long-run-model:lf}
+$Y = 2000$, $T = G = 300$, $C = 100 + 0.6(Y - T)$ and $I = 700 - 20r$. Find private,
+public and \omterm{def:b1:long-run-model:saving}{national saving}, the interest rate and investment.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:long-run-model:taxcut}
+In \cref{exo:b1:long-run-model:lf}, taxes are cut by 50. Find the new $r$, $I$
+and $C$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:long-run-model:immig}
+With the technology of \cref{exo:b1:long-run-model:prices}, immigration
+raises $L$ by $10\%$. Predict the change in the real wage, the \omterm{def:b1:factor-markets:rental-price}{rental price of
+capital} and the \omterm{def:b1:factor-markets:factor-share}{factor shares}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:long-run-model:trend}
+From the opening chart's table, the least-squares trend of the \omterm{def:b1:factor-markets:factor-share}{labour share}
+since 1980 is $-1.3$ points a decade in Germany, $-1.15$ in France, $-1.01$ in
+Japan, $-0.78$ in the United States and $+0.75$ in the United Kingdom.
+% figdata: labsh_trend
+By how much would each have moved over the 43 years to 2023 at that rate?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:long-run-model:brenland}
+In Brenland's accounts for 2025, $Y = 393{,}264$, $C = 225{,}014$, $G = 78{,}653$ and
+$I = 88{,}484$ (millions of dalens). Compute \omterm{def:b1:long-run-model:saving}{national saving} as in a closed
+economy and explain the gap with investment.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:long-run-model:ces}
+With a CES technology and $\sigma < 1$, show that a rise in $K/L$ raises labour's
+share. What happens with $\sigma > 1$?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:long-run-model:partial}
+Suppose \omterm{def:b1:long-run-model:saving}{national saving} rises with the interest rate, $S = \bar S + sr$. Derive the
+effect of $\Delta G$ on $r$ and $I$, and show that \omterm{def:b1:long-run-model:crowding-out}{crowding out} of investment is
+partial.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:long-run-model:neutral-ex}
+What observation would refute the \omterm{def:b1:long-run-model:neutrality}{neutrality of money} in the long run?
+\end{exercise}
+
+\section{Problem: Brenland in the Long Run}\label{sec:b1:long-run-model:problem}
+
+\begin{problem}[{Weekend problem --- a defence build-up}]\label{pb:b1:long-run-model:brenland}
+Brenland's economy (invented) is modelled with shares close to those of its
+2025 accounts. Output is $Y = AK^{0.35}L^{0.65}$ with $K = 1000$ billion dalens and
+$L = 4.4$ million workers, and $Y = 400$ billion. Consumption is
+$C = 36 + 0.6(Y - T)$, taxes $T = 80$, government purchases $G = 80$, and investment
+$I = 132 - 10r$, with $r$ in per cent (all in billions of dalens a year).
+
+\medskip\noindent\textbf{Part I --- Factor prices.}
+\begin{enumerate}
+  \item Find $A$.
+  \item Compute the real wage (thousands of dalens per worker a year).
+  \item Compute the \omterm{def:b1:factor-markets:rental-price}{rental price of capital} (per dalen of capital a year).
+  \item Check Euler's theorem.
+  \item What are labour's and capital's shares?
+  \item By what factors would the wage and the rental price change if $L$ rose by $10\%$?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- Loanable funds.}
+\begin{enumerate}[resume]
+  \item Compute consumption.
+  \item Compute private and \omterm{def:b1:long-run-model:saving}{public saving}.
+  \item Compute \omterm{def:b1:long-run-model:saving}{national saving}.
+  \item Find the real interest rate and investment.
+  \item Compare the shares of $C$, $I$ and $G$ in output with Brenland's 2025 accounts: $0.572$, $0.225$ and $0.2$.
+  \item What would happen to $r$ if investment demand rose by 10 at every rate?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- A defence build-up.} Defence purchases rise
+by $2\%$ of output, financed by borrowing.
+\begin{enumerate}[resume]
+  \item By how much do public and \omterm{def:b1:long-run-model:saving}{national saving} change?
+  \item Find the new interest rate.
+  \item By how much does investment fall?
+  \item If the build-up were financed by taxes instead, find $C$, \omterm{def:b1:long-run-model:saving}{national saving}, $r$ and $I$.
+  \item Why does tax finance crowd out less investment?
+  \item Over the years, what does lower investment do to the capital stock and to wages?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- A technology gain.} $A$ rises by $10\%$, with $K$, $L$,
+$T$, $G$ and investment demand unchanged.
+\begin{enumerate}[resume]
+  \item Find output.
+  \item Find the wage and the rental price.
+  \item What happens to the \omterm{def:b1:factor-markets:factor-share}{factor shares}?
+  \item Find \omterm{def:b1:long-run-model:saving}{national saving} and the interest rate.
+  \item Why might investment demand not stay unchanged, and which way would that move $r$?
+  \item State the result: the effect of the defence build-up on the real interest rate and on investment.
+\end{enumerate}
+\end{problem}

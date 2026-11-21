@@ -1,0 +1,235 @@
+\section*{Chapter \ref{ch:b3:panel-data} --- Panel Data}
+
+\begin{solution}{exo:b3:panel-data:1}
+\begin{enumerate}
+\item Between: 2.7 tonnes per log point, comparing countries' averages with each
+other. Within: 1.0, comparing each country's years with its own average.
+% figdata: co2_stats
+\item An endowment of coal, oil or gas, which makes energy cheap and exports
+valuable; a cold climate, which raises both heating and, through the
+industries it favours, income. A large car-based territory also fits.
+\item Most of the variation in income is between countries: incomes differ by a
+factor of a hundred across countries, but one country's income moves by a few
+tenths of a log point around its own average over three decades.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:panel-data:2}
+\begin{enumerate}
+\item $\bar x = 3.5$ and $\bar y = 7$. The cross-products sum to $12.5 + 4.5 + 1
++ 1 + 4.5 + 12.5 = 36$ and the squares of $x - \bar x$ to $17.5$: the pooled
+slope is $36/17.5 = 2.057$.
+\item Unit A: $\bar x_A = 2$, $\bar y_A = 11/3$; deviations $\ddot x = (-1, 0,
+1)$, $\ddot y = (-5/3, 1/3, 4/3)$. Unit B: $\bar x_B = 5$, $\bar y_B = 31/3$;
+$\ddot x = (-1, 0, 1)$, $\ddot y = (-4/3, -1/3, 5/3)$. Then $\sum \ddot x \ddot
+y = 5/3 + 4/3 + 4/3 + 5/3 = 6$ and $\sum \ddot x^2 = 4$: the within slope is
+$1.5$.
+\item The two clouds each rise by about 1.5 per unit of $x$, but B's lies
+higher and further right, so a single line through all six points (2.057) is
+steeper than either.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:panel-data:3}
+Unit A: $\Delta x = (1, 1)$, $\Delta y = (2, 1)$; unit B: $\Delta x = (1, 1)$,
+$\Delta y = (1, 2)$. The slope without a constant is $\sum \Delta x \Delta y /
+\sum \Delta x^2 = (2 + 1 + 1 + 2)/4 = 1.5$. Every $\Delta x$ equals 1, so
+$\Delta x$ is collinear with a constant: a regression with a constant cannot
+separate the slope from the intercept.
+\end{solution}
+
+\begin{solution}{exo:b3:panel-data:4}
+First, split the panel into 1990--2005 and 2006--2022 and estimate the within
+slope in each; with constant unit effects and a constant slope, the two agree up
+to sampling error. Second, compare the within and first-difference estimates: if
+a slowly changing unit effect (a drift in each country's energy mix) were left
+in the error, the two would weight it differently and disagree. A third check:
+the residuals of the within regression should show no trend inside countries.
+\end{solution}
+
+\begin{solution}{exo:b3:panel-data:5}
+The tested solution is \code{ex05_year_effects.py}, in the chapter's
+\code{exercises/} folder.
+\begin{enumerate}
+\item Country effects: slope 0.999, conventional s.e.\ 0.122, clustered 0.265,
+ratio 2.17. Country and year effects: 2.068, 0.164 and 0.450, ratio 2.74.
+% output: ex05_year_effects
+\item The cross-country mean of log income rose by 0.576. A common rise in
+income, with emissions per person in several large rich countries falling over
+the same years, makes the year-to-year co-movement shared by all countries
+negative or weak; the year effects remove it, and what remains, each country's
+movement relative to the world's that year, has a steeper slope.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:panel-data:6}
+\begin{enumerate}
+\item Downward: the omitted unit effect is negatively correlated with income, so
+the between slope is below the true slope.
+\item No. On this story alone, the between slope would be smaller than an
+unbiased within slope, yet the chart shows it larger. Some fixed
+characteristics that raise income must also raise emissions (fossil
+endowments, climate) and outweigh the clean-technology effect; or the within
+slope is itself small for other reasons, such as measurement error or the
+short-run nature of within variation.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:panel-data:7}
+\begin{enumerate}
+\item $(0.265/0.122)^2 = 2.172^2 = 4.72$.
+\item $6{,}419/4.72 \approx 1{,}360$ effective observations.
+\item Conventional: $0.999 \pm 1.96 \times 0.122 = 0.999 \pm 0.239$, from
+0.760 to 1.238. Clustered: $0.999 \pm 0.519$, from 0.480 to 1.518.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:panel-data:8}
+\begin{enumerate}
+\item Random effects moves; fixed effects does not. The within transform
+removes $a_i$ entirely, so its correlation with $x$ cannot reach the estimate.
+Random effects removes only the share $\theta$ of each unit's mean and leaves
+$(1 - \theta)a_i$ in the error (\cref{prop:b3:panel-data:re}).
+\item $(1 - 0.610)^2 = 0.152$. The true value is $1/(1 + 6) = 0.143$, so the
+true $\theta$ is $1 - \sqrt{0.143} = 0.622$; the estimate, 0.610, is close.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:panel-data:9}
+The tested solution is \code{ex09_fertility.py}, in the chapter's
+\code{exercises/} folder.
+\begin{enumerate}
+\item Over 213 countries: between $-0.778$, within $-0.837$ births per woman per
+log point of income. % output: ex09_fertility
+\item The fixed differences between countries are not strongly correlated with
+income in a way that also moves fertility; whatever the fixed effects absorb
+does not change the slope much. The two slopes can still both be far from a
+causal effect: income and fertility move together inside countries for reasons,
+such as women's schooling, that change over time.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:panel-data:10}
+With $T = 2$, $\bar x_i = (x_{i1} + x_{i2})/2$, so $\ddot x_{i1} = -\Delta x_i/2$
+and $\ddot x_{i2} = \Delta x_i/2$, with $\Delta x_i = x_{i2} - x_{i1}$; the same
+holds for $y$. Then
+\[
+  \sum_i\sum_t \ddot x_{it}\ddot y_{it} = \sum_i 2 \cdot \frac{\Delta x_i \Delta y_i}{4} = \frac12 \sum_i \Delta x_i\Delta y_i,
+  \qquad
+  \sum_i\sum_t \ddot x_{it}^2 = \frac12 \sum_i \Delta x_i^2,
+\]
+and the ratio is $\sum_i \Delta x_i \Delta y_i / \sum_i \Delta x_i^2$, the
+\omterm{def:b3:panel-data:first-difference}{first-difference estimator} without a constant.
+\end{solution}
+
+\begin{solution}{exo:b3:panel-data:11}
+The tested solution is \code{ex11_nickell.py}, in the chapter's
+\code{exercises/} folder.
+\begin{enumerate}
+\item Mean estimates 0.168, 0.337 and 0.421 for $T = 5$, 10 and 20; biases
+$-0.332$, $-0.163$ and $-0.079$. % output: ex11_nickell
+\item The approximation gives $-0.375$, $-0.167$ and $-0.079$. It is good from
+$T = 10$ on and overstates the bias at $T = 5$, as an approximation for large
+$T$ may.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:panel-data:12}
+\begin{enumerate}
+\item $\ddot u_{it} = u_{it} - \bar u_i$ contains $u_{is}$ for every $s$,
+including $s < t$. Under feedback, $x_{it}$ depends on $u_{i,t-1}$, so
+$\Cov(x_{it}, \bar u_i) \neq 0$ and hence $\Cov(\ddot x_{it}, \ddot u_{it}) \neq
+0$, even if $\Cov(x_{it}, u_{it}) = 0$.
+\item Under strict exogeneity, $x_{i,t+1}$ is unrelated to $u_{it}$ and its
+coefficient is zero. If a positive shock this year raises $x$ next year, the
+lead is positively correlated with $u_{it}$: its coefficient is positive.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{pb:b3:panel-data:firms}
+\textbf{1.} Across firm-years, 1~\% more capital goes with 0.87~\% more output.
+% figdata: firms_results
+
+\textbf{2.} $0.30 + 0.5 \times 0.9512/0.8675 = 0.30 + 0.5 \times 1.0965 = 0.30
++ 0.548 = 0.848$.
+
+\textbf{3.} The pooled estimate is 0.868, close to the prediction; the rest
+comes from the subsidy and the year shocks, also left in the pooled error.
+
+\textbf{4.} It is not recorded. Any measure of it --- a survey score, a
+manager's degree --- would be partial and noisy, and the omitted part would
+remain.
+
+\textbf{5.} Downward: the covariance of capital with management would be
+negative.
+
+\textbf{6.} $0.0094/0.0045 = 2.09$. No: the standard error measures sampling
+noise around the wrong number. A biased estimate can be very precise.
+
+\textbf{7.} Within a firm, a year in which capital is 1~\% above the firm's own
+average has output 0.35~\% above its average. The comparisons are between
+years of the same firm.
+
+\textbf{8.} The errors are serially correlated, and the two estimators weight
+the years differently; and the year shocks common to all firms enter both
+differently, because capital trends upward and the within transform compares
+each year with the firm's whole-period average, while differences compare
+adjacent years. Measurement error in capital would also hit them differently.
+
+\textbf{9.} Shocks common to all firms in a year (demand, prices). Capital
+rises on average over time, so any common year shock that happens to line up
+with that trend is attributed to capital by the one-way within estimate.
+
+\textbf{10.} $0.3182 \pm 1.96 \times 0.0147 = 0.3182 \pm 0.0288$, from 0.289 to
+0.347.
+
+\textbf{11.} The movements of each firm's capital around its own average, net of
+the movement common to all firms in that year.
+
+\textbf{12.} No. The advice changes over time (it starts in 2015) and moves both
+capital and output; it is a time-varying confounder, which neither firm nor year
+effects remove.
+
+\textbf{13.} The panel picked better-run firms, and management raises output.
+Capital in the regression captures only part of management, so the subsidy
+dummy picks up the rest.
+
+\textbf{14.} Pooled 0.122, two-way 0.110. The pooled estimate is larger, as
+Question~13 predicts, but here by little, because capital already absorbs much
+of the management difference.
+
+\textbf{15.} $\eu^{0.1101} - 1 = 0.116$: output 11.6~\% higher.
+
+\textbf{16.} The change in output of subsidised firms from before 2018 to after,
+compared with the change of unsubsidised firms over the same years.
+
+\textbf{17.} Without the subsidy, the output of treated and untreated firms would
+have moved in parallel after 2018: their gap could be anything, but not its
+change.
+
+\textbf{18.} Estimate the gap between treated and untreated firms year by year
+for 2011--2017; it should be flat. A trend in it before 2018 would undermine the
+assumption.
+
+\textbf{19.} Upward: output that has just fallen tends to recover by itself, and
+the recovery would be counted as the subsidy's effect.
+
+\textbf{20.} $0.0181/0.0110 = 1.645$; its square is $2.71$.
+
+\textbf{21.} iid: $0.1101 \pm 1.96 \times 0.0110 = 0.1101 \pm 0.0216$, from
+0.0885 to 0.1317. Clustered: $0.1101 \pm 0.0355$, from 0.0746 to 0.1456.
+
+\textbf{22.} The errors persist within a firm from year to year, and the
+regressor persists too: the subsidy is on for eight years in a row for the same
+firms. Together they make the firm-years of one firm far from independent.
+
+\textbf{23.} $2.71 = 1 + 14\rho$, so $\rho = 1.71/14 = 0.122$.
+
+\textbf{24.} $4{,}500/2.71 \approx 1{,}660$ firm-years.
+
+\textbf{25.} Inside firms, net of year shocks, the elasticity of output with
+respect to capital is 0.318, with a clustered 95~\% interval of 0.289 to 0.347.
+The training subsidy raised output by 0.110 log points (11.6~\%), with a
+clustered 95~\% interval of 0.075 to 0.146, if treated and untreated firms would
+otherwise have moved in parallel.
+\end{solution}

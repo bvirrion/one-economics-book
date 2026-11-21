@@ -1,0 +1,288 @@
+% Provenance (never printed): the markets-with-algebra strand of ../economics_series.md (grade 9: the percentage
+% change in quantity for a 1 % change in price; elastic and inelastic; revenue when the price rises; necessities and
+% luxuries; short run and long run). Brief: sources/book1/BRIEFS.md, g9-02. Point and arc elasticities are grade 10's.
+% Chart data: figdata/grade-9/02-elasticity-first-look (published elasticities, each a ledger row; BLS gasoline average
+% prices; an invented demand). Ledger: g9:andreyeva-2010-* (16), g9:fuel-elasticity-short, g9:fuel-elasticity-long,
+% g8:cigarette-tax-elasticity, g9:eia-gasoline-2022, g9:south-africa-cigarettes.
+\chapter{Elasticity: A First Look}\label{ch:g9:elasticity-first-look}
+
+\begin{openingchart}{How much buyers cut their purchases when the price rises by $1\,\%$: published
+estimates, in percent. Foods: averages of United States studies, 1938--2007. Cigarettes: rich
+countries. Gasoline: averages of studies from many countries, in the first year (short run) and after
+several years (long run).}{Andreyeva, Long and Brownell (2010), Table 1; National Cancer Institute and
+World Health Organization (2016); Havranek, Irsova and Janda (2012)}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xbar, bar width=6pt, y=0.36cm, xmin=0, xmax=1,
+  ytick=data, yticklabels from table={figdata/grade-9/02-elasticity-first-look/out/elasticities.csv}{good},
+  yticklabel style={font=\footnotesize}, enlarge y limits={abs=0.6},
+  xlabel={Fall in the quantity bought for a $1\,\%$ rise in the price (percent)},
+  nodes near coords, nodes near coords style={font=\scriptsize, anchor=west},
+  every node near coord/.append style={/pgf/number format/fixed, /pgf/number format/precision=2,
+    /pgf/number format/fixed zerofill}]
+\addplot[fill=omDef, draw=none] table[x=elasticity, y expr=\coordindex]
+  {figdata/grade-9/02-elasticity-first-look/out/elasticities.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+When the \omterm{def:g7:money:price}{price} of beef rises by $1\,\%$, people in the United States buy about $0.75\,\%$ less beef. When
+the \omterm{def:g7:money:price}{price} of eggs rises by $1\,\%$, they buy only about $0.27\,\%$ fewer eggs. In the first year after
+gasoline becomes $1\,\%$ dearer, drivers buy only about $0.09\,\%$ less; after several years, about
+$0.31\,\%$ less. All these buyers respond to the \omterm{def:g7:money:price}{price}, but some much more than others. One number
+measures how much.
+
+\begin{recall}
+A \omterm{def:g9:demand-and-supply-equations:demand-function}{demand function} gives the \omterm{def:g7:demand-and-supply-first-look:quantity-demanded}{quantity demanded} at each \omterm{def:g7:money:price}{price} (\cref{ch:g9:demand-and-supply-equations}).
+A rise of $10\,\%$ multiplies a quantity by $1.10$, a fall of $4\,\%$ by $0.96$. A \omterm{def:g8:taxes-and-public-spending:tax}{tax} on cigarettes lowers
+the quantity smoked (\cref{ch:g8:taxes-and-public-spending}).
+\end{recall}
+
+\section{How strongly buyers respond}
+
+\begin{definition}[Price elasticity of demand]\label{def:g9:elasticity-first-look:price-elasticity}
+The \emph{price elasticity of demand}\index{price elasticity of demand} of a good is the percentage fall
+in the \omterm{def:g7:demand-and-supply-first-look:quantity-demanded}{quantity demanded} divided by the percentage rise in its \omterm{def:g7:money:price}{price}, other things being equal:
+\[
+\text{elasticity} = \frac{\text{percentage fall in the quantity demanded}}{\text{percentage rise in the
+price}}.
+\]
+\end{definition}
+
+If a \omterm{def:g7:money:price}{price} rises by $10\,\%$ and the quantity bought falls by $4\,\%$, the elasticity is $4 \div 10 =
+0.4$. Many studies write elasticities with a minus sign ($-0.4$), because \omterm{def:g7:money:price}{price} and quantity move in
+opposite directions; this book uses the positive number. In this volume, percentage changes are always
+measured from the starting point.
+
+\begin{omfigure}
+\includegraphics[width=0.5\linewidth]{images/book1/ai/g9-elasticity-fuel-station.jpg}
+
+{\small A fuel station. When fuel becomes dearer, most drivers still have to reach work the next day:
+in the short run, they buy only a little less.}
+\end{omfigure}
+
+\section{Elastic and inelastic}
+
+\begin{definition}[Elastic demand]\label{def:g9:elasticity-first-look:elastic}
+Demand is \emph{elastic}\index{elastic demand} when its \omterm{def:g7:money:price}{price} elasticity is greater than 1: the quantity
+falls by a larger percentage than the \omterm{def:g7:money:price}{price} rises.
+\end{definition}
+
+\begin{definition}[Inelastic demand]\label{def:g9:elasticity-first-look:inelastic}
+Demand is \emph{inelastic}\index{inelastic demand} when its \omterm{def:g7:money:price}{price} elasticity is smaller than 1: the
+quantity falls by a smaller percentage than the \omterm{def:g7:money:price}{price} rises.
+\end{definition}
+
+\begin{definition}[Unit-elastic demand]\label{def:g9:elasticity-first-look:unit-elastic}
+Demand is \emph{unit-elastic}\index{unit-elastic demand} when its \omterm{def:g7:money:price}{price} elasticity equals 1.
+\end{definition}
+
+Every estimate in the opening chart is below 1: the demand for these goods, taken as whole groups, is
+\omterm{def:g9:elasticity-first-look:inelastic}{inelastic}. The demand for one brand of a good is usually much more \omterm{def:g9:elasticity-first-look:elastic}{elastic} than the demand for the good
+as a whole, because buyers can switch to another brand.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.5cm, y=0.5cm]
+  \begin{scope}
+    \draw[econ axes] (0,7) node[above, font=\scriptsize] {price} |- (9,0) node[right, font=\scriptsize] {quantity};
+    \draw[demand] (3,7) -- (4.5,0.5);
+    \draw[guide] (0,4) -- (3.69,4); \draw[guide] (0,5) -- (3.46,5);
+    \draw[guide] (3.69,4) -- (3.69,0); \draw[guide] (3.46,5) -- (3.46,0);
+    \node[font=\small\bfseries, anchor=south] at (4.5,7.6) {Inelastic};
+    \node[font=\footnotesize, align=center, anchor=north] at (4.5,-0.6) {price up a lot,\\quantity down a little};
+  \end{scope}
+  \begin{scope}[shift={(12,0)}]
+    \draw[econ axes] (0,7) node[above, font=\scriptsize] {price} |- (9,0) node[right, font=\scriptsize] {quantity};
+    \draw[demand] (0.5,6) -- (8.5,2.5);
+    \draw[guide] (0,4) -- (5.07,4); \draw[guide] (0,5) -- (2.79,5);
+    \draw[guide] (5.07,4) -- (5.07,0); \draw[guide] (2.79,5) -- (2.79,0);
+    \node[font=\small\bfseries, anchor=south] at (4.5,7.6) {Elastic};
+    \node[font=\footnotesize, align=center, anchor=north] at (4.5,-0.6) {the same price rise,\\quantity down a lot};
+  \end{scope}
+\end{tikzpicture}
+
+{\small The same rise in \omterm{def:g7:money:price}{price} (from the lower to the upper dotted line) along a steep demand line and a
+flat one.}
+\end{omfigure}
+
+\section{Price and revenue}
+
+A seller's \omterm{def:g7:firms:revenue}{revenue} is the \omterm{def:g7:money:price}{price} times the quantity sold. When the \omterm{def:g7:money:price}{price} rises, each unit brings more
+but fewer units are sold. Which effect wins depends on the elasticity. With an elasticity of $0.4$, a
+$10\,\%$ \omterm{def:g7:money:price}{price} rise lowers the quantity by $4\,\%$: \omterm{def:g7:firms:revenue}{revenue} is multiplied by $1.10 \times 0.96 = 1.056$,
+a rise of $5.6\,\%$. With an elasticity of $1.5$, the quantity falls by $15\,\%$: \omterm{def:g7:firms:revenue}{revenue} is multiplied by
+$1.10 \times 0.85 = 0.935$, a fall of $6.5\,\%$.
+
+\begin{model}{Elastic and inelastic demand}
+\assumes Demand is stable while the \omterm{def:g7:money:price}{price} changes: other things that affect buyers stay the same.
+\predicts A \omterm{def:g7:money:price}{price} rise raises the seller's \omterm{def:g7:firms:revenue}{revenue} when demand is \omterm{def:g9:elasticity-first-look:inelastic}{inelastic} and lowers it when demand
+is \omterm{def:g9:elasticity-first-look:elastic}{elastic}.
+\tested Cigarettes in South Africa, 1991--2012: as \omterm{def:g8:taxes-and-public-spending:tax}{taxes} and \omterm{def:g7:money:price}{prices} rose, legal sales fell by
+$42\,\%$, yet the cigarette makers' \omterm{def:g7:firms:revenue}{revenue} after inflation rose by $95\,\%$ (National Cancer Institute
+and World Health Organization, 2016).
+\breaks When other things change at the same time as the \omterm{def:g7:money:price}{price} (\omterm{def:g7:households:income}{incomes}, the number of buyers, the
+\omterm{def:g7:money:price}{prices} of other goods); when buyers respond more after some years than in the first months.
+\end{model}
+
+% figdata: revenue (quantity = 1200 - 100p: p 4 3200, 5 3500, 6 3600, 7 3500, 8 3200)
+Along an affine demand line, the elasticity is not the same everywhere: at high \omterm{def:g7:money:price}{prices} demand is \omterm{def:g9:elasticity-first-look:elastic}{elastic},
+at low \omterm{def:g7:money:price}{prices} \omterm{def:g9:elasticity-first-look:inelastic}{inelastic}. For the invented demand $Q^d = 1\,200 - 100p$, \omterm{def:g7:firms:revenue}{revenue} rises with the \omterm{def:g7:money:price}{price} up
+to 6 dalens, then falls.
+
+\begin{omchart}{Revenue along the invented demand $Q^d = 1\,200 - 100p$: it is largest at a price of 6
+dalens, where demand is unit-elastic.}{Invented}
+\begin{tikzpicture}
+\begin{axis}[omrecord, ybar, bar width=10pt, xmin=-0.6, xmax=12.6, ymin=0, ymax=4000,
+  xtick={0,...,12}, xlabel={Price (dalens)}, ylabel={Revenue (dalens)}, height=0.42\linewidth,
+  scaled y ticks=false]
+\addplot[fill=omDef, draw=none] table[x=price, y=revenue] {figdata/grade-9/02-elasticity-first-look/out/revenue.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\begin{measure}[An elasticity from data]
+Measuring an elasticity means comparing the quantity bought at two \omterm{def:g7:money:price}{prices}. The difficulty is ``other
+things being equal'': between two years, \omterm{def:g7:households:income}{incomes}, tastes and the \omterm{def:g7:money:price}{prices} of other goods change too. Studies
+compare places or periods in which the \omterm{def:g7:money:price}{price} changed for a reason unrelated to demand, such as a change
+in a \omterm{def:g8:taxes-and-public-spending:tax}{tax}, and check that other things moved little. Different studies of the same good give different
+numbers: the foods of the opening chart are averages of 13 to 51 estimates each.
+\end{measure}
+
+\section{Necessities and luxuries}
+
+\begin{definition}[Necessity]\label{def:g9:elasticity-first-look:necessity}
+A \emph{necessity}\index{necessity} is a good on which \omterm{def:g7:households:household}{households} spend a smaller share of their \omterm{def:g7:households:income}{income}
+as their \omterm{def:g7:households:income}{income} rises.
+\end{definition}
+
+\begin{definition}[Luxury]\label{def:g9:elasticity-first-look:luxury}
+A \emph{luxury}\index{luxury} is a good on which \omterm{def:g7:households:household}{households} spend a larger share of their \omterm{def:g7:households:income}{income} as their
+\omterm{def:g7:households:income}{income} rises.
+\end{definition}
+
+Food as a whole is a \omterm{def:g9:elasticity-first-look:necessity}{necessity}: richer \omterm{def:g7:households:household}{households} spend a smaller share of their \omterm{def:g7:households:income}{income} on it
+(\cref{ch:g7:households}). Goods that \omterm{def:g7:households:household}{households} cannot do
+without, and that have no close substitute, tend to have \omterm{def:g9:elasticity-first-look:inelastic}{inelastic demand}; goods that can be postponed or
+replaced, like a restaurant meal, more \omterm{def:g9:elasticity-first-look:elastic}{elastic demand}. The opening chart shows the pattern among foods:
+meals away from home have the highest elasticity, eggs the lowest.
+
+\section{Short run and long run}
+
+In the first months after a \omterm{def:g7:money:price}{price} rise, buyers can change little: the car, the boiler and the journey to
+work are already chosen. Over several years, they can buy a smaller car, insulate the house or move
+closer to work. Demand is therefore more \omterm{def:g9:elasticity-first-look:elastic}{elastic} in the long run than in the short run, as the two
+gasoline bars of the opening chart show ($0.09$ and $0.31$).
+
+\begin{record}[Fuel prices in 2022]
+% ledger: g9:eia-gasoline-2022, g9:eia-gasoline-supplied; figdata: gasoline (2021 3.05, 2022 4.09), facts
+% (gas_rise_pct 34.1). EIA's own 2022 average (3.95, in the ledger row) differs from the BLS average printed here
+% (two separate price surveys); the BLS series is the one charted.
+In the United States, a gallon of regular gasoline cost $3.05$ dollars on average in 2021 and $4.09$ in
+2022, a rise of $34.1\,\%$ (Bureau of Labor Statistics average \omterm{def:g7:money:price}{prices}). With a short-run elasticity of
+$0.09$, a $34.1\,\%$ rise in the \omterm{def:g7:money:price}{price} predicts a fall in the quantity of only about $3\,\%$: most
+drivers keep driving, and pay much more. The fall was smaller still: $8.810$ million barrels of gasoline
+a day in 2022 against $8.816$ in 2021, less than $0.1\,\%$ (U.S. Energy Information Administration).
+Other things did not stay the same: driving was still coming back after 2020, when consumption had
+dropped to $8.049$ million barrels a day, so demand was rising while the \omterm{def:g7:money:price}{price} climbed.
+\end{record}
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g9:elasticity-first-look:1}
+Use the opening chart. Which food has the most \omterm{def:g9:elasticity-first-look:elastic}{elastic demand}, and which the least? Which bar of the
+whole chart is the lowest?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g9:elasticity-first-look:2}
+The \omterm{def:g7:money:price}{price} of a good rises by $10\,\%$ and the quantity bought falls by $5\,\%$. Compute the \omterm{def:g9:elasticity-first-look:price-elasticity}{price
+elasticity of demand}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g9:elasticity-first-look:3}
+Is demand \omterm{def:g9:elasticity-first-look:elastic}{elastic} or \omterm{def:g9:elasticity-first-look:inelastic}{inelastic} when the elasticity is $0.5$? When it is $1.8$?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g9:elasticity-first-look:4}
+A shop sells 500 units at 3 dalens, or 400 units at 4 dalens. Compute its \omterm{def:g7:firms:revenue}{revenue} at each \omterm{def:g7:money:price}{price}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g9:elasticity-first-look:5}
+A \omterm{def:g7:money:price}{price} rises by $10\,\%$; the elasticity is $0.4$. By what percentage do the quantity and the \omterm{def:g7:firms:revenue}{revenue}
+change?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g9:elasticity-first-look:6}
+The same, with an elasticity of $1.5$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g9:elasticity-first-look:7}
+When the \omterm{def:g7:money:price}{price} goes from 4 to 5 dalens, the quantity bought goes from 800 to 700 units. Compute the
+elasticity, measuring both changes from the starting point.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g9:elasticity-first-look:8}
+Use the gasoline elasticities of the opening chart. By about what percentage does a $10\,\%$ rise in the
+\omterm{def:g7:money:price}{price} of gasoline lower the quantity bought in the first year? After several years?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g9:elasticity-first-look:9}
+A city raises its bus fares by $10\,\%$. The same year, a large road bridge closes for repairs, and the
+number of bus rides rises by $5\,\%$. Does this show that the demand for bus rides does not fall when the
+fare rises?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g9:elasticity-first-look:10}
+For the demand $Q^d = 1\,200 - 100p$, compute the \omterm{def:g7:firms:revenue}{revenue} at \omterm{def:g7:money:price}{prices} of 4, 5, 6, 7 and 8 dalens. Which
+\omterm{def:g7:money:price}{price} gives the largest \omterm{def:g7:firms:revenue}{revenue}?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g9:elasticity-first-look:11}
+Two goods each sell $1\,000$ units a year at 10 dalens. A \omterm{def:g8:taxes-and-public-spending:tax}{tax} of 1 dalen a unit raises each \omterm{def:g7:money:price}{price} by
+$10\,\%$. The elasticity is $0.3$ for the first good and $2.0$ for the second. How much \omterm{def:g8:taxes-and-public-spending:tax}{tax} does each raise
+in a year?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g9:elasticity-first-look:12}
+Give two reasons why an elasticity measured by comparing two years may mislead.
+\end{exercise}
+
+\section{Problem: The Bus Fare of Brenmoor}
+
+\begin{problem}[{Weekend problem --- riders at two fares, the elasticity and revenue, and a fare cut in
+the short and the long run}]
+\label{pb:g9:elasticity-first-look:1}
+Everything in this problem is invented. Brenmoor's buses carry $10\,000$ riders a day at a fare of
+$2.00$ dalens. The town raises the fare to $2.50$ dalens; the next month, $9\,000$ riders a day take the
+bus.
+
+\medskip
+\noindent\textbf{Part I --- Two fares.}
+\begin{enumerate}
+  \item Compute the daily \omterm{def:g7:firms:revenue}{revenue} at each fare.
+  \item By what percentage did the fare rise?
+  \item By what percentage did the number of riders fall?
+  \item By how much did the daily \omterm{def:g7:firms:revenue}{revenue} change?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Elasticity and revenue.}
+\begin{enumerate}[resume]
+  \item Compute the elasticity of the demand for bus rides.
+  \item Is this demand \omterm{def:g9:elasticity-first-look:elastic}{elastic} or \omterm{def:g9:elasticity-first-look:inelastic}{inelastic}?
+  \item If the elasticity had been $1.5$, how many riders would there have been at $2.50$ dalens, and what
+        \omterm{def:g7:firms:revenue}{revenue}?
+  \item Explain why the \omterm{def:g7:firms:revenue}{revenue} rose in question 4 but falls in question 7.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- A fare cut.} A year later, the town cuts the fare from $2.50$ back to $2.00$
+dalens.
+\begin{enumerate}[resume]
+  \item With the short-run elasticity of question 5, measured from $2.50$ dalens, how many riders are there
+        after the cut? What is the daily \omterm{def:g7:firms:revenue}{revenue}?
+  \item By how much does the daily \omterm{def:g7:firms:revenue}{revenue} change in the short run?
+  \item Over several years, people sell cars and move along the bus lines: the elasticity becomes $1.2$.
+        How many riders are there then, and what is the daily \omterm{def:g7:firms:revenue}{revenue}?
+  \item By how much has the daily \omterm{def:g7:firms:revenue}{revenue} changed in the long run, compared with the \omterm{def:g7:firms:revenue}{revenue} at $2.50$
+        dalens?
+\end{enumerate}
+\end{problem}

@@ -1,0 +1,6 @@
+study,low,high,pos,mid,err
+Katz and Meyer (United States),0.16,0.2,0,0.18,0.02
+Lalive: men (Austria),0.09,0.09,1,0.09,0
+Lalive: women (Austria),0.32,0.32,2,0.32,0
+Johnston and Mas: nonemployment (Missouri),0.3,0.3,3,0.3,0
+Johnston and Mas: benefit receipt (Missouri),0.5,0.5,4,0.5,0

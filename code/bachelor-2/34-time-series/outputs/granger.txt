@@ -1,0 +1,3 @@
+$ python granger.py
+does money help predict infl? F 2.15, p-value 0.076
+does infl help predict money? F 1.47, p-value 0.213

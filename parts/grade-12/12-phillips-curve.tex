@@ -1,0 +1,293 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g12-12. The 1960s relation; the claim of a stable trade-off and its
+% refutation in the 1970s; adaptive expectations and the vertical long-run curve (proved by a recurrence); disinflation and
+% the sacrifice ratio; anchored expectations and 2021-25. Real numbers: figdata/grade-12/12-phillips-curve/ (BLS CPI-U
+% annual inflation, the measure of chapter 10; JST unemployment to 1986; WDI unemployment 2015-2025). Ledger: Phillips 1958
+% (bibliographic, as the name of the relation), Volcker's appointment (Federal Reserve History), Book 3's row on Ball 1994.
+% The natural rate of 6 % in the problem is given, not estimated.
+\chapter{The Phillips Curve and Its Breakdown}\label{ch:g12:phillips-curve}
+
+In 1961 American unemployment was 6.7\,\% and consumer prices rose by 1.1\,\%. By 1969 unemployment had fallen to 3.5\,\% and inflation had risen to 5.5\,\%. For a decade,
+lower unemployment came with higher inflation, year after year, almost along a line. In the next decade the line broke: in 1975 unemployment was 8.5\,\% and inflation
+9.1\,\%; in 1980, 7.1\,\% and 13.5\,\%.
+% figdata: phil6069 (1961 6.7/1.1; 1969 3.5/5.5); phil7083 (1975 8.5/9.1; 1980 7.1/13.5)
+
+This chapter follows a relation that seemed to offer a choice, the evidence that withdrew the offer, and the model that explained why.
+
+\begin{openingchart}{United States: unemployment rate against consumer price inflation, per cent, each year joined to the next; 1960--1969 (blue) and 1970--1983 (red).}{U.S.
+Bureau of Labor Statistics (CPI-U); Jordà--Schularick--Taylor Macrohistory Database (unemployment)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.72\linewidth, height=6.4cm, xmin=3, xmax=10.5, ymin=0, ymax=15, xlabel={unemployment rate, per cent},
+  ylabel={inflation, per cent}, xtick={3,...,10}, ytick={0,5,10,15}]
+\addplot[omDef, thick, sharp plot, mark=*, mark size=1.3pt] table[x=u, y=pi] {figdata/grade-12/12-phillips-curve/out/phil6069.csv};
+\addplot[omThm, thick, sharp plot, mark=*, mark size=1.3pt] table[x=u, y=pi] {figdata/grade-12/12-phillips-curve/out/phil7083.csv};
+\node[font=\scriptsize, omDef, anchor=north] at (axis cs:6.7,1.1) {1961};
+\node[font=\scriptsize, omDef, anchor=south east] at (axis cs:3.5,5.5) {1969};
+\node[font=\scriptsize, omThm, anchor=west] at (axis cs:8.5,9.1) {1975};
+\node[font=\scriptsize, omThm, anchor=south] at (axis cs:7.1,13.5) {1980};
+\node[font=\scriptsize, omThm, anchor=west] at (axis cs:9.6,3.2) {1983};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From \cref{ch:g11:unemployment}: the \omterm{def:g11:unemployment:natural-rate}{natural rate of unemployment}. From \cref{ch:g12:aggregate-demand-and-supply}: demand and supply shocks, and the return to the long
+run. From \cref{ch:g12:monetary-policy}: the Federal Reserve's policy in 1979--83 and 2021--23.
+\end{recall}
+
+\section{A relation in the data}\label{sec:g12:phillips-curve:relation}
+
+\begin{definition}[Phillips curve]\label{def:g12:phillips-curve:phillips-curve}
+A \emph{Phillips curve}\index{Phillips curve} is a relation in which inflation is higher when unemployment is lower. The name comes from a 1958 study of British wages and
+unemployment from 1861 to 1957.
+\end{definition}
+% ledger: g12:phillips1958
+
+The reason is the one of \cref{ch:g12:aggregate-demand-and-supply}: when demand is strong, firms hire, unemployment falls, workers can ask for more, and firms raise prices
+faster. The blue years of the opening chart fit it well.
+
+\begin{model}{The stable Phillips trade-off}
+\assumes One fixed relation between inflation and unemployment.
+\predicts A menu: a government that accepts more inflation can have permanently lower unemployment.
+\tested Refuted. From 1970 to 1983 the points left the 1960s line: in 1975 and 1980 unemployment and inflation were both high (the red years of the opening chart).
+\breaks Whenever people come to expect inflation: the relation shifts up.
+\end{model}
+
+\begin{definition}[Stagflation]\label{def:g12:phillips-curve:stagflation}
+\emph{Stagflation}\index{stagflation} is high inflation together with high unemployment and weak growth.
+\end{definition}
+
+\begin{record}[Stagflation, 1973--82]
+% figdata: phil7083 (1974 5.6/11.1; 1975 8.5/9.1; 1980 7.1/13.5; 1982 9.7/6.1)
+After the oil embargo of 1973 (\cref{ch:g12:aggregate-demand-and-supply}), American inflation reached 11.1\,\% in 1974, and unemployment 8.5\,\% in 1975. Inflation never
+returned to the levels of the early 1960s: it was 7.6\,\% in 1978 and 13.5\,\% in 1980, with unemployment at 7.1\,\%. Two supply shocks and inflation that people had learned
+to expect lifted the whole relation.
+\end{record}
+
+\section{Expectations}\label{sec:g12:phillips-curve:expectations}
+
+\begin{definition}[Adaptive expectations]\label{def:g12:phillips-curve:adaptive}
+People have \emph{adaptive expectations}\index{adaptive expectations} when they expect inflation this year to equal last year's: $\pi^e_t = \pi_{t-1}$.
+\end{definition}
+
+\begin{definition}[Expectations-augmented Phillips curve]\label{def:g12:phillips-curve:augmented}
+The \emph{expectations-augmented Phillips curve}\index{expectations-augmented Phillips curve} is the relation $\pi_t = \pi^e_t - \beta\,(u_t - u^n) + s_t$, where $u^n$ is the
+\omterm{def:g11:unemployment:natural-rate}{natural rate of unemployment}, $\beta > 0$, and $s_t$ is a supply shock (zero in normal times).
+\end{definition}
+
+\begin{notation}[$\beta$ in this chapter]\label{not:g12:phillips-curve:beta}
+Elsewhere in the series $\beta$ is a discount factor or a regression coefficient; in this chapter it is the slope of the \omterm{def:g12:phillips-curve:phillips-curve}{Phillips curve}.
+\end{notation}
+
+Wage setters who expect 5\,\% inflation build it into their wage claims; inflation then exceeds 5\,\% only if unemployment is below the natural rate.
+
+\begin{proposition}[No long-run trade-off]\label{prop:g12:phillips-curve:no-trade-off}
+With \omterm{def:g12:phillips-curve:adaptive}{adaptive expectations} and no supply shocks, if unemployment is held at $u^n - x$ with $x > 0$, inflation rises by $\beta x$ every year: $\pi_t = \pi_0 + t\beta x$, without
+limit. Inflation is constant only when $u = u^n$.
+\end{proposition}
+\begin{proof}
+With $\pi^e_t = \pi_{t-1}$ and $u_t - u^n = -x$, the curve gives $\pi_t = \pi_{t-1} + \beta x$, an arithmetic sequence: $\pi_t = \pi_0 + t\beta x$, which grows without
+limit since $\beta x > 0$. Inflation is constant, $\pi_t = \pi_{t-1}$, exactly when $\beta(u_t - u^n) = 0$, that is $u_t = u^n$.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 1, horizontal sep=1.2cm}, width=0.47\linewidth, height=5.2cm, xmin=2, xmax=9, ymin=0, ymax=9,
+  xlabel={unemployment}, tick label style={font=\scriptsize}, label style={font=\scriptsize}, xtick={4,5,7}, ytick={2,3,4,5,6}]
+\nextgroupplot[title={\scriptsize holding unemployment at 4\,\%}, ylabel={inflation}]
+\addplot[gray, thick] coordinates {(5,0) (5,9)};
+\addplot[omDef, domain=2:9, samples=2] {2 - 0.5*(x - 5)};
+\addplot[omDef, dashed, domain=2:9, samples=2] {2.5 - 0.5*(x - 5)};
+\addplot[omDef, dotted, thick, domain=2:9, samples=2] {3 - 0.5*(x - 5)};
+\addplot[omThm, only marks, mark=*, mark size=1.6pt] coordinates {(5,2) (4,2.5) (4,3) (4,3.5)};
+\node[font=\tiny, anchor=west] at (axis cs:5,8.4) {long run};
+\nextgroupplot[title={\scriptsize a disinflation}]
+\addplot[gray, thick] coordinates {(5,0) (5,9)};
+\addplot[omDef, domain=2:9, samples=2] {6 - 0.5*(x - 5)};
+\addplot[omDef, dashed, domain=2:9, samples=2] {4 - 0.5*(x - 5)};
+\addplot[omThm, thick, mark=*, mark size=1.6pt] coordinates {(5,6) (7,5) (7,4) (7,3) (5,3)};
+\end{groupplot}
+\end{tikzpicture}
+
+{\small Short-run curves $\pi = \pi^e - 0.5(u - 5)$ with $u^n = 5$. Left: holding unemployment at 4\,\% raises inflation from 2 to 2.5, 3 and 3.5\,\% as expectations catch up;
+each year's curve lies above the last. Right: from 6\,\% inflation, holding unemployment at 7\,\% for three years brings inflation down to 3\,\%; unemployment then returns to
+5\,\% at the lower inflation.}
+\end{omfigure}
+
+\begin{model}{The expectations-augmented Phillips curve}
+\assumes \omterm{def:g12:phillips-curve:adaptive}{Adaptive expectations} and a \omterm{def:g11:unemployment:natural-rate}{natural rate of unemployment}.
+\predicts No lasting trade-off: unemployment held below the natural rate brings ever-rising inflation; bringing inflation down requires a period of unemployment above it.
+\tested The 1970s, when inflation kept rising with unemployment not low; 1980--86, when inflation fell after unemployment rose far above its earlier levels (the weekend
+  problem).
+\breaks When expectations no longer follow last year's inflation but stay near a target, the curve stops shifting with last year's inflation, and in
+  the 2010s it also looked flat; supply shocks shift it, as in 2021--22.
+\end{model}
+
+\section{The cost of bringing inflation down}\label{sec:g12:phillips-curve:disinflation}
+
+\begin{definition}[Disinflation and sacrifice ratio]\label{def:g12:phillips-curve:disinflation}
+A \emph{disinflation}\index{disinflation} is a lasting fall in the rate of inflation. The \emph{sacrifice ratio}\index{sacrifice ratio}%
+\phantomsection\label{def:g12:phillips-curve:sacrifice-ratio} is the cumulative unemployment above the natural rate during a disinflation, in point-years, divided by the fall
+in inflation, in points.
+\end{definition}
+
+\begin{record}[The disinflation of 1980--86 and its cost]
+% ledger: b1:fed-targets, b1:ball1994; figdata: volcker, phillips_key (excess_8086 13.7, fall 11.6, ratio 1.18)
+On 6 October 1979 the Federal Reserve changed its operating procedure to bring inflation down. Inflation fell from 13.5\,\% in 1980 to 3.2\,\% in 1983 and 1.9\,\% in 1986; unemployment, 5.8\,\% in
+1979, reached 9.7\,\% in 1982 and was still 7.0\,\% in 1986. With a natural rate of 6\,\%, unemployment above it adds up to 13.7 point-years, for a fall of 11.6 points of
+inflation: a \omterm{def:g12:phillips-curve:disinflation}{sacrifice ratio} of about 1.2. Across 65 \omterm{def:g12:phillips-curve:disinflation}{disinflations} in rich countries with moderate inflation, the ratio (measured there as lost output) was smaller when inflation was brought down
+quickly and when wages were set more flexibly.
+\end{record}
+
+\section{Anchored expectations}\label{sec:g12:phillips-curve:anchored}
+
+\begin{definition}[Anchored expectations]\label{def:g12:phillips-curve:anchored}
+Expectations are \emph{anchored}\index{anchored expectations} when people expect inflation to stay near the central bank's target whatever inflation was last year.
+\end{definition}
+
+With $\pi^e$ fixed at the target, the augmented curve no longer accelerates: low unemployment raises inflation a little, for as long as it lasts, and no more. In the 2010s
+American unemployment fell from 5.3\,\% in 2015 to 3.7\,\% in 2019 while inflation stayed near 2\,\%.
+
+\begin{omchart}{United States: unemployment rate against consumer price inflation, per cent, 2015--2025, each year joined to the next; inflation in 2025 is from the eleven monthly index values
+published.}{World Bank, World Development Indicators
+(SL.UEM.TOTL.NE.ZS); U.S. Bureau of Labor Statistics (CPI-U)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.62\linewidth, height=5.6cm, xmin=3, xmax=9, ymin=0, ymax=9, xlabel={unemployment rate, per cent},
+  ylabel={inflation, per cent}, xtick={3,...,9}, ytick={0,2,...,8}]
+\addplot[omDef, thick, sharp plot, mark=*, mark size=1.3pt] table[x=u, y=pi] {figdata/grade-12/12-phillips-curve/out/phil1525.csv};
+\node[font=\scriptsize, anchor=west] at (axis cs:5.4,0.3) {2015};
+\node[font=\scriptsize, anchor=north east] at (axis cs:3.7,1.8) {2019};
+\node[font=\scriptsize, anchor=west] at (axis cs:8.1,1.2) {2020};
+\node[font=\scriptsize, anchor=east] at (axis cs:3.6,8) {2022};
+\node[font=\scriptsize, anchor=west] at (axis cs:4.3,2.6) {2025};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\begin{record}[2021--25]
+% figdata: phil1525 (2021 5.3/4.7; 2022 3.6/8.0; 2023 3.6/4.1; 2024 4.0/2.9; 2025 4.3/2.6)
+Inflation rose to 4.7\,\% in 2021 and 8.0\,\% in 2022 as unemployment fell to 3.6\,\%, with supply shocks pushing the curve up. It then fell to 4.1\,\% in 2023, 2.9\,\% in 2024
+and 2.6\,\% in 2025 (from the eleven monthly values published), while unemployment rose only to 4.3\,\%. A fall of five points of inflation with so little unemployment does not fit the \omterm{def:g12:phillips-curve:disinflation}{sacrifice ratio} of the 1980s;
+it fits a supply shock that faded while expectations stayed close to the target. Which of the two mattered more is still argued over.
+\end{record}
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g12:phillips-curve:1}
+From the opening chart, give unemployment and inflation in 1961 and in 1969.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:phillips-curve:2}
+From the opening chart, compare 1980 with 1965 (unemployment 4.5\,\%, inflation 1.6\,\%). Does 1980 lie on the 1960s line?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:phillips-curve:3}
+The American consumer price index averaged 270.97 in 2021 and 292.65 in 2022. Find inflation in 2022.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:phillips-curve:4}
+The curve is $\pi = 3 - 0.5(u - 5)$. At what unemployment rate is inflation equal to the expected 3\,\%? What is inflation when $u = 4$?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:phillips-curve:5}
+During a \omterm{def:g12:phillips-curve:disinflation}{disinflation}, unemployment is above the natural rate by 2, 3 and 1 points in three years, and inflation falls by 4 points. Find the \omterm{def:g12:phillips-curve:disinflation}{sacrifice ratio}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:phillips-curve:6}
+With $\beta = 0.5$, $u^n = 5$, \omterm{def:g12:phillips-curve:adaptive}{adaptive expectations} and inflation of 2\,\% last year, unemployment is held at 4\,\%. Find inflation in the next three years.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:phillips-curve:7}
+With $\beta = 0.5$, $u^n = 5$ and inflation of 5\,\% last year, unemployment is held at 6\,\% for three years. Find inflation each year.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:phillips-curve:8}
+After \cref{exo:g12:phillips-curve:6}, unemployment returns to 5\,\%. What happens to inflation? What was gained, and what was the lasting cost?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:phillips-curve:9}
+Using the weekend problem's table, compute the \omterm{def:g12:phillips-curve:disinflation}{sacrifice ratio} for 1980--83 only, with a natural rate of 6\,\%.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:phillips-curve:10}
+From the chart of 2015--2025, compare 2019 and 2022. Did the same unemployment rate come with the same inflation?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:phillips-curve:11}
+Redo \cref{exo:g12:phillips-curve:6} with expectations \omterm{def:g12:phillips-curve:anchored}{anchored} at 2\,\%.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:phillips-curve:12}
+State the claim of a stable trade-off, and the evidence that contradicts it.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:phillips-curve:13}
+With $\beta = 0.5$, $u^n = 5$, \omterm{def:g12:phillips-curve:adaptive}{adaptive expectations} and inflation of 2\,\%, a supply shock $s = 3$ hits in one year, with unemployment at 5\,\%. Find inflation that year and
+the next, if unemployment stays at 5\,\%. What would bring it back to 2\,\%?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:phillips-curve:14}
+In the proposition, what happens to $\pi_t$ as $t$ grows? Why does this mean that no unemployment rate below $u^n$ can be held with stable inflation?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:phillips-curve:15}
+Give two reasons why the \omterm{def:g12:phillips-curve:phillips-curve}{Phillips curve} of the 2010s looked flat.
+\end{exercise}
+
+\section{Problem: The Disinflation of 1979--1986}
+
+\begin{problem}[{Weekend problem --- the cost of bringing inflation down}]
+\label{pb:g12:phillips-curve:1}
+The table gives American unemployment and consumer price inflation, and unemployment above a natural rate of 6\,\%, taken as given (all in per cent).
+
+\medskip
+\begin{center}
+\small
+\pgfplotstabletypeset[col sep=comma, columns={year,u,pi,excess},
+  columns/year/.style={column name=year, int detect, column type=l},
+  columns/u/.style={column name=unemployment, fixed, precision=1, zerofill},
+  columns/pi/.style={column name=inflation, fixed, precision=1, zerofill},
+  columns/excess/.style={column name={above 6\,\%}, fixed, precision=1, zerofill},
+  every head row/.style={before row=\toprule, after row=\midrule}, every last row/.style={after row=\bottomrule}]
+  {figdata/grade-12/12-phillips-curve/out/volcker.csv}
+\end{center}
+
+\medskip
+\noindent\textbf{Part I --- The record.}
+\begin{enumerate}
+\item In which year was inflation highest? Unemployment?
+\item By how many points did inflation fall from 1980 to 1986?
+\item By how many from 1980 to 1983?
+\item What was inflation in 1979, the year of the Federal Reserve's change of operating procedure?
+\item Was unemployment back at 6\,\% by 1986?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The sacrifice ratio.}
+\begin{enumerate}[resume]
+\item Add up unemployment above 6\,\% from 1980 to 1986.
+\item Find the \omterm{def:g12:phillips-curve:disinflation}{sacrifice ratio}.
+\item Redo it with a natural rate of 5.5\,\%.
+\item Redo it with a natural rate of 6.5\,\%.
+\item What does this say about the precision of a \omterm{def:g12:phillips-curve:disinflation}{sacrifice ratio}?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- The curve.}
+\begin{enumerate}[resume]
+\item With \omterm{def:g12:phillips-curve:adaptive}{adaptive expectations} and $u^n = 6$, use 1982 to estimate $\beta$ from $\pi_{1982} - \pi_{1981} = -\beta(u_{1982} - 6)$.
+\item With that $\beta$, predict inflation in 1983 from 1982, and compare.
+\item Predict inflation in 1984 from 1983 the same way, and compare. What went wrong?
+\item How would a credible announcement of lower inflation change expectations, and the \omterm{def:g12:phillips-curve:disinflation}{sacrifice ratio}?
+\item Was this \omterm{def:g12:phillips-curve:disinflation}{disinflation} quick or gradual? What does the cross-country evidence say about the cost of each?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Interpretation.}
+\begin{enumerate}[resume]
+\item Who bore the cost of the \omterm{def:g12:phillips-curve:disinflation}{disinflation}?
+\item Why might the cost have been larger without the earlier change in the Federal Reserve's procedures and its stated aim?
+\item From 2022 to 2025 inflation fell by 5.4 points while unemployment never rose above 4.3\,\%. Why can the 1980s ratio not be applied?
+\item Which model of this chapter does this problem test, and does it pass?
+\item State the result of the problem: the \omterm{def:g12:phillips-curve:disinflation}{sacrifice ratio} of the American \omterm{def:g12:phillips-curve:disinflation}{disinflation}, in point-years of unemployment per point of inflation.
+\end{enumerate}
+\end{problem}

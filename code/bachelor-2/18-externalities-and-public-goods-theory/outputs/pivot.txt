@@ -1,0 +1,5 @@
+$ python pivot.py
+truthful reports [250, 60, 40]: build True, taxes [100, 0, 0]
+resident 1: truthful 50, best of 401 reports 50
+resident 2: truthful -40, best of 401 reports -40
+resident 3: truthful -60, best of 401 reports -60

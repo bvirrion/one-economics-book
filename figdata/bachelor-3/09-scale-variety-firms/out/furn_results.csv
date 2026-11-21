@@ -1,0 +1,4 @@
+regime,f_x,cutoff,export_cutoff,produce,export_share,avg_phi,exit_vs_previous,phi_change
+closed,0,2,0,0.0625,0,2.66667,,
+open,90,2.09949,3.77909,0.0514685,0.0952599,2.79933,0.176504,0.0497469
+agreement,45,2.18657,2.78305,0.043747,0.381039,2.91542,0.150024,0.0414738

@@ -1,0 +1,413 @@
+\chapter{National Accounts in Depth}\label{ch:b1:national-accounts-in-depth}
+
+On 12 July 2016 Ireland's statistical office reported that the country's
+real GDP had grown by $26.3\%$ in 2015; four months earlier it had put the
+growth at $7.8\%$. % ledger: b1:ireland-2015
+On 5 November 2010 Ghana's statistical service announced a GDP for 2010 of
+44.8 billion cedi, against a previous estimate of 25.6 billion, and Ghana
+moved from the low-income to the middle-income group overnight.
+% ledger: b1:ghana-2010
+Neither economy changed in a day. What changed was the estimate: in
+Ireland, a few large firms moved assets that count in its accounts; in
+Ghana, the accounts were rebuilt on a more recent base year. National
+accounts are a measurement system, with rules about what counts and
+estimates where data run out. The macroeconomics of the next chapters
+uses their numbers, and this chapter shows how they are made.
+
+\begin{openingchart}{Two estimates of the same growth: average yearly growth
+of real GDP per person, 1990--2019, from the World Development Indicators
+and from the Penn World Table, 171 countries, with the 45-degree
+line.}{World Bank, World Development Indicators (NY.GDP.PCAP.KD); Penn World
+Table 11.0 (rgdpna, pop)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xmin=-4, xmax=10, ymin=-4, ymax=10, xlabel={WDI growth (log points a year)},
+  ylabel={PWT growth (log points a year)}, width=0.56\linewidth, height=0.5\linewidth]
+  \addplot[only marks, mark=*, mark size=1.3pt, omDef, fill opacity=0.6] table[x=wdi, y=pwt, col sep=comma] {figdata/bachelor-1/18-national-accounts-in-depth/out/growth_gap.csv};
+  \draw[gray, dashed] (axis cs:-4,-4) -- (axis cs:10,10);
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+Two respected sources, measuring the same thing over the same 29
+years (growth in log points a year, 100 times the change in the logarithm
+divided by 29), mostly agree: the median gap is $0.13$ points a year and the
+correlation $0.909$. But $16.4\%$ of the 171 countries differ by more than half
+a point a year, and $7.6\%$ by more than a whole point. % figdata: growth_gap_stats
+For Mali one source gives $1.495\%$ a year and the other $6.17\%$.
+% figdata: growth_gap_largest
+Over 29 years such a gap is the difference between an economy that
+grew by half and one that grew sixfold.
+
+\begin{recall}
+GDP, value added, the production, income and expenditure approaches and
+the identity $Y = C + I + G + X - M$ were met at school, as was the
+conversion of incomes at purchasing power. Fixed-basket and chained price
+indices are compared in \cref{ch:b1:consumer-welfare}; the deflator was met at school.
+\end{recall}
+
+\section{Sectors and the sequence of accounts}\label{sec:b1:national-accounts-in-depth:sectors}
+
+\begin{definition}[Institutional sector]\label{def:b1:national-accounts-in-depth:sector}
+\index{institutional sector}
+An \emph{institutional sector} is a group of units that take economic
+decisions of the same kind: households, non-financial corporations,
+financial corporations, general government; units outside the country
+form the \emph{rest of the world}.
+\end{definition}
+
+Each sector has the same \emph{sequence of accounts}. The production account
+records its value added. The distribution accounts record the incomes it
+receives and pays: wages, profits, interest, rents, taxes, social
+contributions and benefits. The use-of-income account records what it
+consumes and, as the balance, what it saves. The capital account records
+its investment and, as the balance, what it lends to or borrows from the
+other sectors.
+
+\begin{definition}[Gross national income and disposable income]\label{def:b1:national-accounts-in-depth:gni}
+\index{gross national income}\index{GNI}\index{disposable income}
+\emph{Gross national income} is GDP plus the primary incomes (wages,
+profits, interest) that residents receive from abroad, minus those paid to
+non-residents. A sector's \emph{disposable income} is its primary income
+plus the current transfers it receives minus those it pays; for the nation,
+gross national disposable income is GNI plus net current transfers from
+abroad.
+\end{definition}
+
+GDP measures what is produced in the country; \omterm{def:b1:national-accounts-in-depth:gni}{GNI} what its residents earn.
+In Ireland they differ by a fifth or more, because much of the profit of
+firms producing there belongs to non-residents: in 2015 Irish GNP grew by
+$18.7\%$, against GDP's $26.3\%$. % ledger: b1:ireland-2015
+
+\begin{omfigure}
+\begin{tikzpicture}[x=1cm, y=0.012cm, font=\footnotesize]
+  \fill[omDef!35] (0,0) rectangle (1.3,393.3);
+  \fill[omThm!35] (1.6,387.4) rectangle (2.9,393.3);
+  \fill[omDef!35] (3.2,0) rectangle (4.5,387.4);
+  \fill[omProp!35] (4.8,387.4) rectangle (6.1,388.6);
+  \fill[omDef!35] (6.4,0) rectangle (7.7,388.6);
+  \fill[omThm!35] (8.0,84.9) rectangle (9.3,388.6);
+  \fill[omDef!35] (9.6,0) rectangle (10.9,84.9);
+  \node[above] at (0.65,393.3) {GDP 393.3};
+  \node[above] at (2.25,393.3) {$-5.9$};
+  \node[above] at (3.85,393.3) {GNI 387.4};
+  \node[above] at (5.45,393.3) {$+1.2$};
+  \node[above] at (7.05,393.3) {GNDI 388.6};
+  \node[above] at (8.65,393.3) {$C + G$};
+  \node[above] at (10.25,84.9) {saving 84.9};
+  \node[below, text width=1.8cm, align=center, font=\scriptsize] at (2.25,0) {primary income abroad};
+  \node[below, text width=1.8cm, align=center, font=\scriptsize] at (5.45,0) {transfers from abroad};
+  \node[below, text width=1.8cm, align=center, font=\scriptsize] at (8.65,0) {consumption};
+  \draw (-0.1,0) -- (11,0);
+\end{tikzpicture}
+
+{\small The sequence of accounts as a waterfall, Brenland 2025, billions of
+dalens (the weekend problem): from output to national income, to
+\omterm{def:b1:national-accounts-in-depth:gni}{disposable income}, to saving.}
+\end{omfigure}
+
+\section{Saving, investment and net lending}\label{sec:b1:national-accounts-in-depth:net-lending}
+
+\begin{definition}[Net lending]\label{def:b1:national-accounts-in-depth:net-lending}
+\index{net lending}\index{net borrowing}
+A sector's \emph{net lending} is its saving minus its investment (plus net
+capital transfers received): the amount it makes available to other
+sectors. When negative it is \emph{net borrowing}.
+\end{definition}
+
+\begin{proposition}[The sector balances sum to zero]\label{prop:b1:national-accounts-in-depth:balances}
+Ignoring capital transfers, the \omterm{def:b1:national-accounts-in-depth:net-lending}{net lending} of the domestic sectors adds up
+to the current-account balance, and so to minus the \omterm{def:b1:national-accounts-in-depth:net-lending}{net lending} of the rest
+of the world.
+\end{proposition}
+
+\begin{proof}
+For the nation, gross national \omterm{def:b1:national-accounts-in-depth:gni}{disposable income} is
+$Y + \mathrm{NPI} + \mathrm{TR} = C + I + G + X - M + \mathrm{NPI} + \mathrm{TR}$, and saving is that income less
+$C + G$. So $S - I = X - M + \mathrm{NPI} + \mathrm{TR}$, the current account. National saving and
+investment are the sums of the sectors', so the sectors' \omterm{def:b1:national-accounts-in-depth:net-lending}{net lending} sums
+to the current account. What residents lend abroad, non-residents
+borrow: the rest of the world's \omterm{def:b1:national-accounts-in-depth:net-lending}{net lending} is minus the current account.
+\end{proof}
+
+The proposition is an identity: it holds whatever happens. It says, for
+example, that a government deficit must be matched by a private surplus,
+a current-account deficit, or both. It does not say which, nor which
+balance causes which.
+
+\begin{omchart}{Germany: net lending by sector, per cent of GDP, 1999--2023;
+the private sectors computed as the current account minus the
+government's balance.}{Eurostat, Government deficit/surplus
+(gov\_10dd\_edpt1, B9, S13); World Bank, World Development Indicators
+(BN.CAB.XOKA.GD.ZS)}
+\begin{tikzpicture}
+\begin{axis}[omtime, xlabel={Year}, ylabel={Per cent of GDP}, xmin=1999, xmax=2023, ymin=-12, ymax=12,
+  width=0.72\linewidth, height=0.42\linewidth, legend style={font=\footnotesize, legend columns=3, at={(0.5,-0.24)}, anchor=north}]
+  \draw[gray, dotted] (axis cs:1999,0) -- (axis cs:2023,0);
+  \addplot+[thick, no marks] table[x=year, y=gov, col sep=comma] {figdata/bachelor-1/18-national-accounts-in-depth/out/balances_de.csv};
+  \addplot+[thick, no marks] table[x=year, y=private, col sep=comma] {figdata/bachelor-1/18-national-accounts-in-depth/out/balances_de.csv};
+  \addplot+[thick, no marks] table[x=year, y=row, col sep=comma] {figdata/bachelor-1/18-national-accounts-in-depth/out/balances_de.csv};
+  \legend{Government, Private sectors, Rest of the world}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+In 1999 Germany's government borrowed $1.9\%$ of GDP and the rest of the world
+lent it $1.43\%$. By 2019 the government lent $1.3\%$ and the private sectors
+$6.57\%$, so the rest of the world borrowed $7.87\%$ of Germany's GDP. In 2020 the
+government's balance swung to $-4.3\%$ and the private surplus rose to $10.65\%$.
+% figdata: balances_de
+The three lines always sum to zero.
+
+\section{Volumes and prices}\label{sec:b1:national-accounts-in-depth:volumes}
+
+Real GDP measures quantities at constant prices. Which prices? At the
+prices of a fixed base year, a good whose price falls fast --- computers ---
+keeps the high weight of the base year, and its growth inflates the total
+more every year.
+
+\begin{definition}[Chain-linked volume]\label{def:b1:national-accounts-in-depth:chain-linked}
+\index{chain-linked volume}
+A \emph{chain-linked volume} measures growth from each year to the next at
+the previous year's prices, and multiplies these yearly growth factors to
+link the years into one series, expressed in the prices of a reference year.
+\end{definition}
+
+\begin{measure}[Chain-linked volumes]
+Two goods: computers, 10 at 10 dalens in 2015, 40 at 4 in 2020, 160 at 1.6 in
+2025; everything else, 900 at 1, 950 at 1.1 and 1000 at 1.2. At fixed 2015
+prices the volume goes 1000, 1350, 2600: growth of $160\%$. Chained, the volume
+grows by $1350/1000$ from 2015 to 2020 (at 2015 prices) and by
+$(160 \times 4 + 1000 \times 1.1)/(40 \times 4 + 950 \times 1.1) = 1740/1205$ from 2020 to 2025 (at 2020 prices), so it
+reaches $1000 \times 1.35 \times 1.444 = 1949.4$: growth of $95\%$. The cost of chaining is
+that components no longer add up: chained computers (1,600 in 2015
+dalens) plus chained other goods (1,000) make 2,600, not 1,949.4.
+% computed: code/bachelor-1/18-national-accounts-in-depth (problem, Part III)
+\end{measure}
+
+\begin{proposition}[Fixed weights overstate growth]\label{prop:b1:national-accounts-in-depth:fixed}
+If quantities grow fastest for the goods whose relative prices fall, a
+volume at fixed base-year prices grows faster than one at current-year
+prices.
+\end{proposition}
+
+\begin{remark}
+A chained volume reweights every period. When relative prices move the
+same way in every period, as computer prices did, its growth lies between
+the two fixed-weight measures; when they reverse, it need not.
+\end{remark}
+
+The proof is \cref{exo:b1:national-accounts-in-depth:fixed-base}; it is the
+substitution bias of a fixed-basket price index, seen from the volume side.
+The deflator is nominal GDP divided by the volume, so the same choice also
+changes measured inflation.
+
+\section{Purchasing-power parities}\label{sec:b1:national-accounts-in-depth:ppp}
+
+To compare GDP across countries it must be put in one currency. Market
+exchange rates price traded goods; most of GDP is services that do not
+cross borders, and their prices differ far more.
+
+\begin{definition}[PPP conversion factor]\label{def:b1:national-accounts-in-depth:ppp}
+\index{PPP conversion factor}\index{price level index}
+A \emph{PPP conversion factor}, or purchasing-power parity (PPP), between two
+currencies is the ratio of the costs, each in its own currency, of the
+same basket of goods and services in the two countries. The \emph{price level
+index} of a country is its PPP divided by the market exchange rate.
+\end{definition}
+
+\begin{measure}[Building a PPP]
+The International Comparison Program prices a common basket of goods and
+services in each participating economy and combines the prices with each
+economy's expenditure in its national accounts; its 2021 round covered 176
+economies, the tenth comparison since 1968. % ledger: b1:icp-2021
+A PPP is both a conversion factor and a spatial price index: it says how
+many units of each currency buy what one unit of the base currency buys
+in the base economy. Matching items across very different economies, and
+pricing services such as government or housing, are its hardest parts.
+\end{measure}
+
+\begin{omchart}{Price level of household consumption (United States = 100)
+against GDP per person at PPP, 199 countries, 2021.}{World Bank, World
+Development Indicators (PA.NUS.PRVT.PLI, NY.GDP.PCAP.PP.KD)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xmode=log, log ticks with fixed point, xtickten={3,4,5}, xmin=700, xmax=160000, ymin=0, ymax=160,
+  xlabel={GDP per person, PPP (log scale)}, ylabel={Price level (US = 100)}, width=0.7\linewidth, height=0.42\linewidth]
+  \addplot[only marks, mark=*, mark size=1.3pt, omDef, fill opacity=0.6] table[x=gdp, y=pli, col sep=comma] {figdata/bachelor-1/18-national-accounts-in-depth/out/pli_2021.csv};
+  \addplot[omThm, thick, sharp plot, mark=none] table[x=gdp, y=fit, col sep=comma] {figdata/bachelor-1/18-national-accounts-in-depth/out/pli_fit.csv};
+  \addplot[only marks, mark=none, nodes near coords, point meta=explicit symbolic, nodes near coords style={font=\scriptsize, anchor=west}]
+    table[x=gdp, y=pli, meta=country, col sep=comma] {figdata/bachelor-1/18-national-accounts-in-depth/out/pli_points.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+Richer countries are dearer: the price level rises by about 33 points for
+each tenfold rise in income, and the correlation with log income is $0.58$.
+% figdata: pli_stats
+India's price level was $26.131$ against Switzerland's $136.199$. % figdata: pli_points
+At market exchange rates India's GDP per person looks about four times
+smaller relative to the United States than at PPP; why poorer countries are
+cheaper is a question for \cref{ch:b1:open-economy}.
+
+\section{What the accounts estimate}\label{sec:b1:national-accounts-in-depth:revisions}
+
+\begin{definition}[Statistical revision]\label{def:b1:national-accounts-in-depth:revision}
+\index{statistical revision}\index{benchmark revision}
+A \emph{statistical revision} is a change to a published estimate as more
+complete data arrive. A \emph{benchmark revision} (or rebasing) changes the
+whole series at once: new sources, a new base year, new definitions.
+\end{definition}
+
+Quarterly estimates are revised as surveys and tax records come in; a
+rebasing brings in parts of the economy the old sources missed, often the
+informal sector and new industries. Ghana's rebasing moved the base year
+from 1993 to 2006 and raised GDP per person in current dollars from about
+550 to about 1,100. % ledger: b1:ghana-2010
+Multinational firms create a third problem: where a firm records its
+profits and its intellectual property decides in which country's GDP they
+count.
+
+\begin{record}[Ireland 2015 and Ghana 2010]
+Ireland's GDP grew by $26.3\%$ in 2015 in the estimate of July 2016, against
+$7.8\%$ in the estimate of March 2016; its GNP grew by $18.7\%$.
+% ledger: b1:ireland-2015
+Ghana's GDP was revised up by more than $60\%$ in November 2010 (Jerven and
+Duncan 2012). % ledger: b1:ghana-2010
+In both cases measured output jumped with no change in what anyone
+produced or consumed that year: the accounts estimate an economy through
+conventions, and changes in the conventions or in what they capture show
+up as growth.
+\end{record}
+
+\begin{record}[How large are revisions?]
+For the United States over 1993--2015, the average revision without
+regard to sign, from the first quarterly estimates of GDP growth (at an
+annual rate) to the latest ones, was between $1.21$ and $1.31$ percentage
+points; from the advance to the third estimate, a few months later, it
+was $0.65$ points (Fixler, Kanal and Tien 2018). % ledger: b1:fixler-revisions
+A first estimate of $2\%$ growth is compatible with a final $1\%$ or $3\%$.
+\end{record}
+
+\section*{Exercises}\label{sec:b1:national-accounts-in-depth:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:national-accounts-in-depth:gni-ex}
+GDP is 500 and residents' net primary income from abroad is $-20$. Find \omterm{def:b1:national-accounts-in-depth:gni}{GNI}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:national-accounts-in-depth:three}
+Households lend 30, firms borrow 10, government borrows 35 (net). Find the
+current account and the rest of the world's \omterm{def:b1:national-accounts-in-depth:net-lending}{net lending}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:national-accounts-in-depth:read}
+From the opening chart's table, the largest gaps between the two sources
+are Mali ($1.495\%$ in WDI, $6.17\%$ in PWT) and Honduras ($5.779\%$ against $1.236\%$).
+% figdata: growth_gap_largest
+Compute what each pair implies for GDP per person in 2019 relative to
+1990.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:national-accounts-in-depth:recession}
+Predict the sign of the change in the government's \omterm{def:b1:national-accounts-in-depth:net-lending}{net lending} in a
+recession, and say which private balance moves the other way.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:national-accounts-in-depth:chain-ex}
+Good A: 100 at 1, 110 at 1.1, 120 at 1.2 in years 0, 1, 2. Good B: 10 at 10, 20 at 6,
+40 at 4. Compute the volume at year-0 prices and the chained volume, and show
+that the chained components do not add up.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:national-accounts-in-depth:ppp-ex}
+A basket holds 100 loaves, 10 haircuts and 1 phone. In Brenland they cost
+2, 20 and 300 dalens; in Kestria 5, 30 and 900 kests. Compute the PPP. Kestria's
+GDP is 60,000 million kests and the market rate is 3 kests per dalen: compute
+its GDP in dalens both ways, and its price level relative to Brenland.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:national-accounts-in-depth:brenland}
+From Brenland's accounts, nominal GDP was 379,562 million dalens in 2024 and
+393,264 million in 2025, real GDP 286,895 and 292,390 million (2015 dalens), the
+deflator 132.3 and 134.5. Compute \omterm{prop:b1:models-and-data:real-growth}{real growth}, deflator inflation and nominal
+growth, and check the identity.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:national-accounts-in-depth:ip}
+A multinational moves the patents behind its products to a subsidiary in
+Brenland, which now books their profits. Predict the effect on Brenland's
+GDP, \omterm{def:b1:national-accounts-in-depth:gni}{GNI} and employment.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:national-accounts-in-depth:pli-ex}
+A country's PPP is 20 units of its currency per dollar and its market rate
+50. Compute its \omterm{def:b1:national-accounts-in-depth:ppp}{price level index} and say what it means.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:national-accounts-in-depth:sum}
+Prove that the \omterm{def:b1:national-accounts-in-depth:net-lending}{net lending} of households, firms, financial corporations
+and government sums to the current account, with capital transfers
+included.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:national-accounts-in-depth:fixed-base}
+Prove \cref{prop:b1:national-accounts-in-depth:fixed} for two goods and two
+years: if the good whose relative price falls has the faster quantity
+growth, growth at base-year prices exceeds growth at current-year prices.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:national-accounts-in-depth:refute}
+A country's measured growth is slow. What observations would show that
+its growth is mismeasured rather than slow?
+\end{exercise}
+
+\section{Problem: Brenland's Statistician Rebases the Accounts}\label{sec:b1:national-accounts-in-depth:problem}
+
+\begin{problem}[{Weekend problem --- a new level, the same growth}]\label{pb:b1:national-accounts-in-depth:rebase}
+Brenland's accounts (invented) give, for 2025, in millions of dalens: GDP
+393,264; $C = 225{,}014$, $I = 88{,}484$, $G = 78{,}653$, $X = 129{,}777$, $M = 128{,}664$; government
+revenue 157,306 and spending 165,171; debt 236,818. Net primary income from
+abroad is $-5{,}900$, consumption of fixed capital 59,000 and net current
+transfers from abroad $+1{,}200$. In 2015 GDP was 248,438 (current and 2015
+prices), and real GDP in 2025 was 292,390.
+
+\medskip\noindent\textbf{Part I --- The sequence of accounts, 2025.}
+\begin{enumerate}
+  \item Check the expenditure identity.
+  \item Compute \omterm{def:b1:national-accounts-in-depth:gni}{GNI}.
+  \item Compute net national income.
+  \item Compute gross national \omterm{def:b1:national-accounts-in-depth:gni}{disposable income}.
+  \item Compute national saving.
+  \item Compute the saving rate out of \omterm{def:b1:national-accounts-in-depth:gni}{disposable income}.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- Sector balances.}
+\begin{enumerate}[resume]
+  \item Compute the government's \omterm{def:b1:national-accounts-in-depth:net-lending}{net lending}, in millions and as a share of GDP.
+  \item Compute the current account.
+  \item Check that saving minus investment equals the current account.
+  \item Compute the private sectors' \omterm{def:b1:national-accounts-in-depth:net-lending}{net lending}.
+  \item Show that the private sectors, the government and the rest of the world sum to zero.
+  \item Compute the debt ratio.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- Volumes.}
+\begin{enumerate}[resume]
+  \item By what factor did nominal GDP grow from 2015 to 2025?
+  \item By what factor did real GDP grow, and at what average yearly rate?
+  \item Check the 2025 deflator.
+  \item Leave Brenland's GDP aside and take the toy two-good economy of the measure box on \omterm{def:b1:national-accounts-in-depth:chain-linked}{chain-linked volumes} (computers and other goods). Compute its volume at 2015 prices for 2015, 2020 and 2025.
+  \item Compute the chained volume.
+  \item Show that the chained components do not add up.
+  \item Which measure should the statistician publish, and why?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- Rebasing.} A new survey finds an informal
+sector worth $12.8\%$ of the old real GDP in 2015 and $14\%$ in 2025.
+\begin{enumerate}[resume]
+  \item Compute the new real GDP for 2015 and 2025.
+  \item By how much does the rebasing raise the 2025 level?
+  \item Compute the new average yearly growth and compare.
+  \item Compute the debt ratio after rebasing, assuming the same $14\%$ for nominal GDP.
+  \item Why does the rebasing change the level so much more than the growth?
+  \item State the result: the effect of the rebasing on the 2025 level and on growth from 2015 to 2025.
+\end{enumerate}
+\end{problem}

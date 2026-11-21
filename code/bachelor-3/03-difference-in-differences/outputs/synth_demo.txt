@@ -1,0 +1,5 @@
+$ python synth_demo.py
+largest weights: donor 20 0.33, donor 8 0.24, donor 2 0.17, donor 18 0.14
+pre-period RMSPE     0.258
+mean gap after       -1.681
+post/pre RMSPE ratio 6.8, rank 1 of 21

@@ -1,0 +1,357 @@
+\chapter{Causality and the Experimental Ideal}\label{ch:b2:causality-and-experiments}
+
+Regression measures associations. An effect is a different object: what would have happened to the same people under a
+different choice. This chapter defines effects in terms of outcomes that cannot all be observed, shows why comparing those
+who were treated with those who were not usually measures something else, and shows what assigning the treatment at
+random buys. The chart shows the result of one such experiment, a training programme for men with weak work histories.
+
+\begin{openingchart}{Mean earnings in 1978 of men assigned at random to a training programme or to a control group, with
+  95 per cent confidence intervals, dollars.}{National Supported Work sample of LaLonde (1986), subsample of Dehejia and
+  Wahba (1999); our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.5\linewidth, height=0.4\linewidth, ybar, bar width=28pt, xmin=-0.6, xmax=1.6, ymin=0,
+    ymax=8500, xtick={0,1}, xticklabels={control (260 men), trained (185 men)}, ylabel={Dollars},
+    yticklabel style={/pgf/number format/1000 sep={\,}}, nodes near coords, nodes near coords align={center},
+    nodes near coords style={font=\scriptsize, anchor=south west, xshift=2pt, /pgf/number format/1000 sep={\,}}]
+  \addplot[fill=omDef!70, draw=omDef, error bars/.cd, y dir=both, y explicit]
+    table[x=group, y=mean, y error plus expr=\thisrow{hi}-\thisrow{mean}, y error minus expr=\thisrow{mean}-\thisrow{lo}]
+    {figdata/bachelor-2/33-causality-and-experiments/out/means.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: means (control 4555 [3888, 5221], treated 6349 [5215, 7483])
+The trained men earned 6,349 dollars on average in 1978 and the control men 4,555: a difference of 1,794 dollars. Because
+a lottery decided who was trained, the two groups were alike in everything but the training, and the difference measures
+its effect. The same trained men compared with men from a general survey would seem to have lost 8,498 dollars.
+
+\begin{recall}
+From the Year 1 volume: random samples, the difference of two means and its standard error, the omitted variable. From
+\cref{ch:b2:multiple-regression}: the \omterm{def:b2:multiple-regression:ovb}{omitted-variable bias} formula. From \cref{ch:b2:regression-inference}: robust
+standard errors.
+\end{recall}
+
+\section{Potential outcomes}\label{sec:b2:causality-and-experiments:potential}
+
+\begin{definition}[Potential outcome]\label{def:b2:causality-and-experiments:potential-outcome}
+The \emph{potential outcomes}\index{potential outcome} of unit $i$ are $Y_i(1)$, the outcome it would have if treated,
+and $Y_i(0)$, the outcome it would have if not. Only one of them is observed: $Y_i = D_iY_i(1) + (1 - D_i)Y_i(0)$, where
+$D_i$ is 1 if $i$ is treated.
+\end{definition}
+
+\begin{definition}[Treatment effect]\label{def:b2:causality-and-experiments:treatment-effect}
+The \emph{treatment effect}\index{treatment effect} on unit $i$ is $Y_i(1) - Y_i(0)$. It is never observed, since no unit
+is both treated and untreated at the same time.
+\end{definition}
+
+\begin{definition}[Stable unit treatment value assumption]\label{def:b2:causality-and-experiments:sutva}
+The \emph{stable unit treatment value assumption}\index{stable unit treatment value assumption} states that each unit's
+\omterm{def:b2:causality-and-experiments:potential-outcome}{potential outcomes} depend only on its own treatment, not on who else is treated, and that there is one version of the
+treatment.
+\end{definition}
+
+The assumption fails when treated workers compete with untreated ones for the same jobs, or when vaccinated people protect
+unvaccinated ones; the effects defined above then depend on how many are treated.
+
+\section{Average effects}\label{sec:b2:causality-and-experiments:averages}
+
+\begin{definition}[Average treatment effect]\label{def:b2:causality-and-experiments:ate}
+The \emph{average treatment effect}\index{average treatment effect} is $\mathit{ATE} = E[Y_i(1) - Y_i(0)]$, the mean
+effect over the whole population.
+\end{definition}
+
+\begin{definition}[Average treatment effect on the treated]\label{def:b2:causality-and-experiments:att}
+The \emph{average treatment effect on the treated}\index{average treatment effect on the treated} is $\mathit{ATT} =
+E[Y_i(1) - Y_i(0) \mid D_i = 1]$, the mean effect among those who were treated.
+\end{definition}
+
+The two differ when effects differ across people and the treated are not a random part of the population: if those who
+gain most from training are the ones who take it, the ATT exceeds the ATE. Which one matters depends on the question: the
+ATT for judging a voluntary programme as it runs, the ATE for making it compulsory.
+
+\section{Selection bias}\label{sec:b2:causality-and-experiments:selection}
+
+\begin{definition}[Selection bias]\label{def:b2:causality-and-experiments:selection-bias}
+\emph{Selection bias}\index{selection bias} is the difference $E[Y_i(0) \mid D_i = 1] - E[Y_i(0) \mid D_i = 0]$ between
+the untreated outcomes of the treated and of the untreated.
+\end{definition}
+
+\begin{proposition}[The selection-bias decomposition]\label{prop:b2:causality-and-experiments:decomposition}
+The difference in mean observed outcomes between treated and untreated units equals the ATT plus \omterm{def:b2:causality-and-experiments:selection-bias}{selection bias}:
+\[
+E[Y_i \mid D_i = 1] - E[Y_i \mid D_i = 0] = \mathit{ATT} + \bigl(E[Y_i(0) \mid D_i = 1] - E[Y_i(0) \mid D_i = 0]\bigr).
+\]
+\end{proposition}
+
+\begin{proof}
+For the treated $Y_i = Y_i(1)$ and for the untreated $Y_i = Y_i(0)$, so the left side is $E[Y_i(1) \mid D_i = 1] -
+E[Y_i(0) \mid D_i = 0]$. Add and subtract $E[Y_i(0) \mid D_i = 1]$: the first two terms give $E[Y_i(1) - Y_i(0) \mid D_i =
+1] = \mathit{ATT}$, the last two the \omterm{def:b2:causality-and-experiments:selection-bias}{selection bias}.
+\end{proof}
+
+The identity also holds exactly in any sample, with sample means in place of expectations. The listing builds both
+\omterm{def:b2:causality-and-experiments:potential-outcome}{potential outcomes} for 10,000 simulated workers, lets the less skilled take the training, and checks it.
+
+\omcode{code/bachelor-2/33-causality-and-experiments/listings/selection_sim.py}{1}{26}{Simulated \omterm{def:b2:causality-and-experiments:potential-outcome}{potential outcomes}:
+self-selection into training, then random assignment.}\label{lst:b2:causality-and-experiments:selection}
+
+\omoutput{code/bachelor-2/33-causality-and-experiments/outputs/selection_sim.txt}{Training raises earnings, yet the trained
+earn less: \omterm{def:b2:causality-and-experiments:selection-bias}{selection bias} outweighs the effect. Random assignment recovers it.}\label{out:b2:causality-and-experiments:selection}
+
+% code: listings/selection_sim.py
+The training raises earnings by 1.001 on average, and by 1.284 among those who take it, since its effect is larger for the
+less skilled. But those who take it would have earned 2.221 less without it, so the trained earn 0.937 less than the
+others. Assigning the same training at random gives a difference of 1.051, close to the ATE.
+
+\section{What randomisation buys}\label{sec:b2:causality-and-experiments:rct}
+
+\begin{definition}[Randomised controlled trial]\label{def:b2:causality-and-experiments:rct}
+A \emph{randomised controlled trial}\index{randomised controlled trial} assigns the treatment by a random device, so that
+$D_i$ is independent of the \omterm{def:b2:causality-and-experiments:potential-outcome}{potential outcomes} $(Y_i(0), Y_i(1))$.
+\end{definition}
+
+With independence, $E[Y_i(0) \mid D_i = 1] = E[Y_i(0) \mid D_i = 0]$: the \omterm{def:b2:causality-and-experiments:selection-bias}{selection bias} is zero, and the ATT equals the
+ATE. The difference in means is then an unbiased estimate of the ATE, and its standard error is that of a difference of
+two independent means.
+
+\begin{record}[The National Supported Work demonstration]
+% ledger: b1:lalonde1986, b2:nsw-cps
+In the 1970s an American employment and training programme was run as a field experiment: applicants were assigned at
+random to the programme or to a control group. LaLonde (1986) took the men in the experiment and asked whether the
+non-experimental methods then common in programme evaluation, applied to the treated men and to comparison samples drawn
+from two general surveys, would reproduce the experimental estimate. Many did not. The listings use the subsample of 185
+treated and 260 control men distributed by Dehejia and Wahba (1999).
+\end{record}
+
+\omcode{code/bachelor-2/33-causality-and-experiments/listings/nsw_experiment.py}{1}{16}{The experimental estimate: a
+difference in means, and the same by regression.}\label{lst:b2:causality-and-experiments:nsw}
+
+\omoutput{code/bachelor-2/33-causality-and-experiments/outputs/nsw_experiment.txt}{An effect of 1,794 dollars, with an
+interval from 479 to 3,110.}\label{out:b2:causality-and-experiments:nsw}
+
+\begin{definition}[Covariate balance]\label{def:b2:causality-and-experiments:balance}
+Treated and control groups show \emph{covariate balance}\index{covariate balance} when the distributions of variables
+fixed before treatment are the same in both; randomisation makes them equal in expectation.
+\end{definition}
+
+A balance table compares the groups on what was measured before assignment. It cannot check what was not measured, but it
+can catch a randomisation that went wrong.
+
+\omcode{code/bachelor-2/33-causality-and-experiments/listings/balance.py}{1}{13}{Pre-treatment means by group, with the
+$t$ statistic of each difference.}\label{lst:b2:causality-and-experiments:balance}
+
+\omoutput{code/bachelor-2/33-causality-and-experiments/outputs/balance.txt}{Seven of eight differences are small; the share
+without a high-school diploma differs.}\label{out:b2:causality-and-experiments:balance}
+
+% code: listings/balance.py
+One difference of eight is significant at 5 per cent: 71 per cent of the trained men have no diploma, against 83 per cent
+of the controls. With eight independent comparisons, the chance of at least one such difference is $1 - 0.95^8 = 0.34$
+even when the randomisation is perfect.
+
+\section{Regression as adjustment}\label{sec:b2:causality-and-experiments:adjustment}
+
+\begin{definition}[Conditional independence assumption]\label{def:b2:causality-and-experiments:cia}
+The \emph{conditional independence assumption}\index{conditional independence assumption} states that, among units with
+the same observed characteristics $X_i$, treatment is independent of the \omterm{def:b2:causality-and-experiments:potential-outcome}{potential outcomes}: $(Y_i(0), Y_i(1))$ is
+independent of $D_i$ given $X_i$.
+\end{definition}
+
+In an experiment, adding pre-treatment controls to the regression changes the estimate only by chance and can make it
+more precise. In an observational comparison, controls are the only defence, and they work only if the \omterm{def:b2:causality-and-experiments:cia}{conditional
+independence assumption} holds: if, given the controls, nothing that affects earnings also affects who is treated.
+
+\omcode{code/bachelor-2/33-causality-and-experiments/listings/naive_cps.py}{1}{16}{The trained men against men from a
+general survey.}\label{lst:b2:causality-and-experiments:naive}
+
+\omoutput{code/bachelor-2/33-causality-and-experiments/outputs/naive_cps.txt}{The survey men are older, better educated,
+more often married, and earned nine times as much in 1975.}\label{out:b2:causality-and-experiments:naive}
+
+\omcode{code/bachelor-2/33-causality-and-experiments/listings/regression_adjust.py}{1}{17}{The same controls, in the
+experiment and in the survey comparison.}\label{lst:b2:causality-and-experiments:adjust}
+
+\omoutput{code/bachelor-2/33-causality-and-experiments/outputs/regression_adjust.txt}{In the experiment the controls barely
+move the estimate; in the survey comparison they move it by 9,291 dollars and still miss.}\label{out:b2:causality-and-experiments:adjust}
+
+% code: listings/naive_cps.py, listings/regression_adjust.py
+In the experiment the estimate goes from 1,794 to 1,676 dollars with controls. In the survey comparison it goes from
+$-8{,}498$ to 794: the controls remove most of the gap, and the estimate is still less than half the experimental one,
+with an interval (from about $-420$ to $2{,}000$) wide enough to include zero. The men who enter a training programme
+differ from the general population in ways that age, schooling and past earnings capture only in part. Matching on these
+variables, and the other methods that refine this comparison, are the subject of the Year 3 volume.
+
+\section{Classic experiments}\label{sec:b2:causality-and-experiments:classics}
+
+\begin{record}[Tennessee's class-size experiment]
+% ledger: b2:krueger1999
+In Tennessee's Project STAR, about 11,600 pupils and their teachers were assigned at random to classes of different sizes
+from kindergarten to third grade. Krueger (1999), adjusting for pupils who left the experiment or changed class, found that
+test scores rose by about four percentile points in the first year in a small class, and that the advantage grew by about
+one percentile point a year after that. Teacher aides and measured teacher characteristics had little effect; the effect
+of small classes was larger for minority pupils and those eligible for free lunch; and the gains were unlikely to come
+merely from being observed.
+\end{record}
+
+\section{Whether a result travels}\label{sec:b2:causality-and-experiments:external}
+
+\begin{definition}[External validity]\label{def:b2:causality-and-experiments:external-validity}
+A result has \emph{external validity}\index{external validity} if it holds for populations, places, times or versions of
+the treatment other than those of the study; \emph{internal validity} is whether it holds for the study's own population.
+\end{definition}
+
+An experiment secures internal validity. It says nothing by itself about other places: the men of the NSW sample were a
+particular group in a particular decade, and the effect of training on them need not be the effect on others. Where the
+experiment is done is itself chosen, and the choice can be related to the result.
+
+\begin{record}[Results that did not travel]
+% ledger: b2:allcott2015
+Allcott (2015) studied 111 randomised trials of the same programme, letters comparing a household's energy use with its
+neighbours', run by American utilities with 8.6 million households in all. Predictions based on the first 10 trials
+substantially overstated the programme's effect in the next 101. The first utilities to adopt it served more
+environmentally minded areas, whose customers responded more, and utilities first targeted their heaviest users. Each
+trial was internally valid; the sequence was not a random sample of sites.
+\end{record}
+
+\section{The idea of a natural experiment}\label{sec:b2:causality-and-experiments:natural}
+
+\begin{definition}[Natural experiment]\label{def:b2:causality-and-experiments:natural-experiment}
+A \emph{natural experiment}\index{natural experiment} is a situation in which a rule, an accident or a policy, not designed
+for research, assigns a treatment in a way that is as good as random for some group, so that comparisons within that group
+estimate a causal effect.
+\end{definition}
+
+Many questions cannot be settled by an experiment: nobody assigns schooling, minimum wages or interest rates by lottery.
+The Year 3 volume studies the designs that use \omterm{def:b2:causality-and-experiments:natural-experiment}{natural experiments}: instruments that shift the treatment without
+affecting the outcome directly, comparisons of changes over time between groups exposed and not exposed to a policy, and
+comparisons of units just above and just below a threshold that decides treatment. Each replaces randomisation by an
+assumption, and each assumption can be argued about with evidence.
+
+\begin{model}{Potential-outcomes model}
+\assumes Each unit has two \omterm{def:b2:causality-and-experiments:potential-outcome}{potential outcomes}; only one is observed; a unit's outcomes do not depend on others'
+treatment.
+\predicts A difference in means equals the effect on the treated plus \omterm{def:b2:causality-and-experiments:selection-bias}{selection bias}; under random assignment the
+\omterm{def:b2:causality-and-experiments:selection-bias}{selection bias} is zero.
+\tested Experimental and non-experimental estimates on the same treated group can be compared: LaLonde (1986) found that
+many non-experimental estimates of the NSW programme's effect missed the experimental one; here a regression on survey
+men gives 794 dollars against 1,794.
+\breaks Interference between units (displacement in a job market) makes effects depend on the scale of treatment; and an
+experiment's effect need not carry to other sites, as Allcott (2015) found.
+\end{model}
+
+\section{Exercises}\label{sec:b2:causality-and-experiments:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:causality-and-experiments:1}
+Read the opening chart. Give each group's mean and interval, and the difference. Do the intervals overlap?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:causality-and-experiments:2}
+For a hospital, give an example in which the treated have worse untreated outcomes than the untreated. What sign does the
+\omterm{def:b2:causality-and-experiments:selection-bias}{selection bias} have, and what does a raw comparison suggest about the hospital?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:causality-and-experiments:3}
+In the balance table, the share without a diploma differs significantly between the groups. Does this show that the
+randomisation failed? What would you do?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:causality-and-experiments:4}
+A training programme in one town reduces unemployment among participants. Give a reason why making it compulsory in the
+whole country might have a smaller effect per participant.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:causality-and-experiments:5}
+From the listing's output, compute the 95 per cent interval of the experimental estimate from the difference and its
+standard error. Is a zero effect inside it?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:causality-and-experiments:6}
+In the selection listing, which number is the ATE, which the ATT, and why do they differ? Predict what happens to the
+\omterm{def:b2:causality-and-experiments:selection-bias}{selection bias} if the more skilled take the training instead.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:causality-and-experiments:7}
+\textbf{(D)} With the NSW and CPS samples, repeat the survey comparison restricting the survey men to those with 1975
+earnings below 5,000 dollars. What happens to the raw and the adjusted estimates? Why?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:causality-and-experiments:8}
+Why do controls in the experiment move the estimate only from 1,794 to 1,676, while in the survey comparison they move it
+by more than 9,000?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:causality-and-experiments:9}
+A school district reports that pupils who chose a new reading programme scored higher than those who did not. List three
+reasons why this might not be the programme's effect, and design an experiment that would settle it.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:causality-and-experiments:10}
+Show that under random assignment the difference in sample means is an unbiased estimator of the ATE, and derive its
+variance.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:causality-and-experiments:11}
+Write the difference in means as ATE plus \omterm{def:b2:causality-and-experiments:selection-bias}{selection bias} plus a third term, and interpret the third term.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:causality-and-experiments:12}
+Under the \omterm{def:b2:causality-and-experiments:cia}{conditional independence assumption} with a discrete $X$, show that the ATE equals $\sum_xP(X_i =
+x)\bigl(E[Y_i \mid D_i = 1, X_i = x] - E[Y_i \mid D_i = 0, X_i = x]\bigr)$.
+\end{exercise}
+
+\section{Problem: Brenland's training-voucher pilot}\label{sec:b2:causality-and-experiments:problem}
+
+\begin{problem}[{Weekend problem --- Brenland's training-voucher pilot: potential outcomes, the estimate and its interval,
+a non-random roll-out, and the sample size for a given power}]
+\label{pb:b2:causality-and-experiments:1}
+Brenland's labour ministry gives training vouchers to workers in a pilot of 800. In the simulation that stands for the
+pilot (seeded, in the chapter's code), each worker has an unobserved drive $m_i$, standard normal; earnings without a
+voucher are $Y_i(0) = 24{,}000 + 3{,}000m_i + 4{,}000\varepsilon_i$ dalens a year, with $\varepsilon_i$ standard normal; and
+the voucher raises earnings by $1{,}500 + 500m_i$.
+
+\medskip
+\noindent\textbf{Part I --- Potential outcomes.}
+\begin{enumerate}
+  \item Write $Y_i(1)$.
+  \item What is the ATE in the population model?
+  \item Which workers gain most from a voucher?
+  \item What is the ATE among the 800 simulated workers?
+  \item Why can the ministry never observe a worker's own effect?
+  \item Give an example of how the \omterm{def:b2:causality-and-experiments:sutva}{stable unit treatment value assumption} could fail here.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The estimate and its interval.} Half of the 800, drawn at random, get a voucher.
+\begin{enumerate}[resume]
+  \item Give the difference in mean earnings.
+  \item Give its standard error and 95 per cent interval.
+  \item Does the interval contain the true ATE?
+  \item Why is the estimate not exactly the ATE?
+  \item Why is the ATT equal to the ATE in expectation here?
+  \item What would adding pre-treatment earnings as a control do?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- A non-random roll-out.} Instead, workers apply, and those with $m_i + \eta_i > 0$, $\eta_i$
+standard normal, get a voucher.
+\begin{enumerate}[resume]
+  \item What share applies?
+  \item Give the difference in mean earnings between voucher holders and others.
+  \item Give the ATT among applicants.
+  \item Give the \omterm{def:b2:causality-and-experiments:selection-bias}{selection bias}, and check the decomposition.
+  \item Why is the ATT larger than the ATE?
+  \item Could controlling for education remove the bias? Under what condition?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- The sample size for a given power.}
+\begin{enumerate}[resume]
+  \item The ministry wants to detect an effect of 1,500 dalens with 80 per cent power at the 5 per cent level. Write the
+  number per arm, $n = 2(z_{0.025} + z_{0.2})^2\sigma^2/\delta^2$.
+  \item With $\sigma = 5{,}000$, how many workers per arm?
+  \item With the standard deviation of control earnings in the pilot, how many?
+  \item To detect 750 dalens, with $\sigma = 5{,}000$, how many?
+  \item Why does halving the effect quadruple the sample?
+  \item Was the pilot of 800 large enough?
+  \item State the result: the ATE estimate with its interval, the naive bias of the roll-out, and the sample size for 80 per
+  cent power.
+\end{enumerate}
+\end{problem}

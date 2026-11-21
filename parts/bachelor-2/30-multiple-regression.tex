@@ -1,0 +1,369 @@
+\chapter{Multiple Regression}\label{ch:b2:multiple-regression}
+
+A regression with one regressor compares people who differ in that regressor and, usually, in much else. Adding
+regressors compares people who differ in the first and are alike in the others. This chapter writes the model in matrix
+form, derives the least-squares estimator, shows what ``holding the others constant'' means exactly, and measures what
+leaving a variable out does to a coefficient. The chart shows the question on real data: the estimated return to a year
+of schooling as the comparison is made more like for like.
+
+\begin{openingchart}{Estimated effect of a year of schooling on log earnings in 1978, per cent, as controls are added one
+  at a time, with 95 per cent confidence intervals; American men with positive earnings in 1975 and 1978 (13,055 men).}{CPS
+  comparison sample of LaLonde (1986), as distributed by Dehejia and Wahba; our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.72\linewidth, height=0.4\linewidth, xmin=-0.5, xmax=6.5, ymin=0, ymax=6.5,
+    xtick={0,...,6}, xticklabels from table={figdata/bachelor-2/30-multiple-regression/out/steps.csv}{label},
+    xticklabel style={rotate=30, anchor=north east, font=\scriptsize}, ylabel={Per cent per year}]
+  \addplot[omDef, thick, mark=*, mark size=1.6pt, error bars/.cd, y dir=both, y explicit]
+    table[x=step, y=b, y error plus expr=\thisrow{hi}-\thisrow{b}, y error minus expr=\thisrow{b}-\thisrow{lo}]
+    {figdata/bachelor-2/30-multiple-regression/out/steps.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: steps (4.10, 5.22, 3.99, 3.82, 3.71, 3.83, 2.04)
+With no control, a year of schooling goes with log earnings 4.10 per cent higher. Adding age raises the estimate to 5.22;
+adding age squared brings it to 3.99; race and marriage move it little; adding 1975 earnings halves it, to 2.04. Each
+number is a correct answer to a different question. Which question is the right one is not a matter of statistics, and the
+last step is a warning taken up in \cref{ch:b2:specification}.
+
+\begin{recall}
+From the Year 1 volume: the ordinary least squares estimator with one regressor, fitted values and residuals, the error
+term, the zero conditional mean assumption, $R^2$, the omitted variable, estimators, standard errors and confidence
+intervals. From mathematics: matrices, the transpose, the inverse, the rank, and orthogonal projection.
+\end{recall}
+
+\section{The model in matrix form}\label{sec:b2:multiple-regression:model}
+
+\begin{definition}[Multiple regression model]\label{def:b2:multiple-regression:model}
+The \emph{multiple regression model}\index{multiple regression model} writes an outcome as a linear function of several
+regressors plus an error: $y_i = \beta_0 + \beta_1x_{i1} + \dots + \beta_{k-1}x_{i,k-1} + u_i$, $i = 1, \dots, n$.
+\end{definition}
+
+\begin{definition}[Regressor matrix]\label{def:b2:multiple-regression:regressor-matrix}
+The \emph{regressor matrix}\index{regressor matrix} $X$ is the $n \times k$ matrix whose row $i$ is $(1, x_{i1}, \dots,
+x_{i,k-1})$: one row per observation, one column per regressor, the first column a column of ones.
+\end{definition}
+
+With $y$ and $u$ the $n$-vectors of outcomes and errors and $\beta$ the $k$-vector of coefficients, the model is
+$y = X\beta + u$. Three assumptions make $\beta$ the object least squares estimates: the model is linear in $\beta$; $X$
+has full column rank $k$, so that no column is a linear combination of the others; and $E[u \mid X] = 0$, so that the
+errors have mean zero whatever the regressors. The coefficient $\beta_j$ is then the change in the conditional mean of
+$y$ when $x_j$ rises by one and the other regressors are held fixed.
+
+\section{The least-squares estimator}\label{sec:b2:multiple-regression:ols}
+
+Least squares chooses $b$ to minimise the sum of squared residuals $(y - Xb)'(y - Xb) = y'y - 2b'X'y + b'X'Xb$. Setting
+the gradient $-2X'y + 2X'Xb$ to zero gives the following equations.
+
+\begin{definition}[Normal equations]\label{def:b2:multiple-regression:normal-equations}
+The \emph{normal equations}\index{normal equations} of least squares are $X'Xb = X'y$; when $X$ has full column rank,
+$X'X$ is invertible and they have the single solution $\hat\beta = (X'X)^{-1}X'y$.
+\end{definition}
+
+The \omterm{def:b2:multiple-regression:normal-equations}{normal equations} say $X'(y - X\hat\beta) = X'e = 0$: the residual vector $e$ is orthogonal to every column of $X$. So
+the fitted vector $\hat y = X\hat\beta$ is the orthogonal projection of $y$ on the space spanned by the columns of $X$, and
+$e$ is what is left, at right angles to that space. With a column of ones in $X$, the residuals sum to zero.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, every node/.style={font=\small}]
+  \fill[omDef!10] (0,0) -- (6,0) -- (7.5,1.8) -- (1.5,1.8) -- cycle;
+  \node at (6.2,1.45) {columns of $X$};
+  \draw[->, thick] (2,0.6) -- (4.6,1.1) node[midway, below] {$\hat y = X\hat\beta$};
+  \draw[->, thick, omDef] (2,0.6) -- (4.6,3.6) node[midway, above left] {$y$};
+  \draw[->, thick, omThm] (4.6,1.1) -- (4.6,3.6) node[midway, right] {$e = y - \hat y$};
+  \draw (4.6,1.35) -- (4.38,1.31) -- (4.38,1.06);
+\end{tikzpicture}
+
+{\small Least squares as projection. The fitted vector is the point of the column space closest to $y$; the residual is
+orthogonal to the column space, which is what the \omterm{def:b2:multiple-regression:normal-equations}{normal equations} say.}
+\end{omfigure}
+
+The listings use the CPS comparison sample described in the box. The first loads it; the second solves the \omterm{def:b2:multiple-regression:normal-equations}{normal
+equations} with numpy and compares the result with statsmodels.
+
+\begin{measure}[The comparison sample]
+% ledger: b2:nsw-cps, b1:lalonde1986, b1:dehejia1999; figdata: sample (share capped 0.259)
+LaLonde (1986) asked whether econometric methods applied to survey data could reproduce what a field experiment had found
+about a training programme. To do so he built comparison samples of men from two American surveys, the Current Population
+Survey and the Panel Study of Income Dynamics. Dehejia and Wahba (1999) re-examined the same samples and distribute them;
+the CPS one has 15,992 men, with their age, schooling, race, marital status, whether they have a high-school diploma, and
+their earnings in 1974, 1975 and 1978. In the file, 25.9 per cent of the men have 1978 earnings equal to the largest value,
+25,564.7: earnings above some level were recorded at that level, so the top of the distribution is cut off. This chapter
+uses the 13,055 men with positive earnings in both 1975 and 1978. Dropping the men with no earnings in 1978 selects on the
+outcome itself, so the coefficients describe men in work, not all men; the experiment itself returns in \cref{ch:b2:causality-and-experiments}.
+\end{measure}
+
+\omcode{code/bachelor-2/30-multiple-regression/listings/load_cps.py}{1}{18}{Loading the comparison sample and the
+regression sample.}\label{lst:b2:multiple-regression:load}
+
+\omoutput{code/bachelor-2/30-multiple-regression/outputs/load_cps.txt}{A quarter of the men are at the earnings cap; the
+regression sample keeps 13,055 men.}\label{out:b2:multiple-regression:load}
+
+\omcode{code/bachelor-2/30-multiple-regression/listings/ols_by_hand.py}{1}{25}{The \omterm{def:b2:multiple-regression:normal-equations}{normal equations} solved with numpy,
+against statsmodels.}\label{lst:b2:multiple-regression:ols}
+
+\omoutput{code/bachelor-2/30-multiple-regression/outputs/ols_by_hand.txt}{The same coefficients either way; the residuals
+are orthogonal to every column.}\label{out:b2:multiple-regression:ols}
+
+% code: listings/ols_by_hand.py
+Holding age, race and marriage fixed, a year of schooling goes with earnings 3.83 per cent higher; married men earn 26.3
+log points more than unmarried men of the same age, schooling and race. Age enters with a positive coefficient and a
+negative one on its square: earnings rise with age at a falling rate.
+
+\section{Partialling out}\label{sec:b2:multiple-regression:fwl}
+
+What does ``holding the others fixed'' do to the data? Split the regressors into $x$, the one of interest, and $W$, the
+others (with the column of ones), so that $y = x\beta_1 + W\gamma + u$.
+
+\begin{definition}[Frisch--Waugh--Lovell theorem]\label{def:b2:multiple-regression:fwl}
+The \emph{Frisch--Waugh--Lovell theorem}\index{Frisch--Waugh--Lovell theorem} states that the least-squares coefficient
+on $x$ in the regression of $y$ on $x$ and $W$ equals the coefficient in the regression of $\tilde y$ on $\tilde x$, where
+$\tilde y$ and $\tilde x$ are the residuals from regressing $y$ and $x$ on $W$.
+\end{definition}
+
+\begin{proposition}[Frisch--Waugh--Lovell]\label{prop:b2:multiple-regression:fwl}
+Let $M = I - W(W'W)^{-1}W'$, $\tilde x = Mx$ and $\tilde y = My$. Then the coefficient on $x$ in the regression of $y$ on
+$(x, W)$ is $\hat\beta_1 = \tilde x'\tilde y/\tilde x'\tilde x = \tilde x'y/\tilde x'\tilde x$.
+\end{proposition}
+
+\begin{proof}
+$M$ is symmetric, $MM = M$, and $MW = 0$. Write $y = x\hat\beta_1 + W\hat\gamma + e$, with $e$ orthogonal to $x$ and to
+every column of $W$. Then $Me = e$, since $e$ is already orthogonal to $W$. Multiply by $M$: $My = Mx\hat\beta_1 + e$.
+Multiply by $x'$: $x'My = x'Mx\,\hat\beta_1 + x'e = x'Mx\,\hat\beta_1$. Since $x'My = (Mx)'(My) = \tilde x'\tilde y$ and
+$x'Mx = \tilde x'\tilde x$, $\hat\beta_1 = \tilde x'\tilde y/\tilde x'\tilde x$; and $\tilde x'\tilde y = \tilde x'My =
+(M\tilde x)'y = \tilde x'y$.
+\end{proof}
+
+The coefficient on schooling uses only the variation in schooling that age, race and marriage do not predict. The rest of
+the variation is discarded.
+
+\omcode{code/bachelor-2/30-multiple-regression/listings/fwl.py}{1}{29}{Partialling out the controls gives the same
+coefficient as the long regression.}\label{lst:b2:multiple-regression:fwl}
+
+\omoutput{code/bachelor-2/30-multiple-regression/outputs/fwl.txt}{Three routes, one coefficient; the controls remove an
+eighth of the variance of schooling.}\label{out:b2:multiple-regression:fwl}
+
+\section{The omitted-variable bias formula}\label{sec:b2:multiple-regression:ovb}
+
+\begin{definition}[Omitted-variable bias]\label{def:b2:multiple-regression:ovb}
+\emph{Omitted-variable bias}\index{omitted-variable bias} is the difference between the coefficient on a regressor in a
+regression that leaves out a variable and the coefficient in the regression that includes it.
+\end{definition}
+
+Let the long regression be $y = x\hat\beta_1 + W\hat\beta_W + z\hat\gamma + e$ and the short one leave $z$ out. Let
+$\hat\delta$ be the coefficient on $x$ when $z$ itself is regressed on $x$ and $W$. Then, exactly in any sample,
+\begin{equation}\label{eq:b2:multiple-regression:ovb}
+\hat\beta_1^{\text{short}} = \hat\beta_1^{\text{long}} + \hat\gamma\,\hat\delta.
+\end{equation}
+Proof: regress both sides of $y = x\hat\beta_1 + W\hat\beta_W + z\hat\gamma + e$ on $x$ and $W$. Least squares is linear
+in the outcome, the regression of $x$ and of $W$ on themselves gives coefficient one on themselves, $e$ is orthogonal to
+$x$ and $W$ so its coefficients are zero, and $z$ gives $\hat\delta$ on $x$ (Exercise 11).
+
+The formula needs only two signs: the effect of the omitted variable on the outcome and its association with the
+regressor.
+
+\begin{omfigure}
+\begin{tabular}{lcc}
+\toprule
+ & $z$ and $x$ positively associated ($\delta > 0$) & negatively associated ($\delta < 0$) \\
+\midrule
+$z$ raises $y$ ($\gamma > 0$) & short coefficient too high & short coefficient too low \\
+$z$ lowers $y$ ($\gamma < 0$) & short coefficient too low & short coefficient too high \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+{\small The sign of the \omterm{def:b2:multiple-regression:ovb}{omitted-variable bias} $\gamma\delta$. Adding age in the opening chart raised the estimate: earnings
+rise with age, and older men in the sample have less schooling.}
+\end{omfigure}
+
+\omcode{code/bachelor-2/30-multiple-regression/listings/ovb.py}{1}{28}{The \omterm{def:b2:multiple-regression:ovb}{omitted-variable bias} formula checked on the
+sample.}\label{lst:b2:multiple-regression:ovb}
+
+\omoutput{code/bachelor-2/30-multiple-regression/outputs/ovb.txt}{Adding 1975 earnings: $0.020429 + 0.399801 \times 0.044806
+= 0.038343$.}\label{out:b2:multiple-regression:ovb}
+
+% code: listings/ovb.py
+A man with 1 per cent higher earnings in 1975, at the same schooling, age, race and marriage, earns 0.40 per cent more in
+1978; and a year of schooling goes with 4.5 per cent higher 1975 earnings. The product, 1.8 points, is the part of the
+schooling coefficient that 1975 earnings take over. Whether it should be taken over is another matter: 1975 earnings are
+themselves partly a result of schooling, so controlling for them removes part of the effect being measured.
+
+\section{Near-collinear regressors}\label{sec:b2:multiple-regression:collinearity}
+
+\begin{definition}[Perfect collinearity]\label{def:b2:multiple-regression:collinearity}
+Regressors are \emph{perfectly collinear}\index{perfect collinearity} when one column of $X$ is an exact linear
+combination of the others; $X$ then has rank below $k$, $X'X$ is singular, and the coefficients are not identified.
+\end{definition}
+
+A common case is a full set of indicator variables with a constant: an indicator for married men, one for unmarried men,
+and the column of ones, which is their sum. Near-collinearity is not a failure of the assumptions, but it costs precision.
+Under the assumptions of \cref{ch:b2:regression-inference}, with $R_j^2$ the $R^2$ of the regression of $x_j$ on the
+other regressors and $s_j^2$ the sample variance of $x_j$,
+\begin{equation}\label{eq:b2:multiple-regression:var}
+\operatorname{Var}(\hat\beta_j \mid X) = \frac{\sigma^2}{ns_j^2(1 - R_j^2)}.
+\end{equation}
+The formula follows from the \omterm{def:b2:multiple-regression:fwl}{Frisch--Waugh--Lovell theorem}: $\hat\beta_j$ is a regression on $\tilde x_j$, whose sum of
+squares is $ns_j^2(1 - R_j^2)$ (Exercise 12).
+
+\begin{definition}[Variance inflation factor]\label{def:b2:multiple-regression:vif}
+The \emph{variance inflation factor}\index{variance inflation factor} of regressor $j$ is $1/(1 - R_j^2)$: the factor by
+which the variance of $\hat\beta_j$ exceeds what it would be if $x_j$ were uncorrelated with the other regressors.
+\end{definition}
+
+\omcode{code/bachelor-2/30-multiple-regression/listings/collinearity.py}{1}{20}{Simulated regressors with rising
+correlation, and an exactly collinear design.}\label{lst:b2:multiple-regression:collinearity}
+
+\omoutput{code/bachelor-2/30-multiple-regression/outputs/collinearity.txt}{The standard error grows with the correlation
+roughly as the square root of the VIF; with an exact multiple the matrix loses a rank.}\label{out:b2:multiple-regression:collinearity}
+
+% code: listings/collinearity.py
+At a correlation of 0.99 the \omterm{def:b2:multiple-regression:vif}{variance inflation factor} is 48.5 and the standard error of $\hat\beta_1$ is 0.311, about
+seven times the 0.045 of uncorrelated regressors; the estimate itself is still unbiased. Near-collinearity is a shortage
+of information about the separate effects, not an error to be corrected; the remedies are more data or a question that
+does not need the separate effects.
+
+\section{Fit}\label{sec:b2:multiple-regression:fit}
+
+The $R^2$ of a multiple regression is $1 - e'e/\sum_i(y_i - \bar y)^2$, as with one regressor. Adding a regressor never
+lowers it, since least squares could always set the new coefficient to zero.
+
+\begin{definition}[Adjusted R-squared]\label{def:b2:multiple-regression:adjusted-r2}
+The \emph{adjusted $R^2$}\index{adjusted R-squared} is $\bar R^2 = 1 - \frac{e'e/(n - k)}{\sum_i(y_i - \bar y)^2/(n -
+1)} = 1 - (1 - R^2)\frac{n - 1}{n - k}$; it can fall when a regressor is added.
+\end{definition}
+
+% code: listings/ols_by_hand.py; figdata: steps
+In the listing $R^2$ is 0.1181 and $\bar R^2$ 0.1177: with 13,055 observations and seven coefficients the correction is
+tiny. Neither number says whether the coefficient on schooling is the effect of schooling. Adding 1975 earnings raises
+$R^2$ from 0.118 to 0.254 and moves the schooling coefficient from 3.83 to 2.04; a better fit is not a better answer to a causal
+question.
+
+\begin{model}{The linear regression model}
+\assumes The conditional mean of the outcome is linear in the regressors; the \omterm{def:b2:multiple-regression:regressor-matrix}{regressor matrix} has full column rank; the
+error has mean zero given the regressors.
+\predicts Least squares estimates each coefficient without bias: the change in the mean outcome when one regressor rises
+by one and the others are held fixed.
+\tested Linearity can be checked against more flexible forms (\cref{ch:b2:specification}); the zero conditional mean
+assumption cannot be tested from the residuals, which are orthogonal to the regressors by construction, but can be tested
+against an experiment, as LaLonde did (\cref{ch:b2:causality-and-experiments}).
+\breaks When a variable that affects the outcome and is correlated with a regressor is left out, the coefficient absorbs
+its effect, by the amount $\gamma\delta$; and when a control is itself an outcome of the regressor, holding it fixed
+removes part of the effect.
+\end{model}
+
+\section{Exercises}\label{sec:b2:multiple-regression:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:multiple-regression:1}
+Read the opening chart. Give the estimate with no control, after adding age, and with every control. Which single step
+moves the estimate most?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:multiple-regression:2}
+A quarter of the men have 1978 earnings at the cap. What does the cap do to the measured differences in log earnings
+between men with much schooling and men with little?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:multiple-regression:3}
+Compute $\bar R^2$ from $R^2 = 0.1181$, $n = 13{,}055$ and $k = 7$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:multiple-regression:4}
+1975 earnings are measured after most of the men had finished school. Why might controlling for them be a mistake? What
+would show that a control is a bad one?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:multiple-regression:5}
+By hand: with five observations, $x = (1, 2, 3, 4, 5)$, $d = (0, 0, 1, 1, 1)$ and $y = (4, 4, 9, 13, 14)$, regress $y$ on
+a constant, $x$ and $d$. Write $X'X$ and $X'y$, solve the \omterm{def:b2:multiple-regression:normal-equations}{normal equations}, and compute $R^2$ and $\bar R^2$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:multiple-regression:6}
+Predict, then compute: adding age raises the schooling coefficient from 4.10 to 5.22. The correlation between age and
+schooling in the sample is $-0.15$; age has a coefficient of 0.0192 in the long regression, and the regression of age on
+schooling has slope $-0.585$. Check the \omterm{def:b2:multiple-regression:ovb}{omitted-variable bias} formula.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:multiple-regression:7}
+\textbf{(D)} (a) With the Brenland household survey, regress the log gross income of heads with positive income on years
+of schooling, then add age and age squared. (b) With the CPS sample, add \texttt{nodegree} to the regression of the
+listing \texttt{ols\_by\_hand.py}. What happens to the schooling coefficient, its standard error, and its \omterm{def:b2:multiple-regression:vif}{variance
+inflation factor}?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:multiple-regression:8}
+Change $n$ to 2000 in the collinearity listing. By what factor should the standard errors fall? Compare with the output.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:multiple-regression:9}
+A regression includes a constant, an indicator for married men and an indicator for unmarried men. Show that $X$ does not
+have full column rank. Give two ways to fix it, and say what the coefficients then mean.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:multiple-regression:10}
+Show that $M = I - W(W'W)^{-1}W'$ is symmetric and idempotent, that $MW = 0$, and that $My$ is the residual vector of the
+regression of $y$ on $W$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:multiple-regression:11}
+Prove \eqref{eq:b2:multiple-regression:ovb} in full.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:multiple-regression:12}
+Using the \omterm{def:b2:multiple-regression:fwl}{Frisch--Waugh--Lovell theorem} and $\operatorname{Var}(u \mid X) = \sigma^2I$, derive
+\eqref{eq:b2:multiple-regression:var}.
+\end{exercise}
+
+\section{Problem: Brenland's household survey}\label{sec:b2:multiple-regression:problem}
+
+\begin{problem}[{Weekend problem --- Brenland's household survey: matrices, the return to schooling with controls,
+partialling out and omitted-variable bias, and the collinearity of age and experience}]
+\label{pb:b2:multiple-regression:1}
+Brenland's household survey of 2025 has 2,000 households; 1,922 heads have positive gross income. Let $y_i$ be the log
+gross income of head $i$, $s_i$ his years of schooling and $a_i$ his age.
+
+\medskip
+\noindent\textbf{Part I --- Matrices.}
+\begin{enumerate}
+  \item Write the \omterm{def:b2:multiple-regression:regressor-matrix}{regressor matrix} of the regression of $y$ on a constant, $s$, $a$ and $a^2$: its size and a typical row.
+  \item What is the size of $X'X$? Of $X'y$?
+  \item What does the first element of $X'X$ count? The first element of $X'y$?
+  \item Why must $X'X$ be invertible for the estimator to exist?
+  \item What does the first normal equation say about the residuals?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Returns to schooling with controls.}
+\begin{enumerate}[resume]
+  \item Regress $y$ on a constant and $s$. Give the coefficient on $s$ and $R^2$.
+  \item Add $a$ and $a^2$. Give the coefficient on $s$, its 95 per cent confidence interval, $R^2$ and $\bar R^2$.
+  \item Interpret the coefficient on $s$ in the long regression.
+  \item At what age is predicted income highest, holding schooling fixed?
+  \item Why does the coefficient on $s$ barely move?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Partialling out and omitted-variable bias.}
+\begin{enumerate}[resume]
+  \item Regress $s$ on a constant, $a$ and $a^2$, and keep the residual $\tilde s$. Compare the variances of $s$ and $\tilde s$.
+  \item Regress $y$ on $\tilde s$. What coefficient do you get?
+  \item Give $\delta_a$ and $\delta_{a^2}$, the coefficients on $s$ when $a$ and $a^2$ are regressed on a constant and $s$.
+  \item Write the short coefficient as the long one plus the bias, with two omitted variables.
+  \item Compute the bias and check the identity.
+  \item Why are $\delta_a$ and $\delta_{a^2}$ so different in size, and yet give a bias near zero?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Collinearity of age and experience.}
+\begin{enumerate}[resume]
+  \item Define experience as $a - s - 6$. Regress $y$ on a constant, $s$, $a$ and experience. What goes wrong?
+  \item Give the rank of the \omterm{def:b2:multiple-regression:regressor-matrix}{regressor matrix}.
+  \item Which combinations of the coefficients can still be estimated?
+  \item Give the \omterm{def:b2:multiple-regression:vif}{variance inflation factors} of $s$, $a$ and $a^2$ in the regression of Part II.
+  \item Why is the high VIF of $a$ and $a^2$ no problem for the coefficient on $s$?
+  \item With half the sample, by what factor would the standard error of the schooling coefficient grow?
+  \item If ability raised income and was positively correlated with schooling, which way would the estimate be biased?
+  \item Could controlling for hours worked fix that bias? Could it create another?
+  \item State the result: the return to schooling with its interval, and the size of the \omterm{def:b2:multiple-regression:ovb}{omitted-variable bias} from age.
+\end{enumerate}
+\end{problem}

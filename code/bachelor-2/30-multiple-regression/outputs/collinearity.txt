@@ -1,0 +1,7 @@
+$ python collinearity.py
+  rho   corr in sample   b1     se(b1)    VIF
+ 0.00          -0.028   1.002    0.045     1.0
+ 0.50           0.538   0.934    0.057     1.4
+ 0.90           0.906   1.019    0.103     5.6
+ 0.99           0.990   1.123    0.311    48.5
+rank of X with x2 = 2 x1: 2 of 3 columns

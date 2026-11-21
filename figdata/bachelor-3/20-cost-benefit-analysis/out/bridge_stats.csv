@@ -1,0 +1,15 @@
+stat,value
+cost_forecast,400
+cost_corrected,535.2
+time_benefit,28.689
+safety_benefit,3
+net_annual,27.689
+npv2,335.83
+npv35,165.375
+npv7,-51.9227
+npv2_c,203.266
+npv35_c,34.7004
+npv7_c,-178.451
+irr,5.86385
+irr_c,3.89973
+uplift,33.8

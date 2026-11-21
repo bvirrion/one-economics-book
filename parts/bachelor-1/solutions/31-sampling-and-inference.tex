@@ -1,0 +1,127 @@
+\section*{Chapter \ref{ch:b1:sampling-and-inference} --- Sampling and Inference}
+% Numbers recomputed in code/bachelor-1/31-sampling-and-inference/exercises/solutions.py
+% (tested in tests/test_ch31.py) and in the chapter's captured outputs.
+
+\begin{solution}{exo:b1:sampling-and-inference:se}
+$9{,}000/\sqrt{400} = 450$.
+\end{solution}
+
+\begin{solution}{exo:b1:sampling-and-inference:read}
+1,794.3 dollars, with a \omterm{def:b1:sampling-and-inference:standard-error}{standard error} of 671.0; Welch's test gives $p = 0.0079$.
+\end{solution}
+
+\begin{solution}{exo:b1:sampling-and-inference:statements}
+(c). A $p$-value is computed assuming $H_0$, so it is not the probability of $H_0$ (a);
+it does not measure the size of the effect (b); and it is not a probability
+of replication (d).
+\end{solution}
+
+\begin{solution}{exo:b1:sampling-and-inference:width}
+The \omterm{def:b1:sampling-and-inference:standard-error}{standard error} is divided by $\sqrt4 = 2$, so the width halves.
+\end{solution}
+
+\begin{solution}{exo:b1:sampling-and-inference:bias}
+$\E[\tilde\mu] = n\mu/(n+1)$, a bias of $-\mu/(n+1)$. It is consistent: $\tilde\mu = \frac{n}{n+1}\bar X_n$, the factor
+tends to 1 and $\bar X_n$ is consistent.
+\end{solution}
+
+\begin{solution}{exo:b1:sampling-and-inference:proportions}
+$\hat p_1 = 0.300$, $\hat p_2 = 0.225$, pooled $\hat p = 210/800 = 0.2625$. The \omterm{def:b1:sampling-and-inference:standard-error}{standard error} under $H_0$ is
+$\sqrt{0.2625 \times 0.7375 \times 2/400} = 0.0311$, so $z = 0.075/0.0311 = 2.411$ and $p = 0.0159$: the shares
+differ at $5\%$.
+\end{solution}
+
+\begin{solution}{exo:b1:sampling-and-inference:size}
+\omterm{def:b1:sampling-and-inference:power}{Power} $80\%$ at $5\%$ two-sided needs a \omterm{def:b1:sampling-and-inference:standard-error}{standard error} of $1{,}000/(1.960 + 0.842) = 1{,}000/2.8016 = 357$
+dollars. With $m$ people per group, $\sqrt{(7{,}867^2 + 5{,}484^2)/m} = 357$ gives $m = 722$: 1,444 people in
+all, more than three times the experiment's 445.
+\end{solution}
+
+\begin{solution}{exo:b1:sampling-and-inference:fifty}
+$50 \times 0.05 = 2.5$ rejections on average; the Bonferroni threshold is $0.05/50 = 0.001$.
+\end{solution}
+
+\begin{solution}{exo:b1:sampling-and-inference:predict}
+The weighted mean: young households are over-represented in the sample,
+so the unweighted mean is pulled down; the weights give each household
+the share of the \omterm{def:b1:sampling-and-inference:population}{population} it stands for.
+\end{solution}
+
+\begin{solution}{exo:b1:sampling-and-inference:unbiased}
+Write $X_i - \bar X = (X_i - \mu) - (\bar X - \mu)$. Squaring and summing, the cross term is
+$-2(\bar X - \mu)\sum_i (X_i - \mu) = -2n(\bar X - \mu)^2$, so $\sum_i (X_i - \bar X)^2 = \sum_i (X_i - \mu)^2 - n(\bar X - \mu)^2$. Each
+$\E[(X_i - \mu)^2] = \sigma^2$, and $\E[(\bar X - \mu)^2] = \Var(\bar X) = \sigma^2/n$ by independence. The expectation is
+$n\sigma^2 - \sigma^2 = (n - 1)\sigma^2$; dividing by $n - 1$ gives $\sigma^2$.
+\end{solution}
+
+\begin{solution}{exo:b1:sampling-and-inference:consistent}
+The variance divided by $n$, $\hat\sigma^2 = \frac{n-1}{n}s^2$, has expectation $\frac{n-1}{n}\sigma^2$: biased, as
+\cref{out:b1:sampling-and-inference:variance} shows for $n = 5$. Its bias $-\sigma^2/n$ tends to zero and its
+variance too (when the fourth moment is finite), so it is consistent. The \omterm{def:b1:sampling-and-inference:estimator}{estimator}
+$\tilde\mu$ of \cref{exo:b1:sampling-and-inference:bias} is another example.
+\end{solution}
+
+\begin{solution}{exo:b1:sampling-and-inference:search}
+Too many $p$-values just below $0.05$ and too few just above it, compared with
+the smooth distribution that honest reporting of all tests would give; and
+too few studies with insignificant results.
+\end{solution}
+
+\begin{solution}{pb:b1:sampling-and-inference:survey}
+\textbf{1.} Shares $0.444$, $0.333$, $0.222$; true rate $0.444 \times 5.0 + 0.333 \times 6.5 + 0.222 \times 7.25 = 6.0\%$.
+
+\textbf{2.} $4{,}000/2{,}000{,}000 = 0.0020$; $0.00267$; $0.0040$.
+
+\textbf{3.} 500, 375 and 250 people each.
+
+\textbf{4.} To estimate each region's rate with the same precision, the
+small regions included.
+
+\textbf{5.} Upwards: the South, with the highest rate, is over-represented.
+
+\textbf{6.} $1.074$.
+
+\textbf{7.} 201, 272 and 298.
+
+\textbf{8.} $5.03\%$, $6.80\%$ and $7.45\%$, with \omterm{def:b1:sampling-and-inference:standard-error}{standard errors} $0.345$, $0.398$ and $0.415$ point.
+
+\textbf{9.} $771/12{,}000 = 6.425\%$.
+
+\textbf{10.} $6.156\%$.
+
+\textbf{11.} $0.223$ point.
+
+\textbf{12.} $0.219$ point: the design is slightly less precise for the national
+rate, as the \omterm{def:b1:sampling-and-inference:weights}{design effect} predicts.
+
+\textbf{13.} $5.72\%$ to $6.59\%$.
+
+\textbf{14.} $6.456\%$.
+
+\textbf{15.} $+0.300$ point.
+
+\textbf{16.} $\sqrt{0.2229^2 + 0.2283^2} = 0.319$ point.
+
+\textbf{17.} $t = 0.941$, $p = 0.347$.
+
+\textbf{18.} No.
+
+\textbf{19.} No: $0.1$ point from the true $0.2$, a third of a \omterm{def:b1:sampling-and-inference:standard-error}{standard error}.
+
+\textbf{20.} With a correlation $\rho$ between the two months' estimates, the variance
+of the change is multiplied by $1 - \rho$: overlap makes changes more precise.
+
+\textbf{21.} $0.2/(1.960 + 0.842) = 0.0714$ point.
+
+\textbf{22.} $0.312$ point.
+
+\textbf{23.} $12{,}000 \times (0.3119/0.0714)^2 \approx 229{,}000$ people a month.
+
+\textbf{24.} $2 \times 0.06 \times 0.94/0.000714^2 \approx 221{,}000$.
+
+\textbf{25.} Half as many: about 115,000.
+
+\textbf{26.} To detect a $0.2$-point monthly change with $80\%$ \omterm{def:b1:sampling-and-inference:power}{power}, Brenland's survey
+needs about 229,000 people a month, not 12,000 --- about 115,000 if the samples
+overlap enough for a correlation of $0.5$.
+\end{solution}

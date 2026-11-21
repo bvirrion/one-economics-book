@@ -1,0 +1,515 @@
+\chapter{Gravity and the Trade Data}\label{ch:b3:gravity}
+
+The models of the last three chapters say why countries trade. This one asks
+how much, and finds one of the most reliable regularities in economics: trade
+between two countries rises with the size of both and falls with the distance
+between them, like the pull between two masses. The chapter derives that
+\emph{\omterm{def:b3:gravity:gravity}{gravity equation}} from the CES demand of \cref{ch:b3:scale-variety-firms},
+estimates it on the trade of every pair of countries in the world, and uses it to
+measure what borders, languages, agreements and distance cost. It ends with the
+long record: trade as a share of output rose, collapsed and rose again.
+
+\begin{openingchart}{Exports from one country to another in 2019 against the
+product of their GDPs divided by the distance between them, 28{,}569 country
+pairs in 50 groups of equal size (natural logs; trade and GDPs in millions of
+dollars, distance in kilometres), with the least-squares line on all pairs.}{CEPII
+Gravity database, BACI flows; our computation}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.62\linewidth, height=0.48\linewidth,
+  xlabel={$\ln(\mathit{GDP}_o \times \mathit{GDP}_d / \mathit{distance})$},
+  ylabel={$\ln(\text{exports})$}]
+  \addplot table[x=lx, y=ly] {figdata/bachelor-3/10-gravity/out/opening_bins.csv};
+  \addplot[omThm, thick, no marks, sharp plot] table[x=lx, y=ly] {figdata/bachelor-3/10-gravity/out/opening_fit.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: opening_stats
+Across 28{,}569 pairs, one variable --- the product of the two GDPs over the
+distance --- accounts for 62~\% of the variation in log trade, and a 1~\% rise in it
+goes with 1.18~\% more trade. Few relations in the social sciences fit so
+well with so little.
+
+\begin{recall}
+\Cref{ch:b3:panel-data} absorbed unobserved differences with fixed effects, and
+\cref{ch:b3:binary-outcomes} estimated by maximum likelihood. CES demand, the
+\omterm{def:b3:ricardian-trade:iceberg}{iceberg trade cost} and the trade elasticity come from
+\cref{ch:b3:scale-variety-firms} and \cref{ch:b3:ricardian-trade}.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:gravity:symbols}
+$X_{ij}$ is the value of exports from $i$ to $j$; $Y_i$ is $i$'s output, $E_j$ $j$'s
+spending and $Y_w$ the world's; $t_{ij} \ge 1$ is the \omterm{def:b3:ricardian-trade:iceberg}{iceberg trade cost} and $\varepsilon = \sigma
+- 1$ the trade elasticity. $\Pi_i$ and $P_j$ are the \omterm{def:b3:gravity:multilateral-resistance}{multilateral resistance} terms
+(not profit and not a price level of the whole economy).
+\end{notation}
+
+\section{The trade data}\label{sec:b3:gravity:data}
+
+\begin{measure}[What the trade data record]
+Customs offices record goods as they cross borders: the exporter's office values
+them free on board (FOB), at the border, and the importer's adds the cost of
+insurance and freight (CIF). Each flow is therefore declared twice, and the two
+declarations rarely agree. The flows used in this chapter (BACI, distributed with
+the CEPII Gravity database) reconcile the two into one value, FOB, in thousands
+of current dollars. They cover goods, not services; a pair with no flow recorded
+may have traded too little to report.
+\end{measure}
+
+\omcode{code/bachelor-3/10-gravity/listings/load_trade.py}{1}{16}{One year of the world's bilateral trade.}\label{lst:b3:gravity:load}
+
+\omoutput{code/bachelor-3/10-gravity/outputs/load_trade.txt}{224 countries, and most pairs trade.}\label{out:b3:gravity:load}
+
+The file holds only positive flows. Of the 49{,}952 ordered pairs of the 224
+countries, 37.7~\% recorded no trade in 2019, and the five largest flows --- China
+and Mexico to the United States, the United States and Canada to each other, China
+to Hong Kong --- made 8.9~\% of world trade. % output: load_trade
+
+\section{The gravity equation}\label{sec:b3:gravity:equation}
+
+\begin{definition}[Gravity equation; distance elasticity]\label{def:b3:gravity:gravity}
+\index{gravity equation}\index{distance elasticity}
+A \emph{gravity equation} relates bilateral trade to the sizes of the two economies
+and the costs of trading between them:
+$X_{ij} = G\, Y_i^{\beta_1} E_j^{\beta_2} \mathit{dist}_{ij}^{\,\delta} e^{z_{ij}'\gamma}$, where $z_{ij}$ are pair
+characteristics (a shared border, language, colonial link, trade agreement). The
+\emph{distance elasticity} $\delta$ is the percentage change in trade for a 1~\%
+increase in distance.
+\end{definition}
+
+\begin{definition}[Multilateral resistance]\label{def:b3:gravity:multilateral-resistance}
+\index{multilateral resistance}
+The \emph{multilateral resistance} terms $\Pi_i$ and $P_j$ are averages of the
+trade costs that exporter $i$ faces to all its markets and importer $j$ faces from
+all its suppliers. Trade between two countries depends on their bilateral cost
+relative to these averages.
+\end{definition}
+
+\begin{proposition}[Gravity from CES demand]\label{prop:b3:gravity:structural}
+Let each country make one variety, buyers everywhere have \omterm{def:b3:scale-variety-firms:variety}{CES preferences} with
+elasticity $\sigma$, and trade costs be \omterm{def:b3:ricardian-trade:iceberg}{iceberg}. If every country's output is sold
+($Y_i = \sum_j X_{ij}$), then
+\begin{equation}\label{eq:b3:gr:structural}
+  X_{ij} = \frac{Y_i E_j}{Y_w} \Bigl(\frac{t_{ij}}{\Pi_i P_j}\Bigr)^{1-\sigma}, \quad
+  \Pi_i^{1-\sigma} = \sum_j \Bigl(\frac{t_{ij}}{P_j}\Bigr)^{1-\sigma}\frac{E_j}{Y_w}, \quad
+  P_j^{1-\sigma} = \sum_i \Bigl(\frac{t_{ij}}{\Pi_i}\Bigr)^{1-\sigma}\frac{Y_i}{Y_w} .
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+By the CES demand \eqref{eq:b3:sv:demand}, with $p_i$ the factory price of $i$'s
+variety (a taste weight can be folded into it), $j$ spends $X_{ij} = (p_it_{ij}/P_j)^{1-\sigma}E_j$
+on it, where $P_j^{1-\sigma} = \sum_i (p_it_{ij})^{1-\sigma}$. Market clearing gives $Y_i = p_i^{1-\sigma}
+\sum_j (t_{ij}/P_j)^{1-\sigma}E_j = p_i^{1-\sigma} Y_w\Pi_i^{1-\sigma}$, with $\Pi_i$ as defined. So
+$p_i^{1-\sigma} = Y_i/(Y_w\Pi_i^{1-\sigma})$. Substituting into $X_{ij}$ gives the first equation,
+and into $P_j^{1-\sigma}$ the third.
+\end{proof}
+
+Gravity is thus predicted, with unit elasticities on both GDPs and a \omterm{def:b3:gravity:gravity}{distance
+elasticity} equal to $-\varepsilon$ times the elasticity of trade costs to distance. It
+also says what simple gravity forgets: two countries far from everyone else ---
+Australia and New Zealand --- face high resistance with all partners, so they trade
+more with each other than their distance alone predicts.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=1cm, y=1cm]
+  \foreach \n/\x/\y in {A/0/0, B/1.6/0, C/0.8/1.4} \node[draw, circle, inner sep=2pt, font=\scriptsize] (\n) at (\x,\y) {\n};
+  \foreach \n/\x/\y in {D/6/0.2, E/7.4/0.2} \node[draw, circle, inner sep=2pt, font=\scriptsize] (\n) at (\x,\y) {\n};
+  \draw[omDef, thick] (A) -- (B); \draw[omDef, thick] (A) -- (C); \draw[omDef, thick] (B) -- (C);
+  \draw[omThm, very thick] (D) -- (E);
+  \draw[guide] (B) -- (D);
+  \node[font=\scriptsize, align=center] at (0.8,-0.8) {close neighbours:\\ low resistance};
+  \node[font=\scriptsize, align=center] at (6.7,-0.8) {remote pair:\\ high resistance};
+\end{tikzpicture}
+\par\smallskip{\small \omterm{def:b3:gravity:multilateral-resistance}{Multilateral resistance}. D and E are as far apart as A and B,
+but have no other partner nearby: relative to their alternatives, their bilateral
+cost is low, and they trade more with each other than A and B do.}
+\end{omfigure}
+
+\section{Estimating gravity on logs}\label{sec:b3:gravity:ols}
+
+Taking logs of the definition gives a linear regression. The listing estimates it
+for 2019.
+
+\omcode{code/bachelor-3/10-gravity/listings/gravity_ols.py}{1}{17}{Gravity by OLS on logs.}\label{lst:b3:gravity:ols}
+
+\omoutput{code/bachelor-3/10-gravity/outputs/gravity_ols.txt}{The workhorse, naive version.}\label{out:b3:gravity:ols}
+
+% output: gravity_ols
+The fit is good (an $R^2$ of 0.66) and the signs are those of every gravity study:
+trade rises with both GDPs, falls with distance (elasticity $-1.21$), and is higher
+between neighbours, former colonies and partners in an agreement. But the
+regression is the ``naive'' gravity the proposition warns about: it omits the
+resistance terms, which are correlated with GDP and distance, and its estimates
+are biased.
+
+\section{Multilateral resistance and fixed effects}\label{sec:b3:gravity:fe}
+
+The resistance terms are hard to compute, but in a cross-section they are
+exporter and importer constants: $\ln X_{ij} = \ln Y_i - \ln \Pi_i^{1-\sigma} + \ln E_j - \ln
+P_j^{1-\sigma} + \dots$. A dummy for each exporter and each importer absorbs them,
+together with the GDPs --- the fixed effects of \cref{ch:b3:panel-data}, applied to
+the two sides of a flow.
+
+\omcode{code/bachelor-3/10-gravity/listings/gravity_fe.py}{1}{17}{Exporter and importer fixed effects.}\label{lst:b3:gravity:fe}
+
+\omoutput{code/bachelor-3/10-gravity/outputs/gravity_fe.txt}{Structural gravity by OLS.}\label{out:b3:gravity:fe}
+
+% output: gravity_fe
+With 440 parameters, the \omterm{def:b3:gravity:gravity}{distance elasticity} becomes $-1.52$: doubling the
+distance divides trade by $2^{1.515} = 2.86$. A shared border multiplies trade by
+$e^{1.027} = 2.79$, a common official language by $e^{0.825} = 2.28$, and a trade
+agreement by $e^{0.464} = 1.59$.
+
+\section{Zeros and Poisson pseudo-maximum likelihood}\label{sec:b3:gravity:ppml}
+
+Two problems remain. Zeros have no logarithm, so OLS on logs drops them. And
+the log of a variable is not the variable: if the \omterm{def:b3:gravity:gravity}{gravity equation} holds for the
+mean of trade, $E[X_{ij} \mid z] = \exp(z'\beta)$, the error is multiplicative, $X_{ij} =
+\exp(z'\beta)\eta_{ij}$ with $E[\eta \mid z] = 1$.
+
+\begin{proposition}[Logs and heteroskedasticity]\label{prop:b3:gravity:jensen}
+If $E[\eta \mid z] = 1$ and $\eta$ is not constant, then $E[\ln \eta \mid z] < 0$; if the
+distribution of $\eta$ depends on $z$, so in general does $E[\ln \eta \mid z]$, and OLS of $\ln X$
+on $z$ is inconsistent for $\beta$.
+\end{proposition}
+
+\begin{proof}
+The logarithm is strictly concave, so by Jensen's inequality $E[\ln \eta \mid z] < \ln
+E[\eta \mid z] = 0$. Then $E[\ln X \mid z] = z'\beta + E[\ln \eta \mid z]$. When the last term
+varies with $z$, it is part of the regression function, and OLS estimates $\beta$
+plus the slope of that term. For example, if $\ln \eta$ is normal with variance $s^2(z)$
+and mean $-s^2(z)/2$, then $E[\ln \eta \mid z] = -s^2(z)/2$: wherever the spread differs, so
+does the bias.
+\end{proof}
+
+\begin{definition}[Poisson pseudo-maximum-likelihood estimator]\label{def:b3:gravity:ppml}
+\index{Poisson pseudo-maximum-likelihood estimator}\index{PPML}
+The \emph{Poisson pseudo-maximum-likelihood} (PPML) estimator of $\beta$ in $E[X \mid z] =
+\exp(z'\beta)$ solves $\sum_{ij}\bigl(X_{ij} - \exp(z_{ij}'\beta)\bigr)z_{ij} = 0$ --- the first-order
+condition of a Poisson likelihood, used without assuming that $X$ is Poisson.
+\end{definition}
+
+The estimating equation has mean zero whenever the conditional mean is right,
+whatever the variance, so \omterm{def:b3:gravity:ppml}{PPML} is consistent under that condition alone; we
+admit the proof. It keeps the zeros, and it weights flows in levels. Standard
+errors must be robust, since the Poisson variance is not assumed.
+
+\omcode{code/bachelor-3/10-gravity/listings/gravity_ppml.py}{1}{17}{The same equation by \omterm{def:b3:gravity:ppml}{PPML}.}\label{lst:b3:gravity:ppml}
+
+\omoutput{code/bachelor-3/10-gravity/outputs/gravity_ppml.txt}{Smaller elasticities in levels.}\label{out:b3:gravity:ppml}
+
+% output: gravity_ppml
+In levels the \omterm{def:b3:gravity:gravity}{distance elasticity} is $-0.65$, the border coefficient 0.54, the
+agreement 0.38, and a common language no longer matters (its coefficient,
+$-0.03$, is smaller than its standard error). \omterm{def:b3:gravity:ppml}{PPML} gives most weight to the large
+flows, between large and often close economies, and there the costs of
+distance and of foreign languages appear smaller. The file has no zeros, so
+the difference here comes from the weighting and the heteroskedasticity alone
+(\cref{exo:b3:gravity:12}).
+
+\begin{omchart}{The distance elasticity estimated each fourth year, 1996--2020,
+with exporter and importer fixed effects: OLS on log positive flows and PPML.}{CEPII
+Gravity database, BACI flows; our computation}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.6\linewidth, height=0.4\linewidth, xmin=1994, xmax=2022,
+  ymin=-1.8, ymax=-0.3, ylabel={Distance elasticity},
+  legend style={at={(0.97,0.5)}, anchor=east},
+  legend style={font=\footnotesize}]
+  \addplot[omDef, thick, mark=*] table[x=year, y=ols] {figdata/bachelor-3/10-gravity/out/distance_by_year.csv};
+  \addplot[omThm, thick, mark=square*] table[x=year, y=ppml] {figdata/bachelor-3/10-gravity/out/distance_by_year.csv};
+  \legend{OLS on logs, PPML}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: distance_by_year
+Neither estimate shrinks over a quarter-century of cheaper transport and
+communication: the OLS elasticity moves from $-1.35$ in 1996 to $-1.54$ in 2012 and
+$-1.44$ in 2020, the \omterm{def:b3:gravity:ppml}{PPML} one from $-0.55$ to between $-0.64$ and $-0.67$. This is the
+\emph{distance puzzle}. A survey of 1{,}467 estimates from 103 papers found that the
+estimated effect of distance rose around the middle of the twentieth century and
+has stayed high since. % ledger: b3gr:dh.puzzle
+Distance is not only freight: it stands for time, information and trust, which
+fall less with technology than shipping costs do.
+
+\begin{omchart}{Share of ordered country pairs with no recorded trade, among the
+countries recorded each year, 1996--2020 (percent). Coverage of the early years is
+narrower.}{CEPII Gravity database, BACI flows; our computation}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.55\linewidth, height=0.32\linewidth, xmin=1995, xmax=2021,
+  ymin=0, ymax=75, ylabel={Percent of pairs}]
+  \addplot[omDef, thick, mark=none] table[x=year, y=zero_share] {figdata/bachelor-3/10-gravity/out/zeros.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: zeros
+More than a third of all pairs record no trade in every year since 2007 (37.7~\% in
+2019). Those zeros carry information: they are the pairs too far, too small or
+too costly to trade, the extensive margin of \cref{ch:b3:scale-variety-firms}.
+OLS on logs throws them away; \omterm{def:b3:gravity:ppml}{PPML} keeps them when they are in the data.
+
+\section{Borders, languages, agreements}\label{sec:b3:gravity:effects}
+
+Thousands of gravity estimates make a literature large enough for its own
+\omterm{def:b3:credible-empirical-work:meta-analysis}{meta-analysis}.
+
+\begin{record}[Gravity's typical coefficients]
+Over 2{,}508 estimates from 159 papers, the median \omterm{def:b3:gravity:gravity}{distance elasticity} is $-0.89$
+($-1.14$ among studies with fixed effects or equivalent methods); the median
+coefficients are 0.97 and 0.85 on the exporter's and the importer's GDP, 0.49 on a
+shared border and on a common language, 0.91 on a colonial link, 0.47 on a
+regional trade agreement (0.28 with fixed effects) and 0.87 on a common currency.
+% ledger: b3gr:hm.t4
+\end{record}
+
+The most striking cost is the border itself. A study of 1995 found that, after
+controlling for size and distance, Canadian provinces traded 22 times as much
+with each other as with United States states. With \omterm{def:b3:gravity:multilateral-resistance}{multilateral resistance}
+taken into account, the border cuts trade between the two countries by about
+44~\% --- still large, but far below the first estimate, which partly reflected
+the small size of Canada's economy. % ledger: b3gr:avw.border
+
+\begin{definition}[Tariff-equivalent trade cost]\label{def:b3:gravity:tariff-equivalent}
+\index{tariff-equivalent trade cost}
+The \emph{tariff-equivalent} of a trade cost measured by a gravity coefficient $b$
+is the ad valorem tariff that would change trade as much. Since trade varies as
+$t_{ij}^{-\varepsilon}$, a factor that multiplies trade by $e^{b}$ is equivalent to multiplying
+$t_{ij}$ by $e^{-b/\varepsilon}$: a tariff of $e^{-b/\varepsilon} - 1$ when $b < 0$, a tariff cut of $1 -
+e^{-b/\varepsilon}$ when $b > 0$.
+\end{definition}
+
+The tariff-equivalent needs the trade elasticity $\varepsilon$ from outside the
+regression; the median of the estimates identified from tariff changes is 5.03,
+the value we use. % ledger: b3gr:hm.t5
+Not sharing a border is then worth a tariff of $e^{1.027/5.03} - 1 = 22.7~\%$ (with the
+fixed-effects coefficient), and an agreement, by \omterm{def:b3:gravity:ppml}{PPML}, a tariff cut of $1 -
+e^{-0.380/5.03} = 7.3~\%$ --- of the order of the tariffs that agreements remove.
+
+\begin{model}{The gravity equation}
+\assumes CES demand over countries' goods, \omterm{def:b3:ricardian-trade:iceberg}{iceberg trade costs}, and
+market clearing.
+\predicts Trade proportional to the product of the GDPs, divided by trade costs
+relative to \omterm{def:b3:gravity:multilateral-resistance}{multilateral resistance}; a \omterm{def:b3:gravity:gravity}{distance elasticity} around $-1$.
+\tested In thousands of estimates (median \omterm{def:b3:gravity:gravity}{distance elasticity} $-0.89$), and in
+this chapter's own fits on 2019 data, where size and distance alone account for 62~\%
+of the variation in log trade. % ledger: b3gr:hm.t4
+\breaks Zeros; services, which it was not built for; trade costs that change over
+time; and a \omterm{def:b3:gravity:gravity}{distance elasticity} that does not fall as transport gets cheaper.
+\end{model}
+
+\section{The container and the two waves}\label{sec:b3:gravity:waves}
+
+\begin{omchart}{Trade as a share of GDP, (exports + imports)/2 over GDP, 1870--2020:
+unweighted mean over the 13 to 18 advanced economies with data in each
+year (percent).}{Jord\`a--Schularick--Taylor Macrohistory Database, release 6; our computation}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.7\linewidth, height=0.38\linewidth, xmin=1870, xmax=2020,
+  ymin=0, ymax=42, ylabel={Percent of GDP}]
+  \addplot[omDef, thick, mark=none] table[x=year, y=share] {figdata/bachelor-3/10-gravity/out/waves.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\begin{record}[The first wave of globalisation and its end]
+% figdata: waves_points
+Across these economies, trade rose from 17.5~\% of GDP in 1870 to 22.8~\% in 1913,
+collapsed in the First World War, and fell to 12.3~\% in 1932, in the Depression. It
+was back at 17.9~\% in 1950 and passed its 1913 level only in 1974; it reached 35.0~\%
+in 2008 and 37.9~\% in 2019. Globalisation came in two waves, and the first was
+undone for half a century.
+\end{record}
+
+The second wave rode on falling trade costs: tariffs cut in successive rounds of
+negotiation and agreements, and a new way of shipping.
+
+\begin{record}[The container]
+Bernhofen, El-Sahli and Kneller used the dates at which countries first adopted
+container facilities, and the fact that some goods can be containerised and
+others cannot, to estimate the effect of containers on product-level trade from
+1962 to 1990. Among developed countries, the cumulative effect over twenty years
+was about 700~\%, larger than that of tariff liberalisation (working-paper
+estimate). % ledger: b3gr:bek.container
+\end{record}
+
+\section{Exercises}\label{sec:b3:gravity:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:gravity:1}
+In the opening chart, by how much does trade rise, on average, when the product
+of GDPs over distance doubles? Where do the binned points depart from the line,
+and what might explain it?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:gravity:2}
+Pair A has GDPs of 2{,}000 and 500 and is 1{,}000 km apart; pair B has GDPs of
+2{,}000 and 1{,}000 and is 4{,}000 km apart. With unit GDP elasticities and a \omterm{def:b3:gravity:gravity}{distance
+elasticity} of $-0.9$, which pair trades more, and by what factor?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:gravity:3}
+With a \omterm{def:b3:gravity:gravity}{distance elasticity} of $-0.9$, by what percentage does trade change when
+distance doubles? When it falls by 10~\%?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:gravity:4}
+What observation on one pair of countries would contradict gravity? Why is one
+such pair not enough to reject it?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:gravity:5}
+Add a common official language to the regression of the OLS listing. How do the
+coefficients on distance and on a colonial link change, and why?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:gravity:6}
+Estimate the agreement coefficient with fixed effects by OLS and \omterm{def:b3:gravity:ppml}{PPML} for 2005
+and 2019. Convert each into a percentage effect on trade. Is the gap between the
+two estimators stable?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:gravity:7}
+With $\varepsilon = 5$, find the tariff-equivalent of not sharing a border, using the
+fixed-effects coefficient 1.027 and the \omterm{def:b3:gravity:ppml}{PPML} coefficient 0.537.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:gravity:8}
+A new port cuts the ad valorem cost of shipping to one partner from 20~\% to 10~\%.
+With $\varepsilon = 5$, by how much does trade with that partner rise, before any change in
+\omterm{def:b3:gravity:multilateral-resistance}{multilateral resistance}? Will the general-equilibrium effect be larger or smaller,
+and what happens to trade with other partners?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:gravity:9}
+Why does OLS on logs drop zero flows? If zeros are most common between small and
+distant countries, in which direction does dropping them bias the \omterm{def:b3:gravity:gravity}{distance
+elasticity}?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:gravity:10}
+Estimate the \omterm{def:b3:gravity:gravity}{distance elasticity} with fixed effects by OLS every fourth year from
+1996 to 2020, and test for a linear trend. Is the elasticity falling?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:gravity:11}
+Two countries of equal size $Y$ each make one variety; $t_{ii} = 1$ and $t_{12} = t_{21} =
+t$. Use \cref{prop:b3:gravity:structural} to find $X_{12}/X_{11}$ and each country's
+share of spending on imports. How does the import share depend on $t$ and $\sigma$?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:gravity:12}
+Simulate $y = e^{1 + x}\eta$ with $x$ uniform on $[0, 1]$, $\ln\eta$ normal with variance $0.5 + x$
+and mean $-(0.5 + x)/2$. Compare the slope estimated by OLS on $\ln y$ with the \omterm{def:b3:gravity:ppml}{PPML}
+slope over 200 samples of 2{,}000. Explain the OLS result with
+\cref{prop:b3:gravity:jensen}.
+\end{exercise}
+
+\section{Problem: Brenland Joins a Customs Union}\label{sec:b3:gravity:problem}
+
+\begin{problem}[{Weekend problem --- Brenland joins a customs union}]\label{pb:b3:gravity:union}
+An invented world has twenty countries: Brenland, Kestria and eighteen others,
+N01 to N18. Brenland and four neighbours form a customs union. Trade follows the
+structural gravity of \cref{prop:b3:gravity:structural}, observed with noise that
+is larger for small flows, and flows below 0.05 billion dalens go unrecorded.
+Of the 380 ordered pairs, 20 are pairs of members and 6 record no trade.
+% figdata: union_stats
+The union's members and the two largest non-members, with their GDP (billions
+of dalens) and distance from Brenland (thousands of km):
+% figdata: union_table
+\begin{center}\small
+\pgfplotstabletypeset[col sep=comma,
+  columns/name/.style={column name={Country}, string type, column type=l},
+  columns/gdp/.style={column name={GDP}, fixed, precision=0},
+  columns/dist/.style={column name={Distance}, fixed, fixed zerofill, precision=2},
+  columns/member/.style={column name={Member}, fixed, precision=0},
+  every head row/.style={after row=\hline}, every last row/.style={after row=\hline}]
+  {figdata/bachelor-3/10-gravity/out/union_table.csv}
+\end{center}
+Brenland's GDP is 120. Three regressions of exports on log distance and a dummy
+for pairs of members, the first also on log GDPs (standard errors in parentheses):
+% figdata: union_estimates
+\begin{center}\small
+\pgfplotstabletypeset[col sep=comma,
+  columns={method,pairs,gdp_o,gdp_d,dist,dist_se,union,union_se},
+  columns/method/.style={column name={Method}, string type, column type=l},
+  columns/pairs/.style={column name={Pairs}, fixed, precision=0},
+  columns/gdp_o/.style={column name={GDP$_o$}, fixed, fixed zerofill, precision=2, empty cells with={---}},
+  columns/gdp_d/.style={column name={GDP$_d$}, fixed, fixed zerofill, precision=2, empty cells with={---}},
+  columns/dist/.style={column name={Distance}, fixed, fixed zerofill, precision=3},
+  columns/dist_se/.style={column name={}, fixed, fixed zerofill, precision=3, postproc cell content/.append style={/pgfplots/table/@cell content/.add={(}{)}}},
+  columns/union/.style={column name={Union}, fixed, fixed zerofill, precision=3},
+  columns/union_se/.style={column name={}, fixed, fixed zerofill, precision=3, postproc cell content/.append style={/pgfplots/table/@cell content/.add={(}{)}}},
+  every head row/.style={after row=\hline}, every last row/.style={after row=\hline}]
+  {figdata/bachelor-3/10-gravity/out/union_estimates.csv}
+\end{center}
+With the \omterm{def:b3:gravity:ppml}{PPML} coefficients, the model gives Brenland's trade (exports plus
+imports, billions of dalens) without and with the union:
+% figdata: union_brenland
+\begin{center}\small
+\pgfplotstabletypeset[col sep=comma,
+  columns/partners/.style={column name={Brenland's trade with}, string type, column type=l},
+  columns/before/.style={column name={Without union}, fixed, fixed zerofill, precision=1},
+  columns/after/.style={column name={With union}, fixed, fixed zerofill, precision=1},
+  columns/change/.style={column name={Change (\%)}, fixed, fixed zerofill, precision=1},
+  every head row/.style={after row=\hline}, every last row/.style={after row=\hline}]
+  {figdata/bachelor-3/10-gravity/out/union_brenland.csv}
+\end{center}
+
+\medskip\noindent\textbf{Part I --- gravity by OLS.}
+\begin{enumerate}
+\item How many pairs does each regression use, and why does OLS use fewer?
+\item By the OLS estimate, by how much does trade fall when distance doubles?
+\item Using the OLS coefficients, by what factor should Brenland's exports to
+Kestria exceed its exports to N10, setting the union aside?
+\item By what percentage does membership raise trade between two members,
+according to OLS?
+\item The GDP coefficients are well below 1. Which part of the structural equation
+does this regression omit, and why does that bias it?
+\item Compare the OLS distance coefficient with the median of published
+estimates.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- multilateral resistance and fixed effects.}
+\begin{enumerate}[resume]
+\item Why do the exporter and importer dummies make the GDPs unnecessary?
+\item How many dummies are needed, with a constant?
+\item In this world the true \omterm{def:b3:gravity:gravity}{distance elasticity} is $-1$ and the true union
+coefficient 0.5. Is the fixed-effects distance estimate within two standard
+errors of the truth?
+\item Give a 95~\% confidence interval for the union coefficient by OLS with
+fixed effects.
+\item N12 is large and very close to Brenland. How does that affect Brenland's
+\omterm{def:b3:gravity:multilateral-resistance}{multilateral resistance} and its trade with N10?
+\item Why would two remote countries in this world trade more with each other
+than their distance predicts?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- PPML.}
+\begin{enumerate}[resume]
+\item Why can \omterm{def:b3:gravity:ppml}{PPML} use all 380 pairs?
+\item Give the \omterm{def:b3:gravity:ppml}{PPML} union coefficient's 95~\% interval, and the percentage effect
+on trade between two members that it implies.
+\item The noise is larger for small flows. Use \cref{prop:b3:gravity:jensen} to
+explain why OLS on logs and \omterm{def:b3:gravity:ppml}{PPML} disagree.
+\item Which estimator came closest to the true \omterm{def:b3:gravity:gravity}{distance elasticity}, and to the
+true union coefficient?
+\item With $\varepsilon = 5$, find the tariff cut equivalent to the union by \omterm{def:b3:gravity:ppml}{PPML}.
+\item In this world, crossing a border divides the cost term by $e^{1.5}$. Find the
+tariff-equivalent of the border.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- trade creation and diversion.}
+\begin{enumerate}[resume]
+\item Brenland's trade with members rises by less than the \omterm{def:b3:gravity:ppml}{PPML} partial effect.
+Why?
+\item What happens to Brenland's trade with non-members? Name the effect.
+\item Why do Brenland's sales at home fall?
+\item By what percentage does Brenland's total trade change?
+\item Can gravity alone say whether Brenland gains from the union? What else
+would you need?
+\item Would the union's effect on Brenland be larger if its members were far
+away? Explain.
+\item State the result: the union's effect on Brenland's trade with members and
+with non-members, in percent.
+\end{enumerate}
+\end{problem}

@@ -1,0 +1,303 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g11-01. Marginal quantities as derivatives, the rule
+% marginal benefit = marginal cost, average and marginal, tax rates recalled from Book 1 (g8), sunk costs
+% recalled from Book 1 (g7). Real numbers: figdata/grade-11/01-marginal-reasoning/ (WDI life expectancy and
+% health spending, 2019). Ledger: Arkes and Blumer (1985), Experiment 2. Brenland tax bands invented
+% (code/shared/country TAX_BANDS); the bakery of the problem is invented in the problem itself.
+\chapter{Marginal Reasoning}\label{ch:g11:marginal-reasoning}
+
+In 2019, a country that spent 100 dollars a year on the health of each person could expect, from the line that best fits 193 countries, a life expectancy
+about 3.4 years longer if it spent 100 dollars more. A country that spent 1000 dollars could expect about 0.46 years more from the same extra 100 dollars,
+and one that spent 5000, about a month. The first dollars buy vaccines, clean births and antibiotics; the later ones buy rarer treatments for rarer illnesses.
+% figdata: life_fit (n 193; gain100_at100 3.38, gain100_at1000 0.46, gain100_at5000 0.10 years)
+
+The line says nothing about what causes what: richer countries both spend more on health and have cleaner water, better food and safer work. What it shows
+is the shape that runs through this chapter. What matters for a decision is not the total that a choice brings, but what the next step brings and what it
+costs. Economists call the next step the margin.
+
+\begin{openingchart}{Life expectancy at birth against health spending per person, 193 countries, 2019. Spending is in dollars a year at purchasing-power
+parity, on a times-ten scale. The curve is the line, on this scale, that passes closest to the points; the years gained from 100 more dollars fall as spending
+rises.}{World Bank, World Development Indicators: life expectancy at birth, total; current health expenditure per capita, PPP}
+\begin{tikzpicture}
+\begin{semilogxaxis}[omscatter, log basis x=10, log ticks with fixed point, xtick={10,100,1000,10000}, width=0.84\linewidth, height=6.6cm,
+  xmin=20, xmax=12000, ymin=50, ymax=90, xlabel={health spending per person (dollars a year)}, ylabel={life expectancy (years)}]
+\addplot[omDef, only marks, mark=*, mark size=1.2pt, fill opacity=0.7]
+  table[x=health, y=life] {figdata/grade-11/01-marginal-reasoning/out/life.csv};
+\addplot[black, thick, no markers, sharp plot] table[x=health, y=life] {figdata/grade-11/01-marginal-reasoning/out/life_curve.csv};
+\end{semilogxaxis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: the \emph{opportunity cost} of a choice is the best option given up; a \emph{sunk cost} is a cost already paid that cannot be
+recovered, and it should not enter a decision; a firm's \emph{profit} is its revenue minus its costs; the \emph{marginal tax rate} is the share of one more
+dalen of income taken in tax, and the \emph{average tax rate} is total tax divided by income. From mathematics: the derivative $f'(x)$ as the slope of $f$ at
+$x$; a differentiable function on an interval has its maximum where $f' = 0$ if $f'$ goes from positive to negative there.
+\end{recall}
+
+\section{The next unit}\label{sec:g11:marginal-reasoning:next-unit}
+
+\begin{definition}[Marginal quantity]\label{def:g11:marginal-reasoning:marginal-quantity}
+If a total $F(q)$ depends on a quantity $q$, the \emph{marginal quantity}\index{marginal quantity} of $F$ at $q$ is the change in $F$ brought by one more unit
+of $q$. When $F$ is differentiable and one unit is small, it is the derivative $F'(q)$.
+\end{definition}
+
+\begin{definition}[Marginal benefit, cost and revenue]\label{def:g11:marginal-reasoning:marginal-benefit}
+The \emph{marginal benefit}\index{marginal benefit} of an activity is the extra benefit from one more unit of it; its \emph{marginal cost}\index{marginal cost}%
+\phantomsection\label{def:g11:marginal-reasoning:marginal-cost} is the extra cost of that unit; a firm's \emph{marginal revenue}\index{marginal revenue}%
+\phantomsection\label{def:g11:marginal-reasoning:marginal-revenue} is the extra revenue from selling one more unit.
+\end{definition}
+
+\begin{example}[A step and a slope]\label{ex:g11:marginal-reasoning:step}
+A workshop's cost of making $q$ chairs a week is $C(q) = 200 + 10q + 0.5q^2$ dalens. Going from 20 to 21 chairs costs $C(21) - C(20) = 10 + 0.5 \times (441 - 400)
+= 30.5$ dalens. The derivative $C'(q) = 10 + q$ gives $C'(20) = 30$. The two differ by half a dalen: the derivative is the slope at 20, the step is the average
+slope between 20 and 21. When one unit is small compared with the quantity, the two are close, and the derivative is easier to work with.
+\end{example}
+
+The fixed 200 dalens a week (the rent of the workshop, say) appear in $C$ but not in $C'$: they do not change with the number of chairs, so they are no part of the
+cost of any one more chair.
+
+\section{Marginal benefit equals marginal cost}\label{sec:g11:marginal-reasoning:rule}
+
+\begin{definition}[Net benefit]\label{def:g11:marginal-reasoning:net-benefit}
+The \emph{net benefit}\index{net benefit} of doing $q$ units of an activity is its total benefit minus its total cost, $N(q) = B(q) - C(q)$.
+\end{definition}
+
+\begin{proposition}[The marginal rule]\label{prop:g11:marginal-reasoning:rule}
+Let $B$ and $C$ be differentiable on an interval, and suppose that the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal benefit} $B'$ minus the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} $C'$ is positive below $q^*$, zero at
+$q^*$ and negative above it. Then the \omterm{def:g11:marginal-reasoning:net-benefit}{net benefit} is largest at $q^*$, where \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal benefit} equals \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost}.
+\end{proposition}
+\begin{proof}
+$N'(q) = B'(q) - C'(q)$. It is positive below $q^*$, so $N$ increases up to $q^*$; it is negative above $q^*$, so $N$ decreases after it. Hence $N(q^*) \geq N(q)$
+for every $q$ in the interval.
+\end{proof}
+
+In words: keep going while the next unit brings more than it costs, and stop where it brings just what it costs. The proposition needs the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal benefit}
+to fall, or the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} to rise, as $q$ grows: if the next unit always brought more than it cost, there would be no best stopping point inside the interval.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.42cm, y=0.055cm]
+\begin{scope}
+\draw[econ axes] (0,78) node[left, font=\small] {dalens} |- (11,0) node[below left=12pt and 0pt, font=\small] {$q$};
+\draw[demand, domain=0:9, samples=37] plot (\x, {12*\x - 0.5*\x*\x}) node[right, font=\scriptsize] {$B$};
+\draw[supply, domain=0:9, samples=37] plot (\x, {2*\x + 0.5*\x*\x}) node[right, font=\scriptsize] {$C$};
+\draw[guide] (5,22.5) -- (5,0);
+\draw[omThm, thick, <->] (5,23.5) -- (5,46.5);
+\node[font=\scriptsize, left] at (4.9,35) {$N = 25$};
+\foreach \y in {20,40,60} \draw (0,\y) -- (-0.2,\y) node[left, font=\footnotesize] {\y};
+\node[below, font=\footnotesize] at (5,0) {5};
+\node[below, font=\footnotesize] at (10,0) {10};
+\end{scope}
+\begin{scope}[xshift=7.2cm, y=0.3cm]
+\draw[econ axes] (0,14) node[left, font=\small] {dalens} |- (11,0) node[below left=12pt and 0pt, font=\small] {$q$};
+\draw[demand] (0,12) -- (10,2) node[right, font=\scriptsize] {$B'$};
+\draw[supply] (0,2) -- (10,12) node[right, font=\scriptsize] {$C'$};
+\draw[guide] (5,7) -- (5,0);
+\node[eqpoint] at (5,7) {};
+\foreach \y in {2,7,12} \draw (0,\y) -- (-0.2,\y) node[left, font=\footnotesize] {\y};
+\node[below, font=\footnotesize] at (5,0) {5};
+\node[below, font=\footnotesize] at (10,0) {10};
+\end{scope}
+\end{tikzpicture}
+
+{\small Left: total benefit $B(q) = 12q - 0.5q^2$ and total cost $C(q) = 2q + 0.5q^2$. The gap between them, the \omterm{def:g11:marginal-reasoning:net-benefit}{net benefit}, is largest at $q = 5$, where the two
+curves are equally steep. Right: the same choice seen at the margin: $B'(q) = 12 - q$ falls, $C'(q) = 2 + q$ rises, and they cross at $q = 5$.}
+\end{omfigure}
+
+\begin{model}{The optimising decision-maker}
+\assumes A person or a firm chooses a quantity to make its \omterm{def:g11:marginal-reasoning:net-benefit}{net benefit} as large as possible, knowing its benefits and costs.
+\predicts The chosen quantity sits where \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal benefit} equals \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost}; it moves when a \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal benefit} or a \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} changes; it does not move when
+  a cost that does not depend on the quantity changes, nor when a sunk cost changes.
+\tested Consistent with it: producers expand when the price of their output rises and its cost does not, as American crude oil output rose by
+  three-quarters within six years of high prices (\cref{ch:g10:supply}), and buyers of fuel cut their use when its price rises
+  (\cref{ch:g10:elasticities}). A rule of thumb predicts the same directions; a test of the marginal rule proper is its claim that sunk costs do
+  not matter, and the randomised test below finds that they do for a while.
+\breaks Sunk costs do enter some decisions. In a theatre's 1982--83 season, the first buyers of a season ticket were given, at random, the normal price of 15
+  dollars, 2 dollars off or 7 dollars off. Over the first five plays, buyers at the normal price used 4.11 tickets each, against 3.32 and 3.29 for the two
+  discounted groups; over the last five plays the groups no longer differed (Arkes and Blumer 1985). The rule also needs the quantity to be divisible: when it
+  comes in whole units, the slope can point to a quantity that cannot be bought.
+\end{model}
+% ledger: g11:arkes-blumer-1985
+
+\section{Average and marginal}\label{sec:g11:marginal-reasoning:average}
+
+The average cost of $q$ units is $A(q) = C(q)/q$. Average and marginal answer different questions: what each unit has cost so far, and what the next unit will
+cost.
+
+\begin{proposition}[The marginal pulls the average]\label{prop:g11:marginal-reasoning:average}
+Let $C$ be differentiable and $q > 0$, with $A(q) = C(q)/q$ and $M(q) = C'(q)$. Then $A'(q) = \big(M(q) - A(q)\big)/q$: the average rises where the marginal is
+above it, falls where the marginal is below it, and is flat where the two are equal.
+\end{proposition}
+\begin{proof}
+By the quotient rule, $A'(q) = \big(C'(q)\,q - C(q)\big)/q^2 = \big(C'(q) - C(q)/q\big)/q = \big(M(q) - A(q)\big)/q$. Since $q > 0$, $A'(q)$ has the sign of $M(q) - A(q)$.
+\end{proof}
+
+The same holds for any average: a student whose next mark is above her average raises it. With $C(q) = 64 + q^2$, the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} is $2q$ and the average cost
+$64/q + q$; they are equal at $q = 8$, where both are 16, and that is the bottom of the average cost curve.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.42cm, y=0.12cm]
+\draw[econ axes] (0,36) node[left, font=\small] {dalens} |- (17,0) node[below left=12pt and 0pt, font=\small] {$q$};
+\draw[supply, domain=2:16, samples=50] plot (\x, {64/\x + \x}) node[right, font=\scriptsize] {average cost $64/q + q$};
+\draw[demand, domain=0:16] plot (\x, {2*\x}) node[right, font=\scriptsize] {marginal cost $2q$};
+\draw[guide] (8,16) -- (8,0);
+\node[eqpoint] at (8,16) {};
+\foreach \y in {16,32} \draw (0,\y) -- (-0.2,\y) node[left, font=\footnotesize] {\y};
+\node[below, font=\footnotesize] at (8,0) {8};
+\node[below, font=\footnotesize] at (16,0) {16};
+\end{tikzpicture}
+
+{\small Average cost falls while \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} lies below it and rises once \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} is above it; the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} line crosses the average cost curve at its
+lowest point, $q = 8$.}
+\end{omfigure}
+
+Taxes on income show the two side by side. In Brenland, the first \dal{12000} of a year's income are not taxed; income from \dal{12000} to \dal{40000} is taxed at
+20\,\%, from \dal{40000} to \dal{100000} at 35\,\%, and above \dal{100000} at 45\,\%. A person earning \dal{50000} pays $0.20 \times 28000 + 0.35 \times 10000 = 9100$ dalens:
+an average rate of 18.2\,\%, a marginal rate of 35\,\%.
+% figdata: tax_rates (50000: marginal 35, average 18.2); code/shared/country TAX_BANDS
+
+\begin{omchart}{Brenland's income tax: the marginal rate, in steps, and the average rate, against income in dalens a year.}{Brenland tax law (invented)}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.84\linewidth, height=5.4cm, xmin=0, xmax=150000, ymin=0, ymax=50, ylabel={percent of income},
+  xlabel={income (dalens a year)}, scaled x ticks=false, xticklabel style={/pgf/number format/fixed, /pgf/number format/1000 sep={\,}},
+  xtick={0,40000,100000,150000}, legend pos=south east, legend style={font=\scriptsize}]
+\addplot[omThm, thick, const plot mark left] table[x=income, y=marginal] {figdata/grade-11/01-marginal-reasoning/out/tax_rates.csv};
+\addlegendentry{marginal rate}
+\addplot[omDef, thick] table[x=income, y=average] {figdata/grade-11/01-marginal-reasoning/out/tax_rates.csv}; \addlegendentry{average rate}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\begin{measure}[Marginal and average tax rates]
+The average rate says how much of a person's income the tax takes; the marginal rate says how much of one more dalen it takes, and it is the one that matters for
+a decision to work an extra hour or take a better-paid job. The average rate is never above the marginal rate in a schedule like Brenland's, and it climbs towards
+the top rate without reaching it. Measuring the marginal rate a person actually faces means adding every tax and every benefit that changes with income: social
+contributions, and benefits that are cut as earnings rise, can push it well above the rate printed in the tax law.
+\end{measure}
+
+\section{What is gone is gone}\label{sec:g11:marginal-reasoning:sunk}
+
+A sunk cost is the same whatever is chosen now, so it cancels out of every comparison: it shifts the \omterm{def:g11:marginal-reasoning:net-benefit}{net benefit} of every option by the same amount and leaves the
+best option unchanged. A firm that spent \dal{80000} developing a product and needs \dal{30000} more to finish it should finish if the product will bring in more than
+\dal{30000}, and stop otherwise. The \dal{80000} decide nothing. What they can do is teach: a firm that keeps losing such sums learns something about how it picks its
+projects.
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g11:marginal-reasoning:1}
+The total cost of making 0 to 5 cakes is 20, 26, 30, 36, 46 and 60 dalens. Compute the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} of each cake.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:marginal-reasoning:2}
+A student's total benefit from 0 to 5 hours of revision, in points on the exam, is 0, 30, 50, 62, 68 and 70. Each hour of revision costs her the equivalent of 10
+points of other work. Compute the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal benefit} of each hour, and the number of hours she should revise.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:marginal-reasoning:3}
+A cost function is $C(q) = 50 + 4q + 0.5q^2$. Compute the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} $C'(10)$, and compare it with $C(11) - C(10)$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:marginal-reasoning:4}
+Read the opening chart. About what life expectancy goes with spending of 100 dollars a person? Of 1000? Of 10000? By about how many years does it rise each time
+spending is multiplied by ten?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:marginal-reasoning:5}
+A town has spent 2 million dalens on half a bridge. Finishing it would cost 1.5 million dalens more, and the finished bridge would bring benefits worth 1.2
+million dalens. Should the town finish it? Would your answer change if it had spent 3 million dalens so far?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:marginal-reasoning:6}
+The \omterm{def:g11:marginal-reasoning:net-benefit}{net benefit} of $q$ units is $N(q) = 40q - 2q^2 - 50$. Find the quantity that makes it largest, and the largest \omterm{def:g11:marginal-reasoning:net-benefit}{net benefit}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:marginal-reasoning:7}
+The benefit of $q$ units is $B(q) = 30q - q^2$ and the cost $C(q) = 6q + 0.5q^2$. Find the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal benefit} and \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost}, the best quantity, and the \omterm{def:g11:marginal-reasoning:net-benefit}{net
+benefit} there.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:marginal-reasoning:8}
+With Brenland's tax bands, compute the tax, the average rate and the marginal rate for an income of \dal{30000}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:marginal-reasoning:9}
+Same question for an income of \dal{120000}. How much of an extra \dal{1000} does this person keep?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:marginal-reasoning:10}
+In \cref{exo:g11:marginal-reasoning:7}, a charge of 3 dalens is added to each unit. What happens to the best quantity? What if, instead, a single charge of 50
+dalens is added whatever the quantity?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:marginal-reasoning:11}
+A cost function is $C(q) = 100 + q^2$. Compute the average and the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} at $q = 5$, $10$ and $15$, and say whether the average is rising or falling at each.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:marginal-reasoning:12}
+In the theatre experiment of the model box, what would the optimising decision-maker predict for the three groups? Which part of the result breaks the prediction,
+and which part fits it? Why does it matter that the discounts were handed out at random?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:marginal-reasoning:13}
+A list of $n$ numbers has mean $m$. Show that adding a number $x$ raises the mean if $x > m$ and lowers it if $x < m$, and compute the new mean. Relate this to
+\cref{prop:g11:marginal-reasoning:average}.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:marginal-reasoning:14}
+A firm can run only a whole number $q$ of delivery vans, and its \omterm{def:g11:marginal-reasoning:net-benefit}{net benefit} is $N(q) = 20.3q - q^3/3$ dalens a day. Where is $N'(q) = 0$? Compute $N(4)$ and
+$N(5)$. Which number of vans should the firm run, and why does rounding the answer of the derivative mislead here?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:marginal-reasoning:15}
+A Brenland benefit pays \dal{6000} a year to a person with no earnings, and is cut by 50 centimes for every dalen earned until it reaches zero. Using Brenland's
+tax bands, compute the person's total income (earnings plus benefit minus tax) at earnings of \dal{0}, \dal{10000} and \dal{14000}. What is the marginal rate on the
+next dalen earned at \dal{10000}? Compare it with the top tax rate.
+\end{exercise}
+
+\section{Problem: A Bakery at the Margin}
+
+\begin{problem}[{Weekend problem --- a bakery chooses how many loaves to bake}]
+\label{pb:g11:marginal-reasoning:1}
+A bakery in a town in Brenland sells its own loaves. If it bakes and sells $q$ loaves a day, the price at which they all sell is $p = 6 - 0.01q$ dalens. Its cost
+is $C(q) = 120 + 0.9q + 0.005q^2$ dalens a day: 120 dalens of daily rent, and flour, power and wages that grow with the number of loaves. Last year the baker
+bought an oven for \dal{9000}; it cannot be resold.
+
+\medskip
+\noindent\textbf{Part I --- Revenue and cost at the margin.}
+\begin{enumerate}
+\item Write the bakery's revenue $R(q)$, and compute the price and the revenue at $q = 100$.
+\item Compute the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal revenue} $R'(q)$, its value at $q = 100$, and compare with $R(101) - R(100)$.
+\item Compute the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} $C'(q)$ and its value at $q = 100$.
+\item Compute the average cost at $q = 100$. Why does it differ from the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost}?
+\item Should the bakery bake a 101st loaf? Answer with marginal quantities only.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The best number of loaves.}
+\begin{enumerate}[resume]
+\item Find the number of loaves at which \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal revenue} equals \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost}.
+\item Compute the price at that quantity.
+\item Compute the profit.
+\item Check that the profit is lower at 169 and at 171 loaves.
+\item Compute the average and \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} at the best quantity. Is the average cost rising or falling there?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Flour costs more.}
+\begin{enumerate}[resume]
+\item The price of flour rises, adding 0.60 dalens to the cost of each loaf. Write the new cost and \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost}.
+\item Find the new best quantity.
+\item Compute the new price.
+\item Compute the new profit.
+\item The cost of each loaf rose by 0.60 dalens. By how much did the price rise? Who bears the rest?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Costs that do not move the margin.}
+\begin{enumerate}[resume]
+\item Does the oven's \dal{9000} change the best number of loaves? Explain.
+\item The baker says: ``We must sell more loaves to pay off the oven.'' What is wrong with this?
+\item After the flour rise, the landlord raises the rent to 250 dalens a day. What happens to the best quantity and to the profit?
+\item The lease can be ended at any time. Up to what daily rent should the bakery stay open?
+\item State the result of the problem: the profit-maximising number of loaves and the profit, before and after the flour price rise.
+\end{enumerate}
+\end{problem}

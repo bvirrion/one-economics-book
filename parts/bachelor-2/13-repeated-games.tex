@@ -1,0 +1,446 @@
+\chapter{Repeated Games}\label{ch:b2:repeated-games}
+
+Firms that agree to fix prices gain together, and each gains more by secretly undercutting the others. In a
+game played once, the agreement collapses: it is a prisoner's dilemma. Yet cartels exist, and some last for
+decades. The chart summarises how long cartels lasted in nine samples, from nineteenth-century
+international cartels to those prosecuted in the 1990s.
+
+\begin{openingchart}{Duration of cartels in nine samples: average in years (dot) and, where reported, the
+  shortest and longest duration (bar). For export associations of 1918--1965 the figure is a median;
+  for international cartels of 1920--1939 it covers the 28 cartels not ended by the Second World War (8.3 years
+  for all 71). Samples sorted by average duration.}{Levenstein and Suslow (2006), Table~1}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.62\linewidth, height=0.6\linewidth, xmin=0, xmax=30, ymin=0.4,
+    ymax=9.6, ymajorgrids=false, xlabel={Duration of a cartel (years)},
+    ytick=data, yticklabels from table={figdata/bachelor-2/13-repeated-games/out/cartels.csv}{sample},
+    y tick label style={font=\footnotesize}]
+  \addplot[only marks, mark=*, mark size=2.2pt, omDef, error bars/.cd, x dir=both, x explicit,
+      error bar style={draw=omDef, line width=0.9pt}, error mark options={draw=omDef, rotate=90, mark size=2pt}]
+    table[x=mean, y=pos, x error plus=plus, x error minus=minus]
+    {figdata/bachelor-2/13-repeated-games/out/cartels.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% ledger: b2:ls2006-t1, b2:ls2006-text
+% figdata: cartels_summary (lowest 3.7, highest 10, median 5.3, longest 29, with_range 6)
+Average durations run from 3.7 years (international cartels of 1920--1939, counting only those not ended by the war) to
+10 years, with a median of 5.3, and within each sample the spread is wide:
+some cartels end within a year, others last 18 to 29 years. These are cartels that were discovered, most of
+them by prosecutors, so the sample leaves out any that were never found.
+
+The prisoner's dilemma of \cref{ch:b2:static-games} is played once. Firms in a market meet again every week,
+and what they do today can change what the others do tomorrow. This chapter shows that repetition can sustain
+cooperation that a single play cannot, works out when, and draws the lessons for \omterm{def:b2:repeated-games:collusion}{collusion} and for
+\omterm{def:b2:repeated-games:reputation}{reputations} in markets where buyers cannot see quality before they buy.
+
+\begin{recall}
+From \cref{ch:b2:static-games}: the prisoner's dilemma and \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium}. From
+\cref{ch:b2:dynamic-games}: \omterm{def:b2:dynamic-games:spe}{subgame-perfect equilibrium} and \omterm{def:b2:dynamic-games:backward-induction}{backward induction}. From the Year 1 volume:
+Bertrand and Cournot competition.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:repeated-games:symbols}
+In the prisoner's dilemma, each player earns $R$ when both cooperate, $P$ when both defect, $T$ when she defects
+against a cooperator and $S$ when she cooperates against a defector, with $T > R > P > S$. $\beta$ is the \omterm{def:b2:intertemporal-choice:discount-factor}{discount factor}
+per period, $\beta^*$ its critical value, $n$ the number of firms, $\Pi$ the monopoly profit of the market per period and $L$
+the number of periods before a deviation is detected.
+\end{notation}
+
+\section{Finite repetition}\label{sec:b2:repeated-games:finite}
+
+\begin{definition}[Stage game]\label{def:b2:repeated-games:stage-game}
+The \emph{stage game}\index{stage game} of a \omterm{def:b2:repeated-games:repeated-game}{repeated game} is the game in normal form that is played in each
+period.
+\end{definition}
+
+\begin{definition}[Repeated game]\label{def:b2:repeated-games:repeated-game}
+A \emph{repeated game}\index{repeated game} is a dynamic game in which the same \omterm{def:b2:repeated-games:stage-game}{stage game} is played in
+every period, finitely or infinitely often, each player observing the actions of every earlier period before
+choosing her action in the current one.
+\end{definition}
+
+A strategy in a \omterm{def:b2:repeated-games:repeated-game}{repeated game} says what to play in each period after each possible history of play.
+
+\begin{proposition}[Unravelling]\label{prop:b2:repeated-games:unravelling}
+If the prisoner's dilemma is repeated a known, finite number of times, every player defects in every period in
+the unique \omterm{def:b2:dynamic-games:spe}{subgame-perfect equilibrium}.
+\end{proposition}
+
+\begin{proof}
+In the last period nothing follows, so the period is the \omterm{def:b2:repeated-games:stage-game}{stage game}, and both defect whatever happened before.
+In the period before, play in the last period is therefore fixed whatever happens now; today's action has no
+effect on the future, so both defect today too. Repeating the argument back to the first period, both defect in
+every period after every history.
+\end{proof}
+
+The argument relies on a last period that both players know. When the game might go on, the future can
+reward cooperation today.
+
+\section{Infinite repetition and discounting}\label{sec:b2:repeated-games:infinite}
+
+\begin{definition}[Discounted average payoff]\label{def:b2:repeated-games:average-payoff}
+The \emph{discounted average payoff}\index{discounted average payoff} of a stream of stage-game payoffs $u_0,
+u_1, u_2, \dots$ is $(1 - \beta)\sum_{t \ge 0} \beta^t u_t$. A constant stream $u$ has discounted average payoff $u$.
+\end{definition}
+
+The \omterm{def:b2:intertemporal-choice:discount-factor}{discount factor} $\beta$ need not measure patience alone. If the game continues to the next period with
+probability $\rho$ and the interest rate is $r$, a payoff next period is worth $\rho/(1 + r)$ today: an infinitely \omterm{def:b2:repeated-games:repeated-game}{repeated game}
+with $\beta = \rho/(1 + r)$ describes a relationship that ends at a random date that no one can foresee.
+
+\section{Trigger strategies}\label{sec:b2:repeated-games:trigger}
+
+\begin{definition}[Grim-trigger strategy]\label{def:b2:repeated-games:grim-trigger}
+In the repeated prisoner's dilemma, the \emph{grim-trigger strategy}\index{grim-trigger strategy} cooperates in
+the first period and in every period in which no player has defected before, and defects for ever after any
+defection.
+\end{definition}
+
+\begin{definition}[Tit for tat]\label{def:b2:repeated-games:tit-for-tat}
+\emph{Tit for tat}\index{tit for tat} cooperates in the first period and then plays whatever the other player
+played in the previous period.
+\end{definition}
+
+\begin{definition}[Critical discount factor]\label{def:b2:repeated-games:critical-delta}
+The \emph{critical discount factor}\index{critical discount factor} $\beta^*$ of a \omterm{def:b2:static-games:profile}{strategy profile} is the smallest
+\omterm{def:b2:intertemporal-choice:discount-factor}{discount factor} at which the profile is a \omterm{def:b2:dynamic-games:spe}{subgame-perfect equilibrium}.
+\end{definition}
+
+To check that a profile is \omterm{def:b2:dynamic-games:subgame}{subgame} perfect, it is enough to check one-shot deviations: that in no \omterm{def:b2:dynamic-games:subgame}{subgame} can a
+player gain by changing her action in one period and then following her strategy again. If a deviation of any
+kind gained, then with discounting a deviation that ends after finitely many periods would gain too, and the
+last period in which such a deviation differs from the strategy would be a profitable one-shot deviation.
+
+\begin{proposition}[Grim trigger]\label{prop:b2:repeated-games:grim}
+In the infinitely repeated prisoner's dilemma, both players playing grim trigger is a \omterm{def:b2:dynamic-games:spe}{subgame-perfect
+equilibrium} if and only if
+\[
+\beta \ge \beta^* = \frac{T - R}{T - P}.
+\]
+\end{proposition}
+
+\begin{proof}
+There are two kinds of \omterm{def:b2:dynamic-games:subgame}{subgame}. After a defection, both defect for ever; this repeats a \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} of the
+\omterm{def:b2:repeated-games:stage-game}{stage game}, and since future play does not depend on today's action, no one-shot deviation gains. With no
+defection so far, cooperating for ever yields $R$; a one-shot deviation yields $T$ today and then $P$ for ever, a
+discounted average of $(1 - \beta)T + \beta P$. Cooperation is a \omterm{def:b2:static-games:best-response}{best response} if and only if $R \ge (1 - \beta)T + \beta P$, that is,
+$\beta \ge (T - R)/(T - P)$.
+\end{proof}
+
+With $T = 5$, $R = 3$, $P = 1$, $S = 0$, the \omterm{def:b2:repeated-games:critical-delta}{critical discount factor} is $2/4 = 0.5$. The listing computes the \omterm{def:b2:repeated-games:average-payoff}{discounted
+average payoffs} of four strategies against each other, at a \omterm{def:b2:intertemporal-choice:discount-factor}{discount factor} below the critical value and at one
+above it.
+
+\omcode{code/bachelor-2/13-repeated-games/listings/repeated_pd.py}{1}{28}{\omterm{def:b2:repeated-games:average-payoff}{Discounted average payoffs} of four
+strategies in the repeated prisoner's dilemma, at two \omterm{def:b2:intertemporal-choice:discount-factor}{discount factors}.}\label{lst:b2:repeated-games:pd}
+
+\omoutput{code/bachelor-2/13-repeated-games/outputs/repeated_pd.txt}{Against grim trigger, always defecting pays
+3.4 when $\beta = 0.4$ and only 1.4 when $\beta = 0.9$.}\label{out:b2:repeated-games:pd}
+
+% code: listings/repeated_pd.py
+At $\beta = 0.4$ a player facing grim trigger earns 3.4 by defecting for ever against 3 by cooperating: the gain
+today outweighs the loss to come. At $\beta = 0.9$ the same deviation earns 1.4. \omterm{def:b2:repeated-games:tit-for-tat}{Tit for tat} sustains cooperation
+too, but it punishes for one period only and then forgives, so it needs more patience against some
+deviations (\cref{exo:b2:repeated-games:6}).
+
+\section{The folk theorem}\label{sec:b2:repeated-games:folk}
+
+Grim trigger sustains the payoffs $(3, 3)$. Other strategies sustain other payoffs: for instance, alternating
+between mutual cooperation and mutual defection, with any defection from the pattern punished for ever. The
+range of what repetition can sustain is wide.
+
+\begin{definition}[Folk theorem]\label{def:b2:repeated-games:folk-theorem}
+A \emph{folk theorem}\index{folk theorem} is a result stating that, in an infinitely \omterm{def:b2:repeated-games:repeated-game}{repeated game} with patient
+enough players, every feasible payoff vector that gives each player more than the least she can guarantee
+herself in the \omterm{def:b2:repeated-games:stage-game}{stage game}, whatever the others do, is the \omterm{def:b2:repeated-games:average-payoff}{discounted average payoff} of a \omterm{def:b2:dynamic-games:spe}{subgame-perfect
+equilibrium}.
+\end{definition}
+
+\begin{theorem}[Folk theorem, with Nash punishment]\label{thm:b2:repeated-games:folk}
+Let $e$ be a \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} of the \omterm{def:b2:repeated-games:stage-game}{stage game}, and $v$ a feasible payoff vector with $v_i > u_i(e)$ for every
+player. There is $\beta^* < 1$ such that for every $\beta \ge \beta^*$ the \omterm{def:b2:repeated-games:repeated-game}{repeated game} has a \omterm{def:b2:dynamic-games:spe}{subgame-perfect equilibrium} with
+\omterm{def:b2:repeated-games:average-payoff}{discounted average payoffs} $v$.
+\end{theorem}
+
+\admitted
+
+For the prisoner's dilemma, with $e$ mutual defection and $v = (R, R)$, \cref{prop:b2:repeated-games:grim} is the
+proof, with the exact $\beta^*$. The figure shows the payoffs the theorem covers. In the prisoner's dilemma each player
+can always guarantee herself 1, by defecting, so no equilibrium gives a player less
+(\cref{exo:b2:repeated-games:10}).
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=-0.3, xmax=6.3, ymin=-0.3, ymax=5.6, width=0.52\linewidth,
+    height=0.5\linewidth, xlabel={Player 1's average payoff}, ylabel={Player 2's average payoff},
+    xtick={0,1,3,5}, ytick={0,1,3,5}]
+  \addplot[fill=omDef!12, draw=black!60] coordinates {(1,1) (5,0) (3,3) (0,5) (1,1)};
+  \addplot[fill=omDef!40, draw=none] coordinates {(1,1) (4.3333,1) (3,3) (1,4.3333) (1,1)};
+  \draw[guide] (axis cs:1,-0.3) -- (axis cs:1,5.6);
+  \draw[guide] (axis cs:-0.3,1) -- (axis cs:6.3,1);
+  \node[eqpoint] at (axis cs:3,3) {};
+  \node[eqpoint] at (axis cs:1,1) {};
+  \node[anchor=south west, font=\footnotesize] at (axis cs:3.05,3.05) {$(R, R)$};
+  \node[anchor=north east, font=\footnotesize] at (axis cs:0.95,0.95) {$(P, P)$};
+  \node[anchor=west, font=\footnotesize] at (axis cs:5,0.15) {$(T, S)$};
+  \node[anchor=south, font=\footnotesize] at (axis cs:0.4,5) {$(S, T)$};
+\end{axis}
+\end{tikzpicture}
+
+{\small Payoffs in the repeated prisoner's dilemma with $T = 5$, $R = 3$, $P = 1$, $S = 0$. The light region contains
+every feasible pair of average payoffs, the averages of the four stage-game outcomes. The dark region holds the
+feasible pairs that give both players more than 1, what each can guarantee by defecting; with patient enough
+players, each of them is the outcome of a \omterm{def:b2:dynamic-games:spe}{subgame-perfect equilibrium}.}
+\end{omfigure}
+
+The \omterm{def:b2:repeated-games:folk-theorem}{folk theorem} is a result about possibility. It says that repetition makes cooperation possible, and also
+that almost anything else is possible: the same game has equilibria with full cooperation, with none, and with
+everything in between. Which one is played the theory does not say.
+
+\section{When collusion can be sustained}\label{sec:b2:repeated-games:collusion}
+
+\begin{definition}[Collusion]\label{def:b2:repeated-games:collusion}
+\emph{Collusion}\index{collusion} is an equilibrium of a \omterm{def:b2:repeated-games:repeated-game}{repeated game} between firms in which prices are held
+above, or quantities below, those of the equilibrium of the \omterm{def:b2:repeated-games:stage-game}{stage game}, sustained by the threat that a deviation
+will be followed by lower profits. It is \emph{tacit} when it involves no explicit agreement.
+\end{definition}
+
+Take $n$ identical firms competing on price, with constant marginal cost: the stage-game equilibrium is price
+equal to cost, with zero profit. If all charge the monopoly price they share the monopoly profit, $\Pi/n$ each. A
+firm that undercuts slightly takes the whole market for one period, $\Pi$, and then earns zero if the others
+revert to the stage-game equilibrium for ever. \omterm{def:b2:repeated-games:collusion}{Collusion} is sustainable when $\Pi/n \ge (1 - \beta)\Pi$:
+\[
+\beta \ge \beta^* = 1 - \frac{1}{n}.
+\]
+Two firms need $\beta \ge 0.5$, five need 0.8, ten need 0.9. The more firms, the smaller each one's share of the
+collusive profit, and the more tempting the whole market.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, xmin=1.5, xmax=10.5, ymin=0.4, ymax=1.02, width=0.62\linewidth,
+    height=0.42\linewidth, xlabel={Number of firms $n$}, ylabel={Critical discount factor $\beta^*$},
+    xtick={2,...,10}, legend style={at={(0.5,-0.25)}, anchor=north, legend columns=2,
+    /tikz/every even column/.append style={column sep=10pt}}]
+  \addplot[omDef, thick, mark=*, mark size=1.6pt, samples at={2,...,10}] {1 - 1/x};
+  \addplot[omThm, thick, dashed, mark=square*, mark size=1.4pt, samples at={2,...,10}] {sqrt(1 - 1/x)};
+  \legend{Detected at once, Detected after one period}
+\end{axis}
+\end{tikzpicture}
+
+{\small The \omterm{def:b2:repeated-games:critical-delta}{critical discount factor} for \omterm{def:b2:repeated-games:collusion}{collusion} among $n$ firms competing on price. When a deviation is
+detected only after $L$ periods, the deviator keeps the whole market for $L + 1$ periods, and the condition becomes
+$\beta^{L + 1} \ge 1 - 1/n$; the dashed line is $L = 1$.}
+\end{omfigure}
+
+The same reasoning, applied to the other features of a market, gives the model's comparative statics.
+\begin{itemize}
+  \item \emph{Detection lags.} A deviation that the others see only after $L$ periods earns $\Pi$ for $L + 1$ periods, so
+    \omterm{def:b2:repeated-games:collusion}{collusion} requires $\beta^{L + 1} \ge 1 - 1/n$ (\cref{exo:b2:repeated-games:12}). Markets in which prices are public and
+    frequent, such as posted prices, make \omterm{def:b2:repeated-games:collusion}{collusion} easier than markets with secret, negotiated contracts.
+  \item \emph{Demand growth.} If demand grows by a factor $\gamma$ each period, future collusive profits are worth more
+    relative to today's gain, and the condition becomes $\beta\gamma \ge 1 - 1/n$ (\cref{exo:b2:repeated-games:7}).
+  \item \emph{Quantity competition.} With Cournot competition the punishment, reversion to the Cournot
+    equilibrium, is milder than price competition at cost, and so is the deviator's gain. For two firms with
+    linear demand the critical value is $9/17 = 0.529$ (\cref{exo:b2:repeated-games:11}).
+\end{itemize}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, ybar, bar width=7pt, xmin=-0.6, xmax=7.6, ymin=0, ymax=1.15, width=0.7\linewidth,
+    height=0.4\linewidth, xlabel={Period}, ylabel={Profit (share of $\Pi$)}, xtick={0,...,7},
+    ytick={0,0.5,1}, ymajorgrids=false, legend style={at={(0.5,-0.3)}, anchor=north, legend columns=2,
+    /tikz/every even column/.append style={column sep=10pt}}]
+  \addplot[fill=omDef!55, draw=omDef] coordinates {(0,0.5) (1,0.5) (2,0.5) (3,1) (4,0) (5,0) (6,0) (7,0)};
+  \addplot[fill=omThm!45, draw=omThm] coordinates {(0,0.5) (1,0.5) (2,0.5) (3,1) (4,1) (5,0) (6,0) (7,0)};
+  \draw[guide] (axis cs:-0.6,0.5) -- (axis cs:7.6,0.5);
+  \node[anchor=south west, font=\footnotesize] at (axis cs:4.5,0.52) {collusive path};
+  \legend{Detected at once, Detected after one period}
+\end{axis}
+\end{tikzpicture}
+
+{\small Profit of a firm that deviates in period 3 from \omterm{def:b2:repeated-games:collusion}{collusion} in a duopoly competing on price. It earns half
+the monopoly profit while colluding, the whole of it in the period it undercuts, and nothing once the rival
+reverts to pricing at cost. A detection lag of one period adds a second period of full profit.}
+\end{omfigure}
+
+\begin{model}{Collusion in a repeated game}
+\assumes Firms that discount future profits, observe one another's prices or outputs (perhaps with a lag),
+and punish a deviation by reverting to competition.
+\predicts \omterm{def:b2:repeated-games:collusion}{Collusion} is easier with fewer firms, more patient firms, faster detection, growing demand and more
+transparent prices.
+\tested Records of discovered cartels: durations of a few years on average, with a wide spread (Levenstein
+and Suslow 2006).
+\breaks Multiplicity: competition is also an equilibrium whatever the \omterm{def:b2:intertemporal-choice:discount-factor}{discount factor}, so the model says when
+\omterm{def:b2:repeated-games:collusion}{collusion} \emph{can} be sustained, not whether it is. Cartels break up less often from cheating than from entry
+and from failing to adjust the agreement when conditions change (Levenstein and Suslow 2006).
+\end{model}
+
+\begin{record}[How long cartels last]
+% ledger: b2:ls2006-t1, b2:ls2006-text
+Levenstein and Suslow (2006) review studies of cartel duration. Across them the average is about five years. Many
+cartels break up within a year, many others last five to ten, and some last decades. In their own sample of 42
+international cartels prosecuted by the United States or the European Commission in the 1990s, the average was
+5 years with a range of 0 to 20. A price-fixing agreement in aluminium phosphide lasted from January to November
+1990 and collapsed when a major producer refused to take part; cartels in cartonboard (1986--91), graphite
+electrodes (1992--97) and sorbates (1979--97) lasted years. The authors find that cheating and poor monitoring
+end some cartels, but that entry and the difficulty of adjusting an agreement to changed conditions are the
+larger threats.
+\end{record}
+
+\section{Reputation}\label{sec:b2:repeated-games:reputation}
+
+\begin{definition}[Reputation]\label{def:b2:repeated-games:reputation}
+A player's \emph{reputation}\index{reputation} is what others believe about her future behaviour, or about
+her type, on the basis of her past actions.
+\end{definition}
+
+Repetition matters also when the same seller meets a new buyer each time. A buyer cannot see the quality of a
+good before buying, and a seller saves a cost by delivering low quality. Played once, the seller cheats and
+buyers, foreseeing it, do not buy. Suppose instead that every buyer can see the seller's record and buys only from
+sellers who have never cheated. A seller who earns a price of 100 dalens and spends 30 on honest delivery earns 70 a
+period by staying honest; cheating once earns 100 and then nothing. Honesty pays when $70 \ge (1 - \beta) \times 100$, that is, $\beta
+\ge 0.3$. The buyers punish, though each buys only once, because the record makes the seller's past visible to all
+of them.
+
+When buyers are also unsure what kind of seller they face --- careful or careless, honest by nature or by
+calculation --- the record is evidence, and buyers update their beliefs on it. A first complaint against a seller
+with a clean record is then news, while a fifth is not.
+
+\begin{record}[Ratings on online markets]
+% ledger: b2:ch2006
+Cabral and Horta\c{c}su (2006) followed the feedback records of sellers on eBay, an online auction site, from
+October 2002 to March 2003, for four goods: notebook computers, two kinds of collectors' coins and a soft toy.
+Negative ratings were rare: the median seller had one, and on average they were 0.9 per cent of comments. When a
+seller received a first negative rating, the weekly growth of his sales fell from about $+7$ per cent to about $-7$
+per cent; later negatives arrived 25 per cent faster than the first and had much less effect, and sellers with
+worse records were more likely to leave the market.
+\end{record}
+
+The pattern fits a market in which the record carries information: the first negative tells buyers most, and a
+seller whose \omterm{def:b2:repeated-games:reputation}{reputation} has fallen has less to lose by letting quality slip. A rating system, run by the market's
+owner, is a private answer to the problem of hidden quality, without a regulator.
+
+\section{Exercises}\label{sec:b2:repeated-games:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:repeated-games:1}
+In a prisoner's dilemma with $T = 6$, $R = 4$, $P = 1$, $S = 0$, find the \omterm{def:b2:repeated-games:critical-delta}{critical discount factor} for grim trigger.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:repeated-games:2}
+Read the opening chart. Which sample has the shortest and which the longest average duration? What is the longest
+duration of a single cartel in the samples that report a range?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:repeated-games:3}
+Predict, then compute: the \omterm{def:b2:repeated-games:critical-delta}{critical discount factor} for \omterm{def:b2:repeated-games:collusion}{collusion} among five firms competing on price; and for
+two firms when a deviation is detected only after three periods.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:repeated-games:4}
+The model predicts that \omterm{def:b2:repeated-games:collusion}{collusion} is easier among fewer firms. What evidence on discovered cartels would count
+against it, and why might the evidence be hard to read?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:repeated-games:5}
+Show by \omterm{def:b2:dynamic-games:backward-induction}{backward induction} that in the prisoner's dilemma repeated three times, both players defect in every period
+of every \omterm{def:b2:dynamic-games:spe}{subgame-perfect equilibrium}. Which step fails if neither player knows when the game ends?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:repeated-games:6}
+Both players use \omterm{def:b2:repeated-games:tit-for-tat}{tit for tat}, with $T = 5$, $R = 3$, $P = 1$, $S = 0$ and $\beta = 0.6$. A player defects in period 0 and then
+plays \omterm{def:b2:repeated-games:tit-for-tat}{tit for tat}. Find the sequence of her stage payoffs and its \omterm{def:b2:repeated-games:average-payoff}{discounted average payoff}. Does the deviation pay?
+For which $\beta$ does it not? Compare with grim trigger at $\beta = 0.6$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:repeated-games:7}
+Two firms compete on price, and demand grows by a factor $\gamma = 1.2$ a period. Derive the condition for \omterm{def:b2:repeated-games:collusion}{collusion},
+and say whether firms with $\beta = 0.45$ can collude with this growth and without it.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:repeated-games:8}
+In the eBay record, the notebook sellers' average weekly growth of sales was $7.12$ per cent in the four weeks before the
+first negative rating and $-6.76$ per cent in the four weeks after, both as log differences. By what factor did sales
+change over each period of four weeks? What does a model of \omterm{def:b2:repeated-games:reputation}{reputation} with uncertain types predict about the effect
+of later negatives?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:repeated-games:9}
+A cartel survives from one year to the next with probability 0.9 for reasons outside the firms' control, and the interest
+rate is 5 per cent. Find the \omterm{def:b2:intertemporal-choice:discount-factor}{discount factor} relevant for \omterm{def:b2:repeated-games:collusion}{collusion}, and the largest number of firms competing on price
+that can collude.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:repeated-games:10}
+Show that in every \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} of the repeated prisoner's dilemma, finite or infinite, each player's \omterm{def:b2:repeated-games:average-payoff}{discounted
+average payoff} is at least $P$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:repeated-games:11}
+Two Cournot firms face demand $p = a - Q$ and marginal cost $c$. They collude by each producing half the monopoly output,
+and revert to the Cournot equilibrium for ever after a deviation. Show that the \omterm{def:b2:repeated-games:critical-delta}{critical discount factor} is $9/17$,
+whatever $a$ and $c$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:repeated-games:12}
+Derive the condition $\beta^{L + 1} \ge 1 - 1/n$ for \omterm{def:b2:repeated-games:collusion}{collusion} among $n$ firms competing on price when a deviation is detected after
+$L$ periods. What is the longest lag at which two firms with $\beta = 0.95$ per month can collude?
+\end{exercise}
+
+\section{Problem: two cement makers of Brenmoor}\label{sec:b2:repeated-games:problem}
+
+\begin{problem}[{Weekend problem --- two cement makers supply Brenmoor, the capital of Brenland, an invented economy:
+can they hold output down without an agreement, how does a slow flow of information change that, and what happens
+when a third firm arrives}]
+\label{pb:b2:repeated-games:1}
+Demand is $p = 200 - Q$, with $p$ in dalens per tonne and $Q$ in thousands of tonnes a year; each firm's unit cost is 40 dalens.
+Firms choose outputs once a year. The \omterm{def:b2:intertemporal-choice:discount-factor}{discount factor} is 0.8 a year, covering both interest and the chance that the
+market changes. Profits are in thousands of dalens a year.
+
+\medskip
+\noindent\textbf{Part I --- The stage game.}
+\begin{enumerate}
+  \item Find the Cournot equilibrium: each firm's output, the price and each firm's profit.
+  \item Find the outputs that maximise joint profit if split equally, the price and each firm's profit.
+  \item If one firm produces its collusive output, what is the other's best output, the price and its profit?
+  \item What does the firm that kept to the collusive output earn in that case?
+  \item Is the collusive outcome a \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} of the \omterm{def:b2:repeated-games:stage-game}{stage game}?
+  \item Explain why the \omterm{def:b2:repeated-games:stage-game}{stage game} is a prisoner's dilemma.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Trigger strategies.} Each firm produces its collusive output as long as both have done so,
+and its Cournot output for ever after any deviation.
+\begin{enumerate}[resume]
+  \item Write the condition for \omterm{def:b2:repeated-games:collusion}{collusion} to be an equilibrium.
+  \item Find the \omterm{def:b2:repeated-games:critical-delta}{critical discount factor}.
+  \item Can the two firms collude with a \omterm{def:b2:intertemporal-choice:discount-factor}{discount factor} of 0.8?
+  \item Compare the \omterm{def:b2:repeated-games:average-payoff}{discounted average payoff} of colluding with that of the best deviation.
+  \item Why might the \omterm{def:b2:intertemporal-choice:discount-factor}{discount factor} be lower than interest rates alone suggest?
+  \item Is the threat to revert to Cournot output credible?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- A detection lag.} Outputs are not observed directly; a deviation is noticed only after $L$
+years, from falling prices and lost customers.
+\begin{enumerate}[resume]
+  \item Write the condition for \omterm{def:b2:repeated-games:collusion}{collusion} with a lag of $L$ years.
+  \item Can the firms collude at the monopoly price with $L = 1$?
+  \item With $L = 2$?
+  \item With $L = 2$, find the highest price the firms can sustain with equal outputs.
+  \item What is the longest lag that sustains the monopoly price?
+  \item Why does a public price list help the firms?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- A third firm.} A third cement maker with the same cost enters; outputs are again observed at
+once.
+\begin{enumerate}[resume]
+  \item Find the Cournot equilibrium with three firms.
+  \item Find each firm's output and profit under \omterm{def:b2:repeated-games:collusion}{collusion}.
+  \item Find the best deviation and its profit.
+  \item Find the \omterm{def:b2:repeated-games:critical-delta}{critical discount factor}.
+  \item Can the three firms collude at the monopoly price with $\beta = 0.8$ and no lag? With a lag of one year? Of two?
+  \item State the result: the \omterm{def:b2:repeated-games:critical-delta}{critical discount factor} with a lag of $L$ years, and the highest price sustainable with
+    two firms and a lag of two years.
+\end{enumerate}
+\end{problem}

@@ -1,0 +1,136 @@
+\section*{Chapter \ref{ch:b3:cost-benefit-analysis} --- Cost--Benefit Analysis}
+
+\begin{solution}{exo:b3:cost-benefit-analysis:1}
+Rail, by 44.7~\% on average, and most outside Europe and North America (64.6~\%, 16
+projects). Costs were underestimated in almost 9 projects out of 10 (86~\%).
+% figdata: overruns_all, overruns_other
+\end{solution}
+
+\begin{solution}{exo:b3:cost-benefit-analysis:2}
+The annuity factor for 30 years is 19.60 at 3~\% and 12.41 at 7~\%. NPV: $6 \times 19.60 - 100 = 17.6$
+million at 3~\%; $6 \times 12.41 - 100 = -25.5$ million at 7~\%.
+\end{solution}
+
+\begin{solution}{exo:b3:cost-benefit-analysis:3}
+$1{,}000/0.0001 = 10$ million dalens; with a premium of 800, 8 million.
+\end{solution}
+
+\begin{solution}{exo:b3:cost-benefit-analysis:4}
+Random errors would average zero and be as often above as below; \omterm{def:b3:cost-benefit-analysis:optimism-bias}{optimism bias} shows
+in a mean overrun above zero, overruns far more frequent than underruns, and no
+improvement as forecasters learn from past projects.
+\end{solution}
+
+\begin{solution}{exo:b3:cost-benefit-analysis:5}
+$60 \times 8{,}000 + 40 \times 30{,}000 = 480{,}000 + 1{,}200{,}000 = 1.68$ million dalens a year, against a wage bill of 3
+million.
+\end{solution}
+
+\begin{solution}{exo:b3:cost-benefit-analysis:6}
+With continuous rates, $R(t) = -\ln\big(\tfrac12(e^{-0.01t} + e^{-0.05t})\big)/t$: 2.80~\% at 10 years, 2.13~\% at 50, 1.35~\% at 200,
+falling toward 1~\%.
+\end{solution}
+
+\begin{solution}{exo:b3:cost-benefit-analysis:7}
+Worth doing if $100/(1 + \rho)^{100} > 10$, that is $(1 + \rho)^{100} < 10$: $\rho < 10^{0.01} - 1 = 2.33~\%$.
+\end{solution}
+
+\begin{solution}{exo:b3:cost-benefit-analysis:8}
+With the European rail average, $2 \times 1.342 = 2.68$ billion dalens; with the all-region rail
+average, $2 \times 1.447 = 2.89$ billion. The 80th percentile needs the distribution of overruns,
+not only its mean; if rail overruns were normal with the published standard
+deviation of 38.4 points, it would be $44.7 + 0.84 \times 38.4 = 77~\%$, or 3.54 billion.
+\end{solution}
+
+\begin{solution}{exo:b3:cost-benefit-analysis:9}
+Stated amounts that exceed what the same people pay when the payment is real; values
+that do not rise with the quantity of the good offered; and large gaps between what
+people would pay to gain a good and accept to lose it.
+\end{solution}
+
+\begin{solution}{exo:b3:cost-benefit-analysis:10}
+The limit is in the text. Let $f(t) = \tfrac12(e^{-\rho_1t} + e^{-\rho_2t})$, so $R(t) = -\ln f(t)/t$. As a mixture of exponentials, the
+discount factor $f$ is log-convex: $(\ln f)'' > 0$, because $(\ln f)''$ is the variance of the rate under
+weights proportional to $e^{-\rho_it}$, positive since $\rho_1 \ne \rho_2$. With $g = -\ln f$, $g$ is concave with $g(0) = 0$, so
+$g(t)/t$ is strictly decreasing.
+\end{solution}
+
+\begin{solution}{exo:b3:cost-benefit-analysis:11}
+The tested solution is \code{ex11_hedonic.py}, in the chapter's \code{exercises/}
+folder. With all attributes recorded the premium is 0.0170 log points (s.e.\ 0.0042),
+a \omterm{def:b3:cost-benefit-analysis:vsl}{value of a statistical life} of 5.09 million dalens against a true 6 million. Leaving
+out an attribute that is worse in risky jobs raises it to 0.0566 and 17.0 million: the
+premium for risk absorbs the premium for unpleasantness. % output: ex11_hedonic
+\end{solution}
+
+\begin{solution}{exo:b3:cost-benefit-analysis:12}
+A: $120/(100 - 20) = 1.5$. B: $90/(100 + 10) = 0.82$. A delivers more value per dalen of net cost;
+B delivers less than a dalen per dalen.
+\end{solution}
+
+\begin{solution}{pb:b3:cost-benefit-analysis:bridge}
+% figdata: bridge_stats, bridge_npv
+\textbf{1.} $30{,}000 \times 365 \times 1.2 \times 10/60 = 2{,}190{,}000$ hours.
+
+\textbf{2.} $2{,}190{,}000 \times 13.1 = 28.7$ million dalens a year.
+
+\textbf{3.} The benefit is what travellers would pay for the time, which their choices
+reveal; much of the time saved is not working time and is not valued at the wage.
+
+\textbf{4.} $1 \times 3 = 3$ million a year.
+
+\textbf{5.} $28.7 + 3 - 4 = 27.7$ million a year.
+
+\textbf{6.} Traffic induced by the bridge, effects on other routes, noise and land use,
+vehicle operating costs, and the time lost during construction.
+
+\textbf{7.} By estimating the wage premium of jobs with higher fatal risk and dividing
+it by the difference in risk.
+
+\textbf{8.} 6 million a year; the net annual benefit rises to 30.7 million.
+
+\textbf{9.} The deaths avoided are statistical: nobody knows who will be saved, and the
+appraisal values the safety of all travellers alike rather than by income.
+
+\textbf{10.} Downward: the measured premium is that of people who mind risk least.
+
+\textbf{11.} $\mathrm{NPV} = \sum_{t=0}^{42}(B_t - C_t)/(1 + \rho)^t$, with costs 120, 160, 120 in years 0--2 and net benefits 27.7 in years 3--42.
+
+\textbf{12.} 335.8 million at 2~\%, 165.4 at 3.5~\%, $-51.9$ at 7~\%.
+
+\textbf{13.} 5.86~\%.
+
+\textbf{14.} The costs come first and the benefits later: a higher rate shrinks the later
+benefits more than the early costs.
+
+\textbf{15.} The answer turns on it: positive at 2~\% and 3.5~\%, negative at 7~\%. A rate close to the
+return the funds would earn elsewhere if they displace investment; closer to the
+rate of time preference if they displace consumption.
+
+\textbf{16.} About 5.9~\% with the forecast cost, about 3.9~\% with the corrected one.
+
+\textbf{17.} $400 \times 1.338 = 535.2$ million.
+
+\textbf{18.} 203.3 million at 2~\%, 34.7 at 3.5~\%, $-178.5$ at 7~\%.
+
+\textbf{19.} 3.90~\%.
+
+\textbf{20.} Yes, if traffic forecasts for such projects are also biased; correcting them
+lowers benefits, the NPV and the break-even rate further.
+
+\textbf{21.} Each dalen of cost counts 1.3: at 3.5~\%, benefits of 631.7 million in present value
+against corrected costs (construction and maintenance) of 597.0 give $631.7 - 1.3 \times 597.0 =
+-144.4$ million. The bridge no longer passes.
+
+\textbf{22.} Promoters who want the project built, and appraisals that reward low
+estimates; and genuine uncertainty that is treated as if it were not there.
+
+\textbf{23.} A bridge unlike the reference class --- a simple, short span, or a fixed-price
+contract that moves the risk to the builder.
+
+\textbf{24.} Travellers and nearby land owners gain; taxpayers pay, and the \omterm{def:b3:efficiency-cost-of-taxation:harberger}{excess burden}
+of the taxes adds to the cost.
+
+\textbf{25.} After the correction, the bridge's net present value at 3.5~\% is 34.7 million
+dalens, and it turns negative at discount rates above 3.9~\%.
+\end{solution}

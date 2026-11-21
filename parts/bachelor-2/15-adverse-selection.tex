@@ -1,0 +1,396 @@
+\chapter{Adverse Selection}\label{ch:b2:adverse-selection}
+
+An annuity turns savings into an income paid for life. It is a good deal for someone who expects to live long
+and a poor one for someone who does not, and buyers know more about their health than the insurer does. In the
+United Kingdom, annuities were priced on age and sex only, but buyers could choose features: payments that rise
+over time, or a guarantee that pays the estate if the buyer dies early. The chart shows how the buyers of each
+feature died, compared with otherwise similar buyers of a plain annuity.
+
+\begin{openingchart}{Change in the probability of dying within five years of buying an annuity, by feature of the
+  annuity, percentage points, compared with buyers of a level, non-guaranteed annuity of the same age and sex
+  (and, for the last bar, with women). One UK insurer, buyers up to 1993.}{Finkelstein and Poterba (2004), Table~2}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xbar=0pt, bar width=6pt, width=0.7\linewidth, height=0.5\linewidth, xmin=-20,
+    xmax=8, ymin=0.4, ymax=5.6, ymajorgrids=false, xlabel={Percentage points},
+    ytick=data, yticklabels from table={figdata/bachelor-2/15-adverse-selection/out/annuities.csv}{feature},
+    legend style={at={(0.5,-0.22)}, anchor=north, legend columns=2,
+    /tikz/every even column/.append style={column sep=10pt}}, reverse legend]
+  \addplot[fill=omThm!50, draw=omThm] table[x=voluntary, y=pos]
+    {figdata/bachelor-2/15-adverse-selection/out/annuities.csv};
+  \addplot[fill=omDef!55, draw=omDef] table[x=compulsory, y=pos]
+    {figdata/bachelor-2/15-adverse-selection/out/annuities.csv};
+  \draw[black!60] (axis cs:0,0.4) -- (axis cs:0,5.6);
+  \legend{Voluntary market, Compulsory market}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% ledger: b2:fp2004-t1, b2:fp2004-t2
+% figdata: annuities_summary (escalating_vs_male 3.5, indexed_vs_male 4.2)
+Buyers who chose payments that rise over time, in line with prices or at a fixed rate, were less likely to die
+within five years: by 15 to 19 percentage points in the voluntary market. Buyers who chose a guarantee to their
+estate were more likely to. In the voluntary market the effect of choosing rising payments was three and a half to
+more than four times that of being a man, the one characteristic of health the insurer priced on. Buyers chose the product
+that paid best given what they knew of their own health.
+
+This is \omterm{def:b2:adverse-selection:adverse-selection}{adverse selection}: when one side of a market knows more about the quality or the risk of what is traded,
+the price attracts the trades that are worst for the other side. This chapter shows how it can shrink or destroy a
+market, how economists test for it, why it sometimes runs the other way, and what private arrangements and public
+rules do about it, at what cost.
+
+\begin{recall}
+From the school volumes: hidden information. From \cref{ch:b2:expected-utility,ch:b2:insurance-and-risk-sharing}:
+expected utility, the \omterm{def:b2:expected-utility:risk-premium}{risk premium}, and the demand for insurance.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:adverse-selection:symbols}
+In the \omterm{def:b2:adverse-selection:lemons}{lemons model}, $\theta$ is the quality of a good, known to its seller. In insurance markets, $q$ is the share of people
+insured, ranked from the highest willingness to pay; $D(q)$ is the willingness to pay of the $q$-th person, $\mathit{MC}(q)$ her
+expected cost to the insurer and $\mathit{AC}(q)$ the average expected cost of the first $q$.
+\end{notation}
+
+\section{The lemons model}\label{sec:b2:adverse-selection:lemons}
+
+\begin{definition}[Adverse selection]\label{def:b2:adverse-selection:adverse-selection}
+\emph{Adverse selection}\index{adverse selection} occurs when one side of a trade has private information about the
+quality or risk of what is traded, and at any given price the trades that take place are disproportionately those
+that are worst for the uninformed side.
+\end{definition}
+
+\begin{definition}[Lemons model]\label{def:b2:adverse-selection:lemons}
+The \emph{lemons model}\index{lemons model} is a market for a good of varying quality in which each seller knows the
+quality of her good, buyers know only the distribution of quality, and every good sells at one price.
+\end{definition}
+
+Let quality $\theta$ be uniform on $[0, 1]$, a seller value her good at $\theta$ and a buyer at $1.2\,\theta$. With full information every
+good would be sold, since each is worth more to a buyer than to its seller. At a single price $p \le 1$, only sellers with $\theta \le p$
+sell, so the average quality on offer is $p/2$, which buyers value at $0.6\,p$.
+
+\begin{proposition}[Collapse of the market]\label{prop:b2:adverse-selection:collapse}
+In the \omterm{def:b2:adverse-selection:lemons}{lemons model} with quality uniform on $[0, 1]$, seller values $\theta$ and buyer values $1.2\,\theta$, no trade takes place at any
+positive price.
+\end{proposition}
+
+\begin{proof}
+At a price $p$ in $(0, 1]$, the goods offered have average quality $p/2$, worth $0.6\,p < p$ to a buyer, so no buyer pays $p$. At a price above
+1 every good is offered, with average quality $\tfrac12$, worth $0.6 < 1 < p$. So at every positive price buyers do not buy, though every
+trade would create value.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=1.05, ymin=0, ymax=1.05, width=0.5\linewidth,
+    height=0.5\linewidth, xlabel={Price $p$}, ylabel={Value}, xtick={0,0.5,1}, ytick={0,0.5,1},
+    legend style={at={(1.05,0.5)}, anchor=west}]
+  \addplot[black, thick, domain=0:1, samples=2] {x};
+  \addplot[omDef, thick, dashed, domain=0:1, samples=2] {x/2};
+  \addplot[omThm, thick, domain=0:1, samples=2] {0.6*x};
+  \legend{Price, Average quality offered, Buyers' value of it}
+\end{axis}
+\end{tikzpicture}
+
+{\small The \omterm{def:b2:adverse-selection:lemons}{lemons model}. At a price $p$ the goods offered are those worth at most $p$ to their sellers, of average quality $p/2$.
+Buyers value that average at $0.6\,p$, below the price at every positive price, so no price clears the market.}
+\end{omfigure}
+
+The good sellers leave first: at any price, the sellers of the best goods find it too low. The model does not say
+that markets for used goods collapse; it says that, without ways for quality to be shown, they would shrink, and it
+explains why sellers and buyers invest in such ways (\cref{sec:b2:adverse-selection:answers}).
+
+\section{Insurance with hidden types}\label{sec:b2:adverse-selection:insurance}
+
+Insurance is the case that matters most. Take two kinds of people, each facing a loss of 10{,}000 dalens. Low risks
+lose it with probability 0.1 and would pay up to 1{,}500 a year for full cover; high risks lose it with probability 0.3 and
+would pay up to 3{,}500. Each would pay more than her expected loss, the difference being her \omterm{def:b2:expected-utility:risk-premium}{risk premium}. There are as
+many of each.
+
+If the insurer could tell them apart it would charge 1{,}000 and 3{,}000, and everyone would buy. If it cannot, a single
+premium that breaks even when everyone buys is 2{,}000. At that premium low risks leave, since 2{,}000 exceeds their 1{,}500; the
+insurer, left with high risks only, must charge 3{,}000. The low risks go uninsured, losing a surplus of 500 each, though
+insuring them costs less than they would pay.
+
+\section{Unravelling}\label{sec:b2:adverse-selection:unravelling}
+
+\begin{definition}[Unravelling]\label{def:b2:adverse-selection:unravelling}
+\emph{Unravelling}\index{unravelling} (an adverse-selection spiral) is the process in which a rise in an insurance
+premium drives out the buyers with the lowest expected costs, which raises the average cost of those who remain and
+so the premium, driving out more.
+\end{definition}
+
+With many kinds of people, the market can be drawn with three curves. Rank people by willingness to pay for a
+given policy, highest first: $D(q)$ is the demand curve. Let $\mathit{MC}(q)$ be the expected cost of the $q$-th person and $\mathit{AC}(q)$ the
+average cost of the first $q$. Under \omterm{def:b2:adverse-selection:adverse-selection}{adverse selection} those who value cover most cost most, so $\mathit{MC}$ falls with $q$ and
+$\mathit{AC}$ lies above it. Competitive insurers that cannot price on risk break even where demand meets average cost.
+Coverage is efficient where demand meets marginal cost: a person should be insured when she values the cover more
+than it costs to provide it to her.
+
+Take $D(q) = 900 - 500q$ and $\mathit{MC}(q) = 800 - 600q$ (dalens a year), so that $\mathit{AC}(q) = 800 - 300q$. Every person values cover above her
+cost, by $100 + 100q$, so everyone should be insured. But demand meets average cost where $900 - 500q = 800 - 300q$: half the people buy
+at a premium of 650. The welfare lost is the area between demand and marginal cost over the uninsured half, $\int_{0.5}^1 (100 +
+100q)\,dq = 87.5$ dalens a person.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=1.05, ymin=150, ymax=950, width=0.62\linewidth,
+    height=0.45\linewidth, xlabel={$q$: share insured}, ylabel={Dalens a year}, xtick={0,0.5,1},
+    ytick={200,400,650,800}, legend style={at={(1.03,0.5)}, anchor=west}]
+  \addplot[fill=omDef!15, draw=none, forget plot] coordinates {(0.5,650) (1,400) (1,200) (0.5,500)} -- cycle;
+  \addplot[omDef, very thick, domain=0:1, samples=2] {900 - 500*x};
+  \addplot[omThm, very thick, domain=0:1, samples=2] {800 - 300*x};
+  \addplot[omMeth, very thick, dashed, domain=0:1, samples=2] {800 - 600*x};
+  \node[eqpoint] at (axis cs:0.5,650) {};
+  \draw[guide] (axis cs:0.5,150) -- (axis cs:0.5,650);
+  \node[anchor=south west, font=\footnotesize] at (axis cs:0.5,655) {equilibrium};
+  \node[font=\footnotesize] at (axis cs:0.8,400) {loss};
+  \legend{Demand $D$, Average cost $\mathit{AC}$, Marginal cost $\mathit{MC}$}
+\end{axis}
+\end{tikzpicture}
+
+{\small An insurance market with \omterm{def:b2:adverse-selection:adverse-selection}{adverse selection}. Insurers that cannot price on risk charge the average cost of their
+buyers; the market settles where demand meets average cost, insuring half the people at 650. Everyone values cover above
+her cost, so the shaded area between demand and marginal cost is the welfare lost.}
+\end{omfigure}
+
+How the market gets there shows the spiral. The listing starts an insurer at the premium that would break even if
+everyone bought, and lets it reset the premium each year to the average cost of the last year's buyers.
+
+\omcode{code/bachelor-2/15-adverse-selection/listings/unravelling.py}{1}{26}{Premiums and coverage year by year in a
+market that unravels toward its equilibrium.}\label{lst:b2:adverse-selection:unravelling}
+
+\omoutput{code/bachelor-2/15-adverse-selection/outputs/unravelling.txt}{The premium climbs and coverage falls, year by
+year, to 650 and one half.}\label{out:b2:adverse-selection:unravelling}
+
+% code: listings/unravelling.py
+At 500 a fifth of the people find cover too dear; those who leave are the cheapest to insure, so the average cost of
+those who stay rises to 560; more leave; and so on, each step smaller than the last. In this example the spiral stops at
+half the market. If average cost lay above demand at every share but zero, it would not stop: the market would unravel
+completely, as the lemons market does (\cref{exo:b2:adverse-selection:11}).
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0.4, xmax=1.03, ymin=450, ymax=700, width=0.62\linewidth,
+    height=0.42\linewidth, xlabel={$q$: share insured}, ylabel={Premium (dalens a year)},
+    xtick={0.5,0.6,0.7,0.8,0.9,1}, ytick={500,560,596,650}]
+  \addplot[omDef, very thick, domain=0.4:1, samples=2] {900 - 500*x};
+  \addplot[omThm, very thick, domain=0.4:1, samples=2] {800 - 300*x};
+  \addplot[black, thick, -{Stealth[length=2mm]}] coordinates {(1,500) (0.8,500) (0.8,560) (0.68,560) (0.68,596)
+    (0.608,596) (0.608,617.6) (0.5648,617.6) (0.5648,630.56)};
+  \node[eqpoint] at (axis cs:0.5,650) {};
+  \node[anchor=east, font=\footnotesize, omDef] at (axis cs:0.56,560) {demand};
+  \node[anchor=south, font=\footnotesize, omThm] at (axis cs:0.78,600) {average cost};
+\end{axis}
+\end{tikzpicture}
+
+{\small \omterm{def:b2:adverse-selection:unravelling}{Unravelling} step by step. Each horizontal step is the buyers who leave at the current premium; each vertical step
+is the rise in average cost when they have gone. The steps shrink toward the equilibrium at one half and 650.}
+\end{omfigure}
+
+\begin{model}{Demand and cost curves of an insurance market}
+\assumes Insurers that cannot price on the risk that buyers know, competing until profits are zero; a fixed policy.
+\predicts Coverage where demand meets average cost, below the efficient level when those who value cover most cost
+most; a premium cut by a subsidy or mandate lowers average cost as low risks join.
+\tested The Massachusetts individual mandate, after which premiums and average costs in the individual market
+fell (Hackmann, Kolstad and Kowalski 2015).
+\breaks When willingness to pay depends on other things than risk, such as aversion to risk or care, so that those who
+value cover most need not cost most.
+\end{model}
+
+\section{Testing for adverse selection}\label{sec:b2:adverse-selection:testing}
+
+\begin{definition}[Positive-correlation test]\label{def:b2:adverse-selection:positive-correlation}
+The \emph{positive-correlation test}\index{positive-correlation test} checks whether, among people whom the insurer
+treats alike, those who choose more coverage have more claims; asymmetric information predicts that they do.
+\end{definition}
+
+The test needs care. A positive correlation can also come from moral hazard, people with more cover taking less care
+(\cref{ch:b2:moral-hazard}), and it must be computed among buyers whom the insurer prices alike, or it measures only
+what the insurer already knows. A zero correlation is evidence against selection on risk, but not against private
+information that bears on other things.
+
+\begin{debate}[How much adverse selection is there in insurance?]
+% ledger: b2:cs2012, b2:fp2004-t2
+The answer differs by market. In car insurance, Chiappori and Salani\'e (2000) found, with three methods, no correlation
+between coverage and claims in French car insurance, and most later work agreed; a positive correlation found in
+Israel arose from drivers who, learning they were bad risks, switched insurers to buy underpriced cover (Cohen 2005). In
+annuities, the choice of product is strongly related to later mortality (Finkelstein and Poterba 2004). In life insurance,
+people who died within twelve years of a base year were 19 per cent more likely to have bought cover that year (He 2009). In
+health insurance the results are mixed, and in one market the correlation is negative. All as surveyed by Chiappori and
+Salani\'e (2012). One reading: \omterm{def:b2:adverse-selection:adverse-selection}{adverse selection} is real where insurers gather little information, as in annuities, and
+small where they price finely, as in car insurance. Another: private information is everywhere, but it bears on several
+traits at once, and they can offset each other.
+\end{debate}
+
+\section{Selection that runs the other way}\label{sec:b2:adverse-selection:advantageous}
+
+\begin{definition}[Advantageous selection]\label{def:b2:adverse-selection:advantageous}
+\emph{Advantageous selection}\index{advantageous selection} occurs when those who value insurance most have lower
+expected costs, so that at a given premium the buyers are better risks than those who do not buy.
+\end{definition}
+
+People who are cautious, or averse to risk, may both buy more insurance and have fewer accidents. In the American market
+for insurance that supplements public health cover for the elderly, people with higher cognitive ability were found to be
+both more likely to buy and to have lower expected claims (Fang, Keane and Silverman 2008, as surveyed by Chiappori and
+Salani\'e 2012). Then the marginal-cost curve rises with $q$ and the average cost lies below it. The market settles where
+demand meets average cost, which is now to the right of where demand meets marginal cost: too \emph{many} people are
+insured, some of whom value cover at less than it costs to provide it to them (\cref{exo:b2:adverse-selection:8}).
+Selection on private information does not always shrink a market.
+
+\section{Private and compulsory answers}\label{sec:b2:adverse-selection:answers}
+
+Markets have their own ways to reduce the information gap.
+\begin{itemize}
+  \item \emph{Warranties and guarantees.} A seller who knows her good is sound can promise to repair it; a seller of a bad
+    good cannot afford to.
+  \item \emph{Certification and inspection.} Independent tests and ratings reveal quality before the sale.
+  \item \emph{\omterm{def:b2:repeated-games:reputation}{Reputation}.} A dealer who sells many goods over many years has a record to lose (\cref{ch:b2:repeated-games}).
+  \item \emph{Groups formed for other reasons.} Insurance sold to all employees of a firm covers people who joined the firm
+    for reasons other than their risk, so the pool is not selected.
+\end{itemize}
+
+\begin{definition}[Risk classification]\label{def:b2:adverse-selection:risk-classification}
+\emph{Risk classification}\index{risk classification} is the pricing of insurance by observable characteristics that
+predict cost, such as age, sex, health history or driving record.
+\end{definition}
+
+\begin{definition}[Community rating]\label{def:b2:adverse-selection:community-rating}
+\emph{Community rating}\index{community rating} is a rule requiring an insurer to charge the same premium for a
+policy to all buyers, or to all in broad groups, whatever their observable risk.
+\end{definition}
+
+\begin{definition}[Insurance mandate]\label{def:b2:adverse-selection:mandate}
+An \emph{insurance mandate}\index{insurance mandate} is a legal requirement to hold insurance, usually enforced by a
+penalty on those who do not.
+\end{definition}
+
+Each answer has costs. \omterm{def:b2:adverse-selection:risk-classification}{Risk classification} narrows the information gap and with it the selection, but people with high
+observed risk pay high premiums, a risk they could not insure before they were classified. \omterm{def:b2:adverse-selection:community-rating}{Community rating} protects them
+but widens the gap, since the insurer may no longer use what it knows, and so strengthens selection. A mandate keeps low
+risks in the pool and can restore full coverage; it also obliges people who value cover at less than its price to buy it,
+and in a market with \omterm{def:b2:adverse-selection:advantageous}{advantageous selection}, or where some people value cover below its cost, it insures some who
+should not be. Like any public rule, it depends on a penalty set and enforced by government, which may set it too low to
+bind or too high.
+
+\begin{record}[The Massachusetts mandate]
+% ledger: b2:hkk2015
+As part of a health reform, the state of Massachusetts required its residents to hold health insurance. Using data from the state, Hackmann, Kolstad and Kowalski (2015) estimated a model of selection and found that, in the
+individual market, premiums and average costs fell significantly after the mandate, as healthier people joined. They
+estimate an annual welfare gain from the reduction in \omterm{def:b2:adverse-selection:adverse-selection}{adverse selection} of 4.1 per cent per person, or 51.1 million dollars
+a year in the state, and smaller markups after the reform.
+\end{record}
+
+\section{Exercises}\label{sec:b2:adverse-selection:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:adverse-selection:1}
+In a lemons market quality is uniform between 0 and 10{,}000 dalens; a seller values her good at its quality and a buyer at 1.2
+times it. At a price of 6{,}000, which sellers sell, what is the average quality on offer, and do buyers pay the price?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:adverse-selection:2}
+Read the opening chart. Which features were chosen by buyers who lived longer, and which by buyers who died sooner? In which
+market are the effects larger?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:adverse-selection:3}
+Predict, then compute: in the two-type insurance market of the chapter, what is the smallest share of low risks at which a
+single premium keeps both types insured?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:adverse-selection:4}
+A study finds that drivers with more comprehensive cover have more accidents. List two explanations other than \omterm{def:b2:adverse-selection:adverse-selection}{adverse
+selection}, and say what data would separate them.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:adverse-selection:5}
+In the \omterm{def:b2:adverse-selection:lemons}{lemons model} let buyers value a good of quality $\theta$ at $b\theta$. For which $b$ is there trade at a positive price?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:adverse-selection:6}
+In the market of \cref{sec:b2:adverse-selection:unravelling}, carry the spiral of the listing two more years by hand from a
+premium of 596.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:adverse-selection:7}
+Show that, for the curves $D(q) = 900 - 500q$ and $\mathit{MC}(q) = 800 - 600q$, the average cost is $800 - 300q$, and find the equilibrium and the
+welfare loss.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:adverse-selection:8}
+With \omterm{def:b2:adverse-selection:advantageous}{advantageous selection}, let $D(q) = 900 - 500q$ and $\mathit{MC}(q) = 300 + 200q$. Find the average cost, the equilibrium, the efficient
+share insured and the welfare loss.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:adverse-selection:9}
+Explain why the annuity buyers of the opening chart could select by product even though the insurer priced on age and sex.
+Would pricing every feature on the mortality of its buyers end the selection?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:adverse-selection:10}
+Prove that in the \omterm{def:b2:adverse-selection:lemons}{lemons model} with quality uniform on $[0, 1]$, seller values $\theta$ and buyer values $b\theta$ with $1 < b < 2$, no price
+clears the market with positive trade, and find the gains from trade lost.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:adverse-selection:11}
+With linear $D(q) = d_0 - d_1 q$ and $\mathit{MC}(q) = m_0 - m_1 q$, derive $\mathit{AC}(q)$ and the equilibrium share. Find the condition under which the
+market unravels completely.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:adverse-selection:12}
+A mandate imposes a penalty on people who stay uninsured. In the market of \cref{sec:b2:adverse-selection:unravelling}, find the
+smallest penalty that makes everyone buy at the premium that breaks even when all are insured.
+\end{exercise}
+
+\section{Problem: Kestria's health cooperative}\label{sec:b2:adverse-selection:problem}
+
+\begin{problem}[{Weekend problem --- a health cooperative in Kestria, the trading neighbour of Brenland, cannot tell its
+members' health risks: how many stay insured, what does selection cost, and what do a mandate and risk-rated premiums
+change}]
+\label{pb:b2:adverse-selection:1}
+The cooperative has 1{,}000 members and offers one policy, priced in kests a year to break even.
+
+\medskip
+\noindent\textbf{Part I --- Two risk types.} 600 members are healthy, with expected cost 400 and willingness to pay 600; 400 are
+sick, with expected cost 1{,}600 and willingness to pay 1{,}900.
+\begin{enumerate}
+  \item What is the average expected cost of a member?
+  \item What is the total surplus if everyone is insured?
+  \item Should each type be insured, on grounds of efficiency?
+  \item What premiums would the cooperative charge if it could tell the types apart?
+  \item What is each type's \omterm{def:b2:expected-utility:risk-premium}{risk premium}?
+  \item What information is hidden, and from whom?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- A pooled premium.}
+\begin{enumerate}[resume]
+  \item At a premium of 880, who buys?
+  \item What premium must the cooperative then charge, and who buys at it?
+  \item How many members are insured?
+  \item What surplus is lost?
+  \item What surplus do the sick members keep?
+  \item Is there any single premium at which everyone buys and the cooperative breaks even?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Demand and cost curves.} Now members differ continuously. Ranked by willingness to pay, the
+member at rank $q$ would pay $1{,}800 - 1{,}000q$ and costs $1{,}500 - 1{,}200q$.
+\begin{enumerate}[resume]
+  \item Find the average cost of the first $q$ members.
+  \item Find the equilibrium share insured and the premium.
+  \item What is the efficient share insured?
+  \item Find the welfare loss for the 1{,}000 members.
+  \item Starting from a premium of 900, trace three years of the spiral.
+  \item Why does the spiral stop short of \omterm{def:b2:adverse-selection:unravelling}{unravelling} completely?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- A mandate and risk-rated premiums.}
+\begin{enumerate}[resume]
+  \item Under a mandate everyone buys. What premium breaks even, and what is the gain in welfare?
+  \item Which members pay more than they would choose to?
+  \item What penalty makes the mandate bind for everyone?
+  \item If the cooperative could observe each member's expected cost and charge it, who would buy, and what would the
+    highest-cost member pay?
+  \item Compare that member's premium under no intervention, the mandate and risk rating.
+  \item State the result: equilibrium coverage and the welfare loss of selection, and the change under each answer.
+\end{enumerate}
+\end{problem}

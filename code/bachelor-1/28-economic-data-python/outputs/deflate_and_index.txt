@@ -1,0 +1,7 @@
+$ python deflate_and_index.py
+year
+2015     97.1
+2020    100.0
+2025    114.3
+mean log growth 2016-2025: 1.63
+check against the published real GDP: 0.0

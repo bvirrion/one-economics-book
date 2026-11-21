@@ -1,0 +1,4 @@
+$ python sample_variance.py
+population variance         241.9 million
+average, divided by n - 0   194.4 million
+average, divided by n - 1   243.0 million

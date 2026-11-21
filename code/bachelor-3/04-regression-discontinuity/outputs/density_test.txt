@@ -1,0 +1,4 @@
+$ python density_test.py
+scripts moved 982
+clean      log jump in density -0.052  (s.e. 0.048)  t =  -1.1
+re-marked  log jump in density  1.864  (s.e. 0.062)  t =  29.9

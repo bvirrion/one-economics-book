@@ -1,0 +1,12 @@
+$ python lalonde_benchmark.py
+experiment                     1794 (671)
+cps_controls
+  difference in means         -8498 (582)
+  regression, controls          794 (619)
+  DiD                          3621 (610)
+  DiD, controls                2264 (644)
+psid_controls
+  difference in means        -15205 (656)
+  regression, controls          795 (780)
+  DiD                          2327 (645)
+  DiD, controls                2106 (771)

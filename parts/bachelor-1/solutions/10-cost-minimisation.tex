@@ -1,0 +1,156 @@
+\section*{Chapter \ref{ch:b1:cost-minimisation} --- Cost Minimisation}
+% Numbers recomputed in code/bachelor-1/10-cost-minimisation/exercises/solutions.py (tested).
+
+\begin{solution}{exo:b1:cost-minimisation:cd}
+The tangency $K/L = w/r$ and $\sqrt{KL} = q$ give $L^* = q\sqrt{r/w}$ and
+$K^* = q\sqrt{w/r}$. At $w = 4$, $r = 1$, $q = 10$: $L^* = 5$, $K^* = 20$, and the cost is
+$4 \times 5 + 1 \times 20 = 40$ $(= 2q\sqrt{wr})$.
+\end{solution}
+
+\begin{solution}{exo:b1:cost-minimisation:leontief}
+$K = 2 \times 100 = 200$ and $L = 3 \times 100 = 300$: $5 \times 200 + 10 \times 300 = 4000$. If $r$
+doubles the inputs stay the same and the cost becomes $2000 + 3000 = 5000$.
+\end{solution}
+
+\begin{solution}{exo:b1:cost-minimisation:census}
+$62/68 = 0.912$ and $10648/14971 = 0.711$ dalens of cost per dalen of output.
+Not by itself: output is measured in value, not in units, so prices may
+differ; the cost leaves out the cost of capital, which large firms use
+more; and the two firms need not make the same goods. One would need firms
+of different sizes making the same product, with all their costs.
+\end{solution}
+
+\begin{solution}{exo:b1:cost-minimisation:shift}
+A rise in the wage shifts the \omterm{def:b1:cost-minimisation:cost-function}{cost function} ($C$ depends on $w$). A rise in
+demand moves the firm along it, to a larger $q$. A new machine changes the
+\omterm{def:b1:technology:production-function}{production function}, and so shifts the \omterm{def:b1:cost-minimisation:cost-function}{cost function} down.
+\end{solution}
+
+\begin{solution}{exo:b1:cost-minimisation:cd-cost}
+The tangency gives $K/L = \tfrac{1/3}{2/3}\cdot\tfrac wr = \tfrac{w}{2r}$, and
+$C(w, r, q) = q\,(3r)^{1/3}(\tfrac32w)^{2/3}$. At $w = 8$, $r = 1$:
+$3^{1/3} \times 12^{2/3} = 7.5595$ per unit. Here $K/L = 4$, so $q = L \times 4^{1/3}$,
+$L^* = 0.630q$ and $K^* = 2.520q$, and indeed $8 \times 0.630 + 2.520 = 7.56$.
+Shephard: $\partial C/\partial w = \tfrac23C/w = \tfrac23 \times 7.5595/8 \times q = 0.630q = L^*$.
+\end{solution}
+
+\begin{solution}{exo:b1:cost-minimisation:short}
+With $K = 4$, $L = q^2/4$ and $C_s = 4 + q^2/4$. In the long run $C = 2q\sqrt{wr} = 2q$.
+At $q = 4$ both are 8 (four machine hours is the optimal capital for
+$q = 4$); at $q = 6$, $C_s = 4 + 9 = 13 > 12$.
+\end{solution}
+
+\begin{solution}{exo:b1:cost-minimisation:mes-calc}
+$AC = 100/q + 2 + 0.01q$ is lowest where $100/q^2 = 0.01$, at $q = 100$, with
+$AC = 1 + 2 + 1 = 4$. $MC = 2 + 0.02q = 4$ there.
+\end{solution}
+
+\begin{solution}{exo:b1:cost-minimisation:three-doublings}
+$0.8^3 = 0.512$: a fall of $48.8\%$.
+\end{solution}
+
+\begin{solution}{exo:b1:cost-minimisation:estimate}
+From 50 to 400 is three doublings, over which cost was multiplied by
+$120/200 = 0.6$. Per doubling, $0.6^{1/3} = 0.8434$: a \omterm{def:b1:cost-minimisation:learning-curve}{learning rate} of $15.7\%$.
+\end{solution}
+
+\begin{solution}{exo:b1:cost-minimisation:law}
+By Shephard's lemma $L^* = \partial C/\partial w$, so
+$\partial L^*/\partial w = \partial^2C/\partial w^2$. A concave function has nonpositive second
+derivatives along each axis, so $\partial L^*/\partial w \le 0$. And
+$\partial L^*/\partial r = \partial^2C/\partial r\,\partial w = \partial^2C/\partial w\,\partial r = \partial K^*/\partial w$,
+since the order of differentiation does not matter.
+\end{solution}
+
+\begin{solution}{exo:b1:cost-minimisation:u-shape}
+Each short-run curve lies on or above the long-run curve and touches it at
+one output $q_0$ (\cref{prop:b1:cost-minimisation:envelope}), where the two
+average costs have the same slope, because the total costs do and the
+averages are both divided by $q_0$. Where long-run average cost falls, the
+common slope is negative, so the short-run curve is still falling at $q_0$:
+its minimum lies to the right. The envelope touches the minimum of a
+short-run curve only at the bottom of the long-run U.
+\end{solution}
+
+\begin{solution}{exo:b1:cost-minimisation:separate}
+One would need costs of many plants and firms over time, with their
+cumulative output, their size and their research spending. \omterm{def:b1:cost-minimisation:learning-curve}{Learning by
+doing} predicts that, at a given plant size and research spending, a firm's
+cost falls with its own (or its industry's) cumulative output. Against it:
+costs that fall at the same pace in years when cumulative output grows
+slowly (a steady flow of research), or that are explained by plant size
+alone, or new entrants with no experience whose costs match the
+incumbents'.
+\end{solution}
+
+\begin{solution}{pb:b1:cost-minimisation:battery}
+\textbf{1.} $f_L/f_K = K/L = w/r = 1/4$: the expansion path is $K = L/4$.
+
+\textbf{2.} With $K = L/4$, $q = 2\sqrt{L^2/4} = L$: $L^* = q$ and $K^* = q/4$ (in general
+$L^* = \tfrac q2\sqrt{r/w}$ and $K^* = \tfrac q2\sqrt{w/r}$). For $q = 1000$: 1,000 hours and 250
+machine hours.
+
+\textbf{3.} $C = q\sqrt{wr} = q\sqrt{10000} = 100q$: 100,000 dalens.
+
+\textbf{4.} $AC = MC = 100$ dalens per kilowatt-hour: \omterm{def:b1:technology:returns-to-scale}{constant returns to scale}.
+
+\textbf{5.} $\partial C/\partial w = \tfrac q2\sqrt{r/w} = \tfrac q2 \times 2 = q = L^*$.
+
+\textbf{6.} $\sqrt{72 \times 200} = 120$ per unit; per unit,
+$L^*/q = \tfrac12\sqrt{200/72} = 0.8333$ and $K^*/q = \tfrac12\sqrt{72/200} = 0.3$, so
+$72 \times 0.8333 + 200 \times 0.3 = 120$. The plant uses less labour and more capital.
+
+\textbf{7.} The cost doubles, to 200 per unit; the mix, which depends on $w/r$
+only, does not change.
+
+\textbf{8.} $L = q^2/(4 \times 250) = q^2/1000$, so $C_s = 200 \times 250 + 50q^2/1000 = 50000 + 0.05q^2$.
+
+\textbf{9.} $SRAC = 50000/q + 0.05q$ and $SRMC = 0.1q$.
+
+\textbf{10.} $50000/q^2 = 0.05$ at $q = 1000$, where $SRAC = 50 + 50 = 100$.
+
+\textbf{11.} $SRAC = 41.67 + 60 = 101.67$, $SRMC = 120$, and the long-run average
+cost is 100.
+
+\textbf{12.} $62.5 + 40 = 102.5$.
+
+\textbf{13.} In the long run the plant could choose any capital, including
+250, so it can do no worse than with 250. They touch at $q = 1000$, the
+output for which 250 is the cheapest capital ($K^* = q/4$).
+
+\textbf{14.} 1,000; 2,000; 4,000; 8,000; 16,000.
+
+\textbf{15.} $82.0/100 = 0.82$, $67.24/82.0 = 0.82$, $55.14/67.24 = 0.8200$,
+$45.21/55.14 = 0.8199$. Cumulative output doubles each year, so the \omterm{def:b1:cost-minimisation:learning-curve}{learning
+rate} is $18\%$.
+
+\textbf{16.} $2^{-b} = 0.82$, $b = -\log_2 0.82 = 0.2863$.
+
+\textbf{17.} From year 1 to year 5 cumulative output doubles four times:
+$(45.21/100)^{1/4} = 0.820$, a \omterm{def:b1:cost-minimisation:learning-curve}{learning rate} of $18\%$.
+
+\textbf{18.} Cumulative output doubled every year, so it and time moved
+together: a fall of $18\%$ per doubling and a fall of $18\%$ a year predict the
+same five numbers.
+
+\textbf{19.} Unit cost is $2\sqrt{wr}/A = 200/A$, so $A = 200/45.21 = 4.42$.
+
+\textbf{20.} $16000 + 3 \times 16000 = 64000$.
+
+\textbf{21.} $64000/1000 = 64 = 2^6$: $100 \times 0.82^6 = 30.40$ dalens.
+
+\textbf{22.} Seven years at $18\%$: $100 \times 0.82^7 = 24.93$ dalens.
+
+\textbf{23.} If the cost falls through experience, the \omterm{def:b1:cost-minimisation:learning-curve}{learning curve}: output
+stopped growing in year 5, so cumulative output doubles more slowly (only
+twice from year 5 to year 8), and the cost falls more slowly. The yearly
+rule would be right if the fall came from something steady in time, such
+as research elsewhere. The five years cannot tell the two apart
+(question 18); only years in which the growth of output changes, as from
+year 5, can.
+
+\textbf{24.} $1.1 \times 30.40 = 33.44$ dalens per kilowatt-hour.
+
+\textbf{25.} The plant's \omterm{def:b1:cost-minimisation:learning-curve}{learning rate} is $18\%$ per doubling of cumulative
+output, and its unit cost in year 8 is 30.40 dalens per kilowatt-hour.
+\end{solution}

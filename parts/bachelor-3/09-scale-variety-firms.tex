@@ -1,0 +1,547 @@
+\chapter{Scale, Variety and Firms}\label{ch:b3:scale-variety-firms}
+
+The two previous chapters explained trade by differences between countries: in
+technology, in endowments. Yet much of world trade is between similar rich
+countries, and much of it within the same industries: Germany sells cars to
+France and buys cars from it. And inside every industry, most firms do not trade
+at all. This chapter explains both facts with two models. In the first, every
+firm makes its own variety, consumers like variety, and production has fixed
+costs, so trade lets each country make fewer varieties at larger scale while its
+consumers enjoy more. In the second, firms differ in productivity, and only the
+best can pay the cost of selling abroad. The opening chart shows how few they are.
+
+\begin{openingchart}{Share of firms that export, by manufacturing industry, United
+States, 2002 (percent). The dotted line is all manufacturing, 18~\%.}{Bernard,
+Jensen, Redding and Schott (2007), Table~2}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xbar, bar width=5pt, xmin=0, xmax=45, ymin=0.3, ymax=21.7,
+    y dir=reverse, ytick=data,
+    yticklabels from table={figdata/bachelor-3/09-scale-variety-firms/out/exporters.csv}{industry},
+    y tick label style={font=\footnotesize}, xlabel={Percent of the industry's firms that export},
+    grid=none, xmajorgrids, width=0.62\linewidth, height=0.72\linewidth,
+    nodes near coords, every node near coord/.append style={font=\scriptsize}]
+  \addplot[fill=omDef!70, draw=omDef] table[x=exporting, y=pos]
+    {figdata/bachelor-3/09-scale-variety-firms/out/exporters.csv};
+  \draw[guide] (axis cs:18,0.3) -- (axis cs:18,21.7);
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% ledger: b3sv:bjrs.t2.all, b3sv:bjrs.t2.334, b3sv:bjrs.t2.339, b3sv:bjrs.t2.323
+Fewer than one United States manufacturing firm in five exported in 2002. The share
+ranged from 38~\% in computers and electronics and in electrical equipment to
+5~\% in printing and 2~\% in miscellaneous manufacturing --- but every industry
+had exporters, and in every industry most firms sold only at home. And the firms
+that did export sold most of their output at home too: their exports were, on
+average, 14~\% of their shipments.
+
+\begin{recall}
+The Year 1 volume taught monopoly pricing, the Lerner index $(p - c)/p = 1/|\varepsilon|$,
+economies of scale and free entry; the grades 10--12 volume introduced
+\omterm{def:b3:scale-variety-firms:monopolistic-competition}{monopolistic competition}. Chapters \ref{ch:b3:ricardian-trade} and
+\ref{ch:b3:factor-endowments} built the trade models this chapter adds to.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:scale-variety-firms:symbols}
+$\sigma > 1$ is the elasticity of substitution between varieties, $n$ the number
+of varieties (and of firms), $P$ the price index of the industry and $E$ spending
+on it. A firm has fixed cost $F$ and marginal cost $c$, both in labour, with the
+wage set to 1. $\tau \ge 1$ units must be shipped for one to arrive (\omterm{def:b3:ricardian-trade:iceberg}{iceberg
+trade cost}); $\lambda = \tau^{1-\sigma}$ measures the freeness of trade (not an import
+share). In the last sections $\varphi$ is a firm's productivity, $\varphi^*$ the
+domestic cut-off and $\varphi_x$ the \omterm{def:b3:scale-variety-firms:melitz}{export cut-off}.
+\end{notation}
+
+\section{Trade inside industries}\label{sec:b3:scale-variety-firms:intra}
+
+\begin{definition}[Intra-industry trade; Grubel--Lloyd index]\label{def:b3:scale-variety-firms:intra-industry}
+\index{intra-industry trade}\index{Grubel--Lloyd index}
+\emph{Intra-industry trade} is a country's exports and imports of goods of the
+same industry. For an industry with exports $X$ and imports $M$, the
+\emph{Grubel--Lloyd index} is $\mathrm{GL} = 1 - |X - M|/(X + M)$.
+\end{definition}
+
+\begin{measure}[The Grubel--Lloyd index]
+The index is 0 when trade in the industry goes one way only, as Ricardo and
+Heckscher--Ohlin predict, and 1 when exports equal imports. A country's
+aggregate index weights the industries by their trade: $1 - \sum_i |X_i - M_i| /
+\sum_i (X_i + M_i)$. Its value depends on how finely industries are drawn: at a
+coarse level (``machinery''), a country exports some kinds and imports others,
+and the index is high; at a fine one (``ball bearings of a given size''),
+part of that trade becomes inter-industry and the index falls. A high index
+between countries with similar endowments is the fact that endowment models
+cannot produce (\cref{exo:b3:scale-variety-firms:2}).
+\end{measure}
+
+\section{Love of variety and monopolistic competition}\label{sec:b3:scale-variety-firms:variety}
+
+\begin{definition}[Love of variety]\label{def:b3:scale-variety-firms:variety}
+\index{love of variety}\index{CES preferences}
+Consumers have a \emph{love of variety} when, for given spending, they are
+better off with more varieties of a good. The workhorse is \emph{CES
+preferences} over $n$ varieties,
+\begin{equation}\label{eq:b3:sv:ces}
+  U = \Bigl(\sum_{i=1}^n x_i^{(\sigma - 1)/\sigma}\Bigr)^{\sigma/(\sigma - 1)}, \qquad \sigma > 1 .
+\end{equation}
+\end{definition}
+
+Maximising \eqref{eq:b3:sv:ces} under the budget $\sum_i p_i x_i = E$ gives the
+demand for variety $i$ (\cref{exo:b3:scale-variety-firms:10}),
+\begin{equation}\label{eq:b3:sv:demand}
+  x_i = \frac{p_i^{-\sigma}}{P^{1-\sigma}}\, E, \qquad P = \Bigl(\sum_j p_j^{1-\sigma}\Bigr)^{1/(1-\sigma)} ,
+\end{equation}
+and utility $U = E/P$. With $n$ varieties at the same price $p$, $P = n^{1/(1-\sigma)}p$,
+so $U = n^{1/(\sigma-1)} E/p$: at a given price and spending, more varieties mean
+more utility. The \omterm{def:b3:scale-variety-firms:variety}{love of variety} is stronger the smaller $\sigma$, the less
+alike the varieties.
+
+\begin{definition}[Monopolistic competition]\label{def:b3:scale-variety-firms:monopolistic-competition}
+\index{monopolistic competition}
+\emph{Monopolistic competition} is a market in which each firm is the only
+seller of its variety and so sets its price, but free entry drives profits to
+zero, and each firm is too small for its price to move the industry's price
+index $P$.
+\end{definition}
+
+\begin{proposition}[A constant markup]\label{prop:b3:scale-variety-firms:markup}
+Under CES demand and \omterm{def:b3:scale-variety-firms:monopolistic-competition}{monopolistic competition}, every firm charges $p = \dfrac{\sigma}{\sigma - 1}\, c$.
+\end{proposition}
+
+\begin{proof}
+By \eqref{eq:b3:sv:demand}, with $P$ and $E$ taken as given, the firm faces demand
+$x = A p^{-\sigma}$ with $A$ fixed: its price elasticity is $-\sigma$. Profit
+$(p - c)Ap^{-\sigma}$ is maximised where $Ap^{-\sigma} - \sigma(p - c)Ap^{-\sigma - 1} = 0$,
+that is $p = \sigma(p - c)$, or $p = \sigma c/(\sigma - 1)$: the Lerner condition $(p -
+c)/p = 1/\sigma$.
+\end{proof}
+
+\section{The Krugman model of trade}\label{sec:b3:scale-variety-firms:krugman}
+
+Let a country have $L$ workers. Each firm needs $F$ workers to start and $c$
+workers per unit; it charges the markup price of
+\cref{prop:b3:scale-variety-firms:markup}.
+
+\begin{proposition}[Firm size, variety and the gains from trade]\label{prop:b3:scale-variety-firms:krugman}
+With free entry, every firm makes $\bar x = (\sigma - 1)F/c$ units and employs
+$\sigma F$ workers, and there are $n = L/(\sigma F)$ firms. Free trade between two
+such countries, with $L$ and $L^*$ workers, leaves each firm's size and price
+unchanged, raises the number of varieties each consumer buys to $n + n^* = (L +
+L^*)/(\sigma F)$, and raises every worker's real wage by the factor $\bigl((L +
+L^*)/L\bigr)^{1/(\sigma-1)}$.
+\end{proposition}
+
+\begin{proof}
+Zero profit: $(p - c)\bar x = F$ with $p - c = c/(\sigma - 1)$, so $\bar x = (\sigma -
+1)F/c$, and the firm's employment is $F + c\bar x = \sigma F$. Full employment gives
+$n\sigma F = L$. Neither condition involves the size of the market, so opening to
+trade changes neither $\bar x$ nor $p$, only the number of firms the consumer can
+buy from: $n + n^*$. With the wage at 1, the real wage is $U$ per unit of spending,
+$1/P = n^{1/(\sigma-1)}/p$; it rises with the number of varieties to the power
+$1/(\sigma - 1)$.
+\end{proof}
+
+Similar countries trade, and trade within industries, because each makes
+different varieties; each country's industry shrinks in number of firms
+relative to the combined market, and both gain. In this version firm size is
+fixed by the CES markup; with demand that becomes more elastic as varieties
+multiply, trade also makes firms larger and prices lower.
+
+\begin{record}[Gains from new varieties]
+Broda and Weinstein counted the varieties --- a product from a given country ---
+that the United States imported: their number rose by a factor of four from 1972
+to 2001. Because the official import price index ignores new varieties, it
+overstated import price inflation by about 1.2~\% a year, and the welfare gain
+from the growth in imported varieties alone came to 2.8~\% of GDP (the working-paper
+estimate). % ledger: b3sv:bw.variety
+\end{record}
+
+\section{The home-market effect}\label{sec:b3:scale-variety-firms:home-market}
+
+\begin{definition}[Home-market effect]\label{def:b3:scale-variety-firms:home-market}
+\index{home-market effect}
+The \emph{home-market effect} is the prediction that, with increasing returns and
+trade costs, a country's share of an industry's production rises more than in
+proportion to its share of the industry's demand, so that the larger market
+becomes a net exporter of the industry's goods.
+\end{definition}
+
+Let Home and Foreign spend $E$ and $E^*$ on a differentiated good, and let an
+outside good, traded freely, keep both wages at 1, so that all varieties sell at
+the same factory price $p$. Shipping costs $\tau$, so a foreign consumer pays $\tau
+p$. A Home firm's sales are, by \eqref{eq:b3:sv:demand},
+\[
+  R = \frac{E}{n + \lambda n^*} + \frac{\lambda E^*}{\lambda n + n^*}, \qquad \lambda = \tau^{1-\sigma},
+\]
+and a Foreign firm's $R^* = \lambda E/(n + \lambda n^*) + E^*/(\lambda n + n^*)$. Free entry
+requires each to equal $\bar R = \sigma F$.
+
+\begin{proposition}[The home-market effect]\label{prop:b3:scale-variety-firms:hme}
+If both countries make the good, Home's share of the firms is
+\[
+  s_n = \frac{n}{n + n^*} = \frac12 + \frac{1 + \lambda}{1 - \lambda}\Bigl(s_E - \frac12\Bigr),
+  \qquad s_E = \frac{E}{E + E^*},
+\]
+so a one-point rise in Home's share of demand raises its share of production by
+$(1 + \lambda)/(1 - \lambda) > 1$ points, and the country with the larger market is a net
+exporter of the good.
+\end{proposition}
+
+\begin{proof}
+Write $a = E/(n + \lambda n^*)$ and $b = E^*/(\lambda n + n^*)$. Free entry gives $a + \lambda b =
+\lambda a + b = \bar R$; subtracting, $(1 - \lambda)(a - b) = 0$, so $a = b = \bar R/(1 + \lambda)$.
+Hence $n + \lambda n^* = E(1 + \lambda)/\bar R$ and $\lambda n + n^* = E^*(1 + \lambda)/\bar R$. Solving,
+$n = (E - \lambda E^*)/\bigl(\bar R(1 - \lambda)\bigr)$, $n^* = (E^* - \lambda E)/\bigl(\bar R(1 -
+\lambda)\bigr)$, and $n + n^* = (E + E^*)/\bar R$. Dividing, $s_n = (s_E(1 + \lambda) - \lambda)/(1
+- \lambda)$, which rearranges to the formula. With $s_E > \frac12$, $s_n > s_E$: Home's firms
+sell $s_n(E + E^*)$, more than its spending $s_E(E + E^*)$, so it exports on net.
+\end{proof}
+
+\begin{omchart}{Home's share of the industry's firms against its share of
+world spending on the industry, in the two-country Krugman model, for three
+levels of the freeness of trade $\lambda$.}{Model of this section; our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.55\linewidth, height=0.5\linewidth, xmin=0, xmax=1,
+  ymin=0, ymax=1, xlabel={Home's share of spending $s_E$}, ylabel={Home's share of firms $s_n$},
+  legend pos=north west, legend style={font=\footnotesize}]
+  \addplot[omThm, thick, no marks, sharp plot] table[x=s_e, y=lam2] {figdata/bachelor-3/09-scale-variety-firms/out/hme.csv};
+  \addplot[omDef, thick, no marks, sharp plot] table[x=s_e, y=lam5] {figdata/bachelor-3/09-scale-variety-firms/out/hme.csv};
+  \addplot[black, thick, no marks, sharp plot] table[x=s_e, y=lam8] {figdata/bachelor-3/09-scale-variety-firms/out/hme.csv};
+  \addplot[guide, sharp plot] table[x=s_e, y=s_e] {figdata/bachelor-3/09-scale-variety-firms/out/hme.csv};
+  \legend{$\lambda = 0.2$, $\lambda = 0.5$, $\lambda = 0.8$}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+The dotted diagonal is production in proportion to demand. The steeper the line,
+the stronger the effect, and it grows as trade gets cheaper: when shipping is
+nearly free, a small edge in market size draws the whole industry into one
+country. The prediction separates this model from the endowment models, in which
+a country with a strong taste for a good imports it
+(\cref{exo:b3:scale-variety-firms:4}).
+
+\section{Firms that differ: the Melitz model}\label{sec:b3:scale-variety-firms:melitz}
+
+In the Krugman model every firm exports. The opening chart says most do not.
+
+\begin{definition}[Heterogeneous-firms model; export cut-off]\label{def:b3:scale-variety-firms:melitz}
+\index{heterogeneous-firms model}\index{export cut-off}
+In the \emph{heterogeneous-firms model} (Melitz), an entrant pays a sunk entry
+cost $f_e$, then draws a productivity $\varphi$, its output per worker. To produce
+it pays a fixed cost $f$ each period; to export, a further fixed cost $f_x$ and the
+trade cost $\tau$. Demand is CES and entry is free. Firms with $\varphi$ below the
+\emph{domestic cut-off} $\varphi^*$ exit; firms with $\varphi$ above the \emph{export
+cut-off} $\varphi_x$ export as well.
+\end{definition}
+
+A firm's revenue is proportional to $\varphi^{\sigma-1}$, and its profit is revenue
+divided by $\sigma$, less fixed costs. At the domestic cut-off, profit is zero, so
+revenue is $\sigma f$, and a firm with $\varphi \ge \varphi^*$ has domestic profit $f\bigl((\varphi/\varphi^*)^{\sigma-1}
+- 1\bigr)$. Its foreign revenue is $\lambda$ times its domestic revenue (in a market
+of the same size), so it exports when $\lambda\, \sigma f(\varphi/\varphi^*)^{\sigma-1}/\sigma
+\ge f_x$:
+\begin{equation}\label{eq:b3:sv:export-cutoff}
+  \varphi_x = \tau \Bigl(\frac{f_x}{f}\Bigr)^{1/(\sigma-1)} \varphi^* .
+\end{equation}
+Free entry sets the expected profit of an entrant equal to $f_e$. When
+productivity is Pareto-distributed, $\Pr(\varphi > z) = z^{-k}$ for $z \ge 1$ with $k > \sigma
+- 1$, the expected profit can be integrated in closed form (as in the weekend
+problem), and the cut-off follows.
+
+\begin{proposition}[Opening raises the cut-off]\label{prop:b3:scale-variety-firms:cutoff}
+In the \omterm{def:b3:scale-variety-firms:melitz}{heterogeneous-firms model} with Pareto productivity, the closed-economy
+cut-off satisfies $\varphi^{*k} = f(\sigma - 1)/\bigl((k - \sigma + 1)f_e\bigr)$; opening to
+trade with a symmetric country multiplies $\varphi^{*k}$ by $1 + \tau^{-k}(f/f_x)^{k/(\sigma-1) -
+1}$. The least productive firms exit, the most productive export, and average
+productivity rises.
+\end{proposition}
+\admitted
+
+The listing simulates 20{,}000 entrants in the economy of the weekend problem:
+$\sigma = 3$, $k = 4$, $f = 40$, $f_e = 2.5$, $\tau = 1.2$ and $f_x = 90$. % figdata: furn_params
+
+\omcode{code/bachelor-3/09-scale-variety-firms/listings/melitz_selection.py}{1}{26}{Selection in the Melitz model, closed and open.}\label{lst:b3:scale-variety-firms:melitz}
+
+\omoutput{code/bachelor-3/09-scale-variety-firms/outputs/melitz_selection.txt}{Opening pushes the weakest out.}\label{out:b3:scale-variety-firms:melitz}
+
+In autarky one entrant in sixteen produces. With trade, the cut-off rises from 2
+to 2.10: about 18~\% of the firms that produced in autarky exit, and in this
+sample 8.7~\% of the producers export (the formula's population share is 9.5~\%).
+% output: melitz_selection
+% figdata: furn_results
+No firm has become more productive, yet the average producer has: the least
+productive firms are gone. The figure below places the three cut-offs on the
+productivity line, and the chart shows what happens to each firm's sales.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=1.6cm, y=1cm]
+  \draw[econ axes] (1,0) -- (6.5,0) node[right] {$\varphi$};
+  \foreach \x/\l in {1/1, 2/2, 3/3, 4/4, 5/5, 6/6} \draw (\x,0.08) -- (\x,-0.08) node[below, font=\scriptsize] {\l};
+  \draw[omThm, thick] (2,0) -- (2,0.9) node[above, font=\scriptsize] {$\varphi^*$ closed};
+  \draw[omDef, thick] (2.0995,0) -- (2.0995,0.5) node[right, font=\scriptsize] {$\varphi^*$ open};
+  \draw[black, thick] (3.7791,0) -- (3.7791,0.9) node[above, font=\scriptsize] {$\varphi_x$};
+  \node[font=\scriptsize] at (1.5,-0.75) {never produce};
+  \node[font=\scriptsize] at (2.95,-0.75) {sell at home only};
+  \node[font=\scriptsize] at (5.1,-0.75) {sell at home and abroad};
+\end{tikzpicture}
+\par\smallskip{\small The productivity line in the economy of the listing. Firms
+just above the closed-economy cut-off exit when the country opens.}
+\end{omfigure}
+
+\begin{omchart}{Revenue of each simulated firm against its productivity, before
+and after opening to trade (thousands of dalens a year, log scale; the producers among 10{,}000 entrants,
+up to a productivity of 6).}{Simulated: Melitz model of the weekend problem}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.62\linewidth, height=0.45\linewidth, ymode=log,
+  log ticks with fixed point, xmin=1.9, xmax=6.1, ymin=80, ymax=2000,
+  xlabel={Productivity $\varphi$}, ylabel={Revenue}, legend pos=north west,
+  legend style={font=\footnotesize}]
+  \addplot[only marks, mark=o, mark size=1.6pt, omThm] table[x=phi, y=closed] {figdata/bachelor-3/09-scale-variety-firms/out/furn_firms.csv};
+  \addplot[only marks, mark=*, mark size=1.2pt, omDef] table[x=phi, y=open] {figdata/bachelor-3/09-scale-variety-firms/out/furn_firms.csv};
+  \draw[guide] (axis cs:3.7791,80) -- (axis cs:3.7791,2000);
+  \legend{closed, open}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+Firms just above the old cut-off have no filled dot: they exit. Firms between the
+two cut-offs sell less than before, because imported varieties take part of
+their market; firms beyond the \omterm{def:b3:scale-variety-firms:melitz}{export cut-off} (the dotted line) jump up, by a
+factor $1 + \lambda = 1.69$ at given productivity. Market share moves from the least
+to the most productive firms, and that move, not any firm's learning, raises the
+industry's productivity (\cref{exo:b3:scale-variety-firms:11}).
+
+\begin{model}{Monopolistic competition and trade}
+\assumes CES \omterm{def:b3:scale-variety-firms:variety}{love of variety}; increasing returns from a fixed cost; free entry;
+identical firms.
+\predicts Similar countries trade, and trade within industries; trade raises the
+number of varieties and real wages; larger markets attract more than their share
+of an industry.
+\tested The \omterm{def:b3:scale-variety-firms:home-market}{home-market effect} has had mixed tests. On U.S. and Canadian
+manufacturing, Head and Ries (2001) found it in the variation between industries but
+not within them, and judged that most of the evidence favoured a model in which
+each country's goods differ for reasons other than scale; Davis and Weinstein
+rejected the simple version on OECD data, then found that market access with
+\omterm{def:b3:ricardian-trade:comparative-advantage}{comparative advantage} does shape OECD manufacturing. % ledger: b3sv:hr.hme, b3sv:dw.hme
+The gain from variety is measured, not tested: imported varieties quadrupled in the
+United States from 1972 to 2001, worth 2.8~\% of GDP computed with the model's own
+formula. % ledger: b3sv:bw.variety
+\breaks Every firm exports, while most firms in every industry sell only at home.
+\end{model}
+
+\section{Exporters are few, large and productive}\label{sec:b3:scale-variety-firms:exporters}
+
+The \omterm{def:b3:scale-variety-firms:melitz}{heterogeneous-firms model} predicts not only that few firms export but which
+ones: the largest and most productive. The census data agree. Among United
+States manufacturing firms in 2002, exporters had 1.19 log points more employment
+than non-exporters --- about 3.3 times as many workers --- 1.48 log points more
+shipments and 0.26 more value added per worker. Within the same industry the
+differences shrink but remain: 0.97 log points of employment, 0.11 of value added
+per worker, 0.06 of wages, all significant at the 1~\% level.
+% ledger: b3sv:bjrs.t3
+Part of the premium in value added per worker is capital and skill: exporters
+use more of both. But the model asks the data a harder question: did exporters
+become productive by exporting, or did productive firms start to export? Studies
+that follow firms over time find that firms that start exporting were already
+larger and more productive before they did (\cref{exo:b3:scale-variety-firms:9}).
+
+\section{Reallocation after a trade agreement}\label{sec:b3:scale-variety-firms:reallocation}
+
+\begin{record}[The Canada--U.S. free trade agreement, 1989]
+Trefler studied Canadian manufacturing from 1989 to 1996, after an agreement that
+cut tariffs without other reforms at the same time. In the industries with the
+largest Canadian tariff cuts, employment fell by 15~\%, and output and the number
+of plants by about 10~\%: the short-run cost. Labour productivity in the same
+industries rose by 17~\% over the period, a compounded 2.1~\% a year, and about half of that rise came from
+plant turnover --- entry and exit --- and rising technical efficiency.
+% ledger: b3sv:tre.fta
+\end{record}
+
+Chile had opened its economy earlier, in the late 1970s and early 1980s.
+Pavcnik's study of its manufacturing plants found productivity gains within
+plants, especially in import-competing sectors, and that much of the aggregate
+gain came from moving resources and output from less to more efficient
+producers. % ledger: b3sv:pav.chile
+Both records show the selection the model predicts, and both show its cost: the
+plants that close and the jobs they take with them.
+
+\begin{definition}[Foreign direct investment]\label{def:b3:scale-variety-firms:fdi}
+\index{foreign direct investment}
+\emph{Foreign direct investment} (FDI) is a firm's acquisition or creation of
+production abroad that it controls. It is \emph{horizontal} when the foreign
+affiliate makes the same goods to sell in its own market, and \emph{vertical}
+when stages of production are placed abroad to use cheaper inputs, the output
+being shipped on.
+\end{definition}
+
+A firm can serve a foreign market by exporting, paying the trade cost on every
+unit, or by building an affiliate there, paying a larger fixed cost and no
+trade cost. Extending the \omterm{def:b3:scale-variety-firms:melitz}{heterogeneous-firms model}, Helpman, Melitz and Yeaple
+predicted that the least productive firms sell at home, the next export, and the
+most productive set up affiliates. With United States exports and affiliate
+sales in 38 countries and 52 sectors, they found that transport costs and tariffs
+shift sales from exports to affiliates, and that sectors in which firms differ
+more have more affiliate sales relative to exports. % ledger: b3sv:hmy.fdi
+Offshoring, the vertical kind, cuts the chain of production into pieces and
+places each where it is cheapest: a firm's ``imports'' are then often its own
+parts coming home.
+
+\begin{model}{Heterogeneous firms}
+\assumes Firms draw productivity after paying a sunk entry cost; exporting has a
+fixed cost as well as a trade cost; CES demand; free entry.
+\predicts Only the most productive firms export; exporters are larger;
+opening to trade drives the least productive firms out and raises average
+industry productivity without any firm improving.
+\tested Fewer than one United States manufacturing firm in five exports, and
+exporters are larger and more productive; after the Canada--U.S. agreement,
+labour productivity rose 17~\% in the most exposed industries, half of it through
+plant turnover and efficiency; in Chile, liberalisation moved output to more
+efficient plants. % ledger: b3sv:bjrs.t2.all, b3sv:bjrs.t3, b3sv:tre.fta, b3sv:pav.chile
+\breaks Firms differ in quality and in the markets they sell to, not only in
+productivity; within-plant gains, such as those found in Chile, are outside the
+model.
+\end{model}
+
+\section{Exercises}\label{sec:b3:scale-variety-firms:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:scale-variety-firms:1}
+In the opening chart, which industries have the largest and the smallest share
+of firms that export? In which industries is the share above that of all
+manufacturing? What do these industries have in common?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:scale-variety-firms:2}
+Brenland's exports and imports with Kestria, in millions of dalens, are 40 and
+30 for furniture, 10 and 50 for machines, 60 and 0 for grain. Compute the
+\omterm{def:b3:scale-variety-firms:intra-industry}{Grubel--Lloyd index} for each industry and the aggregate index. Which trade would
+Ricardo's model explain?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:scale-variety-firms:3}
+With CES demand and $\sigma = 4$, find a firm's price as a multiple of marginal
+cost, and its Lerner index. How do both change if varieties become closer
+substitutes?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:scale-variety-firms:4}
+Give an observation that would contradict the \omterm{def:b3:scale-variety-firms:home-market}{home-market effect}, and explain
+why the \omterm{def:b3:factor-endowments:ho}{Heckscher--Ohlin model} predicts the opposite of the \omterm{def:b3:scale-variety-firms:home-market}{home-market effect}
+for a good that consumers in one country especially like.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:scale-variety-firms:5}
+A country has $L = 1{,}000$ workers. A firm needs $F = 10$ workers to start and $c =
+1$ worker per unit; $\sigma = 5$ and the wage is 1. Find the price, output per firm,
+employment per firm, the number of firms, and the real wage $1/P$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:scale-variety-firms:6}
+The country of \cref{exo:b3:scale-variety-firms:5} opens to free trade with an
+identical country. Find the number of varieties consumed, the price and the
+percentage gain in the real wage. Which is larger: the gain here, or with
+$\sigma = 3$?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:scale-variety-firms:7}
+With $\sigma = 3$, Pareto productivity of shape $k = 6$ (minimum 1), $f = 10$ and $f_e =
+1$, find the closed-economy cut-off numerically, from a large sample of draws,
+by setting an entrant's mean profit equal to $f_e$; compare it with the formula
+of \cref{prop:b3:scale-variety-firms:cutoff}, and find the share of entrants that
+produce.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:scale-variety-firms:8}
+Productivity is Pareto with $k = 3$ and minimum 1. The domestic cut-off is 1.5 and
+the \omterm{def:b3:scale-variety-firms:melitz}{export cut-off} 3. What share of entrants produce, and what share of
+producers export? What would the export share be with $k = 2$?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:scale-variety-firms:9}
+What data on firms would contradict selection into exporting? Describe a test,
+and the alternative explanation it would support.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:scale-variety-firms:10}
+Derive the CES demand \eqref{eq:b3:sv:demand} from \eqref{eq:b3:sv:ces}, show that
+$U = E/P$, and deduce the constant markup of
+\cref{prop:b3:scale-variety-firms:markup}.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:scale-variety-firms:11}
+With $\sigma = 4$, $k = 5$, $f = 1$, $f_e = 0.5$, $\tau = 1.3$ and $f_x = 1.5$, simulate
+100{,}000 entrants. Compute industry productivity --- the revenue-weighted mean of
+the producers' $\varphi$ --- before and after opening, and split the rise into the
+part due to exit and the part due to market share moving to exporters.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:scale-variety-firms:12}
+In the economy of the listing ($f_x = 90$), the variable trade cost $\tau$ falls from
+1.2 to 1.1. Find the new domestic cut-off and the share of producers that export
+(the extensive margin), and the change in the export sales of a firm with $\varphi = 4$
+(the intensive margin). Compare with a cut in $f_x$, in the weekend problem.
+\end{exercise}
+
+\section{Problem: Brenland's Furniture Makers}\label{sec:b3:scale-variety-firms:problem}
+
+\begin{problem}[{Weekend problem --- Brenland's furniture makers}]\label{pb:b3:scale-variety-firms:furniture}
+Brenland's furniture industry is a heterogeneous-firms industry with $\sigma = 3$.
+Productivity $\varphi$, output per worker, is Pareto with shape $k = 4$ and minimum 1:
+$\Pr(\varphi > z) = z^{-4}$. The wage is 1 (thousand dalens a year). Producing costs $f = 40$
+a year and entry costs $f_e = 2.5$ a year (in thousands of dalens). Kestria is a
+furniture market of the same size; selling there costs $\tau = 1.2$ and $f_x = 90$ a
+year. % figdata: furn_params
+An entrant's expected profit, when the domestic cut-off is $\varphi^*$ and there is no
+trade, is $f\varphi^{*-k}(\sigma - 1)/(k - \sigma + 1)$.
+
+\medskip\noindent\textbf{Part I --- the closed industry.}
+\begin{enumerate}
+\item Find the price of a firm with productivity $\varphi$, as a multiple of its
+marginal cost $1/\varphi$.
+\item Find the revenue of a firm at the domestic cut-off.
+\item Revenue is proportional to $\varphi^{\sigma-1}$. Show that a producer's profit is
+$40\bigl((\varphi/\varphi^*)^2 - 1\bigr)$.
+\item Find the cut-off from free entry.
+\item What share of entrants produce? Given that the mean of a Pareto variable
+above $z$ is $kz/(k - 1)$, find the average productivity of producers.
+\item Find the revenue and the profit of a firm with $\varphi = 4$.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- opening to Kestria.}
+\begin{enumerate}[resume]
+\item Show that the \omterm{def:b3:scale-variety-firms:melitz}{export cut-off} is $1.8$ times the domestic cut-off.
+\item With trade, free entry gives $\varphi^{*4} = 16\bigl(1 + \tau^{-4}f/f_x\bigr)$. Find the
+two cut-offs.
+\item What share of the firms that produced in autarky exit?
+\item What share of producers export? Compare with the furniture industry of the
+opening chart.
+\item By what factor are the total sales of a firm at the \omterm{def:b3:scale-variety-firms:melitz}{export cut-off} larger
+than those of a firm at the domestic cut-off?
+\item Find the domestic sales, exports and total sales of the firm with $\varphi =
+4$, and compare with autarky.
+\item What happens to the sales of a firm with $\varphi = 3$, and why?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- a trade agreement halves the fixed export cost.}
+\begin{enumerate}[resume]
+\item With $f_x = 45$, find the ratio $\varphi_x/\varphi^*$ and the two cut-offs.
+\item What share of producers export now?
+\item What share of the producers before the agreement exit?
+\item What happens to the firm with $\varphi = 3$? Find its total sales.
+\item Find the change in the exports of the firm with $\varphi = 4$. Explain the sign.
+\item Do Brenland's total furniture exports rise? Through which margin?
+\item By what percentage does the average productivity of producers rise?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- productivity and welfare.}
+\begin{enumerate}[resume]
+\item No firm's productivity changed. Where does the rise in average productivity
+come from?
+\item In this model a worker's real income is proportional to $\varphi^*$. Find the
+welfare gain from opening, from the agreement, and in all.
+\item What would a Krugman model with identical firms predict for productivity and
+for the source of the gains?
+\item Which of these predictions does the Canada--U.S. record support?
+\item Who loses from the agreement, and in what sense?
+\item State the results: the rise in average productivity after the agreement,
+and the share of producing firms that exit.
+\end{enumerate}
+\end{problem}

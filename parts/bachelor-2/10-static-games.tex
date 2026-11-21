@@ -1,0 +1,471 @@
+\chapter{Static Games}\label{ch:b2:static-games}
+
+Four people each receive 20 tokens. Each can keep tokens or put them into a common project; every token in
+the project pays 0.4 tokens to each of the four, including the one who put it in. A token kept is worth 1
+to its owner, a token contributed only 0.4, so whatever the others do, each person does best by keeping
+everything. Yet if all four contribute everything, each ends with 32 tokens instead of 20. The chart shows
+what people did when they played this game for money, ten times in a row.
+
+\begin{openingchart}{Mean contribution to the common project, in per cent of the endowment of 20 tokens,
+  over ten periods and in the final period: groups re-formed at random each period (Strangers) or kept
+  fixed (Partners), without and with the possibility of punishing other members at a cost.}{Fehr and
+  G\"achter (2000), Tables~3 and~4}
+\begin{tikzpicture}
+\begin{axis}[omrecord, ybar, bar width=12pt, xmin=0.5, xmax=4.5, ymin=0, ymax=100, xtick=data,
+    xticklabels from table={figdata/bachelor-2/10-static-games/out/contrib.csv}{label},
+    xticklabel style={font=\footnotesize, text width=22mm, align=center},
+    ylabel={Per cent of the endowment}, grid=none, ymajorgrids, width=0.75\linewidth,
+    height=0.45\linewidth, legend columns=2,
+    legend style={at={(0.5,-0.3)}, anchor=north, font=\footnotesize}]
+  \addplot[fill=omDef!70, draw=omDef] table[x=pos, y=all]
+    {figdata/bachelor-2/10-static-games/out/contrib.csv};
+  \addplot[fill=omThm!60, draw=omThm] table[x=pos, y=final]
+    {figdata/bachelor-2/10-static-games/out/contrib.csv};
+  \legend{Mean over ten periods, Final period}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% ledger: b2:fg2000-design, b2:fg2000-t3, b2:fg2000-t4, b2:fg2000-text
+% figdata: contrib_summary (strangers 18.5 / 9.5, partners 37.5 / 16, largest 91)
+Without punishment, groups of strangers contributed 18.5 per cent of their tokens on average and 9.5 per
+cent in the last period; fixed groups contributed 37.5 per cent, falling to 16 per cent. Between 53 and 75
+per cent of the players contributed nothing at all in the last period. When players could pay to reduce
+another member's earnings after seeing the contributions, the pattern changed completely: fixed groups
+contributed 85 per cent on average and 91 per cent in the final period.
+
+This chapter builds the tools to say what a game predicts. A \emph{game} is a situation in which each
+person's payoff depends on what others do; the games of this chapter are \emph{static}: everyone chooses
+once, at the same time, without seeing the others' choices. The central prediction, \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium},
+says that no player gains by changing her choice alone. For the game above it predicts zero
+contributions, which the first bars approach and the last bars refute. Both results have something to
+teach: the first about how incentives shape choices, the second about what the payoffs written into the
+game leave out.
+
+\begin{recall}
+From the school volumes: the prisoner's dilemma, public goods and the commons. From the Year 1 volume:
+Cournot and Bertrand competition and the best-response functions of oligopoly. From
+\cref{ch:b2:social-choice}: the median voter.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:static-games:symbols}
+Players are $i = 1, \dots, n$; $S_i$ is player $i$'s set of strategies and $s_i$ one of them; $s = (s_1, \dots,
+s_n)$ is a \omterm{def:b2:static-games:profile}{strategy profile} and $s_{-i}$ the strategies of everyone but $i$; $u_i(s)$ is $i$'s payoff. In the
+applications, $q_i$ is a firm's quantity, $g_i$ a contribution with total $G$, $y$ an \omterm{def:b2:exchange-economies:endowment}{endowment}, $e_i$ a
+fishing effort with total $E$, and $f$ a fee.
+\end{notation}
+
+\section{The normal form}\label{sec:b2:static-games:normal-form}
+
+\begin{definition}[Normal-form game]\label{def:b2:static-games:normal-form}
+A \emph{normal-form game}\index{normal-form game} consists of a set of players $i = 1, \dots, n$, a set of
+strategies $S_i$ for each player, and for each player a payoff function $u_i(s_1, \dots, s_n)$ that depends
+on the strategies of all players.
+\end{definition}
+
+\begin{definition}[Strategy profile]\label{def:b2:static-games:profile}
+A \emph{strategy profile}\index{strategy profile} is a list $s = (s_1, \dots, s_n)$ with one strategy for
+each player. We write $s = (s_i, s_{-i})$ to separate player $i$'s strategy from the others'.
+\end{definition}
+
+With two players and few strategies, the game fits in a table: rows are the first player's strategies,
+columns the second's, and each cell holds the two payoffs, the row player's first. The figure shows three
+games that recur through the chapter.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, font=\footnotesize]
+  \foreach \ox/\title/\sa/\sb/\ta/\tb/\p/\q/\r/\s in {
+      0/Prisoner's dilemma/C/D/C/D/{3, 3}/{0, 4}/{4, 0}/{1, 1},
+      5.2/Coordination/A/B/A/B/{2, 2}/{0, 0}/{0, 0}/{1, 1},
+      10.4/Matching pennies/H/T/H/T/{1, -1}/{-1, 1}/{-1, 1}/{1, -1}} {
+    \node[font=\small\bfseries] at (\ox+1.3,1.9) {\title};
+    \node[payoff] at (\ox+0.8,0.4) {\p};
+    \node[payoff] at (\ox+2.4,0.4) {\q};
+    \node[payoff] at (\ox+0.8,-0.4) {\r};
+    \node[payoff] at (\ox+2.4,-0.4) {\s};
+    \node at (\ox-0.25,0.4) {\sa};
+    \node at (\ox-0.25,-0.4) {\sb};
+    \node at (\ox+0.8,1.1) {\ta};
+    \node at (\ox+2.4,1.1) {\tb};
+  }
+\end{tikzpicture}
+
+{\small Three games in normal form. In each cell, the first number is the row player's payoff, the second
+the column player's. In the prisoner's dilemma, D (defect) is better than C (cooperate) for each player
+whatever the other does, yet both prefer (C, C) to (D, D). In the \omterm{def:b2:static-games:coordination-game}{coordination game}, each wants to match the
+other. In matching pennies, the row player wants to match and the column player to mismatch.}
+\end{omfigure}
+
+\section{Dominance and iterated elimination}\label{sec:b2:static-games:dominance}
+
+\begin{definition}[Strictly dominant strategy]\label{def:b2:static-games:dominant}
+A strategy $s_i$ is \emph{strictly dominant}\index{strictly dominant strategy} for player $i$ if it gives
+her a higher payoff than any other strategy of hers, whatever the other players do: $u_i(s_i, s_{-i}) >
+u_i(s'_i, s_{-i})$ for every $s'_i \ne s_i$ and every $s_{-i}$.
+\end{definition}
+
+\begin{definition}[Strictly dominated strategy]\label{def:b2:static-games:dominated}
+A strategy $s'_i$ is \emph{strictly dominated}\index{strictly dominated strategy} if some other strategy
+$s_i$ gives player $i$ a higher payoff whatever the others do: $u_i(s_i, s_{-i}) > u_i(s'_i, s_{-i})$ for
+every $s_{-i}$.
+\end{definition}
+
+A player who maximises her payoff never plays a \omterm{def:b2:static-games:dominated}{strictly dominated strategy}, whatever she believes the
+others will do. In the prisoner's dilemma, C is \omterm{def:b2:static-games:dominated}{strictly dominated} by D for each player, so the prediction
+is (D, D), although both would be better off at (C, C). The contribution game of the opening chart is a
+prisoner's dilemma with four players and 21 strategies each: since a token contributed returns 0.4 to its
+owner, contributing nothing strictly dominates every other choice.
+
+If players also know that the others never play dominated strategies, they can go further.
+
+\begin{definition}[Iterated elimination of strictly dominated strategies]\label{def:b2:static-games:iesds}
+\emph{Iterated elimination of strictly dominated strategies}\index{iterated elimination of strictly
+dominated strategies} removes every \omterm{def:b2:static-games:dominated}{strictly dominated strategy} of every player, then every strategy that
+is \omterm{def:b2:static-games:dominated}{strictly dominated} in the game that remains, and so on until nothing more can be removed.
+\end{definition}
+
+The listing applies the procedure to a game with three strategies each, then searches the full game for
+profiles in which each player's strategy is a best reply to the other's, the equilibria of the next
+section.
+
+\omcode{code/bachelor-2/10-static-games/listings/dominance.py}{1}{31}{\omterm{def:b2:static-games:iesds}{Iterated elimination of strictly
+dominated strategies} in a $3 \times 3$ game.}\label{lst:b2:static-games:dominance}
+
+\omoutput{code/bachelor-2/10-static-games/outputs/dominance.txt}{The game is solved by iterated dominance;
+the only survivor is also the only pure \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium}.}\label{out:b2:static-games:dominance}
+
+% code: listings/dominance.py
+Column $C$ goes first: $R$ gives the column player more against every row. Once $C$ is gone, $U$ beats $M$ and
+$D$ for the row player; once only $U$ is left, the column player prefers $L$. Each round needs one more level
+of ``she knows that he knows'': three rounds here.
+
+\section{Best responses and Nash equilibrium}\label{sec:b2:static-games:nash}
+
+Most games have no dominant strategies: what is best for one player depends on what the others do.
+
+\begin{definition}[Best response]\label{def:b2:static-games:best-response}
+A strategy $s_i$ is a \emph{best response}\index{best response} of player $i$ to the others' strategies
+$s_{-i}$ if $u_i(s_i, s_{-i}) \ge u_i(s'_i, s_{-i})$ for every $s'_i \in S_i$.
+\end{definition}
+
+\begin{definition}[Nash equilibrium]\label{def:b2:static-games:nash-equilibrium}
+A \omterm{def:b2:static-games:profile}{strategy profile} $s^* = (s^*_1, \dots, s^*_n)$ is a \emph{Nash equilibrium}\index{Nash equilibrium} if
+every player's strategy is a \omterm{def:b2:static-games:best-response}{best response} to the others': $u_i(s^*_i, s^*_{-i}) \ge u_i(s_i, s^*_{-i})$
+for every player $i$ and every $s_i \in S_i$.
+\end{definition}
+
+In a \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} no player gains by deviating alone. The definition says nothing about how players
+reach it: it describes a situation where every player's expectation of the others is correct and she acts
+on it. In the prisoner's dilemma the only equilibrium is (D, D). Any profile that survives iterated
+dominance alone is a \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} (\cref{exo:b2:static-games:10} asks why the equilibria are never
+eliminated).
+
+\begin{definition}[Coordination game]\label{def:b2:static-games:coordination-game}
+A \emph{coordination game}\index{coordination game} is a game with several Nash equilibria in which every
+player wants to choose the same action as the others, so that players gain from matching their choices.
+\end{definition}
+
+The \omterm{def:b2:static-games:coordination-game}{coordination game} of the figure has two equilibria, (A, A) and (B, B), and both players prefer the
+first; nothing in the definition says which they will reach. Matching pennies has none in pure
+strategies: at every cell one player wants to switch. The existence of a \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} is guaranteed
+only once players may randomise, the subject of \cref{ch:b2:mixed-strategies}.
+
+\section{Quantity competition as a game}\label{sec:b2:static-games:cournot}
+
+The Cournot model of the Year 1 volume is a game: the players are firms, the strategies quantities, the
+payoffs profits. With inverse demand $p = A - Q$, $Q = \sum_i q_i$, and a constant marginal cost $c$, firm $i$
+earns $(A - Q - c)q_i$, and its \omterm{def:b2:static-games:best-response}{best response} to the others' total $Q_{-i}$ is $q_i = (A - c - Q_{-i})/2$.
+
+\begin{proposition}[Cournot equilibrium with $n$ firms]\label{prop:b2:static-games:cournot}
+The game has a unique \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium}, in which each firm produces $q^* = (A - c)/(n + 1)$ and the price is
+$p^* = (A + nc)/(n + 1)$. As $n$ grows, the price falls towards $c$.
+\end{proposition}
+
+\begin{proof}
+Every firm's quantity must be a \omterm{def:b2:static-games:best-response}{best response}: $2q_i = A - c - Q_{-i}$, that is, $q_i = A - c - Q$ for every
+$i$. All firms then produce the same quantity $q$, and $q = A - c - nq$ gives $q^* = (A - c)/(n + 1)$. The price is
+$A - nq^* = (A + nc)/(n + 1)$, which tends to $c$ as $n \to \infty$.
+\end{proof}
+
+% code: exercises/solutions.py cournot
+With $A = 100$ and $c = 10$, a monopoly sells 45 units at 55; two firms sell 30 each at 40; four firms 18 each at 28;
+nine firms 9 each at 19. Each firm ignores the fact that its output lowers the price received by the others,
+so together they produce more than a monopoly would, and the price falls with their number.
+
+\section{Contributions to a public good}\label{sec:b2:static-games:public-good}
+
+In the opening game the dominant strategy made the prediction stark. With diminishing returns the logic is
+the same but the equilibrium interior. Each of $n$ people has income $y = 12$, gives $g_i$ to a public good
+$G = \sum_j g_j$ and consumes the rest; her utility is $\ln(y - g_i) + \ln G$. Her \omterm{def:b2:static-games:best-response}{best response} to the others'
+total $G_{-i}$ sets $1/(y - g_i) = 1/(g_i + G_{-i})$:
+\begin{equation}\label{eq:b2:static-games:br}
+g_i = \tfrac12\,(y - G_{-i}), \quad \text{or zero if this is negative.}
+\end{equation}
+
+\begin{proposition}[Underprovision]\label{prop:b2:static-games:underprovision}
+In this game the \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} is symmetric, $g^* = y/(n + 1)$, and the total $G^* = ny/(n + 1)$ is below the
+efficient symmetric total $ny/2$ whenever $n \ge 2$. The ratio of the two, $2/(n + 1)$, falls as the group grows.
+\end{proposition}
+
+\begin{proof}
+In equilibrium every $g_i$ satisfies \eqref{eq:b2:static-games:br}, so $2g_i + G_{-i} = y$, that is, $g_i + G = y$:
+all contributions are equal, and $g + ng = y$ gives $g^* = y/(n + 1)$. Efficiency requires the sum of the marginal
+rates of substitution between the public good and private consumption to equal 1, the cost of a unit of the
+public good: $\sum_i (y - g_i)/G = 1$. With equal contributions, $n(y - g) = ng$, so $g = y/2$ and the total is
+$ny/2$. The ratio is $(ny/(n + 1))/(ny/2) = 2/(n + 1) < 1$ for $n \ge 2$.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=13, ymin=0, ymax=13, xlabel={$g_1$}, ylabel={$g_2$},
+    xtick={0,4,6,12}, ytick={0,4,6,12}, width=0.5\linewidth, height=0.5\linewidth]
+  \addplot[omDef, very thick, domain=0:12, samples=2] {(12 - x)/2};
+  \addplot[omThm, very thick, domain=0:6, samples=2] {12 - 2*x};
+  \node[eqpoint] at (axis cs:4,4) {};
+  \node[anchor=north east, font=\footnotesize] at (axis cs:3.9,3.9) {Nash};
+  \node[eqpoint] at (axis cs:6,6) {};
+  \node[anchor=south west, font=\footnotesize] at (axis cs:6.1,6.1) {efficient};
+  \node[anchor=south, font=\footnotesize, omDef, align=center] at (axis cs:10.5,2.2) {player 2's\\best response};
+  \node[anchor=west, font=\footnotesize, omThm] at (axis cs:0.4,11.5) {player 1's best response};
+\end{axis}
+\end{tikzpicture}
+
+{\small \omterm{def:b2:static-games:best-response}{Best responses} in the public-good game with two players and $y = 12$. Each line shows one player's best
+contribution given the other's. They cross at the \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} (4, 4), with a total of 8; the efficient
+symmetric point (6, 6) has a total of 12. Each player gives less than efficiency requires because she counts
+only her own benefit from the good.}
+\end{omfigure}
+
+% code: exercises/solutions.py public_good
+With two players, each gives 4 and the total is 8 instead of 12; with ten, each gives 1.09 and the total of 10.9 is
+18 per cent of the efficient 60. The prediction for the linear game of the opening chart is the extreme case:
+zero.
+
+\begin{record}[Contributions fall with repetition]
+% ledger: b2:fg2000-design, b2:fg2000-t3, b2:fg2000-t4, b2:fg2000-text
+Fehr and G\"achter (2000) ran the opening game for ten periods with 24 participants per session. Without
+punishment, contributions fell over the periods in both treatments, to 9.5 per cent of the \omterm{def:b2:exchange-economies:endowment}{endowment} among
+strangers and 16 per cent in fixed groups by the last period, with between 53 and 75 per cent of
+participants contributing nothing. With the option to punish, average contribution rates between 50 and
+95 per cent of the \omterm{def:b2:exchange-economies:endowment}{endowment} were maintained, and in the last period of the fixed-group treatment 82.5 per
+cent of participants contributed everything.
+\end{record}
+
+Punishment costs the punisher and benefits the group, so it is itself a public good: a selfish player
+never punishes in the last period, and, knowing this, no one should fear punishment. That the mere option of
+punishing raised contributions so much suggests that players expected some others to punish, which a player
+who cares only about her own tokens would not do; why this is so, and how cooperation can be
+sustained among selfish players who meet again, are questions for \cref{ch:b2:repeated-games}.
+
+\begin{model}{Nash equilibrium as a model of play}
+\assumes Players maximise known payoffs, and each correctly anticipates the others' strategies.
+\predicts Dominated strategies are not played; zero contributions in a linear public-goods game;
+underprovision of public goods and over-use of common resources, worse in larger groups.
+\tested Public-goods experiments: contributions start well above zero and fall with repetition, toward
+but not to the prediction (Fehr and G\"achter 2000); field studies of commons (Ostrom 1990).
+\breaks Players who care about others' payoffs or about fairness; punishment; groups that write and enforce
+their own rules; several equilibria with no way to choose among them.
+\end{model}
+
+\section{A common resource}\label{sec:b2:static-games:commons}
+
+\begin{definition}[Common-pool resource]\label{def:b2:static-games:common-pool}
+A \emph{common-pool resource}\index{common-pool resource} is a resource from which it is costly to exclude
+users, and whose use by one person reduces what is left for others: a fishing ground, a pasture, an aquifer.
+\end{definition}
+
+A common resource is the mirror image of a public good: each user imposes a cost on the others instead of
+conferring a benefit. Let $n$ boats fish one ground. A boat's effort $e_i$ (boat-days) lands a catch worth $A - E$
+per boat-day, where $E = \sum_j e_j$: the more the ground is fished, the less each day yields. A boat-day costs $c$.
+Boat $i$ earns $e_i(A - E - c)$, and its \omterm{def:b2:static-games:best-response}{best response} sets $A - E - e_i - c = 0$. This is the Cournot game again:
+each boat ignores the fall in the others' yield that its effort causes.
+
+\begin{proposition}[Over-use of a common resource]\label{prop:b2:static-games:commons}
+In the symmetric \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium}, total effort is $E^{\mathrm{N}} = n(A - c)/(n + 1)$. The effort that maximises the
+boats' total profit is $E^{*} = (A - c)/2$. Equilibrium effort exceeds it by the factor $2n/(n + 1)$, and a fee $f =
+(A - c)(n - 1)/(2n)$ per boat-day brings the equilibrium to $E^*$.
+\end{proposition}
+
+\begin{proof}
+Summing the \omterm{def:b2:static-games:best-response}{best responses}, $n(A - E - c) - E = 0$, so $E^{\mathrm{N}} = n(A - c)/(n + 1)$. Total profit $E(A - E - c)$ is
+largest at $E^* = (A - c)/2$. The ratio is $2n/(n + 1)$. With a fee $f$, the equilibrium becomes $n(A - c - f)/(n + 1)$;
+setting it equal to $(A - c)/2$ gives $A - c - f = (A - c)(n + 1)/(2n)$, so $f = (A - c)(n - 1)/(2n)$.
+\end{proof}
+
+Taxing access is one answer. Assigning the resource to an owner, or dividing it into quotas, are others,
+and so is leaving the users to manage it themselves. Each needs someone to monitor use and to enforce the
+rules, and each has failed somewhere: a fee needs an agency that knows $A$ and $c$ and has reasons to set the
+fee right; a quota needs catches to be counted.
+
+\begin{record}[Commons governed by their users]
+% ledger: b2:ostrom1990
+Ostrom (1990) studied \omterm{def:b2:static-games:common-pool}{common-pool resources}, among them mountain pastures, irrigation systems and
+fisheries, that their users had managed over long periods by rules they made themselves, and others where
+such rules broke down. The successful cases shared features: clear boundaries of who may use the resource,
+rules adapted to local conditions, users who take part in changing the rules, monitors accountable to the
+users, sanctions that rise with repeated violations, and cheap ways to settle conflicts. The model of
+\cref{prop:b2:static-games:commons} has none of these; its over-use is what happens without them.
+\end{record}
+
+\section{Location}\label{sec:b2:static-games:location}
+
+\begin{definition}[Location game]\label{def:b2:static-games:location-game}
+In a \emph{location game}\index{location game} two or more sellers (or candidates) choose positions on a line
+along which buyers (or voters) are spread; each buyer goes to the nearest seller, and each seller's payoff is
+the share of buyers it attracts.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, font=\footnotesize]
+  \draw[thick] (0,0) -- (10,0);
+  \foreach \x/\l in {0/0, 10/1} \draw (\x,0.15) -- (\x,-0.15) node[below] {\l};
+  \fill[omDef] (3,0) circle (3pt) node[above=4pt] {seller 1 at 0.3};
+  \fill[omThm] (6,0) circle (3pt) node[above=4pt] {seller 2 at 0.6};
+  \draw[dashed] (4.5,0.5) node[above] {0.45} -- (4.5,-0.5);
+  \draw[<->, omDef] (0,-0.9) -- node[below] {share 0.45} (4.5,-0.9);
+  \draw[<->, omThm] (4.5,-0.9) -- node[below] {share 0.55} (10,-0.9);
+  \draw[->, omDef, thick] (3,1.3) -- (4.3,1.3);
+  \node[omDef, anchor=east] at (2.9,1.3) {moves};
+\end{tikzpicture}
+
+{\small Two sellers on a line of buyers spread evenly from 0 to 1. Buyers left of the midpoint 0.45 go to seller
+1, the rest to seller 2. Seller 1 gains by moving towards seller 2; the only equilibrium has both at the median
+buyer, 0.5.}
+\end{omfigure}
+
+\begin{proposition}[Two sellers meet at the median]\label{prop:b2:static-games:location}
+With buyers spread along a line and two sellers, the unique \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} places both sellers at the median
+buyer's position.
+\end{proposition}
+
+\begin{proof}
+If the sellers are at different positions, each gains by moving towards the other: it keeps every buyer on its
+outer side and gains some between them. If both are at the same position away from the median, each has half
+the buyers, and either one can move a little towards the median and take more than half. At the median, each
+has half; a seller who moves away gets the buyers on its side of the new midpoint, fewer than half.
+\end{proof}
+
+With voters instead of buyers, this is the result that two candidates who care only about winning both take
+the median voter's position, the companion of the \omterm{def:b2:social-choice:median-voter}{median voter theorem} of \cref{ch:b2:social-choice}. With
+three sellers there is no equilibrium in pure strategies (\cref{exo:b2:static-games:12}), and with several
+dimensions, as \cref{ch:b2:social-choice} showed, the median may not exist.
+
+\section{Exercises}\label{sec:b2:static-games:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:static-games:1}
+The row player chooses $T$ or $B$, the column player $L$, $C$ or $R$. Payoffs: $(T, L) = (1, 0)$, $(T, C) = (1, 2)$,
+$(T, R) = (0, 1)$, $(B, L) = (0, 3)$, $(B, C) = (0, 1)$, $(B, R) = (2, 0)$. Solve the game by \omterm{def:b2:static-games:iesds}{iterated elimination of
+strictly dominated strategies}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:static-games:2}
+Find all pure Nash equilibria of the game with row strategies $U, M, D$ and columns $L, C, R$: row $U$: $(3, 3)$,
+$(0, 2)$, $(1, 0)$; row $M$: $(2, 0)$, $(2, 2)$, $(0, 1)$; row $D$: $(0, 1)$, $(1, 0)$, $(4, 4)$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:static-games:3}
+Read the opening chart. By how many points did punishment raise the mean contribution of strangers, and of fixed
+groups? Which treatment comes closest to the Nash prediction?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:static-games:4}
+Describe the result of a public-goods experiment that would refute the prediction of zero contributions, and
+one that would be consistent with it although contributions are positive in early periods.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:static-games:5}
+With $p = 100 - Q$ and $c = 10$, find each firm's output, the price and each firm's profit for $n = 1, 2, 4, 9$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:static-games:6}
+In the public-good game with $y = 12$, find the Nash contributions and the efficient total for $n = 3$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:static-games:7}
+Predict, then compute: how does the ratio of the Nash total to the efficient total change from $n = 2$ to $n = 4$ and
+to $n = 10$? What does each person give?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:static-games:8}
+Two boats fish a ground with $A = 100$ and $c = 20$. Find the equilibrium effort, the efficient effort, the
+over-use in per cent and the fee that removes it.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:static-games:9}
+Describe a test of \cref{prop:b2:static-games:location} with data on candidates' positions and voters'
+positions in many elections. What result would count against it?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:static-games:10}
+(a) Show that a \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} is never removed by \omterm{def:b2:static-games:iesds}{iterated elimination of strictly dominated strategies}.
+(b) Each of $n$ people has utility $x_i + v(G)$, with $v$ increasing and strictly concave, and gives $g_i \ge 0$ from
+income $y$. Show that in every \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} with a positive total, $v'(G^{\mathrm{N}}) = 1$, while efficiency requires
+$nv'(G^*) = 1$; conclude that $G^{\mathrm{N}} < G^*$ for $n \ge 2$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:static-games:11}
+Show that matching pennies has no \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} in pure strategies. Then construct a game in which each
+player has infinitely many strategies (numbers in $[0, 1]$) and no pure \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} exists.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:static-games:12}
+Three sellers choose positions on $[0, 1]$, with buyers spread evenly; a seller sharing a position with others
+splits those buyers equally. Show that there is no \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium} in pure strategies.
+\end{exercise}
+
+\section{Problem: Kestria's fishing ground}\label{sec:b2:static-games:problem}
+
+\begin{problem}[{Weekend problem --- five boats fish one ground off the coast of Kestria, an invented economy:
+how much do they over-fish, and which of two answers, a licence fee or a quota set and monitored by the boats
+themselves, restores the efficient catch}]
+\label{pb:b2:static-games:1}
+A boat-day of effort lands a catch worth $100 - E$ thousand kests, where $E$ is the total effort of all boats in a
+season; a boat-day costs 20 thousand kests. There are five boats.
+
+\medskip
+\noindent\textbf{Part I --- The catch game.}
+\begin{enumerate}
+  \item Write boat $i$'s profit as a function of $e_i$ and the others' effort $E_{-i}$.
+  \item Derive boat $i$'s \omterm{def:b2:static-games:best-response}{best response}.
+  \item Does any boat have a dominant strategy?
+  \item Which earlier game of the chapter has the same structure?
+  \item Explain in one sentence why a boat ignores part of the cost of its effort.
+  \item What would change if the value per boat-day did not depend on $E$?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The Nash catch.}
+\begin{enumerate}[resume]
+  \item Find each boat's effort and the total in the symmetric \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium}.
+  \item Find the value per boat-day and each boat's profit.
+  \item Find the boats' total profit.
+  \item Check that no boat gains by changing its effort alone.
+  \item How would the total effort change with ten boats?
+  \item Is the equilibrium \omterm{def:b2:exchange-economies:pareto-efficient}{Pareto-efficient} for the boats? Explain.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- The efficient catch.}
+\begin{enumerate}[resume]
+  \item Find the total effort that maximises the boats' total profit.
+  \item Find the value per boat-day and the total profit there.
+  \item By what percentage does the Nash effort exceed it?
+  \item How much total profit does over-fishing destroy each season?
+  \item The model leaves out the fish stock's future. Would including it make over-fishing worse or better?
+  \item Name the result so far.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Two answers.}
+\begin{enumerate}[resume]
+  \item A licence fee of $f$ per boat-day is charged. Find the fee that makes the Nash total equal to the efficient
+        effort.
+  \item With that fee, find each boat's profit and the fee revenue.
+  \item The boats instead agree on a quota of 8 boat-days each. If the other four keep it, what is one boat's best
+        effort, and how much would it gain by cheating?
+  \item The boats hire a monitor who detects cheating with probability one half. What fine makes the quota hold?
+  \item Compare the two answers: what does each need to know, and what can go wrong with each?
+  \item State the result: the over-fishing as a share of the efficient effort, and the fee that restores
+        efficiency.
+\end{enumerate}
+\end{problem}

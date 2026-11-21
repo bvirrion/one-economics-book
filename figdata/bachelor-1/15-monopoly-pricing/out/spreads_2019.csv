@@ -1,0 +1,111 @@
+iso3,country,gdp,spread
+ALB,Albania,16761,5.78
+DZA,Algeria,15199,6.25
+AGO,Angola,9713,12.88
+ATG,Antigua and Barbuda,29652,7.03
+ARG,Argentina,26630,19.97
+ARM,Armenia,16215,3.66
+ABW,Aruba,39755,3.5
+AUS,Australia,58049,3.54
+AZE,Azerbaijan,20101,7.59
+BHS,Bahamas The,33202,3.66
+BGD,Bangladesh,6838,2.78
+BRB,Barbados,19890,7.9
+BLR,Belarus,26799,2.52
+BLZ,Belize,11766,7.12
+BEN,Benin,3281,1.38
+BTN,Bhutan,14555,11.75
+BOL,Bolivia,11931,5.22
+BIH,Bosnia and Herzegovina,17029,2.37
+BWA,Botswana,18106,4.8
+BRA,Brazil,18019,32.04
+BRN,Brunei Darussalam,80228,5.13
+BGR,Bulgaria,29150,4.52
+BFA,Burkina Faso,2392,1.38
+CPV,Cabo Verde,9112,7.68
+CHN,China,18821,2.85
+COL,Colombia,17337,7.27
+COM,Comoros,3523,8.75
+COD,Congo Dem. Rep.,1395,21.26
+CRI,Costa Rica,23497,4.11
+CZE,Czechia,47764,3.3
+DMA,Dominica,17619,5.77
+DOM,Dominican Republic,21451,6.36
+EGY,Egypt Arab Rep.,15027,5.17
+SWZ,Eswatini,10100,6.44
+FJI,Fiji,13056,1.35
+GMB,Gambia The,2751,19.9
+GEO,Georgia,18187,2.11
+GRD,Grenada,17037,6.23
+GTM,Guatemala,11466,7.73
+GUY,Guyana,13402,9.6
+HTI,Haiti,3362,6.23
+HND,Honduras,6264,8.92
+HKG,Hong Kong SAR China,65388,4.97
+HUN,Hungary,37663,1.69
+IDN,Indonesia,12758,3.68
+ISR,Israel,44492,2.88
+JAM,Jamaica,10816,10.45
+JOR,Jordan,10168,3.73
+KEN,Kenya,5172,4.94
+KOR,Korea Rep.,49791,1.59
+KWT,Kuwait,51381,2.92
+KGZ,Kyrgyz Republic,6088,17.45
+LBN,Lebanon,15660,0.82
+LSO,Lesotho,2773,9.68
+LBR,Liberia,1576,8.92
+MAC,Macao SAR China,133454,5.12
+MDG,Madagascar,1708,36
+MYS,Malaysia,31301,1.89
+MDV,Maldives,21856,8.05
+MUS,Mauritius,25958,4.7
+MEX,Mexico,21704,4.9
+FSM,Micronesia Fed. Sts.,3965,14.39
+MDA,Moldova,14621,3.65
+MNG,Mongolia,15791,6.04
+MNE,Montenegro,24585,5.71
+MOZ,Mozambique,1529,9.9
+MMR,Myanmar,6563,8
+NAM,Namibia,10813,4.17
+NIC,Nicaragua,6757,9.38
+NGA,Nigeria,8362,6.48
+MKD,North Macedonia,21767,3.74
+NOR,Norway,90773,2.31
+OMN,Oman,38292,1.54
+PAK,Pakistan,5296,3.1
+PNG,Papua New Guinea,4302,7.77
+PRY,Paraguay,15319,12.05
+PER,Peru,15461,10.72
+PHL,Philippines,9452,3.01
+QAT,Qatar,113161,1.41
+ROU,Romania,36399,5.38
+RUS,Russian Federation,37319,3.35
+RWA,Rwanda,2754,8.88
+WSM,Samoa,7034,6.24
+SMR,San Marino,60171,2.97
+STP,Sao Tome and Principe,5702,15.68
+SYC,Seychelles,34346,9.02
+SLE,Sierra Leone,2853,11.56
+SGP,Singapore,120678,5.05
+SLB,Solomon Islands,2662,10.25
+ZAF,South Africa,14353,3.12
+LKA,Sri Lanka,14637,2.53
+KNA,St. Kitts and Nevis,31512,6.51
+LCA,St. Lucia,22445,6.22
+VCT,St. Vincent and the Grenadines,16365,6.55
+SUR,Suriname,22967,5.98
+CHE,Switzerland,81695,2.98
+TJK,Tajikistan,3650,18.37
+TZA,Tanzania,3485,9.87
+THA,Thailand,21280,2.67
+TLS,Timor-Leste,5103,14.72
+TON,Tonga,6860,5.78
+TTO,Trinidad and Tobago,33749,7.75
+UKR,Ukraine,17637,6.93
+URY,Uruguay,30011,6.49
+UZB,Uzbekistan,9169,7.45
+VUT,Vanuatu,3987,8.98
+VNM,Viet Nam,11629,2.73
+PSE,West Bank and Gaza,6270,3.08
+ZMB,Zambia,3592,2.01
+ZWE,Zimbabwe,4994,13.21

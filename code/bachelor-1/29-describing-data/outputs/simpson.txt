@@ -1,0 +1,9 @@
+$ python simpson.py
+overall: {False: 25301.0, True: 24519.0}
+             count     mean
+works older                
+False False     57   9353.0
+      True     504  18370.0
+True  False    968  26240.0
+      True     471  31098.0
+share working: {False: 0.944, True: 0.483}

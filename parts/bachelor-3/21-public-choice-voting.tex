@@ -1,0 +1,437 @@
+\chapter{Public Choice: Voting}\label{ch:b3:public-choice-voting}
+
+The previous chapters asked what a government should do if it maximised social
+welfare. This one asks what governments do, given that they are chosen by voters,
+run by politicians and constrained by rules. The same tools apply: people pursue
+their aims under constraints, and the predictions are tested against the record.
+Market failures justify a role for government; this chapter and the next measure
+how the government that fills the role is likely to behave.
+
+\begin{openingchart}{Central-government expenditure as a share of GDP, 1870--2020:
+median and interquartile range of up to 18 economies (years with at least 12), and
+the United Kingdom and the United States (percent).}{Jordà, Schularick and Taylor,
+Macrohistory Database (expenditure, gdp); our ratios}
+\begin{tikzpicture}
+\begin{axis}[omtimesten, width=0.72\linewidth, height=0.42\linewidth, xmin=1865,
+  xmax=2025, ymin=0, ymax=70, ylabel={Percent of GDP}, legend pos=north west,
+  legend style={font=\footnotesize}]
+  \addplot[name path=lo, draw=none, forget plot] table[x=year, y=q25] {figdata/bachelor-3/21-public-choice-voting/out/spending.csv};
+  \addplot[name path=hi, draw=none, forget plot] table[x=year, y=q75] {figdata/bachelor-3/21-public-choice-voting/out/spending.csv};
+  \addplot[omDef!20, area legend] fill between[of=lo and hi];
+  \addplot[omDef, thick, mark=none] table[x=year, y=median] {figdata/bachelor-3/21-public-choice-voting/out/spending.csv};
+  \addplot[omThm, thick, dashed, mark=none] table[x=year, y=GBR] {figdata/bachelor-3/21-public-choice-voting/out/spending.csv};
+  \addplot[black, thick, dotted, mark=none] table[x=year, y=USA] {figdata/bachelor-3/21-public-choice-voting/out/spending.csv};
+  \legend{Interquartile range, Median, United Kingdom, United States}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: spending_points
+The median economy's central government spent 6.5~\% of GDP in 1870 and 7.4~\% in 1913,
+12.1~\% in 1938, 17.2~\% in 1950, 25.3~\% in 1980 and 31.4~\% in 2020. The wars raised it in steps,
+but most of the rise after 1950 came in peacetime, as the vote spread, incomes grew
+and governments took on pensions, health care and schooling. The models of this
+chapter try to explain that rise and are tested against it.
+
+\begin{recall}
+The grades 10--12 volume introduced public choice. The Year 2 volume proved the
+median-voter theorem for single-peaked preferences over one dimension and stated
+Arrow's theorem. The regression discontinuity design is chapter 4's, and the
+capitalisation of taxes into asset prices was met in the Year 1 volume.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:public-choice-voting:symbols}
+$q$ is the size of a public programme; $q_0$ the \omterm{def:b3:public-choice-voting:agenda-setter}{reversion point}; $t$ a tax rate; $y_m$ and $\bar y$
+the median and mean incomes; $P$ the probability that one vote decides an election.
+\end{notation}
+
+\section{The median voter and its tests}\label{sec:b3:public-choice-voting:median}
+
+\begin{model}{The median voter}
+\assumes Policy has one dimension, voters' preferences over it are single-peaked,
+and two parties that care only about winning commit to platforms.
+\predicts Both platforms converge to the median voter's ideal point, and policy
+moves with the median voter's preferences.
+\tested In close elections to the United States House of Representatives,
+1946--1994, which party wins is as good as random; the roll-call votes of the
+winners do not respond to large changes in their chance of winning, which is
+closer to full divergence --- voters choose between fixed platforms --- than to the
+convergence the model predicts, full or partial. % ledger: b3pv:lmb
+\breaks Politicians care about policy and cannot commit to moderate it; turnout
+differs across voters; policy has many dimensions; and incumbents hold an
+advantage: in the same elections, a narrow win raised the chance of winning the
+next one by about 0.40 to 0.45. % ledger: b3pv:lee
+\end{model}
+
+\section{Many dimensions: cycles}\label{sec:b3:public-choice-voting:cycles}
+
+\begin{definition}[Condorcet winner; majority cycle]\label{def:b3:public-choice-voting:cycle}
+\index{Condorcet winner}\index{majority cycle}
+A \emph{Condorcet winner} is an alternative that beats every other in a pairwise
+majority vote. A \emph{majority cycle} is a set of alternatives in which each is
+beaten by another, so that none is a Condorcet winner.
+\end{definition}
+
+\begin{proposition}[A cycle with three voters]\label{prop:b3:public-choice-voting:cycle}
+If three voters rank three alternatives $A \succ B \succ C$, $B \succ C \succ A$ and
+$C \succ A \succ B$, majority rule prefers $A$ to $B$, $B$ to $C$ and $C$ to $A$.
+\end{proposition}
+
+\begin{proof}
+$A$ beats $B$ with the first and third voters; $B$ beats $C$ with the first and
+second; $C$ beats $A$ with the second and third. Each pair is decided two to one,
+and the three decisions form a cycle.
+\end{proof}
+
+The third voter's preferences are not single-peaked on the order $A, B, C$: she
+ranks both ends above the middle. When the preferences of every voter are
+single-peaked on one dimension, the median voter's ideal beats every alternative and
+no cycle can form. Arrow's theorem, recalled above, says that with three or more
+alternatives no rule other than dictatorship meets a short list of reasonable
+conditions for every profile of preferences. How often do they arise? The listing
+draws profiles in three ways: every ranking equally likely, voters who rank
+alternatives by distance on a line, and voters who rank them by distance in a plane.
+
+\omcode{code/bachelor-3/21-public-choice-voting/listings/condorcet.py}{1}{32}{The frequency of \omterm{def:b3:public-choice-voting:cycle}{majority cycles} over three alternatives.}\label{lst:b3:public-choice-voting:condorcet}
+
+\omoutput{code/bachelor-3/21-public-choice-voting/outputs/condorcet.txt}{Share of simulated profiles with a cycle.}\label{out:b3:public-choice-voting:condorcet}
+
+With every ranking equally likely, a cycle appears in 12 of the 216 profiles of
+three voters, 5.6~\%, and in about 9~\% of large electorates, close to the known limit
+of 8.8~\%. On a line, never. In a plane, rarely: voters spread evenly around a centre
+leave each alternative's majority anchored near it, and cycles appear in about 1~\%
+of profiles or fewer. % output: condorcet
+Cycles are a matter of how preferences are spread, not of majority rule alone:
+when the electorate has a centre, majority rule has a winner. What the theorem
+leaves open is who sets the agenda when it does not, the subject of the section
+after next.
+
+\section{Turnout and the uninformed voter}\label{sec:b3:public-choice-voting:turnout}
+
+\begin{definition}[Calculus of voting; rational ignorance]\label{def:b3:public-choice-voting:turnout}
+\index{calculus of voting}\index{paradox of voting}\index{rational ignorance}
+The \emph{calculus of voting} compares the expected benefit of voting --- the
+probability $P$ that one vote decides the outcome times the value of the preferred
+outcome --- with its cost; when the benefit is far below the cost while many vote,
+the gap is the \emph{paradox of voting}. \emph{Rational ignorance} is a voter's choice
+not to acquire costly political information whose expected value to her is small.
+\end{definition}
+
+\begin{measure}[The probability of being decisive]
+A week before the 2008 United States presidential election, forecasts put the
+chance that one vote would decide the national outcome at about 1 in 10 million in
+the closest states and 1 in 60 million on average. % ledger: b3pv:gse
+At such odds, the private benefit of voting is close to zero unless the voter
+values the outcome for millions of others, or values voting itself.
+\end{measure}
+
+People vote anyway, in large numbers, which is the paradox; but they spend little
+on informing themselves, which is what the calculus predicts. Groups whose members
+each have much at stake in one policy --- an industry, a profession --- inform
+themselves and organise; the next chapter takes them up.
+
+\section{Vote trading and agenda setting}\label{sec:b3:public-choice-voting:agenda}
+
+\begin{definition}[Logrolling]\label{def:b3:public-choice-voting:logrolling}
+\index{logrolling}\index{vote trading}
+\emph{Logrolling} is the trading of votes among legislators: each supports
+another's project in exchange for support for his own.
+\end{definition}
+
+\omterm{def:b3:public-choice-voting:logrolling}{Logrolling} can pass projects whose total cost exceeds their total benefit, when
+each benefits a few districts and the cost is shared by all: every member of the
+coalition gains from the trade, and the districts outside it pay for projects that
+give them nothing (\cref{exo:b3:public-choice-voting:11}).
+
+\begin{definition}[Agenda setter (reversion point)]\label{def:b3:public-choice-voting:agenda-setter}
+\index{agenda setter}\index{reversion point}
+An \emph{agenda setter} is a body that alone may propose a policy, which voters
+accept or reject; the \emph{reversion point} is the policy that holds if they
+reject.
+\end{definition}
+
+\begin{proposition}[The setter gets more than the median voter wants]\label{prop:b3:public-choice-voting:setter}
+Let voters' preferences be single-crossing (a voter with a higher ideal prefers a
+larger $q$ to a smaller one whenever a voter with a lower ideal does), the median
+voter's be single-peaked with ideal $q^*$, and the \omterm{def:b3:public-choice-voting:agenda-setter}{reversion
+point} $q_0 < q^*$. A setter who wants the largest $q$ proposes the largest $q > q^*$ that the median
+voter likes as much as $q_0$, and it passes.
+\end{proposition}
+
+\begin{proof}
+The median voter accepts any $q$ she likes at least as much as $q_0$; by single-peakedness
+these form an interval $[q_0, \bar q]$ containing $q^*$, with $\bar q > q^*$ where her utility returns to its
+level at $q_0$. By single crossing, every voter whose ideal is above hers prefers $\bar q$ to
+$q_0$ whenever she does, and every voter below prefers $q_0$ to a larger proposal whenever she
+does; so a majority ranks each proposal against $q_0$ as she does, $\bar q$ passes and no larger
+proposal does.
+The lower the \omterm{def:b3:public-choice-voting:agenda-setter}{reversion point}, the larger $\bar q$.
+\end{proof}
+
+\begin{omchart}{Net benefit of a pool to Brenmoor's median household (two members),
+by size in lanes: the ideal is 6 lanes; against a reversion point of 2 lanes, a
+setter can win a vote on 13.4.}{Invented data: the weekend problem; our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.56\linewidth, height=0.36\linewidth, xmin=0, xmax=20,
+  ymin=-40, ymax=110, xlabel={Pool size $q$ (lanes)}, ylabel={Dalens a year}]
+  \addplot[omDef, thick, mark=none] table[x=q, y=u] {figdata/bachelor-3/21-public-choice-voting/out/brenmoor_u.csv};
+  \draw[guide] (axis cs:2,43.18) -- (axis cs:13.42,43.18);
+  \fill (axis cs:2,43.18) circle (1.6pt) node[above left, font=\scriptsize] {$q_0$};
+  \fill (axis cs:6,95.01) circle (1.6pt) node[above, font=\scriptsize] {ideal};
+  \fill (axis cs:13.42,43.18) circle (1.6pt) node[above right, font=\scriptsize] {setter};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: brenmoor_stats, brenmoor_u
+
+\section{The size of government}\label{sec:b3:public-choice-voting:size}
+
+\begin{definition}[Meltzer--Richard model]\label{def:b3:public-choice-voting:meltzer-richard}
+\index{Meltzer--Richard model}
+The \emph{Meltzer--Richard model} is the model in which a linear income tax finances
+an equal transfer to all, taxation has a deadweight cost, and the tax rate is the
+one the median voter prefers.
+\end{definition}
+
+\begin{proposition}[Redistribution and the median]\label{prop:b3:public-choice-voting:mr}
+If the transfer is $t\bar y - \tfrac a2t^2\bar y$, the median voter chooses $t = (1 - y_m/\bar y)/a$ when $y_m < \bar y$, and zero
+otherwise: the rate rises with the ratio of mean to median income.
+\end{proposition}
+
+\begin{proof}
+Her income after tax and transfer is $(1 - t)y_m + t\bar y - \tfrac a2t^2\bar y$. Its derivative in $t$ is $\bar y - y_m -
+at\bar y$, zero at $t = (1 - y_m/\bar y)/a$, and the second derivative $-a\bar y$ is negative. If $y_m \ge \bar y$ the derivative
+is negative at $t = 0$. As $\bar y/y_m$ rises, $y_m/\bar y$ falls and $t$ rises.
+\end{proof}
+
+\begin{model}{Meltzer--Richard}
+\assumes Voters differ only in income; the tax is linear, the transfer equal, and
+the median voter decides.
+\predicts More unequal societies, and societies that extend the vote to poorer
+citizens, redistribute more.
+\tested Within countries, the franchise prediction holds. When poll taxes and literacy
+tests were abolished in U.S. states, turnout rose most among the poor, the pivotal
+voter became poorer, and welfare spending rose sharply while other spending did not
+(Husted and Kenny 1997, 46 states, 1950--1988). % ledger: b3pv:hk.franchise
+After women won the vote in U.S. states, local public-health spending rose at once,
+and child mortality from infectious diseases fell by 8--15~\% (Miller 2008).
+% ledger: b3pv:mil.suffrage
+The inequality prediction has no clean test here. Across 75 countries, average
+central-government spending over 2010--2019 \emph{falls} with the average Gini index,
+by 0.70 points of GDP per Gini point (s.e.\ 0.13), and by 0.44 (0.14) holding income
+per person fixed; but that Gini measures income after taxes and transfers, so a
+country that redistributes more shows less inequality: the slope runs at least partly
+from spending to the Gini. Across 36 European countries, with the Gini of income
+before social transfers, the slope is 0.01 (s.e.\ 0.27): no relation. % figdata: mr_test
+Even that Gini is not the model's: it is after taxes, and incomes before transfers
+respond to the transfers people expect.
+\breaks The poor vote less, and the median voter is richer than the median
+household; redistribution also insures against risk, which the model leaves out;
+and spending is not all redistribution.
+\end{model}
+
+\begin{definition}[Wagner's law; Baumol cost disease]\label{def:b3:public-choice-voting:size-of-government}
+\index{Wagner's law}\index{Baumol cost disease}
+\emph{Wagner's law} is the measured regularity that public spending rises as a share
+of output as income per person grows. \emph{Baumol cost disease} is the rise in the
+relative price of services whose productivity grows slowly, such as teaching and
+care, when wages rise with productivity elsewhere.
+\end{definition}
+
+\begin{proposition}[The relative price of the stagnant sector]\label{prop:b3:public-choice-voting:baumol}
+If labour is the only input, wages are equal across two sectors, and output per
+worker grows at $g$ in one sector and zero in the other, the relative price of the
+stagnant sector's output grows at rate $g$.
+\end{proposition}
+
+\begin{proof}
+With competitive prices equal to unit labour costs, $p_i = w/a_i$ with $a_i$ output per
+worker. The relative price $p_2/p_1 = a_1/a_2$ grows at the growth rate of $a_1$ minus that of $a_2$,
+which is $g - 0 = g$.
+\end{proof}
+
+Governments buy mostly services --- teaching, care, administration --- so the cost
+disease raises the measured share of spending even at constant real provision.
+
+\begin{omchart}{Central-government expense against GDP per person (PPP, constant
+dollars, logarithmic scale), 138 countries, 2019.}{World Bank, World Development
+Indicators (GC.XPN.TOTL.GD.ZS, NY.GDP.PCAP.PP.KD)}
+\begin{tikzpicture}
+\begin{semilogxaxis}[omscatter, log ticks with fixed point, width=0.58\linewidth,
+  height=0.4\linewidth, xmin=600, xmax=150000, ymin=0, ymax=95,
+  xlabel={GDP per person (dollars)}, ylabel={Expense (\% of GDP)}]
+  \addplot table[x=y, y=s] {figdata/bachelor-3/21-public-choice-voting/out/wagner.csv};
+\end{semilogxaxis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: wagner_stats
+Across countries, a doubling of income per person goes with a central-government
+share higher by $3.45 \times \ln 2 = 2.4$ points (slope on log income 3.45, robust s.e.\ 0.88), but income
+explains only a tenth of the variation ($R^2$ 0.10). Two small island states, Nauru
+(90~\% of GDP) and Kiribati (70~\%), pull the slope down: without them it is 4.06.
+In short, \omterm{def:b3:public-choice-voting:size-of-government}{Wagner's law} holds on average and
+leaves most of the differences to be explained by other things.
+
+\section{Fiscal rules}\label{sec:b3:public-choice-voting:rules}
+
+\begin{definition}[Fiscal rule]\label{def:b3:public-choice-voting:fiscal-rule}
+\index{fiscal rule}
+A \emph{fiscal rule} is a lasting legal limit on a government's budget aggregates:
+a balanced-budget requirement, a cap on debt, spending or taxes.
+\end{definition}
+
+\begin{record}[Balanced-budget rules in the United States states]
+When regional downturns opened large budget deficits in several states in the late
+1980s, states with rules forbidding a deficit to be carried into the next year,
+or with tax and spending limits, adjusted faster. States where one party held both
+the legislature and the governorship reacted much faster than states under
+divided control, and in years when the governor was up for election, tax rises
+and spending cuts were significantly smaller. % ledger: b3pv:poterba
+\end{record}
+
+\section{Local governments and moving households}\label{sec:b3:public-choice-voting:tiebout}
+
+\begin{definition}[Tiebout sorting]\label{def:b3:public-choice-voting:tiebout}
+\index{Tiebout sorting}\index{fiscal competition}
+\emph{Tiebout sorting} is the choice by mobile households among many local
+jurisdictions according to their bundles of taxes and public services, which sorts
+households with similar demands together; the competition among jurisdictions for
+residents and firms is \emph{fiscal competition}.
+\end{definition}
+
+\begin{model}{Tiebout sorting}
+\assumes Households move at low cost among many jurisdictions, each offering a
+tax and service bundle.
+\predicts Households sort by their demand for local services; differences in
+taxes and services are capitalised into house prices.
+\tested Comparing houses on opposite sides of school attendance boundaries, which
+holds the neighbourhood fixed, Black (1999) found that parents pay 2.5~\% more for a
+house whose school's test scores are 5~\% higher: school quality is capitalised, as
+the model predicts. % ledger: b3pv:black.boundary
+\Cref{exo:b3:public-choice-voting:9} asks what such data would have to show for taxes.
+\breaks Zoning limits who can move in, moving is costly, and services such as
+schools depend on who the neighbours are, which sorting itself changes.
+\end{model}
+
+A household comparing two towns with the same services and a tax difference of $\Delta T$
+a year is indifferent when the house in the higher-tax town is cheaper by the
+present value of the difference, $\Delta T/r$ at interest rate $r$ for ever: the tax is
+capitalised, and the buyer pays it once in the price.
+
+\section{Exercises}\label{sec:b3:public-choice-voting:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:public-choice-voting:1}
+In the opening chart, compare the rise of the median share from 1870 to 1950 with
+the rise from 1950 to 2020. Which country is at the top of the range in 2020?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:public-choice-voting:2}
+Five voters' ideal tax rates are 10, 15, 25, 30 and 45~\%. With single-peaked
+preferences, which rate wins a majority against every other?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:public-choice-voting:3}
+In an election with 1{,}000 other voters, each voting for either candidate with
+probability one half, what is the probability of a tie among them?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:public-choice-voting:4}
+What would contradict the median-voter prediction in a two-party race?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:public-choice-voting:5}
+Mean income is 40{,}000 and median 32{,}000; the deadweight parameter $a$ is 0.8. Find the
+Meltzer--Richard tax rate. What is it if the median rises to 36{,}000?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:public-choice-voting:6}
+In the pool example, the \omterm{def:b3:public-choice-voting:agenda-setter}{reversion point} is 1 lane instead of 2. What does the setter
+propose? What if the \omterm{def:b3:public-choice-voting:agenda-setter}{reversion point} is 6 lanes?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:public-choice-voting:7}
+Output per worker grows at 2~\% a year in manufacturing and 0~\% in care. By how much has
+the relative price of care risen after 20 years?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:public-choice-voting:8}
+With the WDI data, estimate the cross-country slope of central-government expense
+on log income per person in 2000 and in 2019. Has \omterm{def:b3:public-choice-voting:size-of-government}{Wagner's law} strengthened?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:public-choice-voting:9}
+What house-price data would contradict the capitalisation of local taxes?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:public-choice-voting:10}
+Prove the Meltzer--Richard comparative static, and show that if the deadweight cost
+is $\tfrac a2t^2\bar y$ with $a$ rising in the share of income that can avoid tax, the chosen rate falls as
+avoidance grows.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:public-choice-voting:11}
+Three districts vote on two projects. Project A is worth 100 to district 1, project B
+100 to district 2; each costs 120, shared equally by the three. Does either pass
+alone? Can districts 1 and 2 trade votes to pass both, and is the result efficient?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:public-choice-voting:12}
+With the JST data, regress the central-government spending share on log real GDP
+per person with country fixed effects, 1870--2020, and then add year fixed effects.
+What survives of \omterm{def:b3:public-choice-voting:size-of-government}{Wagner's law} within countries?
+\end{exercise}
+
+\section{Problem: Brenmoor Votes on a Pool}\label{sec:b3:public-choice-voting:problem}
+
+\begin{problem}[{Weekend problem --- Brenmoor votes on a pool}]\label{pb:b3:public-choice-voting:pool}
+Brenmoor's households are those of Brenland's survey (\code{load("households")}). A
+pool of $q$ lanes costs each household $20q$ dalens a year; a household of $n$ members
+values it at $60n\ln q$. The old pool has 2 lanes. % figdata: brenmoor_stats, brenmoor_u
+
+\medskip\noindent\textbf{Part I --- the referendum.}
+\begin{enumerate}
+\item Find the ideal pool size of a household of $n$ members.
+\item Show that preferences are single-peaked in $q$.
+\item Find the median household size in the survey.
+\item What size wins a referendum against every other?
+\item What size would maximise total net benefit, and why does it differ?
+\item Who is outvoted, and by how much do they lose?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- the agenda setter.} The council alone proposes a
+size, and if voters reject it the old pool stays.
+\begin{enumerate}[resume]
+\item Compute the median household's net benefit at 2 lanes.
+\item Find the largest size it accepts.
+\item Why does this proposal pass?
+\item What would the setter propose if the old pool had 1 lane?
+\item What if the old pool had been closed, leaving no pool?
+\item What rule would stop the setter exploiting the \omterm{def:b3:public-choice-voting:agenda-setter}{reversion point}?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- redistribution.} The council finances a
+transfer to every household by a linear income tax, with a deadweight cost
+$\tfrac a2t^2\bar y$, $a = 0.5$.
+\begin{enumerate}[resume]
+\item Find the median and mean gross incomes of the survey.
+\item Find the tax rate the median voter chooses.
+\item Compute the transfer per household.
+\item What happens to the rate if the poorest fifth stop voting?
+\item How does the cross-country evidence bear on the model's prediction?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- the next town.} The neighbouring town offers the
+same services for a tax 500 dalens a year higher. The interest rate is 4~\%.
+\begin{enumerate}[resume]
+\item How much cheaper must an identical house there be?
+\item Who bears the higher tax: current owners or future buyers?
+\item What happens to the difference if households cannot move?
+\item How would the referendum on the pool change house prices?
+\item How does capitalisation change who has a stake in a vote on local taxes?
+\item What evidence would show capitalisation in Brenmoor?
+\item State the result: the pool size the referendum chooses, the setter's proposal,
+and the capitalisation of the tax difference.
+\end{enumerate}
+\end{problem}

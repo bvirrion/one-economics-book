@@ -1,0 +1,8 @@
+pos,flaw,rate
+1,No Condorcet winner,0.55
+2,Compromise failure,3.8
+3,Spoiler effect,1.6
+4,Upward monotonicity,1.6
+5,Condorcet winner loses,1.1
+6,Downward monotonicity,1.1
+7,Truncation paradox,0.5

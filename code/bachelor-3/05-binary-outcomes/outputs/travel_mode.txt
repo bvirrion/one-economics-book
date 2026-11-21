@@ -1,0 +1,11 @@
+$ python travel_mode.py
+air      4.7399 (0.8675)
+train    3.9532 (0.4686)
+bus      3.3062 (0.4583)
+invc    -0.0139 (0.0067)
+invt    -0.0040 (0.0008)
+ttme    -0.0969 (0.0103)
+value of in-vehicle time: 17.2 dollars an hour
+actual shares     [0.276 0.3   0.143 0.281]
+predicted shares  [0.276 0.3   0.143 0.281]
+without air       [0.386 0.188 0.426] (train, bus, car)

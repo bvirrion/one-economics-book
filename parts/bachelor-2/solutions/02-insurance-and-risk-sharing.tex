@@ -1,0 +1,206 @@
+\section*{Chapter \ref{ch:b2:insurance-and-risk-sharing} --- Insurance and Risk Sharing}
+
+\begin{solution}{exo:b2:insurance-and-risk-sharing:1}
+The United States lies above the line ($1.97 > 1.76$): its consumption moved more than its output.
+% figdata: volatility (USA, JPN)
+Japan lies below ($1.50 < 2.05$). Under full sharing with identical CRRA utilities, every country's
+consumption grows at the world's rate, so every country has the world's consumption volatility, 1.79
+% figdata: summary (world_sd_cons 1.79)
+points: the points would lie on a horizontal line at 1.79, below the dotted line for every country
+whose GDP is more volatile than that (all but 8).
+\end{solution}
+
+\begin{solution}{exo:b2:insurance-and-risk-sharing:2}
+Fair premium $0.005 \times \num{40000} = \dal{200}$. \omterm{def:b2:insurance-and-risk-sharing:loading}{Loading} $260/200 - 1 = 30$ per cent.
+\end{solution}
+
+\begin{solution}{exo:b2:insurance-and-risk-sharing:3}
+% code: exercises/solutions.py ex_contingent
+$z_G = \num{50000} - 0.12\chi$, $z_B = \num{30000} + 0.88\chi$. Budget line slope $-0.88/0.12 = -7.33$;
+fair-odds slope $-0.9/0.1 = -9$; \omterm{def:b2:insurance-and-risk-sharing:loading}{loading} $0.12/0.1 - 1 = 20$ per cent. On the certainty line,
+$\num{50000} - 0.12\chi = \num{30000} + 0.88\chi$, so $\chi = \num{20000}$ (full cover) and $z_G = z_B
+= \dal{47600}$.
+\end{solution}
+
+\begin{solution}{exo:b2:insurance-and-risk-sharing:4}
+Rejections: a household's consumption falls in a year when its own income falls (an illness, a
+lay-off, a hailstorm on its fields only) while the village's average consumption does not; or the gaps
+between households' consumptions widen after shocks to their own incomes and do not close. Not a
+rejection: every household's consumption falls in a drought year. A drought is \omterm{def:b2:insurance-and-risk-sharing:aggregate-risk}{aggregate risk}, which
+no sharing among the villagers can remove.
+\end{solution}
+
+\begin{solution}{exo:b2:insurance-and-risk-sharing:5}
+% code: exercises/solutions.py ex_cover
+With the formula of \cref{ex:b2:insurance-and-risk-sharing:loading}: $\chi^{*} = (0.1 \times 0.88
+\times \num{50000} - 0.9 \times 0.12 \times \num{30000})/(0.12 \times 0.88) = (\num{4400} -
+\num{3240})/\num{0.1056} = \dal{10985}$, about half of full cover. Wealth $\num{50000} - 0.12 \times
+\num{10985} = \dal{48682}$ with no loss and $\num{30000} + 0.88 \times \num{10985} = \dal{39667}$ after
+a loss.
+\end{solution}
+
+\begin{solution}{exo:b2:insurance-and-risk-sharing:6}
+A higher price means a higher \omterm{def:b2:insurance-and-risk-sharing:loading}{loading}, so cover falls. At $\psi = 0.15$: $\chi^{*} = (0.1 \times 0.85
+\times \num{50000} - 0.9 \times 0.15 \times \num{30000})/(0.15 \times 0.85) = 200/0.1275 =
+\dal{1569}$. It buys nothing once $0.1(1 - \psi)\num{50000} \le 0.9\psi \times \num{30000}$, that is
+$\psi \ge \num{5000}/\num{32000} = 0.15625$, a \omterm{def:b2:insurance-and-risk-sharing:loading}{loading} of $56.25$ per cent. From a 20 to a 50 per cent
+\omterm{def:b2:insurance-and-risk-sharing:loading}{loading}, cover falls by six sevenths.
+\end{solution}
+
+\begin{solution}{exo:b2:insurance-and-risk-sharing:7}
+% code: exercises/solutions.py ex_borch
+By \cref{ex:b2:insurance-and-risk-sharing:cara}, $z_1 = \tfrac{a_2}{a_1 + a_2}\Omega + k =
+\tfrac13\Omega + k$. The expected harvest is \num{80000}, so $k = \num{30000} - \num{80000}/3 =
+\dal{3333}$. Farmer 1 gets \dal{36667} or \dal{23333}; farmer 2 gets \dal{63333} or \dal{36667}. Of the
+\dal{40000} swing in the harvest, farmer 2 bears two thirds: he is half as risk-averse, so he has twice
+the risk tolerance.
+\end{solution}
+
+\begin{solution}{exo:b2:insurance-and-risk-sharing:8}
+% code: exercises/solutions.py ex_six_countries
+Standard deviations (GDP, consumption) and ratio: United States $1.76$, $1.97$, $1.12$; Japan $2.05$,
+$1.50$, $0.73$; Korea $3.23$, $4.40$, $1.36$; France $2.22$, $1.85$, $0.83$; Brazil $2.65$, $3.13$,
+$1.18$; India $2.89$, $2.83$, $0.98$. The prediction is a consumption volatility equal to the world's,
+1.79 points, and a ratio below one: France, Japan and the United States come closest in level, France
+and Japan also in the ratio. Korea is furthest away.
+\end{solution}
+
+\begin{solution}{exo:b2:insurance-and-risk-sharing:9}
+Full sharing (identical CRRA utilities) puts every point at a correlation of $1$ for consumption:
+along the top edge of the chart. Measured correlations can fall short without any failure of
+sharing because the series is private consumption only (public services are left out), because much of
+consumption is non-traded (housing, local services) and its relative price moves with local
+conditions, because consumption is measured with error, and because tastes differ from year to year.
+To separate these from a lack of sharing, look at the gap where measurement is good and for traded
+goods only; or ask whether the gap is larger in countries that hold less foreign wealth. Measurement
+error does not explain why holdings of foreign assets should matter.
+\end{solution}
+
+\begin{solution}{exo:b2:insurance-and-risk-sharing:10}
+Borch: $c_1^{-\gamma_1}/c_2^{-\gamma_2} = \kappa$, so $\gamma_1\ln c_1 - \gamma_2\ln c_2 = -\ln\kappa$
+in every state. Across states, $\gamma_1\,\dd\ln c_1 = \gamma_2\,\dd\ln c_2$; both consumptions rise
+with the aggregate (\cref{cor:b2:insurance-and-risk-sharing:aggregate-only}), and household 1's grows
+$\gamma_2/\gamma_1 > 1$ times as fast in percentage terms, so its share rises with the aggregate. In the
+regression, household 1's consumption moves more than one for one with average consumption ($\beta_1
+> 1$), household 2's less, and own income still adds nothing ($\beta_2 = 0$). So $\beta_1 \neq 1$ does
+not reject full sharing when attitudes to risk differ; the test that survives is $\beta_2 = 0$.
+\end{solution}
+
+\begin{solution}{exo:b2:insurance-and-risk-sharing:11}
+% code: exercises/solutions.py ex_pooling
+Each household bears $\frac1n\sum_j\tilde x_j$, and its cost $\Gamma$ solves $u(z - \Gamma) =
+\mathbb{E}[u(z - \frac1n\sum_j \tilde x_j)]$, which gives $e^{a\Gamma} = \mathbb{E}[e^{a\sum_j \tilde x_j/n}] = \bigl(1 - \mu +
+\mu e^{a\Lambda/n}\bigr)^n$ by independence. Numbers: \dal{1585.7} for $n = 1$, \dal{1046.2} for $n =
+10$, \dal{1004.5} for $n = 100$, against an expected loss of \dal{1000}. Write the cost as $K(s)/s$ with
+$s = a/n$ and $K(s) = \ln\mathbb{E}[e^{s\tilde x}]$. $K$ is convex with $K(0) = 0$, so $K(s)/s$ rises
+with $s$: the cost falls as $n$ rises, towards $K'(0) = \mathbb{E}[\tilde x] = \mu\Lambda$. With
+perfectly correlated losses, everyone loses together, each household bears its full loss in that state,
+and the cost stays \dal{1585.7} whatever $n$.
+\end{solution}
+
+\begin{solution}{exo:b2:insurance-and-risk-sharing:12}
+% code: exercises/solutions.py ex_portfolio
+$\theta^{*} = 0.05/(3 \times 0.18^2) = 0.514$. Under CRRA, the share is the same at every wealth, so
+the amount doubles when wealth doubles. Under CARA with normal returns, the amount $\bar\xi/(a\sigma^2)$
+is fixed, so the share halves. Data in which the rich and the poor hold the same share reject CARA;
+data in which they hold the same amount reject CRRA; a share that rises with wealth rejects both, and
+calls for relative \omterm{def:b2:expected-utility:risk-aversion}{risk aversion} that falls with wealth.
+\end{solution}
+
+\begin{solution}{pb:b2:insurance-and-risk-sharing:1}
+% code: exercises/solutions.py problem, problem_bb_cover
+\textbf{1.} A boat is good with probability $0.4 + 0.2 = 0.6$; both are good with probability $0.4 >
+0.6^2 = 0.36$. The catches are not independent: they are positively correlated (a common sea).
+
+\textbf{2.} Mean $0.6 \times \num{30000} + 0.4 \times \num{10000} = \kst{22000}$; standard deviation
+$\sqrt{0.6 \times 0.4} \times \num{20000} = \kst{9798}$.
+
+\textbf{3.} Covariance $\num{20000}^2(0.4 - 0.36)$, variance $\num{20000}^2 \times 0.24$: correlation
+$0.04/0.24 = 0.167$.
+
+\textbf{4.} \kst{60000} with probability $0.4$, \kst{40000} with probability $0.4$ (one boat good),
+\kst{20000} with probability $0.2$.
+
+\textbf{5.} $0.6\ln\num{30000} + 0.4\ln\num{10000} = 9.8695$; \omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalent} \kst{19332}.
+
+\textbf{6.} The remainder $z_1 - \Omega/2$ is $0$ when both seasons are alike, $+\num{10000}$ when only
+boat 1 is good and $-\num{10000}$ when only boat 2 is; household 2's is the opposite, so the two add up
+to zero. Standard deviations: \kst{7483} for $\Omega/2$, \kst{6325} for the remainder (variances
+$5.6$ and $4.0$ times $10^7$, which add up to $9.6 \times 10^7$, the variance of the catch).
+
+\textbf{7.} Both have CRRA utility with $\gamma = 1$; with $n = 2$,
+\cref{prop:b2:insurance-and-risk-sharing:constant-shares} gives $z_1(s) = k\,\Omega(s)$ with a constant
+$k$, and $z_2 = (1 - k)\Omega$.
+
+\textbf{8.} \kst{30000}, \kst{20000}, \kst{20000}, \kst{10000} in the four states: mean \kst{22000},
+unchanged; expected utility $0.4\ln\num{30000} + 0.4\ln\num{20000} + 0.2\ln\num{10000} = 9.9270$;
+\omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalent} \kst{20477}.
+
+\textbf{9.} $\num{20477} - \num{19332} = \kst{1145}$ a year for each household.
+
+\textbf{10.} The variance falls from $9.6$ to $5.6$ times $10^7$, by 41.7 per cent. The idiosyncratic
+part, the remainder of question 6, is removed entirely: 100 per cent.
+
+\textbf{11.} \Cref{ex:b2:insurance-and-risk-sharing:cara} with $a_1 = 2a_2$: skipper 1 bears
+$a_2/(a_1 + a_2) = \tfrac13$ of the aggregate, $z_1 = \Omega/3 + k$, and $k = \num{22000} -
+\num{44000}/3 = \kst{7333}$. Skipper 1 gets \kst{27333} when both are good, \kst{20667} when one is,
+\kst{14000} when both are bad; skipper 2 gets the rest: \kst{32667}, \kst{19333}, \kst{6000}.
+
+\textbf{12.} What remains is \omterm{def:b2:insurance-and-risk-sharing:aggregate-risk}{aggregate risk}: in a bad year for both boats, there is less to share.
+Only someone whose income does not fall in the same seasons can take it: an insurer that pools
+fisheries of many coasts, or investors elsewhere, at a price.
+
+\textbf{13.} A household's bad season has probability $0.4$: the fair price is $0.4$ per kest of cover,
+the loaded price $0.48$.
+
+\textbf{14.} $z_0 = \num{30000}$, $\Lambda = \num{20000}$, $\mu = 0.4$, $\psi = 0.48$: $\chi^{*} =
+(0.4 \times 0.52 \times \num{30000} - 0.6 \times 0.48 \times \num{10000})/(0.48 \times 0.52) =
+\num{3360}/\num{0.2496} = \kst{13462}$.
+
+\textbf{15.} $\num{30000} - 0.48 \times \num{13462} = \kst{23538}$ in a good season, $\num{10000} +
+0.52 \times \num{13462} = \kst{17000}$ in a bad one; \omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalent} \kst{20666}.
+
+\textbf{16.} The insurer, by \kst{189} a year. The cooperative removes only the \omterm{def:b2:insurance-and-risk-sharing:idiosyncratic-risk}{idiosyncratic risk}; the
+insurer, which pools many coasts, takes some of the \omterm{def:b2:insurance-and-risk-sharing:aggregate-risk}{aggregate risk} too, and here that is worth more than
+the \omterm{def:b2:insurance-and-risk-sharing:loading}{loading}. The insurer expects to earn $(0.48 - 0.4) \times \num{13462} = \kst{1077}$ a year on the
+contract.
+
+\textbf{17.} The price of cover paid in the state where both are bad is $1.2 \times 0.2 = 0.24$.
+Expected utility $0.4\ln(\num{30000} - 0.24\chi) + 0.4\ln(\num{20000} - 0.24\chi) + 0.2\ln(\num{10000}
++ 0.76\chi)$ is largest at $\chi^{*} = \kst{9391}$; \omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalent} \kst{21072}.
+
+\textbf{18.} Cooperative with cover of the bad state for both (\kst{21072}), insurer alone (\kst{20666}),
+cooperative alone (\kst{20477}), nothing (\kst{19332}). A cover paid on a household's own bad season
+weakens the reward for the skipper's effort (\cref{ch:b2:moral-hazard}); sharing in the cooperative
+does too, since each household keeps only half of its own catch, but the members can watch each
+other's work more closely than an insurer can. A cover paid only when both boats fail depends little
+on any one skipper's effort.
+
+\textbf{19.} $\beta_1 = 1$ and $\beta_2 = 0$: with identical CRRA utilities every household's
+consumption is a constant share of the total
+(\cref{prop:b2:insurance-and-risk-sharing:constant-shares}), so its growth is the group's, whatever its
+own income did.
+
+\textbf{20.} $\hat\beta_1 = 0.853$ (standard error $0.034$), $\hat\beta_2 = 0.143$ ($0.006$).
+% figdata: coop_regression
+
+\textbf{21.} $t = 22.6$ (the table divides unrounded figures; $0.143/0.006$ gives about 24), far
+above $1.96$: $\beta_2 = 0$ is rejected.
+
+\textbf{22.} $t = (0.853 - 1)/0.034 = -4.3$: $\beta_1 = 1$ is rejected too. The sum is $0.996$. If a
+household keeps the share $\kappa$ of its own shock, $\Delta\ln c_{it} \approx \Delta m^{c}_t +
+\kappa\,\Delta m^{o}_{it}$, where $m^{c}_t$ is the common part and $m^{o}_{it}$ the household's own
+part of log income. Since $\Delta\ln m_{it} = \Delta m^{c}_t + \Delta m^{o}_{it}$ and
+$\Delta\ln\bar c_t \approx \Delta m^{c}_t$, this is $(1 - \kappa)\Delta\ln\bar c_t + \kappa\,\Delta\ln m_{it}$: the two coefficients add up to
+one.
+
+\textbf{23.} Households keep about 14 per cent of their own income shocks; the cooperative insures about
+86 per cent of idiosyncratic income risk.
+
+\textbf{24.} Error in measured income biases $\hat\beta_2$ towards zero, so the cooperative would look
+as if it insured more than 86 per cent. Error in consumption only widens the standard errors.
+
+\textbf{25.} The two-boat cooperative is worth \kst{1145} a year to each household, by removing all of
+its \omterm{def:b2:insurance-and-risk-sharing:idiosyncratic-risk}{idiosyncratic risk}; the larger cooperative insures about 86 per cent of its members' idiosyncratic
+income risk ($1 - \hat\beta_2$).
+\end{solution}

@@ -1,0 +1,5 @@
+$ python omitted.py
+true effect of a year of school: 0.060
+slope, ability left out: mean 0.0839
+slope, ability included: mean 0.0601
+predicted bias 0.10 * 1.5 / (1.5**2 + 2**2) = 0.0240

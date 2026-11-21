@@ -1,0 +1,5 @@
+$ python geography_iv.py
+countries                 157
+first-stage F             35.4
+OLS  elasticity          0.866  (s.e. 0.149)
+2SLS elasticity          0.428  (s.e. 0.382)

@@ -1,0 +1,351 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g10-11. Three ways to GDP, expenditure components,
+% GNI and depreciation, nominal GDP and the deflator, comparisons and limits. Real numbers:
+% figdata/grade-10/11-national-accounts/ (WDI spending shares 2023, GNI/GDP 2023); Brenland accounts (invented).
+\chapter{National Accounts}\label{ch:g10:national-accounts}
+
+In 2023, American households spent on their own consumption a sum equal to 67.7\,\% of the country's GDP; Chinese households, 39.6\,\%.
+China put 41.1\,\% of its GDP into new buildings, machines and stocks, about twice the American share. Vietnam sold abroad goods and services
+worth 86.7\,\% of its GDP, and bought from abroad 78.3\,\%. Kenya's households spent 77.0\,\% of GDP, and the country bought 7.5\,\% of GDP more
+from abroad than it sold.
+% figdata: shares (USA C 67.7; CHN C 39.6, I 41.1; USA I 21.6; VNM X 86.7, M 78.3; KEN C 77.0, NX -7.5)
+
+These numbers come from the national accounts, the system by which statistical offices measure a country's production. The grades 6--9
+volume defined GDP and showed how it is used to compare countries over two centuries. This chapter opens the accounts: who buys what is
+produced, why three different ways of adding up give the same total, what GDP leaves out, and how the part due to rising prices is taken out.
+
+\begin{openingchart}{Spending on goods and services in six countries, 2023, in percent of GDP: households' consumption, investment (new capital
+and stocks), government purchases, and exports minus imports.}{World Bank, World Development Indicators: households and NPISHs final consumption expenditure,
+gross capital formation, general government final consumption expenditure, exports and imports of goods and services (\% of GDP)}
+\begin{tikzpicture}
+\begin{axis}[omrecord, ybar=0pt, bar width=5pt, width=0.92\linewidth, height=6.4cm, ymin=-15, ymax=85, xmin=0.4, xmax=6.6,
+  xtick=data, xticklabels from table={figdata/grade-10/11-national-accounts/out/shares.csv}{iso3}, xmajorgrids=false,
+  ylabel={percent of GDP}, legend columns=4, legend style={at={(0.5,1.03)}, anchor=south, font=\scriptsize, draw=none}]
+\addplot[fill=omDef!70, draw=omDef] table[x=pos, y=C] {figdata/grade-10/11-national-accounts/out/shares.csv}; \addlegendentry{consumption}
+\addplot[fill=omMeth!60, draw=omMeth] table[x=pos, y=I] {figdata/grade-10/11-national-accounts/out/shares.csv}; \addlegendentry{investment}
+\addplot[fill=omProp!60, draw=omProp] table[x=pos, y=G] {figdata/grade-10/11-national-accounts/out/shares.csv}; \addlegendentry{government}
+\addplot[fill=omThm!60, draw=omThm] table[x=pos, y=NX] {figdata/grade-10/11-national-accounts/out/shares.csv}; \addlegendentry{net exports}
+\draw[black] (axis cs:0.4,0) -- (axis cs:6.6,0);
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: \emph{GDP} is the market value of the final goods and services produced in a country in a year; a firm's \emph{value
+added} is its sales minus what it buys from other firms; \emph{real GDP} values each year's production at the prices of one base year, so that it
+changes only when quantities do; and incomes can be compared across countries at \emph{purchasing-power parity}, with prices of a common basket.
+\end{recall}
+
+\section{Three ways to the same total}\label{sec:g10:national-accounts:three}
+
+The grades 6--9 volume followed wheat from a farm to a bakery and showed that adding up value added, not sales, counts each good once. What
+is new here is the other side of each firm's account: the incomes it pays. In a small economy a mine sells iron ore to a steelworks for 30
+dalens; the steelworks sells the steel to a carmaker for 50; the carmaker sells its cars to households for 90. The mine pays 20 of its 30 dalens
+in wages and keeps 10 as profit; the steelworks pays 12 in wages and keeps 8; the carmaker pays 25 and keeps 15.
+
+\begin{omfigure}
+\begin{tikzpicture}[font=\small, box/.style={draw, rounded corners=2pt, minimum width=1.8cm, minimum height=0.9cm, align=center}]
+\node[box] (f) at (0,0) {mine};
+\node[box] (m) at (3.8,0) {steelworks};
+\node[box] (b) at (7.6,0) {carmaker};
+\node[box] (h) at (11.4,0) {households};
+\draw[-{Stealth}, thick] (f) -- node[above, font=\scriptsize] {ore, 30} (m);
+\draw[-{Stealth}, thick] (m) -- node[above, font=\scriptsize] {steel, 50} (b);
+\draw[-{Stealth}, thick] (b) -- node[above, font=\scriptsize] {cars, 90} (h);
+\node[font=\scriptsize, align=center, anchor=north] at (0,-0.6) {value added 30\\wages 20, profit 10};
+\node[font=\scriptsize, align=center, anchor=north] at (3.8,-0.6) {value added $50 - 30 = 20$\\wages 12, profit 8};
+\node[font=\scriptsize, align=center, anchor=north] at (7.6,-0.6) {value added $90 - 50 = 40$\\wages 25, profit 15};
+\node[font=\scriptsize, align=center, anchor=north] at (11.4,-0.6) {final spending 90};
+\end{tikzpicture}
+
+{\small A chain of three firms. Production: $30 + 20 + 40 = 90$. Income: $(20 + 10) + (12 + 8) + (25 + 15) = 90$. Expenditure: 90 of cars bought by final
+buyers.}
+\end{omfigure}
+
+Adding the sales of the three firms would give $30 + 50 + 90 = 170$, counting the ore three times and the steel twice, as the wheat was in the grades 6--9 volume. The accounts avoid this by
+counting only what final buyers buy.
+
+\begin{definition}[Final expenditure]\label{def:g10:national-accounts:final-expenditure}
+\emph{Final expenditure}\index{final expenditure} is spending on goods and services by their final users: households buying for their own use, firms
+buying new capital, the government, and buyers abroad. Goods bought by firms to be used up in their own production are intermediate, not final.
+\end{definition}
+
+\begin{proposition}[Three totals]\label{prop:g10:national-accounts:three}
+In an economy whose firms buy their inputs only from one another, the sum of all firms' value added equals \omterm{def:g10:national-accounts:final-expenditure}{final expenditure}, and equals the sum of all
+incomes paid out (wages and profits).
+\end{proposition}
+\begin{proof}
+A firm's value added is its sales minus its purchases from other firms. Summing over firms, every sale from one firm to another appears once as a sale
+and once as a purchase, and cancels. What remains is the sales to final buyers: \omterm{def:g10:national-accounts:final-expenditure}{final expenditure}. Each firm's value added is paid out as wages, and what is
+left after wages is, by definition, its profit; so value added equals wages plus profits, firm by firm, and the totals are equal too.
+\end{proof}
+
+\begin{measure}[How GDP is measured, three ways]
+Statistical offices build GDP from three sources at once. The \emph{production} side adds firms' value added, from business surveys and tax returns. The
+\emph{income} side adds wages, profits, and taxes on production, from tax and social-security records. The \emph{expenditure} side adds what households,
+firms, government and foreign buyers spend, from household surveys, \omterm{def:g10:national-accounts:investment}{investment} surveys, government budgets and customs data. \Cref{prop:g10:national-accounts:three}
+says the three must agree. With real data they never agree exactly, because each source misses something; the gap is published as a \emph{statistical
+discrepancy}, and the three estimates are reconciled by hand. In the opening chart, the four shares add to 100.0 for the United States and China, but to
+102.9 for Vietnam and 97.9 for Kenya.
+\end{measure}
+% figdata: shares (total: USA 100.0, CHN 100.0, VNM 102.9, KEN 97.9)
+
+\section{Who buys the output}\label{sec:g10:national-accounts:components}
+
+\omterm{def:g10:national-accounts:final-expenditure}{Final expenditure} is split into four groups of buyers.
+
+\begin{definition}[Investment and government purchases]\label{def:g10:national-accounts:investment}
+In the national accounts, \emph{investment}\index{investment (national accounts)} is spending on new capital goods (buildings, machines, software) and the
+change in firms' stocks of goods; buying a share (in a company) or a second-hand house is not investment in this sense. \emph{Government
+purchases}\index{government purchases} are the goods and services that the government buys or produces, including the work of its employees; pensions and
+other transfers are not purchases, since nothing is produced in exchange.
+\end{definition}
+\phantomsection\label{def:g10:national-accounts:government-purchases}
+
+\begin{definition}[Net exports]\label{def:g10:national-accounts:net-exports}
+\emph{Net exports}\index{net exports} are exports minus imports of goods and services.
+\end{definition}
+
+With $C$ for households' consumption, $I$ for \omterm{def:g10:national-accounts:investment}{investment}, $G$ for \omterm{def:g10:national-accounts:investment}{government purchases}, $X$ for exports and $M$ for imports, GDP measured by expenditure is
+\[
+  Y = C + I + G + X - M .
+\]
+Imports are subtracted because they are already inside $C$, $I$, $G$ and $X$: a Kenyan family buying an imported phone adds to $C$, but the phone was produced
+abroad and is no part of Kenya's GDP. Subtracting $M$ leaves only what was produced at home. That is also why Vietnam's exports can be 86.7\,\% of its GDP:
+much of what it exports is assembled from imported parts, and only the value added in Vietnam counts.
+
+\begin{omfigure}
+\begin{tikzpicture}[font=\small, box/.style={draw, rounded corners=2pt, minimum width=2.4cm, minimum height=0.9cm, align=center}, >={Stealth}]
+\node[box] (h) at (0,0) {households};
+\node[box] (f) at (7,0) {firms};
+\node[box] (g) at (3.5,1.9) {government};
+\node[box] (w) at (3.5,-1.9) {rest of the world};
+\draw[->, thick, omDef] (h.north east) to[bend left=12] node[above, font=\scriptsize, pos=0.5] {consumption $C$} (f.north west);
+\draw[->, thick, omThm] (f.west) to node[below, font=\scriptsize] {wages and profits} (h.east);
+\draw[->, thick, omProp] (g.east) to[bend left=10] node[above right, font=\scriptsize] {purchases $G$} (f.north);
+\draw[->, thick, gray] (h.north) to[bend left=10] node[above left, font=\scriptsize] {taxes} (g.west);
+\draw[->, thick, omMeth] (w.east) to[bend right=10] node[below right, font=\scriptsize] {exports $X$} (f.south);
+\draw[->, thick, omExo] (h.south) to[bend right=10] node[below left, font=\scriptsize] {imports $M$} (w.west);
+\draw[->, thick, omMeth] (f.east) arc[start angle=200, end angle=-110, radius=0.45] node[right, font=\scriptsize, pos=0.4, xshift=4pt] {investment $I$};
+\end{tikzpicture}
+
+{\small The circular flow of spending and income. Firms sell to households ($C$), to one another for new capital ($I$), to the government ($G$) and abroad ($X$),
+and pay all their value added out as wages and profits. Part of households' spending goes abroad ($M$), and the government pays for its purchases from taxes
+and borrowing.}
+\end{omfigure}
+
+\section{From GDP to national income}\label{sec:g10:national-accounts:gni}
+
+GDP counts what is produced inside a country, whoever owns the firms. Part of the income it creates leaves: the profits of foreign-owned firms, the wages of
+workers who live abroad. Other income comes in.
+
+\begin{definition}[Gross national income]\label{def:g10:national-accounts:gni}
+\emph{Gross national income}\index{gross national income} (GNI) is GDP plus the incomes that residents receive from abroad (wages, profits, interest) minus the
+incomes paid to non-residents.
+\end{definition}
+
+For most countries the two are close: in 2023 American GNI was 99.1\,\% of GDP and German GNI 103.2\,\%. For some they are far apart. Ireland's GNI was only
+74.5\,\% of its GDP, because many large foreign firms book their profits there and send them to their owners abroad. The Philippines' GNI was 111.0\,\% of its
+GDP: wages earned abroad by Filipino workers count as income received from abroad.
+% figdata: gni (USA 99.1, DEU 103.2, IRL 74.5, PHL 111.0)
+
+\begin{definition}[Depreciation of capital]\label{def:g10:national-accounts:depreciation}
+\emph{Depreciation (of capital)}\index{depreciation (of capital)}, which the accounts call consumption of fixed capital, is the value of the buildings, machines
+and software worn out or made obsolete during the year. GDP minus depreciation is the \emph{net} domestic product.
+\end{definition}
+
+The ``gross'' in GDP means that depreciation has not been taken out. A country that produces a lot but lets its roads and factories wear out without replacing
+them has a high GDP and a lower net product.
+
+\section{Nominal GDP, real GDP and the deflator}\label{sec:g10:national-accounts:deflator}
+
+\begin{definition}[Nominal GDP and the GDP deflator]\label{def:g10:national-accounts:nominal-gdp}
+\emph{Nominal GDP}\index{nominal GDP} values each year's production at that year's prices. The \emph{GDP deflator}\index{GDP deflator} is $100 \times$ nominal GDP
+$/$ real GDP: an index of the prices of everything produced, equal to 100 in the base year.
+\end{definition}
+\phantomsection\label{def:g10:national-accounts:deflator}
+
+\begin{omchart}{Brenland's GDP at current prices (nominal) and at 2015 prices (real), 2000--2025, in millions of dalens.}{Brenland national accounts (invented
+data)}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.84\linewidth, height=5.6cm, xmin=1999, xmax=2026, ymin=100000, ymax=420000, ylabel={millions of dalens},
+  scaled y ticks=false, yticklabel style={/pgf/number format/fixed, /pgf/number format/1000 sep={\,}}, xtick={2000,2005,...,2025}, legend pos=north west]
+\addplot[omDef, thick] table[x=year, y=gdp] {figdata/grade-10/11-national-accounts/out/brenland.csv}; \addlegendentry{nominal GDP}
+\addplot[omThm, thick, dashed] table[x=year, y=real_gdp] {figdata/grade-10/11-national-accounts/out/brenland.csv}; \addlegendentry{real GDP (2015 prices)}
+\draw[guide] (axis cs:2015,100000) -- (axis cs:2015,248438);
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+The two lines cross in 2015, the base year, where both equal \num{248438} million dalens. Before 2015 prices were lower than in 2015, so \omterm{def:g10:national-accounts:nominal-gdp}{nominal GDP} is below real
+GDP; after, it is above. Between 2024 and 2025, \omterm{def:g10:national-accounts:nominal-gdp}{nominal GDP} grew from \num{379562} to \num{393264} million dalens, by 3.61\,\%; real GDP grew from \num{286895} to
+\num{292390} million, by 1.92\,\%; and the deflator went from 132.3 to 134.5, a rise of 1.66\,\%. The three are linked: $1.0361 \approx 1.0192 \times 1.0166$.
+% figdata: brenland (2015 248438); bren_2025 (gdp_24 379562, gdp_25 393264, real_gdp 286895, 292390, deflator 132.3, 134.5; g_nom 3.61, g_real 1.92, g_defl 1.66)
+
+\begin{proposition}[Nominal growth splits into real growth and inflation]\label{prop:g10:national-accounts:split}
+If \omterm{def:g10:national-accounts:nominal-gdp}{nominal GDP} grows by a factor $1 + n$, real GDP by $1 + g$ and the deflator by $1 + \pi$, then $1 + n = (1 + g)(1 + \pi)$, and $n \approx g + \pi$ when the rates
+are small.
+\end{proposition}
+\begin{proof}
+\omterm{def:g10:national-accounts:nominal-gdp}{Nominal GDP} $=$ real GDP $\times$ deflator$/100$, in each year. Dividing this year's equation by last year's gives $1 + n = (1 + g)(1 + \pi)$. Expanding, $n = g + \pi
++ g\pi$, and $g\pi$ is small when both rates are small (for 2\,\% and 2\,\%, it is 0.04\,\%).
+\end{proof}
+
+\section{Comparisons and limits}\label{sec:g10:national-accounts:limits}
+
+Comparing GDP across countries needs one more step, which the grades 6--9 volume introduced: converting at purchasing-power parity, so that a haircut in Nairobi
+and one in Berlin count as the same quantity of haircuts. Even then, several things lie outside or at the edge of the measure.
+
+\begin{definition}[Non-market production]\label{def:g10:national-accounts:non-market}
+\emph{Non-market production}\index{non-market production} is production that is not sold at a price that covers its cost: public schools, hospitals in many
+countries, the police, the courts, and the services of non-profit bodies.
+\end{definition}
+
+\begin{measure}[Non-market production: valued at its cost]
+A public school's lessons have no price, so the accounts value them at what they cost to produce: the teachers' wages, the materials, the wear of the buildings.
+Two consequences follow. A rise in teachers' pay raises measured GDP even if pupils learn nothing more. And a reform that lets the same teachers teach better is
+not counted at all. Statistical offices are working on measures of the output itself, such as pupils taught or patients treated, but cost remains the usual
+yardstick.
+\end{measure}
+
+\begin{itemize}
+\item \textbf{Work at home.} Cooking, cleaning and caring for children or parents within the family are not sold and are left out. If a family starts buying its
+  meals instead of cooking them, measured GDP rises although nothing more is eaten.
+\item \textbf{The informal economy.} Small trades paid in cash and never declared are estimated, but poorly; in many poor countries they are a large share of
+  activity.
+\item \textbf{Quality and new goods.} A phone of 2025 does things that no phone of 2005 could do, and a new
+  good has no price in the years before it exists; \cref{ch:g10:price-indices} returns to
+  this.
+\item \textbf{Distribution.} GDP per person is a mean. It says nothing about how income is shared; grade 11 measures that.
+\item \textbf{Free goods.} Search engines and maps, valued so highly in \cref{ch:g10:surplus-and-efficiency}, add almost nothing to GDP.
+\end{itemize}
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g10:national-accounts:1}
+Read the opening chart. In which country is consumption the largest share of GDP, and in which is \omterm{def:g10:national-accounts:investment}{investment} the largest? Which countries have negative \omterm{def:g10:national-accounts:net-exports}{net exports}?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:national-accounts:2}
+From the opening chart, compare China and the United States: by how many points of GDP does China's \omterm{def:g10:national-accounts:investment}{investment} share exceed the American one, and by how many does
+its consumption share fall short?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:national-accounts:3}
+An economy has $C = 600$, $I = 200$, $G = 250$, $X = 300$ and $M = 350$. Compute GDP and \omterm{def:g10:national-accounts:net-exports}{net exports}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:national-accounts:4}
+A forest sells timber to a sawmill for 40, the sawmill sells planks to a furniture maker for 70, who sells tables to households for 150. Compute each firm's value
+added and GDP.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:national-accounts:5}
+A country's GDP is 800. Its residents receive 30 of income from abroad and pay 70 to non-residents. Compute its GNI.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:national-accounts:6}
+\omterm{def:g10:national-accounts:nominal-gdp}{Nominal GDP} is 500 in year 1 and 540 in year 2; real GDP is 500 and 515. Compute the deflator in each year (base year 1) and its rate of increase.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:national-accounts:7}
+Brenland's \omterm{def:g10:national-accounts:nominal-gdp}{nominal GDP} was \num{152000} million dalens in 2000 and its real GDP \num{197403} million. Compute the deflator in 2000 and compare with 134.5 in 2025. By
+what percentage did the prices of what Brenland produces rise over the 25 years?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:national-accounts:8}
+\omterm{def:g10:national-accounts:nominal-gdp}{Nominal GDP} grows by 7\,\% and the deflator by 4\,\%. Compute real growth exactly and with the approximation of \cref{prop:g10:national-accounts:split}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:national-accounts:9}
+GDP is \num{1000} and depreciation 150. Compute the net domestic product. Why can a country's GDP grow while its net product does not?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:national-accounts:10}
+A family that bought 1200 dalens of food a year from farms and cooked it at home now buys ready meals worth 3000 dalens from a shop, which buys the same 1200
+dalens of food from the farms. By how much does measured GDP change? Has the family's consumption of food changed?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:national-accounts:11}
+In which of these cases does Brenland's GDP change, and in which component: (a) a household buys a new car made in Kestria; (b) a firm builds a new warehouse; (c)
+the government raises pensions; (d) a household buys a house built in 1990; (e) a firm's unsold stock of shoes rises by 500 pairs.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:national-accounts:12}
+In the opening chart, the four shares add to 102.9 for Vietnam and 97.9 for Kenya. Explain how this can happen when \cref{prop:g10:national-accounts:three} says the
+totals must agree, and what it says about the accuracy of each share.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:national-accounts:13}
+A deflator is 100, 103, 105, 110 and 112 in five successive years. Compute the inflation of each year, and check that chaining the four yearly factors gives the rise
+over the whole period.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:national-accounts:14}
+An economy produces bread, sold for 400, and public schooling, which costs 150 in teachers' wages and 30 in materials bought from firms. Compute GDP. The teachers get a
+10\,\% pay rise and teach exactly as before: what happens to measured GDP?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:national-accounts:15}
+A firm imports parts for 70 and sells the assembled machine abroad for 100. Show that the expenditure method, with imports subtracted, and the production method give the
+same contribution to GDP.
+\end{exercise}
+
+\section{Problem: Brenland's Accounts for 2025}
+
+\begin{problem}[{Weekend problem --- the identity, growth, prices and income per person}]
+\label{pb:g10:national-accounts:1}
+Brenland's national accounts give, in millions of dalens at current prices:
+\begin{center}
+\small
+\begin{tabular}{l r r r r r r r r}
+\toprule
+year & $C$ & $I$ & $G$ & $X$ & $M$ & GDP & real GDP & population \\
+\midrule
+2024 & \num{219565} & \num{85401} & \num{75912} & \num{125104} & \num{126420} & \num{379562} & \num{286895} & \num{9235} \\
+2025 & \num{225014} & \num{88484} & \num{78653} & \num{129777} & \num{128664} & \num{393264} & \num{292390} & \num{9291} \\
+\bottomrule
+\end{tabular}
+\end{center}
+Real GDP is at 2015 prices; population is in thousands.
+% figdata: bren_2025
+
+\medskip
+\noindent\textbf{Part I --- The identity and the shares.}
+\begin{enumerate}
+\item Check that $C + I + G + X - M$ equals GDP in 2025.
+\item Compute the share of each of $C$, $I$, $G$, $X$ and $M$ in 2025 GDP.
+\item Compute \omterm{def:g10:national-accounts:net-exports}{net exports} in 2024 and 2025.
+\item Compute the nominal growth of each component between 2024 and 2025. Which grew fastest?
+\item Split the rise in \omterm{def:g10:national-accounts:nominal-gdp}{nominal GDP} between the components: how many millions of dalens did each add, with imports counted negatively?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Prices.}
+\begin{enumerate}[resume]
+\item Compute the nominal growth of GDP.
+\item Compute the real growth of GDP.
+\item Compute the deflator in 2024 and 2025.
+\item Compute the inflation of the deflator, and check \cref{prop:g10:national-accounts:split}.
+\item What share of nominal growth came from prices?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Per person.}
+\begin{enumerate}[resume]
+\item Compute the growth of the population.
+\item Compute real GDP per person in 2024 and 2025, in dalens.
+\item Compute the growth of real GDP per person, exactly and as real growth minus population growth.
+\item Compute \omterm{def:g10:national-accounts:nominal-gdp}{nominal GDP} per person in 2025.
+\item Real GDP was \num{248438} million in 2015. Compute the total real growth from 2015 to 2025 and the average annual rate.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Beyond GDP.}
+\begin{enumerate}[resume]
+\item Brenland's residents receive \num{4000} million dalens of income from abroad and pay \num{9000} million to non-residents. Compute GNI in 2025.
+\item Depreciation is 12\,\% of GDP. Compute the net domestic product in 2025.
+\item A survey finds that unpaid work at home would be worth a quarter of GDP if it were paid at market wages. By how much would GDP rise if it were counted?
+\item Would counting it change the growth rate from 2024 to 2025? What would you need to know?
+\item State the result of the problem: the real growth of GDP per person in 2025, and how much of nominal growth was prices.
+\end{enumerate}
+\end{problem}

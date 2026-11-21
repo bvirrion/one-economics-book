@@ -1,0 +1,304 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g12-11. Budget and primary balance; automatic stabilisers; the
+% debt-ratio recurrence and its limit; sustainability; Ricardian equivalence (first look); how large debts ended; fiscal rules
+% in a currency union. Real numbers: figdata/grade-12/11-fiscal-policy-and-debt/ (JST debtgdp, gdp, ltrate, cpi for GBR and
+% USA; Eurostat gov_10dd_edpt1 GD and B9). Ledger: TFEU Protocol 12 (3 % and 60 %), Parker et al. 2013 (abstract of the working
+% paper), Wikipedia on the Greek debt crisis (the 53.5 % face-value cut; second programme ratified February 2012). The
+% Reinhart-Rogoff table of how debts ended was not read: the chapter tells the exits through its own two records.
+\chapter{Fiscal Policy and Public Debt}\label{ch:g12:fiscal-policy-and-debt}
+
+In 1946 the British government owed 270\,\% of a year's national income. Thirty years later it owed 47\,\%. It did not repay most of its debt: in money, the debt grew.
+What fell was the debt as a share of a national income that grew much faster.
+% figdata: debt_key (uk1946 269.8, uk1975 46.7; nominal debt 1975 / 1946 = uk_nominal_ratio)
+
+This chapter is about a government's budget over time: how deficits add to debt, what makes a \omterm{def:g12:fiscal-policy-and-debt:debt-ratio}{debt ratio} rise or fall, when a debt can be carried, and how the largest
+debts of the past came down.
+
+\begin{openingchart}{Public debt as a percentage of GDP, United Kingdom and United States, 1870--2020.}{Jordà--Schularick--Taylor Macrohistory Database}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.9\linewidth, height=6.0cm, xmin=1870, xmax=2020, ymin=0, ymax=280, ytick={0,50,...,250}, ylabel={per cent of GDP},
+  xtick={1870,1890,...,2010}]
+\addplot[omDef, thick] table[x=year, y=gbr] {figdata/grade-12/11-fiscal-policy-and-debt/out/debt_long.csv};
+\addplot[omThm, thick] table[x=year, y=usa] {figdata/grade-12/11-fiscal-policy-and-debt/out/debt_long.csv};
+\node[font=\scriptsize, omDef, anchor=west] at (axis cs:1947,262) {United Kingdom};
+\node[font=\scriptsize, omThm, anchor=west] at (axis cs:1890,22) {United States};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: the government's budget, deficits and debt, and the ageing of populations. From \cref{ch:g12:present-value}: \omterm{def:g12:present-value:present-value}{present value}. From
+\cref{ch:g12:saving-and-investment}: \omterm{def:g12:saving-and-investment:crowding-out}{crowding out}. From \cref{ch:g12:keynesian-cross}: the multiplier. From mathematics: sequences of the form $u_{t+1} = a u_t + b$.
+\end{recall}
+
+\section{The budget balance}\label{sec:g12:fiscal-policy-and-debt:balance}
+
+\begin{definition}[Primary balance]\label{def:g12:fiscal-policy-and-debt:primary-balance}
+The \emph{primary balance}\index{primary balance} is government revenue minus government spending other than interest on the debt.
+\end{definition}
+
+The overall balance is the \omterm{def:g12:fiscal-policy-and-debt:primary-balance}{primary balance} minus interest. A government can run a primary surplus and an overall deficit at once, if its interest bill is large.
+
+\begin{definition}[Automatic stabiliser]\label{def:g12:fiscal-policy-and-debt:automatic-stabiliser}
+An \emph{automatic stabiliser}\index{automatic stabiliser} is a part of the budget that, without any new decision, takes in less or pays out more when output falls, such as
+taxes on income and profits or benefits for the unemployed.
+\end{definition}
+
+\begin{definition}[Structural balance]\label{def:g12:fiscal-policy-and-debt:structural-balance}
+The \emph{structural balance}\index{structural balance} is the budget balance the government would have if output were at potential: the actual balance with the effect of
+the cycle removed. Like \omterm{def:g12:aggregate-demand-and-supply:potential-output}{potential output}, it is estimated, not observed.
+\end{definition}
+
+In the euro area as a whole, the general government deficit went from 0.7\,\% of GDP in 2007 to 6.3\,\% in 2009, as tax receipts fell with output and spending on
+benefits and rescues rose.
+% figdata: debt_key (ea_b9_2007 -0.7, ea_b9_2009 -6.3)
+
+\section{How the debt ratio moves}\label{sec:g12:fiscal-policy-and-debt:dynamics}
+
+\begin{definition}[Debt ratio]\label{def:g12:fiscal-policy-and-debt:debt-ratio}
+The \emph{debt ratio}\index{debt ratio} is the government's debt divided by a year's GDP.
+\end{definition}
+
+\begin{proposition}[The debt recurrence]\label{prop:g12:fiscal-policy-and-debt:recurrence}
+Let $d_t$ be the \omterm{def:g12:fiscal-policy-and-debt:debt-ratio}{debt ratio}, $i$ the interest rate paid on the debt, $\gamma$ the growth rate of \omterm{def:g10:national-accounts:nominal-gdp}{nominal GDP} and $p$ the primary surplus as a share of GDP. Then
+\[ d_{t+1} = \frac{1 + i}{1 + \gamma}\, d_t - p. \]
+\end{proposition}
+\begin{proof}
+Debt next year is debt this year plus interest minus the primary surplus: $D_{t+1} = (1 + i) D_t - P_{t+1}$. Divide by $Y_{t+1} = (1 + \gamma) Y_t$:
+$d_{t+1} = (1 + i) D_t / ((1 + \gamma) Y_t) - P_{t+1}/Y_{t+1} = \frac{1 + i}{1 + \gamma} d_t - p$.
+\end{proof}
+
+Write $a = (1 + i)/(1 + \gamma)$. When the interest rate is below the growth rate, $a < 1$: the ratio shrinks by itself unless the government runs primary deficits. When
+it is above, $a > 1$: the ratio grows unless the government runs primary surpluses. The \omterm{def:g12:fiscal-policy-and-debt:primary-balance}{primary balance} that holds the ratio constant is $p = (a - 1) d = d\,(i -
+\gamma)/(1 + \gamma)$.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 1, horizontal sep=1.2cm}, width=0.47\linewidth, height=5.2cm, xmin=0, xmax=110, ymin=0, ymax=110,
+  xlabel={$d_t$}, tick label style={font=\scriptsize}, label style={font=\scriptsize}, xtick={0,40,100}, ytick={0,40,100}]
+\nextgroupplot[title={\scriptsize $a = 0.8$, primary deficit 8: converges}, ylabel={$d_{t+1}$}]
+\addplot[gray, domain=0:110, samples=2] {x};
+\addplot[omDef, thick, domain=0:110, samples=2] {0.8*x + 8};
+\addplot[omThm, thin] coordinates {(100,0) (100,88) (88,88) (88,78.4) (78.4,78.4) (78.4,70.72) (70.72,70.72) (70.72,64.58) (64.58,64.58) (64.58,59.66)};
+\fill (axis cs:40,40) circle (1.5pt);
+\nextgroupplot[title={\scriptsize $a = 1.2$, primary surplus 8: diverges}]
+\addplot[gray, domain=0:110, samples=2] {x};
+\addplot[omDef, thick, domain=0:110, samples=2] {1.2*x - 8};
+\addplot[omThm, thin] coordinates {(50,0) (50,52) (52,52) (52,54.4) (54.4,54.4) (54.4,57.28) (57.28,57.28) (57.28,60.74) (60.74,60.74) (60.74,64.88)};
+\fill (axis cs:40,40) circle (1.5pt);
+\end{groupplot}
+\end{tikzpicture}
+
+{\small The recurrence drawn step by step, with numbers exaggerated for the picture. Left: from a ratio of 100, each year moves up to the blue line and across to the grey
+line $d_{t+1} = d_t$; the ratio falls towards 40. Right: the resting point is again 40, but a ratio that starts at 50 moves away from it, faster each year.}
+\end{omfigure}
+
+\begin{definition}[Sustainable debt]\label{def:g12:fiscal-policy-and-debt:sustainable}
+A government's debt is \emph{sustainable}\index{sustainable debt} when the \omterm{def:g12:fiscal-policy-and-debt:primary-balance}{primary balances} it can be expected to run keep the \omterm{def:g12:fiscal-policy-and-debt:debt-ratio}{debt ratio} from rising without limit, without
+default or \omterm{def:g12:inflation-and-money:unexpected-inflation}{unexpected inflation}.
+\end{definition}
+
+\begin{model}{Debt dynamics}
+\assumes The recurrence (an identity) with given interest rate, growth rate and \omterm{def:g12:fiscal-policy-and-debt:primary-balance}{primary balance}.
+\predicts The path of the \omterm{def:g12:fiscal-policy-and-debt:debt-ratio}{debt ratio}; a stable ratio when $i < \gamma$, an explosive one when $i > \gamma$ unless primary surpluses offset it.
+\tested Consistent with it, as an accounting relation must be: the United Kingdom after 1945 and the United States after 1946, ratios above 100\,\% fell for thirty years with nominal growth above the interest rate (the opening chart
+  and the weekend problem).
+\breaks The interest rate depends on the debt: when lenders fear default, they ask for a higher rate, which raises $a$ and the debt it was meant to measure, as in Greece in
+  2010--12. Growth too may fall when the primary surplus is raised to stabilise the debt, through the multiplier.
+\end{model}
+
+\section{Do households look through the debt?}\label{sec:g12:fiscal-policy-and-debt:ricardian}
+
+\begin{definition}[Ricardian equivalence]\label{def:g12:fiscal-policy-and-debt:ricardian-equivalence}
+\emph{Ricardian equivalence}\index{Ricardian equivalence} is the proposition that, for given government spending, replacing taxes today by borrowing does not change
+households' consumption, because they save the tax cut to pay the future taxes that will repay the debt.
+\end{definition}
+
+\begin{model}{Ricardian equivalence}
+\assumes Households look ahead to future taxes, can borrow and lend freely, and care about the taxes their heirs will pay.
+\predicts A debt-financed tax cut or rebate is saved, not spent.
+\tested In 2008 American households received one-off stimulus payments. In the three months of receipt they spent about 12--30\,\% of the payments on nondurable goods, and about 50--90\,\% counting durables such as cars. Much of the money was spent, not saved.
+\breaks Households that cannot borrow, or do not look far ahead, spend a rebate; the proposition holds best for those who were already saving.
+\end{model}
+% ledger: g12:parker2013
+
+\section{How large debts ended}\label{sec:g12:fiscal-policy-and-debt:exits}
+
+The recurrence shows the four ways a \omterm{def:g12:fiscal-policy-and-debt:debt-ratio}{debt ratio} can come down: growth of real output, inflation, primary surpluses, and default, which cuts $D$ itself. A government that
+borrows in its own currency can always pay in money its central bank creates; the record of the hyperinflations in the grades 6--9 volume shows the price of that exit.
+
+\begin{record}[How the United Kingdom's debt fell after 1945]
+% figdata: uk_decomp (interest 189.5; real growth -104.8; inflation -192.2; other -115.7); debt_key (gamma_mean 9, i_mean 6.42)
+From 1946 to 1975 the British \omterm{def:g12:fiscal-policy-and-debt:debt-ratio}{debt ratio} fell from 269.8 to 46.7\,\% of GDP. \omterm{def:g10:national-accounts:nominal-gdp}{Nominal GDP} grew by 9.0\,\% a year on average and the long-term interest rate averaged 6.4\,\%.
+Year by year, the recurrence splits the fall of 223 points into interest, which added 190 points; real growth, which removed 105; inflation, which removed 192; and the
+rest, primary surpluses and the gap between the long-term rate and the rate actually paid on the debt, which removed 116. The weekend problem works through it.
+\end{record}
+
+\begin{definition}[Sovereign default]\label{def:g12:fiscal-policy-and-debt:default}
+A \emph{sovereign default}\index{sovereign default} is a government's failure to pay interest or principal on its debt as promised, including a forced exchange of its \omterm{def:g12:present-value:bond}{bonds}
+for \omterm{def:g12:present-value:bond}{bonds} worth less.
+\end{definition}
+
+\begin{record}[Greece 2010--12]
+% ledger: g12:greece-psi; figdata: debt_key (el_gd2008 110.9, el_b9_2009 -15.4, el_gd2011 175.1, el_gd2012 164.1)
+Greece's general government deficit reached 15.4\,\% of GDP in 2009, and its debt rose from 110.9\,\% of GDP in 2008 to 175.1\,\% in 2011. Lenders demanded higher rates, and the
+government borrowed from other euro-area governments and the IMF instead. The second rescue programme, ratified in February 2012, required private bondholders to accept a
+53.5\,\% reduction in the face value of their \omterm{def:g12:present-value:bond}{bonds}. The ratio fell to 164.1\,\% in 2012, then rose again, to 180.4\,\% in 2013.
+\end{record}
+
+\begin{definition}[Fiscal rule]\label{def:g12:fiscal-policy-and-debt:fiscal-rule}
+A \emph{fiscal rule}\index{fiscal rule} is a lasting limit on a budget figure, such as the deficit, the debt or spending, set in law.
+\end{definition}
+
+\begin{omchart}{General government gross debt, per cent of GDP, six euro-area countries, 2000--2025.}{Eurostat (gov\_10dd\_edpt1)}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.9\linewidth, height=5.6cm, xmin=2000, xmax=2025, ymin=0, ymax=220, ytick={0,60,100,150,200}, ylabel={per cent of GDP}]
+\addplot[gray, dashed, domain=2000:2025, samples=2] {60};
+\addplot[omDef, thick] table[x=year, y=EL] {figdata/grade-12/11-fiscal-policy-and-debt/out/debt_euro.csv};
+\addplot[omThm, thick] table[x=year, y=IT] {figdata/grade-12/11-fiscal-policy-and-debt/out/debt_euro.csv};
+\addplot[omProp, thick] table[x=year, y=FR] {figdata/grade-12/11-fiscal-policy-and-debt/out/debt_euro.csv};
+\addplot[omMeth, thick] table[x=year, y=ES] {figdata/grade-12/11-fiscal-policy-and-debt/out/debt_euro.csv};
+\addplot[black, thick] table[x=year, y=DE] {figdata/grade-12/11-fiscal-policy-and-debt/out/debt_euro.csv};
+\addplot[gray, thick] table[x=year, y=IE] {figdata/grade-12/11-fiscal-policy-and-debt/out/debt_euro.csv};
+\node[font=\scriptsize, omDef, anchor=south] at (axis cs:2018,186) {Greece};
+\node[font=\scriptsize, omThm, anchor=south] at (axis cs:2005,108) {Italy};
+\node[font=\scriptsize, omProp, anchor=west] at (axis cs:2022.3,118) {France};
+\node[font=\scriptsize, omMeth, anchor=north] at (axis cs:2004,40) {Spain};
+\node[font=\scriptsize, anchor=south] at (axis cs:2017,66) {Germany};
+\node[font=\scriptsize, gray, anchor=north] at (axis cs:2022,34) {Ireland};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\begin{record}[A fiscal rule in a currency union]
+% ledger: g12:tfeu-p12; figdata: debt_key (euro12_over3 124, euro12_obs 288, gd2025_*)
+The treaties of the European Union set reference values of 3\,\% of GDP for the government deficit and 60\,\% for the government debt. Among the twelve countries that have
+used the euro since 2002 or earlier, the deficit exceeded 3\,\% of GDP in 124 of the 288 country-years from 2002 to 2025, 43\,\%. In 2025 the debt was below 60\,\% in
+Ireland (34.8\,\%), close to it in Germany (62.8\,\%), and far above it in Spain (100.5\,\%), France (115.7\,\%), Italy (136.7\,\%) and Greece (145.4\,\%).
+\end{record}
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g12:fiscal-policy-and-debt:1}
+A government's deficit is 4\,\% of GDP, and its interest payments are 3\,\% of GDP. Find its \omterm{def:g12:fiscal-policy-and-debt:primary-balance}{primary balance}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:fiscal-policy-and-debt:2}
+Revenue is 40, spending other than interest 38 and interest 5, all in per cent of GDP. Find the \omterm{def:g12:fiscal-policy-and-debt:primary-balance}{primary balance} and the overall balance.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:fiscal-policy-and-debt:3}
+From the opening chart, when did the British \omterm{def:g12:fiscal-policy-and-debt:debt-ratio}{debt ratio} peak, and at what level? What was it in 1975?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:fiscal-policy-and-debt:4}
+From the opening chart, compare the American \omterm{def:g12:fiscal-policy-and-debt:debt-ratio}{debt ratio} in 1946 and in 2020.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:fiscal-policy-and-debt:5}
+The \omterm{def:g12:fiscal-policy-and-debt:debt-ratio}{debt ratio} is 60\,\%, the interest rate 4\,\% and nominal growth 3\,\%, with a balanced primary budget. Find next year's ratio.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:fiscal-policy-and-debt:6}
+From a ratio of 100\,\%, with $i = 2\,\%$, $\gamma = 5\,\%$ and a primary deficit of 1\,\% of GDP, find the ratio after one, two and three years.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:fiscal-policy-and-debt:7}
+From a ratio of 100\,\%, with $i = 6\,\%$, $\gamma = 3\,\%$ and a balanced primary budget, find the ratio after one, two and three years.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:fiscal-policy-and-debt:8}
+The ratio is 120\,\%, $i = 5\,\%$ and $\gamma = 3\,\%$. Find the \omterm{def:g12:fiscal-policy-and-debt:primary-balance}{primary balance} that keeps the ratio constant.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:fiscal-policy-and-debt:9}
+The ratio is 100\,\% and $\gamma = 4\,\%$. The interest rate rises from 3\,\% to 5\,\%. How does the stabilising \omterm{def:g12:fiscal-policy-and-debt:primary-balance}{primary balance} change?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:fiscal-policy-and-debt:10}
+From the chart of euro-area debt, which country's ratio rose most from 2007 to 2025, and which fell most after 2012? Use the record's values for 2025 and 2007 values of
+35.7\,\% (Spain), 65.5\,\% (France) and 24.0\,\% (Ireland).
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:fiscal-policy-and-debt:11}
+Tax receipts are 40\,\% of GDP and move in proportion to it, and benefits rise by 0.3\,\% of GDP when output falls by 3\,\%. By how much does the deficit widen, in per cent
+of GDP, with no new decision?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:fiscal-policy-and-debt:12}
+What evidence contradicts \omterm{def:g12:fiscal-policy-and-debt:ricardian-equivalence}{Ricardian equivalence}? Which assumption of the model does it point to?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:fiscal-policy-and-debt:13}
+Let $d^*$ satisfy $d^* = a d^* - p$, with $a \neq 1$. Show that $d_t - d^* = a^t (d_0 - d^*)$, and deduce when the ratio converges.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:fiscal-policy-and-debt:14}
+A government owes 100\,\% of GDP in long-term \omterm{def:g12:present-value:bond}{bonds} at a fixed rate. Prices rise by 10\,\% more than expected in one year, with real output unchanged. Ignoring interest and
+the \omterm{def:g12:fiscal-policy-and-debt:primary-balance}{primary balance}, what is the new ratio? Who loses?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:fiscal-policy-and-debt:15}
+A government owes 170\,\% of GDP, half of it to private bondholders, who accept a cut of 53.5\,\% in the face value of their \omterm{def:g12:present-value:bond}{bonds}. Find the new ratio. Why might it rise again
+afterwards?
+\end{exercise}
+
+\section{Problem: How the United Kingdom's Debt Ratio Fell, 1946--1975}
+
+\begin{problem}[{Weekend problem --- growth, inflation and surpluses}]
+\label{pb:g12:fiscal-policy-and-debt:1}
+From 1946 to 1975 the British \omterm{def:g12:fiscal-policy-and-debt:debt-ratio}{debt ratio} fell from 269.8\,\% to 46.7\,\% of GDP. Over 1947--1975, \omterm{def:g10:national-accounts:nominal-gdp}{nominal GDP} grew by 9.0\,\% a year on average, the long-term interest rate
+averaged 6.42\,\%, consumer price inflation 5.82\,\% and real growth 3.05\,\%. The table splits the change in the ratio, year by year with the recurrence, using the long-term
+rate as the interest rate on the debt (in percentage points of GDP, summed over the years; share of the fall in per cent, computed from unrounded
+values).
+
+\medskip
+\begin{center}
+\small
+\pgfplotstabletypeset[col sep=comma, columns={item,points,share},
+  columns/item/.style={string type, column name={contribution}, column type=l},
+  columns/points/.style={column name={points}, fixed, precision=1, zerofill},
+  columns/share/.style={column name={share of the fall}, fixed, precision=1, zerofill},
+  every head row/.style={before row=\toprule, after row=\midrule}, every last row/.style={after row=\bottomrule}]
+  {figdata/grade-12/11-fiscal-policy-and-debt/out/uk_decomp.csv}
+\end{center}
+
+\medskip
+\noindent\textbf{Part I --- The averages.}
+\begin{enumerate}
+\item By how many points did the ratio fall?
+\item Check that real growth and inflation roughly account for nominal growth.
+\item With a ratio of 270\,\%, $i = 3\,\%$ and $\gamma = 9\,\%$, find next year's ratio with a balanced primary budget.
+\item In the same year, what \omterm{def:g12:fiscal-policy-and-debt:primary-balance}{primary balance} would have kept the ratio constant?
+\item Was the interest rate above or below nominal growth on average? What does the recurrence then predict?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The decomposition.}
+\begin{enumerate}[resume]
+\item How many points did interest add?
+\item How many points did real growth and inflation remove?
+\item Find the net effect of nominal growth over the interest rate, in points.
+\item Find its share of the fall.
+\item What is in the row ``other''? Find its share.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Reading it.}
+\begin{enumerate}[resume]
+\item Inflation removed more than real growth. Why does inflation lower the ratio of a debt with fixed interest rates?
+\item Who bore that part of the cost?
+\item Why is the long-term rate only an approximation of the rate paid on the debt?
+\item The long rate rose from 2.6\,\% in 1946 to 14.6\,\% in 1975. Why might lenders have asked for more as the period went on?
+\item From the opening chart, the American ratio fell from 118.9\,\% in 1946 to 33.6\,\% in 1975. Find the fall in points.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Lessons.}
+\begin{enumerate}[resume]
+\item Which of the four exits did this record use, and which not?
+\item Which exit did Greece use in 2012?
+\item With $i$ below $\gamma$, can a government run primary deficits for ever without the ratio exploding? Use the recurrence.
+\item Why does the record not show that the same fall could be repeated with low inflation?
+\item State the result of the problem: the share of the fall due to nominal growth above the interest rate.
+\end{enumerate}
+\end{problem}

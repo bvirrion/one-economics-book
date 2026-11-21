@@ -1,0 +1,5 @@
+$ python weights.py
+true mean 24,920
+unweighted 26,475; weighted 24,822
+weights: {0: 9.12, 1: 4.21}
+design effect 1.135; effective sample size 264

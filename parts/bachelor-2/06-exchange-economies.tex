@@ -1,0 +1,593 @@
+\chapter{Exchange Economies}\label{ch:b2:exchange-economies}
+
+In 1962 a group of students traded an imaginary good in a classroom. Each buyer held a card with the
+% ledger: b2:smith1962-t1
+highest price she could pay, each seller a card with the lowest price he could accept, and anyone could
+call out a bid or an offer at any moment. No one knew the others' cards, and no one computed an
+equilibrium. Yet the predicted price, the one at which the supply built from the sellers' cards met the
+demand built from the buyers', was \usd{2.00} in the first market, and the average contract price went from
+\usd{1.80} in the first trading period to \usd{2.03} in the fifth. The chart shows six of the markets Smith ran:
+each line is the average contract price of a trading period, as a percentage of the predicted price.
+
+\begin{openingchart}{Average contract price in each trading period, as a percentage of the competitive
+  price predicted from the buyers' and sellers' reservation prices, in six laboratory markets (tests 1,
+  4A, 6A, 7, 9A and 10). The dashed line is the prediction.}{Smith (1962), Journal of Political
+  Economy, Table~1}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, ymajorgrids, xmin=0.7, xmax=6.3, ymin=40, ymax=120, xtick={1,...,6},
+    xlabel={Trading period}, ylabel={Average price, per cent of predicted}, unbounded coords=jump,
+    width=0.8\linewidth, height=0.5\linewidth, legend columns=3,
+    legend style={at={(0.5,-0.22)}, anchor=north, font=\footnotesize}]
+  \addplot[omDef, thick, mark=*] table[x=period, y=T1_ratio]
+    {figdata/bachelor-2/06-exchange-economies/out/smith_wide.csv};
+  \addplot[omThm, thick, mark=square*] table[x=period, y=T4A_ratio]
+    {figdata/bachelor-2/06-exchange-economies/out/smith_wide.csv};
+  \addplot[omExo, thick, mark=triangle*] table[x=period, y=T6A_ratio]
+    {figdata/bachelor-2/06-exchange-economies/out/smith_wide.csv};
+  \addplot[black, thick, mark=diamond*] table[x=period, y=T7_ratio]
+    {figdata/bachelor-2/06-exchange-economies/out/smith_wide.csv};
+  \addplot[black!50, thick, mark=o] table[x=period, y=T9A_ratio]
+    {figdata/bachelor-2/06-exchange-economies/out/smith_wide.csv};
+  \addplot[omDef!50, thick, densely dotted, mark=x] table[x=period, y=T10_ratio]
+    {figdata/bachelor-2/06-exchange-economies/out/smith_wide.csv};
+  \legend{Test 1, Test 4A, Test 6A, Test 7, Test 9A, Test 10}
+  \draw[black!70, dashed] (axis cs:0.7,100) -- (axis cs:6.3,100);
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: smith_summary (t6a_first 49.2, t6a_last 101.4, t4a_last 107.1, t9a_last 90.3, share_alpha_fell 100)
+Some markets opened far from the prediction: in test 6A the first period's average price was 49.2 per
+cent of it, and by the fourth 101.4 per cent. Others stayed off: test 4A ended 7.1 per cent above, test
+9A 9.7 per cent below. But in all ten tests that ran for three periods or more, prices clustered closer to
+the prediction in the last period than in the first. Those were single markets, studied with the
+partial-equilibrium tools of the Year 1 volume. An economy is many markets at once: what a household
+supplies in one pays for what it demands in another, and every price affects every demand. This chapter
+builds the simplest such economy, in which people only trade what they already have. It asks which
+\omterm{def:b2:exchange-economies:allocation}{allocations} cannot be improved on, which prices clear every market at once, and whether such prices
+exist, are unique and can be found by trading.
+
+\begin{recall}
+From the Year 1 volume: partial equilibrium in one market; consumer choice with a budget line, the
+marginal rate of substitution and the tangency condition; Cobb--Douglas demands, which spend a fixed
+share of income on each good. From \cref{ch:b2:insurance-and-risk-sharing}: Pareto efficiency of risk
+sharing.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:exchange-economies:symbols}
+Consumers are $i = A, B$ (or $i = 1, \dots, I$); goods $\ell = 1, 2$ (or $1, \dots, n$). Consumer $i$ has
+the \omterm{def:b2:exchange-economies:endowment}{endowment} $\omega_i = (\omega_{i1}, \omega_{i2})$ and consumes $x_i = (x_{i1}, x_{i2})$; $\bar\omega
+= \omega_A + \omega_B$ is the total \omterm{def:b2:exchange-economies:endowment}{endowment}. $u_i$ is a utility function and $\mathit{MRS}_i$ its
+marginal rate of substitution of good 2 for good 1, $(\partial u_i/\partial x_{i1})/(\partial
+u_i/\partial x_{i2})$. Prices are $p_1, p_2$; with good 2 as \omterm{def:b2:exchange-economies:numeraire}{numeraire}, $p = p_1/p_2$. $z_\ell(p)$ is the
+excess demand for good $\ell$. With Cobb--Douglas utilities, $a$ and $b$ are the shares of income that
+$A$ and $B$ spend on good 1.
+\end{notation}
+
+\section{The economy}\label{sec:b2:exchange-economies:economy}
+
+\begin{definition}[Exchange economy]\label{def:b2:exchange-economies:exchange-economy}
+An \emph{exchange economy}\index{exchange economy} consists of $I$ consumers and $n$ goods; each
+consumer has preferences over bundles $x_i \in \mathbb{R}^n_{+}$ and an \omterm{def:b2:exchange-economies:endowment}{endowment}. There is no
+production: the goods available are those the consumers hold.
+\end{definition}
+
+\begin{definition}[Endowment]\label{def:b2:exchange-economies:endowment}
+A consumer's \emph{endowment}\index{endowment} $\omega_i \in \mathbb{R}^n_{+}$ is the bundle she holds
+before any trade.
+\end{definition}
+
+\begin{definition}[Allocation]\label{def:b2:exchange-economies:allocation}
+An \emph{allocation}\index{allocation} is a list $x = (x_1, \dots, x_I)$ of bundles, one per consumer.
+\end{definition}
+
+\begin{definition}[Feasible allocation]\label{def:b2:exchange-economies:feasible}
+An \omterm{def:b2:exchange-economies:allocation}{allocation} is \emph{feasible}\index{feasible allocation} if $\sum_i x_i \le \sum_i \omega_i$, good by
+good: the economy does not consume more of any good than it has. It is \emph{non-wasteful} if equality
+holds.
+\end{definition}
+
+With two consumers and two goods, all non-wasteful \omterm{def:b2:exchange-economies:allocation}{allocations} fit in one picture.
+
+\begin{definition}[Edgeworth box]\label{def:b2:exchange-economies:edgeworth-box}
+The \emph{Edgeworth box}\index{Edgeworth box} of a two-consumer, two-good economy is the rectangle of
+width $\bar\omega_1$ and height $\bar\omega_2$. A point in it is a non-wasteful \omterm{def:b2:exchange-economies:allocation}{allocation}: measured from
+the bottom-left corner it is $A$'s bundle, measured from the top-right corner $B$'s.
+\end{definition}
+
+$A$'s indifference curves are drawn as usual from $A$'s origin; $B$'s are drawn from $B$'s origin, so
+they curve the other way and $B$ prefers points nearer the bottom-left. A budget line through the
+\omterm{def:b2:exchange-economies:endowment}{endowment} with slope $-p_1/p_2$ is a budget line for both consumers at once: every point on it is worth
+as much as the \omterm{def:b2:exchange-economies:endowment}{endowment}, for $A$ and therefore for $B$.
+
+The running example of this chapter has $\bar\omega = (10, 10)$, $\omega_A = (8, 2)$ and $\omega_B =
+(2, 8)$: $A$ is rich in good 1 and $B$ in good 2. Utilities are $u_A = \tfrac12\ln x_{A1} + \tfrac12\ln
+x_{A2}$ and $u_B = \tfrac23\ln x_{B1} + \tfrac13\ln x_{B2}$: $A$ spends half her income on each good, $B$
+two thirds of his on good 1.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, axis lines=box, xmin=0, xmax=10, ymin=0, ymax=10, xtick={0,2,4,6,8,10},
+    ytick={0,2,4,6,8,10}, xlabel={Good 1 held by $A$}, ylabel={Good 2 held by $A$},
+    width=0.6\linewidth, height=0.6\linewidth, clip=true]
+  \addplot[omDef, thick, domain=3.05:10, samples=60] {30.4511/x};
+  \addplot[omThm, thick, domain=0:9.2, samples=60] {10 - 98.9315/(10 - x)^2};
+  \addplot[black, thick, domain=1.5:9.47, samples=2] {2 - 1.357143*(x - 8)};
+  \node[eqpoint] at (axis cs:8,2) {};
+  \node[anchor=north east, font=\footnotesize] at (axis cs:8,2) {$\omega$};
+  \node[eqpoint] at (axis cs:4.737,6.429) {};
+  \node[anchor=south west, font=\footnotesize] at (axis cs:4.8,6.5) {$x^*$};
+  \node[anchor=west, font=\footnotesize, omDef] at (axis cs:6.6,4.0) {$u_A$};
+  \node[anchor=east, font=\footnotesize, omThm] at (axis cs:2.6,8.6) {$u_B$};
+  \node[anchor=east, font=\footnotesize] at (axis cs:8.9,0.5) {budget line};
+\end{axis}
+\node[anchor=north east, font=\footnotesize] at (current axis.north east) {$O_B$\,};
+\node[anchor=south west, font=\footnotesize] at (current axis.south west) {\,$O_A$};
+\end{tikzpicture}
+
+{\small The \omterm{def:b2:exchange-economies:edgeworth-box}{Edgeworth box} of the running example. $A$'s origin is at the bottom left, $B$'s at the top
+right. From the \omterm{def:b2:exchange-economies:endowment}{endowment} $\omega = (8, 2)$, the budget line at the equilibrium price $p = 19/14$ reaches
+the \omterm{def:b2:exchange-economies:allocation}{allocation} $x^*$, where an indifference curve of each consumer touches it.}
+\end{omfigure}
+
+\section{Pareto efficiency and the contract curve}\label{sec:b2:exchange-economies:pareto}
+
+\begin{definition}[Pareto-efficient allocation]\label{def:b2:exchange-economies:pareto-efficient}
+A \omterm{def:b2:exchange-economies:feasible}{feasible allocation} $x$ is \emph{Pareto-efficient}\index{Pareto-efficient allocation} if no \omterm{def:b2:exchange-economies:feasible}{feasible
+allocation} $x'$ makes every consumer at least as well off and at least one strictly better off:
+$u_i(x'_i) \ge u_i(x_i)$ for all $i$ with a strict inequality for some $i$.
+\end{definition}
+
+Efficiency says nothing about fairness: the \omterm{def:b2:exchange-economies:allocation}{allocation} that gives $A$ everything is efficient, since any
+change takes something from $A$. It is a test of waste, not a ranking of \omterm{def:b2:exchange-economies:allocation}{allocations}.
+
+\begin{proposition}[Tangency]\label{prop:b2:exchange-economies:tangency}
+Let $u_A$ and $u_B$ be differentiable, strictly increasing and strictly quasi-concave. An \omterm{def:b2:exchange-economies:allocation}{allocation} in
+the interior of the \omterm{def:b2:exchange-economies:edgeworth-box}{Edgeworth box} is \omterm{def:b2:exchange-economies:pareto-efficient}{Pareto-efficient} if and only if $\mathit{MRS}_A = \mathit{MRS}_B$
+there.
+\end{proposition}
+
+\begin{proof}
+If $\mathit{MRS}_A > \mathit{MRS}_B$, $A$ values good 1 more, in units of good 2, than $B$ does. Let $B$
+give $A$ a small amount $\varepsilon$ of good 1 against $t\varepsilon$ of good 2, with $\mathit{MRS}_B <
+t < \mathit{MRS}_A$. To first order $A$'s utility changes by $\varepsilon\,\partial_2 u_A\,
+(\mathit{MRS}_A - t) > 0$ and $B$'s by $\varepsilon\,\partial_2 u_B\,(t - \mathit{MRS}_B) > 0$: both gain,
+so the \omterm{def:b2:exchange-economies:allocation}{allocation} is not efficient. The case $\mathit{MRS}_A < \mathit{MRS}_B$ is symmetric. Conversely,
+if the rates are equal, the two indifference curves through the point are tangent; the set of bundles
+$A$ weakly prefers is convex and lies on one side of the common tangent, and the set $B$ weakly prefers,
+seen from the same corner, lies on the other side. Any point both weakly prefer lies on both sides, so it
+is the point itself (strict quasi-concavity rules out a second common point): no \omterm{def:b2:exchange-economies:feasible}{feasible allocation}
+improves on it.
+\end{proof}
+
+\begin{definition}[Contract curve]\label{def:b2:exchange-economies:contract-curve}
+The \emph{contract curve}\index{contract curve} is the set of \omterm{def:b2:exchange-economies:pareto-efficient}{Pareto-efficient allocations} in the
+\omterm{def:b2:exchange-economies:edgeworth-box}{Edgeworth box}.
+\end{definition}
+
+With Cobb--Douglas utilities the \omterm{def:b2:exchange-economies:contract-curve}{contract curve} has a closed form. $\mathit{MRS}_A = \frac{a}{1 - a}
+\frac{x_{A2}}{x_{A1}}$ and $\mathit{MRS}_B = \frac{b}{1 - b}\frac{\bar\omega_2 - x_{A2}}{\bar\omega_1 -
+x_{A1}}$; setting them equal and solving for $x_{A2}$,
+\begin{equation}\label{eq:b2:exchange-economies:contract}
+x_{A2} = \frac{b(1 - a)\,\bar\omega_2\,x_{A1}}{a(1 - b)(\bar\omega_1 - x_{A1}) + b(1 - a)\,x_{A1}} .
+\end{equation}
+It runs from one origin to the other. In the running example, $a = \tfrac12$ and $b = \tfrac23$, so $x_{A2}
+= 20x_{A1}/(10 + x_{A1})$. When $a = b$, the denominator is $a(1 - a)\bar\omega_1$ and the curve is the
+diagonal: consumers with the same shares consume goods in the same proportion at every efficient
+\omterm{def:b2:exchange-economies:allocation}{allocation}.
+
+At the \omterm{def:b2:exchange-economies:endowment}{endowment}, $\mathit{MRS}_A = 2/8 = 0.25$ and $\mathit{MRS}_B = 2 \times 8/2 = 8$: in units of good 2,
+% code: exercises/solutions.py text_example
+$B$ values good 1 at 32 times $A$'s valuation. There is a lot to trade. The \omterm{def:b2:exchange-economies:allocation}{allocations} both
+consumers weakly prefer to the \omterm{def:b2:exchange-economies:endowment}{endowment} form the lens between their two indifference curves through
+$\omega$, and the efficient ones among them are a piece of the \omterm{def:b2:exchange-economies:contract-curve}{contract curve}, from $x_{A1} = 3.26$ to
+$x_{A1} = 6.27$.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, axis lines=box, xmin=0, xmax=10, ymin=0, ymax=10, xtick={0,2,4,6,8,10},
+    ytick={0,2,4,6,8,10}, xlabel={Good 1 held by $A$}, ylabel={Good 2 held by $A$},
+    width=0.6\linewidth, height=0.6\linewidth, clip=true]
+  \addplot[guide, domain=0:10, samples=2] {x};
+  \addplot[black, very thick, domain=0:10, samples=60] {20*x/(10 + x)};
+  \addplot[omDef, thick, domain=1.6:10, samples=60] {16/x};
+  \addplot[omThm, thick, domain=0:8.2, samples=60] {10 - 32/(10 - x)^2};
+  \addplot[omExo, line width=2.5pt, domain=3.257:6.266, samples=40] {20*x/(10 + x)};
+  \node[eqpoint] at (axis cs:8,2) {};
+  \node[anchor=north west, font=\footnotesize] at (axis cs:8,2) {$\omega$};
+  \node[anchor=south, font=\footnotesize] (cc) at (axis cs:6.0,9.25) {contract curve};
+  \draw[->, black!70] (cc.east) -- (axis cs:7.45,8.65);
+  \node[anchor=south east, font=\footnotesize, omExo] at (axis cs:4.3,6.6) {core};
+  \node[anchor=south west, font=\footnotesize, black!60] at (axis cs:1.2,1.6) {diagonal};
+\end{axis}
+\end{tikzpicture}
+
+{\small The \omterm{def:b2:exchange-economies:contract-curve}{contract curve} of the running example, $x_{A2} = 20x_{A1}/(10 + x_{A1})$, lies above the
+diagonal because $B$ spends more of his income on good 1 than $A$ does. The two indifference curves
+through $\omega$ enclose the \omterm{def:b2:exchange-economies:allocation}{allocations} both prefer to the \omterm{def:b2:exchange-economies:endowment}{endowment}; the thick piece of the \omterm{def:b2:exchange-economies:contract-curve}{contract
+curve} inside them is the \omterm{def:b2:exchange-economies:core}{core} of the economy (\cref{sec:b2:exchange-economies:several}).}
+\end{omfigure}
+
+\section{Competitive equilibrium}\label{sec:b2:exchange-economies:equilibrium}
+
+Each consumer takes prices as given and sells her \omterm{def:b2:exchange-economies:endowment}{endowment} at those prices to buy her preferred bundle.
+Her budget set is $\{x_i \ge 0 : p_1x_{i1} + p_2x_{i2} \le p_1\omega_{i1} + p_2\omega_{i2}\}$ and her
+demand $x_i(p_1, p_2)$ is the best bundle in it.
+
+\begin{definition}[Excess demand function]\label{def:b2:exchange-economies:excess-demand}
+The \emph{excess demand function}\index{excess demand function} for good $\ell$ is $z_\ell(p_1, \dots,
+p_n) = \sum_i x_{i\ell}(p_1, \dots, p_n) - \sum_i \omega_{i\ell}$: the total quantity demanded minus the
+total quantity available.
+\end{definition}
+
+\begin{definition}[Competitive equilibrium]\label{def:b2:exchange-economies:competitive-equilibrium}
+A \emph{competitive equilibrium}\index{competitive equilibrium (general)} of an \omterm{def:b2:exchange-economies:exchange-economy}{exchange economy} is a
+price vector $p^* \gg 0$ and an \omterm{def:b2:exchange-economies:allocation}{allocation} $x^*$ such that each $x^*_i$ is consumer $i$'s demand at
+$p^*$, and every market clears: $z_\ell(p^*) = 0$ for every good $\ell$.
+\end{definition}
+
+The Year 1 volume found the equilibrium of one market, taking the prices of all other goods as fixed.
+Here every price is determined together, since a consumer's income is the value of her \omterm{def:b2:exchange-economies:endowment}{endowment} and
+changes with every price.
+
+\begin{definition}[Walras' law]\label{def:b2:exchange-economies:walras-law}
+\emph{Walras' law}\index{Walras' law} is the identity $\sum_\ell p_\ell\,z_\ell(p) = 0$ for every price
+vector $p$: the value of total excess demand is zero, whether or not markets clear.
+\end{definition}
+
+\begin{proposition}[Walras' law holds]\label{prop:b2:exchange-economies:walras}
+If every consumer's preferences are locally non-satiated, so that each spends her whole income,
+\omterm{def:b2:exchange-economies:walras-law}{Walras' law} holds. Hence if all markets but one clear at prices $p \gg 0$, the last clears too.
+\end{proposition}
+
+\begin{proof}
+Each consumer's budget binds: $\sum_\ell p_\ell x_{i\ell}(p) = \sum_\ell p_\ell \omega_{i\ell}$, that is
+$\sum_\ell p_\ell (x_{i\ell}(p) - \omega_{i\ell}) = 0$. Summing over $i$ gives $\sum_\ell p_\ell
+z_\ell(p) = 0$. If $z_\ell(p) = 0$ for $\ell = 1, \dots, n - 1$, then $p_n z_n(p) = 0$ and, as $p_n > 0$,
+$z_n(p) = 0$.
+\end{proof}
+
+Demands depend only on relative prices: multiplying every price by $t > 0$ multiplies each income by $t$
+and leaves every budget set unchanged. So excess demand is homogeneous of degree zero, and one price can
+be fixed.
+
+\begin{definition}[Numeraire]\label{def:b2:exchange-economies:numeraire}
+A \emph{numeraire}\index{numeraire} is a good whose price is set to one; every other price is then
+measured in units of it.
+\end{definition}
+
+With $n$ goods there are $n - 1$ relative prices to find, and by \omterm{def:b2:exchange-economies:walras-law}{Walras' law} only $n - 1$ market-clearing
+conditions to impose. With two goods and good 2 as \omterm{def:b2:exchange-economies:numeraire}{numeraire}, one equation in one unknown $p = p_1/p_2$:
+$z_1(p) = 0$.
+
+\begin{example}[The running example]\label{ex:b2:exchange-economies:running}
+A Cobb--Douglas consumer spends the share $a$ of her income $p\omega_{A1} + \omega_{A2}$ on good 1, so
+$x_{A1} = a(p\omega_{A1} + \omega_{A2})/p$. Market clearing for good 1, multiplied by $p$, reads
+$a(p\omega_{A1} + \omega_{A2}) + b(p\omega_{B1} + \omega_{B2}) = p\bar\omega_1$, so
+\[
+p^* = \frac{a\,\omega_{A2} + b\,\omega_{B2}}{(1 - a)\,\omega_{A1} + (1 - b)\,\omega_{B1}}
+= \frac{\tfrac12 \times 2 + \tfrac23 \times 8}{\tfrac12 \times 8 + \tfrac13 \times 2} =
+\frac{19/3}{14/3} = \frac{19}{14} = 1.357 .
+\]
+% code: exercises/solutions.py text_example
+$A$'s income is $1.357 \times 8 + 2 = 12.857$; she buys $x_{A1} = 0.5 \times 12.857/1.357 = 4.737$ and
+$x_{A2} = 6.429$. $B$'s income is $1.357 \times 2 + 8 = 10.714$; he buys $x_{B1} = \tfrac23 \times
+10.714/1.357 = 5.263$ and $x_{B2} = 3.571$. Both markets clear: $4.737 + 5.263 = 10$ and $6.429 + 3.571 =
+10$, the second by \omterm{def:b2:exchange-economies:walras-law}{Walras' law}. The \omterm{def:b2:exchange-economies:allocation}{allocation} satisfies \eqref{eq:b2:exchange-economies:contract}:
+$20 \times 4.737/14.737 = 6.429$.
+\end{example}
+
+The equilibrium lies on the \omterm{def:b2:exchange-economies:contract-curve}{contract curve}, as \cref{ch:b2:welfare-theorems} will prove in general: at
+an interior equilibrium each consumer sets her $\mathit{MRS}$ equal to the same price ratio, so the two
+rates are equal. It lies inside the lens, since each consumer could have kept her \omterm{def:b2:exchange-economies:endowment}{endowment}.
+
+Equilibrium can also be read from the box with \emph{offer curves}. $A$'s offer curve is the set of her
+demands as $p$ varies, drawn from her origin; $B$'s likewise. Every point of an offer curve is on a
+budget line through $\omega$, and an equilibrium is a point where the two curves meet away from $\omega$:
+there both consumers demand the same \omterm{def:b2:exchange-economies:allocation}{allocation} at the same price.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, axis lines=box, xmin=0, xmax=10, ymin=0, ymax=10, xtick={0,2,4,6,8,10},
+    ytick={0,2,4,6,8,10}, xlabel={Good 1 held by $A$}, ylabel={Good 2 held by $A$},
+    width=0.6\linewidth, height=0.6\linewidth, clip=true]
+  \addplot[omDef, thick, domain=0.2:8, samples=120, variable=\t] ({0.5*(8*\t + 2)/\t}, {0.5*(8*\t + 2)});
+  \addplot[omThm, thick, domain=0.12:8, samples=120, variable=\t]
+    ({10 - (2/3)*(2*\t + 8)/\t}, {10 - (1/3)*(2*\t + 8)});
+  \addplot[black, domain=2.7:9.47, samples=2] {2 - 1.357143*(x - 8)};
+  \node[eqpoint] at (axis cs:8,2) {};
+  \node[anchor=north east, font=\footnotesize] at (axis cs:8,2) {$\omega$};
+  \node[eqpoint] at (axis cs:4.737,6.429) {};
+  \node[anchor=south west, font=\footnotesize] at (axis cs:4.8,6.5) {$x^*$};
+  \node[anchor=west, font=\footnotesize, omDef] at (axis cs:5.0,9.0) {$A$'s offer curve};
+  \node[anchor=south west, font=\footnotesize, omThm] at (axis cs:0.4,7.2) {$B$'s offer curve};
+\end{axis}
+\end{tikzpicture}
+
+{\small Offer curves of the running example. As $p$ rises, $A$, who owns good 1, becomes richer and
+moves up her curve; $B$'s curve is traced from his corner. Both curves pass through $\omega$, but at
+different prices ($A$ chooses not to trade at $p = 0.25$, $B$ at $p = 8$), so that meeting is not an
+equilibrium. They meet again at $x^*$, on the budget line of slope $-19/14$, where both demand the same
+\omterm{def:b2:exchange-economies:allocation}{allocation} at the same price.}
+\end{omfigure}
+
+\begin{record}[Markets in the laboratory]
+Smith (1962) ran ten classroom markets of this kind, in which buyers and sellers held private
+% ledger: b2:smith1962-t6a, b2:smith1962-t7
+reservation prices and traded by open outcry. He measured each period's dispersion around the predicted
+price by a \emph{coefficient of convergence}, $\alpha = 100\,\sigma_0/P_0$, where $\sigma_0$ is the
+root mean square deviation of contract prices from the predicted price $P_0$. In test 6A, $\alpha$ fell
+from 53.8 in the first period to 9.4 in the fourth; in test 7, from 49.1 to 2.7 over six periods. In all
+% figdata: smith_summary (share_alpha_fell 100)
+ten tests with three or more periods it was lower in the last period than in the first. Quantities
+% ledger: b2:smith1962-t1
+traded were close to the prediction from the start: five, five, five, seven and six units against a
+predicted six in test 1. Each market was run within one class period, with the students of one class
+as its traders: far from the large numbers that justify price taking in theory.
+\end{record}
+
+\section{Existence}\label{sec:b2:exchange-economies:existence}
+
+A \omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium} need not exist: if a consumer's demand jumps as prices change, excess demand
+can jump over zero. Two conditions are enough.
+
+\begin{theorem}[Existence of a competitive equilibrium]\label{thm:b2:exchange-economies:existence}
+Suppose every consumer has a positive \omterm{def:b2:exchange-economies:endowment}{endowment} of every good, and continuous, strictly increasing and
+strictly quasi-concave preferences. Then the \omterm{def:b2:exchange-economies:exchange-economy}{exchange economy} has a \omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium}.
+\end{theorem}
+
+\admitted
+
+The general proof uses a fixed-point theorem: the map that raises the prices of goods in excess demand
+and lowers the others, normalised so that prices sum to one, is continuous on the simplex and has a
+fixed point, at which no market is in excess demand. With two goods the intermediate value theorem is
+enough, and the two conditions of the theorem show where they are used.
+
+\begin{proposition}[Two goods]\label{prop:b2:exchange-economies:two-goods}
+With two goods and the assumptions of \cref{thm:b2:exchange-economies:existence}, $z_1(p)$ is continuous on
+$(0, \infty)$, positive for $p$ small enough and negative for $p$ large enough. Hence it is zero at some
+$p^* > 0$, and by \omterm{def:b2:exchange-economies:walras-law}{Walras' law} both markets clear there.
+\end{proposition}
+
+\begin{proof}
+Continuity of preferences and strict quasi-concavity make each demand a continuous function of $p$
+(admitted from the theory of the consumer). As $p \to 0$, good 1 becomes free while every consumer's
+income stays at least $\omega_{i2} > 0$; a consumer with strictly increasing preferences then demands
+more good 1 than any bound, and $z_1(p) \to +\infty$. By the same argument with the roles of the goods
+swapped, $z_2(p) \to +\infty$ as $p \to \infty$, and \omterm{def:b2:exchange-economies:walras-law}{Walras' law} $pz_1 + z_2 = 0$ gives $z_1(p) < 0$ for
+$p$ large. The intermediate value theorem gives a zero.
+\end{proof}
+
+The conditions matter. Without continuity, demand can jump past the total \omterm{def:b2:exchange-economies:endowment}{endowment}. Without positive
+\omterm{def:b2:exchange-economies:endowment}{endowments}, a consumer who owns only good 1 has no income when $p \to 0$, and her demand need not grow:
+excess demand can stay negative all the way down.
+
+\section{Several equilibria and stability}\label{sec:b2:exchange-economies:several}
+
+Nothing in the assumptions makes the equilibrium unique. Take $u_A = x_{A1} - \tfrac18 x_{A2}^{-8}$ and
+$u_B = -\tfrac18 x_{B1}^{-8} + x_{B2}$, with $\omega_A = (2, r)$ and $\omega_B = (r, 2)$, where $r =
+% code: exercises/solutions.py three
+2^{8/9} - 2^{1/9} = 0.7717$. $A$ cares about good 2 only up to a point, $B$ about good 1 only up to a
+point. The tangency conditions give $x_{A2} = p^{1/9}$ and $x_{B1} = p^{-1/9}$; $A$ spends the rest of
+her income on good 1, $x_{A1} = 2 + (r - p^{1/9})/p$. So
+\[
+z_1(p) = \frac{r - p^{1/9}}{p} + p^{-1/9} - r ,
+\]
+and $z_1(\tfrac12) = z_1(1) = z_1(2) = 0$ (\cref{exo:b2:exchange-economies:11}): three equilibria.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmode=log, log ticks with fixed point, xmin=0.35, xmax=3.5,
+    ymin=-7, ymax=12, xtick={0.5,1,2}, ytick={-5,0,5,10}, xlabel={Relative price $p = p_1/p_2$
+    (log scale)}, ylabel={$1000 \times z_1(p)$}, width=0.62\linewidth, height=0.45\linewidth]
+  \addplot[guide, domain=0.35:3.5, samples=2] {0};
+  \addplot[omDef, very thick, domain=0.35:3.5, samples=150]
+    {1000*((0.7716897 - x^(1/9))/x + x^(-1/9) - 0.7716897)};
+  \node[eqpoint] at (axis cs:0.5,0) {};
+  \node[eqpoint] at (axis cs:1,0) {};
+  \node[eqpoint] at (axis cs:2,0) {};
+  \node[anchor=north east, font=\footnotesize] at (axis cs:0.49,-0.6) {stable};
+  \node[anchor=south, font=\footnotesize] at (axis cs:1,0.6) {unstable};
+  \node[anchor=south, font=\footnotesize] at (axis cs:2,0.6) {stable};
+\end{axis}
+\end{tikzpicture}
+
+{\small Excess demand for good 1 in an economy with three equilibria, $p = \tfrac12$, $1$ and $2$ (in
+thousandths of a unit, since the swings are small). Where $z_1$ crosses zero from above, a price that
+rises with excess demand returns to the equilibrium; where it crosses from below, it moves away.}
+\end{omfigure}
+
+Which equilibrium would a market reach? Imagine an auctioneer who calls out prices, collects demands
+without letting anyone trade, and raises the price of a good in excess demand: \emph{tâtonnement}
+(groping), $\dot p = k\,z_1(p)$ with $k > 0$. An equilibrium is \emph{locally stable} under this process if
+prices that start near it converge to it, which with two goods happens exactly when $z_1$ is decreasing
+there. In the example, $p = \tfrac12$ and $p = 2$ are stable and $p = 1$ is not. The listing runs the
+process from seven starting prices.
+
+\omcode{code/bachelor-2/06-exchange-economies/listings/tatonnement.py}{1}{21}{Tâtonnement from several
+starting prices in the economy with three equilibria.}\label{lst:b2:exchange-economies:tatonnement}
+
+\omoutput{code/bachelor-2/06-exchange-economies/outputs/tatonnement.txt}{Prices that start below $1$ go
+to $\tfrac12$, prices that start above go to $2$.}\label{out:b2:exchange-economies:tatonnement}
+
+% code: listings/tatonnement.py
+A start at exactly 1 stays there; a start at 0.99 goes to $\tfrac12$ and one at 1.01 to $2$. Two
+cautions. Tâtonnement is a thought experiment: in real markets trade happens at prices out of
+equilibrium, which changes \omterm{def:b2:exchange-economies:endowment}{endowments} and so the equilibrium itself. And with three goods or more,
+examples are known in which tâtonnement cycles for ever around a unique equilibrium, so stability is not
+guaranteed by the assumptions that guarantee existence. The laboratory markets of the opening chart did
+converge, but they were single markets with supply and demand designed by the experimenter.
+
+With many equilibria, the theory predicts a set, and which point the economy reaches depends on history.
+With few traders it predicts less still: two consumers facing each other in a box have no reason to take
+prices as given, and might bargain to any efficient point both prefer to their \omterm{def:b2:exchange-economies:endowment}{endowment}.
+
+\begin{definition}[Core]\label{def:b2:exchange-economies:core}
+A coalition $S$ of consumers \emph{blocks} a \omterm{def:b2:exchange-economies:feasible}{feasible allocation} $x$ if its members, trading only their
+own \omterm{def:b2:exchange-economies:endowment}{endowments} among themselves, can reach bundles $(y_i)_{i \in S}$ with $\sum_{i \in S} y_i \le
+\sum_{i \in S}\omega_i$ that make none of them worse off than under $x$ and at least one strictly better
+off. The \emph{core}\index{core} is the set of \omterm{def:b2:exchange-economies:feasible}{feasible allocations} that no coalition blocks.
+\end{definition}
+
+With two consumers, a single consumer blocks any \omterm{def:b2:exchange-economies:allocation}{allocation} she likes less than her \omterm{def:b2:exchange-economies:endowment}{endowment}, and the
+pair blocks any inefficient \omterm{def:b2:exchange-economies:allocation}{allocation}. So the \omterm{def:b2:exchange-economies:core}{core} is the part of the \omterm{def:b2:exchange-economies:contract-curve}{contract curve} inside the lens,
+the thick piece in the second figure. Every \omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium} is in the \omterm{def:b2:exchange-economies:core}{core}: a coalition that
+could do better with its own \omterm{def:b2:exchange-economies:endowment}{endowments} could have bought the better bundles at equilibrium prices,
+which contradicts the consumers' choices (\cref{ch:b2:welfare-theorems}). As the economy is replicated,
+with many copies of each type of consumer, more coalitions can form and the \omterm{def:b2:exchange-economies:core}{core} shrinks; in the limit
+only competitive \omterm{def:b2:exchange-economies:allocation}{allocations} remain. \Cref{exo:b2:exchange-economies:12} proves the first step. Price
+taking is then a conclusion about large economies, not an assumption about every economy.
+
+\begin{model}{Walrasian exchange}
+\assumes Consumers take prices as given; preferences are convex and monotone; there are no externalities;
+there is a market for every good.
+\predicts Prices that clear all markets together; equilibrium \omterm{def:b2:exchange-economies:allocation}{allocations} on the \omterm{def:b2:exchange-economies:contract-curve}{contract curve} and in
+the \omterm{def:b2:exchange-economies:core}{core}; changes in relative prices when \omterm{def:b2:exchange-economies:endowment}{endowments} are redistributed between consumers with different
+tastes.
+\tested Laboratory double-auction markets, in which prices converge towards the competitive prediction
+within a few periods (Smith 1962 and the experiments that followed).
+\breaks With few traders, price taking has no justification and the outcome is a bargain anywhere in the
+\omterm{def:b2:exchange-economies:core}{core}; with several equilibria, the theory does not say which one is reached; with three goods or more,
+price adjustment need not converge; and the model is silent on how trade proceeds out of equilibrium.
+\end{model}
+
+\section{Exercises}\label{sec:b2:exchange-economies:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:exchange-economies:1}
+The total \omterm{def:b2:exchange-economies:endowment}{endowment} is $(10, 10)$. Which of these \omterm{def:b2:exchange-economies:allocation}{allocations} $(x_A, x_B)$ are \omterm{def:b2:exchange-economies:feasible}{feasible}, and which
+non-wasteful? (i) $(4, 7), (6, 3)$; (ii) $(5, 5), (6, 4)$; (iii) $(3, 2), (6, 7)$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:exchange-economies:2}
+$u_A = x_{A1}x_{A2}$ and $u_B = x_{B1}x_{B2}^2$. At the \omterm{def:b2:exchange-economies:allocation}{allocation} $x_A = (4, 6)$, $x_B = (6, 4)$, compute
+both marginal rates of substitution. Is the \omterm{def:b2:exchange-economies:allocation}{allocation} \omterm{def:b2:exchange-economies:pareto-efficient}{Pareto-efficient}? If not, which way should good 1
+move?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:exchange-economies:3}
+Read the opening chart. In which test was the first period's price furthest from the prediction, and
+in which tests was the last period's price still more than 5 per cent away? Does any line cross the
+prediction?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:exchange-economies:4}
+Describe a laboratory result that would refute the claim that double-auction markets converge to the
+competitive prediction, and say why a single period far from the prediction would not.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:exchange-economies:5}
+$u_A = \ln x_{A1} + \ln x_{A2}$ with $\omega_A = (6, 2)$, and $u_B = \ln x_{B1} + 3\ln x_{B2}$ with
+$\omega_B = (4, 8)$. Find the \omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium} price $p = p_1/p_2$ and \omterm{def:b2:exchange-economies:allocation}{allocation}, and check that
+both markets clear.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:exchange-economies:6}
+For the economy of \cref{exo:b2:exchange-economies:5}, write the \omterm{def:b2:exchange-economies:contract-curve}{contract curve}, compute $x_{A2}$ at
+$x_{A1} = 2$, $5$ and $8$, and check that the equilibrium \omterm{def:b2:exchange-economies:allocation}{allocation} lies on it. Is it above or below the
+diagonal, and why?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:exchange-economies:7}
+In the economy of \cref{exo:b2:exchange-economies:5}, $B$ gives $A$ two units of good 2 before trade
+opens. Predict the direction of the change in $p$ before computing it, then compute the new price. Show
+that with Cobb--Douglas consumers a transfer of $\Delta$ units of good 2 from $B$ to $A$ changes $p^*$ by
+$(a - b)\Delta/((1 - a)\omega_{A1} + (1 - b)\omega_{B1})$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:exchange-economies:8}
+In the economy of \cref{exo:b2:exchange-economies:5}, compute $z_1$ and $z_2$ at $p = 1$, and check
+\omterm{def:b2:exchange-economies:walras-law}{Walras' law}. Which price must rise?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:exchange-economies:9}
+Design a laboratory test of whether a market with two competitive equilibria settles at one of them
+predictably. What would you vary across sessions, and what result would show that history, not the
+model, picks the equilibrium?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:exchange-economies:10}
+Prove \omterm{def:b2:exchange-economies:walras-law}{Walras' law} for $I$ consumers and $n$ goods, with locally non-satiated preferences. Show that if
+$z_\ell(p) = 0$ for $n - 1$ goods and $p_n > 0$, the $n$-th market clears, and give an example in which
+a good with a zero price is in excess supply at equilibrium.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:exchange-economies:11}
+For the economy of \cref{sec:b2:exchange-economies:several}: (a) derive $x_{A2} = p^{1/9}$, $x_{B1} =
+p^{-1/9}$ and $z_1(p)$; (b) check that $p = \tfrac12$, $1$ and $2$ are equilibria; (c) compute the sign
+of $z_1'$ at each and say which are stable under tâtonnement.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:exchange-economies:12}
+Replicate a two-consumer economy: two consumers of type $A$ with \omterm{def:b2:exchange-economies:endowment}{endowment} $\omega_A$ and two of type
+$B$ with $\omega_B$, all with strictly quasi-concave preferences of their type. Let $(x_A, x_B)$ be an
+\omterm{def:b2:exchange-economies:allocation}{allocation} of the two-consumer economy on its \omterm{def:b2:exchange-economies:contract-curve}{contract curve} with $x_A \neq \omega_A$ and $u_A(x_A) =
+u_A(\omega_A)$, $u_B(x_B) > u_B(\omega_B)$, and give each consumer of the replica her type's bundle.
+Show that the coalition of the two $A$ consumers and one $B$ consumer blocks this \omterm{def:b2:exchange-economies:allocation}{allocation}, so that it
+is in the \omterm{def:b2:exchange-economies:core}{core} of the two-consumer economy but not of its replica.
+\end{exercise}
+
+\section{Problem: Fish for grain}\label{sec:b2:exchange-economies:problem}
+
+\begin{problem}[{Weekend problem --- Brenland's fishers and Kestria's farmers, in two invented
+economies, trade fish for grain, find the price that clears both markets, and see what a gift of grain
+does to it}]
+\label{pb:b2:exchange-economies:1}
+Treat each country as one consumer. Brenland holds 60 tonnes of fish and 10 of grain, Kestria 20 of fish
+and 90 of grain. Brenland's utility is $\tfrac12\ln f + \tfrac12\ln g$, Kestria's $\tfrac14\ln f +
+\tfrac34\ln g$, where $f$ and $g$ are tonnes of fish and grain. Grain is the \omterm{def:b2:exchange-economies:numeraire}{numeraire} and $p$ is the
+price of a tonne of fish in tonnes of grain. Round prices and marginal rates of substitution to four
+decimals and quantities to two.
+
+\medskip
+\noindent\textbf{Part I --- The box.}
+\begin{enumerate}
+  \item Give the dimensions of the \omterm{def:b2:exchange-economies:edgeworth-box}{Edgeworth box} and the \omterm{def:b2:exchange-economies:endowment}{endowment} point, with Brenland at the
+        bottom-left corner.
+  \item Compute each country's marginal rate of substitution of grain for fish at the \omterm{def:b2:exchange-economies:endowment}{endowment}.
+  \item Is the \omterm{def:b2:exchange-economies:endowment}{endowment} \omterm{def:b2:exchange-economies:pareto-efficient}{Pareto-efficient}? Within which range of terms of trade (grain per tonne of fish)
+        would both gain from a small trade?
+  \item Brenland offers 10 tonnes of fish for 5 tonnes of grain. Check that both gain.
+  \item Who exports fish, and why, in one sentence?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The Pareto set.}
+\begin{enumerate}[resume]
+  \item Write the condition for an interior \omterm{def:b2:exchange-economies:allocation}{allocation} to be \omterm{def:b2:exchange-economies:pareto-efficient}{Pareto-efficient}.
+  \item Derive the \omterm{def:b2:exchange-economies:contract-curve}{contract curve} as Brenland's grain $g_B$ as a function of its fish $f_B$.
+  \item Check that it passes through both corners of the box. Is it above or below the diagonal?
+  \item Find the range of $f_B$ over which the \omterm{def:b2:exchange-economies:contract-curve}{contract curve} lies inside the lens of \omterm{def:b2:exchange-economies:allocation}{allocations} both
+        countries weakly prefer to the \omterm{def:b2:exchange-economies:endowment}{endowment}.
+  \item Is the \omterm{def:b2:exchange-economies:allocation}{allocation} that gives Brenland all the fish and all the grain \omterm{def:b2:exchange-economies:pareto-efficient}{Pareto-efficient}? What does
+        your answer say about efficiency?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Equilibrium.}
+\begin{enumerate}[resume]
+  \item Write each country's demand for fish and for grain as a function of $p$.
+  \item Write the excess demand for fish $z_f(p)$.
+  \item Find the equilibrium price.
+  \item Find the equilibrium \omterm{def:b2:exchange-economies:allocation}{allocation} and each country's trade.
+  \item Check that the grain market clears, and name the law that says it must.
+  \item Check that the \omterm{def:b2:exchange-economies:allocation}{allocation} lies on the \omterm{def:b2:exchange-economies:contract-curve}{contract curve} and inside the range of question 9.
+  \item Compare each country's utility (or $f^{a}g^{1-a}$) with its \omterm{def:b2:exchange-economies:endowment}{endowment}'s.
+  \item For each country, find the extra grain that, added to its \omterm{def:b2:exchange-economies:endowment}{endowment} without trade, would make it
+        as well off as trade does.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- A gift of grain.} Before trade opens, Kestria gives Brenland 10 tonnes of
+grain.
+\begin{enumerate}[resume]
+  \item Predict the direction of the change in the price of fish, and explain it.
+  \item Compute the new equilibrium price and \omterm{def:b2:exchange-economies:allocation}{allocation}.
+  \item Who gains and who loses relative to Part III? Does Kestria still gain from trade, given its new
+        \omterm{def:b2:exchange-economies:endowment}{endowment}?
+  \item Check that the new \omterm{def:b2:exchange-economies:allocation}{allocation} lies on the same \omterm{def:b2:exchange-economies:contract-curve}{contract curve}.
+  \item Could a transfer of \omterm{def:b2:exchange-economies:endowment}{endowments} reach any point of the \omterm{def:b2:exchange-economies:contract-curve}{contract curve}? What does that suggest
+        for the next chapter?
+  \item State the result: the equilibrium price of fish in grain, and each country's gain from trade as
+        an equivalent amount of grain.
+\end{enumerate}
+\end{problem}

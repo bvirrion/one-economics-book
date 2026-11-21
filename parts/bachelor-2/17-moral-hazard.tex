@@ -1,0 +1,446 @@
+\chapter{Moral Hazard and Contracts}\label{ch:b2:moral-hazard}
+
+In 1994 and 1995 Safelite, the largest installer of car windscreens in the United States, moved its installers from
+hourly wages to pay by the piece, region by region, with a guarantee of about the former wage. The firm kept monthly
+records of each installer's output before and after. The chart shows three estimates of how much output per worker
+rose.
+
+\begin{openingchart}{Rise in windscreens installed per worker per day after Safelite moved from hourly wages to piece
+  rates, per cent: raw means of all monthly observations (2.70 units a day under hourly wages, 3.24 under piece rates);
+  with month and year effects controlled; and within the same worker, comparing each installer with himself.}{Lazear
+  (2000), Tables~2--3 and text}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xbar, bar width=10pt, width=0.62\linewidth, height=0.36\linewidth, xmin=0, xmax=52,
+    ymin=0.4, ymax=3.6, ymajorgrids=false, xlabel={Per cent},
+    ytick=data, yticklabels from table={figdata/bachelor-2/17-moral-hazard/out/safelite.csv}{label},
+    nodes near coords, nodes near coords style={font=\footnotesize}]
+  \addplot[fill=omThm!50, draw=omThm] table[x=pct, y=pos]
+    {figdata/bachelor-2/17-moral-hazard/out/safelite.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% ledger: b2:lazear2000-design, b2:lazear2000-t2, b2:lazear2000-t3
+% figdata: safelite_summary (raw 20, total 44, within 22, between 22, within_share 0.5)
+Output per worker rose by 44 per cent once month and year effects are controlled. Half of that, 22 per cent, is the same
+installer working faster: an incentive effect. The other half came from who worked there, as the firm kept more of its
+most productive installers and hired more productive ones. Pay by results changed both what each worker did and who
+chose to work.
+
+Under an hourly wage, the firm could not see each installer's effort well enough to pay for it. That is the problem of
+this chapter: one party acts for another, and the other cannot observe the action. The chapter builds the model of
+contracts written under that constraint, finds what the best contract trades off, and turns to the evidence from
+workshops, farms and health insurance. It ends with contracts that cannot be written at all.
+
+\begin{recall}
+From \cref{ch:b2:expected-utility,ch:b2:insurance-and-risk-sharing}: expected utility, the \omterm{def:b2:expected-utility:risk-premium}{risk premium}, and insurance
+against risk. From \cref{ch:b2:adverse-selection,ch:b2:signalling-and-screening}: hidden information, participation and
+\omterm{def:b2:signalling-and-screening:ic}{incentive-compatibility constraints}.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:moral-hazard:symbols}
+The agent's effort is $e$ and its cost $\mathit{C}(e)$; output is $y$ and the agent's pay $w$. In the linear model, $w = a + by$, with $b$ the
+share of output paid to the agent, $r$ her \omterm{def:b2:expected-utility:ara}{coefficient of absolute risk aversion}, $\sigma^2$ the variance of output given effort,
+and $c$ the slope of her marginal cost of effort. The agent's reservation utility is $\bar u$.
+\end{notation}
+
+\section{Principal and agent}\label{sec:b2:moral-hazard:principal-agent}
+
+\begin{definition}[Principal--agent problem]\label{def:b2:moral-hazard:principal-agent}
+A \emph{principal--agent problem}\index{principal--agent problem} arises when one party, the principal, has an
+action taken on its behalf by another, the agent, whose interests differ from its own, and must design the agent's
+reward without full information about the agent's action or knowledge.
+\end{definition}
+
+\begin{definition}[Moral hazard]\label{def:b2:moral-hazard:moral-hazard}
+\emph{Moral hazard}\index{moral hazard} is the problem of a hidden action: after a contract is signed, one party takes
+an action that affects the other's payoff and that the other cannot observe or cannot write into the contract.
+\end{definition}
+
+\omterm{def:b2:moral-hazard:moral-hazard}{Moral hazard} differs from \omterm{def:b2:adverse-selection:adverse-selection}{adverse selection} (\cref{ch:b2:adverse-selection}) in timing: the information is hidden before
+the contract in \omterm{def:b2:adverse-selection:adverse-selection}{adverse selection}, and the action is hidden after it here. An insurer may face both: people who know they
+are risky buy more cover, and people with cover take less care.
+
+Take an orchard owner, the principal, who hires a manager. The manager can work hard, at a cost to her of 2 (in the units
+of her utility), or not, at no cost. Output, in thousands of dalens, is 100 or 20; hard work makes 100 likely with
+probability 0.8, easy work with probability 0.4. The manager's utility is $\sqrt{w} - \text{cost}$, and she will take the job only
+if it gives her at least $\bar u = 5$, what she could earn elsewhere. The owner is risk neutral.
+
+If the owner could see effort, he would pay a fixed wage for hard work, the smallest that the manager accepts: $\sqrt{w} - 2
+= 5$, so $w = 49$. Expected output is $0.8 \times 100 + 0.2 \times 20 = 84$, and profit 35. Easy work would need only $w = 25$, with expected output
+52 and profit 27. So the first best is hard work, at a fixed wage: the risk-neutral owner bears all the risk.
+
+\section{Insurance against incentives}\label{sec:b2:moral-hazard:second-best}
+
+\begin{definition}[Second-best contract]\label{def:b2:moral-hazard:second-best}
+A \emph{second-best contract}\index{second-best contract} is the contract that maximises the principal's payoff
+subject to the agent's participation and incentive constraints when the agent's action cannot be contracted on.
+\end{definition}
+
+If effort is hidden, a fixed wage gives the manager no reason to work hard. The owner must pay more when output is high,
+$w_H$, than when it is low, $w_L$. Writing $u_H = \sqrt{w_H}$ and $u_L = \sqrt{w_L}$, hard work must be worth its cost (incentive
+compatibility) and the job must be worth taking (participation):
+\[
+  0.8u_H + 0.2u_L - 2 \ge 0.4u_H + 0.6u_L, \qquad 0.8u_H + 0.2u_L - 2 \ge 5 .
+\]
+The first says $u_H - u_L \ge 5$. The owner wants the cheapest such pair, and both bind: $u_H - u_L = 5$ and $0.8u_H + 0.2u_L = 7$, so $u_L = 3$ and
+$u_H = 8$, that is $w_L = 9$ and $w_H = 64$. The expected wage is $0.8 \times 64 + 0.2 \times 9 = 53$, against 49 in the first best.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=10, ymin=0, ymax=12, width=0.5\linewidth,
+    height=0.5\linewidth, xlabel={$u_L$: utility of pay if output is low}, ylabel={$u_H$: if high},
+    xtick={3,7}, ytick={7,8}, legend style={at={(1.05,0.5)}, anchor=west}]
+  \addplot[black!50, thin, domain=0:10, samples=2] {x};
+  \addplot[omDef, thick, domain=0:8.75, samples=2] {(7 - 0.2*x)/0.8};
+  \addplot[omThm, thick, dashed, domain=0:7, samples=2] {x + 5};
+  \node[eqpoint] at (axis cs:3,8) {};
+  \node[eqpoint] at (axis cs:7,7) {};
+  \node[anchor=south east, font=\footnotesize] at (axis cs:2.9,8.9) {second best};
+  \node[anchor=north west, font=\footnotesize] at (axis cs:7.2,6.5) {first best};
+  \legend{Equal pay, Participation, Incentive}
+\end{axis}
+\end{tikzpicture}
+
+{\small The two-outcome contract in utilities. The first best pays the same in both outcomes, on the equal-pay line.
+With hidden effort the contract must lie on or above the incentive line, five units of utility apart; the cheapest point
+that also meets participation is $u_L = 3$, $u_H = 8$.}
+\end{omfigure}
+
+The manager is no worse off, at expected utility 7 minus the cost of 2. The 4 thousand extra is the price of risk: to make
+her work, the owner must expose her to risk, and a risk-averse manager must be paid to bear it. That is the
+\emph{agency cost} of hidden effort. Profit falls from 35 to 31, still above the 27 of easy work, so the owner still asks
+for hard work. Were the manager risk neutral, the cost would vanish: making her bear all the risk costs nothing to insure
+(\cref{exo:b2:moral-hazard:11}). The trade-off is between insurance and incentives.
+
+\section{Linear contracts}\label{sec:b2:moral-hazard:linear}
+
+\begin{definition}[Linear incentive contract]\label{def:b2:moral-hazard:linear-contract}
+A \emph{linear incentive contract}\index{linear incentive contract} pays the agent a fixed amount plus a constant share
+of a measure of output: $w = a + by$.
+\end{definition}
+
+\begin{definition}[Piece rate]\label{def:b2:moral-hazard:piece-rate}
+A \emph{piece rate}\index{piece rate} is pay by the unit of output produced, a linear contract on a count of units.
+\end{definition}
+
+Contracts in practice are often linear: commissions, \omterm{def:b2:moral-hazard:piece-rate}{piece rates}, crop shares. A model in which the linear contract is
+the right one to study takes output $y = e + \varepsilon$, with $\varepsilon$ normal with mean zero and variance $\sigma^2$; effort cost $ce^2/2$; and an agent
+with \omterm{def:b2:expected-utility:cara}{constant absolute risk aversion} $r$. For such an agent a normal income with mean $\mu$ and variance $v$ is worth its
+\omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalent} $\mu - rv/2$. Under $w = a + by$ her \omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalent} is
+\[
+  a + be - \frac{c e^2}{2} - \frac{r b^2 \sigma^2}{2},
+\]
+so she chooses $e = b/c$: effort rises with the share. The fixed part $a$ does not affect effort; it only divides the surplus,
+and the principal sets it so that participation just binds.
+
+\begin{proposition}[The optimal linear share]\label{prop:b2:moral-hazard:linear}
+In the linear model the share that maximises the principal's expected profit is
+\[
+  b^* = \frac{1}{1 + rc\sigma^2},
+\]
+and the total certainty-equivalent surplus is $b^*/(2c)$, against $1/(2c)$ when effort is observable.
+\end{proposition}
+
+\begin{proof}
+With participation binding, the principal's profit is the total surplus, expected output less the cost of effort and the
+agent's \omterm{def:b2:expected-utility:risk-premium}{risk premium}, minus the fixed reservation level. With $e = b/c$, the surplus is
+\[
+  S(b) = \frac{b}{c} - \frac{b^2}{2c} - \frac{r b^2\sigma^2}{2}.
+\]
+Its derivative $1/c - b/c - rb\sigma^2$ is zero at $b^* = 1/(1 + rc\sigma^2)$, and $S$ is concave, so $b^*$ is the maximum. Since $1/c + r\sigma^2 = 1/(cb^*)$, $S(b^*) =
+b^*/c - b^{*2}/(2cb^*) = b^*/(2c)$. With observable effort, the principal asks for $e = 1/c$ and pays a fixed wage, so the surplus is
+$1/c - 1/(2c) = 1/(2c)$.
+\end{proof}
+
+The share falls with \omterm{def:b2:expected-utility:risk-aversion}{risk aversion}, with the cost of effort and with noise: when output says little about effort, paying
+on output buys little effort at a high price in risk. The listing finds the best share by search and checks the formula.
+
+\omcode{code/bachelor-2/17-moral-hazard/listings/linear.py}{1}{25}{The best linear share for six levels of noise, found by
+search and by the formula.}\label{lst:b2:moral-hazard:linear}
+
+\omoutput{code/bachelor-2/17-moral-hazard/outputs/linear.txt}{The share, effort and surplus fall as output gets noisier;
+the agency cost rises toward the whole first-best surplus, 0.5.}\label{out:b2:moral-hazard:linear}
+
+% code: listings/linear.py
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=4.2, ymin=0, ymax=1.05, width=0.6\linewidth,
+    height=0.4\linewidth, xlabel={$\sigma^2$: variance of output}, ylabel={Optimal share $b^*$},
+    xtick={0,1,2,3,4}, ytick={0,0.5,1}, legend style={at={(1.03,0.5)}, anchor=west}]
+  \addplot[omDef, thick, domain=0:4.2, samples=60] {1/(1 + 1*x)};
+  \addplot[omThm, thick, dashed, domain=0:4.2, samples=60] {1/(1 + 2*x)};
+  \addplot[omMeth, thick, dotted, domain=0:4.2, samples=60] {1/(1 + 4*x)};
+  \legend{$rc = 1$, $rc = 2$, $rc = 4$}
+\end{axis}
+\end{tikzpicture}
+
+{\small The risk--incentive trade-off. The optimal share of output paid to the agent falls as output gets noisier, and
+faster for a more risk-averse agent or one whose effort is more costly.}
+\end{omfigure}
+
+\section{Several tasks}\label{sec:b2:moral-hazard:multitask}
+
+Most jobs have several tasks, and some are easier to measure than others. A teacher raises test scores and also teaches
+what tests do not measure; an installer fits windscreens quickly and also fits them well. Suppose the agent's cost
+depends on her total effort, and only the first task is measured. Pay on the measure moves effort from the second task to
+the first, at no extra cost to her. If the principal values both, strong pay on the measured task can lower what he gets.
+The model's answer is weaker incentives than one task alone would warrant, or a fixed wage with supervision, when what is
+measured is a poor guide to what is wanted. Safelite could pay by the piece in part because a badly fitted windscreen soon came
+back, and the installer who fitted it had to refit it on his own time (Lazear 2000).
+
+\section{Teams and relative performance}\label{sec:b2:moral-hazard:teams}
+
+When output is joint, pay on it is shared. If $n$ workers each choose effort $e_i$ at cost $e_i^2/2$, output is $\sum_i e_i$ and is
+shared equally, each worker earns $1/n$ of what her own effort adds, and chooses $e_i = 1/n$; the efficient effort is 1. A team of
+four works at a quarter of the efficient level. This is free riding, as with the public goods of the school volumes.
+
+\begin{definition}[Relative performance evaluation]\label{def:b2:moral-hazard:rpe}
+\emph{Relative performance evaluation}\index{relative performance evaluation} is pay that depends on an agent's
+output compared with the output of others who face some of the same shocks.
+\end{definition}
+
+Comparison helps when agents share a shock. Let $y_1 = e_1 + \eta + \varepsilon_1$ and $y_2 = e_2 + \eta + \varepsilon_2$, where $\eta$ is a common shock with variance
+$\sigma_\eta^2$, such as the weather on two neighbouring farms or the state of the market for two salespeople, and $\varepsilon_1$, $\varepsilon_2$ are
+independent with variance $\sigma^2$. Pay agent 1 on $y_1 - k y_2$. Since $e_2$ is expected, subtracting $ky_2$ moves the measure by a known amount,
+which the fixed part can offset; it changes only the noise.
+
+\begin{proposition}[Relative evaluation filters a common shock]\label{prop:b2:moral-hazard:rpe}
+The variance of $y_1 - ky_2$ is least at $k^* = \sigma_\eta^2/(\sigma_\eta^2 + \sigma^2)$, where it equals $\sigma^2 + \sigma_\eta^2\sigma^2/(\sigma_\eta^2 + \sigma^2)$, below the variance $\sigma^2 + \sigma_\eta^2$ of $y_1$
+whenever $\sigma_\eta^2 > 0$. So the optimal linear contract pays on $y_1 - k^*y_2$, with a larger share $b^*$.
+\end{proposition}
+
+\begin{proof}
+$y_1 - ky_2 - (e_1 - ke_2) = (1 - k)\eta + \varepsilon_1 - k\varepsilon_2$, with variance $V(k) = (1 - k)^2\sigma_\eta^2 + \sigma^2 + k^2\sigma^2$. Then $V'(k) = -2(1 - k)\sigma_\eta^2 +
+2k\sigma^2$, zero at $k^*$, and $V$ is convex. Substituting, $V(k^*) = \sigma^2 + \sigma_\eta^2\sigma^2/(\sigma_\eta^2 + \sigma^2)$. Since the second term is below $\sigma_\eta^2$, $V(k^*) < V(0)$. By
+\cref{prop:b2:moral-hazard:linear}, a lower variance gives a larger share and a larger surplus.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=1.25, ymin=0, ymax=4.5, width=0.55\linewidth,
+    height=0.4\linewidth, xlabel={$k$: weight on the other agent's output}, ylabel={Variance of the measure},
+    xtick={0,0.75,1}, ytick={1,1.75,2,4}]
+  \addplot[omDef, thick, domain=0:1.25, samples=60] {3*(1 - x)^2 + 1 + x^2};
+  \addplot[black!50, dashed, domain=0:1.25, samples=2] {1};
+  \node[eqpoint] at (axis cs:0.75,1.75) {};
+  \node[anchor=north, font=\footnotesize] at (axis cs:0.75,1.7) {$k^*$};
+  \node[anchor=south west, font=\footnotesize] at (axis cs:0,4) {own output};
+  \node[anchor=south, font=\footnotesize] at (axis cs:0.55,0.95) {own idiosyncratic noise};
+\end{axis}
+\end{tikzpicture}
+
+{\small Filtering a common shock, with $\sigma_\eta^2 = 3$ and $\sigma^2 = 1$. Paying on own output alone carries a variance of 4; on the difference
+from the other agent's output, 2; on $y_1 - 0.75y_2$, 1.75. No weight brings it to the idiosyncratic noise alone, since the other
+agent's output carries noise of its own.}
+\end{omfigure}
+
+Relative evaluation has costs: agents may collude to work less, sabotage one another, or choose colleagues badly; and
+if the shock is not common it only adds noise.
+
+\section{The evidence}\label{sec:b2:moral-hazard:evidence}
+
+\begin{record}[Piece rates at Safelite]
+% ledger: b2:lazear2000-t2, b2:lazear2000-t3
+Output per installer per day was 2.70 units under hourly wages and 3.24 under \omterm{def:b2:moral-hazard:piece-rate}{piece rates}; its spread across installers
+widened, with a standard deviation of 1.42 before and 1.59 after. Pay rose little, from 2{,}228 to 2{,}283 dollars a month,
+while the cost of an installed unit fell from 44.43 to 35.24 dollars. The model's predictions hold here: output rose, more
+productive workers stayed or came, and the gain was shared between the firm and its workers (Lazear 2000).
+\end{record}
+
+\begin{model}{Principal and agent with linear contracts}
+\assumes A risk-averse agent whose effort raises output; output observed with noise; effort not observable or not
+contractible; the principal chooses a fixed part and a share.
+\predicts Effort and output rise with the share paid on output; the share falls with noise, \omterm{def:b2:expected-utility:risk-aversion}{risk aversion} and the cost
+of effort; comparison with others who share the same shocks raises it.
+\tested \omterm{def:b2:moral-hazard:piece-rate}{Piece rates} at Safelite (Lazear 2000); higher output after a reform that raised sharecroppers' shares in West Bengal
+(Banerjee, Gertler and Ghatak 2002); medical use falling with the share of costs the insured pay (Brook et al.\ 2006).
+\breaks When the measure can be gamed at the expense of what is not measured, the several-task problem above; and when pay
+changes why people work as well as how hard, which this model leaves out.
+\end{model}
+
+\begin{record}[Tenancy reform in West Bengal]
+% ledger: b2:bgg2002
+A sharecropper pays the landowner a share of the crop: a linear contract with share $b$ equal to what the tenant keeps. Within a year of its election in 1977, the West Bengal state government began to register sharecroppers, giving the registered permanent, inheritable
+tenure as long as they paid the landowner the legal share, at most 25 per cent of output. By 1993 about 65 per cent of
+sharecroppers were registered, against 15 per cent before. In a survey, the share of tenants keeping more than half of
+their crop rose from 17 to 39 per cent. From 1979 to 1993 rice yields rose 69 per cent in West Bengal and 44 per cent in
+neighbouring Bangladesh, after growing at similar rates over the decade before. With controls for rainfall, irrigation and
+high-yield varieties, the authors estimate that yields were 18 per cent higher in West Bengal in 1988--91, and that the reform
+explains about 28 per cent of the later growth of farm productivity there (Banerjee, Gertler and Ghatak 2002). The reform changed
+both the share and the security of tenure; the study cannot separate them.
+\end{record}
+
+\begin{definition}[Coinsurance rate]\label{def:b2:moral-hazard:coinsurance}
+The \emph{coinsurance rate}\index{coinsurance rate} of an insurance policy is the share of each covered cost that the
+insured person pays.
+\end{definition}
+
+Health insurance lowers the price of care at the point of use, so the insured may use more of it. That is \omterm{def:b2:moral-hazard:moral-hazard}{moral hazard}
+too, though the hidden action is a choice of how much care to buy. To measure it one must compare people who differ in
+cover but not in health, which is what an experiment can do.
+
+\begin{omchart}{Mean outpatient visits to a doctor per person-year by the coinsurance rate of the randomly assigned
+  plan, RAND Health Insurance Experiment, plans without an individual deductible (14{,}941 person-years). Whiskers: two
+  standard errors.}{statsmodels bundled data (public domain), randhie, as distributed by Cameron and Trivedi; our
+  computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, ybar, bar width=16pt, width=0.6\linewidth, height=0.42\linewidth, xmin=-12, xmax=107,
+    ymin=0, ymax=4.2, xtick={0,25,50,95}, xlabel={Coinsurance rate (per cent)},
+    ylabel={Doctor visits a year}, xmajorgrids=false]
+  \addplot[fill=omThm!50, draw=omThm, error bars/.cd, y dir=both, y explicit]
+    table[x=coins, y=mean, y error expr=2*\thisrow{se}]
+    {figdata/bachelor-2/17-moral-hazard/out/randhie.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\begin{record}[The RAND Health Insurance Experiment]
+% ledger: b2:randhie2006
+% figdata: randhie_summary (free 3.555, c25 2.787, c50 2.561, c95 2.112, fall_pct 40.6, n 14941)
+From 1971 to 1982, 2{,}750 families, more than 7{,}700 people under 65 at six sites, were assigned at random to free care or
+to plans with coinsurance of 25, 50 or 95 per cent, with out-of-pocket spending capped. Those with 25 per cent coinsurance
+spent 20 per cent less than those with free care, by using fewer services, not by paying lower prices. In general the
+reduction had no adverse effect on health, but free care improved blood pressure, dental health, vision and some serious
+symptoms, mainly among the sickest and poorest (Brook et al.\ 2006). In the experiment's public data
+(the chart above), visits fall from 3.56 a year under free care to 2.11 under 95 per cent coinsurance, 41 per cent
+fewer.
+\end{record}
+
+\section{Contracts that cannot be written}\label{sec:b2:moral-hazard:incomplete}
+
+\begin{definition}[Incomplete contract]\label{def:b2:moral-hazard:incomplete-contract}
+An \emph{incomplete contract}\index{incomplete contract} is one that does not specify what each party must do in every
+possible situation, because some situations cannot be foreseen, described or verified by a court.
+\end{definition}
+
+\begin{definition}[Hold-up problem]\label{def:b2:moral-hazard:hold-up}
+The \emph{hold-up problem}\index{hold-up problem} arises when one party makes an investment whose value depends on
+trading with a particular partner, and the terms of trade are bargained after the investment: the partner can capture
+part of its return, so the investment is too small or not made.
+\end{definition}
+
+A supplier can spend 30 thousand dalens adapting its plant to one buyer's design, which raises the value of their trade by
+50. If the contract could specify the price after the investment, the supplier would invest. If it cannot, because the
+design and quality cannot be described in advance, the price is bargained after the plant is adapted, and the investment
+cost is then sunk. If they split the gain equally, the supplier gets 25 for its 30 and does not invest, though the
+investment would create 20 net. Remedies include long-term contracts, joint ownership, and one firm owning the other: which
+activities a firm does itself and which it buys can be explained in part by which investments would otherwise be held up.
+Each remedy has costs of its own, such as weaker incentives inside a larger firm.
+
+\section{Exercises}\label{sec:b2:moral-hazard:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:moral-hazard:1}
+Read the opening chart. Why is the raw gain smaller than the gain with month and year controlled, and what does the gap
+between the second and third bars measure?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:moral-hazard:2}
+In the orchard of \cref{sec:b2:moral-hazard:principal-agent}, let the manager's outside option be $\bar u = 6$. Find the first-best wage and
+profit, and the profit from easy work.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:moral-hazard:3}
+From the chart of the RAND experiment in \cref{sec:b2:moral-hazard:evidence}, compute the fall in visits, in per cent, from free care to 25 per cent coinsurance, and from 25
+to 95 per cent. Why does random assignment matter for reading these as effects of the plan?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:moral-hazard:4}
+Predict, then compute: in a team of four sharing output equally, with cost $e^2/2$, what effort does each choose, and what is
+each one's surplus, against the efficient level?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:moral-hazard:5}
+With $\bar u = 6$, find the \omterm{def:b2:moral-hazard:second-best}{second-best contract}, the expected wage and the agency cost. Does the owner still want hard work?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:moral-hazard:6}
+In the linear model with $r = 2$, $c = 1$ and $\sigma^2 = 0.5$, find $b^*$, effort, the agent's \omterm{def:b2:expected-utility:risk-premium}{risk premium}, the cost of effort, the surplus and
+the agency cost.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:moral-hazard:7}
+In the hold-up example, find the smallest share of the gain that makes the supplier invest. Why might a contract fixing
+the price in advance not solve the problem?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:moral-hazard:8}
+Explain why the RAND results measure \omterm{def:b2:moral-hazard:moral-hazard}{moral hazard} and not \omterm{def:b2:adverse-selection:adverse-selection}{adverse selection}, and why the same comparison across ordinary
+insurance buyers would not.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:moral-hazard:9}
+With $\sigma_\eta^2 = 3$ and $\sigma^2 = 1$, compute the variance of the measure for $k = 0$, $k = 1$ and $k^*$. With $r = 2$ and $c = 1$, find the optimal share in
+each case.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:moral-hazard:10}
+Show that the agency cost in the linear model is $(1 - b^*)/(2c)$, and that it rises with $\sigma^2$ toward the whole first-best surplus.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:moral-hazard:11}
+In the two-outcome model, let the manager be risk neutral, with utility $w - \text{cost}$. Find the cheapest contract for hard work
+and show that the agency cost is zero. Interpret.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:moral-hazard:12}
+Agent 1 is compared with the average output of $n$ others, each with idiosyncratic variance $\sigma^2$, all sharing the shock $\eta$. Find
+the best weight $k$ on the average and the variance of the measure. Evaluate for $\sigma_\eta^2 = 3$, $\sigma^2 = 1$ and $n = 4$, and find the limit as $n$ grows.
+\end{exercise}
+
+\section{Problem: Sharecropping in a Brenland orchard}\label{sec:b2:moral-hazard:problem}
+
+\begin{problem}[{Weekend problem --- an orchard owner in Brenland lets his orchard to a tenant for a share of the crop: what
+share is best, what does hidden effort cost, and how much does comparing with the neighbouring orchard save}]
+\label{pb:b2:moral-hazard:1}
+The crop is worth $y = e + \eta + \varepsilon$ hundred dalens a season, where $e$ is the tenant's effort, $\eta$ the weather, common to the
+neighbouring orchard, with variance 1{,}800, and $\varepsilon$ the orchard's own luck, with variance 200. Effort costs the tenant $0.01e^2/2$. The
+tenant keeps a share $b$ of the crop plus a fixed payment $a$ (negative if he pays a rent), and has \omterm{def:b2:expected-utility:cara}{constant absolute risk
+aversion} $r = 0.05$. The owner is risk neutral. Effort cannot be observed.
+
+\medskip
+\noindent\textbf{Part I --- Effort and output.}
+\begin{enumerate}
+  \item What effort does the tenant choose for a share $b$?
+  \item For $b = 0.5$, find expected output and the tenant's cost of effort.
+  \item For $b = 0.5$, find the variance of the crop and the tenant's \omterm{def:b2:expected-utility:risk-premium}{risk premium}.
+  \item Write the tenant's \omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalent} as a function of $a$ and $b$.
+  \item Why does $a$ not affect effort?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The first best.}
+\begin{enumerate}[resume]
+  \item If the owner could observe effort, what effort would he ask for?
+  \item What would the total surplus be?
+  \item With a fixed wage and no share, what effort and surplus result?
+  \item With a fixed rent, the tenant keeping the whole crop, what effort, \omterm{def:b2:expected-utility:risk-premium}{risk premium} and surplus result?
+  \item Why is neither extreme best?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- The linear share.}
+\begin{enumerate}[resume]
+  \item Write the surplus as a function of $b$.
+  \item Find the optimal share.
+  \item Find effort and expected output.
+  \item Find the \omterm{def:b2:expected-utility:risk-premium}{risk premium}, the cost of effort and the surplus.
+  \item What is the agency cost?
+  \item A law fixes the tenant's share at 0.75. Find effort and the surplus.
+  \item Why can such a law lower the surplus in this model, though in West Bengal output rose after a similar reform?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- The neighbour's yield.}
+\begin{enumerate}[resume]
+  \item What share of the crop's variance does the weather account for?
+  \item The contract pays on the orchard's crop minus the neighbour's, whose own luck also has variance 200. Find the variance
+    of this measure and the optimal share.
+  \item Find effort, the surplus and the agency cost.
+  \item Find the best weight on the neighbour's crop and the variance of the measure.
+  \item Find the optimal share, effort, surplus and agency cost.
+  \item With the best weight, what surplus does the 0.75 law now give?
+  \item Name two ways in which comparing with the neighbour could go wrong.
+  \item State the result: the optimal share, the agency cost, and its fall with relative evaluation.
+\end{enumerate}
+\end{problem}

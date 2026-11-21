@@ -1,0 +1,382 @@
+\chapter{The Three-Equation Model}\label{ch:b2:three-equation-model}
+
+Central banks set an interest rate, and they set it by looking at inflation and at how far output is from its normal
+level. This chapter builds the model that describes that practice in its simplest form: a supply side where wage and price
+setting fix equilibrium unemployment, a demand curve, a Phillips curve and a central bank that chooses the interest rate.
+It is a toy model, small enough to solve by hand. The chart compares the American policy rate with a simple rule published
+in 1993.
+
+\begin{openingchart}{United States: the federal funds rate and the rule $r = p + 0.5y + 0.5(p - 2) + 2$ of Taylor (1993), quarterly, 1960--2008; $p$ is CPI inflation over four quarters,
+  $y$ the per cent deviation of real GDP from a Hodrick--Prescott trend.}{Federal Reserve, H.15 (RIFSPFF\_N.M); statsmodels
+  macrodata (cpi, realgdp); our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.72\linewidth, height=0.42\linewidth, xmin=1960, xmax=2009, ymin=-2, ymax=25,
+    xticklabel style={/pgf/number format/1000 sep=}, ylabel={Per cent},
+    legend style={at={(0.97,0.97)}, anchor=north east, font=\scriptsize}]
+  \addplot[omDef, thick] table[x=t, y=ffr] {figdata/bachelor-2/27-three-equation-model/out/rule.csv};
+  \addlegendentry{federal funds rate}
+  \addplot[omThm, thick, dashed] table[x=t, y=rule] {figdata/bachelor-2/27-three-equation-model/out/rule.csv};
+  \addlegendentry{1993 rule}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: rule_dec (mean deviation: 1960s -0.49, 1970s -4.74, 1980s 0.88, 1990s -0.21, 2000s -2.13); rule_summary (MAD 1960-79 2.90, 1987-2007 1.40)
+In the 1970s the funds rate was on average 4.74 points below the rule; from 1987 to 2007 it stayed on average 1.40 points from it,
+against 2.90 in 1960--79. The rule was written in 1993 to describe policy since 1987, so the fit after 1987 is partly by
+construction; the 1970s gap is not. After 2001, and again after 2007, the rate went well below the rule.
+
+\begin{recall}
+From the Year 1 volume: the IS curve and an interest-rate rule for monetary policy; the natural rate of unemployment;
+aggregate supply and the expectations-augmented Phillips curve; the sacrifice ratio. From
+\cref{ch:b2:expectations-and-lucas-critique}: the \omterm{def:b2:expectations-and-lucas-critique:loss}{central-bank loss function}, \omterm{def:b2:expectations-and-lucas-critique:rational-expectations}{rational expectations} and the \omterm{def:b2:expectations-and-lucas-critique:lucas-critique}{Lucas critique}.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:three-equation-model:symbols}
+$x$ is the output gap, the per cent deviation of output from its equilibrium level (a local symbol here); $\pi$ is inflation and $\pi^{\mathrm T}$ the target; $r$ is the
+real interest rate, $i$ the nominal rate, $r^*$ the real rate that keeps output at equilibrium; $a$ is the effect of the real rate on
+output, $\alpha$ the slope of the Phillips curve, $\lambda$ the bank's weight on output; $\mu$ is the price markup as a share of output per worker.
+\end{notation}
+
+\section{Wage setting and price setting}\label{sec:b2:three-equation-model:ws-ps}
+
+\begin{definition}[Wage-setting curve]\label{def:b2:three-equation-model:ws}
+The \emph{wage-setting curve}\index{wage-setting curve} gives the real wage that results from wage setting, by bargaining or by
+employers paying efficiency wages, at each unemployment rate; it falls as unemployment rises, since workers' outside
+options worsen.
+\end{definition}
+
+\begin{definition}[Price-setting curve]\label{def:b2:three-equation-model:ps}
+The \emph{price-setting curve}\index{price-setting curve} gives the real wage implied by firms' pricing: with prices set as a
+markup on unit labour cost, the real wage equals output per worker times $1 - \mu$, independent of unemployment when output per worker is
+constant.
+\end{definition}
+
+Where the two curves cross, the real wage workers obtain is the real wage firms' prices leave them. At any lower
+unemployment, wage setters push for more than price setters allow: wages chase prices and prices chase wages, and inflation
+rises. At higher unemployment it falls. The crossing is equilibrium unemployment, and output there is equilibrium output.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=0.12, ymin=0.6, ymax=1.15, width=0.55\linewidth, height=0.4\linewidth,
+    xlabel={Unemployment rate, $u$}, ylabel={Real wage}, scaled x ticks=false, xticklabel style={/pgf/number format/fixed},
+    legend style={at={(1.03,0.5)}, anchor=west, font=\small}]
+  \addplot[omDef, very thick, domain=0:0.1, samples=2] {1.1 - 5*x};
+  \addlegendentry{WS: $1.1 - 5u$}
+  \addplot[omThm, very thick, domain=0:0.12, samples=2] {0.8};
+  \addlegendentry{PS, $\mu = 0.20$}
+  \addplot[omThm, thick, dashed, domain=0:0.12, samples=2] {0.75};
+  \addlegendentry{PS, $\mu = 0.25$}
+  \node[eqpoint] at (axis cs:0.06,0.8) {};
+  \node[eqpoint] at (axis cs:0.07,0.75) {};
+  \draw[guide] (axis cs:0.06,0.8) -- (axis cs:0.06,0.6);
+  \draw[guide] (axis cs:0.07,0.75) -- (axis cs:0.07,0.6);
+\end{axis}
+\end{tikzpicture}
+
+{\small Brenland's wage-setting and \omterm{def:b2:three-equation-model:ps}{price-setting curves} (the weekend problem). Equilibrium unemployment is 6 per cent; a rise
+in the markup from 0.20 to 0.25 lowers the price-setting real wage and raises it to 7 per cent.}
+\end{omfigure}
+
+\section{A demand curve with expectations}\label{sec:b2:three-equation-model:is}
+
+Spending depends on the real interest rate, and with a lag: investment plans and durable purchases take time to respond.
+In gap form, $x_t = -a(r_{t-1} - r^*)$. The rate $r^*$ is the real rate at which output is at its equilibrium level; it changes when the demand curve shifts. The
+central bank sets a nominal rate, and the real rate is the nominal rate minus the inflation people expect.
+
+\section{A Phillips curve}\label{sec:b2:three-equation-model:pc}
+
+With expectations of inflation equal to last period's inflation, the Phillips curve is $\pi_t = \pi_{t-1} + \alpha x_t$: inflation rises when output is above its
+equilibrium level, the gap between the curves of the WS--PS diagram. Each Phillips curve is drawn for one value of past
+inflation, and it shifts each period.
+
+\section{A monetary rule}\label{sec:b2:three-equation-model:mr}
+
+\begin{definition}[Three-equation model]\label{def:b2:three-equation-model:three-equation}
+The \emph{three-equation model}\index{three-equation model} of monetary policy is the model made of a demand (IS)
+equation, a Phillips curve and a monetary rule derived from the central bank's loss function.
+\end{definition}
+
+The bank's loss is $L = (\pi_t - \pi^{\mathrm T})^2 + \lambda x_t^2$. Because of the lag in the IS curve, it cannot affect this period's output: it sets $r_{t-1}$ now to choose next period's point on next
+period's Phillips curve. Minimising the loss subject to $\pi_t = \pi_{t-1} + \alpha x_t$: $2\alpha(\pi_t - \pi^{\mathrm T}) + 2\lambda x_t = 0$.
+
+\begin{definition}[Monetary-rule curve]\label{def:b2:three-equation-model:mr}
+The \emph{monetary-rule curve}\index{monetary-rule curve} is the set of combinations of inflation and output gap that the
+central bank chooses, given its loss function and the Phillips curve it faces: here $x = -\dfrac{\alpha}{\lambda}(\pi - \pi^{\mathrm T})$.
+\end{definition}
+
+Combining the MR curve with the Phillips curve and the IS curve gives the interest rate the bank must set. With $\pi_{t-1}$ known,
+\begin{equation}\label{eq:b2:three-equation-model:rule}
+\pi_t - \pi^{\mathrm T} = \frac{\pi_{t-1} - \pi^{\mathrm T}}{1 + \alpha^2/\lambda}, \qquad r_{t-1} - r^* = \frac{\alpha}{a(\lambda + \alpha^2)}(\pi_{t-1} - \pi^{\mathrm T}).
+\end{equation}
+The bank raises the real rate in proportion to the inflation gap, and each period inflation closes the same fraction of its
+gap. The output gap does not appear in the rule only because the model has no demand shocks that the bank can see
+coming; with them, it appears too.
+
+\begin{definition}[Taylor rule]\label{def:b2:three-equation-model:taylor-rule}
+A \emph{Taylor rule}\index{Taylor rule} is an interest-rate rule in which the central bank sets its policy rate as a linear
+function of inflation, or its gap from the target, and of the output gap, $i = r^* + \pi + \phi_\pi(\pi - \pi^{\mathrm T}) + \phi_x x$.
+\end{definition}
+
+\begin{record}[Rules and rates, 1960--2007]
+% ledger: b2:taylor1993, b2:cgg2000; figdata: rule_summary
+Taylor (1993) proposed the rule of the opening chart, with an inflation target of 2 per cent and an equilibrium real rate of 2 per cent,
+and found that it fitted actual policy remarkably well over 1987--1992, except in 1987, when the Federal Reserve eased after the
+stock-market crash. Clarida, Gal\'i and Gertler (2000) estimated forward-looking rules for the post-war United States and found that
+policy after 1979 was much more sensitive to expected inflation than before, and that the later rule was stabilising in a
+simple model, the earlier one not. In the chart the rate was on average 4.74 points below the rule in the 1970s.
+\end{record}
+
+\section{Shocks and responses}\label{sec:b2:three-equation-model:shocks}
+
+Take Brenland's parameters: $\alpha = 0.5$, $\lambda = 0.5$, $a = 0.5$, $r^* = 2$ and a target of 2 per cent. An inflation shock raises inflation to 5 per cent. The MR curve is $x = -(\pi - 2)$, and the bank aims at the point
+of next period's Phillips curve $\pi = 5 + 0.5x$ that lies on it: $x = -2$, $\pi = 4$. To get there it sets the real rate at $r = 2 + 2/0.5 = 6$ per cent. Next period, with inflation 4, the
+Phillips curve has shifted down, and so on.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=-3, xmax=1.5, ymin=1, ymax=6, width=0.55\linewidth, height=0.45\linewidth,
+    xlabel={Output gap, $x$}, ylabel={Inflation, $\pi$}, clip=false]
+  \draw[black!40] (axis cs:0,1) -- (axis cs:0,6);
+  \addplot[omThm, very thick, domain=-3:1, samples=2] {2 - x};
+  \addplot[omDef, thick, domain=-3:1.5, samples=2] {5 + 0.5*x};
+  \addplot[omDef, thick, dashed, domain=-3:1.5, samples=2] {4 + 0.5*x};
+  \addplot[omDef, thick, dotted, domain=-3:1.5, samples=2] {3.3333 + 0.5*x};
+  \node[eqpoint, label={[font=\small]right:A}] at (axis cs:0,5) {};
+  \node[eqpoint, label={[font=\small]below left:B}] at (axis cs:-2,4) {};
+  \node[eqpoint, label={[font=\small]below left:C}] at (axis cs:-1.3333,3.3333) {};
+  \node[eqpoint, label={[font=\small]right:Z}] at (axis cs:0,2) {};
+  \node[font=\small, anchor=south west] at (axis cs:-2.95,5.0) {MR};
+  \node[font=\scriptsize, anchor=west] at (axis cs:1.55,5.75) {PC, $\pi_{-1} = 5$};
+  \node[font=\scriptsize, anchor=west] at (axis cs:1.55,4.75) {PC, $\pi_{-1} = 4$};
+  \node[font=\scriptsize, anchor=west] at (axis cs:1.55,4.08) {PC, $\pi_{-1} = 3.33$};
+\end{axis}
+\end{tikzpicture}
+
+{\small Adjustment after an inflation shock. The economy starts at A, with inflation 5 and output at equilibrium. The bank
+chooses B, where the Phillips curve for past inflation 5 meets the MR curve; then C on the next Phillips curve (dashed); and so on down
+the MR curve to Z, the target with a zero gap.}
+\end{omfigure}
+
+The listing follows the path period by period. The nominal rate is the real rate plus expected inflation, which here is
+current inflation.
+
+\omcode{code/bachelor-2/27-three-equation-model/listings/three_eq.py}{1}{27}{The path of inflation and interest rates
+after an inflation shock.}\label{lst:b2:three-equation-model:path}
+
+\omoutput{code/bachelor-2/27-three-equation-model/outputs/three_eq.txt}{Inflation closes a third of its gap each period;
+the real rate starts 4 points above $r^*$; the cumulated output loss is twice the fall in inflation.}\label{out:b2:three-equation-model:path}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=-0.3, xmax=8.3, ymin=0, ymax=12, width=0.55\linewidth, height=0.38\linewidth,
+    xlabel={Period}, ylabel={Per cent}, legend style={at={(1.03,0.5)}, anchor=west, font=\small}]
+  \addplot[omDef, thick, mark=*, mark size=1.4pt, samples at={0,...,8}] {2 + 4*(2/3)^x + 2 + 3*(2/3)^x};
+  \addlegendentry{nominal rate}
+  \addplot[omThm, thick, mark=square*, mark size=1.4pt, samples at={0,...,8}] {2 + 4*(2/3)^x};
+  \addlegendentry{real rate}
+  \addplot[omMeth, thick, mark=triangle*, mark size=1.6pt, samples at={0,...,8}] {2 + 3*(2/3)^x};
+  \addlegendentry{inflation}
+\end{axis}
+\end{tikzpicture}
+
+{\small The interest-rate path of the listing: both rates jump and then fall back with inflation. The nominal rate moves by
+more than inflation: it starts 7 points above its long-run level of 4 when inflation is 3 points above target.}
+\end{omfigure}
+
+% code: listings/three_eq.py; exercises/solutions.py cumulated_loss
+The cumulated output loss is 6 per cent of a period's output, twice the 3-point fall in inflation: a sacrifice ratio of 2, which is $1/\alpha$. It does not depend on $\lambda$: a
+bank that cares more about output spreads the same total loss over more periods. With a Phillips curve built on past
+inflation, each point of disinflation must be bought with $1/\alpha$ points of output below equilibrium.
+
+\begin{model}{The three-equation model}
+\assumes A Phillips curve with expectations equal to past inflation; demand that responds to the real rate with a lag; a
+central bank that minimises a quadratic loss and knows the economy's parameters; no financial sector.
+\predicts An interest-rate rule that raises the real rate with the inflation gap; inflation and output returning to
+target along the MR curve; a sacrifice ratio of $1/\alpha$.
+\tested From the mid-1980s to 2007 the American funds rate stayed close to a simple rule of this form (Taylor 1993; the
+opening chart); policy after 1979 responded more strongly to inflation than before (Clarida, Gal\'i and Gertler 2000).
+\breaks In 2008 a financial crisis, outside the model, drove rates to zero; estimates on American states find a Phillips
+curve that is flat (Hazell, Herre\~no, Nakamura and Steinsson 2022), so the output cost of moving inflation would be large; in 2021--22 inflation rose a
+long way before rates did.
+\end{model}
+
+\begin{omchart}{United States: CPI inflation over twelve months and the federal funds rate, monthly, January 2019 to
+  October 2026, per cent.}{Bureau of Labor Statistics, CPI-U; Federal Reserve, H.15 (RIFSPFF\_N.M); our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.7\linewidth, height=0.38\linewidth, xmin=2019, xmax=2026.9, ymin=0, ymax=10,
+    xticklabel style={/pgf/number format/1000 sep=}, ylabel={Per cent},
+    legend style={at={(0.03,0.97)}, anchor=north west, font=\scriptsize}]
+  \addplot[omMeth, thick] table[x=t, y=infl] {figdata/bachelor-2/27-three-equation-model/out/recent.csv};
+  \addlegendentry{CPI inflation}
+  \addplot[omDef, thick] table[x=t, y=ffr] {figdata/bachelor-2/27-three-equation-model/out/recent.csv};
+  \addlegendentry{federal funds rate}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\begin{record}[2021--23]
+% figdata: recent_summary (CPI peak 9.1 in 2022-06 with ffr 1.21; ffr first above 0.5 in 2022-05; ffr peak 5.33 in 2023-08; 2026-10: CPI 3.9, ffr 3.88)
+American CPI inflation over twelve months peaked at 9.1 per cent in June 2022. The funds rate first rose above half a point in
+May 2022 and was 1.21 per cent in the month of the peak; it reached 5.33 per cent in August 2023. In the model the bank responds
+to inflation at once and the real rate rises with it; in 2021--22 the real rate, measured with current inflation, fell to
+far below zero before it rose. Whether this was a misreading of the shocks as temporary or a deliberate choice is
+outside the model; the record is that inflation rose a long way before policy moved.
+\end{record}
+
+\section{The rule must react more than one for one}\label{sec:b2:three-equation-model:taylor-principle}
+
+\begin{definition}[Taylor principle]\label{def:b2:three-equation-model:taylor-principle}
+The \emph{Taylor principle}\index{Taylor principle} is the requirement that the nominal policy rate rise by more than one
+point for each point of rise in inflation, so that the real rate rises when inflation rises.
+\end{definition}
+
+\begin{proposition}[The Taylor principle in the three-equation model]\label{prop:b2:three-equation-model:principle}
+Let the bank set $i_t = r^* + \pi^{\mathrm T} + \phi(\pi_t - \pi^{\mathrm T})$, with expected inflation $\pi_t$. Inflation returns to target from any starting point if and only if $1 < \phi < 1 + 2/(a\alpha)$.
+\end{proposition}
+
+\begin{proof}
+The real rate is $r_t = i_t - \pi_t = r^* + (\phi - 1)(\pi_t - \pi^{\mathrm T})$. Then $x_{t+1} = -a(\phi - 1)(\pi_t - \pi^{\mathrm T})$, and the Phillips curve gives $\pi_{t+1} - \pi^{\mathrm T} = (1 - a\alpha(\phi - 1))(\pi_t - \pi^{\mathrm T})$. The gap shrinks to zero if and only if $|1 - a\alpha(\phi - 1)| < 1$, that is
+$0 < a\alpha(\phi - 1) < 2$.
+\end{proof}
+
+With $\phi < 1$, a rise in inflation lowers the real rate, raises output and raises inflation further. With Brenland's parameters the derived rule
+has $\phi = 1 + 4/3$: the nominal rate rises by 2.33 points per point of inflation, and each period the gap shrinks to $1 - 0.25 \times 4/3 = 2/3$ of its value. A rule with
+$\phi = 0.5$ would multiply the gap by 1.125 each period.
+
+\section{The zero lower bound}\label{sec:b2:three-equation-model:zlb}
+
+Cash pays a nominal return of zero, so the nominal rate cannot go much below zero. When inflation is low and $r^*$ has fallen, the rule
+may call for a negative nominal rate. With $r^* = 1$, inflation 0.5 and Brenland's rule, the desired real rate is $1 - \tfrac43 \times 1.5 = -1$, a nominal rate of $-0.5$. Set at zero, the real rate is only $-0.5$: next
+period's gap is 0.75 instead of the 1.0 the bank wanted, and inflation returns more slowly.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=-1, xmax=4, ymin=-3, ymax=8, width=0.5\linewidth, height=0.4\linewidth,
+    xlabel={Inflation, $\pi$}, ylabel={Nominal rate, $i$}]
+  \draw[black!40] (axis cs:-1,0) -- (axis cs:4,0);
+  \addplot[omDef, thick, dashed, domain=-1:0.714, samples=2] {7/3*x - 5/3};
+  \addplot[omDef, very thick, domain=0.714:4, samples=2] {7/3*x - 5/3};
+  \addplot[omDef, very thick, domain=-1:0.714, samples=2] {0};
+  \node[eqpoint] at (axis cs:0.714,0) {};
+\end{axis}
+\end{tikzpicture}
+
+{\small The rule $i = r^* + \pi + \tfrac43(\pi - 2)$ with $r^* = 1$, and the zero lower bound: below an inflation rate of about 0.71 per cent, the rule asks for a negative rate
+(dashed), and the rate set stays at zero.}
+\end{omfigure}
+
+The model's forward-looking variant replaces past inflation by expected future inflation in the Phillips curve. Then a
+promise to keep rates low for longer, after the bound stops binding, raises expected inflation and lowers the real rate
+today; the promise works only if it is believed, which is the credibility problem of
+\cref{ch:b2:expectations-and-lucas-critique}.
+
+\section{Exercises}\label{sec:b2:three-equation-model:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:three-equation-model:1}
+Read the opening chart. In which decade was the funds rate furthest below the rule on average? Compare the average distance
+from the rule in 1960--79 and 1987--2007.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:three-equation-model:2}
+Read the chart of 2019--2026. When did inflation peak, and what was the funds rate then? When did the rate first exceed half a
+point, and when did it peak?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:three-equation-model:3}
+The \omterm{def:b2:three-equation-model:ws}{wage-setting curve} is $1.2 - 4u$ and the price-setting real wage 0.8. Find equilibrium unemployment.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:three-equation-model:4}
+With inflation at 4 per cent and output 1 per cent below trend, what funds rate does the 1993 rule give?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:three-equation-model:5}
+With $\alpha = \lambda = a = 1$, find the MR curve, the fraction of the inflation gap left after one period, and the coefficient of the interest-rate rule.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:three-equation-model:6}
+Predict, then compute: with Brenland's parameters, a one-period demand shock raises the output gap to 2 with past inflation at target.
+What are inflation this period, inflation and the gap the bank chooses for next period, and the real and nominal rates it sets?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:three-equation-model:7}
+With $r^* = 1$, inflation 0.5 and Brenland's rule, find the nominal rate the rule asks for, the rate set, and next period's output gap with
+and without the bound.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:three-equation-model:8}
+Modify the listing to set $\lambda = 2$. What happens to the first period's inflation, real rate and output gap, and to the cumulated output loss?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:three-equation-model:9}
+\textbf{(D)} With the macrodata and H.15 series, compute the funds rate minus the 1993 rule, quarterly 1960--2008, and report
+its mean and its mean absolute value by decade.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:three-equation-model:10}
+Derive \eqref{eq:b2:three-equation-model:rule} from the loss function, the Phillips curve and the IS curve.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:three-equation-model:11}
+Show that the derived rule satisfies the \omterm{def:b2:three-equation-model:taylor-principle}{Taylor principle} for all positive $a$, $\alpha$ and $\lambda$, and find the $\phi$ that the proposition's upper bound would allow with
+Brenland's parameters.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:three-equation-model:12}
+Show that, after an inflation shock that leaves a gap $g_0$, the cumulated output loss along the MR path is $g_0/\alpha$ whatever $\lambda$.
+\end{exercise}
+
+\section{Problem: Brenland's central bank meets a supply shock}\label{sec:b2:three-equation-model:problem}
+
+\begin{problem}[{Weekend problem --- Brenland's central bank meets a supply shock: wage and price setting, the Phillips and
+MR curves, the path of rates, and the cost of disinflation}]
+\label{pb:b2:three-equation-model:1}
+Brenland's \omterm{def:b2:three-equation-model:ws}{wage-setting curve} is $1.1 - 5u$ and firms price at a markup of 0.20 of output per worker, which is 1. Demand is $x_t = -0.5(r_{t-1} - 2)$; the Phillips curve is
+$\pi_t = \pi_{t-1} + 0.5x_t$; the central bank's loss is $(\pi - 2)^2 + 0.5x^2$. A supply shock has just raised inflation to 5 per cent, with output at equilibrium.
+
+\medskip
+\noindent\textbf{Part I --- Wage and price setting.}
+\begin{enumerate}
+  \item What does the \omterm{def:b2:three-equation-model:ws}{wage-setting curve} say about bargaining?
+  \item Find the price-setting real wage.
+  \item Find equilibrium unemployment.
+  \item What happens to inflation if unemployment is held at 4 per cent?
+  \item The markup rises to 0.25. Find the new equilibrium unemployment.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The Phillips and MR curves.}
+\begin{enumerate}[resume]
+  \item Write the Phillips curve the bank faces for next period.
+  \item Derive the MR curve.
+  \item Find the point the bank chooses for next period.
+  \item What real rate does it set now?
+  \item What nominal rate, if expected inflation is current inflation?
+  \item Write the interest-rate rule as $r - r^*$ in terms of $\pi - \pi^{\mathrm T}$.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- The path.}
+\begin{enumerate}[resume]
+  \item What fraction of the inflation gap is left each period?
+  \item Find inflation and the output gap in period 2.
+  \item Find the real rate set in period 1.
+  \item After how many periods is inflation below 2.5 per cent?
+  \item Check the first rows of the listing's output against your answers.
+  \item What nominal-rate coefficient on inflation does the rule imply? Does it satisfy the \omterm{def:b2:three-equation-model:taylor-principle}{Taylor principle}?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- The cost.}
+\begin{enumerate}[resume]
+  \item Find the cumulated output loss.
+  \item Find the sacrifice ratio.
+  \item With a weight of 2 on output, find the first period's inflation and output gap.
+  \item What is the cumulated loss with that weight?
+  \item Why is the total cost the same, and what does the weight change?
+  \item What would a flatter Phillips curve, $\alpha = 0.25$, do to the sacrifice ratio?
+  \item If the shock had come with a fall in $r^*$ to 0.5, would the zero lower bound have mattered at the start? Why not?
+  \item State the result: the interest-rate path, the cumulated output loss and the sacrifice ratio of the disinflation.
+\end{enumerate}
+\end{problem}

@@ -1,0 +1,115 @@
+\section*{Chapter \ref{ch:b2:specification} --- Specification}
+
+\begin{solution}{exo:b2:specification:1}
+% figdata: attenuation
+At $\sigma_e^2 = 1$ the estimate is 0.99, against a limit of 1; the \omterm{def:b2:specification:reliability}{reliability ratio} is $1/(1 + 1) = 0.5$.
+\end{solution}
+
+\begin{solution}{exo:b2:specification:2}
+% code: listings/engel.py
+A 1 per cent rise in income goes with 0.856 per cent more food spending. A 10 per cent rise raises food spending by about
+8.6 per cent (exactly $1.1^{0.856} - 1 = 8.5$ per cent), less than income, so the budget share falls.
+\end{solution}
+
+\begin{solution}{exo:b2:specification:3}
+% code: listings/dummies.py
+With a constant, a fifth dummy would make the dummies sum to the constant: the \omterm{def:b2:specification:dummy-trap}{dummy-variable trap}. Size 1 is the omitted
+category. A household of three: $e^{0.440} - 1 = 55$ per cent more.
+\end{solution}
+
+\begin{solution}{exo:b2:specification:4}
+If none of the twenty mattered, at least one would be significant at 5 per cent with probability about 0.64. One
+significant result in twenty is what chance alone predicts; the reader should ask for all twenty results, or a threshold
+of $0.05/20$.
+\end{solution}
+
+\begin{solution}{exo:b2:specification:5}
+% code: exercises/solutions.py percent
+About 15 per cent; exactly $e^{0.15} - 1 = 16.2$ per cent.
+\end{solution}
+
+\begin{solution}{exo:b2:specification:6}
+$\lambda\beta = 2/(1 + \sigma_e^2)$: 1.6 needs $\sigma_e^2 = 0.25$, 1 needs $\sigma_e^2 = 1$; the listing prints 1.605 and
+1.006.
+\end{solution}
+
+\begin{solution}{exo:b2:specification:7}
+% code: exercises/solutions.py engel_quadratic
+The coefficients are 0.872 on centred log income and $-0.077$ on its square ($p = 0.014$): the elasticity falls with
+income, $0.872 - 2 \times 0.077 \times (\ln\mathit{inc} - \overline{\ln\mathit{inc}})$. It is 0.96 at the 10th percentile of
+income and 0.79 at the 90th.
+\end{solution}
+
+\begin{solution}{exo:b2:specification:8}
+% code: exercises/solutions.py proxy_coef; tests/test_solutions.py proxy_plim
+A better proxy removes more of the bias: 0.083, against 0.091 with the noisier score and 0.080 with ability itself. The
+population value is $0.08 + 0.10\,\delta$, with $\delta = (1.5 \times 1.09 - 1.5)/(6.25 \times 1.09 - 1.5^2) = 0.030$.
+\end{solution}
+
+\begin{solution}{exo:b2:specification:9}
+The programme may change the worker's occupation; comparing trained and untrained workers in the same occupation removes
+that channel and compares groups that differ in unobserved ways. Good controls are fixed before the programme: age,
+schooling, earlier earnings and occupation before the programme.
+\end{solution}
+
+\begin{solution}{exo:b2:specification:10}
+By the theorem the slope on $x_1$ is the slope of $y$ on $\tilde x_1$, the residual of $x_1$ on $x_2$. Since $e$ is
+uncorrelated with $x_2$, the regression of $x_1$ on $x_2$ has the same limit as that of $x_1^*$, so $\tilde x_1 = \tilde
+x_1^* + e$ in the limit, and $y$ moves with
+$\tilde x_1^*$ at rate $\beta_1$; so the slope converges to $\beta_1\operatorname{Var}(\tilde x_1^*)/(\operatorname{Var}(\tilde x_1^*) + \operatorname{Var}(e)) = \lambda_1\beta_1$.
+Since $\operatorname{Var}(\tilde x_1^*) \leq \operatorname{Var}(x_1^*)$ and the noise variance is unchanged, $\lambda_1 \leq
+\lambda$.
+\end{solution}
+
+\begin{solution}{exo:b2:specification:11}
+If $y = y^* + v$ with $v$ independent of $x$, then $y = \beta_0 + \beta x + (u + v)$ and $x$ is still uncorrelated with the
+error: the slope is consistent. The error variance rises from $\sigma_u^2$ to $\sigma_u^2 + \sigma_v^2$, and the variance
+of the slope rises in proportion.
+\end{solution}
+
+\begin{solution}{exo:b2:specification:12}
+% code: exercises/solutions.py any_rejection
+The probability of a union is at most the sum of the probabilities: $k\alpha$. Under independence the probability that
+none rejects is $(1 - \alpha)^k$. With $\alpha = 0.05$: bound 1 (useless), exact 0.642. With $\alpha = 0.0025$: bound
+0.05, exact 0.0488.
+\end{solution}
+
+\begin{solution}{pb:b2:specification:1}
+% code: exercises/solutions.py brenland_food, corrected, bonferroni_z, any_rejection; listings/dummies.py
+\textbf{Part I.}
+1. 0.288; $R^2 = 0.181$.
+2. A necessity: the elasticity is below one.
+3. By about 2.9 per cent.
+4. It falls, since food spending rises less than in proportion.
+5. The slope is then an elasticity, free of units, and the relation is closer to linear.
+\textbf{Part II.}
+6. 0.196; $R^2 = 0.924$.
+7. Larger households have both more income and more mouths to feed; without size, the income coefficient picked up part
+of the effect of size.
+8. 0.246, 0.440, 0.597 and 0.738 for sizes 2 to 5; a household of five spends $e^{0.738} - 1 = 109$ per cent more than a
+single person with the same income.
+9. Size 1 is the omitted category; a dummy for it with the constant would be the \omterm{def:b2:specification:dummy-trap}{dummy-variable trap}.
+10. $+0.001$ (s.e.\ 0.004): owners and tenants of the same size and income spend the same on food.
+11. Tenants 0.187, owners 0.211.
+12. Yes: $t = 2.64$ (from the unrounded coefficient and standard error), above 1.96.
+\textbf{Part III.}
+13. Toward zero.
+14. $0.196/0.8 = 0.245$.
+15. By the \omterm{def:b2:multiple-regression:fwl}{Frisch--Waugh--Lovell theorem} the elasticity comes from the part of income not predicted by size, and it is the
+reliability of that part which sets the attenuation.
+16. No: without size, the reliability of the whole of reported income would apply, which is higher, and the elasticity
+itself would be a different one.
+17. No: error in the outcome raises the standard errors but leaves the slope unbiased.
+18. Then the error is negatively correlated with true income and the classical correction is wrong; the bias depends on
+how reporting varies with income.
+\textbf{Part IV.}
+19. $1 - 0.95^{20} = 0.642$.
+20. $0.05/20 = 0.0025$; $|t| > 3.02$.
+21. No: its $t$ is 2.64.
+22. The regressors, the form and the sample of the regression it will report, and how many others it will try.
+23. It was chosen for a reason given in advance (larger households eat more), not found by the search.
+24. No: choosing after seeing the data is a search too, and the number of tries is then not twenty but unknown.
+25. Brenland's food--income elasticity, holding household size fixed, is 0.196 as measured and $0.196/0.8 = 0.245$
+corrected for the reliability of reported income; with twenty tries, a result should count only if its $p$-value is below
+0.0025.
+\end{solution}

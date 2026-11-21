@@ -1,0 +1,270 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g12-09. The consumption function; planned expenditure and
+% equilibrium output; the multiplier as a geometric series, with taxes and imports; the toy model and what shrinks the
+% multiplier; measured multipliers (debate). Real numbers: figdata/grade-12/09-keynesian-cross/ (Ramey 2019 Table 1 as a
+% cited table; Brenland's propensities fitted on the invented accounts). Ledger: Ramey 2019 (abstract, text, Tables 1 and 3),
+% Blanchard-Leigh 2013 abstract, and Book 3's rows on Ramey-Zubairy 2018, Auerbach-Gorodnichenko 2012 and
+% Nakamura-Steinsson 2014.
+\chapter{The Keynesian Cross and the Multiplier}\label{ch:g12:keynesian-cross}
+
+When a government spends one more dollar, by how much does output rise? Since the financial crisis of 2008, economists have estimated the answer in dozens of studies,
+with different methods, countries and periods. A survey of them found that most estimates of the average government-spending multiplier lie between 0.6 and 1: one more
+dollar of \omterm{def:g10:national-accounts:investment}{government purchases} raises output by less than a dollar, or by about one.
+% ledger: g12:ramey-abstract
+
+This chapter builds the simplest model of the question, in which the answer can be much larger, then shows each assumption that makes it large, and what happens to the
+answer when each is dropped.
+
+\begin{openingchart}{Estimates of the cumulative government-spending multiplier, from time-series studies (blue) and estimated models of the whole economy (red); a dot is a
+single estimate, a bar the range a study reports across samples or horizons.}{Ramey (2019), Table 1, and the studies it surveys}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.62\linewidth, height=7.4cm, xmin=0, xmax=2.2, ymin=0.3, ymax=14.7, xlabel={multiplier},
+  ytick={1,...,14}, yticklabels from table={figdata/grade-12/09-keynesian-cross/out/multipliers.csv}{label}, y dir=reverse,
+  y tick label style={font=\scriptsize}, xtick={0,0.5,...,2}, ymajorgrids=false, xmajorgrids=true]
+\addplot[gray, dashed, sharp plot, no marks, samples=2, domain=0.3:14.7] ({1}, {x});
+\addplot[only marks, mark=*, mark size=1.6pt, color=omDef, error bars/.cd, x dir=both, x explicit, error bar style={line width=1.2pt}]
+  table[x=mid, y expr=15-\thisrow{pos}, x error minus=em, x error plus=ep, restrict expr to domain={\thisrow{pos}}{6:14}]
+  {figdata/grade-12/09-keynesian-cross/out/multipliers.csv};
+\addplot[only marks, mark=*, mark size=1.6pt, color=omThm, error bars/.cd, x dir=both, x explicit, error bar style={line width=1.2pt}]
+  table[x=mid, y expr=15-\thisrow{pos}, x error minus=em, x error plus=ep, restrict expr to domain={\thisrow{pos}}{1:5}]
+  {figdata/grade-12/09-keynesian-cross/out/multipliers.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From \cref{ch:g10:national-accounts}: output equals spending, $Y = C + I + G + X - M$. From \cref{ch:g12:saving-and-investment}: \omterm{def:g12:saving-and-investment:crowding-out}{crowding out}. From
+\cref{ch:g12:aggregate-demand-and-supply}: \omterm{def:g12:aggregate-demand-and-supply:ad}{aggregate demand}, \omterm{def:g12:aggregate-demand-and-supply:sticky-price}{sticky prices} and \omterm{def:g12:aggregate-demand-and-supply:potential-output}{potential output}. From mathematics: the sum of a geometric series.
+\end{recall}
+
+\section{Planned spending and equilibrium output}\label{sec:g12:keynesian-cross:equilibrium}
+
+\begin{definition}[Consumption function]\label{def:g12:keynesian-cross:consumption-function}
+A \emph{consumption function}\index{consumption function} gives households' consumption as a function of their disposable income: here $C = C_0 + c\,(Y - T)$, where $C_0$
+is consumption that does not depend on income.
+\end{definition}
+
+\begin{definition}[Marginal propensity to consume]\label{def:g12:keynesian-cross:mpc}
+The \emph{marginal propensity to consume}\index{marginal propensity to consume} $c$ is the share of an extra unit of disposable income that is spent on consumption.
+\end{definition}
+
+\begin{definition}[Planned expenditure and autonomous spending]\label{def:g12:keynesian-cross:planned-expenditure}
+\emph{Planned expenditure}\index{planned expenditure} is the total that households, firms, the government and foreigners plan to spend at a given level of output.
+\emph{Autonomous spending}\index{autonomous spending}\phantomsection\label{def:g12:keynesian-cross:autonomous} is the part of it that does not depend on output.
+\end{definition}
+
+In a closed economy without taxes, \omterm{def:g12:keynesian-cross:planned-expenditure}{planned expenditure} is $PE = C_0 + cY + I + G$. If firms produce more than is planned to be bought, unsold goods pile up and they cut
+output; if they produce less, stocks run down and they raise it. Output settles where $Y = PE$. With $C_0 = 100$, $c = 0.8$, $I = 50$ and $G = 50$, \omterm{def:g12:keynesian-cross:planned-expenditure}{autonomous spending} is
+200 and $Y = 200 + 0.8Y$ gives $Y = 1000$. If government spending rises by 100, $Y = 300 + 0.8Y$ gives $Y = 1500$: output rises by 500, five times the rise in spending.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[width=0.62\linewidth, height=6.0cm, xmin=0, xmax=2000, ymin=0, ymax=2000, xlabel={output $Y$}, ylabel={planned expenditure},
+  xtick={400,1000,1500}, ytick={400,1000,1500}, grid=major, grid style={gray!20}, scaled ticks=false]
+\addplot[gray, thick, domain=0:2000, samples=2] {x};
+\addplot[omDef, thick, domain=0:2000, samples=2] {200 + 0.8*x};
+\addplot[omDef, thick, dashed, domain=0:2000, samples=2] {300 + 0.8*x};
+\addplot[omThm, thick, dashed, domain=0:2000, samples=2] {200 + 0.5*x};
+\node[font=\scriptsize, anchor=north west] at (axis cs:1450,1800) {$PE = Y$};
+\node[font=\scriptsize, omDef, anchor=south east] at (axis cs:600,780) {$PE'$};
+\node[font=\scriptsize, omDef, anchor=north west] at (axis cs:600,680) {$PE$};
+\node[font=\scriptsize, omThm, anchor=north west] at (axis cs:1300,840) {with leakages};
+\fill (axis cs:1000,1000) circle (1.5pt) (axis cs:1500,1500) circle (1.5pt) (axis cs:400,400) circle (1.5pt);
+\end{axis}
+\end{tikzpicture}
+
+{\small The cross. \omterm{def:g12:keynesian-cross:planned-expenditure}{Planned expenditure} $PE = 200 + 0.8Y$ meets the line $PE = Y$ at 1000; a rise of 100 in spending moves it to 1500. With taxes and imports (the red line,
+slope 0.5), the same \omterm{def:g12:keynesian-cross:planned-expenditure}{autonomous spending} gives output 400, and each extra unit of spending raises output by 2, not 5.}
+\end{omfigure}
+
+\section{The multiplier}\label{sec:g12:keynesian-cross:multiplier}
+
+\begin{definition}[Spending multiplier]\label{def:g12:keynesian-cross:multiplier}
+The \emph{spending multiplier}\index{spending multiplier} is the change in output caused by a change in \omterm{def:g12:keynesian-cross:planned-expenditure}{autonomous spending}, divided by that change.
+\end{definition}
+
+\begin{proposition}[The multiplier in the cross]\label{prop:g12:keynesian-cross:multiplier}
+In the model without taxes or imports, with $0 < c < 1$, a rise $\Delta A$ in \omterm{def:g12:keynesian-cross:planned-expenditure}{autonomous spending} raises output by $\Delta A / (1 - c)$.
+\end{proposition}
+\begin{proof}
+The rise $\Delta A$ is someone's income; they spend $c\,\Delta A$ of it, which is someone else's income, who spends $c^2 \Delta A$, and so on. After $n$ rounds output has
+risen by $\Delta A (1 + c + \dots + c^{n-1}) = \Delta A (1 - c^n)/(1 - c)$. Since $0 < c < 1$, $c^n \to 0$, and the total tends to $\Delta A/(1 - c)$. The same follows in one
+line from $Y = A + cY$: $Y = A/(1 - c)$, so $\Delta Y = \Delta A/(1 - c)$.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[ybar, /pgf/bar width=10pt, width=0.62\linewidth, height=4.6cm, xmin=0.4, xmax=10.6, ymin=0, ymax=110, xlabel={round of spending},
+  ylabel={new spending}, xtick={1,...,10}, grid=major, grid style={gray!20}]
+\addplot[fill=omDef!60, draw=omDef, domain=1:10, samples=10] {100*0.8^(x-1)};
+\end{axis}
+\end{tikzpicture}
+
+{\small A rise of 100 in spending with $c = 0.8$: each round spends 80\,\% of the one before. After three rounds output has risen by 244, after ten by 446; the total
+tends to 500.}
+\end{omfigure}
+
+\begin{definition}[Marginal propensity to import]\label{def:g12:keynesian-cross:mpm}
+The \emph{marginal propensity to import}\index{marginal propensity to import} $m$ is the share of an extra unit of output that is spent on imports.
+\end{definition}
+
+\begin{proposition}[The multiplier with taxes and imports]\label{prop:g12:keynesian-cross:leakages}
+If taxes are a share $t$ of output and imports a share $m$, the multiplier is $1/(1 - c(1 - t) + m)$, smaller than $1/(1 - c)$ when $t > 0$ or $m > 0$.
+\end{proposition}
+\begin{proof}
+Consumption is $C_0 + c(1 - t)Y$ and imports are $mY$, so $Y = A + c(1 - t)Y - mY$ and $Y = A/(1 - c(1 - t) + m)$. The denominator rises with $t$ and with $m$.
+\end{proof}
+
+Taxes and imports are leaks: each round of spending loses part of its income to the government and part to foreign producers, so the rounds shrink faster.
+
+\section{A toy model}\label{sec:g12:keynesian-cross:toy}
+
+\begin{model}{The Keynesian cross}
+\index{Keynesian cross}%
+\assumes Prices are fixed; the interest rate is fixed; households spend a fixed share of their current income and do not look ahead; firms have idle capacity and produce
+  whatever is demanded.
+\predicts A rise in \omterm{def:g12:keynesian-cross:planned-expenditure}{autonomous spending} raises output by the multiplier $1/(1 - c(1 - t) + m)$.
+\tested Measured
+  multipliers are mostly between 0.6 and 1, some higher in deep slumps or when interest rates are stuck at zero, lower with a floating exchange rate and open trade. A large,
+  fixed multiplier, the same in all conditions, is refuted by the record.
+\breaks At full capacity, where more demand raises prices rather than output; when the central bank raises interest rates in response; and when households look ahead and
+  expect higher taxes later.
+\end{model}
+% ledger: g12:ramey-abstract, g12:ramey-exchange
+
+Each assumption removes a leak. If prices can rise, part of the extra demand goes into prices, as in \cref{ch:g12:aggregate-demand-and-supply}. If the central bank raises
+its rate, investment falls, the \omterm{def:g12:saving-and-investment:crowding-out}{crowding out} of \cref{ch:g12:saving-and-investment}. If households know that extra spending today means taxes tomorrow, they spend less of
+a temporary rise in income. And at full capacity, output cannot rise at all.
+
+\begin{debate}[How large is the government-spending multiplier?]
+% ledger: b1:ramey2018, b1:auerbach2012, b1:nakamura2014, g12:bl2013, g12:ramey-br, g12:ramey-exchange, g12:ramey-chodorow
+\emph{Below one, in good times and bad.} Ramey and Zubairy (2018), with quarterly American data reaching back more than a century, find multipliers below one whether or not
+the economy has slack; at the zero lower bound the results are mixed, a few specifications as high as 1.5. Their shocks come mostly from military spending in wars, which may
+differ from other spending.
+
+\emph{Larger in \omterm{def:g12:aggregate-demand-and-supply:recession}{recessions}.} Auerbach and Gorodnichenko (2012), with models whose parameters switch between expansions and \omterm{def:g12:aggregate-demand-and-supply:recession}{recessions}, find \omterm{def:g12:keynesian-cross:multiplier}{spending multipliers} much larger in
+\omterm{def:g12:aggregate-demand-and-supply:recession}{recessions}. The finding depends on how the states are defined and on the sample.
+
+\emph{Regional evidence.} Nakamura and Steinsson (2014), comparing American regions during military build-ups, find a relative multiplier of about 1.5; cross-state studies of
+the 2009 stimulus give 1.7 to 2. But a region shares its country's interest rate and taxes, so a relative multiplier is not the national one.
+
+\emph{Forecast errors.} Blanchard and Leigh (2013) found that, early in the crisis, countries that planned larger budget cuts grew less than forecast: multipliers were
+substantially higher than forecasters had assumed. The method gives no precise value.
+
+\emph{Annual defence spending.} Regressions on annual American defence spending give 0.6 to 0.7; the variation comes mostly from a few wars.
+
+\emph{Exchange rates.} Across 44 countries, multipliers reach about 1.4 in the long run under fixed exchange rates, and lie between 0.1 and $-0.7$ under flexible ones
+(Ilzetzki, Mendoza and V\'egh 2010). Countries choose their regime, so the split between fixed and flexible is not random.
+\end{debate}
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g12:keynesian-cross:1}
+A closed economy without taxes has $C = 100 + 0.8Y$, $I = 100$ and $G = 100$. Find equilibrium output.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:keynesian-cross:2}
+$C = 50 + 0.75Y$, $I = 100$, $G = 50$, no taxes or trade. Find equilibrium output.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:keynesian-cross:3}
+Find the multiplier $1/(1 - c)$ for $c = 0.6$ and for $c = 0.9$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:keynesian-cross:4}
+From the opening chart, how many of the fourteen estimates reach above 1?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:keynesian-cross:5}
+From the opening chart, which estimates are the lowest, and from what kind of event do they come?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:keynesian-cross:6}
+Find the multiplier for $c = 0.8$, $t = 0.25$ and $m = 0.1$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:keynesian-cross:7}
+Find the multiplier for $c = 0.9$, $t = 0.3$ and $m = 0.3$, and compare it with $1/(1 - c)$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:keynesian-cross:8}
+With the multiplier of \cref{exo:g12:keynesian-cross:6}, government spending rises by 50. By how much does output rise in the model? By how much do tax receipts rise, and
+by how much the deficit?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:keynesian-cross:9}
+With $c = 0.8$, spending rises by 100. Find the new spending in each of the first three rounds and the total after three rounds; compare it with the limit.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:keynesian-cross:10}
+From the cross in this chapter, read equilibrium output before and after the rise in spending, and compute the multiplier from the two readings.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:keynesian-cross:11}
+Government spending rises by 100, and the central bank raises its rate so that investment falls by exactly 100. What is the multiplier?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:keynesian-cross:12}
+What evidence contradicts a large multiplier, the same in all conditions? Use the opening chart and the debate.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:keynesian-cross:13}
+In a closed economy with $c = 0.8$ and taxes that do not depend on income, government spending and taxes both rise by 100. Find the change in output.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:keynesian-cross:14}
+An economy is at \omterm{def:g12:aggregate-demand-and-supply:potential-output}{potential output} with no idle capacity. Government spending rises. Using the \omterm{def:g12:aggregate-demand-and-supply:ad}{aggregate demand} and supply model, what happens to output and prices in the
+long run, and what is the multiplier?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:keynesian-cross:15}
+Give two reasons why open economies, and economies with a floating exchange rate, have smaller multipliers, and use the debate's estimates.
+\end{exercise}
+
+\section{Problem: Brenland's Stimulus}
+
+\begin{problem}[{Weekend problem --- a toy multiplier and what is left of it}]
+\label{pb:g12:keynesian-cross:1}
+Brenland's accounts for 2001--2025 give, from lines fitted to the yearly data: a \omterm{def:g12:keynesian-cross:mpc}{marginal propensity to consume} out of disposable income $c = 0.95$; government revenue
+of $t = 0.40$ of GDP in every year; a \omterm{def:g12:keynesian-cross:mpm}{marginal propensity to import} $m = 0.34$. In 2025, GDP was 393\,264 million dalens, consumption 225\,014 million and revenue 157\,306
+million. The government raises its spending by 1\,\% of GDP.
+
+\medskip
+\noindent\textbf{Part I --- The toy multiplier.}
+\begin{enumerate}
+\item Find disposable income in 2025 and the ratio of consumption to it.
+\item Check that revenue was 40\,\% of GDP in 2025.
+\item Find the multiplier $1/(1 - c)$, with consumption as the only leak.
+\item Find the rise in spending in millions of dalens, and the output gain with that multiplier, in millions and in per cent of GDP.
+\item Find the multiplier with taxes but no imports.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Taxes and imports.}
+\begin{enumerate}[resume]
+\item Find the multiplier with taxes and imports.
+\item Find the output gain.
+\item By how much do tax receipts rise? By how much does the deficit rise?
+\item By how much do imports rise?
+\item Why is a gain of 20\,\% of GDP not believable even in the toy model?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- The central bank and capacity.}
+\begin{enumerate}[resume]
+\item The central bank raises its rate so that investment and other spending fall by half the rise in government spending. Find the output gain.
+\item Find the multiplier left.
+\item If Brenland were at full capacity, what would the multiplier be in the long run, and what would rise instead?
+\item Compare the multipliers of Parts II and III with the opening chart.
+\item Which assumption of the toy model fails if households expect the extra spending to be paid by higher taxes later?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Interpretation.}
+\begin{enumerate}[resume]
+\item Find the multiplier with taxes and imports if $m$ were half as large.
+\item Why might a country with a fixed exchange rate see a larger multiplier than Brenland?
+\item The value $c = 0.95$ is fitted on years in which income grew steadily. Why might households spend less of a one-off rise in income?
+\item Which of the multipliers computed here would you report as the model's estimate, and with what warning?
+\item State the result of the problem: the toy-model multiplier, and the multiplier left once imports, taxes and the monetary offset are counted.
+\end{enumerate}
+\end{problem}

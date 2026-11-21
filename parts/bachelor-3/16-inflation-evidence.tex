@@ -1,0 +1,373 @@
+\chapter{Inflation: The Evidence across Time and Countries}\label{ch:b3:inflation-evidence}
+
+Inflation is the macroeconomic fact with the longest record and the clearest
+regularities. This chapter sets the theory of the Year 1 and Year 2 volumes against
+that record: prices under gold and under paper money, money growth and inflation
+across countries, the hyperinflations and how they ended, the cost of bringing
+inflation down, and what markets expect it to be. One thread runs through it:
+lasting inflation is a monetary phenomenon whose cause is usually fiscal.
+
+\begin{openingchart}{Consumer price level of five economies, 1870--2020 (1870 = 1,
+logarithmic scale).}{Jordà, Schularick and Taylor, Macrohistory Database (cpi); our
+rebasing}
+\begin{tikzpicture}
+\begin{semilogyaxis}[omtimesten, width=0.72\linewidth, height=0.46\linewidth, xmin=1865,
+  xmax=2025, ymin=0.4, ymax=20000, ylabel={Price level (1870 = 1)}, legend pos=north west,
+  legend style={font=\footnotesize}]
+  \addplot[omDef, thick, mark=none] table[x=year, y=GBR] {figdata/bachelor-3/16-inflation-evidence/out/prices.csv};
+  \addplot[black, thick, mark=none] table[x=year, y=USA] {figdata/bachelor-3/16-inflation-evidence/out/prices.csv};
+  \addplot[omThm, thick, mark=none] table[x=year, y=FRA] {figdata/bachelor-3/16-inflation-evidence/out/prices.csv};
+  \addplot[omThm, thick, dashed, mark=none] table[x=year, y=ITA] {figdata/bachelor-3/16-inflation-evidence/out/prices.csv};
+  \addplot[omDef, thick, dashed, mark=none] table[x=year, y=JPN] {figdata/bachelor-3/16-inflation-evidence/out/prices.csv};
+  \legend{United Kingdom, United States, France, Italy, Japan}
+\end{semilogyaxis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: prices_points
+Under the \omterm{def:b3:exchange-rate-regimes:gold-standard}{gold standard}, prices in 1913 were about where they had been in 1870 ---
+1.04 times the 1870 level in Britain, 0.76 times in the United States (Japan's, the
+exception, doubled). Then they
+rose in every economy: by 2020, 18 times the 1870 level in the United States and 89
+times in Britain, and more than two thousand times in France, Italy and Japan,
+whose price levels rose more than a hundredfold between 1913 and 1950. Four decades of stable prices, then a century of
+rising ones: the difference is the monetary standard.
+
+\begin{recall}
+The Year 1 volume defined seigniorage, the inflation tax and hyperinflation, and
+stated the quantity equation, the Fisher effect and the sacrifice ratio. The Year 2
+volume treated rational expectations, credibility and the dynamics of government
+debt. The grades 10--12 and Year 1 volumes told the American disinflation of
+1979--1983; it is not retold here.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:inflation-evidence:symbols}
+$\mu$ is the growth rate of money and $\pi$ the inflation rate, both continuous rates per
+year; $m$ real money balances as a percent of GDP; $s$ seigniorage as a percent of
+GDP; $d$ the primary deficit and $b$ real government debt; $\alpha$ the sensitivity of
+money demand to expected inflation (a local symbol: not the capital share).
+\end{notation}
+
+\section{Money growth and inflation across countries}\label{sec:b3:inflation-evidence:quantity}
+
+\begin{omchart}{Average inflation against average broad-money growth, 1990--2024
+(percent a year, averages of log growth, logarithmic scales), 146 countries with
+at least 20 years of data; the dashed line is equality. Grenada, whose money
+supply shrank on average, cannot appear on a log axis.}{World Bank, World
+Development Indicators (FM.LBL.BMNY.ZG, FP.CPI.TOTL.ZG); our computation}
+\begin{tikzpicture}
+\begin{loglogaxis}[omscatter, log ticks with fixed point, width=0.58\linewidth,
+  height=0.46\linewidth, xmin=1, xmax=200, ymin=0.3, ymax=200,
+  xlabel={Money growth (\% a year)}, ylabel={Inflation (\% a year)}]
+  \addplot table[x=money, y=infl] {figdata/bachelor-3/16-inflation-evidence/out/mi.csv};
+  \addplot[black, dashed, no marks] table[x=x, y=y] {figdata/bachelor-3/16-inflation-evidence/out/mi_line.csv};
+\end{loglogaxis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: mi_stats
+Across 146 countries, the regression of average inflation on average money growth,
+both as continuously compounded rates, has a slope of 0.96 (standard error 0.02) and
+an $R^2$ of 0.92. Most of the fit comes from the high-inflation countries; below 10~\%
+a year, the points scatter and inflation runs well below money growth, because real
+output grows and velocity moves. That is why, on the chart's log scales, the cloud
+is steeper than the equality line: the log-log slope over the 145 countries shown is
+1.36, with an $R^2$ of 0.83.
+
+\begin{model}{The quantity theory over the long run}
+\assumes Velocity changes slowly and output growth does not depend on money
+growth in the long run.
+\predicts Over decades, inflation equals money growth minus output growth plus the
+change in velocity: one for one across countries with different money growth.
+\tested Country averages over 35 years line up on a slope of 0.96, dominated by
+high-inflation countries (the chart above).
+\breaks Low-inflation samples, where velocity shifts and output growth dominate;
+short periods, when money demand moves with interest rates and financial change.
+\end{model}
+
+\section{Hyperinflations}\label{sec:b3:inflation-evidence:hyper}
+
+\begin{definition}[Cagan model]\label{def:b3:inflation-evidence:cagan}
+\index{Cagan model}
+In the \emph{Cagan model}, the demand for real money balances falls exponentially
+with expected inflation: $m = Ae^{-\alpha\pi^e}$. In a steady state with $\pi^e = \pi = \mu$, the government
+raises seigniorage $s = \mu m = \mu Ae^{-\alpha\mu}$.
+\end{definition}
+
+\begin{proposition}[The seigniorage curve]\label{prop:b3:inflation-evidence:laffer}
+Steady-state seigniorage is maximised at $\mu = 1/\alpha$, where it equals $A/(\alpha e)$. Any revenue
+below the maximum is raised by two rates of money growth.
+\end{proposition}
+
+\begin{proof}
+$ds/d\mu = Ae^{-\alpha\mu}(1 - \alpha\mu)$, positive below $1/\alpha$ and negative above: $s$ rises, peaks at $1/\alpha$ with
+$s = (1/\alpha)Ae^{-1}$, and falls toward zero as $\mu$ grows. A continuous function that rises
+from 0 to its maximum and falls back toward 0 takes each intermediate value twice.
+\end{proof}
+
+\begin{omchart}{Steady-state seigniorage in the Cagan model with $A = 20~\%$ of GDP and
+$\alpha = 2$ (the weekend problem's Kestria), against money growth.}{Our computation
+(\code{cagan.py})}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.56\linewidth, height=0.36\linewidth, xmin=0, xmax=2.5,
+  ymin=0, ymax=4.3, xlabel={Money growth $\mu$ (continuous, per year)},
+  ylabel={Seigniorage (\% of GDP)}]
+  \addplot[omDef, thick, mark=none] table[x=mu, y=s] {figdata/bachelor-3/16-inflation-evidence/out/laffer.csv};
+  \draw[guide] (axis cs:0.5,0) -- (axis cs:0.5,3.68) node[above, font=\scriptsize] {peak at $1/\alpha$};
+  \draw[guide] (axis cs:0,3) -- (axis cs:2.5,3) node[above left, font=\scriptsize] {a deficit of 3~\%};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+The model explains why hyperinflations accelerate. A government whose deficit
+exceeds the peak revenue cannot finance it at any steady rate; it prints faster,
+people hold less money, and the base on which the tax falls shrinks. And it
+explains how they end: when the deficit closes, money growth can fall to zero,
+and the demand for real balances recovers.
+
+\begin{record}[Germany, 1923]
+In 1923 the German government financed virtually all of its spending by issuing
+notes. On 15 October a decree created a new bank and currency, the Rentenmark,
+worth one trillion paper marks, and capped both its total issue, at 3.2 billion,
+and its lending to the government, at 1.2 billion; on 15 November the Reichsbank
+stopped discounting treasury bills. In late November prices stopped rising and the
+mark stopped falling, and the budget swung into balance. % ledger: b3ie:sar.germany
+The same two measures ended the hyperinflations of Austria, Hungary and Poland: a
+central bank legally bound to refuse the government new unsecured credit, and a
+simultaneous change of fiscal regime. And in each case the note circulation went
+on growing fast after prices had stabilised: people rebuilt the money balances
+they had fled. % ledger: b3ie:sar.ends
+\end{record}
+
+The last sentence is the \omterm{def:b3:inflation-evidence:cagan}{Cagan model}'s remonetisation: once expected inflation
+falls, real balances rise toward $A$, and the central bank can issue money without
+inflation, once.
+
+\section{The fiscal origin}\label{sec:b3:inflation-evidence:fiscal}
+
+\begin{definition}[Fiscal theory of the price level; unpleasant arithmetic]\label{def:b3:inflation-evidence:fiscal}
+\index{fiscal theory of the price level}\index{unpleasant arithmetic}
+The \emph{fiscal theory of the price level} is the model in which the price level
+adjusts so that the real value of government debt equals the present value of
+future primary surpluses. The \emph{unpleasant arithmetic} is the result that,
+when the fiscal authority does not adjust its deficits, tighter money now implies
+higher inflation later.
+\end{definition}
+
+\begin{proposition}[Unpleasant arithmetic]\label{prop:b3:inflation-evidence:arithmetic}
+A government with real debt $b_0$, a primary deficit $d$ in each of two periods and a
+real rate $r$ must raise seigniorage $s_1$ and $s_2$ with $s_2 = (1 + r)\big((1 + r)b_0 + d - s_1\big) + d$ if
+the debt is to be repaid at the end of period 2. Each unit less of seigniorage now
+requires $1 + r$ units more later.
+\end{proposition}
+
+\begin{proof}
+The debt at the end of period 1 is $b_1 = (1 + r)b_0 + d - s_1$. At the end of period 2 it must
+be zero: $(1 + r)b_1 + d - s_2 = 0$. Substituting, $s_2 = (1 + r)b_1 + d$, and $\partial s_2/\partial s_1 = -(1 + r)$. With
+seigniorage rising in money growth below the Cagan peak, the later money growth,
+and so inflation, must be higher.
+\end{proof}
+
+This is the \omterm{def:b3:inflation-evidence:fiscal}{unpleasant arithmetic} of Sargent and Wallace (1981): a central bank
+that fights inflation alone, against a government that does not close its deficit, only postpones
+inflation and makes it larger. If money demand depends on expected inflation, even
+the postponement fails: expected future inflation lowers the demand for money now
+and raises inflation today.
+
+\section{Disinflations and what they cost}\label{sec:b3:inflation-evidence:disinflation}
+
+\begin{omchart}{Median inflation of the 26 inflation-targeting countries, by years from
+the adoption of a target (year 0), and median inflation of all other countries in the
+same calendar years (percent).}{Roger (2010) for adoption dates; World Bank, World
+Development Indicators (FP.CPI.TOTL.ZG); our computation}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.6\linewidth, height=0.38\linewidth, xmin=-5.5, xmax=8.5,
+  ymin=0, ymax=12, xtick={-5,...,8}, xlabel={Years from adoption}, ylabel={Percent},
+  legend pos=north east, legend style={font=\footnotesize}]
+  \addplot[omDef, thick, mark=*] table[x=k, y=targeters] {figdata/bachelor-3/16-inflation-evidence/out/it_event.csv};
+  \addplot[omThm, thick, dashed, mark=o] table[x=k, y=others] {figdata/bachelor-3/16-inflation-evidence/out/it_event.csv};
+  \legend{Targeters, Other countries}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: it_event
+Five years before adoption, the median targeter's inflation was 9.0~\%, against 6.0~\%
+elsewhere in the same years; four years after, 2.8~\% against 3.9~\%. Inflation fell
+everywhere over these decades, so the comparison is the gap: from 3.0 points above
+the others to 1.1 below. Countries chose to target inflation when they had already
+begun to bring it down, so the fall is not all the target's effect
+(\cref{exo:b3:inflation-evidence:11}). % ledger: b3ie:roger.it
+
+\begin{record}[Disinflations with and without credibility]
+In 65 disinflations in moderate-inflation OECD economies, the output lost per point
+of lasting inflation reduction --- the sacrifice ratio --- was smaller when
+inflation was brought down fast than when it was brought down gradually, and
+smaller where wages were set flexibly; the openness of the economy made no
+difference. % ledger: b3ie:ball.sacrifice
+The hyperinflations ended with almost no output cost, because the regime change was
+believed; moderate inflations, whose end depends on contracts and expectations
+adjusting, cost more.
+\end{record}
+
+\section{Measured expectations}\label{sec:b3:inflation-evidence:expectations}
+
+\begin{definition}[Breakeven inflation]\label{def:b3:inflation-evidence:breakeven}
+\index{breakeven inflation}
+\emph{Breakeven inflation} is the yield on a nominal government bond minus the yield
+on an inflation-indexed bond of the same maturity: the inflation rate at which the
+two bonds pay the same.
+\end{definition}
+
+\begin{measure}[Breakeven inflation]
+\omterm{def:b3:inflation-evidence:breakeven}{Breakeven inflation} equals expected inflation plus an inflation risk premium (what
+holders of nominal bonds demand for bearing inflation risk) minus a liquidity
+premium (indexed bonds trade less, so their yields are higher). In a panic, when
+investors sell the less liquid indexed bonds, \omterm{def:b3:inflation-evidence:breakeven}{breakeven inflation} can collapse
+without any change in expected inflation. Surveys of households and forecasters
+measure expectations directly, with their own biases.
+\end{measure}
+
+\begin{omchart}{Ten-year breakeven inflation in the United States, monthly averages,
+2003--2025 (percent): the nominal ten-year Treasury yield minus the ten-year
+inflation-indexed yield.}{Board of Governors of the Federal Reserve System, H.15
+(RIFLGFCY10\_N.M, RIFLGFCY10\_XII\_N.M); our difference}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.7\linewidth, height=0.36\linewidth, xmin=2002, xtick distance=5, xmax=2026.2,
+  ymin=0, ymax=3.2, ylabel={Percent}]
+  \addplot[omDef, thick, mark=none] table[x=t, y=breakeven] {figdata/bachelor-3/16-inflation-evidence/out/breakeven.csv};
+  \draw[guide] (axis cs:2003,2) -- (axis cs:2026,2);
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: breakeven_stats
+The breakeven rate averaged 2.06~\% from 2003 to 2019. It fell to 0.25~\% in December
+2008, when the indexed market froze, and reached its highest, 2.89~\%, in April
+2022, while consumer prices rose by 8~\% a year: ten-year expectations moved by less
+than a point. Long-run expectations stayed anchored, which is the measured form of
+the credibility the Year 2 volume modelled.
+
+\section{Exercises}\label{sec:b3:inflation-evidence:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:inflation-evidence:1}
+In the opening chart, identify a period of stable prices and the periods of fastest
+rise for each economy. In what years did French and Italian prices rise most?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:inflation-evidence:2}
+Prices rise by 50~\% a month. By how much do they rise in a year? In a day, on average?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:inflation-evidence:3}
+The monetary base is 8~\% of GDP and grows by 25~\% a year with inflation of 22~\%. How
+much seigniorage, as a share of GDP, does the government raise?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:inflation-evidence:4}
+What episode would contradict the claim that hyperinflations have a fiscal
+origin?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:inflation-evidence:5}
+In the \omterm{def:b3:inflation-evidence:cagan}{Cagan model} with $\alpha = 2$ (years), find the revenue-maximising money growth as a
+continuous rate and as an annual percentage. With $A = 15~\%$ of GDP, find the maximum
+seigniorage.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:inflation-evidence:6}
+With the JST data, compute decade averages of money growth and inflation for each
+economy since 1870 and regress inflation on money growth. Compare the slope before
+and after 1970.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:inflation-evidence:7}
+In the two-period model, $b_0 = 50$, $d = 5$ and $r = 4~\%$. The central bank raises
+$s_1 = 5$; find $s_2$. If it lowers $s_1$ to 2, by how much must $s_2$ rise?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:inflation-evidence:8}
+Trend inflation falls from 9~\% to 3~\% over three years, during which output is 2, 3
+and 1~\% below potential. Find the sacrifice ratio. A second episode lowers inflation
+by the same amount in one year with a 4~\% output gap. Which was cheaper?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:inflation-evidence:9}
+What evidence would show that \omterm{def:b3:inflation-evidence:breakeven}{breakeven inflation} is not expected inflation?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:inflation-evidence:10}
+Prove the seigniorage proposition, and show that if expectations adapt slowly, a
+government can raise more than the steady-state maximum for a while. Why can it not
+do so for ever?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:inflation-evidence:11}
+For the 26 targeters, compare average inflation in the five years before adoption
+with the years 3 to 7 after, and do the same for all other countries in the same
+calendar years. What is the difference-in-differences, and what would make it a
+poor estimate of the target's effect?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:inflation-evidence:12}
+A government ends a hyperinflation by closing its deficit and fixing its currency.
+Before, real balances were 4~\% of GDP; with stable prices they return to 16~\% over
+three years. How much money can the central bank issue without inflation? Why is it
+dangerous to treat this as a lasting source of revenue?
+\end{exercise}
+
+\section{Problem: Kestria's Printing Press}\label{sec:b3:inflation-evidence:problem}
+
+\begin{problem}[{Weekend problem --- Kestria's printing press}]\label{pb:b3:inflation-evidence:kestria}
+Kestria's government runs a primary deficit of 3~\% of GDP and finances it by issuing
+money. Real money balances are $m = 20e^{-2\pi}$ percent of GDP, with $\pi$ the continuous
+inflation rate per year. % figdata: kestria_stats, laffer
+
+\medskip\noindent\textbf{Part I --- the deficit and seigniorage.}
+\begin{enumerate}
+\item Write steady-state seigniorage as a function of money growth $\mu$.
+\item Find seigniorage at $\mu = 0.1$ and $\mu = 1$.
+\item Find the revenue-maximising money growth and the maximum seigniorage.
+\item Express the revenue-maximising rate as an annual inflation rate.
+\item Can Kestria finance a deficit of 4~\% of GDP by money in a steady state?
+\item Why do real balances fall as inflation rises?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- the inflation that finances the deficit.}
+\begin{enumerate}[resume]
+\item Show that two rates of money growth raise 3~\% of GDP, and find them numerically.
+\item Convert both into annual inflation rates.
+\item Find real balances at each.
+\item Which steady state is stable if expectations adapt slowly to actual
+inflation? (Argue informally.)
+\item Kestria is at the low steady state, and the deficit rises to 3.5~\% of GDP. What
+happens to inflation?
+\item What happens if the deficit rises above 3.68~\%?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- the stabilisation.} Kestria closes its deficit
+and sets up a \omterm{def:b3:exchange-rate-regimes:regimes}{currency board}; inflation falls to zero and is expected to stay
+there.
+\begin{enumerate}[resume]
+\item Find real balances after the reform.
+\item Find the remonetisation: the money the board can issue without inflation, in
+percent of GDP.
+\item The board must back new money with reserves. Where can they come from?
+\item Why is a \omterm{def:b3:exchange-rate-regimes:regimes}{currency board} alone not enough without the fiscal reform?
+\item What did the German reform of 1923 have in common with this one?
+\item Why did the note circulation keep growing after German prices stabilised?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- a gradual alternative.} Instead of the reform,
+Kestria brings inflation down gradually from the low steady state to 3~\% a year.
+\begin{enumerate}[resume]
+\item By how many points must inflation fall?
+\item With a sacrifice ratio of 1.5, find the cumulative output loss.
+\item With a credible reform and a sacrifice ratio of 0.5, find it.
+\item What does the evidence on disinflations say about which ratio is likely?
+\item During the gradual disinflation, how is the deficit financed?
+\item Compare the output costs of the two strategies.
+\item State the result: the inflation rate that finances Kestria's deficit, and the
+remonetisation gain after the reform.
+\end{enumerate}
+\end{problem}

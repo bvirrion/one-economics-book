@@ -1,0 +1,377 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g10-09. Three jobs of a price, arbitrage, storage
+% and speculation, price ceilings and floors with surplus, the record of controls, the market as an
+% institution. Real numbers: figdata/grade-10/09-what-prices-do/ (Eurostat HICP monthly rates, fuels CP0722
+% and hairdressing CP1211). Ledger: Jensen (2007), Diamond, McQuade and Qian (2019), US oil controls.
+% Brenland and Kestria numbers invented.
+\chapter{What Prices Do}\label{ch:g10:what-prices-do}
+
+In June 2022 the price of petrol and diesel was 33\,\% higher than a year earlier in Germany, 40\,\% higher in France, 28\,\% in
+Italy, 39\,\% in Spain and 35\,\% in the Netherlands. Two years before, in the spring of 2020, it had been 14 to 21\,\% lower than a
+year earlier in all five. The top panel of the opening chart shows how closely the five countries' fuel price changes have moved
+together for a quarter of a century. The bottom panel shows the price of a haircut in the same five countries: each country's line follows its
+own path.
+% figdata: fuel_rates (2022-06: DE 32.9, FR 40.3, IT 28.2, ES 38.9, NL 34.8; 2020-05: -20.6 to -14.1)
+
+Fuel can be carried from one country to another, and the crude oil it is made from is traded across the world; a haircut cannot be
+carried anywhere. This chapter explains why goods that can be moved tend to one price, how prices move goods through time as well as
+space, and what happens when a law stops a price from doing these jobs.
+
+\begin{openingchart}{Change in consumer prices over twelve months, in five euro-area countries, monthly, 2001--2024, in percent: fuels for
+personal transport (top) and hairdressing (bottom). Over these months, the average correlation between two countries' series is 0.92 for fuels
+and 0.44 for hairdressing.}{Eurostat, harmonised index of consumer prices, monthly annual rates of change}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=1 by 2, vertical sep=1.1cm, x descriptions at=edge bottom},
+  omtime, width=0.88\linewidth, height=4.4cm, xmin=2001, xmax=2025, xtick={2002,2006,...,2022},
+  legend columns=5, legend style={at={(0.5,1.04)}, anchor=south, font=\scriptsize, draw=none}]
+\nextgroupplot[width=0.88\linewidth, ymin=-30, ymax=50, ylabel={fuels (\%)}]
+\addplot[omDef, thin] table[x=t, y=DE] {figdata/grade-10/09-what-prices-do/out/fuel_rates.csv}; \addlegendentry{Germany}
+\addplot[omThm, thin] table[x=t, y=FR] {figdata/grade-10/09-what-prices-do/out/fuel_rates.csv}; \addlegendentry{France}
+\addplot[omMeth, thin] table[x=t, y=IT] {figdata/grade-10/09-what-prices-do/out/fuel_rates.csv}; \addlegendentry{Italy}
+\addplot[omProp, thin] table[x=t, y=ES] {figdata/grade-10/09-what-prices-do/out/fuel_rates.csv}; \addlegendentry{Spain}
+\addplot[omExo, thin] table[x=t, y=NL] {figdata/grade-10/09-what-prices-do/out/fuel_rates.csv}; \addlegendentry{Netherlands}
+\nextgroupplot[width=0.88\linewidth, ymin=-1, ymax=9, ylabel={hairdressing (\%)}]
+\addplot[omDef, thin] table[x=t, y=DE] {figdata/grade-10/09-what-prices-do/out/hair_rates.csv};
+\addplot[omThm, thin] table[x=t, y=FR] {figdata/grade-10/09-what-prices-do/out/hair_rates.csv};
+\addplot[omMeth, thin] table[x=t, y=IT] {figdata/grade-10/09-what-prices-do/out/hair_rates.csv};
+\addplot[omProp, thin] table[x=t, y=ES] {figdata/grade-10/09-what-prices-do/out/hair_rates.csv};
+\addplot[omExo, thin] table[x=t, y=NL] {figdata/grade-10/09-what-prices-do/out/hair_rates.csv};
+\end{groupplot}
+\end{tikzpicture}
+\end{openingchart}
+% figdata: hicp_summary (fuel mean_corr 0.92, hair 0.44, 288 months)
+
+\begin{recall}
+From the grades 6--9 volume: a price is a \emph{signal}; below the equilibrium price there is a \emph{shortage} and above it a \emph{surplus}; a
+\emph{price ceiling} is a legal maximum and a \emph{price floor} a legal minimum; identical goods sold in places between which they can be moved
+freely tend to sell at one price, the \emph{law of one price}. From \cref{ch:g10:surplus-and-efficiency}: consumer, producer and \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus}, and
+the surplus lost when the quantity traded differs from the equilibrium quantity.
+\end{recall}
+
+\section{Three jobs of a price}\label{sec:g10:what-prices-do:jobs}
+
+Go back to the frost in Kestria's orchards of \cref{ch:g10:market-equilibrium}. The price of apples rises. Nobody announces the frost to the
+country's shoppers, juice makers and growers, and few of them hear of it. Yet each of them changes what they do.
+
+\begin{itemize}
+\item \textbf{The price informs.} A shopper who sees dearer apples learns that apples have become scarcer, without learning why.
+\item \textbf{The price gives a reason to act.} Shoppers buy pears instead; juice makers switch part of their production to other fruit; growers in
+  valleys the frost spared send more of their crop to market, and some plant more trees.
+\item \textbf{The price rations.} The apples that remain go to the buyers who are willing to pay most for them, and by \cref{prop:g10:surplus-and-efficiency:max}
+  to the buyers who value them most in money.
+\end{itemize}
+
+The knowledge that the change uses is spread over thousands of people: which grower has spare fruit, which family can do without apples, which juice
+maker can use pears. No one holds it all. The price carries the result of all these local judgements in a single number. When prices are fixed by law,
+this information has to travel some other way, or not at all.
+
+\section{Arbitrage and the single price}\label{sec:g10:what-prices-do:arbitrage}
+
+\begin{definition}[Arbitrage]\label{def:g10:what-prices-do:arbitrage}
+\emph{Arbitrage}\index{arbitrage} is buying a good where it is cheap and selling it where it is dear, for a profit, by moving it between places (or
+between markets) at a known cost.
+\end{definition}
+
+\begin{proposition}[The arbitrage band]\label{prop:g10:what-prices-do:band}
+Suppose a good can be carried from town $A$ to town $B$, or back, at a cost of $t$ per unit, and that traders are free to do so. In equilibrium the prices
+satisfy $|p_B - p_A| \le t$. If the good flows from $A$ to $B$, then $p_B = p_A + t$.
+\end{proposition}
+\begin{proof}
+If $p_B > p_A + t$, a trader who buys a unit in $A$ and sells it in $B$ gains $p_B - p_A - t > 0$; traders do so, which raises demand in $A$ and supply in
+$B$, raising $p_A$ and lowering $p_B$, until the gain is gone. The same holds the other way round if $p_A > p_B + t$. So in equilibrium $|p_B - p_A| \le t$.
+If units do flow from $A$ to $B$, traders must not lose on them, so $p_B \ge p_A + t$; with the first part, $p_B = p_A + t$.
+\end{proof}
+
+\begin{example}[Two towns and one road]\label{ex:g10:what-prices-do:two-towns}
+In town $A$, demand for potatoes is $Q = 100 - 2p$ and supply $Q = 2p - 20$; alone, its price would be 30 dalens a sack. In town $B$, demand is $Q = 140 - 2p$
+and supply $Q = 2p - 40$; alone, its price would be 45. Carrying a sack from $A$ to $B$ costs 5 dalens. With trade, potatoes flow from $A$ to $B$ and $p_B =
+p_A + 5$. $A$'s \omterm{def:g10:market-equilibrium:excess-demand}{excess supply} at $p_A$ is $(2p_A - 20) - (100 - 2p_A) = 4p_A - 120$; $B$'s \omterm{def:g10:market-equilibrium:excess-demand}{excess demand} at $p_A + 5$ is $(140 - 2p_A - 10) - (2p_A + 10 - 40) =
+160 - 4p_A$. They are equal when $8p_A = 280$: $p_A = 35$, $p_B = 40$, and 20 sacks are carried. The gap between the two prices has shrunk from 15 dalens to
+the transport cost of 5.
+\end{example}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.06cm, y=0.09cm]
+\begin{scope}
+\draw[econ axes] (0,52) node[left, font=\small] {$p$} |- (82,0) node[below left=12pt and 0pt, font=\small] {town $A$};
+\draw[demand] (0,50) -- (80,10);
+\draw[supply] (0,10) -- (80,50);
+\draw[guide] (0,35) -- (60,35);
+\draw[|<->|, omProp] (30,35.8) -- (50,35.8);
+\node[font=\scriptsize, anchor=south] at (40,36.2) {export 20};
+\node[eqpoint] at (40,30) {};
+\foreach \y in {30,35} \draw (0,\y) -- (-1,\y) node[left, font=\footnotesize] {\y};
+\end{scope}
+\begin{scope}[xshift=6.4cm]
+\draw[econ axes] (0,72) node[left, font=\small] {$p$} |- (82,0) node[below left=12pt and 0pt, font=\small] {town $B$};
+\draw[demand] (0,70) -- (80,30);
+\draw[supply] (0,20) -- (80,60);
+\draw[guide] (0,40) -- (60,40);
+\draw[|<->|, omProp] (40,40.8) -- (60,40.8);
+\node[font=\scriptsize, anchor=north] at (50,39.4) {import 20};
+\node[eqpoint] at (50,45) {};
+\foreach \y in {40,45} \draw (0,\y) -- (-1,\y) node[left, font=\footnotesize] {\y};
+\end{scope}
+\end{tikzpicture}
+
+{\small Two towns joined by a road with a transport cost of 5 dalens a sack. Alone, prices would be 30 in $A$ and 45 in $B$ (dots). With trade, $A$ sells
+at 35 and exports its \omterm{def:g10:market-equilibrium:excess-demand}{excess supply} of 20 sacks; $B$ buys at 40 and imports 20.}
+\end{omfigure}
+
+\begin{model}{Arbitrage}
+\assumes Traders can move a good between two markets at a known cost and are free to do so; they know the prices in both markets.
+\predicts The two prices differ by at most the cost of moving the good, and by exactly that cost when goods flow; a shock to one market's price passes to
+  the other.
+\tested Consistent with the model: fuel price changes in five euro-area countries move together month after month (opening chart), since all five
+  buy crude oil at one world price, while the prices of haircuts, which cannot be moved, do not; the chart shows rates of change, not the price levels
+  whose gap the model bounds. A test: when mobile phones reached fishermen and wholesalers in Kerala, in south India, between 1997 and 2001, the gaps between fish prices in nearby
+  markets fell sharply, fish stopped being thrown away unsold, and prices came close to a single price (Jensen 2007).
+\breaks When the good cannot be moved (a haircut, a flat); when moving it is forbidden or taxed at the border; when traders cannot learn the prices elsewhere,
+  as in Kerala before the phones.
+\end{model}
+% ledger: g10:jensen2007
+
+\section{Storage and speculation}\label{sec:g10:what-prices-do:storage}
+
+Storage does through time what transport does through space. Grain harvested in autumn is eaten all year; somebody has to keep it, and keeping it costs
+money.
+
+\begin{definition}[Speculation]\label{def:g10:what-prices-do:speculation}
+\emph{Speculation}\index{speculation} is buying or holding a good now in order to sell it later, because its price is expected to be higher then by more than
+the cost of holding it.
+\end{definition}
+
+\begin{example}[Two seasons]\label{ex:g10:what-prices-do:seasons}
+A valley harvests 80 tonnes of grain in autumn and nothing in spring. In each season the demand is $Q = 100 - 2p$. Without storage, autumn's price is 10 (from $80 =
+100 - 2p$) and in spring there is no grain at all: buyers would pay up to 50. Storing a tonne from autumn to spring costs 4 dalens. Speculators buy and store
+grain as long as the spring price exceeds the autumn price by more than 4. If they store $x$ tonnes, autumn's price is $p_1 = (20 + x)/2$ and spring's is $p_2 =
+(100 - x)/2$. Storage stops when $p_2 = p_1 + 4$: $100 - x = 28 + x$, so $x = 36$, $p_1 = 28$ and $p_2 = 32$. Autumn's buyers eat 44 tonnes, spring's 36.
+\end{example}
+
+The speculators raised the autumn price from 10 to 28, which the autumn buyers did not like, and lowered the spring price from 50 to 32, with grain to eat. By the
+reasoning of \cref{prop:g10:what-prices-do:band}, with storage in place of transport, the two prices end exactly 4 dalens apart: the gap pays for the storage, and
+nothing more. A law that forbade storing grain for sale, or capped the spring price at the autumn price, would remove the reason to store, and spring would again
+have none.
+
+\section{Price ceilings and price floors}\label{sec:g10:what-prices-do:controls}
+
+Take the market of \cref{ch:g10:surplus-and-efficiency}: demand $Q = 120 - 4p$, supply $Q = 2p - 24$, equilibrium 24 units at 24 dalens, \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus} 216. A law
+caps the price at 18 dalens. Sellers offer only $2 \times 18 - 24 = 12$ units; buyers want $120 - 72 = 48$; the shortage is 36 units.
+
+\begin{definition}[Deadweight loss]\label{def:g10:what-prices-do:dwl}
+The \emph{deadweight loss}\index{deadweight loss} of a rule or a tax is the fall in \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus} it causes: the surplus of units that buyers value above their cost
+but that are no longer traded, or of units traded that cost more than buyers value them.
+\end{definition}
+
+With the ceiling, 12 units are traded instead of 24. As computed in \cref{ch:g10:surplus-and-efficiency}, \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus} falls from 216 to at most 162: the \omterm{def:g10:what-prices-do:dwl}{deadweight
+loss} is 54 dalens. The ceiling also moves surplus. If the 12 units go to the buyers who value them most, \omterm{def:g10:surplus-and-efficiency:consumer-surplus}{consumer surplus} is the area between the demand curve and the
+price of 18 over 12 units, $\tfrac12 (12 + 9) \times 12 = 126$ (it was 72), and \omterm{def:g10:surplus-and-efficiency:producer-surplus}{producer surplus} falls to $\tfrac12 \times 12 \times 6 = 36$ (it was 144).
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.13cm, y=0.16cm]
+\begin{scope}
+\draw[econ axes] (0,33) node[left, font=\small] {$p$} |- (52,0) node[below left=12pt and 0pt, font=\small] {$Q$};
+\fill[gray!35] (12,27) -- (24,24) -- (12,18) -- cycle;
+\draw[demand] (0,30) -- (48,18);
+\draw[supply] (0,12) -- (40,32);
+\draw[omThm, thick] (0,18) -- (50,18); \node[above right, font=\scriptsize, text=omThm!85!black] at (0.3,18) {ceiling 18};
+\draw[guide] (12,27) -- (12,0); \draw[guide] (0,27) -- (12,27);
+\draw[|<->|, omProp] (12,16.3) -- (48,16.3);
+\node[font=\scriptsize, anchor=north] at (30,16) {shortage 36};
+\node[font=\scriptsize] at (16.5,23) {DWL};
+\foreach \y in {18,27} \draw (0,\y) -- (-0.6,\y) node[left, font=\footnotesize] {\y};
+\foreach \x in {12,48} \draw (\x,0) -- (\x,-0.5) node[below, font=\footnotesize] {\x};
+\node[font=\scriptsize, anchor=north] at (24,-3.2) {ceiling};
+\end{scope}
+\begin{scope}[xshift=7.6cm]
+\draw[econ axes] (0,33) node[left, font=\small] {$p$} |- (52,0) node[below left=12pt and 0pt, font=\small] {$Q$};
+\fill[gray!35] (8,28) -- (24,24) -- (8,16) -- cycle;
+\draw[demand] (0,30) -- (48,18);
+\draw[supply] (0,12) -- (40,32);
+\draw[omThm, thick] (0,28) -- (50,28) node[below left, font=\scriptsize] {floor 28};
+\draw[guide] (8,28) -- (8,0);
+\draw[|<->|, omProp] (8,29.6) -- (32,29.6);
+\node[font=\scriptsize, anchor=south] at (20,29.9) {excess supply 24};
+\node[font=\scriptsize] at (14,23) {DWL};
+\foreach \y in {16,28} \draw (0,\y) -- (-0.6,\y) node[left, font=\footnotesize] {\y};
+\draw[guide] (0,16) -- (8,16);
+\foreach \x in {8,32} \draw (\x,0) -- (\x,-0.5) node[below, font=\footnotesize] {\x};
+\node[font=\scriptsize, anchor=north] at (24,-3.2) {floor};
+\end{scope}
+\end{tikzpicture}
+
+{\small Left: a ceiling of 18 dalens leaves sellers offering 12 units while buyers want 48; the grey triangle (54 dalens) is the \omterm{def:g10:what-prices-do:dwl}{deadweight loss}. Right: a floor of 28
+dalens leaves buyers taking 8 units while sellers offer 32; if only the 8 units bought are produced, the grey triangle (96 dalens) is lost.}
+\end{omfigure}
+% (floor: Qd = 120 - 112 = 8, Qs = 56 - 24 = 32; at Q = 8 the supply price is 16; DWL = (24 - 8)(28 - 16)/2 = 96)
+
+The 126 dalens of \omterm{def:g10:surplus-and-efficiency:consumer-surplus}{consumer surplus} assume that the 12 units reach the buyers who value them most. A ceiling cannot ensure this: at 18 dalens, 48 units are wanted
+and only 12 exist, so something other than the price must decide who gets them.
+
+\begin{definition}[Non-price rationing and black markets]\label{def:g10:what-prices-do:non-price-rationing}
+\emph{Non-price rationing}\index{non-price rationing} allocates a good in short supply by some rule other than the price: first come first served, a queue, a
+lottery, coupons, or the seller's favour. A \emph{black market}\index{black market} is trade at prices, or in ways, that the law forbids.
+\end{definition}
+\phantomsection\label{def:g10:what-prices-do:black-market}
+
+Each way of rationing has a cost. In a queue, buyers pay with their time: the last of the 12 units is worth 27 dalens to its buyer, 9 more than the legal
+price, and buyers will queue until the time spent eats up much of that difference; that time is lost to everyone. With a lottery, units go to buyers chosen at
+random, many of whom value them less than those who lose, so the units do less good. Sellers can ask for a side payment, which is a black-market price in
+disguise: 12 units can be sold for up to 27 dalens each. Or sellers can lower the quality of what they sell, since they no longer need to compete for buyers.
+
+\begin{model}{A price ceiling in a competitive market}
+\assumes The competitive market of \cref{ch:g10:market-equilibrium}, with a legal maximum price below the equilibrium price.
+\predicts A shortage; a smaller quantity traded and a \omterm{def:g10:what-prices-do:dwl}{deadweight loss}; \omterm{def:g10:what-prices-do:non-price-rationing}{non-price rationing} (queues, side payments, lower quality); and a shortage that grows over
+  time as supply becomes more elastic (\cref{ch:g10:supply}).
+\tested The fall in rental housing after rent control was extended in San Francisco, measured against similar buildings that stayed uncontrolled (record
+  below); consistent with it, the queues at American petrol stations when domestic oil prices were controlled.
+\breaks When a single buyer faces many sellers and sets the price (grade 11): a cap can then raise the quantity traded. When supply is fixed in the short run, as for
+  the flats that already exist: a cap then moves surplus from landlords to tenants with little loss at first, and the loss comes later.
+\end{model}
+
+\section{The record of price controls}\label{sec:g10:what-prices-do:record}
+
+\begin{record}[Petrol queues in the United States, 1973 and 1979]
+% ledger: g10:us-oil-controls
+After the oil crisis of 1973, the United States kept price controls on domestically produced oil. Long queues formed at petrol stations in 1973 and again in 1979.
+In 1979 some places rationed by licence plate: drivers with an odd-numbered plate could buy petrol only on odd-numbered days. Ration coupons were printed but never
+used. Controls were removed in phases from 5 April 1979 and fully dismantled in 1981. How much of the 1979 queues came from the controls, and how much from drivers
+rushing to fill their tanks for fear of a shortage, is still discussed; both are causes the model recognises, since panic buying is a shift of demand that a
+controlled price cannot absorb.
+\end{record}
+
+\begin{record}[Rent control in San Francisco]
+% ledger: g10:dmq2019-law, g10:dmq2019-mobility, g10:dmq2019-supply
+In 1994 a change in San Francisco's law extended rent control to some rental buildings and not to others much like them. Comparing the two groups, a study
+found that rent control cut tenants' moves by 20\,\% and made them less likely to leave the city. Landlords of controlled buildings reduced the rental
+housing they offered by 15\,\%, by selling flats to owner-occupants and redeveloping their buildings (Diamond, McQuade and Qian 2019). The tenants who stayed gained,
+as the model predicts in the short run; the supply that left likely raised rents for those looking for a flat, as it predicts in the long run.
+\end{record}
+
+\section{The market as an institution}\label{sec:g10:what-prices-do:institution}
+
+Everything in this chapter assumes more than buyers and sellers. A market needs \textbf{property}: a seller can only sell what is recognised as hers, and a buyer
+only pays for what he will be allowed to keep. It needs \textbf{contracts} that are kept, or enforced by courts when they are not. It needs \textbf{a place to meet},
+a square, an exchange, a website, where buyers and sellers find each other and see prices. And it needs \textbf{rules} on weights, measures and honesty, so that a
+kilogram is a kilogram. Where these are weak, trade shrinks to people who know and trust each other, and prices do their jobs badly. Grade 12 measures how much
+these institutions matter for the wealth of countries.
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g10:what-prices-do:1}
+A drought cuts the coffee harvest in one large producing country, and the price of coffee rises. Give one example of each of the three jobs of the price in this
+story.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:what-prices-do:2}
+Read the opening chart. Between which values did the five countries' fuel price changes lie in June 2022? Did the hairdressing lines ever fall below zero, and what
+would that mean?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:what-prices-do:3}
+Demand is $Q = 100 - 2p$ and supply $Q = 3p - 50$. Find the equilibrium. A ceiling is set at 25. Compute the quantities demanded and supplied, and the shortage.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:what-prices-do:4}
+Demand is $Q = 60 - p$ and supply $Q = p$. Compute the shortage caused by a ceiling of 20.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:what-prices-do:5}
+In \cref{exo:g10:what-prices-do:3}, compute the \omterm{def:g10:what-prices-do:dwl}{deadweight loss} of the ceiling.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:what-prices-do:6}
+In \cref{exo:g10:what-prices-do:4}, compute the \omterm{def:g10:what-prices-do:dwl}{deadweight loss} of the ceiling and the surplus moved from sellers to buyers on the units still sold.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:what-prices-do:7}
+In the market of the text (demand $Q = 120 - 4p$, supply $Q = 2p - 24$), the ceiling is 20 instead of 18. Compute the shortage, the \omterm{def:g10:what-prices-do:dwl}{deadweight loss} and the surplus moved
+from sellers to buyers.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:what-prices-do:8}
+In the market of \cref{exo:g10:what-prices-do:3}, a floor is set at 36. Compute the \omterm{def:g10:market-equilibrium:excess-demand}{excess supply} and, if only the units bought are produced, the \omterm{def:g10:what-prices-do:dwl}{deadweight loss}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:what-prices-do:9}
+Wheat sells for 200 dalens a tonne in one town and 230 in another, and carrying a tonne between them costs 20. What does a trader do, and what happens to the gap? What
+if the cost were 40?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:what-prices-do:10}
+At harvest, rice sells for 10 dalens a sack; traders expect 18 in the lean season, and storing a sack until then costs 5. What do traders do, and how do the two prices
+change? At what gap between them does storage stop growing?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:what-prices-do:11}
+In \cref{exo:g10:what-prices-do:4}, what is the highest price that a buyer would pay on a \omterm{def:g10:what-prices-do:non-price-rationing}{black market} for one of the units sold under the ceiling, if the units go to
+the buyers who value them most? Explain.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:what-prices-do:12}
+Describe an observation that would contradict the \omterm{def:g10:what-prices-do:arbitrage}{arbitrage} model, and say what you would check before concluding that it does.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:what-prices-do:13}
+In the market of the text, a ceiling is set at 26. Show that it changes nothing. Then demand shifts to $Q = 138 - 4p$: find the new equilibrium and say what the
+ceiling does now.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:what-prices-do:14}
+In the market of the text with the ceiling of 18, suppose the 12 units go to the buyers who value them most, but each must queue until the time spent is worth, for
+the last buyer, the 9 dalens between her value and the price, and every buyer queues as long. How much surplus does the queue destroy? What is the \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus} left,
+compared with 216 at equilibrium?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:what-prices-do:15}
+In the market of \cref{exo:g10:what-prices-do:3}, the government sets a floor of 36 and buys every unit that is offered and not bought. How many units does it buy, and
+what does it cost the taxpayers? Compare with the gain of the sellers.
+\end{exercise}
+
+\section{Problem: Rent Control in a Brenland Town}
+
+\begin{problem}[{Weekend problem --- a rent ceiling, queues, side payments and five years of conversions}]
+\label{pb:g10:what-prices-do:1}
+In a Brenland town, with rents $p$ in dalens a month and quantities in flats, the demand for rented flats is $Q = 10000 - 5p$. This year the supply of rented flats is
+$Q = 4000 + p$: the flats exist, and landlords can only rent out a few more or a few fewer. Over five years, landlords can convert flats into flats for sale, build new
+ones or let old ones go, and the long-run supply is a line through the same equilibrium point with a slope of 10 flats per dalen.
+
+\medskip
+\noindent\textbf{Part I --- The first year.}
+\begin{enumerate}
+\item Find the equilibrium rent and number of flats.
+\item The town caps rents at 800 dalens. How many flats are offered and how many wanted this year? What is the shortage?
+\item At 4800 flats, what rent would the last tenant be willing to pay? What is the lowest rent at which the last landlord rents out?
+\item Compute this year's \omterm{def:g10:what-prices-do:dwl}{deadweight loss}, in dalens a month.
+\item Compute the surplus moved from landlords to the tenants of the 4800 flats.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Queues and side payments.}
+\begin{enumerate}[resume]
+\item What is the highest monthly payment above the legal rent that the last tenant would agree to make, for example as a ``key fee'' spread over the months?
+\item If every tenant paid that much on top of the legal rent, what would be the total rent a tenant pays, and who would get the surplus that the ceiling moved?
+\item If instead flats went to whoever queues longest, what is the most that queuing could destroy, in dalens a month, for the 4800 flats?
+\item Why might landlords spend less on repairs under the ceiling?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Five years later.}
+\begin{enumerate}[resume]
+\item Write the long-run supply line.
+\item How many flats are offered at 800 after five years? What is the shortage now?
+\item What rent would the last of these tenants be willing to pay?
+\item Compute the \omterm{def:g10:what-prices-do:dwl}{deadweight loss} after five years.
+\item How many times larger is it than in the first year?
+\item How many flats have left the rental market? Compare with the record of San Francisco.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Elasticities and gains.}
+\begin{enumerate}[resume]
+\item Compute the \omterm{def:g10:elasticities:supply}{price elasticity of supply} at the equilibrium, in the short run and in the long run.
+\item Compute the surplus moved to tenants on the flats still rented, in the first year and after five years.
+\item Who gains from the ceiling after five years, and who loses? Count the people looking for a flat.
+\item With a ceiling of 950 instead, compute the long-run \omterm{def:g10:what-prices-do:dwl}{deadweight loss}.
+\item State the result of the problem: the \omterm{def:g10:what-prices-do:dwl}{deadweight loss} and the black-market rent, in the first year and after five years.
+\end{enumerate}
+\end{problem}

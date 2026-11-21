@@ -1,0 +1,419 @@
+\chapter{Profit Maximisation and Supply}\label{ch:b1:profit-maximisation}
+
+The retail price of a pound of white flour in the United States averaged
+33 cents in 2006 and 51 cents in 2008, after a rise in world grain prices.
+% figdata: flour
+American farmers had already moved: the area harvested of maize rose from
+28.6 million hectares in 2006 to 35.0 million in 2007, while the area of
+soya beans fell from 30.2 to 26.0 million, as land was switched from one
+crop to the other. % figdata: crop_area_points
+Behind each hectare is a decision about what to grow and with how much
+fertiliser, taken by a firm that cannot change the price it gets. This
+chapter derives that decision: what a price-taking firm produces at given
+prices, how it responds when they change, and whether the model's firm
+resembles real ones.
+
+\begin{openingchart}{Area harvested of maize and soya beans, Brazil and the
+United States, 1961--2024, millions of hectares.}{FAOSTAT, Crops and
+livestock products: area harvested}
+\begin{tikzpicture}
+\begin{axis}[omtime, xlabel={Year}, ylabel={Million hectares}, xmin=1961, xmax=2024, ymin=0, ymax=50,
+  width=0.72\linewidth, height=0.44\linewidth, legend pos=north west]
+  \addplot[demand, mark=none] table[x=year, y=maize_usa, col sep=comma] {figdata/bachelor-1/11-profit-maximisation/out/crop_area.csv};
+  \addplot[demand, dashed, mark=none] table[x=year, y=soya_usa, col sep=comma] {figdata/bachelor-1/11-profit-maximisation/out/crop_area.csv};
+  \addplot[supply, mark=none] table[x=year, y=maize_bra, col sep=comma] {figdata/bachelor-1/11-profit-maximisation/out/crop_area.csv};
+  \addplot[supply, dashed, mark=none] table[x=year, y=soya_bra, col sep=comma] {figdata/bachelor-1/11-profit-maximisation/out/crop_area.csv};
+  \legend{Maize: United States, Soya: United States, Maize: Brazil, Soya: Brazil}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+The chart has fast and slow movements. Year to year, American farmers
+switch hectares between maize and soya beans as their relative prices
+move. Over decades, Brazil's soya area grew from 1.3 million hectares in
+1970 to 45.9 million in 2024, as new land was cleared and new varieties
+adapted soya to the tropics; it now exceeds the American
+area. % figdata: crop_area_points
+A firm's supply has a short run, in which land and machines are fixed, and
+a long run, in which they are not.
+
+\begin{recall}
+A price-taking firm produces where price equals marginal cost, and shuts
+down if the price is below its average variable cost: this was met at
+school. The \omterm{def:b1:cost-minimisation:cost-function}{cost function}, the short and the long run and Shephard's lemma
+are in \cref{ch:b1:cost-minimisation}; the envelope theorem is
+\cref{thm:b1:comparative-statics:envelope}.
+\end{recall}
+
+\section{The price-taking firm}\label{sec:b1:profit-maximisation:firm}
+
+A firm sells its output at the price $p$ and hires labour and capital at $w$
+and $r$, all given. It chooses its inputs to
+\[
+\max_{K, L}\ pf(K, L) - wL - rK.
+\]
+At an interior maximum,
+\[
+pf_L(K, L) = w,\qquad pf_K(K, L) = r:
+\]
+each input is hired until the value of its \omterm{def:b1:technology:marginal-product}{marginal product}, $p$ times
+the \omterm{def:b1:technology:marginal-product}{marginal product}, equals its price. One more hour of work adds
+$f_L$ units worth $pf_L$ and costs $w$. The second-order condition requires
+$f$ to be concave near the optimum: diminishing \omterm{def:b1:technology:marginal-product}{marginal products}, and
+more.
+
+With constant returns there is no interior maximum. If a plan makes a
+profit $\pi > 0$, doubling it makes $2\pi$, so the firm would grow without
+limit; if every plan loses money, it makes nothing; and if the best plans
+break even, any size will do. Price-taking firms with constant returns
+have no determinate size --- a point the industry chapter
+(\cref{ch:b1:competitive-industry}) turns into a theory of the number of
+firms.
+
+\section{Supply and factor demands}\label{sec:b1:profit-maximisation:supply}
+
+The firm's problem splits in two: for each output, the cheapest way of
+making it (\cref{ch:b1:cost-minimisation}), and then the best output,
+\[
+\max_q\ pq - C(q).
+\]
+Its first-order condition is $p = C'(q)$: price equals marginal cost. The
+second-order condition is $C''(q) \ge 0$: marginal cost must be rising
+there.
+
+\begin{definition}[Supply function]\label{def:b1:profit-maximisation:supply-function}
+\index{supply function (of a firm)}\index{supply curve!of a firm}
+The \emph{supply function} $q^*(p, w, r)$ of a price-taking firm gives its
+profit-maximising output at the prices $(p, w, r)$. Its graph against $p$
+is the firm's \emph{supply curve}.
+\end{definition}
+
+\begin{definition}[Shut-down price]\label{def:b1:profit-maximisation:shut-down}
+\index{shut-down price}
+In the short run a firm can shut down, losing its fixed cost but paying no
+variable cost. It produces only if revenue covers variable cost,
+$pq \ge C_v(q)$, that is $p \ge C_v(q)/q$. The \emph{shut-down price} is the
+minimum of average variable cost; below it the firm supplies nothing.
+\end{definition}
+
+The short-run supply curve is therefore the rising part of marginal cost
+above the minimum of average variable cost. In the long run there is no
+fixed cost and the firm leaves the industry if the price is below the
+minimum of average cost.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Output $q$}, ylabel={Price and cost},
+  xmin=0, xmax=25, ymin=0, ymax=14, width=0.6\linewidth, height=0.44\linewidth, samples=100,
+  legend pos=south east]
+  \fill[omDef!14] (axis cs:0,6.053) rectangle (axis cs:17.971,9);
+  \addplot[shifted, domain=4:25] {50/x + 4 - 0.4*x + 0.02*x^2};
+  \addplot[guide, domain=0:25] {4 - 0.4*x + 0.02*x^2};
+  \addplot[supply, thin, domain=0:10] {4 - 0.8*x + 0.06*x^2};
+  \addplot[supply, line width=2.2pt, domain=10:22.2] {4 - 0.8*x + 0.06*x^2};
+  \addplot[demand, thin, forget plot] coordinates {(0,9) (25,9)};
+  \addplot[supply, line width=2.2pt, forget plot] coordinates {(0,0) (0,2)};
+  \addplot[only marks, mark=*, black, forget plot] coordinates {(10,2) (17.971,9)};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:0.3,9) {$p = 9$};
+  \node[font=\footnotesize] at (axis cs:4.5,7.5) {profit};
+  \legend{$AC$, $AVC$, $MC$, supply}
+\end{axis}
+\end{tikzpicture}
+
+{\small $C(q) = 50 + 4q - 0.4q^2 + 0.02q^3$. The supply curve (thick red) is marginal
+cost above the minimum of average variable cost, $(10, 2)$; below the price 2
+the firm supplies nothing. At $p = 9$ it makes 17.97 units at an average cost
+of 6.05: the shaded profit is $17.97 \times (9 - 6.05) \approx 53.0$ (52.96 unrounded).}
+\end{omfigure}
+
+The firm also chooses its inputs; their quantities as functions of all
+prices are its demands for them.
+
+\begin{definition}[Unconditional factor demand]\label{def:b1:profit-maximisation:factor-demand}
+\index{factor demand!unconditional}\index{unconditional factor demand}
+The \emph{unconditional factor demands} $L(p, w, r)$ and $K(p, w, r)$ are the
+inputs of the profit-maximising plan. They equal the conditional demands
+of \cref{ch:b1:cost-minimisation} at the profit-maximising output:
+$L(p, w, r) = L^*(w, r, q^*(p, w, r))$.
+\end{definition}
+
+A rise in the wage acts through two channels: at given output the firm
+substitutes capital for labour (the conditional demand falls), and since
+marginal cost rises the firm makes less, so it needs less of every normal
+input. Both push labour demand down.
+
+\section{The profit function}\label{sec:b1:profit-maximisation:profit-function}
+
+\begin{definition}[Profit function]\label{def:b1:profit-maximisation:profit-function}
+\index{profit function}
+The \emph{profit function} $\pi(p, w, r)$ is the largest profit a
+price-taking firm can make at the prices $(p, w, r)$:
+$\pi(p, w, r) = \max_{K, L}\ pf(K, L) - wL - rK$.
+\end{definition}
+
+Like the \omterm{def:b1:cost-minimisation:cost-function}{cost function}, it collects the firm's whole behaviour in one
+function of prices. It is nondecreasing in $p$, nonincreasing in $w$ and $r$,
+homogeneous of degree one in all prices together, and convex.
+
+\begin{proposition}[Convexity of the profit function]\label{prop:b1:profit-maximisation:convex}
+$\pi(p, w, r)$ is convex in $(p, w, r)$.
+\end{proposition}
+
+\begin{proof}
+Write a plan as $y = (q, -L, -K)$ and a price vector as $P = (p, w, r)$, so the
+profit of $y$ is $P\cdot y$. Let $P = tP^1 + (1 - t)P^2$ and let $y$ be the best plan at
+$P$. Then $\pi(P) = tP^1\cdot y + (1 - t)P^2\cdot y \le t\pi(P^1) + (1 - t)\pi(P^2)$, since $y$ is
+feasible but not necessarily best at $P^1$ and $P^2$.
+\end{proof}
+
+Convexity has the same economic content as the concavity of the \omterm{def:b1:cost-minimisation:cost-function}{cost
+function}: a firm that kept its plan when the price rose would see profit
+rise along a straight line; by adjusting it does better, so the \omterm{def:b1:profit-maximisation:profit-function}{profit
+function} lies above its tangent.
+
+\begin{theorem}[Hotelling's lemma]\label{thm:b1:profit-maximisation:hotelling}
+\index{Hotelling's lemma}
+Where the supply and factor demands are differentiable,
+\[
+\frac{\partial\pi}{\partial p} = q^*(p, w, r),\qquad \frac{\partial\pi}{\partial w} = -L(p, w, r),\qquad
+\frac{\partial\pi}{\partial r} = -K(p, w, r).
+\]
+\end{theorem}
+
+\begin{proof}
+By the envelope theorem the derivative of the maximum value with respect to
+a parameter is the partial derivative of the objective,
+$pf(K, L) - wL - rK$, at the optimum: $f(K, L) = q^*$ for $p$, $-L$ for $w$, $-K$
+for $r$.
+\end{proof}
+
+\begin{proposition}[Law of supply]\label{prop:b1:profit-maximisation:law-of-supply}
+\index{law of supply}
+A price-taking, profit-maximising firm's supply never falls when its
+output price rises, and its demand for an input never rises when the
+input's price rises: $\partial q^*/\partial p \ge 0$, $\partial L/\partial w \le 0$, $\partial K/\partial r \le 0$.
+\end{proposition}
+
+\begin{proof}
+By Hotelling's lemma, $\partial q^*/\partial p = \partial^2\pi/\partial p^2$ and
+$\partial L/\partial w = -\partial^2\pi/\partial w^2$; the second derivatives of a convex function
+along each axis are nonnegative.
+\end{proof}
+
+The law of supply needs no assumption about the shape of the \omterm{def:b1:technology:production-function}{production
+function} beyond the existence of a best plan: it follows from profit
+maximisation alone. The same argument with two price vectors and two
+plans, without derivatives, gives $(p^1 - p^0)(q^1 - q^0) \ge 0$
+(\cref{exo:b1:profit-maximisation:convex}).
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Output price $p$}, ylabel={Profit},
+  xmin=0, xmax=4, ymin=-2, ymax=16, width=0.5\linewidth, height=0.4\linewidth, samples=60,
+  legend pos=north west]
+  \addplot[demand, domain=0:4] {x^2};
+  \addplot[shifted, domain=0.4:4] {4 + 4*(x - 2)};
+  \addplot[only marks, mark=*, black, forget plot] coordinates {(2,4)};
+  \legend{$\pi(p) = p^2$, plan of $p = 2$ kept}
+\end{axis}
+\end{tikzpicture}
+
+{\small A firm with $C = q^2/4$ supplies $q = 2p$ and earns $\pi = p^2$. If it kept the
+plan chosen at $p = 2$ ($q = 4$), its profit would move along the dashed line;
+adjusting, it does better at every other price, so the \omterm{def:b1:profit-maximisation:profit-function}{profit function} is
+convex and its slope at $p$ is the output, $\pi'(p) = 2p$.}
+\end{omfigure}
+
+\begin{omchart}{Cereal yield, five regions, 1961--2024, tonnes per
+hectare.}{FAOSTAT, Crops and livestock products: yield of cereals, primary}
+\begin{tikzpicture}
+\begin{axis}[omtime, xlabel={Year}, ylabel={Tonnes per hectare}, xmin=1961, xmax=2024, ymin=0, ymax=7,
+  width=0.72\linewidth, height=0.42\linewidth, legend pos=north west]
+  \addplot+[no marks, thick] table[x=year, y=americas, col sep=comma] {figdata/bachelor-1/11-profit-maximisation/out/cereal_yield.csv};
+  \addplot+[no marks, thick] table[x=year, y=asia, col sep=comma] {figdata/bachelor-1/11-profit-maximisation/out/cereal_yield.csv};
+  \addplot+[no marks, thick] table[x=year, y=europe, col sep=comma] {figdata/bachelor-1/11-profit-maximisation/out/cereal_yield.csv};
+  \addplot+[no marks, thick] table[x=year, y=world, col sep=comma] {figdata/bachelor-1/11-profit-maximisation/out/cereal_yield.csv};
+  \addplot+[no marks, thick] table[x=year, y=africa, col sep=comma] {figdata/bachelor-1/11-profit-maximisation/out/cereal_yield.csv};
+  \legend{Americas, Asia, Europe, World, Africa}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+Supply grows on the \omterm{def:b1:labour-supply-and-saving:margins}{intensive margin} too. The world's cereal yield rose
+from 1.35 to 4.21 tonnes per hectare between 1961 and 2024, $1.8\%$ a year;
+Africa's from 0.81 to 1.68, $1.2\%$ a year. % figdata: yield_growth
+Higher yields came from better seeds, more fertiliser and irrigation: a
+change in the \omterm{def:b1:technology:production-function}{production function} (\omterm{def:b1:technology:technical-progress}{technical progress}) as much as a
+response to prices along it.
+
+\begin{measure}[Area harvested and yield]
+FAOSTAT's area harvested counts the hectares from which a crop was
+gathered in the year; its production is the quantity gathered; yield is
+production divided by area harvested. A yield can rise because each
+hectare produces more, because fewer harvests fail, or because poor land
+leaves the crop; it falls when new, poorer land is brought in. A rising
+area and a rising yield are the extensive and the \omterm{def:b1:labour-supply-and-saving:margins}{intensive margin} of a
+farm sector's supply.
+\end{measure}
+
+\section{Do firms maximise profit?}\label{sec:b1:profit-maximisation:evidence}
+
+The model does not say that managers solve the equations of this chapter.
+It says that firms behave \emph{as if} they did, and it is judged by its
+predictions: supply that rises with expected prices, factor demands that
+fall with their own price. Two arguments support it. Firms that leave
+much profit unearned are less likely to survive competition or to attract
+capital; and most decisions are repeated, so a firm can find good rules by
+trial. Neither argument is a proof. Survival is slow when competition is
+weak, and the record below shows firms that had left large gains unused.
+
+\begin{record}[Management as a missing input]
+In a field experiment, free management consulting was given to randomly
+chosen plants of large textile firms in India. The plants adopted
+practices for quality control, inventory and maintenance, and their
+productivity rose by $17\%$ in the first year; within three years the
+treated firms had opened more plants. The authors conclude that the main
+reason the practices had not been adopted before was that the owners did
+not know about them or doubted their value (Bloom, Eifert, Mahajan, McKenzie
+and Roberts 2013). % ledger: b1:bloom2013
+Profitable improvements had been left unused, and competition had not
+forced the badly managed firms out, because limits on managerial time
+held back the movement of business between firms. % ledger: b1:bloom2013
+\end{record}
+
+\begin{model}{The profit-maximising firm}
+\assumes A price-taking firm with a convex technology chooses its output
+and inputs to maximise profit.
+\predicts Supply that rises with the output price, with a larger response
+in the long run than in the short run; factor demands that fall with their
+own price; the symmetry $\partial L/\partial r = \partial K/\partial w$.
+\tested Planted area responds to expected prices: one estimate of the
+supply elasticity of the world's calories from maize, wheat, rice and soya
+beans lies between $0.08$ and $0.13$ across specifications (Roberts and
+Schlenker 2010), small but not zero. % ledger: b1:roberts2010
+The switch from soya to maize in 2007 is the same response in one
+country. % figdata: crop_area_points
+\breaks Firms that do not know their costs or the best practices
+(Bloom et al.\ 2013); % ledger: b1:bloom2013
+firms large enough to move their price (\cref{ch:b1:monopoly-pricing}).
+\end{model}
+
+\section*{Exercises}\label{sec:b1:profit-maximisation:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:profit-maximisation:supply-q2}
+A price-taking firm has $C(q) = q^2/4$. Derive its supply function and its
+\omterm{def:b1:profit-maximisation:profit-function}{profit function}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:profit-maximisation:shutdown}
+Find the \omterm{def:b1:profit-maximisation:shut-down}{shut-down price} of a firm with
+$C(q) = 50 + 10q - q^2 + q^3/3$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:profit-maximisation:read}
+From the opening chart's table, Brazil harvested soya beans from 11.487
+million hectares in 1990 and 45.907 million in 2024. % figdata: crop_area_points
+By what factor did the area grow? What part of this growth would a supply
+curve with a fixed technology and fixed land explain?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:profit-maximisation:sign}
+A price-taking firm's wage rises. What is the sign of the change in its
+demand for labour, and which result says so?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:profit-maximisation:cd}
+For $f = K^{1/4}L^{1/2}$, derive the supply and the factor demands, and evaluate
+them at $p = 8$, $w = r = 1$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:profit-maximisation:hotelling-check}
+Show that the \omterm{def:b1:profit-maximisation:profit-function}{profit function} of the previous exercise is
+$\pi = p^4/(64rw^2)$, and check Hotelling's lemma for $q$ and for $L$ at $p = 8$,
+$w = r = 1$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:profit-maximisation:predict}
+With a supply elasticity of $0.1$, predict the response of the area planted
+to a $30\%$ rise in the expected price.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:profit-maximisation:yield}
+From the second chart's table, cereal yields were 1.353 and 4.206 tonnes per
+hectare for the world in 1961 and 2024, and 0.81 and 1.676 for
+Africa. % figdata: yield_growth
+Compute the yearly growth rates.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:profit-maximisation:crs}
+Show that a price-taking firm with constant returns and the \omterm{def:b1:cost-minimisation:cost-function}{cost function}
+$C(q) = cq$ either makes nothing, wants to grow without limit, or is
+indifferent among all sizes. Which happens at which prices?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:profit-maximisation:convex}
+Without derivatives: let the firm choose $q^0$ at the price $p^0$ and $q^1$ at
+$p^1$, with input prices fixed. Show that $(p^1 - p^0)(q^1 - q^0) \ge 0$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:profit-maximisation:fixed-factor}
+A firm has $q = Ax^a\bar K^b$ with $0 < a < 1$, a variable input $x$ at price $v$ and
+a fixed $\bar K$. Derive its short-run supply and show that its elasticity is
+$a/(1 - a)$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:profit-maximisation:refute}
+What evidence would refute profit maximisation as a model of farm supply?
+Name one pattern in planted areas, and one in input use.
+\end{exercise}
+
+\section{Problem: A Kestrian Farm in a Price Boom}\label{sec:b1:profit-maximisation:problem}
+
+\begin{problem}[{Weekend problem --- short-run and long-run supply}]\label{pb:b1:profit-maximisation:farm}
+A Kestrian maize farm (invented) produces $q = 40N^{1/4}T^{1/4}$ tonnes from $N$
+kilograms of fertiliser, at $v = 2$ kests a kilogram, and $T$ hectares of land,
+rented at $\rho = 200$ kests a hectare a year. The farmer's own labour is fixed
+and not counted: profit is its return. Maize sells at $p = 100$ kests a tonne.
+
+\medskip\noindent\textbf{Part I --- The plan.}
+\begin{enumerate}
+  \item What are the \omterm{def:b1:technology:returns-to-scale}{returns to scale}? Why can the farm have a determinate size?
+  \item Write the first-order conditions.
+  \item Show that the farm spends a quarter of its revenue on each input, and find $q$, $N$ and $T$.
+  \item Compute the profit, and the yield per hectare.
+  \item Show that the \omterm{def:b1:profit-maximisation:profit-function}{profit function} is $\pi = 1600p^2/(8\sqrt{v\rho})$, and evaluate it.
+  \item Check Hotelling's lemma for $q$.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- Supply and demands.}
+\begin{enumerate}[resume]
+  \item Derive the long-run supply function $q(p, v, \rho)$.
+  \item What is its price elasticity?
+  \item Derive the demand for fertiliser $N(p, v, \rho)$.
+  \item What is the elasticity of fertiliser demand with respect to its own price?
+  \item Check that $\partial N/\partial\rho = \partial T/\partial v$.
+  \item Why does the farm not double its land when it is profitable?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- A price boom.} The price of maize rises to 150.
+In the short run the land is fixed at 250 hectares.
+\begin{enumerate}[resume]
+  \item Write the short-run \omterm{def:b1:technology:production-function}{production function} in $N$ alone.
+  \item Derive the short-run supply and its elasticity.
+  \item Compute short-run output and fertiliser at $p = 150$.
+  \item Compute long-run output, land and fertiliser at $p = 150$.
+  \item Compare short-run and long-run profit at $p = 150$.
+  \item Why is the long-run response larger?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- Fertiliser too.} At the same time the price of
+fertiliser rises from 2 to 4.5 kests a kilogram.
+\begin{enumerate}[resume]
+  \item Compute long-run output.
+  \item Compute short-run output, with 250 hectares.
+  \item Compute fertiliser per hectare in the short run, against 100 before.
+  \item Compute land and fertiliser in the long run.
+  \item Explain why output falls in the short run but not in the long run.
+  \item State the result: the farm's long-run and short-run supply elasticities.
+\end{enumerate}
+\end{problem}

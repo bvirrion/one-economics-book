@@ -1,0 +1,385 @@
+\chapter{Describing Data}\label{ch:b1:describing-data}
+
+In 1978, 2,490 American men of a household panel earned on average 21,554
+dollars of 1982, and $51.4\%$ of them earned less than that average. (The
+samples of this chapter and the next three measure earnings in dollars of
+1982.) % ledger: b1:nsw-1982dollars
+% computed: code/bachelor-1/29-describing-data/outputs/histogram.txt
+In the United States in 2022, the richest hundredth of the population had
+an average income 9.37 times the median. % figdata: pip_stats
+A mean is a fine summary of a symmetric distribution and a poor one of a
+skewed one, and incomes are skewed. This chapter describes data before any
+model: distributions, their centre and spread, how two variables move
+together, how means differ across groups --- and the traps in each.
+
+\begin{openingchart}{Average income per person of each hundredth of the
+population, United States, 2022, dollars a day at 2021 purchasing power, on
+an ordinary axis (left) and a logarithmic axis (right).}{World Bank, Poverty
+and Inequality Platform (\omterm{def:b1:describing-data:quantile}{percentiles})}
+\begin{tikzpicture}
+\begin{groupplot}[omrecord, group style={group size=2 by 1, horizontal sep=1.6cm}, width=0.46\linewidth,
+  height=0.36\linewidth, xmin=0, xmax=101, xlabel={Hundredth of the population}]
+  \nextgroupplot[ylabel={Dollars a day}, ymin=0, ymax=650]
+  \addplot[omDef, thick, sharp plot] table[x=percentile, y=avg_welfare, col sep=comma] {figdata/bachelor-1/29-describing-data/out/pip_usa.csv};
+  \nextgroupplot[ymode=log, ymin=0.2, ymax=1000, log basis y=10]
+  \addplot[omDef, thick, sharp plot] table[x=percentile, y=avg_welfare, col sep=comma] {figdata/bachelor-1/29-describing-data/out/pip_usa.csv};
+\end{groupplot}
+\end{tikzpicture}
+\end{openingchart}
+
+On the ordinary axis the bottom four-fifths are squeezed together and the
+top hundredth stands alone at 629 dollars a day. On the logarithmic axis,
+equal distances are equal ratios: the median, 67 dollars, is 2.7 times the
+tenth hundredth and 0.4 times the ninetieth. % figdata: pip_stats
+
+\begin{recall}
+Mean, median, quartiles, variance and standard deviation were met in the
+mathematics series; the Lorenz curve, the Gini coefficient and top
+shares at school. Python and pandas are \cref{ch:b1:economic-data-python}.
+\end{recall}
+
+\begin{measure}[Income in a survey]
+The opening chart's incomes come from a household survey. Household income
+is divided by the number of members, which assumes that everyone in the
+household shares equally; and wealthy households are less likely to answer,
+so the distribution may have too thin a tail at the top. % ledger: b1:pip-methods
+Tax records, which reach the top better, give larger top shares.
+\end{measure}
+
+\section{Histograms and quantiles}\label{sec:b1:describing-data:histograms}
+
+\begin{definition}[Histogram]\label{def:b1:describing-data:histogram}
+\index{histogram}
+A \emph{histogram} divides the range of a variable into bins and draws over
+each a bar whose area is the share of observations in the bin: its height
+is the share divided by the bin's width, a \emph{density}, so that the areas
+sum to 1 whatever the widths.
+\end{definition}
+
+\begin{definition}[Empirical distribution function]\label{def:b1:describing-data:edf}
+\index{empirical distribution function}
+The \emph{empirical distribution function} of a sample $x_1, \dots, x_n$ is
+$\hat F(t) = \frac1n\#\{i : x_i \le t\}$, the share of observations at or below $t$.
+\end{definition}
+
+\begin{definition}[Quantile, percentile]\label{def:b1:describing-data:quantile}
+\index{quantile}\index{percentile}
+The \emph{quantile} of order $p$ is the smallest value $t$ with $\hat F(t) \ge p$ (or an
+interpolation between two observations, as pandas does by default); the
+$p$-th \emph{percentile} is the quantile of order $p/100$.
+\end{definition}
+
+\omcode{code/bachelor-1/29-describing-data/listings/histogram.py}{1}{17}{A \omterm{def:b1:describing-data:histogram}{histogram} as a table of
+densities, and five \omterm{def:b1:describing-data:quantile}{quantiles}.}\label{lst:b1:describing-data:histogram}
+
+\omoutput{code/bachelor-1/29-describing-data/outputs/histogram.txt}{A long right tail: a few men
+above 100,000 dollars, a tenth at zero.}\label{out:b1:describing-data:histogram}
+
+\section{Mean, variance and skewness}\label{sec:b1:describing-data:moments}
+
+\begin{definition}[Skewness]\label{def:b1:describing-data:skewness}
+\index{skewness}
+The \emph{skewness} of a sample is $\frac1n\sum_i (x_i - \bar x)^3/s^3$, with $s^2 = \frac1n\sum_i (x_i - \bar x)^2$:
+positive when the right tail is longer, negative when the left one is,
+zero for a symmetric distribution.
+\end{definition}
+
+\omcode{code/bachelor-1/29-describing-data/listings/moments.py}{1}{13}{The first three moments, of
+earnings and of their logarithm.}\label{lst:b1:describing-data:moments}
+
+\omoutput{code/bachelor-1/29-describing-data/outputs/moments.txt}{Positive earnings skewed to the right
+($1.645$); their logarithm skewed to the left ($-1.913$).}\label{out:b1:describing-data:moments}
+
+The logarithm pulls in the long right tail, but it stretches the left one:
+a man with very low positive earnings sits far below the others on a log
+scale. In Brenland's survey, where no household has income near zero, the
+logarithm of \omterm{def:b1:national-accounts-in-depth:gni}{disposable income} has a \omterm{def:b1:describing-data:skewness}{skewness} of $-0.123$, against $1.436$ for
+the level (weekend problem). % computed: code/bachelor-1/29-describing-data/exercises/solutions.py
+Whether the logarithm makes a distribution symmetric depends on its bottom
+as much as on its top.
+
+\section{Covariance and correlation}\label{sec:b1:describing-data:correlation}
+
+\begin{definition}[Sample covariance, correlation coefficient]\label{def:b1:describing-data:correlation}
+\index{covariance, sample}\index{correlation coefficient}
+The \emph{sample covariance} of $x$ and $y$ is $s_{xy} = \frac1{n-1}\sum_i (x_i - \bar x)(y_i - \bar y)$; the
+\emph{correlation coefficient} is $r = s_{xy}/(s_x s_y)$.
+\end{definition}
+
+\begin{proposition}[Range of the correlation]\label{prop:b1:describing-data:range}
+$-1 \le r \le 1$, with $|r| = 1$ if and only if the points lie on a straight line
+that is not horizontal or vertical.
+\end{proposition}
+
+\begin{proof}
+Let $a_i = x_i - \bar x$ and $b_i = y_i - \bar y$. By the Cauchy--Schwarz inequality,
+$(\sum_i a_ib_i)^2 \le \sum_i a_i^2 \sum_i b_i^2$, so $s_{xy}^2 \le s_x^2 s_y^2$ and $r^2 \le 1$. Equality holds when
+$b = \lambda a$ for some $\lambda \ne 0$, that is $y_i - \bar y = \lambda(x_i - \bar x)$ for every $i$.
+\end{proof}
+
+\omcode{code/bachelor-1/29-describing-data/listings/covariance.py}{1}{17}{Covariance and correlation
+by hand and with pandas, and a correlation that misses a parabola.}\label{lst:b1:describing-data:covariance}
+
+\omoutput{code/bachelor-1/29-describing-data/outputs/covariance.txt}{Earnings in 1975 and 1978:
+$r = 0.73$. A parabola: $r$ near 0.}\label{out:b1:describing-data:covariance}
+
+A correlation measures how close the points are to a straight line. It
+says nothing about a relation that is not linear: on a symmetric range, $v = u^2$
+is entirely determined by $u$, and the correlation is near zero.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{groupplot}[omscatter, group style={group size=3 by 1, horizontal sep=0.9cm}, width=0.34\linewidth,
+  height=0.3\linewidth, xticklabels={}, yticklabels={}]
+  \nextgroupplot[title={\small $r = 0.995$}]
+  \addplot[only marks, mark=*, mark size=0.8pt, omDef] table[x=x1, y=y1, col sep=comma] {figdata/bachelor-1/29-describing-data/out/clouds.csv};
+  \nextgroupplot[title={\small $r = 0.62$}]
+  \addplot[only marks, mark=*, mark size=0.8pt, omDef] table[x=x2, y=y2, col sep=comma] {figdata/bachelor-1/29-describing-data/out/clouds.csv};
+  \nextgroupplot[title={\small $r = 0.04$}]
+  \addplot[only marks, mark=*, mark size=0.8pt, omDef] table[x=x3, y=y3, col sep=comma] {figdata/bachelor-1/29-describing-data/out/clouds.csv};
+\end{groupplot}
+\end{tikzpicture}
+
+{\small Three seeded samples of 200 points: close to a line, a cloud, and a
+parabola whose correlation is near zero although $y$ is a function of $x$.
+% figdata: clouds_r
+}
+\end{omfigure}
+
+\section{Conditional means}\label{sec:b1:describing-data:conditional}
+
+\begin{definition}[Conditional mean (in data)]\label{def:b1:describing-data:conditional-mean}
+\index{conditional mean}
+The \emph{conditional mean} of $y$ given $x = a$ in a sample is the mean of $y$ over
+the observations with $x = a$; as a function of $a$, it describes how the average
+of $y$ changes with $x$.
+\end{definition}
+
+\omcode{code/bachelor-1/29-describing-data/listings/group_means.py}{1}{8}{Mean and median earnings
+by years of schooling.}\label{lst:b1:describing-data:groups}
+
+\omoutput{code/bachelor-1/29-describing-data/outputs/group_means.txt}{Earnings rise with
+schooling, with a dip at 11 years and a step at 12.}\label{out:b1:describing-data:groups}
+
+\begin{omchart}{Mean earnings in 1978 by years of schooling, PSID comparison
+sample: the 2,307 men with 8 to 17 years of schooling (counts above the
+bars).}{LaLonde (1986) and Dehejia and
+Wahba (1999) samples of the National Supported Work data}
+\begin{tikzpicture}
+\begin{axis}[omrecord, ybar, bar width=9pt, xlabel={Years of schooling}, ylabel={Mean earnings (dollars of 1982)},
+  xmin=7.3, xmax=17.7, ymin=0, ymax=38000, width=0.62\linewidth, height=0.38\linewidth, xtick={8,...,17},
+  nodes near coords, point meta=explicit symbolic, nodes near coords style={font=\tiny}]
+  \addplot[fill=omDef!60, draw=omDef] table[x=education, y=mean, meta=count, col sep=comma] {figdata/bachelor-1/29-describing-data/out/school.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+The samples were assembled to test whether non-experimental methods can
+reproduce the result of an experiment (LaLonde 1986; Dehejia and Wahba
+1999). % ledger: b1:lalonde1986
+% ledger: b1:dehejia1999
+The \omterm{def:b1:describing-data:conditional-mean}{conditional means} describe; whether a year of schooling causes the
+step from $16{,}153$ to $20{,}564$ dollars between 11 and 12 years is the question of
+\cref{ch:b1:simple-regression}.
+% computed: code/bachelor-1/29-describing-data/outputs/group_means.txt
+
+\section{Traps}\label{sec:b1:describing-data:traps}
+
+\begin{definition}[Composition effect, Simpson's paradox]\label{def:b1:describing-data:simpson}
+\index{composition effect}\index{Simpson's paradox}
+A \emph{composition effect} is a change or difference in an overall mean that
+comes from the shares of the groups rather than from the means within
+them. \emph{Simpson's paradox} is its extreme case: a comparison that goes one
+way within every group and the other way overall.
+\end{definition}
+
+\omcode{code/bachelor-1/29-describing-data/listings/simpson.py}{1}{12}{Older and younger households
+in Brenland's survey, overall and within working and non-working households.}\label{lst:b1:describing-data:simpson}
+
+\omoutput{code/bachelor-1/29-describing-data/outputs/simpson.txt}{Older households have more
+income within each group, and less overall.}\label{out:b1:describing-data:simpson}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xmin=0.5, xmax=3.5, ymin=5000, ymax=35000, xtick={1,2,3},
+  xticklabels={Not working, Working, All}, ylabel={Mean disposable income (dalens)}, width=0.56\linewidth,
+  height=0.38\linewidth, legend style={font=\scriptsize, at={(0.02,0.98)}, anchor=north west}]
+  \addplot[only marks, mark=*, mark size=2pt, omDef] table[x=pos, y=young, col sep=comma] {figdata/bachelor-1/29-describing-data/out/simpson.csv};
+  \addplot[only marks, mark=square*, mark size=2pt, omThm] table[x=pos, y=old, col sep=comma] {figdata/bachelor-1/29-describing-data/out/simpson.csv};
+  \legend{Head under 50, Head 50 or over}
+\end{axis}
+\end{tikzpicture}
+
+{\small \omterm{def:b1:describing-data:simpson}{Simpson's paradox} in Brenland's survey: within non-working and within
+working households, households with older heads have more income; overall
+they have less, because $51.7\%$ of them do not work, against $5.6\%$ of the others.}
+\end{omfigure}
+
+\begin{record}[Admissions by department]
+In 1973 the six largest departments of a graduate school admitted $44.5\%$ of
+2,691 male applicants and $30.4\%$ of 1,835 female applicants. % ledger: b1:bickel1975
+Department by department the gap largely disappeared: women had applied
+more often to the departments that admitted a small share of all
+applicants. The pooled figures showed a pattern that the departments'
+own decisions did not (Bickel, Hammel and O'Connell 1975).
+\end{record}
+
+\begin{definition}[Top-coding, censoring]\label{def:b1:describing-data:top-coding}
+\index{top-coding}\index{censoring}
+A variable is \emph{top-coded} when values above a cap are recorded at the cap.
+More generally, it is \emph{censored} when values beyond a limit are known only
+to lie beyond it.
+\end{definition}
+
+\omcode{code/bachelor-1/29-describing-data/listings/top_coding.py}{1}{15}{A quarter of a sample at the
+cap.}\label{lst:b1:describing-data:top-coding}
+
+\omoutput{code/bachelor-1/29-describing-data/outputs/top_coding.txt}{4,145 men recorded at 25,564.70
+dollars: the recorded mean is a lower bound.}\label{out:b1:describing-data:top-coding}
+
+\begin{omchart}{Earnings in 1978 in dollars of 1982, density per 100,000
+dollars, bins of 2,000 dollars: PSID comparison sample (blue) and CPS comparison sample (red),
+values above 60,000 put in the last bin.}{National Supported Work comparison
+samples}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xlabel={Earnings in 1978 (dollars of 1982)}, ylabel={Density}, xmin=0, xmax=60000, ymin=0,
+  width=0.66\linewidth, height=0.36\linewidth, scaled x ticks=false]
+  \addplot[omDef, thick, const plot mark mid] table[x=lo, y=psid, col sep=comma] {figdata/bachelor-1/29-describing-data/out/earn_hist.csv};
+  \addplot[omThm, thick, const plot mark mid] table[x=lo, y=cps, col sep=comma] {figdata/bachelor-1/29-describing-data/out/earn_hist.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+The CPS sample's spike at its cap holds a quarter of the men. Every mean,
+variance or regression computed on it treats 25,564.70 dollars as their
+earnings.
+
+\begin{definition}[Outlier, trimmed mean]\label{def:b1:describing-data:outlier}
+\index{outlier}\index{trimmed mean}
+An \emph{outlier} is an observation far from the bulk of the data. The
+\emph{$\alpha$-trimmed mean} drops the fraction $\alpha$ of the observations at each end and
+averages the rest.
+\end{definition}
+
+\omcode{code/bachelor-1/29-describing-data/listings/trimmed.py}{1}{13}{The mean moves with one
+observation; the median and the \omterm{def:b1:describing-data:outlier}{trimmed mean} barely.}\label{lst:b1:describing-data:trimmed}
+
+\omoutput{code/bachelor-1/29-describing-data/outputs/trimmed.txt}{Removing one man in 445 lowers the
+mean by 124 dollars and the median by 29.}\label{out:b1:describing-data:trimmed}
+
+\section*{Exercises}\label{sec:b1:describing-data:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:describing-data:read}
+From the opening chart's table, the median hundredth of Americans had 67.15
+dollars a day in 2022 and the ninetieth 169.65. % figdata: pip_stats
+Give the ratio, and say where each lies on the logarithmic panel.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:describing-data:five}
+Find the mean and the median of $2$, $3$, $3$, $4$, $18$. Which describes the typical value?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:describing-data:r}
+Two variables have a covariance of 12 and standard deviations of 3 and 5.
+Find their correlation.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:describing-data:trap}
+A country's average wage falls in a year in which the wage of every
+occupation rises. Name the trap and give a mechanism.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:describing-data:log}
+For the PSID men earning at least 5,000 dollars, compute the \omterm{def:b1:describing-data:skewness}{skewness} of
+earnings and of their logarithm, and compare with \cref{out:b1:describing-data:moments}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:describing-data:cap}
+Replace the CPS sample's capped values by 1.5 times the cap. By how much does
+the mean change? And the median?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:describing-data:step}
+From \cref{out:b1:describing-data:groups}, give the step in mean earnings from 11 to 12
+years of schooling, and the step from 12 to 16 years per year.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:describing-data:prove}
+Prove \cref{prop:b1:describing-data:range} without the Cauchy--Schwarz inequality, using
+$\sum_i (a_i/\sqrt{\sum a^2} \pm b_i/\sqrt{\sum b^2})^2 \ge 0$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:describing-data:billionaire}
+A billionaire moves into a town of 10,000 people. Predict the change in
+mean and in median wealth.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:describing-data:build}
+Department A admits 80 of 100 male and 18 of 20 female applicants;
+department B admits 10 of 50 male and 30 of 130 female applicants. Compute
+the admission rates by department and overall, and explain.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:describing-data:minimise}
+Show that $\bar x$ minimises $\sum_i (x_i - c)^2$ over $c$, and that a median minimises
+$\sum_i |x_i - c|$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:describing-data:hidden}
+A study reports a correlation of $0.1$ between two variables. What
+observation would show that a strong relation lies behind it?
+\end{exercise}
+
+\section{Problem: Brenland's Household Survey}\label{sec:b1:describing-data:problem}
+
+\begin{problem}[{Weekend problem --- a survey, described}]\label{pb:b1:describing-data:survey}
+Brenland's household survey of 2025 (invented) has 2,000 households, with
+disposable and gross income, the head's age, schooling and hours, and the
+household's size. Each answer comes from a script.
+
+\medskip\noindent\textbf{Part I --- The distribution.}
+\begin{enumerate}
+  \item Give the counts of \omterm{def:b1:national-accounts-in-depth:gni}{disposable income} in bins of 10,000 dalens.
+  \item Give the counts of $\log_{10}$ of \omterm{def:b1:national-accounts-in-depth:gni}{disposable income} in bins of $0.2$ from $3.8$ to $5$.
+  \item Which \omterm{def:b1:describing-data:histogram}{histogram} is closer to symmetric?
+  \item Give the mean and the median.
+  \item What share of households is below the mean?
+  \item Why is the mean above the median?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- Moments and quantiles.}
+\begin{enumerate}[resume]
+  \item Give the standard deviation and the \omterm{def:b1:describing-data:skewness}{skewness}.
+  \item Give the \omterm{def:b1:describing-data:skewness}{skewness} of the logarithm.
+  \item Give the 10th and 90th \omterm{def:b1:describing-data:quantile}{percentiles} and their ratio.
+  \item What share of all \omterm{def:b1:national-accounts-in-depth:gni}{disposable income} goes to the top tenth of households?
+  \item Why may a survey understate that share?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- Income and schooling.}
+\begin{enumerate}[resume]
+  \item Give mean gross income for heads with under 12, 12, 13--15 and 16 or
+    more years of schooling.
+  \item Give the correlation of schooling with gross income, and with its
+    logarithm.
+  \item Why might the correlation understate how much schooling and income
+    are related?
+  \item Does the table show that schooling raises income?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- The paradox.} Split households by the
+head's age (under 50, 50 or over) and by whether the head works.
+\begin{enumerate}[resume]
+  \item Give mean \omterm{def:b1:national-accounts-in-depth:gni}{disposable income} of each age group, overall.
+  \item Give the four means within working and non-working households.
+  \item Give the share working in each age group.
+  \item Rebuild each overall mean as a weighted average of the within-group means.
+  \item Compute the older households' mean if they worked as often as the younger.
+  \item Which comparison answers ``do older households have more income
+    when they work?''
+  \item Which answers ``do older households have more income?''
+  \item Name the trap.
+  \item What would a reader of the overall means alone conclude?
+  \item State the result.
+\end{enumerate}
+\end{problem}

@@ -1,0 +1,567 @@
+\chapter{Factor Endowments}\label{ch:b3:factor-endowments}
+
+Ricardo's model explains trade by differences in technology. Countries also
+differ in what they have: some have much capital per worker, some many workers
+with little schooling, some vast farmland. When the same technology is available
+everywhere, these differences in endowments are enough to create \omterm{def:b3:ricardian-trade:comparative-advantage}{comparative
+advantage}. This chapter builds the models in which they do --- first with
+factors stuck in their sectors, then with factors that move --- and draws from
+them the two predictions economists use most: who gains and who loses from
+trade inside a country, and which factors a country's trade embodies. The second
+prediction has been tested for seventy years, and the record of those tests is
+the chapter's last section.
+
+\begin{openingchart}{Shares of the world's capital stock, workers and output in
+2019, for the twelve largest economies by output (percent; the world is the 175
+countries with all three series).}{Penn World Table 11.0; our computation}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.72\linewidth, height=0.55\linewidth, xmin=0, xmax=25,
+  ymin=0.4, ymax=12.6, ytick={1,...,12}, yticklabels from table={figdata/bachelor-3/08-factor-endowments/out/endow.csv}{country},
+  y tick label style={font=\footnotesize}, xlabel={Share of the world total (\%)},
+  legend pos=south east, ymajorgrids=true, xmajorgrids=false]
+  \addplot[only marks, mark=square*, mark size=2.2pt, omDef] table[x=capital, y=rank] {figdata/bachelor-3/08-factor-endowments/out/endow.csv};
+  \addplot[only marks, mark=triangle*, mark size=2.6pt, omThm] table[x=workers, y=rank] {figdata/bachelor-3/08-factor-endowments/out/endow.csv};
+  \addplot[only marks, mark=*, mark size=2pt, black] table[x=output, y=rank] {figdata/bachelor-3/08-factor-endowments/out/endow.csv};
+  \legend{capital, workers, output}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+The United States had 11.4~\% of the world's capital and 4.9~\% of its workers;
+India 6.1~\% of the capital and 16.2~\% of the workers; China, the largest in
+both, had more of the workers (23.0~\%) than of the capital (19.1~\%).
+% figdata: endow
+Japan, Germany, France, the United Kingdom, Italy and South Korea all hold two to
+four times as large a share of the world's capital as of its workers. If
+technology were the same everywhere, these ratios alone would tell each country
+what to export.
+
+\begin{recall}
+The grades 10--12 volume drew the production possibility frontier and its
+opportunity costs. The Year 1 volume taught production functions, isoquants and
+cost minimisation, and the Year 2 volume general equilibrium. Here they are
+combined, two goods and two factors at a time.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:factor-endowments:symbols}
+Goods $j = 1, 2$ have prices $p_j$ (not the price level). Labour earns the wage
+$w$ and capital the rental rate $r$ (not an interest rate). $a_{Lj}$ and $a_{Kj}$
+are the labour and capital used per unit of good $j$, and $\theta_{Lj} = w
+a_{Lj}/p_j$ is labour's share of its cost. A hat is a proportional change:
+$\hat x = dx/x$. In the factor-content section, $A$ is a matrix of factor
+requirements (not productivity), $V_c$ a country's endowments, $T_c$ its net
+exports and $s_c$ its share of world spending.
+\end{notation}
+
+\section{Specific factors: who gains in the short run}\label{sec:b3:factor-endowments:specific}
+
+\begin{definition}[Specific-factors model]\label{def:b3:factor-endowments:specific-factors}
+\index{specific-factors model}
+In the \emph{specific-factors model}, two goods are made with labour, which moves
+freely between sectors, and one factor specific to each sector (land in farming,
+capital in manufacturing), which cannot move. Each sector has constant returns
+to scale and diminishing returns to labour; markets are competitive.
+\end{definition}
+
+Labour is allocated so that it earns the same in both sectors: $w = p_1\,
+\mathrm{MPL}_1(L_1) = p_2\, \mathrm{MPL}_2(L - L_1)$. The diagram draws the two
+value-of-marginal-product curves from the two ends of the labour force.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.75cm, y=0.6cm]
+  \draw[econ axes] (0,0) -- (10,0);
+  \draw[econ axes] (0,0) -- (0,9.3) node[above] {$w$};
+  \draw[econ axes] (10,0) -- (10,9.3);
+  \node[below] at (0,0) {$O_1$}; \node[below] at (10,0) {$O_2$};
+  \draw[curve, omDef, domain=0:10, samples=40] plot (\x, {7*exp(-0.2*\x)}) node[right, font=\scriptsize] {$p_1\mathrm{MPL}_1$};
+  \draw[curve, omDef, dashed, domain=0:10, samples=40] plot (\x, {9.1*exp(-0.2*\x)}) node[above right, font=\scriptsize] {$p_1'\mathrm{MPL}_1$};
+  \draw[curve, omThm, domain=0:10, samples=40] plot (\x, {7*exp(-0.2*(10-\x))});
+  \node[omThm, font=\scriptsize, anchor=south east] at (10,7.1) {$p_2\mathrm{MPL}_2$};
+  \fill (5,2.575) circle (1.6pt); \fill (5.656,2.937) circle (1.6pt);
+  \draw[guide] (5,0) node[below] {$L_1$} -- (5,2.575);
+  \draw[guide] (5.656,0) node[below right] {$L_1'$} -- (5.656,2.937);
+  \node[font=\scriptsize] at (2.5,-1.1) {labour in sector 1 $\rightarrow$};
+  \node[font=\scriptsize] at (7.8,-1.1) {$\leftarrow$ labour in sector 2};
+\end{tikzpicture}
+\par\smallskip{\small The specific-factors diagram. A rise in the price of good 1
+shifts its curve up in proportion; labour moves into sector 1 and the wage rises,
+but by less than the price.}
+\end{omfigure}
+
+\begin{proposition}[A price rise in the specific-factors model]\label{prop:b3:factor-endowments:specific}
+Let $p_1$ rise with $p_2$ fixed. Then $0 < \hat w < \hat p_1$; the real return to the
+factor specific to sector 1 rises in terms of both goods, the real return to the
+factor specific to sector 2 falls in terms of both, and the real wage rises in
+terms of good 2 and falls in terms of good 1.
+\end{proposition}
+
+\begin{proof}
+At the old allocation, $p_1\mathrm{MPL}_1$ exceeds the wage paid in sector 2, so
+labour moves into sector 1 until the two are equal again: $L_1$ rises. Then
+$\mathrm{MPL}_2$ rises (sector 2 has less labour), so $w = p_2\mathrm{MPL}_2$ rises:
+$\hat w > 0$. And $\mathrm{MPL}_1$ falls, so $w = p_1\mathrm{MPL}_1$ rises by less
+than $p_1$: $\hat w < \hat p_1$. The real wage $w/p_2$ rises and $w/p_1$ falls. With
+constant returns, the return to the specific factor in sector $j$, in terms of
+good $j$, is its marginal product, which rises with the labour working with it:
+in sector 1 it rises, so the nominal return rises by more than $p_1$, and so more
+than $p_2$; in sector 2 it falls, and with $p_2$ fixed and $p_1$ higher, it falls in
+terms of both goods.
+\end{proof}
+
+Opening to trade raises the price of the export good. The model therefore
+predicts a conflict by sector: owners of land and capital in the export
+sector gain, those in the import-competing sector lose, and workers, who can
+move, are caught in between.
+
+\begin{model}{Specific factors}
+\assumes In the short run some factors cannot move between sectors; labour can.
+\predicts A trade shock divides a country by sector, not by factor: the owners
+of the factors specific to an industry stand together for or against trade; the
+wage moves by less than the price, so whether workers gain is ambiguous.
+\tested In congressional testimony on a United States trade bill of 1973,
+industries' business associations and unions took the same side on trade policy
+in 19 of 21 industries. % ledger: b3fe:magee.lobby
+The owners' side of the prediction fits; that the workers sided with their
+industry fits a version of the model in which skills, too, are specific to an
+industry.
+\breaks In the long run capital is rebuilt and workers retrain, factors move
+between sectors, and the division becomes one by factor: the subject of the
+rest of the chapter.
+\end{model}
+
+\section{The Heckscher--Ohlin model}\label{sec:b3:factor-endowments:ho}
+
+\begin{definition}[Factor intensity; factor abundance]\label{def:b3:factor-endowments:intensity}
+\index{factor intensity}\index{factor abundance}
+Good 1 is \emph{capital-intensive} relative to good 2 if at any given factor
+prices it uses more capital per worker: $a_{K1}/a_{L1} > a_{K2}/a_{L2}$. A country is
+\emph{capital-abundant} relative to another if it has more capital per worker:
+$K/L > K^*/L^*$.
+\end{definition}
+
+\begin{definition}[Heckscher--Ohlin model]\label{def:b3:factor-endowments:ho}
+\index{Heckscher--Ohlin model}
+The \emph{Heckscher--Ohlin model} has two countries, two goods and two factors
+that move freely between sectors but not between countries. Technologies are the
+same in both countries, with constant returns to scale and a ranking of factor
+intensities that does not reverse; tastes are the same and homothetic; markets
+are competitive and trade is free.
+\end{definition}
+
+With identical technologies and tastes, the only difference between the two
+countries is in their endowments. In autarky the capital-abundant country has
+cheap capital, so the capital-intensive good is relatively cheap there; with
+trade, it exports that good. This is the Heckscher--Ohlin prediction: \emph{a
+country exports the goods that use its abundant factor intensively.}
+
+\section{Factor prices}\label{sec:b3:factor-endowments:prices}
+
+When both goods are made, competition drives profits to zero:
+\begin{equation}\label{eq:b3:fe:zp}
+  p_1 = a_{L1} w + a_{K1} r, \qquad p_2 = a_{L2} w + a_{K2} r .
+\end{equation}
+With fixed input requirements these are two linear equations in $w$ and $r$, and
+goods prices alone determine factor prices. With cost-minimising requirements
+that vary with factor prices, the same is true, and differentiating gives, by
+the envelope theorem (the changes in the $a$'s have no first-order effect on
+cost),
+\begin{equation}\label{eq:b3:fe:hat}
+  \hat p_j = \theta_{Lj}\hat w + \theta_{Kj}\hat r, \qquad j = 1, 2 .
+\end{equation}
+
+\begin{definition}[Magnification effect]\label{def:b3:factor-endowments:magnification}
+\index{magnification effect}
+A change in goods prices has a \emph{magnification effect} on factor prices if
+one factor price rises proportionally more than both goods prices and the other
+rises proportionally less than both (or falls).
+\end{definition}
+
+\begin{proposition}[Stolper--Samuelson theorem]\label{prop:b3:factor-endowments:ss}
+If good 1 is labour-intensive and $\hat p_1 > \hat p_2$, then $\hat w > \hat p_1 > \hat p_2 >
+\hat r$: the real wage rises in terms of both goods and the real rental falls in
+terms of both.
+\end{proposition}
+
+\begin{proof}
+By \eqref{eq:b3:fe:hat}, each $\hat p_j$ is a weighted average of $\hat w$ and $\hat r$,
+with weights $\theta_{Lj}$ and $\theta_{Kj} = 1 - \theta_{Lj}$, so it lies between them.
+Subtracting the two equations, $\hat p_1 - \hat p_2 = (\theta_{L1} - \theta_{L2})(\hat w -
+\hat r)$. Good 1 is labour-intensive, so $\theta_{L1} > \theta_{L2}$, and $\hat p_1 > \hat p_2$
+gives $\hat w > \hat r$. Both prices lie between $\hat r$ and $\hat w$, and $\hat p_1$, which
+puts more weight on $\hat w$, lies closer to it: $\hat w > \hat p_1 > \hat p_2 > \hat r$.
+\end{proof}
+
+The theorem is the long-run counterpart of \cref{prop:b3:factor-endowments:specific}.
+When trade raises the relative price of a country's exports, the factor used
+intensively in them gains in real terms and the other factor loses, whatever
+the sector its owners work in. In a capital-abundant country, opening to trade
+lowers the real wage of its workers; in a labour-abundant one, it raises it.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.9cm, y=0.9cm]
+  \draw[econ axes] (0,0) -- (8,0) node[right] {$w$};
+  \draw[econ axes] (0,0) -- (0,5) node[above] {$r$};
+  \draw[curve, omDef] (0,4) -- (5,0) node[below, font=\scriptsize] {$p_1$};
+  \draw[curve, omDef, dashed] (0,4.4) -- (5.5,0) node[below right, font=\scriptsize] {$p_1'$};
+  \draw[curve, omThm] (0,3) -- (7.5,0) node[below, font=\scriptsize] {$p_2$};
+  \fill (2.5,2) circle (1.6pt); \fill (3.5,1.6) circle (1.6pt);
+  \draw[guide] (2.5,0) -- (2.5,2) -- (0,2);
+  \draw[guide] (3.5,0) -- (3.5,1.6) -- (0,1.6);
+\end{tikzpicture}
+\par\smallskip{\small Zero-profit lines $p_j = a_{Lj}w + a_{Kj}r$ for the two goods.
+Their crossing gives the factor prices. Good 1, labour-intensive, has the
+steeper line. A 10~\% rise in $p_1$ shifts it out (dashed): here the wage rises by
+40~\% and the rental falls by 20~\%.}
+\end{omfigure}
+
+\begin{definition}[Factor-price equalisation]\label{def:b3:factor-endowments:fpe}
+\index{factor-price equalisation}
+\emph{Factor-price equalisation} is the prediction that free trade in goods
+equalises factor prices across countries: if two countries face the same goods
+prices, share the same technology and both make both goods, then
+\eqref{eq:b3:fe:zp} gives them the same wage and the same rental.
+\end{definition}
+
+\omterm{def:b3:factor-endowments:fpe}{Factor-price equalisation} is the model's most striking prediction and its most
+obviously false one: wages for the same work differ many times over between
+countries. The gap is the measure of how much the model leaves out ---
+technology above all (\cref{exo:b3:factor-endowments:9}).
+
+The Stolper--Samuelson prediction (\cref{prop:b3:factor-endowments:ss}) is easier to test inside one country: when
+the price of goods made with unskilled labour falls, unskilled wages should fall
+relative to others. Whether imports from low-wage countries did that to unskilled
+American wages is the trade-and-wages debate of \cref{sec:b3:trade-policy:evidence},
+where the evidence is weighed; the price changes that the theorem needs turned out
+to be small, and the effects most studies find run through local labour markets,
+which the model of this chapter does not have.
+
+\section{Outputs: Rybczynski}\label{sec:b3:factor-endowments:rybczynski}
+
+\begin{definition}[Rybczynski effect]\label{def:b3:factor-endowments:rybczynski}
+\index{Rybczynski effect}
+The \emph{Rybczynski effect} is the response of outputs to a change in a
+country's endowments at given goods prices.
+\end{definition}
+
+\begin{proposition}[Rybczynski theorem]\label{prop:b3:factor-endowments:rybczynski}
+At given goods prices, with both goods made, a rise in the endowment of capital
+raises the output of the capital-intensive good more than in proportion and
+lowers the output of the other good.
+\end{proposition}
+
+\begin{proof}
+Fixed goods prices fix factor prices by \eqref{eq:b3:fe:zp}, and so the input
+requirements. Full employment then reads $a_{K1}Q_1 + a_{K2}Q_2 = K$ and $a_{L1}Q_1 +
+a_{L2}Q_2 = L$. Let good 2 be capital-intensive and $\Delta = a_{L1}a_{K2} -
+a_{K1}a_{L2} > 0$. By Cramer's rule, $Q_2 = (a_{L1}K - a_{K1}L)/\Delta$ and $Q_1 = (a_{K2}L -
+a_{L2}K)/\Delta$. With $L$ fixed, $\partial Q_1/\partial K = -a_{L2}/\Delta < 0$. And
+$\hat Q_2 = a_{L1}K\hat K/(a_{L1}K - a_{K1}L) > \hat K$, since the denominator is smaller
+than the numerator's $a_{L1}K$.
+\end{proof}
+
+An economy that accumulates capital, at given world prices, does not spread it
+over all sectors: it moves workers out of labour-intensive sectors to staff the
+capital-intensive ones, and factor prices do not move at all. Immigration works
+the same way with the roles reversed (\cref{exo:b3:factor-endowments:12}).
+
+\section{The factor content of trade and its tests}\label{sec:b3:factor-endowments:content}
+
+With many goods and many factors, the Heckscher--Ohlin prediction about goods
+becomes a prediction about the factors that goods embody.
+
+\begin{definition}[Factor content of trade; Heckscher--Ohlin--Vanek equation; missing trade]\label{def:b3:factor-endowments:factor-content}
+\index{factor content of trade}\index{Heckscher--Ohlin--Vanek equation}\index{missing trade}
+The \emph{factor content of trade} of country $c$ is $F_c = A T_c$, the amounts
+of each factor used to make its net exports, where column $j$ of $A$ gives the
+factor requirements of good $j$. The \emph{Heckscher--Ohlin--Vanek (HOV)
+equation} predicts $F_c = V_c - s_c V_w$, where $V_w$ is the world's endowments.
+\emph{Missing trade} is the finding that measured factor contents are much
+smaller than the HOV prediction.
+\end{definition}
+
+\begin{proposition}[The HOV equation]\label{prop:b3:factor-endowments:hov}
+If all countries share the technology $A$, factor prices are equal, every
+country makes goods with full employment ($A Q_c = V_c$), and tastes are identical
+and homothetic, so that every country consumes the same proportions of the
+world's output ($C_c = s_c Q_w$), then $F_c = V_c - s_c V_w$.
+\end{proposition}
+
+\begin{proof}
+$F_c = A T_c = A(Q_c - C_c) = AQ_c - s_c AQ_w$. Full employment in country $c$ gives
+$AQ_c = V_c$, and summing over countries, $AQ_w = V_w$. Hence $F_c = V_c - s_c V_w$.
+\end{proof}
+
+A country is a net exporter of the services of a factor exactly when its share
+of the world's endowment of that factor exceeds its share of world spending.
+Read the opening chart with output standing in for spending. Japan, France and
+Italy have larger shares of the world's capital than of its output, and should
+export capital services embodied in goods; India and China, the services of
+labour. But the United States has smaller shares of both the world's capital and
+its workers than of its output, and China larger shares of both: measured this
+way, the richest large economy is scarce in every factor and a poorer one abundant
+in all. That pattern is the first clue in the record below.
+
+\begin{record}[Leontief's paradox]
+The first test came before the HOV equation was written. Leontief used the
+input--output table of the United States for 1947 to compute the capital and labour
+needed to make a million dollars' worth of its exports, and a million dollars' worth
+of the goods that compete with its imports. The trade of the most capital-rich
+economy of the time turned out to be, on balance, labour-using and
+capital-conserving. Leontief's own explanation was that an American worker was as
+efficient as three foreign ones. % ledger: b3fe:ken.leontief
+In a second study he sorted the workers by occupation. Export production used more
+skill: % ledger: b3fe:ken.occ
+\begin{center}
+\small
+\begin{tabular}{lcc}
+  Percent of workers & Export production & Import-competing production \\ \hline
+  Professional and technical & 13.75 & 12.24 \\
+  Clerical, sales and service & 22.07 & 17.00 \\
+  Craftsmen and foremen & 15.15 & 11.79 \\
+  Operatives & 30.05 & 28.38 \\
+  Labourers & 18.98 & 30.59 \\ \hline
+\end{tabular}
+\end{center}
+Kenen counted skill as capital: he valued each worker's wage above a labourer's as
+the return on human capital and added it to the physical capital. Total capital per
+worker in exports and in import-competing production then came to 30.61 and 29.83
+thousand 1947 dollars with the wage differences capitalised at 9~\%, 27.16 and 26.89 at 11~\%, and
+25.08 and 25.12 at 12.7~\%: the paradox reverses in two of the three cases. Physical capital alone
+still runs the paradoxical way. % ledger: b3fe:ken.total
+Leamer (1980) replied that Leontief had made the wrong comparison: when trade is not
+balanced, exports set against imports need not reveal abundance. % ledger: b3fe:leamer
+\end{record}
+
+The proposition below makes Leamer's point exact.
+
+\begin{proposition}[Leamer's revealed abundance]\label{prop:b3:factor-endowments:leamer}
+Under the assumptions of \cref{prop:b3:factor-endowments:hov}, a country is abundant in
+capital relative to labour ($K_c/L_c > K_w/L_w$) if and only if the capital per worker
+embodied in its production exceeds the capital per worker embodied in its
+consumption. The capital per worker embodied in its exports and in its imports can
+rank the other way.
+\end{proposition}
+
+\begin{proof}
+Production embodies $V_c = (K_c, L_c)$. Consumption embodies $V_c - F_c = s_c V_w$, whose
+capital per worker is $K_w/L_w$. So production is more capital-intensive than
+consumption exactly when $K_c/L_c > K_w/L_w$. For the second claim, write $F = A X - A M$ for
+exports $X$ and imports $M$. When a trade surplus makes both entries of $F$ positive,
+$(A X)_K / (A X)_L$ is a weighted average of $(A M)_K/(A M)_L$ and $F_K/F_L$, so it is
+below the imports' ratio whenever $F_K / F_L$ is; the listing below gives numbers.
+\end{proof}
+
+\omcode{code/bachelor-3/08-factor-endowments/listings/leontief_leamer.py}{1}{21}{Leontief's comparison and Leamer's on a country with a trade surplus.}\label{lst:b3:factor-endowments:leamer}
+
+\omoutput{code/bachelor-3/08-factor-endowments/outputs/leontief_leamer.txt}{Factor units per year.}\label{out:b3:factor-endowments:leamer}
+
+Home's exports carry 3.25 units of capital per worker, its imports 4.0: by Leontief's
+test it is abundant in labour. Yet its production carries 2.16 against 2.0 in its
+consumption and in the world: it is abundant in capital. % output: leontief_leamer
+It exports labour services on net only because it spends less than it earns: its
+consumption share is 0.2 of the world's, below its share of the world's labour (0.25),
+so it sells the services of both factors abroad. A test of the
+model must compare what a country makes with what it consumes, which is what the
+HOV equation does.
+
+\begin{record}[The missing trade]
+Bowen, Leamer and Sveikauskas tested the HOV equations with twelve resources and
+the trade of twenty-seven countries in 1967; the data did not support the
+prediction that trade reveals \omterm{def:b3:factor-endowments:intensity}{factor abundance}. % ledger: b3fe:bls.tests
+Trefler found that trade is \emph{missing}: measured factor contents are far
+smaller than the predicted ones, and rich countries appear scarce in most
+factors while poor ones appear abundant in all. He traced the failures to home
+bias in consumption and to differences in technology. % ledger: b3fe:tre.missing
+Davis and Weinstein then allowed technology to differ across countries, as
+measured in each country's own input data, together with trade costs and
+\omterm{def:b3:ricardian-trade:iceberg}{non-traded goods}: with these amendments, countries export the services of their
+abundant factors in about the right amounts. % ledger: b3fe:dw.works
+\end{record}
+
+The repairs bring Ricardo back. Technology does differ: the chart below shows
+how weakly capital per worker alone accounts for output per worker.
+
+\begin{omchart}{Output per worker against capital per worker, 2019, 175
+countries (thousands of 2021 dollars per person engaged, log scales), with the
+least-squares line in logs.}{Penn World Table 11.0; our computation}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.7\linewidth, height=0.45\linewidth, xmode=log, ymode=log,
+  xmin=1, xmax=2000, ymin=1, ymax=300, log ticks with fixed point,
+  xlabel={Capital per worker}, ylabel={Output per worker}]
+  \addplot table[x=k, y=y] {figdata/bachelor-3/08-factor-endowments/out/kpw.csv};
+  \addplot[omThm, thick, no marks, sharp plot] table[x=k, y=y] {figdata/bachelor-3/08-factor-endowments/out/kpw_fit.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+Capital per worker is about 30 times as high at the 90th percentile of
+countries as at the 10th, % figdata: kpw_stats
+and output per worker rises with it with an elasticity of 0.76 --- above the
+median share of capital in income in the same table, 0.48. If technology were the
+same everywhere, the elasticity would be that share; it is larger because
+countries with more capital also have better technology and more skills. The \omterm{def:b3:factor-endowments:ho}{Heckscher--Ohlin model}, which
+assumes the same technology everywhere, holds only once those differences are
+measured.
+
+\begin{model}{Heckscher--Ohlin}
+\assumes Identical technologies and homothetic tastes everywhere; two or more
+factors, mobile between sectors, immobile between countries; free trade.
+\predicts Countries export goods intensive in their abundant factors; trade
+raises the real return of the abundant factor and lowers that of the scarce one
+(Stolper--Samuelson); factor prices equalise; the \omterm{def:b3:factor-endowments:factor-content}{factor content of trade}
+equals $V_c - s_c V_w$.
+\tested In its pure form HOV is rejected: the data do not support the prediction
+that trade reveals \omterm{def:b3:factor-endowments:intensity}{factor abundance}, and trade is missing. With measured
+technology differences, home bias and trade costs, the \omterm{def:b3:factor-endowments:factor-content}{factor content of trade}
+lines up with endowments in sign and size.
+\breaks Technologies differ across countries, so factor prices do not equalise;
+consumers favour home goods; and trade costs keep many goods at home.
+\end{model}
+
+\section{Exercises}\label{sec:b3:factor-endowments:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:factor-endowments:1}
+In the opening chart, which countries have a larger share of world capital
+than of world output? By HOV, which factor's services should they export?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:factor-endowments:2}
+Making a million dollars of steel uses \$4 million of capital and 20 workers;
+a million dollars of clothing uses \$1 million of capital and 40 workers. Which
+good is capital-intensive? Is that ranking still true if wages double?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:factor-endowments:3}
+Good 1 needs 2 workers and 1 unit of capital per unit; good 2 needs 1 worker and 2
+units of capital. If $p_1 = 10$ and $p_2 = 8$, find $w$ and $r$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:factor-endowments:4}
+A labour-abundant country's exports are found to be more capital-intensive than
+its imports. Does this contradict the \omterm{def:b3:factor-endowments:ho}{Heckscher--Ohlin model}? What else would you
+check?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:factor-endowments:5}
+Labour's cost share is 0.7 in good 1 and 0.4 in good 2. The price of good 1 rises
+by 10~\%, that of good 2 is unchanged. Find $\hat w$ and $\hat r$, and check the
+\omterm{def:b3:factor-endowments:magnification}{magnification effect}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:factor-endowments:6}
+With the technology of \cref{exo:b3:factor-endowments:3}, a country has $L = 100$
+and $K = 80$. Find its outputs. Capital rises by 10~\%: find the new outputs and
+their percentage changes.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:factor-endowments:7}
+In Brenland, grain is made with land and labour, manufactures with capital and
+labour, and workers move freely. The world price of grain rises by 20~\%. Who gains
+and who loses in the short run? In the long run, if capital can be turned into
+farm equipment?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:factor-endowments:8}
+Three goods (steel, cars, clothing) need 4, 2 and 1 units of capital and 1, 2 and
+3 units of labour per unit. A country's net exports are 10, $-5$ and $-8$ units, and
+its endowments are 400 units of capital and 500 of labour. Compute the factor
+content of its trade and compare it with its endowments.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:factor-endowments:9}
+What wage data would contradict \omterm{def:b3:factor-endowments:fpe}{factor-price equalisation}? Do they reject the
+\omterm{def:b3:factor-endowments:ho}{Heckscher--Ohlin model}, or one of its assumptions? Which?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:factor-endowments:10}
+Prove \omterm{def:b3:factor-endowments:fpe}{factor-price equalisation} with fixed input requirements: show that if
+$a_{L1}a_{K2} \ne a_{K1}a_{L2}$, the zero-profit conditions have exactly one solution
+$(w, r)$, and state what is needed for it to be positive.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:factor-endowments:11}
+Simulate an HOV world of ten countries and three factors. Compare measured
+factor contents with the HOV prediction when (a) HOV holds exactly; (b) four
+fifths of the predicted trade is missing; (c) trade is missing and measured with
+noise. Report the share of matching signs and the slope of measured on
+predicted contents. What does each test detect?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:factor-endowments:12}
+In a small open Heckscher--Ohlin economy that makes both goods, immigration raises
+the labour force by 5~\%. Show that wages need not fall, and state the conditions:
+on prices, on the economy's size, and on how large the inflow can be.
+\end{exercise}
+
+\section{Problem: Kestria's Capital Boom}\label{sec:b3:factor-endowments:problem}
+
+\begin{problem}[{Weekend problem --- Kestria's capital boom}]\label{pb:b3:factor-endowments:boom}
+Kestria and Brenland (invented) make machines and textiles with capital and
+labour, with the same fixed input requirements per unit:
+% figdata: boom_params
+\begin{center}\small
+\pgfplotstabletypeset[col sep=comma,
+  columns/item/.style={column name={Good}, string type, column type=l},
+  columns/capital/.style={column name={Capital per unit}, fixed, precision=0},
+  columns/labour/.style={column name={Workers per unit}, fixed, precision=0},
+  columns/price/.style={column name={World price (kests)}, fixed, precision=0},
+  every head row/.style={after row=\hline}, every last row/.style={after row=\hline}]
+  {figdata/bachelor-3/08-factor-endowments/out/boom_params.csv}
+\end{center}
+Kestria has 60 million units of capital and 40 million workers; Brenland 30
+million and 50 million; the world as a whole 1{,}300 million and 1{,}100 million.
+Consumers everywhere spend half of their income on each good. Both countries are
+small, and with trade they face the world prices in the table.
+
+\medskip\noindent\textbf{Part I --- Kestria in autarky.}
+\begin{enumerate}
+\item Which good is capital-intensive?
+\item Compare capital per worker in Kestria, Brenland and the world. Which country
+is capital-abundant?
+\item Find Kestria's outputs with all of its capital and labour employed.
+\item In autarky, equal spending on the two goods sets the relative price of
+machines equal to $Q_T/Q_M$. Compute it.
+\item With the price of textiles set to 1, find Kestria's autarky wage and
+rental.
+\item Check that Kestria's output, valued at \omterm{def:b3:ricardian-trade:autarky}{autarky prices}, equals its factor
+income.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- free trade.}
+\begin{enumerate}[resume]
+\item Find the wage and the rental at world prices.
+\item Find Brenland's outputs. Why are its factor prices the same as Kestria's?
+\item Find Kestria's consumption and net exports of each good, and check that
+trade balances.
+\item Compute Kestria's real wage and real rental, in machines and in textiles,
+in autarky and with trade.
+\item By what percentage does the relative price of machines rise, and the
+wage and the rental in terms of textiles? Check the \omterm{def:b3:factor-endowments:magnification}{magnification effect}.
+\item Who in Kestria gains from trade and who loses?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- the capital boom.}
+\begin{enumerate}[resume]
+\item Kestria's capital stock rises by 25~\%, to 75 million. At world prices,
+find its new outputs.
+\item Give the percentage changes of the two outputs, and relate them to the
+Rybczynski theorem.
+\item Why does textile output fall when no price has changed?
+\item What happens to the wage and the rental? To workers' real wage?
+\item Find Kestria's new GDP, consumption and net exports.
+\item Why is it reasonable to hold world prices fixed? What would change if
+Kestria were large?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- the factor content of trade.}
+\begin{enumerate}[resume]
+\item Before the boom, compute the factor content of Kestria's net exports.
+\item Compute Kestria's share of world spending.
+\item Check the HOV equation for Kestria.
+\item Do the same for Brenland.
+\item What would ``\omterm{def:b3:factor-endowments:factor-content}{missing trade}'' look like in these data, and what could cause
+it here?
+\item State the results: the change in Kestria's textile output and in its
+workers' real wage after the boom.
+\end{enumerate}
+\end{problem}

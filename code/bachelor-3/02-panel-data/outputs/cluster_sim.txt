@@ -1,0 +1,4 @@
+$ python cluster_sim.py
+se_iid      rejects the true zero in 0.396 of the samples
+se_hc1      rejects the true zero in 0.392 of the samples
+se_cluster  rejects the true zero in 0.066 of the samples

@@ -1,0 +1,312 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g12-13. Trade from endowments, scale and variety; value chains;
+% winners and losers inside a country; a tariff and a quota in a small open economy (proved: two triangles); the arguments for
+% protection with their evidence; trade agreements, customs unions and the single market; debate on trade and wages. Real
+% numbers: figdata/grade-12/13-trade-and-trade-policy/ (WDI weighted mean applied tariffs; Kestria invented). Ledger: Amiti et
+% al. 2019, Fajgelbaum et al. 2020, Autor-Dorn-Hanson 2013, Fajgelbaum-Khandelwal 2016 (abstracts of the working papers), the
+% WTO in brief, Wikipedia on the Leontief paradox and the single market (date only; no estimate of its effect was read). No
+% container-port photograph. The 2019 US value of the WDI tariff series (13.8) is left out as inconsistent with its series.
+\chapter{Trade beyond Ricardo, and Trade Policy}\label{ch:g12:trade-and-trade-policy}
+
+In 1990 India's imports paid, on average, a tariff of 56\,\% of their value. In 2022 they paid 4.6\,\%. China's average fell from 32\,\% in 1992 to 2.2\,\%, Brazil's from 32\,\% in
+1989 to 7.3\,\%. Within three decades, the large economies that had protected their producers most opened to imports, while the European Union's tariffs, already low,
+fell to 1.3\,\%.
+% figdata: tariff_key (ind1990 56.4, ind2022 4.6, chn1992 32.2, chn2022 2.2, bra1989 31.9, bra2022 7.3, euu2022 1.3)
+
+This chapter widens the reasons for trade beyond the comparative advantage of \cref{ch:g10:ricardo-model}, then measures who gains and who loses, and what tariffs do.
+
+\begin{openingchart}{Average tariff on imports, weighted by the value of imports, per cent, 1988--2022; the lines join the years with data.}{World Bank, World Development
+Indicators (TM.TAX.MRCH.WM.AR.ZS)}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.9\linewidth, height=6.0cm, xmin=1988, xmax=2022, ymin=0, ymax=60, ytick={0,10,...,60}, ylabel={per cent}, unbounded coords=discard]
+\addplot[omDef, thick] table[x=year, y=IND] {figdata/grade-12/13-trade-and-trade-policy/out/tariffs.csv};
+\addplot[omThm, thick] table[x=year, y=CHN] {figdata/grade-12/13-trade-and-trade-policy/out/tariffs.csv};
+\addplot[omProp, thick] table[x=year, y=BRA] {figdata/grade-12/13-trade-and-trade-policy/out/tariffs.csv};
+\addplot[omMeth, thick] table[x=year, y=MEX] {figdata/grade-12/13-trade-and-trade-policy/out/tariffs.csv};
+\addplot[black, thick] table[x=year, y=KOR] {figdata/grade-12/13-trade-and-trade-policy/out/tariffs.csv};
+\addplot[gray, thick] table[x=year, y=EUU] {figdata/grade-12/13-trade-and-trade-policy/out/tariffs.csv};
+\node[font=\scriptsize, omDef, anchor=west] at (axis cs:1990.4,55) {India};
+\node[font=\scriptsize, omThm, anchor=south west] at (axis cs:1992.5,31) {China};
+\node[font=\scriptsize, omProp, anchor=west] at (axis cs:1989.5,25) {Brazil};
+\node[font=\scriptsize, omMeth, anchor=south] at (axis cs:2003,16) {Mexico};
+\node[font=\scriptsize, anchor=south] at (axis cs:2016,9) {South Korea};
+\node[font=\scriptsize, gray, anchor=north] at (axis cs:2012,1.3) {European Union};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: exports, imports, tariffs, import quotas, and trade as a share of output. From \cref{ch:g10:ricardo-model}: comparative advantage and the \omterm{def:g10:ricardo-model:terms-of-trade}{terms of
+trade}. From \cref{ch:g10:surplus-and-efficiency}: consumer and \omterm{def:g10:surplus-and-efficiency:producer-surplus}{producer surplus}. From \cref{ch:g10:tax-incidence}: who pays a tax. From \cref{ch:g11:public-choice-first-look}:
+\omterm{def:g11:public-choice-first-look:rent-seeking}{rent seeking}.
+\end{recall}
+
+\section{Why countries trade}\label{sec:g12:trade-and-trade-policy:why}
+
+\begin{definition}[Factor endowment]\label{def:g12:trade-and-trade-policy:endowment}
+A country's \emph{factor endowment}\index{factor endowment} is the quantity it has of each factor of production: land, capital, skilled and unskilled labour.
+\end{definition}
+
+\begin{model}{The endowments model (Heckscher--Ohlin)}
+\index{Heckscher--Ohlin model}%
+\assumes Countries share the same technologies but differ in their endowments; goods differ in the factors they use intensively.
+\predicts A country exports the goods that use its abundant factor intensively; trade raises the return to its abundant factor and lowers the return to its scarce factor.
+\tested Mixed. The first test, in 1953, found American exports more labour-intensive than its imports, the reverse of the prediction for a capital-rich country; a
+  later test across many countries found far less trade in factors than the model predicts, and fitted better once technology was allowed to differ across countries
+  (Trefler 1995).
+% ledger: b3fe:tre.missing
+\breaks When technologies differ, which is Ricardo's reason for trade; and it says nothing of the large trade between similar countries.
+\end{model}
+% ledger: g12:leontief
+
+\begin{definition}[Intra-industry trade]\label{def:g12:trade-and-trade-policy:intra-industry}
+\emph{Intra-industry trade}\index{intra-industry trade} is the export and import of goods of the same kind, such as cars sold both ways between two countries.
+\end{definition}
+
+Similar countries trade cars for cars because each firm produces a few varieties at large scale, and buyers like variety. Trade lets each variety be made where its producer
+is, for a larger market, at a lower cost per unit. Within any industry, the firms that export are the larger and more productive ones: American exporting firms in 2002 employed about two and a
+half times as many workers as other firms of the same industry, and their value added per worker was about a tenth higher (Bernard, Jensen, Redding and Schott 2007);
+% ledger: b3sv:bjrs.t3
+ opening to trade moves workers from the
+less productive firms, which shrink, to the more productive, which grow.
+
+\begin{definition}[Global value chain]\label{def:g12:trade-and-trade-policy:value-chain}
+A \emph{global value chain}\index{global value chain} is the sequence of stages, from design and parts to assembly and sale, by which a product is made in several countries.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}[font=\scriptsize, node distance=0.4cm, box/.style={draw, rounded corners, fill=omDef!10, align=center, minimum height=1.0cm, text width=2.1cm}]
+\node[box] (a) {design\\ \emph{Country A}};
+\node[box, right=of a] (b) {chips and parts\\ \emph{Countries B, C}};
+\node[box, right=of b] (c) {assembly\\ \emph{Country D}};
+\node[box, right=of c, fill=omThm!10] (d) {sale\\ \emph{everywhere}};
+\draw[->, thick] (a) -- (b); \draw[->, thick] (b) -- (c); \draw[->, thick] (c) -- (d);
+\end{tikzpicture}
+
+{\small A product made in stages across invented countries. Parts may cross borders several times, so a tariff on one stage raises the cost of every later one.}
+\end{omfigure}
+
+\section{Winners and losers inside a country}\label{sec:g12:trade-and-trade-policy:losers}
+
+Trade raises a country's total income, as \cref{ch:g10:ricardo-model} proved, but not everyone's. Workers in industries that compete with imports can lose their jobs, and
+those in the places where such industries gather can see wages fall for years.
+
+\begin{debate}[Trade and wages]
+% ledger: g12:adh2013, g12:fk2016, g12:leontief
+\emph{Large local losses.} Autor, Dorn and Hanson (2013) compared American local labour markets more and less exposed to Chinese imports from 1990 to 2007: the more exposed had
+higher unemployment, lower participation and lower wages, and more people on benefits; the rise in imports explains, conservatively, a quarter of the fall in American
+manufacturing employment over those years. The design measures differences between places, not the national total, which also includes gains elsewhere.
+
+\emph{Gains spread across buyers.} Fajgelbaum and Khandelwal (2016) estimate that trade typically favours poorer households, who spend more of their income on traded goods.
+Their estimate rests on a model of demand fitted to aggregate data, not on observed households.
+
+\emph{How large overall.} How much of the rise in the spread of wages trade explains, against technology, has no agreed estimate; the two studies above
+measure different things, one the loss in exposed places, the other the gain to buyers, and neither gives the national share.
+\end{debate}
+
+\section{A tariff and a quota}\label{sec:g12:trade-and-trade-policy:tariff}
+
+\begin{definition}[World price and small open economy]\label{def:g12:trade-and-trade-policy:world-price}
+The \emph{world price}\index{world price} of a good is the price at which it is traded on world markets. A \emph{small open economy}\index{small open economy}%
+\phantomsection\label{def:g12:trade-and-trade-policy:small-open-economy} trades at world prices that its own purchases and sales are too small to change.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[width=0.66\linewidth, height=6.0cm, xmin=0, xmax=90, ymin=20, ymax=80, xlabel={metres of cloth, millions}, ylabel={price, kests},
+  xtick={20,28,52,60}, ytick={40,48}, grid=major, grid style={gray!20}, clip=false]
+\fill[omThm!25] (axis cs:28,40) -- (axis cs:28,48) -- (axis cs:52,48) -- (axis cs:52,40) -- cycle;
+\fill[omDef!35] (axis cs:20,40) -- (axis cs:28,48) -- (axis cs:28,40) -- cycle;
+\fill[omDef!35] (axis cs:52,40) -- (axis cs:52,48) -- (axis cs:60,40) -- cycle;
+\fill[omProp!25] (axis cs:0,40) -- (axis cs:20,40) -- (axis cs:28,48) -- (axis cs:0,48) -- cycle;
+\addplot[omDef, thick, domain=20:80, samples=2] ({100 - x}, {x}) node[pos=0.95, right, font=\scriptsize] {demand};
+\addplot[omThm, thick, domain=20:80, samples=2] ({x - 20}, {x}) node[pos=0.95, right, font=\scriptsize] {supply};
+\addplot[black, thick, domain=0:90, samples=2] {40} node[pos=1, right, font=\scriptsize] {world price};
+\addplot[black, dashed, domain=0:90, samples=2] {48} node[pos=1, right, font=\scriptsize] {with tariff};
+\node[font=\scriptsize] at (axis cs:12,44) {a};
+\node[font=\scriptsize] at (axis cs:26,42.5) {b};
+\node[font=\scriptsize] at (axis cs:40,44) {c};
+\node[font=\scriptsize] at (axis cs:54,42.5) {d};
+\end{axis}
+\end{tikzpicture}
+
+{\small A 20\,\% tariff on cloth in Kestria, with the numbers of the weekend problem. The price rises from 40 to 48 kests; buyers lose $a + b + c + d$; producers gain $a$;
+the government collects $c$ on the remaining imports; $b$ and $d$ are lost to all.}
+\end{omfigure}
+
+\begin{proposition}[The cost of a tariff]\label{prop:g12:trade-and-trade-policy:tariff}
+In a \omterm{def:g12:trade-and-trade-policy:world-price}{small open economy} with linear demand and supply, a tariff $t$ per unit that leaves some imports causes a \omterm{def:g10:what-prices-do:dwl}{deadweight loss} of $\tfrac12 t\,\Delta Q_s + \tfrac12 t\,\Delta Q_d$,
+where $\Delta Q_s$ is the rise in domestic production and $\Delta Q_d$ the fall in consumption.
+\end{proposition}
+\begin{proof}
+The domestic price rises by $t$. \omterm{def:g10:surplus-and-efficiency:consumer-surplus}{Consumer surplus} falls by the area between the two prices left of the demand curve, a trapezium $a + b + c + d$. \omterm{def:g10:surplus-and-efficiency:producer-surplus}{Producer surplus} rises by
+the trapezium $a$ left of the supply curve. Tariff revenue is $t$ times the new imports, the rectangle $c$. The net change is $-(b + d)$, two triangles of height $t$ and
+bases $\Delta Q_s$ and $\Delta Q_d$.
+\end{proof}
+
+Triangle $b$ is the cost of producing at home, at a cost above the \omterm{def:g12:trade-and-trade-policy:world-price}{world price}, cloth that could have been imported; triangle $d$ is the value of the cloth that buyers no
+longer buy, though they valued it above its \omterm{def:g12:trade-and-trade-policy:world-price}{world price}. An import quota that lets in the same quantity raises the price by the same amount, but the rectangle $c$ goes to
+whoever holds the import licences, not to the government.
+
+\begin{model}{A tariff in a small open economy}
+\assumes A fixed \omterm{def:g12:trade-and-trade-policy:world-price}{world price} and competitive domestic markets.
+\predicts The domestic price rises by the full tariff; buyers lose, domestic producers and the treasury gain, and the country loses two triangles.
+\tested After the American tariffs of 2018 the prices of the targeted imports, before duty, did not fall: the tariffs passed fully into what American buyers paid.
+\breaks When domestic sellers can set their prices: after the American tariff on washing machines in 2018, the price of washers rose by nearly 12\,\%, and the
+  price of dryers, which bore no tariff, rose by as much (Flaaen, Hortaçsu and Tintelnot 2020). A large country's tariff can also lower the
+  \omterm{def:g12:trade-and-trade-policy:world-price}{world price} of what it buys, shifting part of the cost to foreign sellers; the American record of 2018 found no such shift.
+% ledger: g9:fht-2020-price-effect, g9:fht-2020-dryers
+\end{model}
+% ledger: g12:arw2019, g12:fgkk2020
+
+\begin{record}[The American tariffs of 2018--19]
+% ledger: g12:arw2019, g12:fgkk2020
+The United States raised tariffs on many imports in 2018, and its trading partners retaliated. Both studies of the episode found complete pass-through to the
+duty-inclusive prices paid by Americans and large falls in imports and exports. The losses to American consumers and firms buying imports were about 51 billion dollars, or
+0.27\,\% of GDP; after counting the tariff revenue and the gains of domestic producers, the net loss of real income was 7.2 billion dollars, 0.04\,\% of GDP. By the end of
+2018 the cost was running at about 1.4 billion dollars a month.
+\end{record}
+
+\section{The arguments for protection}\label{sec:g12:trade-and-trade-policy:arguments}
+
+\begin{definition}[Infant-industry argument]\label{def:g12:trade-and-trade-policy:infant-industry}
+The \emph{infant-industry argument}\index{infant-industry argument} holds that a young industry should be protected until it has learned to produce at the costs of its foreign
+rivals.
+\end{definition}
+
+The argument holds only if the industry's future cost savings, in \omterm{def:g12:present-value:present-value}{present value}, exceed the cost of protecting it, and if lenders would not finance the learning
+themselves. Protection, once granted, creates producers who gain from keeping it: an industry that never grows up can lobby to stay protected, the \omterm{def:g11:public-choice-first-look:rent-seeking}{rent seeking} of
+\cref{ch:g11:public-choice-first-look}. A large country can gain from a tariff through better \omterm{def:g10:ricardo-model:terms-of-trade}{terms of trade}, but only if others do not retaliate. A country may also keep
+the capacity to make goods it would need in a war, a cost paid for security.
+
+\begin{definition}[Anti-dumping duty]\label{def:g12:trade-and-trade-policy:anti-dumping}
+An \emph{anti-dumping duty}\index{anti-dumping duty} is a tariff on an import judged to be sold below its price at home or below its cost.
+\end{definition}
+
+\section{Trade agreements and the single market}\label{sec:g12:trade-and-trade-policy:agreements}
+
+\begin{definition}[Trade agreement, customs union, single market]\label{def:g12:trade-and-trade-policy:trade-agreement}
+A \emph{trade agreement}\index{trade agreement} is a treaty in which countries lower their barriers to each other's goods. A \emph{customs union}\index{customs
+union}\phantomsection\label{def:g12:trade-and-trade-policy:customs-union} is an agreement that removes tariffs between its members and sets common tariffs on the rest of the
+world. A \emph{single market}\index{single market}\phantomsection\label{def:g12:trade-and-trade-policy:single-market} goes further: goods, services, capital and people move
+between its members under common rules, without checks at the borders.
+\end{definition}
+
+The World Trade Organization, which began on 1 January 1995, succeeded the General Agreement on Tariffs and Trade, under which tariffs had been negotiated down since 1947. The
+European Union's \omterm{def:g12:trade-and-trade-policy:trade-agreement}{single market} took effect on 1 January 1993. An agreement that lowers tariffs only between its members can draw imports away from cheaper producers outside:
+its gain from new trade must be set against that diversion.
+% ledger: g12:wto1995, g12:esm1993
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g12:trade-and-trade-policy:1}
+Demand is $Q_d = 100 - 2P$ and supply $Q_s = 2P - 20$; the \omterm{def:g12:trade-and-trade-policy:world-price}{world price} is 20. Find imports under free trade, and the domestic price and imports with a tariff of 5 per
+unit.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:trade-and-trade-policy:2}
+The \omterm{def:g12:trade-and-trade-policy:world-price}{world price} is 50 and a country imposes a 10\,\% tariff. What is the domestic price in a \omterm{def:g12:trade-and-trade-policy:world-price}{small open economy}?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:trade-and-trade-policy:3}
+From the opening chart, give China's average tariff in 1992 and 2022.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:trade-and-trade-policy:4}
+From the opening chart, which of the six had the highest average tariff in 2022? Compare it with India's in 1990.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:trade-and-trade-policy:5}
+A quota of 20 units raises the domestic price from the \omterm{def:g12:trade-and-trade-policy:world-price}{world price} of 20 to 25. Find the licence rent.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:trade-and-trade-policy:6}
+In \cref{exo:g12:trade-and-trade-policy:1}, find the tariff revenue and the \omterm{def:g10:what-prices-do:dwl}{deadweight loss}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:trade-and-trade-policy:7}
+In \cref{exo:g12:trade-and-trade-policy:1}, the tariff is 10. Find imports, revenue and the \omterm{def:g10:what-prices-do:dwl}{deadweight loss}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:trade-and-trade-policy:8}
+In \cref{exo:g12:trade-and-trade-policy:1}, compare the tariff of 5 with a quota of 20 units. What is the same, and who gets the rectangle?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:trade-and-trade-policy:9}
+In \cref{exo:g12:trade-and-trade-policy:1}, the country is large: a tariff of 5 lowers the \omterm{def:g12:trade-and-trade-policy:world-price}{world price} from 20 to 18, so the domestic price is 23. Find imports, revenue, the
+part of the revenue paid by foreign sellers, the \omterm{def:g10:what-prices-do:dwl}{deadweight loss} and the country's net gain or loss.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:trade-and-trade-policy:10}
+A bicycle sells for 100 on the world market and uses 60 of imported parts, which pay no tariff. A 10\,\% tariff on bicycles raises their domestic price to 110. By how much
+does it raise the value added that domestic assemblers can earn, in per cent? This is the effective rate of protection.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:trade-and-trade-policy:11}
+In the 2018 record, the losses to buyers were 51 billion dollars and the net loss 7.2 billion. Explain the difference.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:trade-and-trade-policy:12}
+For a large country, the model allows a tariff to lower the price foreign sellers receive. What did the record of 2018 show, and what does it imply about who paid?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:trade-and-trade-policy:13}
+Protecting an industry costs 10 a year for five years. From year 6 on, it saves 8 a year for ever. At 5\,\%, compare the \omterm{def:g12:present-value:present-value}{present values}. What else must be true for protection
+to be the right tool?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:trade-and-trade-policy:14}
+A country rich in skilled labour opens to trade with a country rich in unskilled labour. According to the endowments model, whose wages fall in each country?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:trade-and-trade-policy:15}
+An \omterm{def:g12:trade-and-trade-policy:anti-dumping}{anti-dumping duty} can be requested by domestic producers. Why might it be used more than the cases of true dumping justify?
+\end{exercise}
+
+\section{Problem: Kestria's Tariff on Cloth}
+
+\begin{problem}[{Weekend problem --- a tariff, a quota and retaliation}]
+\label{pb:g12:trade-and-trade-policy:1}
+In Kestria, demand for cloth is $Q_d = 100 - P$ and domestic supply is $Q_s = P - 20$, in millions of metres, with $P$ in kests per metre. Kestria is small and can import any
+quantity at the \omterm{def:g12:trade-and-trade-policy:world-price}{world price} of 40 kests.
+
+\medskip
+\noindent\textbf{Part I --- Free trade and a tariff.}
+\begin{enumerate}
+\item Find consumption, production and imports under free trade.
+\item Kestria imposes a tariff of 20\,\%. Find the domestic price.
+\item Find consumption, production and imports with the tariff.
+\item Find the loss of \omterm{def:g10:surplus-and-efficiency:consumer-surplus}{consumer surplus} and the gain of \omterm{def:g10:surplus-and-efficiency:producer-surplus}{producer surplus}, in millions of kests.
+\item Find the tariff revenue.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The deadweight loss.}
+\begin{enumerate}[resume]
+\item Find the two triangles and the \omterm{def:g10:what-prices-do:dwl}{deadweight loss}.
+\item Check that the loss of consumers equals the gains of producers and of the government plus the \omterm{def:g10:what-prices-do:dwl}{deadweight loss}.
+\item Kestria uses a quota of 24 million metres instead. What is the domestic price?
+\item Find the licence rent. Who gets it if licences are sold at auction? If they are given to foreign exporters?
+\item What is Kestria's total loss in the second case?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Retaliation.}
+\begin{enumerate}[resume]
+\item Brenland answers with a tariff on Kestria's grain, which lowers the price Kestria's grain exporters receive from 30 to 27 kests. Kestria's grain supply is $Q_s = 2P -
+  20$ and demand $Q_d = 80 - 2P$. Find grain exports before and after.
+\item Find the loss of grain producers.
+\item Find the gain of grain buyers in Kestria.
+\item Find Kestria's net loss on grain.
+\item Find Kestria's total net loss, cloth and grain together.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Interpretation.}
+\begin{enumerate}[resume]
+\item Who in Kestria gains from the cloth tariff? Who loses from the retaliation?
+\item Why might cloth producers lobby for the tariff although Kestria as a whole loses?
+\item Which result of the 2018 record does Part I resemble?
+\item What would change if Kestria were large enough to lower the \omterm{def:g12:trade-and-trade-policy:world-price}{world price} of cloth?
+\item State the result of the problem: the \omterm{def:g10:what-prices-do:dwl}{deadweight loss} of the tariff, and the net loss to Kestria after retaliation.
+\end{enumerate}
+\end{problem}

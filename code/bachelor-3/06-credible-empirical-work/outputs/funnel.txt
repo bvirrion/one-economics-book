@@ -1,0 +1,5 @@
+$ python funnel.py
+all 400 studies: simple mean 0.097, inverse-variance mean 0.100
+  FAT (slope on s.e.) -0.051 (s.e. 0.093), PET (effect at s.e. 0) 0.103 (s.e. 0.007)
+the 138 published: simple mean 0.145, inverse-variance mean 0.127
+  FAT (slope on s.e.)  0.762 (s.e. 0.194), PET (effect at s.e. 0) 0.091 (s.e. 0.010)

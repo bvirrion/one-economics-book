@@ -1,0 +1,7 @@
+sector,which,firm,output,cost,ac
+farming,smallest,462,76,62,0.816
+farming,largest,305,7032,5442,0.774
+manufacturing,smallest,324,68,62,0.912
+manufacturing,largest,414,14971,10648,0.711
+services,smallest,285,57,54,0.947
+services,largest,300,13667,10847,0.794

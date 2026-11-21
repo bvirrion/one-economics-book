@@ -1,0 +1,305 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g12-02. Expected value and risk aversion; certainty equivalent and risk
+% premium; fair and loaded premiums; pooling, common shocks and diversification; who carries risk. Real numbers:
+% figdata/grade-12/02-risk-and-insurance/ (WDI SP.DYN.CDRT.IN, FRA JPN SWE USA 2000-2024; a seeded pooling simulation,
+% invented). Ledger: Sydnor 2010 (deductibles), National Research Council 1999 (Hurricane Andrew). No lottery payout figure
+% was found on a page that could be read; none is printed. The fair-odds diagram was not drawn. Kestria's orchards are invented.
+\chapter{Risk and Insurance}\label{ch:g12:risk-and-insurance}
+
+No insurer can know who will die this year. It can know, very nearly, how many. In the United States, 8.5 people in every thousand died in 2000, 8.0 in 2010 and 8.7 in
+2019; in France the rate stayed between 8.3 and 9.1 throughout those twenty years. Then in 2020 the American rate jumped to 10.3, and the French and Swedish rates rose too: one shock struck many people at once.
+% figdata: death_rates (USA 2000 8.5, 2010 8.0, 2019 8.7, 2020 10.27; FRA 8.3-9.1 2000-2019)
+
+Insurance rests on that contrast. Each person's fate is uncertain, but the average over many people is steady, so that a pool can promise to pay those who are struck. And
+a pool fails when a shock strikes all its members together. This chapter explains why people pay to be rid of risk, how much they will pay, why \omterm{def:g12:risk-and-insurance:pooling}{pooling} works and when
+it fails, and who carries the risks that markets do not.
+
+\begin{openingchart}{Crude death rate, deaths per 1000 people in the year, France, Japan, Sweden and the United States, 2000--2024.}{World Bank, World Development
+Indicators (SP.DYN.CDRT.IN)}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.88\linewidth, height=5.4cm, xmin=2000, xmax=2024, ymin=6, ymax=14, ylabel={deaths per 1000}, xtick={2000,2004,...,2024}]
+\addplot[omDef, thick] table[x=year, y=USA] {figdata/grade-12/02-risk-and-insurance/out/death_rates.csv};
+\addplot[omThm, thick] table[x=year, y=FRA] {figdata/grade-12/02-risk-and-insurance/out/death_rates.csv};
+\addplot[omProp, thick] table[x=year, y=JPN] {figdata/grade-12/02-risk-and-insurance/out/death_rates.csv};
+\addplot[black, thick, dashed] table[x=year, y=SWE] {figdata/grade-12/02-risk-and-insurance/out/death_rates.csv};
+\node[omDef, font=\scriptsize, anchor=north] at (axis cs:2008,7.9) {United States};
+\node[omThm, font=\scriptsize, anchor=north] at (axis cs:2016,8.2) {France};
+\node[omProp, font=\scriptsize, anchor=south] at (axis cs:2014,10.6) {Japan};
+\node[black, font=\scriptsize, anchor=south] at (axis cs:2003,10.7) {Sweden};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From \cref{ch:g11:asymmetric-information}: \omterm{def:g11:asymmetric-information:adverse-selection}{adverse selection} and \omterm{def:g11:asymmetric-information:moral-hazard}{moral hazard}. From the mathematics volumes: expectation and variance of a random variable; the variance
+of a sum of independent variables is the sum of their variances; the law of large numbers; concave functions.
+\end{recall}
+
+\section{Risk aversion}\label{sec:g12:risk-and-insurance:aversion}
+
+A gamble that pays 100 or 0 with equal chances has an expected value of 50. Few people would pay 50 for it, and many would rather have 40 for sure. To describe this, one
+gives each level of \omterm{def:g11:inequality:wealth}{wealth} $w$ a utility $u(w)$, and supposes that people choose among risky prospects by comparing the expected value of their utility.
+
+\begin{definition}[Expected utility]\label{def:g12:risk-and-insurance:expected-utility}
+The \emph{expected utility}\index{expected utility} of a prospect that leaves \omterm{def:g11:inequality:wealth}{wealth} $w_1, \dots, w_k$ with probabilities $p_1, \dots, p_k$ is $p_1 u(w_1) + \dots +
+p_k u(w_k)$, where $u$ is an increasing function of \omterm{def:g11:inequality:wealth}{wealth}.
+\end{definition}
+
+\begin{definition}[Risk aversion and risk neutrality]\label{def:g12:risk-and-insurance:risk-aversion}
+A person shows \emph{risk aversion}\index{risk aversion} if she prefers the expected value of any risky prospect, for sure, to the prospect itself; this holds when $u$ is
+strictly concave. She shows \emph{risk neutrality}\index{risk neutrality}\phantomsection\label{def:g12:risk-and-insurance:risk-neutrality} if she cares only about expected value,
+which holds when $u$ is linear.
+\end{definition}
+
+\begin{proposition}[Jensen's inequality for two outcomes, square root]\label{prop:g12:risk-and-insurance:jensen}
+For $x, y \ge 0$ and $0 \le p \le 1$, $\;p\sqrt{x} + (1 - p)\sqrt{y} \le \sqrt{px + (1 - p)y}$, with equality only if $x = y$ or $p \in \{0, 1\}$.
+\end{proposition}
+\begin{proof}
+Both sides are non-negative, so it suffices to compare their squares. With $q = 1 - p$, the square of the left side is $p^2x + q^2y + 2pq\sqrt{xy}$. Since $p - p^2 = pq$
+and $q - q^2 = pq$, the right side's square minus the left side's is $pq(x + y - 2\sqrt{xy}) = pq(\sqrt{x} - \sqrt{y})^2 \ge 0$, zero only if $pq = 0$ or $x = y$.
+\end{proof}
+
+\section{Certainty equivalent and risk premium}\label{sec:g12:risk-and-insurance:ce}
+
+\begin{definition}[Certainty equivalent and risk premium]\label{def:g12:risk-and-insurance:certainty-equivalent}
+The \emph{certainty equivalent}\index{certainty equivalent} of a risky prospect is the sure \omterm{def:g11:inequality:wealth}{wealth} with the same utility as the prospect's \omterm{def:g12:risk-and-insurance:expected-utility}{expected utility}. The \emph{risk
+premium}\index{risk premium}\phantomsection\label{def:g12:risk-and-insurance:risk-premium} is the expected value minus the certainty equivalent: what a person would give
+up to replace the prospect by its expected value.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[width=0.72\linewidth, height=5.6cm, xmin=0, xmax=110, ymin=0, ymax=11, xlabel={wealth $w$}, ylabel={utility $u(w) = \sqrt{w}$},
+  xtick={16,49,58,100}, ytick={4,7,10}, grid=major, grid style={gray!20}]
+\addplot[omDef, thick, domain=0:110, samples=120] {sqrt(x)};
+\draw[omThm, thick] (axis cs:16,4) -- (axis cs:100,10);
+\fill[omThm] (axis cs:16,4) circle (1.5pt) (axis cs:100,10) circle (1.5pt) (axis cs:58,7) circle (1.5pt);
+\fill[omDef] (axis cs:49,7) circle (1.5pt);
+\draw[dashed, gray] (axis cs:49,0) -- (axis cs:49,7) (axis cs:58,0) -- (axis cs:58,7);
+\draw[<->, omProp, thick] (axis cs:49,2.0) -- (axis cs:58,2.0);
+\node[omProp, font=\scriptsize, anchor=west] at (axis cs:60,2.0) {risk premium 9};
+\node[font=\scriptsize, anchor=west] at (axis cs:60,6.6) {expected utility 7};
+\end{axis}
+\end{tikzpicture}
+
+{\small A prospect leaving \omterm{def:g11:inequality:wealth}{wealth} 16 or 100 with equal chances, for a person with $u(w) = \sqrt{w}$. Its expected value is 58; its \omterm{def:g12:risk-and-insurance:expected-utility}{expected utility}, $(4 + 10)/2 = 7$, lies on
+the chord. The sure \omterm{def:g11:inequality:wealth}{wealth} with utility 7 is $7^2 = 49$, the \omterm{def:g12:risk-and-insurance:certainty-equivalent}{certainty equivalent}; the gap of 9 is the \omterm{def:g12:risk-and-insurance:certainty-equivalent}{risk premium}.}
+\end{omfigure}
+
+\section{The price of insurance}\label{sec:g12:risk-and-insurance:price}
+
+\begin{definition}[Actuarially fair premium and loading]\label{def:g12:risk-and-insurance:fair-premium}
+An insurance premium is \emph{actuarially fair}\index{actuarially fair premium} if it equals the expected value of the claims it covers. The \emph{loading}\index{loading}%
+\phantomsection\label{def:g12:risk-and-insurance:loading} is the part of a premium above the fair one, which pays the insurer's costs and the return on its capital.
+\end{definition}
+
+A person with \omterm{def:g11:inequality:wealth}{wealth} $w$ who faces a loss $L$ with probability $p$ will pay for full insurance any premium $\pi$ such that $u(w - \pi)$ is at least her \omterm{def:g12:risk-and-insurance:expected-utility}{expected utility}
+without it. The most she will pay is $w$ minus her \omterm{def:g12:risk-and-insurance:certainty-equivalent}{certainty equivalent}: the fair premium $pL$ plus her \omterm{def:g12:risk-and-insurance:certainty-equivalent}{risk premium}. A risk-averse person therefore buys insurance at a
+fair premium, and at a loaded one as long as the \omterm{def:g12:risk-and-insurance:fair-premium}{loading} is below her \omterm{def:g12:risk-and-insurance:certainty-equivalent}{risk premium}.
+
+\begin{measure}[How a premium is priced]
+An insurer estimates the expected claims of a policy from the past claims of many similar policies: the probability of a claim times its average size. To that it adds
+the cost of selling the policy and settling claims, and a charge for the capital it must hold against years in which claims run high. The premium is the expected claims
+times one plus the \omterm{def:g12:risk-and-insurance:fair-premium}{loading}. What it cannot observe about a buyer, it prices by the average of buyers who look the same.
+\end{measure}
+
+\begin{model}{Expected utility}
+\assumes People rank risky prospects by the expected value of a concave utility of \omterm{def:g11:inequality:wealth}{wealth}.
+\predicts People pay more than the fair premium to insure large losses relative to their \omterm{def:g11:inequality:wealth}{wealth}; for small losses they act almost as if risk neutral, since a concave
+  function is nearly linear over a short range.
+\tested Consistent with it: insurance of homes, health and lives is bought at premiums that include a \omterm{def:g12:risk-and-insurance:fair-premium}{loading}, as the model allows for large losses.
+  A test would compare, for the same people, how much above the fair premium they pay for cover of small and of large losses; the one such study
+  cited here, under \emph{breaks}, finds the small-loss side does not fit.
+\breaks For small losses: in home insurance, most buyers choose low \omterm{def:g11:asymmetric-information:deductible}{deductibles} at costs well above the expected saving, and fitting these choices to the model gives
+  implausibly high \omterm{def:g12:risk-and-insurance:risk-aversion}{risk aversion} (Sydnor 2010). People also buy both insurance and lottery tickets, whose prizes pay out less than the tickets cost.
+\end{model}
+% ledger: g12:sydnor2010
+
+\section{Pooling and its limits}\label{sec:g12:risk-and-insurance:pooling}
+
+\begin{definition}[Pooling]\label{def:g12:risk-and-insurance:pooling}
+\emph{Pooling}\index{pooling} is the sharing of many risks within a group, so that each member pays a share of the group's total losses instead of bearing her own.
+\end{definition}
+
+\begin{proposition}[The spread of a pooled average]\label{prop:g12:risk-and-insurance:pool}
+If $n$ members' losses are independent, each with mean $\mu$ and standard deviation $\sigma$, the average loss per member has mean $\mu$ and standard deviation
+$\sigma/\sqrt{n}$.
+\end{proposition}
+\begin{proof}
+The mean of the sum is $n\mu$, so the average has mean $\mu$. The variance of a sum of independent variables is the sum of the variances, $n\sigma^2$; dividing the sum by
+$n$ divides the variance by $n^2$, which gives $\sigma^2/n$, and a standard deviation of $\sigma/\sqrt{n}$.
+\end{proof}
+
+\begin{omchart}{Average loss per member of a pool in which each member loses 1000 with probability 0.05, independently: the range holding 90\,\% of 4000 simulated years, for
+pools of 10 to 10\,000 members (invented; logarithmic horizontal scale).}{invented data}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.78\linewidth, height=5.0cm, xmode=log, xmin=8, xmax=12000, ymin=0, ymax=210, log ticks with fixed point,
+  xtick={10,100,1000,10000}, xlabel={members of the pool}, ylabel={average loss per member}]
+\addplot[omDef, thick, mark=*, mark size=1.2pt] table[x=n, y=p95] {figdata/grade-12/02-risk-and-insurance/out/pool_spread.csv};
+\addplot[omDef, thick, mark=*, mark size=1.2pt] table[x=n, y=p05] {figdata/grade-12/02-risk-and-insurance/out/pool_spread.csv};
+\addplot[gray, dashed, domain=8:12000, samples=2] {50};
+\node[font=\scriptsize, anchor=north west] at (axis cs:10,48) {expected loss 50};
+\node[omDef, font=\scriptsize, anchor=south west] at (axis cs:60,100) {95th percentile};
+\node[omDef, font=\scriptsize, anchor=south west] at (axis cs:250,2) {5th percentile};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: pool_spread (n 10: 0-200; n 10000: 46.3-53.6; sd 68.92 to 2.18)
+
+With ten members, the average loss is 200 or more in more than one year in twenty; with ten thousand, nine years in ten it stays between 46 and 54. A pool that charges each member 50
+plus a little can pay its claims with near certainty. That is the law of large numbers at work, and it needs independence. When one shock strikes all members at once,
+a hurricane on one coast, an epidemic, a frost over a whole valley, the average does not settle down, however large the pool.
+
+\begin{record}[Hurricane Andrew and the insurers it broke, 1992]
+% ledger: g12:andrew
+Hurricane Andrew struck southern Florida in 1992. Insured losses were estimated at 15.5 billion dollars, and nine property insurers became insolvent as a direct
+result. Early in 1993, 39 insurers planned to cancel or not renew 844\,433 policies in Florida; in May 1993 the state imposed a moratorium on cancelling and not renewing
+home policies. Insurers had pooled many houses, but in one region: one storm struck many of them at once.
+\end{record}
+
+\begin{definition}[Diversification]\label{def:g12:risk-and-insurance:diversification}
+\emph{Diversification}\index{diversification} is the spreading of \omterm{def:g11:inequality:wealth}{wealth} across several assets whose returns are not perfectly correlated, so that the risk of the whole is
+less than that of its parts.
+\end{definition}
+
+Half one's \omterm{def:g11:inequality:wealth}{wealth} in each of two independent assets with the same standard deviation $\sigma$ has a standard deviation of $\sigma/\sqrt{2}$, by the same calculation as for
+a pool. Insurers diversify too, across regions and kinds of risk, and pass part of their largest risks to other insurers.
+
+\begin{definition}[Prevention]\label{def:g12:risk-and-insurance:prevention}
+\emph{Prevention}\index{prevention} is spending that lowers the probability or the size of a loss, such as a sprinkler, a vaccination or a frost fan in an orchard.
+\end{definition}
+
+\section{Who carries risk}\label{sec:g12:risk-and-insurance:who}
+
+Families pool risks among their members; mutual insurers are owned by their policyholders; insurance companies by shareholders. Each faces the problems of
+\cref{ch:g11:asymmetric-information}. \omterm{def:g11:asymmetric-information:adverse-selection}{Adverse selection}: at a premium set for the average buyer, the lowest risks find it too dear and leave, raising the average risk of
+those who stay. \omterm{def:g11:asymmetric-information:moral-hazard}{Moral hazard}: an insured person takes less care, and an insurer that cannot observe \omterm{def:g12:risk-and-insurance:prevention}{prevention} cannot reward it. \omterm{def:g11:asymmetric-information:deductible}{Deductibles} and co-payments leave part of
+the loss with the insured, so that care still pays.
+
+\begin{definition}[Social insurance and means-tested assistance]\label{def:g12:risk-and-insurance:social-insurance}
+\emph{Social insurance}\index{social insurance} is insurance run or required by the state, with membership compulsory for a whole group and benefits tied to
+contributions or to the loss, such as public pensions, unemployment and health insurance. \emph{Means-tested assistance}\index{means-tested assistance}%
+\phantomsection\label{def:g12:risk-and-insurance:assistance} pays benefits only to those whose income or \omterm{def:g11:inequality:wealth}{wealth} is below a threshold, whatever they paid before.
+\end{definition}
+
+Compulsory membership removes \omterm{def:g11:asymmetric-information:adverse-selection}{adverse selection}: no one can leave the pool. It does not remove \omterm{def:g11:asymmetric-information:moral-hazard}{moral hazard}, and it charges low risks more than their expected losses.
+Assistance targets those in need and is cheaper for a given help to the poor, but it lowers the gain from earning more near the threshold.
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g12:risk-and-insurance:1}
+A ticket pays 100 with probability 0.2 and nothing otherwise. Find its expected value.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:risk-and-insurance:2}
+A house worth 200\,000 has a probability of 0.002 a year of a fire that destroys 150\,000 of its value. Find the expected yearly loss.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:risk-and-insurance:3}
+From the opening chart, give each country's death rate in 2019 and in 2020. Which country's rose most?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:risk-and-insurance:4}
+With $u(w) = \sqrt{w}$, find the \omterm{def:g12:risk-and-insurance:certainty-equivalent}{certainty equivalent} of a prospect paying 0 or 100 with equal chances.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:risk-and-insurance:5}
+A loss of 10\,000 has a probability of 0.03. Find the \omterm{def:g12:risk-and-insurance:fair-premium}{actuarially fair premium} for full insurance.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:risk-and-insurance:6}
+With $u(w) = \sqrt{w}$, a prospect leaves \omterm{def:g11:inequality:wealth}{wealth} 64 or 144 with equal chances. Find its expected value, \omterm{def:g12:risk-and-insurance:certainty-equivalent}{certainty equivalent} and \omterm{def:g12:risk-and-insurance:certainty-equivalent}{risk premium}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:risk-and-insurance:7}
+With $u(w) = \sqrt{w}$ and \omterm{def:g11:inequality:wealth}{wealth} 400, a person faces a loss of 300 with probability 0.25. Find the \omterm{def:g12:risk-and-insurance:certainty-equivalent}{certainty equivalent} and the \omterm{def:g12:risk-and-insurance:certainty-equivalent}{risk premium}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:risk-and-insurance:8}
+In \cref{exo:g12:risk-and-insurance:7}, find the fair premium for full insurance and the most the person will pay.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:risk-and-insurance:9}
+In \cref{exo:g12:risk-and-insurance:7}, an insurer charges the fair premium plus a \omterm{def:g12:risk-and-insurance:fair-premium}{loading} of 30\,\%. Does the person buy? And at a \omterm{def:g12:risk-and-insurance:fair-premium}{loading} of 20\,\%?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:risk-and-insurance:10}
+Each member of a pool loses 1000 with probability 0.05. Find the standard deviation of one member's loss, then of the average loss in pools of 100 and of 10\,000
+members.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:risk-and-insurance:11}
+Two independent assets each have a return with standard deviation 20 points. Find the standard deviation of a portfolio with half in each (the variance of $aX + bY$ for
+independent $X, Y$ is $a^2\operatorname{Var}X + b^2\operatorname{Var}Y$).
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:risk-and-insurance:12}
+What evidence contradicts the expected-utility model? Use the record of \omterm{def:g11:asymmetric-information:deductible}{deductibles} in the chapter, and explain why choosing a low \omterm{def:g11:asymmetric-information:deductible}{deductible} at a high price is hard to
+square with the model.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:risk-and-insurance:13}
+Admit that if each pair of members' losses has correlation $\rho$, the variance of the average loss is $\sigma^2\bigl(1/n + \rho(1 - 1/n)\bigr)$. With $\sigma = 218$ and
+$\rho = 0.1$, find the standard deviation of the average for $n = 10\,000$, and compare it with the independent case. What happens as $n$ grows?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:risk-and-insurance:14}
+Half the people have a probability of 0.05 of losing 64, half a probability of 0.2; all have \omterm{def:g11:inequality:wealth}{wealth} 100 and $u(w) = \sqrt{w}$. An insurer cannot tell them apart and
+charges the fair premium for the average. Do the low risks buy? What happens to the premium if they leave, and what would compulsory membership change?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:risk-and-insurance:15}
+A grower with \omterm{def:g11:inequality:wealth}{wealth} 100 loses 64 to frost with probability 0.1. A frost fan lowers that probability to 0.05. What is the fan worth to a risk-neutral grower? If the grower is
+fully insured at a premium that does not depend on the fan, what is it worth to him? What does this show?
+\end{exercise}
+
+\section{Problem: Insuring Kestria's Orchards}
+
+\begin{problem}[{Weekend problem --- a grower, a mutual and a frost}]
+\label{pb:g12:risk-and-insurance:1}
+In a valley of Kestria, each fruit grower has \omterm{def:g11:inequality:wealth}{wealth} 100 (thousands of kests) and $u(w) = \sqrt{w}$. In any year, a grower's orchard is struck by frost with probability
+0.1, which costs 64.
+
+\medskip
+\noindent\textbf{Part I --- One grower.}
+\begin{enumerate}
+\item Find the grower's expected \omterm{def:g11:inequality:wealth}{wealth}.
+\item Find her \omterm{def:g12:risk-and-insurance:expected-utility}{expected utility}.
+\item Find her \omterm{def:g12:risk-and-insurance:certainty-equivalent}{certainty equivalent}.
+\item Find her \omterm{def:g12:risk-and-insurance:certainty-equivalent}{risk premium}.
+\item Find the fair premium for full insurance and the most she will pay.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- A mutual of independent risks.}
+Four hundred growers form a mutual, each paying the fair premium. Frosts strike orchards independently.
+\begin{enumerate}[resume]
+\item Find the mutual's expected total claims and its premium income.
+\item Find the standard deviation of one grower's loss, and of the total claims.
+\item Admit that the total claims are close to normal, so that they exceed their mean by more than two standard deviations in about 2.3\,\% of years. What reserve must
+  the mutual hold, beyond its premiums, to pay all claims in the other years?
+\item What extra charge per member, for one year, would build that reserve?
+\item Is membership worth it at the fair premium plus that charge?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- A common frost.}
+Now frost strikes the whole valley at once, with probability 0.1 each year, or no orchard at all.
+\begin{enumerate}[resume]
+\item Find the expected total claims. Has it changed?
+\item Find the claims in a frost year, and the shortfall beyond the year's fair premiums.
+\item What reserve does the mutual now need to pay all claims in at least 97.7\,\% of years?
+\item Explain why \omterm{def:g12:risk-and-insurance:pooling}{pooling} within the valley no longer helps.
+\item Name two ways the growers could still be insured against the common frost.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Prevention and selection.}
+\begin{enumerate}[resume]
+\item With independent frosts, a frost fan costing 2 a year lowers a grower's probability to 0.05. Is it worth buying without insurance, for a risk-neutral grower?
+\item If the mutual cannot see who has a fan, what happens to the incentive to buy one?
+\item Some growers on the valley floor face a probability of 0.2, others on the slopes 0.05. Why might the slope growers leave a mutual that charges all the same premium?
+\item What evidence would show that growers are less risk averse than the model assumes?
+\item State the result of the problem: the maximum premium a grower pays, and the reserve the mutual needs, beyond its premiums, to pay all claims in at least 97.7\,\% of years,
+  with independent frosts and with a common frost.
+\end{enumerate}
+\end{problem}

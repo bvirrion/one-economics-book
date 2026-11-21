@@ -1,0 +1,489 @@
+\chapter{The Solow Model}\label{ch:b1:solow-model}
+
+Countries that invest a large share of their output are, on the whole,
+much richer than those that invest little. Among 181 countries, the quarter
+that invested most over 1960--2019 --- at least $26.7\%$ of GDP on average --- had a
+median income of 38,117 dollars a person in 2019 (in 2021 PPP dollars); the quarter that invested
+least --- $15.4\%$ or less --- had 5,342. % figdata: solow_stats
+Is investment the cause, and how much of a sevenfold gap can it explain?
+This chapter takes the Solow model, met at school as a recurrence, into
+continuous time, and confronts it with the data.
+
+\begin{openingchart}{GDP per person in 2019 (2021 PPP dollars, log scale)
+against the average investment share of GDP over 1960--2019 (the years
+available, at least 30), 181 countries.}{Penn World
+Table 11.0 (rgdpe, pop, csh\_i)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, ymode=log, log ticks with fixed point, ytickten={3,4,5}, xmin=0, xmax=65, ymin=400, ymax=200000,
+  xlabel={Average investment share, 1960--2019 (\% of GDP)}, ylabel={GDP per person, 2019}, width=0.7\linewidth,
+  height=0.45\linewidth]
+  \addplot[only marks, mark=*, mark size=1.3pt, omDef, fill opacity=0.6] table[x=s, y=y, col sep=comma] {figdata/bachelor-1/20-solow-model/out/invest_income.csv};
+  \addplot[only marks, mark=none, nodes near coords, point meta=explicit symbolic, nodes near coords style={font=\scriptsize, anchor=west}]
+    table[x=s, y=y, meta=country, col sep=comma] {figdata/bachelor-1/20-solow-model/out/invest_points.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+The correlation between the investment share and the logarithm of income
+is $0.5$. % figdata: solow_stats
+Singapore invested $44.88\%$ of its output and reached 101,632 dollars a
+person; Niger invested $16.03\%$ and had 1,447. % figdata: invest_points
+The cloud is wide: China invested more than Norway, $33.62\%$ against
+$28.96\%$, and had a quarter of its income. % figdata: invest_points
+
+\begin{recall}
+The Solow model as a recurrence, its \omterm{def:b1:solow-model:steady-state}{steady state} and convergence were met
+at school; linear differential equations come from the mathematics
+course. The \omterm{def:b1:long-run-model:long-run}{long-run model} of \cref{ch:b1:long-run-model} sets output
+from given factors; this chapter lets capital grow.
+\end{recall}
+
+\section{The model in continuous time}\label{sec:b1:solow-model:continuous}
+
+Output is $Y = F(K, L)$ with constant returns, so output per worker is
+$y = f(k)$ with $k = K/L$ and $f(k) = F(k, 1)$. A constant share $s$ of output is
+saved and invested, capital depreciates at the rate $\delta$, and the labour force
+grows at the rate $n$:
+\[
+\dot K = sY - \delta K, \qquad \dot L = nL.
+\]
+Since $\dot k/k = \dot K/K - \dot L/L$,
+\[
+\dot k = s f(k) - (n + \delta)k.
+\]
+Investment per worker $sf(k)$ adds capital; \emph{break-even investment}
+$(n + \delta)k$ is what is needed to equip new workers and replace worn
+capital.
+
+\begin{definition}[Inada conditions]\label{def:b1:solow-model:inada}
+\index{Inada conditions}
+A \omterm{def:b1:technology:production-function}{production function} per worker $f$ satisfies the \emph{Inada conditions}
+when $f(0) = 0$, $f' > 0$, $f'' < 0$, $f'(k) \to \infty$ as $k \to 0$ and $f'(k) \to 0$ as $k \to \infty$.
+\end{definition}
+
+\begin{definition}[Steady state]\label{def:b1:solow-model:steady-state}
+\index{steady state}
+A \emph{steady state} is a capital per worker $k^* > 0$ at which $\dot k = 0$:
+$sf(k^*) = (n + \delta)k^*$. Capital, output and consumption per worker are then
+constant, and their totals grow at the rate $n$.
+\end{definition}
+
+\begin{proposition}[Existence and stability]\label{prop:b1:solow-model:stability}
+If $f$ satisfies the \omterm{def:b1:solow-model:inada}{Inada conditions} and $0 < s < 1$, there is a unique \omterm{def:b1:solow-model:steady-state}{steady
+state} $k^* > 0$, and from any $k(0) > 0$ capital per worker converges to it.
+\end{proposition}
+
+\begin{proof}
+Let $\phi(k) = sf(k)/k$. It is decreasing (since $f$ is concave with $f(0) = 0$, $f(k)/k$
+falls), tends to $\infty$ as $k \to 0$ (by l'Hôpital, $f(k)/k \to f'(0) = \infty$) and to $0$ as $k \to \infty$
+(likewise $f(k)/k \to 0$). So $\phi(k) = n + \delta$ at exactly one $k^*$. Below $k^*$, $\phi(k) > n + \delta$
+and $\dot k > 0$; above it $\dot k < 0$. Capital moves towards $k^*$ from either side,
+and cannot overshoot it, since $\dot k = 0$ there.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Capital per worker $k$}, ylabel={Per worker},
+  xmin=0, xmax=12, ymin=0, ymax=0.75, width=0.56\linewidth, height=0.4\linewidth, samples=80]
+  \addplot[demand, domain=0:12] {0.2*x^(1/3)};
+  \addplot[supply, domain=0:12] {0.06*x};
+  \addplot[guide] coordinates {(6.086,0) (6.086,0.365)};
+  \node[font=\footnotesize, anchor=south] at (axis cs:10.5,0.44) {$sf(k)$};
+  \node[font=\footnotesize, anchor=south east] at (axis cs:9.3,0.6) {$(n+\delta)k$};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:6.15,0.07) {$k^* = 6.086$};
+  \draw[->, thick] (axis cs:2,0.04) -- (axis cs:4.2,0.04);
+  \draw[->, thick] (axis cs:11,0.04) -- (axis cs:8.6,0.04);
+\end{axis}
+\end{tikzpicture}
+
+{\small The Solow diagram with $f(k) = k^{1/3}$, $s = 0.2$ and $n + \delta = 0.06$. Where
+investment (blue) exceeds break-even investment (red), $k$ rises; where it
+falls short, $k$ falls. The arrows point to the \omterm{def:b1:solow-model:steady-state}{steady state}.}
+\end{omfigure}
+
+\section{Comparative statics of the steady state}\label{sec:b1:solow-model:statics}
+
+With $f(k) = k^{\alpha}$, the \omterm{def:b1:solow-model:steady-state}{steady state} solves $sk^{\alpha} = (n + \delta)k$:
+\[
+k^* = \left(\frac{s}{n + \delta}\right)^{1/(1 - \alpha)}, \qquad
+y^* = \left(\frac{s}{n + \delta}\right)^{\alpha/(1 - \alpha)}.
+\]
+A higher saving rate raises the level of income per worker in the \omterm{def:b1:solow-model:steady-state}{steady
+state}, but not its growth rate, which is zero; faster population growth
+lowers the level. Taking logarithms,
+$\partial \ln y^*/\partial \ln s = \alpha/(1 - \alpha)$. With a capital share of one-third the
+elasticity is $\tfrac12$: doubling the saving rate raises steady-state income
+by a factor $\sqrt 2$, about $41\%$.
+
+That is far less than the opening chart seems to show. With $\alpha = 1/3$, the
+saving rates of the top and bottom investment quartiles, $26.7\%$ and
+$15.4\%$, predict an income ratio of $1.32$; the medians differ sevenfold.
+% computed: code/bachelor-1/20-solow-model/exercises/solutions.py
+Either other things differ with saving, or capital matters more than its
+share of income suggests.
+
+\section{The golden rule}\label{sec:b1:solow-model:golden}
+
+Steady-state consumption per worker is $c^* = f(k^*) - (n + \delta)k^*$. A saving rate
+of zero gives no capital and no consumption; a saving rate of one gives
+capital and no consumption. In between there is a best.
+
+\begin{definition}[Golden-rule capital stock]\label{def:b1:solow-model:golden-rule}
+\index{golden rule}\index{golden-rule capital stock}
+The \emph{golden-rule capital stock} $k_g$ is the steady-state capital per
+worker that maximises steady-state consumption per worker.
+\end{definition}
+
+\begin{proposition}[The golden rule]\label{prop:b1:solow-model:golden}
+$k_g$ satisfies $f'(k_g) = n + \delta$. With $f(k) = k^{\alpha}$, the saving rate that reaches it
+is $s_g = \alpha$.
+\end{proposition}
+
+\begin{proof}
+Every $k$ is a \omterm{def:b1:solow-model:steady-state}{steady state} for some $s$, namely $s = (n + \delta)k/f(k)$. So maximise
+$c(k) = f(k) - (n + \delta)k$ over $k$: the first-order condition is $f'(k) = n + \delta$, and
+$c'' = f'' < 0$. With Cobb--Douglas, $f'(k) = \alpha f(k)/k$, so $\alpha f(k_g) = (n + \delta)k_g = s_g f(k_g)$ and
+$s_g = \alpha$.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Capital per worker $k$}, ylabel={Per worker},
+  xmin=0, xmax=24, ymin=0, ymax=3.2, width=0.56\linewidth, height=0.4\linewidth, samples=80]
+  \addplot[demand, domain=0:24] {x^(1/3)};
+  \addplot[supply, domain=0:24] {0.06*x};
+  \addplot[guide] coordinates {(13.095,0.786) (13.095,2.357)};
+  \addplot[black, dashed, thin, domain=1:24] {2.357 + 0.06*(x - 13.095)};
+  \node[font=\footnotesize, anchor=north west] at (axis cs:21,2.7) {$f(k)$};
+  \node[font=\footnotesize, anchor=north west] at (axis cs:20,1.15) {$(n+\delta)k$};
+  \node[font=\footnotesize, anchor=west] at (axis cs:13.3,1.6) {$c_g = 1.571$};
+  \node[font=\footnotesize, anchor=north] at (axis cs:13.095,0.75) {$k_g$};
+\end{axis}
+\end{tikzpicture}
+
+{\small The \omterm{def:b1:solow-model:golden-rule}{golden rule} with $f(k) = k^{1/3}$ and $n + \delta = 0.06$: consumption, the
+vertical gap between output and break-even investment, is largest at
+$k_g = 13.095$, where the slope of $f$ (the dashed tangent) equals $n + \delta$.}
+\end{omfigure}
+
+\begin{definition}[Dynamic inefficiency]\label{def:b1:solow-model:dynamic-inefficiency}
+\index{dynamic inefficiency}
+An economy is \emph{dynamically inefficient} when its capital per worker
+exceeds the \omterm{def:b1:solow-model:golden-rule}{golden rule}, $k > k_g$: saving less would raise consumption at
+every date.
+\end{definition}
+
+Below the \omterm{def:b1:solow-model:golden-rule}{golden rule} the choice is harder: saving more raises
+consumption in the end but lowers it at first. Which path a society
+should prefer depends on how it weighs the present against the future;
+the Solow model, with $s$ given, cannot say.
+
+\section{The speed of convergence}\label{sec:b1:solow-model:speed}
+
+\begin{definition}[Speed of convergence, half-life]\label{def:b1:solow-model:speed}
+\index{speed of convergence}\index{half-life}
+Near the \omterm{def:b1:solow-model:steady-state}{steady state}, $\frac{d}{dt}\ln y \approx -\lambda(\ln y - \ln y^*)$. The rate $\lambda$ is the
+\emph{speed of convergence}: the share of the remaining gap closed each
+year. The \emph{half-life} $\ln 2/\lambda$ is the time it takes to close half of it.
+\end{definition}
+
+\begin{proposition}[Speed of convergence]\label{prop:b1:solow-model:lambda}
+With $f(k) = k^{\alpha}$, $\lambda = (1 - \alpha)(n + \delta)$.
+\end{proposition}
+
+\begin{proof}
+Write $\dot k/k = sk^{\alpha - 1} - (n + \delta) = s\,e^{-(1 - \alpha)\ln k} - (n + \delta)$. Linearise in $x = \ln k$ around
+$x^* = \ln k^*$, where $sk^{*\alpha - 1} = n + \delta$: the derivative of the right side is
+$-(1 - \alpha)sk^{*\alpha - 1} = -(1 - \alpha)(n + \delta)$. So $\dot x \approx -(1 - \alpha)(n + \delta)(x - x^*)$, and since
+$\ln y = \alpha \ln k$, the same holds for $\ln y$.
+\end{proof}
+
+With $\alpha = 1/3$ and $n + \delta = 0.06$, $\lambda = 0.04$ and the \omterm{def:b1:solow-model:speed}{half-life} is $17.33$ years.
+% computed: code/bachelor-1/20-solow-model/exercises/solutions.py
+With Cobb--Douglas, the variable $z = k^{1 - \alpha}$ obeys an exact linear equation,
+$\dot z = (1 - \alpha)[s - (n + \delta)z]$, so the gap in $z$ closes at the rate $\lambda$ exactly
+(\cref{exo:b1:solow-model:exact}).
+
+\begin{record}[Convergence at two per cent a year]
+Across the states of the United States since 1880, the gap between the
+typical poor and the typical rich state has narrowed at roughly $2\%$ a
+year; across 73 regions of Western Europe since 1950, at about $2\%$ a year
+too (Barro and Sala-i-Martin 1991). % ledger: b1:barro1991
+The model with a capital share of one-third, $n + \delta = 0.06$ and \omterm{def:b1:technology:technical-progress}{technical
+progress} of $0.02$ predicts $(2/3) \times 0.08 = 5.3\%$; it predicts $2\%$ only with a
+capital share of $0.75$. % computed: code/bachelor-1/20-solow-model/exercises/solutions.py
+Convergence happens, but more slowly than diminishing returns to physical
+capital alone imply --- as if capital, broadly understood, had a larger
+share.
+\end{record}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omtime, xlabel={Years after the war}, ylabel={Output per worker}, xmin=0, xmax=80, ymin=1.4, ymax=1.9,
+  width=0.56\linewidth, height=0.36\linewidth, samples=80]
+  \addplot[demand, domain=0:80] {(3.3333 + (2.0999 - 3.3333)*exp(-0.04*x))^(0.5)};
+  \addplot[guide, domain=0:80] {1.826};
+  \addplot[guide] coordinates {(17.33,1.4) (17.33,1.648)};
+  \node[font=\footnotesize, anchor=south east] at (axis cs:78,1.83) {$y^* = 1.826$};
+  \node[font=\footnotesize, anchor=west] at (axis cs:18,1.5) {17.33 years};
+\end{axis}
+\end{tikzpicture}
+
+{\small The weekend problem: Kestria's output per worker after half its
+capital is destroyed, from $1.449$ back towards $1.826$, along the exact path.
+After one \omterm{def:b1:solow-model:speed}{half-life} it is $1.648$.}
+\end{omfigure}
+
+\begin{record}[Postwar recoveries]
+From 1950 to 1973 real GDP per person grew at $5.21\%$ a year in Germany and
+$7.47\%$ in Japan, against $2.51\%$ in the United States and $2.4\%$ in the United
+Kingdom. % figdata: postwar
+In 1950 Germany's income per person was $0.478$ of the American and Japan's
+$0.198$. % figdata: postwar
+Economies far below their \omterm{def:b1:solow-model:steady-state}{steady state}, with their skills and
+institutions intact and their capital destroyed, grew fastest --- as the
+model predicts.
+\end{record}
+
+\section{Technical progress and balanced growth}\label{sec:b1:solow-model:progress}
+
+Let technology be labour-augmenting, $Y = F(K, AL)$, with $A$ growing at the rate
+$g$. Measure capital and output per \emph{effective worker}, $\tilde k = K/(AL)$
+and $\tilde y = f(\tilde k)$:
+\[
+\dot{\tilde k} = sf(\tilde k) - (n + g + \delta)\tilde k.
+\]
+It is the same equation with $n + g + \delta$ in place of $n + \delta$.
+
+\begin{definition}[Capital per effective worker, balanced growth path]\label{def:b1:solow-model:balanced}
+\index{capital per effective worker}\index{balanced growth path}
+\emph{Capital per effective worker} is $\tilde k = K/(AL)$. A \emph{balanced growth
+path} is a path on which $Y$, $K$ and $C$ all grow at the same constant rate.
+\end{definition}
+
+\begin{proposition}[Balanced growth]\label{prop:b1:solow-model:balanced}
+In the \omterm{def:b1:solow-model:steady-state}{steady state} of $\tilde k$, output, capital and consumption grow at the
+rate $n + g$, output per worker at the rate $g$, and the capital--output ratio
+$K/Y = s/(n + g + \delta)$ is constant.
+\end{proposition}
+
+\begin{proof}
+$K = \tilde k^* AL$ and $Y = f(\tilde k^*)AL$ with $\tilde k^*$ constant, so both grow as $AL$, at
+$n + g$; $C = (1 - s)Y$ too; $Y/L = f(\tilde k^*)A$ grows at $g$. From
+$sf(\tilde k^*) = (n + g + \delta)\tilde k^*$, $K/Y = \tilde k^*/f(\tilde k^*) = s/(n + g + \delta)$.
+\end{proof}
+
+In the long run, then, income per worker grows only as fast as technology:
+saving raises the level of the path, not its slope. Where $g$ comes from,
+the model does not say.
+
+\begin{definition}[Conditional convergence]\label{def:b1:solow-model:conditional-convergence}
+\index{conditional convergence}\index{convergence, conditional}
+\emph{Conditional convergence} is the prediction that economies grow faster
+the further they are below their own \omterm{def:b1:solow-model:steady-state}{steady state}, which depends on their
+saving, population growth and technology. It differs from \emph{absolute}
+convergence, in which poor economies grow faster than rich ones whatever
+their characteristics.
+\end{definition}
+
+\subsection*{The model to the data}
+
+Taking logarithms of $y^*$ and adding human capital, the \omterm{def:b1:solow-model:steady-state}{steady state} gives
+an equation that can be fitted across countries:
+\[
+\ln y_i = a + \frac{\alpha}{1 - \alpha}\,[\ln s_i - \ln(n_i + g + \delta)] + c \ln h_i,
+\]
+with $h_i$ a measure of human capital per worker. Fitting it by least squares
+is the subject of \cref{ch:b1:simple-regression}; here only the results are
+used.
+
+\begin{measure}[Human capital in the Penn World Table]
+The index \texttt{hc} turns a country's average years of schooling of the
+population aged 15 and over into human capital per worker, $h = e^{\phi(S)}$,
+where $\phi$ adds a return of $0.134$ for each of the first four years of
+schooling, $0.101$ for years five to eight and $0.068$ for each further year,
+following estimates of the wage gain from schooling. % ledger: b1:pwt-hc
+It counts years in school, not what is learnt there.
+\end{measure}
+
+In the original fit on 98 countries, with averages over 1960--1985, the
+equation with human capital explained $78\%$ of the variance of the
+logarithm of income (adjusted $R^2$), with an implied capital share of $0.31$
+and a human-capital share of $0.28$; the basic model without human capital
+implied a capital share of about $0.6$ ($0.59$ in their intermediate sample;
+Mankiw, Romer and Weil 1992).
+% ledger: b1:mrw1992
+Refitted on the Penn World Table for 145 countries, with averages over
+1960--2019, income in 2019 and $g + \delta = 0.05$, the equation explains $66.6\%$ of the
+variance, with an implied capital share of $0.445$; without human capital it
+explains $46.3\%$, with an implied share of $0.645$. % figdata: solow_stats
+
+\begin{omchart}{GDP per person in 2019 predicted by the augmented Solow model
+against actual, 145 countries (2021 PPP dollars, log scales), with the 45-degree
+line.}{Penn World Table 11.0 (rgdpe, pop, csh\_i, hc); fitted by the
+tested script}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xmode=log, ymode=log, log ticks with fixed point, xtickten={3,4,5}, ytickten={3,4,5},
+  xmin=500, xmax=200000, ymin=500, ymax=200000, xlabel={Predicted}, ylabel={Actual}, width=0.56\linewidth,
+  height=0.5\linewidth]
+  \addplot[only marks, mark=*, mark size=1.3pt, omDef, fill opacity=0.6] table[x=fitted, y=y, col sep=comma] {figdata/bachelor-1/20-solow-model/out/mrw_fit.csv};
+  \draw[gray, dashed] (axis cs:500,500) -- (axis cs:200000,200000);
+  % figdata: mrw_points (fitted, actual): China (25890, 17770), India (8854, 7390),
+  % Niger (1450, 1447), United States (49351, 68683)
+  \begin{scope}[black!60, every node/.style={font=\scriptsize, black}]
+    \draw (axis cs:49351,68683) -- (axis cs:14000,130000) node[anchor=east] {United States};
+    \draw (axis cs:25890,17770) -- (axis cs:70000,9000) node[anchor=west] {China};
+    \draw (axis cs:8854,7390) -- (axis cs:25000,2600) node[anchor=west] {India};
+    \draw (axis cs:1450,1447) -- (axis cs:4500,750) node[anchor=west] {Niger};
+  \end{scope}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+The fit is good on average and poor for many countries. India's predicted
+income is 8,854 dollars against 7,390 actual; the United States', 49,351
+against 68,683. % figdata: mrw_points
+Saving, population growth and schooling account for much of the ranking of
+countries, but not for the size of the gaps at the extremes; what the
+model leaves in the constant --- technology and efficiency --- is the subject
+of \cref{ch:b1:growth-accounting}.
+
+\begin{model}{The Solow model}
+\assumes A closed economy; a constant saving rate; exogenous growth of
+population $n$ and technology $g$; depreciation at the rate $\delta$; constant returns
+and diminishing returns to capital.
+\predicts Steady-state income per worker rising with $s$ and falling with $n$;
+\omterm{def:b1:solow-model:conditional-convergence}{conditional convergence} to the \omterm{def:b1:solow-model:steady-state}{steady state} at the rate $(1 - \alpha)(n + g + \delta)$;
+long-run growth of income per worker equal to $g$, whatever the saving rate.
+\tested The augmented model explained $78\%$ of the cross-country variance
+of log income with a capital share of $0.31$ (Mankiw, Romer and Weil 1992);
+% ledger: b1:mrw1992
+convergence across regions at about $2\%$ a year (Barro and Sala-i-Martin
+1991). % ledger: b1:barro1991
+\breaks Growth of technology $g$ is left unexplained; the basic model needs a
+capital share near $0.6$ to fit; the measured \omterm{def:b1:solow-model:speed}{speed of convergence} is
+slower than the model with a capital share of one-third predicts; and
+capital does not flow from rich to poor countries as fast as diminishing
+returns would imply.
+\end{model}
+
+\section*{Exercises}\label{sec:b1:solow-model:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:solow-model:steady}
+With $f(k) = k^{0.3}$, $s = 0.25$, $n = 0.02$ and $\delta = 0.05$, find $k^*$, $y^*$ and $c^*$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:solow-model:read}
+From the opening chart's table, Singapore invested $44.88\%$ of GDP and had
+an income of 101,632 dollars; China invested $33.62\%$ and had 17,770.
+% figdata: invest_points
+Does the comparison support the Solow model's prediction? What else
+differs?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:solow-model:predict}
+A country's saving rate rises permanently from $0.2$ to $0.25$. Predict the
+growth rate of income per worker just after the change and in the long run.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:solow-model:golden-ex}
+Show that with $f(k) = k^{\alpha}$ the golden-rule saving rate equals $\alpha$, and find
+$k_g$ for $\alpha = 0.3$ and $n + \delta = 0.07$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:solow-model:half}
+With $\alpha = 1/3$ and $n + \delta = 0.07$, find the \omterm{def:b1:solow-model:speed}{speed of convergence} and the \omterm{def:b1:solow-model:speed}{half-life}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:solow-model:ratio}
+With $\alpha = 1/3$ and the same $n + \delta$, predict the ratio of steady-state incomes of
+two countries saving $25\%$ and $10\%$. Compare with the sevenfold gap of the
+investment quartiles in the opening chart.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:solow-model:balanced-ex}
+With $n = 0.01$, $g = 0.02$, $\delta = 0.05$, $s = 0.2$ and $\alpha = 1/3$, give the growth rates of $Y$,
+$Y/L$ and $K/Y$ on the \omterm{def:b1:solow-model:balanced}{balanced growth path}, and the value of $K/Y$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:solow-model:inefficient}
+An economy is in a \omterm{def:b1:solow-model:steady-state}{steady state} with $k^* > k_g$. Show that lowering the saving
+rate to the \omterm{def:b1:solow-model:golden-rule}{golden rule} raises consumption per worker at every date.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:solow-model:fit}
+In the refitted augmented model, India's predicted income in 2019 was
+8,854 dollars and its actual income 7,390; the United States' were 49,351
+and 68,683. % figdata: mrw_points
+Compute each ratio of predicted to actual and say what the model leaves
+out.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:solow-model:exact}
+With $f(k) = k^{\alpha}$, set $z = k^{1 - \alpha}$. Show that $\dot z = (1 - \alpha)[s - (n + \delta)z]$, solve
+it, and deduce that the \omterm{def:b1:solow-model:steady-state}{steady state} is globally stable.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:solow-model:linear}
+For a general $f$ satisfying the \omterm{def:b1:solow-model:inada}{Inada conditions}, show by linearisation
+that $\lambda = (1 - \alpha_k)(n + \delta)$, where $\alpha_k = k^*f'(k^*)/f(k^*)$ is capital's share at the
+\omterm{def:b1:solow-model:steady-state}{steady state}.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:solow-model:refute}
+What cross-country evidence would refute the Solow model's explanation of
+income gaps between countries?
+\end{exercise}
+
+\section{Problem: Kestria after the War}\label{sec:b1:solow-model:problem}
+
+\begin{problem}[{Weekend problem --- a war and a recovery}]\label{pb:b1:solow-model:kestria}
+Kestria (invented) produces $y = k^{1/3}$ per worker, saves $s = 0.2$ of its
+output, and has $n = 0.01$ and $\delta = 0.05$, with no \omterm{def:b1:technology:technical-progress}{technical progress} until
+Part~IV. Time is in years.
+
+\medskip\noindent\textbf{Part I --- The prewar steady state.}
+\begin{enumerate}
+  \item Find $k^*$.
+  \item Find $y^*$ and $c^*$.
+  \item Find the capital--output ratio.
+  \item Find the \omterm{def:b1:technology:marginal-product}{marginal product} of capital, and compare it with $n + \delta$.
+  \item Is Kestria above or below the \omterm{def:b1:solow-model:golden-rule}{golden rule}?
+  \item Find $k_g$, $y_g$ and $c_g$.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- The capital stock halved.} A war destroys
+half of the capital stock; the labour force is intact.
+\begin{enumerate}[resume]
+  \item Find $k$ and $y$ just after the war.
+  \item Find the growth rate of $k$ just after the war.
+  \item Find the growth rate of $y$ just after the war.
+  \item Find the \omterm{def:b1:solow-model:speed}{speed of convergence} and the \omterm{def:b1:solow-model:speed}{half-life}.
+  \item Write the exact path of $z = k^{2/3}$.
+  \item Find $k$ and $y$ after one \omterm{def:b1:solow-model:speed}{half-life}.
+  \item What share of the log gap $\ln y^* - \ln y$ has been closed after one \omterm{def:b1:solow-model:speed}{half-life}?
+  \item What share of the gap in levels $y^* - y$?
+  \item Why do the two shares differ from one half?
+  \item Why do economies far below their \omterm{def:b1:solow-model:steady-state}{steady state} grow fast?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- A saving reform.} Back in the prewar \omterm{def:b1:solow-model:steady-state}{steady
+state}, Kestria raises its saving rate to the \omterm{def:b1:solow-model:golden-rule}{golden rule}.
+\begin{enumerate}[resume]
+  \item What is the golden-rule saving rate?
+  \item Find consumption per worker just after the reform.
+  \item Find consumption per worker ten years after the reform.
+  \item After how many years does consumption regain its prewar level?
+  \item Find consumption in the new \omterm{def:b1:solow-model:steady-state}{steady state}.
+  \item Who gains and who loses from the reform?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- Technical progress.} Back at $s = 0.2$,
+labour-augmenting technology now grows at $g = 0.02$.
+\begin{enumerate}[resume]
+  \item Find $\tilde k^*$ and $\tilde y^*$.
+  \item Give the growth rates of output and of output per worker on the balanced path, and the capital--output ratio.
+  \item Find the new \omterm{def:b1:solow-model:speed}{half-life}.
+  \item State the result of Part II: without \omterm{def:b1:technology:technical-progress}{technical progress}, how long does Kestria take to recover half its gap after the war?
+\end{enumerate}
+\end{problem}

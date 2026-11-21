@@ -1,0 +1,156 @@
+\section*{Chapter \ref{ch:b3:inflation-evidence} --- Inflation: The Evidence across Time and Countries}
+
+\begin{solution}{exo:b3:inflation-evidence:1}
+Stable prices: 1870--1913 in Britain, the United States, France and Italy (in 1913
+between 0.76 and 1.19 times the 1870 level); Japan's prices doubled over the same
+years (2.09). Fastest rises: the two world wars and their aftermaths.
+French prices rose most in 1945--1948 (by 48 to 59~\% a year), Italian ones in
+1944 (344~\%) and 1945 (97~\%). % figdata: prices, prices_points
+\end{solution}
+
+\begin{solution}{exo:b3:inflation-evidence:2}
+$1.5^{12} = 129.7$: prices rise by 12{,}875~\% in a year. A day: $1.5^{1/30} = 1.0136$, 1.36~\% a
+day on average.
+\end{solution}
+
+\begin{solution}{exo:b3:inflation-evidence:3}
+Seigniorage is the new money over GDP, $\mu \times M/PY = 0.25 \times 8~\% = 2.0~\%$ of GDP. Of this,
+$0.22 \times 8~\% = 1.76~\%$ is the inflation tax on existing balances; the rest is new money
+the growing economy wants to hold.
+\end{solution}
+
+\begin{solution}{exo:b3:inflation-evidence:4}
+A hyperinflation in a country whose government ran no deficit and whose central
+bank lent nothing to the government or to public enterprises (no quasi-fiscal
+deficit), with money growing for some other reason --- or one that ended with no
+change in fiscal policy.
+\end{solution}
+
+\begin{solution}{exo:b3:inflation-evidence:5}
+$\mu = 1/\alpha = 0.5$; annual inflation $e^{0.5} - 1 = 64.9~\%$. Maximum $15/(2e) = 2.76~\%$ of GDP.
+\end{solution}
+
+\begin{solution}{exo:b3:inflation-evidence:6}
+The tested solution is \code{ex06_decades.py}, in the chapter's \code{exercises/}
+folder (Germany is left out: the 1923 reform breaks its series). Before 1970 the
+slope is 0.96 (s.e.\ 0.05, $R^2$ 0.69, 153 economy-decades); from 1970, 0.72 (0.05,
+$R^2$ 0.74, 84). % output: ex06_decades
+Before 1970 the samples include wars and high inflations, where the quantity theory
+fits best; after 1970, with low inflation in most decades, velocity shifts and
+financial change weaken the link.
+\end{solution}
+
+\begin{solution}{exo:b3:inflation-evidence:7}
+$b_1 = 1.04 \times 50 + 5 - 5 = 52$; $s_2 = 1.04 \times 52 + 5 = 59.08$. With $s_1 = 2$: $b_1 = 55$, $s_2 = 62.2$: $3.12 =
+1.04 \times 3$ more.
+\end{solution}
+
+\begin{solution}{exo:b3:inflation-evidence:8}
+Output loss $2 + 3 + 1 = 6$ point-years for a 6-point fall: a ratio of 1.0. The second
+episode: $4/6 = 0.67$. The fast disinflation was cheaper, as in the OECD episodes.
+\end{solution}
+
+\begin{solution}{exo:b3:inflation-evidence:9}
+Large moves in \omterm{def:b3:inflation-evidence:breakeven}{breakeven inflation} when nothing changes in surveys of expected
+inflation, as in a liquidity panic; a breakeven rate that differs systematically
+from inflation later realised; and gaps between breakevens on bonds of the same
+maturity that differ only in liquidity.
+\end{solution}
+
+\begin{solution}{exo:b3:inflation-evidence:10}
+The proof is in the text. If expectations adapt slowly, real balances respond to
+expected inflation, not actual: printing faster than expected collects $\mu Ae^{-\alpha\pi^e}$ with
+$\pi^e < \mu$, more than the steady-state revenue at $\mu$. As expectations catch up, real
+balances fall, and keeping revenue up needs ever faster printing --- the
+acceleration of a hyperinflation. It ends when the public no longer holds the
+money at all.
+\end{solution}
+
+\begin{solution}{exo:b3:inflation-evidence:11}
+The tested solution is \code{ex11_targeting_did.py}, in the chapter's
+\code{exercises/} folder. Medians: targeters 7.8~\% before and 3.2~\% after; other
+countries 4.9~\% and 4.6~\% in the same years; difference-in-differences $-4.3$ points.
+% output: ex11_targeting_did
+It overstates the target's effect if countries adopted targets when they were
+already disinflating (the chart shows the fall began before year 0), or when other
+reforms --- fiscal consolidation, central-bank independence --- came at the same
+time; and the other countries are not a valid comparison if their inflation would
+not have moved in parallel.
+\end{solution}
+
+\begin{solution}{exo:b3:inflation-evidence:12}
+Real balances rise by 12~\% of GDP: the central bank can issue that much new money,
+over the three years, without raising prices. Once balances reach 16~\%, further
+issue raises prices: the gain is a one-off, and a government that counts on it
+year after year returns to inflation.
+\end{solution}
+
+\begin{solution}{pb:b3:inflation-evidence:kestria}
+\textbf{1.} $s(\mu) = 20\mu e^{-2\mu}$ percent of GDP. % figdata: kestria_stats, laffer
+
+\textbf{2.} $s(0.1) = 2e^{-0.2} = 1.64$; $s(1) = 20e^{-2} = 2.71$.
+
+\textbf{3.} $\mu = 1/2 = 0.5$; $s = 10e^{-1} = 3.68~\%$ of GDP.
+
+\textbf{4.} $e^{0.5} - 1 = 64.9~\%$ a year.
+
+\textbf{5.} No: 4~\% exceeds the maximum of 3.68~\%.
+
+\textbf{6.} Inflation is the cost of holding money: people hold less of it,
+spending it faster or holding foreign currency and goods instead.
+
+\textbf{7.} $s$ rises from 0 to 3.68 and falls back toward 0, so it equals 3 twice:
+$\mu = 0.245$ and $\mu = 0.891$.
+
+\textbf{8.} $e^{0.245} - 1 = 27.7~\%$ and $e^{0.891} - 1 = 143.7~\%$ a year.
+
+\textbf{9.} $20e^{-0.489} = 12.3~\%$ and $20e^{-1.781} = 3.4~\%$ of GDP.
+
+\textbf{10.} The low one. Near it, a little more inflation than expected raises
+revenue above the deficit, so less printing is needed and inflation returns;
+near the high one, more inflation lowers revenue, more printing is needed, and
+inflation runs away.
+
+\textbf{11.} The low steady state moves up, to $\mu = 0.358$, an annual inflation of 43.1~\%.
+
+\textbf{12.} No steady state finances it: inflation accelerates without limit --- a
+hyperinflation.
+
+\textbf{13.} $m = 20~\%$ of GDP.
+
+\textbf{14.} $20 - 12.3 = 7.7~\%$ of GDP.
+
+\textbf{15.} From the public, who bring the foreign currency they hold to exchange it
+for the new money; from a foreign loan; from the sale of government assets.
+
+\textbf{16.} The board cannot lend to the government; with a deficit still to finance,
+the government would default or abolish the board, and the public, expecting
+this, would not hold the money.
+
+\textbf{17.} A note issuer legally barred from new lending to the government, and a
+budget brought into balance at the same time.
+
+\textbf{18.} Prices stopped rising, expected inflation fell, and the public rebuilt its
+real money balances: remonetisation.
+
+\textbf{19.} $27.7 - 3 = 24.7$ points.
+
+\textbf{20.} $1.5 \times 24.7 = 37.1$ point-years: 37~\% of a year's output, spread over the
+disinflation.
+
+\textbf{21.} $0.5 \times 24.7 = 12.4$ point-years.
+
+\textbf{22.} Fast disinflations cost less per point than gradual ones, and the ends of
+hyperinflations, with a believed change of regime, cost very little: the low
+ratio is the credible one.
+
+\textbf{23.} Seigniorage falls as inflation falls, but the deficit is still 3~\%: it must be
+financed by debt, which raises later deficits --- the \omterm{def:b3:inflation-evidence:fiscal}{unpleasant arithmetic}. Without
+the fiscal reform the gradual path is not even consistent.
+
+\textbf{24.} 37.1 against 12.4 point-years, and only the reform deals with the deficit.
+
+\textbf{25.} Money growth of 0.245 a year --- inflation of 27.7~\% a year --- finances
+Kestria's deficit of 3~\% of GDP; after the reform, remonetisation lets the board
+issue 7.7~\% of GDP of money without inflation.
+\end{solution}

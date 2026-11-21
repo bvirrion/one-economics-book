@@ -1,0 +1,206 @@
+\section*{Chapter \ref{ch:b3:regression-discontinuity} --- Regression Discontinuity}
+
+\begin{solution}{exo:b3:regression-discontinuity:1}
+The left line reaches 0.4597 at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} and the right line 0.5353; the jump is
+$0.5353 - 0.4597 = 0.0756$. % figdata: elections_fit_left, elections_fit_right
+Margins are drawn mostly near zero, so the bins near $\pm 0.4$ hold few
+elections and their means are noisier.
+\end{solution}
+
+\begin{solution}{exo:b3:regression-discontinuity:2}
+40: one class of 40. 41: $41/2 = 20.5$. 80: $80/2 = 40$. 81: $81/3 = 27$. 121:
+$121/4 = 30.25$. The rule jumps at 41 (from 40 to 20.5, by $-19.5$), at 81 (from 40
+to 27, by $-13$) and at 121 (from $120/3 = 40$ to 30.25, by $-9.75$); the jumps
+shrink because the extra class is shared among more pupils.
+\end{solution}
+
+\begin{solution}{exo:b3:regression-discontinuity:3}
+$52 - 40 = 12$ percentage points. It assumes that applicants on 68--69 are
+comparable to those on 70--71 apart from the scheme. If employment rises with the
+score, the two groups differ by about two marks of that slope as well: the
+difference of means adds the slope times two marks to the effect.
+\end{solution}
+
+\begin{solution}{exo:b3:regression-discontinuity:4}
+That pupils on the two sides differ in background, so something other than the
+scholarship changes at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}: sorting (better-connected families obtain
+re-marks), or another programme using the same mark. Look at the density of
+scores at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}, at other predetermined covariates, at the rules for
+re-marking, and at whether any other benefit uses the same mark.
+\end{solution}
+
+\begin{solution}{exo:b3:regression-discontinuity:5}
+The tested solution is \code{ex05_global_polynomial.py}, in the chapter's
+\code{exercises/} folder. Bias and standard deviation: order 1, $-0.034$ and
+0.010; order 2, 0.010 and 0.012; order 4, $-0.001$ and 0.022; order 6, $-0.002$
+and 0.029; local linear within 0.25, $-0.003$ and 0.013. % output: ex05_global_polynomial
+Low orders are biased because they cannot follow the curve; high orders are
+unbiased here but noisy, because observations far from the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} pull the
+fitted value at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} about. The local linear fit has a small bias and
+half the noise of the order-6 polynomial. Here the true curve is a cubic, which
+an order-4 fit contains; with real data no order is known to be right.
+\end{solution}
+
+\begin{solution}{exo:b3:regression-discontinuity:6}
+\begin{enumerate}
+\item $(0.75 - 0.70)/(0.85 - 0.60) = 0.05/0.25 = 0.20$: insurance raises the
+probability of a visit by 20 percentage points, for the people at the threshold
+who are insured because they crossed it.
+\item Those insured below the threshold are \omterm{def:b3:instrumental-variables:compliance}{always-takers}: crossing does not
+change their insurance, so they contribute nothing to either jump, and the ratio
+says nothing about them.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:regression-discontinuity:7}
+Upward. The determined pupils move from just below the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} to just above it,
+raising later earnings above the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} and lowering them below it for reasons
+other than the scholarship.
+\end{solution}
+
+\begin{solution}{exo:b3:regression-discontinuity:8}
+The tested solution is \code{ex08_donut.py}, in the chapter's \code{exercises/}
+folder. With all recorded scores the jump is 0.076 (s.e.\ 0.015); dropping the
+marks 69 and 70 gives 0.089 (0.022); dropping 68--71 gives 0.087 (0.028).
+% output: ex08_donut
+The re-marked pupils, all recorded at 70, have the earnings of pupils on 66--69,
+so they pull the mean just above the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} down and the estimate below the true
+0.10. The donut removes them; the estimate moves toward the truth, and its
+standard error rises because the observations closest to the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}, the most
+informative, are gone.
+\end{solution}
+
+\begin{solution}{exo:b3:regression-discontinuity:9}
+A heap of households just below the line and a gap just above it, or households
+just below it that differ in their characteristics (connections to the council,
+a particular district) from those just above. If the line was chosen to include
+particular households, the units on the two sides are not alike, continuity
+fails, and the jump mixes the subsidy with the reasons those households were
+chosen.
+\end{solution}
+
+\begin{solution}{exo:b3:regression-discontinuity:10}
+The OLS intercept of $Y$ on $(1, x)$ is $\hat a_1 = (S_2 \sum_i Y_i - S_1 \sum_i
+x_i Y_i)/(n_1 S_2 - S_1^2)$, from the normal equations, which is $\sum_i
+\omega_i Y_i$ with $\omega_i = (S_2 - S_1 x_i)/(n_1 S_2 - S_1^2)$. The weights sum
+to $(n_1 S_2 - S_1^2)/(n_1 S_2 - S_1^2) = 1$. The denominator is positive (it is
+$n_1$ times the sum of squared deviations of $x$). Above the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} all $x_i \ge
+0$, so $S_1 > 0$, and $\omega_i < 0$ exactly when $x_i > S_2/S_1$: the
+observations farthest from the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} get negative weight, as the line is
+extrapolated back to $x = 0$.
+\end{solution}
+
+\begin{solution}{exo:b3:regression-discontinuity:11}
+The tested solution is \code{ex11_coverage.py}, in the chapter's
+\code{exercises/} folder. Coverage is 0.944 at a window of 0.02, 0.932 at 0.10,
+0.882 at 0.25 and 0.018 at 0.50. % output: ex11_coverage
+The interval is built for noise only. At 0.50 the bias is $-0.015$ and the
+standard deviation 0.004 (\cref{out:b3:regression-discontinuity:bandwidth}): the
+interval is centred nearly four standard errors from the truth and almost never
+covers it. At 0.25, where the error-minimising window lies, the bias is already a
+large part of the standard error and coverage falls short of 95~\%.
+\end{solution}
+
+\begin{solution}{exo:b3:regression-discontinuity:12}
+The pupils at 50 differ from those at 70: they may gain more from funding (if
+money, not ability, is what holds them back) or less (if they are less
+prepared for the course the scholarship pays for). And a scholarship given to
+many more pupils may change what it pays for: crowded courses, a weaker signal
+to employers. A design: if the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} differed between years or towns, a
+discontinuity at 50 where the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} was 50 estimates the effect there; or a
+lottery among applicants between 50 and 70.
+\end{solution}
+
+\begin{solution}{pb:b3:regression-discontinuity:scholarship}
+\textbf{1.} Sharp for the offer, which goes to everyone from 70 and to no one
+below; fuzzy for the award, which jumps by about two thirds.
+% figdata: scholarship
+
+\textbf{2.} Being offered the scholarship raises log earnings at 30 by 0.0792,
+about 8~\%, for pupils at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}.
+
+\textbf{3.} $0.0792 \pm 1.96 \times 0.0323 = 0.0792 \pm 0.0633$: from 0.0159 to
+0.1425. It excludes zero.
+
+\textbf{4.} 0.0784, 0.0792 and 0.0738: the estimate barely moves, so curvature
+is not driving it. The standard errors, 0.0442, 0.0323 and 0.0241, fall because a
+wider window uses more pupils; doubling the window divides them by about
+$\sqrt 2$ ($0.0442/0.0323 = 1.37$).
+
+\textbf{5.} $-0.0101$ with a standard error of 0.0309: no jump in a variable
+fixed before the exam. Pupils just above and just below are alike in family
+background, as the design requires.
+
+\textbf{6.} Only part of those offered take an award because of the offer; the
+effect of the offer is the effect of the award diluted by that share.
+
+\textbf{7.} Crossing 70 raises the probability of receiving an award by 0.6675.
+
+\textbf{8.} $0.0792/0.6675 = 0.119$; $\eu^{0.119} - 1 = 0.126$: earnings 12.6~\%
+higher.
+
+\textbf{9.} $0.0784/0.6552 = 0.120$ and $0.0738/0.6525 = 0.113$.
+
+\textbf{10.} $0.0323/0.6675 = 0.0484$; $0.119 \pm 1.96 \times 0.0484 = 0.119 \pm
+0.0949$, from 0.024 to 0.214. The approximation ignores the noise in the
+award jump, which is small here.
+
+\textbf{11.} For \omterm{def:b3:instrumental-variables:compliance}{compliers} at 70: pupils who receive an award if and only if
+they are offered one. It leaves out \omterm{def:b3:instrumental-variables:compliance}{never-takers}, who decline even when
+offered, and \omterm{def:b3:instrumental-variables:compliance}{always-takers}, who obtain an equivalent award below 70.
+
+\textbf{12.} Crossing 70 changes earnings only by changing whether a pupil
+receives the award. It fails if the offer itself matters: if pupils list it on
+their applications and employers reward it, or if being offered raises a
+pupil's ambition even when the award is declined.
+
+\textbf{13.} 0.0211 (0.0277), $t = 0.76$: no jump where nothing changes, so the
+local linear fits are not manufacturing jumps out of the curve's shape.
+
+\textbf{14.} A window that crossed 70 would include the real jump in the fit on
+one side and could turn it into a spurious jump at the placebo \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}.
+
+\textbf{15.} At 10, with the estimates at 5 and 20 beside it, the balance test,
+the placebo \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} and the density test --- and the fuzzy estimate with its
+interval, since the award, not the offer, is the policy's instrument.
+
+\textbf{16.} A cohort or a town where the mark of 70 carried no scholarship (or
+the scholarship's \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} was elsewhere) but the same standing with employers: a
+jump at 70 there would be the signal alone.
+
+\textbf{17.} All pupils: $0.3036/0.0798 = 3.80$. Without the school: $0.0623/0.0841
+= 0.74$. % figdata: scholarship_density
+Too many pupils just above 70, all coming from the one school; elsewhere the
+density is smooth.
+
+\textbf{18.} $\eu^{0.3036} = 1.35$: about 35~\% more pupils per mark just above
+70 than just below.
+
+\textbf{19.} Pupils of that school whose true score was 67, 68 or 69. They are
+on average about two marks weaker than the honest pupils on 70.
+
+\textbf{20.} Downward, since weaker pupils are added just above the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}; but
+the bias should be small, as few pupils were moved and they were only two marks
+weaker. The estimates without the school are 0.0628, 0.0770 and 0.0729, against
+0.0784, 0.0792 and 0.0738: they are not higher, and the differences are well
+inside a standard error. The re-marking is detected but does no visible harm.
+
+\textbf{21.} Parents' income moves little with the score, and the moved pupils
+are few and only slightly weaker: the jump they cause in mean parents' income is
+far below what a standard error of 0.03 can detect.
+
+\textbf{22.} If that school's pupils differ from the rest (a richer district), the
+population at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} changes, and the estimate is for a different group; and
+if other teachers re-marked without being caught, dropping one school does not
+remove the problem.
+
+\textbf{23.} Drop the pupils recorded on 69 and 70 (or on 68 to 71) and estimate
+from the rest; the re-marked pupils, all on 70, are gone, at the cost of the
+observations nearest the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff}.
+
+\textbf{24.} The scholarship raises earnings at 30 by 0.119 log points, 12.6~\%,
+for pupils at the \omterm{def:b3:regression-discontinuity:running-variable}{cutoff} of 70 whose award depends on the offer, with an
+approximate 95~\% interval of 0.024 to 0.214. The density test finds re-marking
+in one school ($t = 3.80$) and none elsewhere ($t = 0.74$); without that school
+the estimate is $0.0770/0.6613 = 0.116$.
+\end{solution}

@@ -1,0 +1,11 @@
+$ python load_trade.py
+countries 224, ordered pairs with positive trade 31,120
+pairs with no recorded trade: 37.7% of 49,952
+total trade 18,098 billion dollars
+iso3_o iso3_d  flow  dist
+   CHN    USA   427 11883
+   MEX    USA   355  3359
+   CAN    USA   314   556
+   CHN    HKG   262  1226
+   USA    CAN   259   556
+the 5 largest flows: 8.9% of world trade

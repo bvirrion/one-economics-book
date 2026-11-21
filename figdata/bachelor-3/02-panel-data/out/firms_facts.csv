@@ -1,0 +1,2 @@
+n_firms,years,rows,treated,var_k,cov_km,sd_y
+300,15,4500,100,0.8675,0.9512,0.8554

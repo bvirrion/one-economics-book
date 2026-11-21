@@ -1,0 +1,488 @@
+\chapter{Consumer Welfare}\label{ch:b1:consumer-welfare}
+
+From 1990 to 2024 the American consumer price index rose by a factor of
+2.40, an average of $2.61\%$ a year. Over the same years the deflator of
+household consumption, another price index for the same households, rose
+by a factor of 2.07, $2.16\%$ a year. % figdata: us_growth
+Social Security benefits are tied to the CPI-W, a sibling of this index,
+and many pensions and wage contracts to fixed-basket indices like
+it; % ledger: b1:cpi-uses
+since 2017 US federal tax brackets have followed a chained index
+instead. % ledger: b1:ccpiu-tax
+If a fixed-basket index
+overstates the rise in the cost of living by half a point a year, a
+pension indexed to it gains about $18\%$ in real terms over 34 years. This
+chapter defines what ``the cost of living'' means in the model of
+\cref{ch:b1:consumer-choice}, measures the welfare effect of a price change
+in money, and shows which way a fixed-basket index errs.
+
+\begin{openingchart}{Two measures of US consumer prices, 1990--2024, 1990 = 100:
+the consumer price index for all urban consumers (CPI-U, annual average), a
+fixed-basket index whose weights are updated at intervals, and the
+deflator of household final consumption from the national accounts, a
+chained index. Scope and weights differ as well as the
+formula.}{U.S. Bureau of Labor Statistics, consumer price index, all
+items, U.S. city average; World Bank, World Development Indicators,
+household final consumption expenditure in current and constant prices}
+\begin{tikzpicture}
+\begin{axis}[omtime, xlabel={Year}, ylabel={Index, 1990 = 100},
+  xmin=1990, xmax=2024, ymin=90, ymax=250, width=0.72\linewidth,
+  height=0.46\linewidth, legend pos=north west]
+  \addplot+[omDef, very thick, no marks] table[x=year, y=cpi] {figdata/bachelor-1/07-consumer-welfare/out/us_indices.csv};
+  \addplot+[omThm, thick, dashed, no marks] table[x=year, y=deflator] {figdata/bachelor-1/07-consumer-welfare/out/us_indices.csv};
+  \legend{CPI-U, Consumption deflator}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+The two lines start together and end 33 index points apart: 240.01
+against 206.89 in 2024. % figdata: us_growth
+Part of the gap is about formula: a fixed basket ignores that households
+buy less of what has become dear. Part is about scope: the deflator also covers
+some spending made on households' behalf, such as health care paid by
+employers and governments, which the CPI leaves out. The chapter's
+theory isolates the first part.
+
+\begin{recall}
+A Laspeyres index prices a fixed base-period basket at current prices; a
+Paasche index prices the current basket. A fixed basket overstates the rise
+in the cost of living because it ignores substitution (the substitution
+bias); a chained index updates the basket every period. \omterm{def:b1:consumer-welfare:consumer-surplus}{Consumer surplus} is
+the area between the demand curve and the price. The \omterm{def:b1:income-and-substitution-effects:expenditure}{expenditure function}
+$e(p, u)$ and Shephard's lemma, $\partial e/\partial p_i = h_i$, are in
+\cref{ch:b1:income-and-substitution-effects}.
+\end{recall}
+
+\section{Money measures of a price change}\label{sec:b1:consumer-welfare:cv-ev}
+
+A price rises from $p^0$ to $p^1$ (one price, the others fixed), and the
+consumer's utility falls from $u^0 = v(p^0, m)$ to $u^1 = v(p^1, m)$. Utility
+has no unit (\cref{prop:b1:preferences-and-utility:ordinal}), but income
+does, and the \omterm{def:b1:income-and-substitution-effects:expenditure}{expenditure function} converts one into the other.
+
+\begin{definition}[Compensating variation]\label{def:b1:consumer-welfare:cv}
+\index{compensating variation}
+The \emph{compensating variation} of the price change is
+$\mathrm{CV} = e(p^1, u^0) - e(p^0, u^0) = e(p^1, u^0) - m$: the extra income that,
+at the new prices, would restore the old utility.
+\end{definition}
+
+\begin{definition}[Equivalent variation]\label{def:b1:consumer-welfare:ev}
+\index{equivalent variation}
+The \emph{equivalent variation} is
+$\mathrm{EV} = e(p^1, u^1) - e(p^0, u^1) = m - e(p^0, u^1)$: the loss of income
+that, at the old prices, would hurt as much as the price change.
+\end{definition}
+
+For a price rise both are positive; for a price fall both are negative
+(the consumer would pay $|\mathrm{CV}|$ to have the fall, or would need
+$|\mathrm{EV}|$ more to be as well off without it).
+
+\begin{proposition}[CV and EV as areas]\label{prop:b1:consumer-welfare:areas}
+\index{compensating variation!as an area}
+When only $p_i$ changes,
+\[
+\mathrm{CV} = \int_{p_i^0}^{p_i^1} h_i(p_i, u^0)\,\dd p_i ,\qquad
+\mathrm{EV} = \int_{p_i^0}^{p_i^1} h_i(p_i, u^1)\,\dd p_i ,
+\]
+the areas to the left of the \omterm{def:b1:income-and-substitution-effects:compensated}{compensated demand} curves at the old and the
+new utility, between the two prices. For a \omterm{def:b1:consumer-choice:normal-inferior}{normal good} and a price rise,
+$\mathrm{CV} \ge \mathrm{EV}$.
+\end{proposition}
+
+\begin{proof}
+For a fixed $u$, $e(p^1, u) - e(p^0, u) = \int \partial e/\partial p_i\,\dd p_i$
+over $[p_i^0, p_i^1]$, and $\partial e/\partial p_i = h_i$ (Shephard's lemma,
+\cref{prop:b1:income-and-substitution-effects:shephard}). With $u = u^0$ this is
+CV, with $u = u^1$ EV. For a \omterm{def:b1:consumer-choice:normal-inferior}{normal good}, more utility means more of the good
+at every price: $h_i(p_i, u) = x_i\bigl(p, e(p, u)\bigr)$ rises with $u$, since $e$
+rises with $u$. A price rise gives $u^1 < u^0$, so $h_i(\cdot, u^0) \ge h_i(\cdot, u^1)$
+and the first integral is the larger.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Quantity of good 1}, ylabel={Price $p_1$},
+  xmin=0, xmax=720, ymin=0.5, ymax=2.5, width=0.6\linewidth, height=0.45\linewidth, samples=60,
+  legend pos=north east]
+  \addplot[fill=omDef!14, draw=none, domain=1:2, variable=\t, forget plot] ({353.55/sqrt(t)}, {t}) -- (axis cs:0,2) -- (axis cs:0,1) -- cycle;
+  \addplot[shifted, domain=0.5:2.5, variable=\t] ({500/sqrt(t)}, {t});
+  \addplot[demand, domain=0.5:2.5, variable=\t] ({500/t}, {t});
+  \addplot[supply, domain=0.5:2.5, variable=\t] ({353.55/sqrt(t)}, {t});
+  \addplot[guide, forget plot] coordinates {(0,1) (720,1)};
+  \addplot[guide, forget plot] coordinates {(0,2) (720,2)};
+  \legend{{$h_1(\cdot, u^0)$}, $x_1$, {$h_1(\cdot, u^1)$}}
+  \node[font=\footnotesize] at (axis cs:110,1.5) {EV};
+\end{axis}
+\end{tikzpicture}
+
+{\small $u = \sqrt{x_1x_2}$, income 1000, $p_2 = 1$, $p_1$ from 1 to 2. Between the
+dotted price lines, the area left of the \omterm{def:b1:income-and-substitution-effects:compensated}{compensated demand} at the new
+utility (red, shaded) is $\mathrm{EV} = 292.89$; left of the \omterm{def:b1:consumer-choice:demand-function}{Marshallian demand}
+(blue) the consumer-surplus loss, 346.57; left of the \omterm{def:b1:income-and-substitution-effects:compensated}{compensated demand} at
+the old utility (dashed) $\mathrm{CV} = 414.21$.}
+\end{omfigure}
+
+For the Cobb--Douglas consumer of the figure, $e(p, u) = 2u\sqrt{p_1p_2}$ and
+$e$ is proportional to $\sqrt{p_1}$, so doubling $p_1$ raises the cost of any
+utility by the factor $\sqrt 2$:
+$\mathrm{CV} = 1000(\sqrt 2 - 1) = 414.21$ and
+$\mathrm{EV} = 1000(1 - 1/\sqrt 2) = 292.89$.
+
+\section{Consumer surplus}\label{sec:b1:consumer-welfare:surplus}
+
+CV and EV need the \omterm{def:b1:income-and-substitution-effects:compensated}{compensated demand}, which is not observed. The demand
+curve that is estimated from market data is the Marshallian one.
+
+\begin{definition}[Consumer surplus]\label{def:b1:consumer-welfare:consumer-surplus}
+\index{consumer surplus}
+The \emph{consumer surplus} at price $p_i$ is the area under the
+(Marshallian) demand curve above the price,
+$\mathrm{CS}(p_i) = \int_{p_i}^{\infty} x_i(t, m)\,\dd t$ (with the integral
+stopping at the price where demand reaches zero, if there is one). The
+change in consumer surplus when the price rises from $p_i^0$ to $p_i^1$ is
+$-\int_{p_i^0}^{p_i^1} x_i(t, m)\,\dd t$.
+\end{definition}
+
+The loss of \omterm{def:b1:consumer-welfare:consumer-surplus}{consumer surplus} from the doubled price in the figure is
+$\int_1^2 500/t\,\dd t = 500\ln 2 = 346.57$, between EV and CV. That holds in
+general for a \omterm{def:b1:consumer-choice:normal-inferior}{normal good}: the \omterm{def:b1:consumer-choice:demand-function}{Marshallian demand} through $(x_i(p^0), p^0)$
+and $(x_i(p^1), p^1)$ lies between the two compensated curves, one through each
+of the two points.
+
+\begin{proposition}[Exact surplus with quasi-linear utility]\label{prop:b1:consumer-welfare:quasi}
+\index{quasi-linear utility!consumer surplus}
+If $u = \phi(x_1) + x_2$ with $p_2 = 1$ and an interior optimum, then
+$\mathrm{CV} = \mathrm{EV} = $ the loss of \omterm{def:b1:consumer-welfare:consumer-surplus}{consumer surplus}.
+\end{proposition}
+
+\begin{proof}
+At an interior optimum the demand for good 1 solves $\phi'(x_1) = p_1$, so it
+does not depend on income: $x_1(p_1, m) = h_1(p_1, u)$ for every $u$. The three
+integrals of \cref{prop:b1:consumer-welfare:areas} and of the definition are
+then integrals of the same function between the same prices.
+\end{proof}
+
+How far apart can the three be in general? The gap comes from the \omterm{def:b1:income-and-substitution-effects:effects}{income
+effect}, so it is small when the good takes a small share of the budget or
+has a small income elasticity. A result known as Willig's bound (admitted
+here) makes this precise: for a price change whose surplus loss is a
+fraction $A$ of income, CV and EV differ from it by about
+$\eta A/2$ in relative terms, with $\eta$ the income elasticity. A surplus
+loss of $5\%$ of income with $\eta = 1$ puts CV and EV within about $2.5\%$
+of it. That is why applied welfare economics, from \cref{ch:b1:partial-equilibrium-welfare}
+on, uses areas under estimated demand curves.
+
+\section{The true cost-of-living index}\label{sec:b1:consumer-welfare:col}
+
+\begin{definition}[True cost-of-living index]\label{def:b1:consumer-welfare:col-index}
+\index{true cost-of-living index}\index{cost-of-living index}
+The \emph{true cost-of-living index} between prices $p^0$ and $p^1$, at the
+reference utility $u$, is $I(p^0, p^1; u) = e(p^1, u)/e(p^0, u)$: the factor by
+which income must rise to keep the consumer at utility $u$.
+\end{definition}
+
+A statistical office does not know $e$. It knows prices and the basket
+$x^0$ bought in the base period, and computes the Laspeyres index
+$L = p^1\cdot x^0/p^0\cdot x^0$; when it knows the current basket $x^1$, the
+Paasche index $P = p^1\cdot x^1/p^0\cdot x^1$.
+
+\begin{proposition}[The Laspeyres and Paasche bounds]\label{prop:b1:consumer-welfare:bounds}
+\index{Laspeyres index!bound}\index{Paasche index!bound}
+For a consumer who chooses $x^0$ at $(p^0, m^0)$ with utility $u^0$, and $x^1$ at
+$(p^1, m^1)$ with utility $u^1$,
+\[
+I(p^0, p^1; u^0) \le L ,\qquad I(p^0, p^1; u^1) \ge P .
+\]
+\end{proposition}
+
+\begin{proof}
+$x^0$ reaches $u^0$, so the cheapest way to reach $u^0$ at $p^1$ costs at most
+$p^1\cdot x^0$: $e(p^1, u^0) \le p^1\cdot x^0$. And $e(p^0, u^0) = p^0\cdot x^0$,
+since $x^0$ was chosen at $p^0$. Dividing gives the first inequality. In the
+same way $e(p^0, u^1) \le p^0\cdot x^1$ and $e(p^1, u^1) = p^1\cdot x^1$, which
+gives the second.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={$x_1$}, ylabel={$x_2$},
+  xmin=0, xmax=90, ymin=0, ymax=160, width=0.55\linewidth, height=0.42\linewidth, samples=80]
+  \addplot[demand, domain=16:90] {2500/x};
+  \addplot[supply] coordinates {(0,150) (75,0)};
+  \addplot[shifted] coordinates {(0,141.42) (70.71,0)};
+  \addplot[guide] coordinates {(0,100) (100,0)};
+  \addplot[only marks, mark=*, black] coordinates {(50,50) (35.36,70.71)};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:50,50) {$x^0$};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:35.36,70.71) {cheapest};
+\end{axis}
+\end{tikzpicture}
+
+{\small $u = x_1x_2$, base prices $(1, 1)$ and income 100 (dotted line), base bundle
+$x^0 = (50, 50)$. At new prices $(2, 1)$ the old bundle costs 150 (red line):
+$L = 1.5$. The cheapest bundle on the old \omterm{def:b1:preferences-and-utility:indifference-curve}{indifference curve} costs 141.42
+(dashed line): the true index is $1.4142$.}
+\end{omfigure}
+
+The Laspeyres index overstates the rise in the cost of living because the
+consumer, compensated, would not keep buying $x^0$; it is the
+substitution bias of the recall box, now proved. A chained index updates
+the basket every period, so its error in each link is second order in that
+period's price changes, and it stays closer to the true index. For
+Cobb--Douglas preferences with budget shares $s_i$, the \omterm{def:b1:income-and-substitution-effects:expenditure}{expenditure
+function} is $e(p, u) = u\,\prod_i p_i^{s_i}/\prod_i s_i^{s_i}$, so the true index
+is the same at every reference utility and equals the geometric mean of
+the price relatives, $I = \prod_i (p_i^1/p_i^0)^{s_i}$
+(\cref{exo:b1:consumer-welfare:cd-index}). Since a weighted geometric mean is
+below the weighted arithmetic mean, $L = \sum_i s_i\,p_i^1/p_i^0$ is above it,
+as the proposition requires.
+
+\begin{measure}[Fixed-basket and chained indices]
+The CPI-U prices a basket of goods and services whose weights come from the
+household expenditure surveys of \cref{ch:b1:consumer-choice}; since the
+January 2023 data the weights are updated every year. Since July 2002 the
+Bureau of Labor Statistics also publishes a chained index, the C-CPI-U,
+with a superlative formula that lets the weights follow substitution across
+categories of items. From 2001 to 2023 the CPI-U rose on average about
+$0.2$ percentage points a year faster. % ledger: b1:ccpiu-gap
+The deflator of the opening chart is chained too, but it also differs in
+coverage and weights, so the gap of the chart, $2.61 - 2.16 = 0.45$ points a
+year, is more than substitution bias. % figdata: us_growth
+\end{measure}
+
+\begin{model}{The cost-of-living index}
+\assumes A representative household with stable preferences, whose
+\omterm{def:b1:income-and-substitution-effects:expenditure}{expenditure function} defines the cost of reaching a fixed utility.
+\predicts A fixed-basket index rises faster than the true index; a chained
+index lies between them; the gap grows with the dispersion of price
+changes across goods.
+\tested The chained CPI has risen about 0.2 points a year more slowly than
+the fixed-basket CPI-U since 2001. % ledger: b1:ccpiu-gap
+A commission of five economists put the total upward bias of the American
+CPI in the 1990s at 1.1 points a year, adding substitution, new goods
+and quality change (Boskin and others 1998). % ledger: b1:boskin1998
+\breaks Households differ: a household that cannot substitute, or that buys
+more of the goods whose prices rose fastest, faces a different true index,
+so no single index is true for all. New goods and quality changes need
+values that no price survey records.
+\end{model}
+
+\begin{record}[A review of the CPI]
+A commission of five economists estimated, and in 1998 reiterated, that the
+American CPI overstated the rise in the cost of living by 1.1 percentage
+points a year (Boskin and others 1998). % ledger: b1:boskin1998
+The sources were substitution between goods (which a fixed basket misses),
+substitution between outlets (discount stores), new products introduced
+late, and quality improvements priced as price rises. The chained index of
+the measure box addresses the first of these; the theory of this chapter
+says it cannot address the others.
+\end{record}
+
+\section{New goods and quality}\label{sec:b1:consumer-welfare:new-goods}
+
+A good that did not exist in the base period has no base price. The model
+gives it one.
+
+\begin{definition}[Virtual price]\label{def:b1:consumer-welfare:virtual-price}
+\index{virtual price}\index{reservation price}
+The \emph{virtual price} of a good that is not available is the price at
+which the consumer's demand for it would be exactly zero, given her income
+and the other prices: the intercept of its demand curve on the price axis.
+\end{definition}
+
+Pricing the good at its \omterm{def:b1:consumer-welfare:virtual-price}{virtual price} before it appears, the true index can
+treat its arrival as a price fall from the \omterm{def:b1:consumer-welfare:virtual-price}{virtual price} to the market
+price. The welfare gain is the area under the \omterm{def:b1:income-and-substitution-effects:compensated}{compensated demand} between
+the two prices, or the consumer-surplus triangle when \omterm{def:b1:income-and-substitution-effects:effects}{income effects} are
+small. A Laspeyres index that adds the good only years after it appears
+misses this gain, and the falls in its price in the meantime.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Quantity (gigabytes a year)}, ylabel={Price (dalens)},
+  xmin=0, xmax=65, ymin=0, ymax=34, width=0.5\linewidth, height=0.4\linewidth]
+  \addplot[cs area] coordinates {(0,30) (40,10) (0,10)} \closedcycle;
+  \addplot[demand] coordinates {(0,30) (60,0)};
+  \addplot[guide] coordinates {(0,10) (40,10) (40,0)};
+  \addplot[only marks, mark=*, black] coordinates {(0,30) (40,10)};
+  \node[font=\footnotesize, anchor=west] at (axis cs:1,31.5) {virtual price 30};
+  \node[font=\footnotesize] at (axis cs:12,15) {400};
+\end{axis}
+\end{tikzpicture}
+
+{\small Demand for phone data in Brenland (invented), $q = 60 - 2p$. Before the
+service exists its \omterm{def:b1:consumer-welfare:virtual-price}{virtual price} is 30, where demand is zero. At a market
+price of 10 a household buys 40 gigabytes, and the triangle, 400 dalens a
+year, is the value of the new good.}
+\end{omfigure}
+
+\begin{record}[A new good]
+Cellular telephones were introduced in the United States in 1983, and about
+55 million were in use at the end of 1997, but the CPI did not include them
+until 1998. % ledger: b1:hausman1999
+Hausman (1999) estimated the demand for cellular service, valued its
+arrival and its falling prices, and found that a correctly computed index
+of telecommunications services would have fallen by about $0.8\%$ a year,
+and that leaving the telephones out had biased that index upward by between
+0.8 and 1.9 per cent a year. % ledger: b1:hausman1999
+\end{record}
+
+Quality changes raise the same problem in a milder form: a computer sold
+at the same price as last year's but twice as fast is cheaper per unit of
+computing. Statistical offices adjust some prices for quality, with
+regressions of prices on characteristics, but most goods are adjusted
+little or not at all; the commission's 1.1 points include its estimate of
+what this misses.
+
+\section*{Exercises}\label{sec:b1:consumer-welfare:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:consumer-welfare:cs-linear}
+Demand is $q = 100 - 2p$. The price rises from 10 to 15. Compute the change
+in \omterm{def:b1:consumer-welfare:consumer-surplus}{consumer surplus}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:consumer-welfare:growth}
+In the opening chart's table the CPI-U is 240.01 and the deflator 206.89 in
+2024, both with 1990 = 100. % figdata: us_growth
+Compute the average yearly growth of each over the 34 years.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:consumer-welfare:lp}
+Two goods have prices $(1, 1)$ and quantities $(10, 10)$ in the base year, and
+prices $(2, 1)$ and quantities $(6, 12)$ in the current year. Compute the
+Laspeyres and Paasche indices.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:consumer-welfare:signs}
+What are the signs of CV and EV for a fall in the price of a good the
+consumer buys? Interpret each in words.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:consumer-welfare:cv-ev}
+For $u = \sqrt{x_1x_2}$, income 1000 and prices $(1, 1)$, the price of good 1
+doubles. Compute CV and EV from the \omterm{def:b1:income-and-substitution-effects:expenditure}{expenditure function}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:consumer-welfare:between}
+On the numbers of the previous exercise, compute the loss of \omterm{def:b1:consumer-welfare:consumer-surplus}{consumer
+surplus} and check that it lies between EV and CV.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:consumer-welfare:cd-index}
+Show that for Cobb--Douglas preferences the \omterm{def:b1:consumer-welfare:col-index}{true cost-of-living index} is
+$\prod_i(p^1_i/p^0_i)^{s_i}$ at every reference utility. For the consumer of
+the figure of the Laspeyres bound, compute it and the error of the
+Laspeyres index.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:consumer-welfare:basket}
+Brenland's 2015 basket costs 10,850 dalens, of which bread 600, clothing 800,
+energy 750, rent 8,400 and transport 300; the price relatives 2015--2025 are
+1.355, 1.225, 1.84, 1.4288 and 1.3033 (invented data). Rebuild the 2025
+Laspeyres index and the geometric index, and compare with the chained index
+of the weekend problem's table, 143.27. % figdata: brenland_indices
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:consumer-welfare:spread}
+For small price changes,
+$\ln L - \ln I \approx \tfrac12\sum_i s_i(r_i - \bar r)^2$, where $r_i$ is the log
+price relative of good $i$ and $\bar r = \sum_i s_ir_i$ (Cobb--Douglas true index).
+Two goods with equal shares see their prices grow 1 point a year faster and
+1 point a year slower than average. Predict the substitution bias of a
+basket fixed for one year, and of one fixed for ten years.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:consumer-welfare:prove-bound}
+Prove the two bounds of \cref{prop:b1:consumer-welfare:bounds}, and show by
+an example with \omterm{def:b1:preferences-and-utility:perfect}{perfect complements} that the Laspeyres index can equal the
+true index.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:consumer-welfare:quasi}
+For $u = 10\sqrt{x_1} + x_2$, $p_2 = 1$ and income 100, the price of good 1 rises
+from 1 to 2. Compute the demand, CV, EV and the loss of \omterm{def:b1:consumer-welfare:consumer-surplus}{consumer surplus},
+and check \cref{prop:b1:consumer-welfare:quasi}.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:consumer-welfare:low-income}
+``The CPI overstates the rise in the cost of living.'' What evidence would
+refute this for a low-income household? Name one way its true index can
+rise faster than the CPI.
+\end{exercise}
+
+\section{Problem: Brenland's Statistician Revises the CPI}\label{sec:b1:consumer-welfare:problem}
+
+\begin{problem}[{Weekend problem --- the substitution bias of Brenland's CPI}]\label{pb:b1:consumer-welfare:cpi}
+Brenland's CPI (invented data) prices a basket of five goods bought by a
+household in 2015. The table below gives the basket, its 2015 cost and the
+prices of 2025. Households have Cobb--Douglas preferences with the 2015
+budget shares $s_i$.
+
+\begin{center}
+\pgfplotstabletypeset[col sep=comma, string type,
+  columns={good,qty,p2015,p2025,spend2015,share,relative},
+  columns/good/.style={column name=Good},
+  columns/qty/.style={column name=Quantity},
+  columns/p2015/.style={column name=Price 2015},
+  columns/p2025/.style={column name=Price 2025},
+  columns/spend2015/.style={column name=Cost 2015},
+  columns/share/.style={column name=Share},
+  columns/relative/.style={column name=Relative},
+  every head row/.style={before row=\toprule, after row=\midrule},
+  every last row/.style={after row=\bottomrule}]
+  {figdata/bachelor-1/07-consumer-welfare/out/brenland_basket.csv}
+\end{center}
+
+\noindent The script's chained index for 2025 (2015 = 100) is 143.27; questions
+2, 5 and 6 compute the other three. % figdata: brenland_indices
+
+\medskip\noindent\textbf{Part I --- Two fixed baskets.}
+\begin{enumerate}
+  \item Check the 2015 cost, 10,850 dalens, and the shares of rent and energy.
+  \item Compute the cost of the 2015 basket at 2025 prices and the Laspeyres index.
+  \item Show that the Laspeyres index is the share-weighted arithmetic mean of the price relatives.
+  \item Show that, with Cobb--Douglas households, the 2025 quantities are $s_i m^1/p^1_i$, and that the Paasche index is then $1/\sum_i s_i/(p^1_i/p^0_i)$.
+  \item Compute the Paasche index.
+  \item Compute the geometric index $\prod_i (p^1_i/p^0_i)^{s_i}$.
+  \item Order the three, and say which mean each is.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- The true index and the bias.}
+\begin{enumerate}[resume]
+  \item Explain why the geometric index is the \omterm{def:b1:consumer-welfare:col-index}{true cost-of-living index} for these households, whatever the reference utility.
+  \item Compute the substitution bias of the Laspeyres index in 2025, in index points.
+  \item Compute the average yearly growth of the Laspeyres and the geometric index, and the bias per year.
+  \item Explain why the bias is so small in Brenland.
+  \item In 2022 the price of energy rose by $36.7\%$, the other four prices by
+    $6.7\%$ to $8.3\%$. % computed: code/shared/country basket table, prices 2021 and 2022
+    The script's table shows the Laspeyres--geometric gap at 0.04 points in
+    2021 and 0.37 points in 2022. Why does a year like 2022 widen the
+    gap? % figdata: brenland_indices
+  \item Where does the chained index lie? Why does it not reach the geometric index?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- A new good.} Phone data arrived in
+Brenland in 2020. Each household's demand is $q = 60 - 2p$ (gigabytes a year,
+$p$ in dalens per gigabyte); the price was 20 in 2020 and 10 in 2025. Treat
+utility as quasi-linear in other spending.
+\begin{enumerate}[resume]
+  \item What is the \omterm{def:b1:consumer-welfare:virtual-price}{virtual price} of phone data before 2020?
+  \item Compute the quantity bought and the \omterm{def:b1:consumer-welfare:consumer-surplus}{consumer surplus} in 2020 and in 2025.
+  \item In 2025, how much does the new good lower the cost of reaching the 2015 utility, in dalens and as a share of the 2025 cost of the 2015 basket?
+  \item Compute the true index in 2025 with the new good, starting from the geometric index.
+  \item Compute its average yearly growth over 2015--2025, and the bias per year of an index that leaves the phone out.
+  \item The CPI adds phone data only in 2025, at its 2025 price. What does it miss?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- A pension.} A pension of 15,000 dalens a
+year in 2015 is indexed to the CPI. The script's table gives, for 2016 to
+2025, Laspeyres--geometric gaps whose sum is 1.81 index points. % figdata: brenland_indices
+\begin{enumerate}[resume]
+  \item Compute the 2025 pension indexed to the Laspeyres index, and to the geometric index.
+  \item How much more does the Laspeyres pension pay in 2025, and over 2016--2025 in all?
+  \item Compute the 2025 pension indexed to the chained index. What would a switch to it cost the pensioner in 2025?
+  \item Which index would keep a pensioner who uses no phone data exactly as well off as in 2015?
+  \item A pensioner spends more of her budget on energy than the average household. Does the geometric index with average shares overstate or understate her true index? Explain.
+  \item State the result: the substitution bias of Brenland's CPI over 2015--2025.
+\end{enumerate}
+\end{problem}

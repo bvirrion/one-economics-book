@@ -1,0 +1,7 @@
+$ python ar_fit.py
+AR(1) by OLS:     c 0.0889, phi 0.9880
+AR(1) by AutoReg: c 0.0889, phi 0.9880
+implied mean 7.44; half-life 57.6 quarters
+AR(2) by OLS:     [ 0.2487  1.6394 -0.68  ]
+AR(2) by AutoReg: [ 0.2487  1.6394 -0.68  ]
+t of the second lag -12.90

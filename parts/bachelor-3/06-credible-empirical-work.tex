@@ -1,0 +1,601 @@
+\chapter{Credible Empirical Work}\label{ch:b3:credible-empirical-work}
+
+The first five chapters built designs that can identify a causal effect:
+instruments, panels, differences in differences, discontinuities. A design is
+a promise about one study. Economics, like every empirical field, learns from
+many studies, and what it learns depends on which studies are run, which
+analyses are reported and which results are published. If significant results
+are published and others are not, the published record can be wrong even when
+every study in it is honest. This chapter measures how large that problem is
+in economics, shows the tools that detect it and the practices that limit it,
+and ends with the scale on which this volume grades evidence from here on.
+
+\begin{openingchart}{Simulated: the absolute $z$-statistics of 6{,}000
+studies, each with its own true effect and sample size (light bars), and of the
+2{,}663 that are published (dark bars) when every study with $|z| > 1.96$ is
+published and the others one time in four. Bins of width 0.245, so that 1.96 is
+a bin edge.}{Simulated by the authors (seed 1996)}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.8\linewidth, height=0.42\linewidth, xmin=0, xmax=5.9,
+  ymin=0, ymax=800, xlabel={Absolute $z$-statistic}, ylabel={Studies per bin},
+  xtick={0,1,1.96,3,4,5}, xticklabels={0,1,1.96,3,4,5}, legend pos=north east]
+  \addplot[ybar, bar shift=0pt, bar width=7.5pt, area legend, fill=omDef!20, draw=omDef!50]
+    table[x=z, y=all] {figdata/bachelor-3/06-credible-empirical-work/out/filter_hist.csv};
+  \addplot[ybar, bar shift=0pt, bar width=7.5pt, area legend, fill=omDef!75, draw=omDef]
+    table[x=z, y=published] {figdata/bachelor-3/06-credible-empirical-work/out/filter_hist.csv};
+  \draw[guide] (axis cs:1.96,0) -- (axis cs:1.96,800);
+  \legend{all studies, published}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+The light bars fall smoothly: most studies are small, most true effects are
+modest, and $z$-statistics near zero are the most common. The dark bars do not.
+Below 1.96 they are a quarter of the light ones; above it they are all of
+them, and the published record has a cliff exactly where a significance test
+draws its line. In the simulation, 27~\% of all studies are significant, and
+61~\% of the published ones. % figdata: filter_meta
+Real collections of published test statistics look like this. In about 50{,}000
+tests published in three leading economics journals, Brodeur and coauthors find
+the distribution of $p$-values shaped like a two-humped camel, with $p$-values
+between 0.25 and 0.10 missing. % ledger: b3ce:blsz.camel
+The rest of the chapter asks what such a filter does to estimates, how to see
+it, and what to do about it.
+
+\begin{recall}
+The Year 1 volume defined tests, $p$-values and the power of a test, and
+showed what happens when many tests are run at once. The Year 2 volume named
+\emph{specification search}: trying several specifications and reporting the
+ones that work. Chapters~\ref{ch:b3:instrumental-variables}
+to~\ref{ch:b3:regression-discontinuity} supplied the designs whose results are
+graded at the end of this chapter.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:credible-empirical-work:symbols}
+$\beta$ is a true effect and $\hat\beta$ an estimate of it, with standard error
+$s$; $z = \hat\beta/s$; $c = 1.96$ is the critical value. $\phi$ and $\Phi$ are the
+standard normal density and distribution function, and $\lambda(a) =
+\phi(a)/(1 - \Phi(a))$. In \omterm{def:b3:credible-empirical-work:meta-analysis}{meta-analysis}, study $i$ reports $\hat\beta_i$ with
+standard error $s_i$, and $\tau^2$ is the variance of true effects across
+studies (not a tax rate).
+\end{notation}
+
+\section{How results get published}\label{sec:b3:credible-empirical-work:publication}
+
+A study is designed, run, analysed and written up; then a journal decides. At
+each step a significant result has an advantage: researchers are more likely to
+write it up, referees more likely to find it interesting, editors more likely
+to accept it. None of this requires dishonesty.
+
+\begin{definition}[Publication bias]\label{def:b3:credible-empirical-work:publication-bias}
+\index{publication bias}
+\emph{Publication bias} is the difference between the average published
+estimate of an effect and the effect itself, created when whether a result is
+published depends on its sign, its size or its statistical significance.
+\end{definition}
+
+\begin{proposition}[The significance filter inflates published estimates]\label{prop:b3:credible-empirical-work:filter}
+Let $\hat\beta \sim N(\beta, s^2)$ with $\beta > 0$, and let the estimate be
+published only if $\hat\beta/s > c$. Write $a = c - \beta/s$. Then the
+probability of publication is the power $1 - \Phi(a)$, and
+\[
+  \E[\hat\beta \mid \text{published}] = \beta + s\,\lambda(a) > \beta .
+\]
+\end{proposition}
+
+\begin{proof}
+Write $\hat\beta = \beta + s u$ with $u \sim N(0, 1)$. The estimate is published
+when $u > a$, which has probability $1 - \Phi(a)$. Then $\E[\hat\beta \mid u > a]
+= \beta + s\,\E[u \mid u > a]$, and
+\[
+  \E[u \mid u > a] = \frac{1}{1 - \Phi(a)} \int_a^\infty u\,\phi(u)\, du
+  = \frac{\bigl[-\phi(u)\bigr]_a^\infty}{1 - \Phi(a)} = \frac{\phi(a)}{1 - \Phi(a)},
+\]
+using $\phi'(u) = -u\phi(u)$. Since $\phi(a) > 0$, the term is positive.
+\end{proof}
+
+The size of the bias is $s\,\lambda(a)$: it grows with the standard error, so the
+smallest studies are the most exaggerated, and it is largest when power is low.
+
+\begin{model}{The significance filter}
+\assumes Studies estimate an effect without bias; a study is published if its
+estimate is significant, and otherwise with a lower probability.
+\predicts A heap of published test statistics just above the critical value
+and a gap just below it; published estimates larger than the true effect, by
+more in small studies; estimates that rise with their standard errors across a
+literature.
+\tested Collections of published test statistics in economics show the gap below
+the critical value; across 159 literatures, most reported effects are larger
+than those of the adequately powered studies of the same literature.
+\breaks It is not the only reason for the heap: specification search produces
+it too, within studies, and the two are hard to tell apart in published numbers.
+Where null results are wanted --- a \omterm{def:b3:credible-empirical-work:replication}{replication}, a policy that is claimed not to
+work --- the filter can run the other way.
+\end{model}
+
+\section{Specification search and the garden of forking paths}\label{sec:b3:credible-empirical-work:forking}
+
+Even before a journal decides, the analysis has made choices. Which outcome?
+Which controls? Which sample? What to do with outliers? Each choice is often
+defensible, and a researcher who makes them after seeing the data can, without
+intending to, follow the path that gives the clearest result.
+
+\begin{proposition}[Many independent tests]\label{prop:b3:credible-empirical-work:many}
+If $k$ independent tests are run at the 5~\% level and every null hypothesis is
+true, the probability that at least one is significant is $1 - 0.95^k$.
+\end{proposition}
+
+\begin{proof}
+Each test is not significant with probability 0.95; by independence, all $k$ are
+not significant with probability $0.95^k$; at least one is significant with the
+complementary probability.
+\end{proof}
+
+For $k = 16$ the formula gives 0.56. The paths of one analysis are not
+independent --- they use the same data --- so the true figure is lower, but it
+is far above 5~\%. The diagram shows sixteen paths for one simple question, and
+\cref{lst:b3:credible-empirical-work:forking} walks them on data in which the
+treatment does nothing.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=1cm, y=0.24cm, font=\scriptsize]
+  \node[anchor=east] (r) at (0,0) {data};
+  \foreach \i/\lab in {0/outcome, 1/controls, 2/sample, 3/outliers}
+    \node[font=\scriptsize\itshape] at (1.6*\i+1.3, 9.6) {\lab};
+  \foreach \a in {-1,1} {
+    \draw (0,0) -- (1.6,4*\a);
+    \foreach \b in {-1,1} {
+      \draw (1.6,4*\a) -- (3.2,4*\a+2*\b);
+      \foreach \c in {-1,1} {
+        \draw (3.2,4*\a+2*\b) -- (4.8,4*\a+2*\b+\c);
+        \foreach \d in {-1,1} {
+          \draw (4.8,4*\a+2*\b+\c) -- (6.4,4*\a+2*\b+\c+0.5*\d);
+          \fill[omDef] (6.4,4*\a+2*\b+\c+0.5*\d) circle (1.2pt);
+  }}}}
+  \node[anchor=west, align=left] at (6.7,0) {16 paths:\\$2 \times 2 \times 2 \times 2$};
+\end{tikzpicture}
+\par\smallskip{\small Four binary choices --- which of two outcomes, whether to
+control for age and schooling, whether to drop people over 50, whether to trim
+outliers --- make sixteen analyses of the same data.}
+\end{omfigure}
+
+\omcode{code/bachelor-3/06-credible-empirical-work/listings/forking_paths.py}{1}{40}{Sixteen defensible analyses of data in which the treatment does nothing.}\label{lst:b3:credible-empirical-work:forking}
+
+\omoutput{code/bachelor-3/06-credible-empirical-work/outputs/forking_paths.txt}{One dataset, then a thousand.}\label{out:b3:credible-empirical-work:forking}
+
+In the first dataset no path is significant. Over a thousand datasets, the
+first path --- the one a researcher could have written down in advance --- is
+significant 6.4~\% of the time, close to the 5~\% it promises; at least one of the
+sixteen paths is significant 21.4~\% of the time. % output: forking_paths
+A researcher who reports the best path turns a 5~\% test into a 21~\% one.
+
+\section{Low power and exaggerated estimates}\label{sec:b3:credible-empirical-work:power}
+
+\begin{definition}[Exaggeration ratio; sign error]\label{def:b3:credible-empirical-work:exaggeration}
+\index{exaggeration ratio}\index{sign error}
+For a true effect $\beta \ne 0$ and a design with a given standard error, the
+\emph{exaggeration ratio} (or type M error) is the expected absolute value of a
+statistically significant estimate divided by $|\beta|$. A \emph{sign error} (or
+type S error) is a statistically significant estimate whose sign is opposite to
+that of $\beta$ (Gelman and Carlin, 2014).
+\end{definition}
+
+By \cref{prop:b3:credible-empirical-work:filter}, the \omterm{def:b3:credible-empirical-work:exaggeration}{exaggeration ratio} is
+$1 + (s/\beta)\lambda(c - \beta/s)$, ignoring the small chance of a significant
+estimate of the wrong sign. It depends only on power. The chart draws it.
+
+\begin{omchart}{Exaggeration ratio of significant estimates against the power
+of the study (normal approximation, test at 5~\%, two-sided, one tail ignored).}{Our
+computation from the formula of
+\cref{prop:b3:credible-empirical-work:filter}}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.7\linewidth, height=0.38\linewidth, xmin=0, xmax=1,
+  ymin=0, ymax=6, xlabel={Power}, ylabel={Exaggeration ratio},
+  x tick label style={/pgf/number format/.cd, fixed, precision=1}]
+  \addplot[omDef, thick, no marks, sharp plot] table[x=power, y=ratio] {figdata/bachelor-3/06-credible-empirical-work/out/exaggeration.csv};
+  \draw[guide] (axis cs:0,1) -- (axis cs:1,1);
+  \draw[guide] (axis cs:0.18,0) -- (axis cs:0.18,6);
+  \node[font=\scriptsize, anchor=south west] at (axis cs:0.19,4.6) {power 0.18: ratio 2.4};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+At a power of 0.8, the conventional target, significant estimates are 12~\% too
+large on average; at 0.5, 41~\%; at 0.2, 125~\%. % figdata: exaggeration
+\Cref{lst:b3:credible-empirical-work:filter} checks the formula by simulation, for
+a treatment whose true effect is a tenth of a standard deviation and trials of
+50 to 1{,}600 people per arm.
+
+\omcode{code/bachelor-3/06-credible-empirical-work/listings/significance_filter.py}{1}{18}{The significance filter by simulation, against the formula (\texttt{filtered\_mean} in the chapter library).}\label{lst:b3:credible-empirical-work:filter}
+
+\omoutput{code/bachelor-3/06-credible-empirical-work/outputs/significance_filter.txt}{Small trials publish large estimates.}\label{out:b3:credible-empirical-work:filter}
+
+A trial with 50 people per arm has power 0.072 and, when significant, reports on
+average an effect 4.85 times the truth; with 1{,}600 per arm, power 0.81 and a
+ratio of 1.12. % output: significance_filter
+Simulation and formula agree to within 0.04. At 50 per arm, \omterm{def:b3:credible-empirical-work:exaggeration}{sign errors} appear
+too: a significant negative estimate has probability 0.007, against 0.072 for a
+significant positive one, so about one significant result in eleven has the wrong
+sign.
+
+\begin{measure}[Power in economics]
+Ioannidis, Stanley and Doucouliagos collected 64{,}076 estimates from more than
+6{,}700 studies in 159 empirical literatures of economics. They estimate each
+literature's true effect by the average of its adequately powered studies, and
+each study's power against it. The median power is 18~\% or less, and in half of
+the literatures nearly 90~\% of results are under-powered. Nearly 80~\% of the
+reported effects are exaggerated, typically by a factor of two, and one third by
+a factor of four or more. % ledger: b3ce:isd.power
+At a power of 0.18 the formula above gives an \omterm{def:b3:credible-empirical-work:exaggeration}{exaggeration ratio} of 2.4 for a
+significant result: the two methods agree in size.
+\end{measure}
+
+\section{The replication record of economics}\label{sec:b3:credible-empirical-work:replication}
+
+\begin{definition}[Reproduction; replication]\label{def:b3:credible-empirical-work:replication}
+\index{reproduction}\index{replication}
+A \emph{reproduction} obtains a study's published results again from the same
+data, using the authors' code or an independent rewriting of it. A
+\emph{replication} repeats the study's design on new data --- a new sample from
+the same population, or a new experiment --- and asks whether the result holds.
+\end{definition}
+
+A failed \omterm{def:b3:credible-empirical-work:replication}{reproduction} means an error or a missing step; a failed \omterm{def:b3:credible-empirical-work:replication}{replication}
+may mean that the first result was a false positive, that it was exaggerated
+by the filter, or that the effect differs between settings.
+
+\begin{record}[Reproducing published papers from their code]
+Chang and Li tried to reproduce 67 papers published in 13 economics journals,
+using the data and code files the authors had provided. Without contacting the
+authors they reproduced the key qualitative result of 22 papers (33~\%).
+Leaving out 6 papers with confidential data and 2 that needed software they did
+not have, they reproduced 29 of 59 (49~\%) with the authors' help.
+% ledger: b3ce:cl.replicate
+Most failures were missing files or code that did not run, not results that
+were wrong; but a result that cannot be rerun cannot be checked.
+\end{record}
+
+\begin{record}[Replication of economics experiments]
+Camerer and coauthors repeated 18 laboratory experiments published in two
+leading economics journals between 2011 and 2014, each with enough participants
+to have a power of at least 90~\% against the original effect. Eleven (61~\%)
+found a significant effect in the original direction. On average the \omterm{def:b3:credible-empirical-work:replication}{replication}
+effect was 65.9~\% of the original. % ledger: b2:camerer2016
+Both numbers are what a literature with moderate exaggeration produces: most
+effects real, most smaller than first reported.
+\end{record}
+
+\section{Pre-registration and pre-analysis plans}\label{sec:b3:credible-empirical-work:preregistration}
+
+\begin{definition}[Pre-registration; pre-analysis plan]\label{def:b3:credible-empirical-work:pre-registration}
+\index{pre-registration}\index{pre-analysis plan}
+\emph{Pre-registration} records a study in a public, dated registry before its
+data are collected or seen, with its design and main hypotheses. A
+\emph{pre-analysis plan} is a document, registered in the same way, that fixes in
+advance the outcomes, the sample, the specifications and the tests of the
+study's main analysis.
+\end{definition}
+
+Registration attacks the filter: a registered study that is never reported is
+visible as missing. A \omterm{def:b3:credible-empirical-work:pre-registration}{pre-analysis plan} attacks the forking paths: the first
+path of \cref{out:b3:credible-empirical-work:forking}, chosen in advance, keeps
+its 5~\% error rate. The American Economic Association decided in April 2012
+to set up a registry for randomised trials in economics and the other social
+sciences. % ledger: b3ce:aea.registry
+The limits are real. Plans suit experiments, whose data do not exist before
+the study; much of economics uses data that already exist, where no one can
+check that the plan came first. And a plan that fixes everything leaves no room
+for what the data teach; the usual answer is to report the planned analysis
+first and label everything else exploratory.
+
+\section{Meta-analysis and funnel plots}\label{sec:b3:credible-empirical-work:meta}
+
+\begin{definition}[Meta-analysis; funnel plot]\label{def:b3:credible-empirical-work:meta-analysis}
+\index{meta-analysis}\index{funnel plot}
+A \emph{meta-analysis} combines the estimates of many studies of the same effect
+into one. Its \emph{fixed-effect} mean weights each estimate by its precision,
+$\bar\beta = \sum_i w_i\hat\beta_i / \sum_i w_i$ with $w_i = 1/s_i^2$, and has
+standard error $1/\sqrt{\sum_i w_i}$; a \emph{random-effects} mean adds the
+variance $\tau^2$ of true effects across studies to each $s_i^2$. A \emph{funnel
+plot} draws each estimate against its precision $1/s_i$.
+\end{definition}
+
+Without selection, the funnel is symmetric: precise studies cluster near the
+true effect at the top, imprecise ones scatter widely and evenly at the bottom.
+With the filter, the bottom-left is missing --- small studies with small or
+negative estimates were not published --- and the funnel leans.
+
+\begin{omchart}{Funnel plot of a simulated literature: 400 studies of a true
+effect of 0.1 (all dots), of which 138 are published (dark dots) when significant
+positive results are always published and the others one time in ten.}{Simulated
+by the authors (seed 400), the draws of
+\cref{lst:b3:credible-empirical-work:funnel}}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.75\linewidth, height=0.42\linewidth, xmin=-0.6, xmax=0.8,
+  ymin=0, ymax=34, xlabel={Estimate}, ylabel={Precision $1/s$}, legend pos=north east,
+  x tick label style={/pgf/number format/.cd, fixed, precision=1}]
+  \addplot[only marks, mark=o, mark size=1.4pt, draw=omDef!45,
+    restrict expr to domain={\thisrow{published}}{0:0}]
+    table[x=est, y=precision] {figdata/bachelor-3/06-credible-empirical-work/out/funnel.csv};
+  \addplot[only marks, mark=*, mark size=1.4pt, fill=omDef, draw=omDef,
+    restrict expr to domain={\thisrow{published}}{1:1}]
+    table[x=est, y=precision] {figdata/bachelor-3/06-credible-empirical-work/out/funnel.csv};
+  \draw[guide] (axis cs:0.1,0) -- (axis cs:0.1,34);
+  \legend{not published, published}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\begin{definition}[Precision-effect test (FAT--PET)]\label{def:b3:credible-empirical-work:fat-pet}
+\index{precision-effect test}\index{FAT--PET}
+The \emph{FAT--PET} regression is the weighted least-squares regression of the
+estimates on their standard errors, with weights $1/s_i^2$:
+$\hat\beta_i = \beta_0 + \beta_1 s_i + e_i$. The funnel-asymmetry test (FAT)
+tests $\beta_1 = 0$; the \emph{precision-effect test} (PET) tests $\beta_0 = 0$,
+and $\hat\beta_0$, the predicted estimate of a study with no sampling error, is
+the estimate of the effect corrected for selection.
+\end{definition}
+
+\begin{proposition}[Without selection, FAT--PET finds no asymmetry]\label{prop:b3:credible-empirical-work:fatpet}
+Dividing the \omterm{def:b3:credible-empirical-work:fat-pet}{FAT--PET} regression by $s_i$ gives the ordinary regression $t_i =
+\beta_1 + \beta_0 (1/s_i) + v_i$ of each study's $t$-statistic on its precision,
+with $v_i = e_i/s_i$. If the estimates are unselected, $\hat\beta_i = \beta + s_i
+u_i$ with $u_i \sim N(0, 1)$ independent of $s_i$, then this regression has
+intercept $\beta_1 = 0$ and slope $\beta_0 = \beta$.
+\end{proposition}
+
+\begin{proof}
+Weighted least squares with weights $1/s_i^2$ minimises $\sum_i (\hat\beta_i -
+\beta_0 - \beta_1 s_i)^2/s_i^2 = \sum_i (t_i - \beta_0/s_i - \beta_1)^2$, which is
+ordinary least squares of $t_i$ on a constant and $1/s_i$. Without selection,
+$t_i = \beta (1/s_i) + u_i$, a linear model in $1/s_i$ with intercept 0, slope
+$\beta$ and an error $u_i$ of mean zero independent of the regressor; OLS
+estimates it without bias.
+\end{proof}
+
+Under the filter, imprecise studies are published only with large estimates,
+so estimates rise with $s_i$ and $\hat\beta_1 > 0$. PET extrapolates the line to
+$s = 0$, where no filter can act.
+
+\omcode{code/bachelor-3/06-credible-empirical-work/listings/funnel.py}{1}{19}{\omterm{def:b3:credible-empirical-work:meta-analysis}{Meta-analysis} of the simulated literature, before and after the filter.}\label{lst:b3:credible-empirical-work:funnel}
+
+\omoutput{code/bachelor-3/06-credible-empirical-work/outputs/funnel.txt}{The filter, seen and corrected.}\label{out:b3:credible-empirical-work:funnel}
+
+With all 400 studies, every method finds about 0.1 and the FAT slope is
+insignificant. Among the 138 published, the simple mean is 0.145, the
+precision-weighted mean 0.127, and the FAT slope 0.762 is nearly four standard
+errors from zero; PET gives 0.091, close to the truth. % output: funnel
+PET is a model, not a cure: it assumes the bias is linear in the standard
+error, and with few small studies, or when real effects differ by study size
+(small studies of the most promising sites), it can mislead. The minimum-wage
+literature of \cref{ch:b3:minimum-wage} is a real case.
+
+\section{Reading a results table}\label{sec:b3:credible-empirical-work:table}
+
+Most empirical results reach readers as a table. \Cref{lst:b3:credible-empirical-work:table}
+prints one, from the job-training experiment of
+\cref{ch:b3:difference-in-differences}.
+
+\omcode{code/bachelor-3/06-credible-empirical-work/listings/reading_table.py}{1}{18}{Three nested regressions, printed as a journal table.}\label{lst:b3:credible-empirical-work:table}
+
+\omoutput{code/bachelor-3/06-credible-empirical-work/outputs/reading_table.txt}{A results table: earnings in 1978, thousands of dollars.}\label{out:b3:credible-empirical-work:table}
+
+Read it in this order. The columns are models; the rows are coefficients, each
+with its standard error in parentheses below it (here robust ones, which the
+table does not say --- a good table does). The stars mark $p$-values below 0.10
+(*), 0.05 (**) and 0.01 (***). $N$ is the number of observations. Controls not
+shown are listed in the code; a journal table lists them in a note. Then look at
+what the stars hide. The training offer's coefficient falls from 1.794 to 1.651
+and its standard error from 0.671 to 0.647: the estimate is all but unchanged,
+yet column (3) has two stars where the others have three, because its
+$t$-statistic, $1.651/0.647 = 2.55$, falls just short of 2.58. % output: reading_table
+The stars draw lines through a continuous measure of evidence. Read the
+coefficient and its standard error; the interval
+$1.651 \pm 1.96 \times 0.647$, from 0.38 to 2.92 thousand dollars, says more than
+any number of stars.
+
+\section{The evidence scale of this volume}\label{sec:b3:credible-empirical-work:scale}
+
+\begin{definition}[Evidence scale]\label{def:b3:credible-empirical-work:evidence-scale}
+\index{evidence scale}
+The \emph{evidence scale} of this volume grades the evidence for a causal claim:
+\begin{enumerate}
+\item several randomised or natural experiments that agree;
+\item one strong design (a randomised trial, a convincing natural experiment), or
+several that disagree in size;
+\item correlations with controls and a plausible mechanism;
+\item a theory with no design-based test yet.
+\end{enumerate}
+\end{definition}
+
+\begin{measure}[Using the evidence scale]
+Every \texttt{debate} box in this volume tags each study it cites with a grade.
+A grade belongs to a claim, not to a paper: a randomised trial gives grade 2 for
+the effect in its setting, and only agreement across settings gives grade 1.
+\omterm{def:b3:credible-empirical-work:pre-registration}{Pre-registration}, a large sample and a reproduced analysis make a grade
+trustworthy; a heap of significant small studies, an asymmetric funnel or a
+failed \omterm{def:b3:credible-empirical-work:replication}{replication} lowers it. No grade turns a positive claim into a policy;
+that needs values the evidence does not supply.
+\end{measure}
+
+\section{Exercises}\label{sec:b3:credible-empirical-work:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:credible-empirical-work:1}
+In \cref{out:b3:credible-empirical-work:table}, which number is the standard
+error of the training coefficient in column (2)? Give its $t$-statistic and the
+approximate 95~\% interval. What would the table need to say for you to know
+how the standard errors were computed?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:credible-empirical-work:2}
+Compute $1 - 0.95^k$ for $k = 5$ and $k = 20$. Why is the figure for sixteen
+correlated paths in \cref{out:b3:credible-empirical-work:forking} lower than the
+formula's?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:credible-empirical-work:3}
+A study's design gives a standard error of 0.02 for an effect whose true value
+is 0.05. What is its power at 5~\% (ignore the wrong tail)?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:credible-empirical-work:4}
+What would a \omterm{def:b3:credible-empirical-work:meta-analysis}{funnel plot} of an unbiased literature look like? Give one reason,
+other than \omterm{def:b3:credible-empirical-work:publication-bias}{publication bias}, why a funnel might be asymmetric.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:credible-empirical-work:5}
+Compute the \omterm{def:b3:credible-empirical-work:exaggeration}{exaggeration ratio} of a significant estimate at a power of 0.2,
+using the normal approximation: find $\beta/s$, then $a$ and $\lambda(a)$, with
+$\Phi^{-1}(0.8) = 0.8416$ and $\phi(0.8416) = 0.2800$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:credible-empirical-work:6}
+Twelve studies report estimates of the same effect, with standard errors (in
+parentheses) of 0.02, 0.03, 0.04, 0.05, 0.06, 0.08, 0.10, 0.12, 0.15, 0.18, 0.20 and
+0.25, and estimates 0.05, 0.07, 0.06, 0.11, 0.13, 0.17, 0.21, 0.26, 0.31, 0.38, 0.42 and
+0.53 in the same order.
+\begin{enumerate}
+\item Compute the simple and the inverse-variance means.
+\item Run \omterm{def:b3:credible-empirical-work:fat-pet}{FAT--PET}. What do you conclude about the effect?
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:credible-empirical-work:7}
+How would a \omterm{def:b3:credible-empirical-work:pre-registration}{pre-analysis plan} change the result of
+\cref{lst:b3:credible-empirical-work:forking}? What would it not change?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:credible-empirical-work:8}
+Three studies estimate the same effect: 0.20 (s.e.\ 0.10), 0.10 (0.05) and 0.40
+(0.20). Compute the fixed-effect mean and its standard error. Which study
+dominates, and why?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:credible-empirical-work:9}
+A well-powered \omterm{def:b3:credible-empirical-work:replication}{replication} of a published experiment finds an effect a third of
+the original's size, not significant. List what this shows and what it does not
+show about the original study.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:credible-empirical-work:10}
+Under the conditions of \cref{prop:b3:credible-empirical-work:filter}, the
+\omterm{def:b3:credible-empirical-work:exaggeration}{exaggeration ratio} is $1 + (s/\beta)\lambda(c - \beta/s)$.
+\begin{enumerate}
+\item Compute it at $\beta/s = 1$ and at $\beta/s = 3$.
+\item Show that it tends to 1 as $\beta/s$ grows.
+\item Now let estimates be published when $|\hat\beta/s| > 1.96$, of either sign.
+At $\beta/s = 1$, compute the probability of publication and the share of
+published estimates that are \omterm{def:b3:credible-empirical-work:exaggeration}{sign errors}.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:credible-empirical-work:11}
+Eight studies report 0.12 (0.05), 0.05 (0.04), 0.30 (0.10), 0.18 (0.06), $-0.02$
+(0.05), 0.22 (0.08), 0.09 (0.03) and 0.15 (0.07).
+\begin{enumerate}
+\item Compute the fixed-effect mean and Cochran's $Q = \sum_i w_i (\hat\beta_i -
+\bar\beta)^2$.
+\item Estimate the between-study variance by DerSimonian and Laird, $\hat\tau^2 =
+\max\{0, (Q - (k - 1))/(\sum w_i - \sum w_i^2/\sum w_i)\}$, and the
+random-effects mean with weights $1/(s_i^2 + \hat\tau^2)$. Why is its standard
+error larger?
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:credible-empirical-work:12}
+Choose three published claims from earlier chapters of this volume --- one
+from a randomised experiment, one from a natural experiment, one from
+correlations --- and grade each on the \omterm{def:b3:credible-empirical-work:evidence-scale}{evidence scale}. Defend each grade, and
+say what new study would raise it.
+\end{exercise}
+
+\section{Problem: Twenty Studies of a Training Programme}\label{sec:b3:credible-empirical-work:problem}
+
+\begin{problem}[{Weekend problem --- twenty studies of a training programme}]\label{pb:b3:credible-empirical-work:twenty}
+Brenland (invented) runs a job-training programme, and twenty randomised
+evaluations of it have been published. Each reports the effect on trainees'
+earnings a year later, in percent, with its standard error, and the number of
+trainees in each arm. % figdata: studies
+A summary of the literature, and a large pre-registered trial with 20{,}000
+trainees per arm published later, are in the second table.
+% figdata: studies_summary
+
+\begin{center}\small
+\pgfplotstabletypeset[col sep=comma, skip rows between index={10}{20},
+  columns/study/.style={column name={Study}, string type},
+  columns/n/.style={column name={$n$ per arm}, int detect},
+  columns/est/.style={column name={Effect (\%)}, fixed, precision=1, zerofill},
+  columns/se/.style={column name={s.e.}, fixed, precision=2, zerofill},
+  every head row/.style={after row=\hline}, every last row/.style={after row=\hline}]
+  {figdata/bachelor-3/06-credible-empirical-work/out/studies.csv}
+\qquad
+\pgfplotstabletypeset[col sep=comma, skip rows between index={0}{10},
+  columns/study/.style={column name={Study}, string type},
+  columns/n/.style={column name={$n$ per arm}, int detect},
+  columns/est/.style={column name={Effect (\%)}, fixed, precision=1, zerofill},
+  columns/se/.style={column name={s.e.}, fixed, precision=2, zerofill},
+  every head row/.style={after row=\hline}, every last row/.style={after row=\hline}]
+  {figdata/bachelor-3/06-credible-empirical-work/out/studies.csv}
+
+\medskip
+\pgfplotstabletypeset[col sep=comma,
+  columns/stat/.style={column name={Statistic}, string type, column type=l},
+  columns/est/.style={column name={Estimate}, fixed, precision=2, zerofill},
+  columns/se/.style={column name={s.e.}, fixed, precision=2, zerofill, empty cells with={---}},
+  every head row/.style={after row=\hline}, every last row/.style={after row=\hline}]
+  {figdata/bachelor-3/06-credible-empirical-work/out/studies_summary.csv}
+\end{center}
+
+\medskip\noindent\textbf{Part I --- the naive average.}
+\begin{enumerate}
+\item How many of the twenty studies are significant at 5~\% ($z > 1.96$)? Check
+the share in the summary table.
+\item The simple mean is 6.52~\%. What does averaging the estimates with equal
+weights assume about the studies?
+\item Compute the inverse-variance weights of studies S16 and S04 and their
+ratio.
+\item Why is the inverse-variance mean, 3.78~\%, lower than the simple mean?
+\item Give the 95~\% interval of the inverse-variance mean.
+\item If the true effect were 3.78~\%, what power would a study the size of S04
+have? What does that suggest about how S04 came to be published?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- funnel and FAT--PET.}
+\begin{enumerate}[resume]
+\item Sketch the \omterm{def:b3:credible-empirical-work:meta-analysis}{funnel plot} of the twenty studies, and say what it would look
+like without selection.
+\item Among the eight studies with standard errors above 5, how many estimates
+lie above 3.78 and how many below? What does that show?
+\item Interpret the FAT slope, 1.26 (s.e.\ 0.48), and its $t$-statistic.
+\item Interpret the PET estimate, 0.93 (s.e.\ 1.23).
+\item Why is PET read as the effect of a study with no sampling error?
+\item If the true effect is 2~\%, compute the power of a study with a standard
+error of 8 and the average size of its significant estimates. Compare with S02
+and S04.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- a pre-registered trial.}
+\begin{enumerate}[resume]
+\item Give the trial's 95~\% interval.
+\item Is the trial consistent with the inverse-variance mean? Compute the $z$
+of their difference, treating the two as independent.
+\item Is it consistent with PET?
+\item What was the trial's power against a true effect of 2~\%?
+\item Why does its registration matter for how its result is read?
+\item Does the trial's estimate prove that PET was right?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- the corrected estimate and its grade.}
+\begin{enumerate}[resume]
+\item Combine the PET estimate and the trial by inverse-variance weighting.
+Give the combined estimate and its standard error.
+\item Why should this combination be read with caution?
+\item Grade the evidence for a positive effect on the scale of
+\cref{def:b3:credible-empirical-work:evidence-scale}, before and after the trial.
+\item A trainee would earn 20{,}000 dalens a year without training. Compute
+the yearly gain at 6.52~\% and at 2.0~\%.
+\item What does a reader of only the simple mean get wrong, and by how much?
+\item State the results: the bias-corrected effect of the programme and its
+grade.
+\end{enumerate}
+\end{problem}

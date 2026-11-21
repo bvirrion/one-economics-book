@@ -1,0 +1,6 @@
+$ python melitz_selection.py
+cut-offs: closed 2.000, open 2.099, export 3.779
+entrants that produce: closed 0.0632 (formula 0.0625), open 0.0520
+producers that exit on opening: 0.176
+producers that export: 0.087
+mean productivity of producers: closed 2.655, open 2.785

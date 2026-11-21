@@ -1,0 +1,129 @@
+\section*{Chapter \ref{ch:b2:mixed-strategies} --- Mixed Strategies}
+
+\begin{solution}{exo:b2:mixed-strategies:1}
+% code: exercises/solutions.py battle
+The pure equilibria are $(A, A)$ and $(B, B)$. In the mixed one, the column player chooses $A$ with probability $q$ that
+makes the row player indifferent: $2q = 1 - q$, so $q = 1/3$; the row player chooses $A$ with probability $p$ that makes
+the column player indifferent: $p = 2(1 - p)$, so $p = 2/3$. Each player's expected payoff is $2/3$, less than in
+either pure equilibrium: the players often fail to coordinate.
+\end{solution}
+
+\begin{solution}{exo:b2:mixed-strategies:2}
+% code: exercises/solutions.py serve_game
+Receiver leans left with $q$: $0.58q + 0.79(1 - q) = 0.73q + 0.49(1 - q)$, so $0.30 = 0.45q$ and $q = 0.667$. Server serves
+left with $p$: $0.58p + 0.73(1 - p) = 0.79p + 0.49(1 - p)$, so $0.24 = 0.45p$ and $p = 0.533$. The server wins with
+probability $0.58 \times 0.667 + 0.79 \times 0.333 = 0.65$.
+\end{solution}
+
+\begin{solution}{exo:b2:mixed-strategies:3}
+% figdata: serves_summary
+% ledger: b2:ww2001-totals
+64 per cent after serves to the left (1{,}040 of 1{,}622) and 65 per cent after serves to the right (918 of 1{,}404).
+Equality was rejected in one point game of 40 at the 5 per cent level; if the model is right, each test rejects
+with probability 0.05, so about two rejections are expected.
+\end{solution}
+
+\begin{solution}{exo:b2:mixed-strategies:4}
+Win rates that differ between the two directions systematically, in many point games of the same server, by
+more than chance allows. A server who is simply better than another wins more on both sides; that is not
+evidence against the model, which concerns the comparison between the sides for one server, against one
+receiver, on one court.
+\end{solution}
+
+\begin{solution}{exo:b2:mixed-strategies:5}
+Row 1 earns more than row 2 against both columns, so the row player plays it; against row 1 the column player
+chooses column 2, holding the row player to 2. The pair (row 1, column 2) is a saddle point: 2 is the least
+payoff in its row and the greatest in its column. The \omterm{def:b2:mixed-strategies:value}{value} is 2, and no mixing is needed.
+\end{solution}
+
+\begin{solution}{exo:b2:mixed-strategies:6}
+% code: exercises/solutions.py better_goalie
+The keeper's improvement makes kicking left less attractive. Recomputing with 0.50: the keeper covers left with
+$q$ where $0.50q + 0.95(1 - q) = 0.90q + 0.70(1 - q)$, so $q = 0.25/0.65 = 0.385$; the kicker kicks left with $p$ where $0.50p +
+0.90(1 - p) = 0.95p + 0.70(1 - p)$, so $p = 0.20/0.65 = 0.308$. The \omterm{def:b2:mixed-strategies:value}{value} falls from 0.791 to 0.777. Both kick left and
+cover left become rarer: the keeper, now better on the left, covers it \emph{less} often, because the kicker
+goes there less and the keeper must keep the kicker indifferent.
+\end{solution}
+
+\begin{solution}{exo:b2:mixed-strategies:7}
+% code: exercises/solutions.py pearson
+Win rates $20/33 = 0.606$ and $22/26 = 0.846$; pooled $42/59 = 0.712$. Left: $(20 - 33 \times 0.712)^2/(33 \times 0.712 \times
+0.288) = 1.80$; right: $(22 - 26 \times 0.712)^2/(26 \times 0.712 \times 0.288) = 2.29$; total 4.09. It exceeds 3.84: equality is
+rejected at 5 per cent, the one rejection among the 40 point games.
+\end{solution}
+
+\begin{solution}{exo:b2:mixed-strategies:8}
+If the opponent plays rock, paper and scissors with probabilities $r$, $s$, $c$, rock earns $c - s$, paper $r - c$, scissors
+$s - r$. A mixture using all three requires the three to be equal, so $r = s = c = 1/3$, and each earns 0. No pure
+strategy is a \omterm{def:b2:static-games:best-response}{best response} to itself and no mixture on two strategies can be part of an equilibrium (the
+third strategy would then beat it), so this is the only equilibrium.
+\end{solution}
+
+\begin{solution}{exo:b2:mixed-strategies:9}
+Count the runs, the unbroken sequences of serves in one direction, in each point game, and compare the
+number with its distribution under independent choices with the observed proportions. Too many runs means
+the server switches too often; too few, that he repeats. A server who tries to look unpredictable may switch
+too often, because sequences that really are random contain longer runs than people expect.
+\end{solution}
+
+\begin{solution}{exo:b2:mixed-strategies:10}
+Without a saddle point the indifference conditions give $q^* = (a_{22} - a_{12})/d$ and $p^* = (a_{22} - a_{21})/d$ with $d =
+a_{11} - a_{12} - a_{21} + a_{22} \ne 0$. The row player's payoff against $q^*$ is $a_{11}q^* + a_{12}(1 - q^*) = (a_{11}a_{22} -
+a_{12}a_{21})/d = v$ for both rows. So with $q^*$ the column player holds her to $v$ ($\min\max \le v$), and with $p^*$ she
+earns $v$ against both columns ($\max\min \ge v$); with $\max\min \le \min\max$ the three give equality.
+\end{solution}
+
+\begin{solution}{exo:b2:mixed-strategies:11}
+Let $p$ and $q$ be the probabilities of the first strategies. The row player's \omterm{def:b2:static-games:best-response}{best response} to $q$ depends on the
+sign of a linear function of $q$: it is $p = 1$ where the function is positive, $p = 0$ where it is negative, and
+every $p$ where it is zero. Its graph is a connected path from the side $q = 0$ to the side $q = 1$ of the unit
+square. The column player's is a connected path from $p = 0$ to $p = 1$. Two such paths must cross, and a crossing
+point is a pair of mutual \omterm{def:b2:static-games:best-response}{best responses}.
+\end{solution}
+
+\begin{solution}{exo:b2:mixed-strategies:12}
+% code: exercises/solutions.py inspection
+The taxpayer's indifference is unchanged: $a^* = D/(D + F)$. The inspector now earns $D - k + e\,sF$ from auditing and
+$(1 - e)D$ from not auditing, so he is indifferent when $e(D + sF) = k$: $e^* = k/(D + sF)$. Evasion now falls with the
+fine and with the share $s$, and rises with the cost of an audit; the audit rate still falls with the fine.
+\end{solution}
+
+\begin{solution}{pb:b2:mixed-strategies:1}
+% code: exercises/solutions.py inspection
+\textbf{Part I.}
+1. Taxpayer first, office second: honest and audit, $-1{,}000$ and 800; honest and no audit, $-1{,}000$ and
+$1{,}000$; evade and audit, $-2{,}500$ and 800; evade and no audit, 0 and 0.
+2. Audit $\to$ honest is best $\to$ no audit is best $\to$ evade is best $\to$ audit is best: every cell has a player who
+gains by switching.
+3. The taxpayer's: the audit rate must make her indifferent.
+4. The office's.
+5. No: evading is better without an audit, worse with one.
+6. No: the taxpayer's payment and the office's net collection do not sum to a constant, because audits cost
+and fines go elsewhere.
+\textbf{Part II.}
+7. $a^* = 1{,}000/2{,}500 = 0.4$.
+8. $e^* = 200/1{,}000 = 0.2$.
+9. $1{,}000$: honest, she pays it for sure; evading, she pays $0.4 \times 2{,}500 = 1{,}000$ on average.
+10. 800: the payoff from auditing, $1{,}000 - 200$, equal to that from not auditing, $0.8 \times 1{,}000$.
+11. Tax from honest taxpayers $0.8 \times 1{,}000 = 800$ plus tax recovered from caught evaders $0.2 \times 0.4 \times 1{,}000 =
+80$: 880, or 88 per cent; audits cost $0.4 \times 200 = 80$.
+12. At $a = 0.4$ the taxpayer pays 1{,}000 either way; at $e = 0.2$ the office collects 800 either way.
+\textbf{Part III.}
+13. In the model, audits fall and evasion is unchanged.
+14. $a^* = 1{,}000/5{,}000 = 0.2$; $e^* = 0.2$.
+15. They halve, from 80 to 40 per taxpayer.
+16. A cheaper audit, or a larger gain to the office from catching an evader (\cref{exo:b2:mixed-strategies:12}).
+17. They may not know the audit rate and judge it from the past, or the fine may carry a stigma the payoffs leave
+out; then a higher fine deters before audits adjust.
+18. Evasion and audit rates before and after a change in fines, over a period long enough for audits to adjust:
+the model predicts audits fall and evasion returns to its old level.
+\textbf{Part IV.}
+19. $a = 1{,}000/2{,}500 = 0.4$: then evading costs on average as much as paying.
+20. $1{,}000 - 0.4 \times 200 - 100 = 820$.
+21. $820 > 800$: yes.
+22. $a = 1{,}000/1{,}500 = 0.667$, and $1{,}000 - 133.33 - 100 = 766.67 < 800$: no.
+23. Commitment pays when $1{,}000 - 200 \times 1{,}000/(1{,}000 + F) - 100 \ge 800$, that is, $200{,}000/(1{,}000 + F) \le 100$, or $F \ge
+1{,}000$.
+24. In equilibrium the office audits 40 per cent of taxpayers and 20 per cent evade; announcing an audit rate pays
+when the fine is at least 1{,}000 dalens.
+\end{solution}

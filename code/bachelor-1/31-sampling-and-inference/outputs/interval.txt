@@ -1,0 +1,3 @@
+$ python interval.py
+n 260, mean 4,555, s 5,484, standard error 340
+95% interval: 3,885 to 5,224 (t quantile 1.969)

@@ -1,0 +1,347 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g10-08. Willingness to pay, consumer and producer
+% surplus, total surplus maximised at the competitive equilibrium, limits of the measure. Real numbers:
+% figdata/grade-10/08-surplus-and-efficiency/ (Brynjolfsson, Collis and Eggers 2019, Table 1, cited rows).
+% Brenland numbers invented.
+\chapter{Surplus and Efficiency}\label{ch:g10:surplus-and-efficiency}
+
+How much would someone have to pay you to give up search engines for a whole year: no web search on any device, for
+twelve months? In 2017 a team of researchers asked this of thousands of Americans, offering amounts from one dollar to
+twenty thousand. Half of them refused \usd{17530}. For email the median answer was \usd{8414}; for digital maps, \usd{3648}.
+% ledger: g10:bce2019-search, g10:bce2019-email, g10:bce2019-maps, g10:bce2019-design
+
+These services are free. Nobody pays for a web search, so the national accounts of the next chapters, which add up what is
+paid for goods, count almost nothing for them. Yet the people who use them would give up a great deal to keep them. The gap
+between what a good is worth to its buyer and what the buyer pays is called surplus. This chapter measures it, for buyers and
+for sellers, and proves the central result about competitive markets: with the assumptions of the model, the equilibrium
+quantity makes the \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus} as large as it can be.
+
+\begin{openingchart}{Median amount that American internet users would accept to give up a category of free digital goods for one
+year, 2017, in dollars, on a times-ten scale.}{Brynjolfsson, Collis and Eggers (2019), Table 1}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xbar, xmode=log, log basis x=10, log ticks with fixed point, log origin x=infty,
+  width=0.78\linewidth, height=6.4cm, xmin=100, xmax=30000, bar width=7pt,
+  ytick=data, yticklabels from table={figdata/grade-10/08-surplus-and-efficiency/out/digital_wta.csv}{category},
+  y dir=reverse, ymin=0.4, ymax=8.6, ymajorgrids=false, xlabel={dollars a year (times-ten scale)},
+  point meta=explicit, nodes near coords={\pgfmathprintnumber[fixed, precision=0, 1000 sep={\,}]{\pgfplotspointmeta}},
+  nodes near coords style={font=\scriptsize, anchor=west}]
+\addplot[fill=omDef!70, draw=omDef] table[x=wta2017, y=rank, meta=wta2017] {figdata/grade-10/08-surplus-and-efficiency/out/digital_wta.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: a \emph{demand curve} gives the quantity buyers want at each price and a \emph{supply curve} the quantity
+sellers offer. From \cref{ch:g10:supply}: the height of a supply curve at a quantity is the cost of the marginal unit. From
+\cref{ch:g10:market-equilibrium}: the equilibrium of a competitive market, with price-taking buyers and sellers.
+\end{recall}
+
+\section{Willingness to pay and consumer surplus}\label{sec:g10:surplus-and-efficiency:consumer}
+
+\begin{definition}[Willingness to pay]\label{def:g10:surplus-and-efficiency:wtp}
+A buyer's \emph{willingness to pay}\index{willingness to pay} for a unit of a good is the largest amount of money the buyer would give for
+it: at that price, buying and not buying are equally good to the buyer.
+\end{definition}
+
+Eight people in a Brenland town would each buy one ticket for a concert. Their \omterm{def:g10:surplus-and-efficiency:wtp}{willingness to pay}, in dalens, is 10, 9, 7, 6, 4, 3, 2 and 1.
+Ranked from highest to lowest, these values form a staircase: at a price of 5 dalens, the first four buy; at 3.5, the first five do. The
+staircase \emph{is} the demand curve of this small market: its height at the $k$-th ticket is the $k$-th highest \omterm{def:g10:surplus-and-efficiency:wtp}{willingness to pay}.
+
+\begin{definition}[Consumer surplus]\label{def:g10:surplus-and-efficiency:consumer-surplus}
+A buyer's \emph{consumer surplus}\index{consumer surplus} on a unit is its \omterm{def:g10:surplus-and-efficiency:wtp}{willingness to pay} minus the price paid. The consumer surplus of a
+market is the sum over all units bought.
+\end{definition}
+
+At a price of 5 dalens, the four buyers gain $5 + 4 + 2 + 1 = 12$ dalens: the area of the staircase above the price line, up to the fourth
+ticket.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.75cm, y=0.38cm]
+\draw[econ axes] (0,11.5) node[left, font=\small] {dalens} |- (9,0) node[below left=12pt and 0pt, font=\small] {tickets};
+\foreach \k/\v in {1/10,2/9,3/7,4/6} \fill[omDef!20] (\k-1,5) rectangle (\k,\v);
+\draw[curve] (0,10) -- (1,10) -- (1,9) -- (2,9) -- (2,7) -- (3,7) -- (3,6) -- (4,6) -- (4,4) -- (5,4) -- (5,3) -- (6,3) -- (6,2) -- (7,2)
+  -- (7,1) -- (8,1);
+\draw[omThm, thick] (0,5) -- (8.5,5) node[right, font=\footnotesize] {price 5};
+\foreach \k/\v in {1/10,2/9,3/7,4/6} \node[font=\scriptsize] at (\k-0.5,{(\v+5)/2}) {\the\numexpr\v-5\relax};
+\foreach \y in {5,10} \draw (0,\y) -- (-0.15,\y) node[left, font=\footnotesize] {\y};
+\foreach \x in {1,...,8} \node[below, font=\footnotesize] at (\x-0.5,0) {\x};
+\end{tikzpicture}
+
+{\small Eight buyers ranked by \omterm{def:g10:surplus-and-efficiency:wtp}{willingness to pay} form a staircase demand curve. At a price of 5 dalens the first four buy, and their \omterm{def:g10:surplus-and-efficiency:consumer-surplus}{consumer
+surplus} is the shaded area, $5 + 4 + 2 + 1 = 12$ dalens.}
+\end{omfigure}
+
+With many buyers the steps become too small to see and the staircase becomes a smooth curve. \omterm{def:g10:surplus-and-efficiency:consumer-surplus}{Consumer surplus} is then the area between the
+demand curve and the price line. For a straight demand line, it is a triangle.
+
+\begin{example}[Consumer surplus under a line]\label{ex:g10:surplus-and-efficiency:cs-line}
+For the demand $Q = 120 - 4p$, nobody buys above 30 dalens. At a price of 24, $Q = 24$ units are bought, and the \omterm{def:g10:surplus-and-efficiency:consumer-surplus}{consumer surplus} is the triangle
+with base 24 and height $30 - 24 = 6$: $\tfrac12 \times 24 \times 6 = 72$ dalens.
+\end{example}
+
+\begin{measure}[Valuing a free good: asking people what they would accept]
+A free good has no price, so no market reveals its value. The study of the opening chart asked people to choose between keeping a good and
+receiving a sum of money for giving it up for a year. Each person saw one sum, drawn among nine amounts from \usd{1} to \usd{20000}; the share of
+people who take the money at each amount traces a curve, and the median is the amount at which half accept. The study covered 19 digital goods and
+6 others for comparison. Most of these choices were hypothetical. To check them, the researchers ran smaller experiments in which the choice was
+binding: people who chose the money were paid and their use of the good was checked. In one, the median user needed about \usd{48} to give up
+Facebook for one month. Two cautions remain: what people accept to give up a good is usually larger than what they would pay to get it, and an
+online survey misses people who do not use the internet.
+\end{measure}
+% ledger: g10:bce2019-design, g10:bce2019-facebook
+
+\section{Cost and producer surplus}\label{sec:g10:surplus-and-efficiency:producer}
+
+On the other side, each seller has a lowest price at which it will sell a unit: the cost of producing it, including what the seller's time and
+money could earn elsewhere.
+
+\begin{definition}[Producer surplus]\label{def:g10:surplus-and-efficiency:producer-surplus}
+A seller's \emph{producer surplus}\index{producer surplus} on a unit is the price received minus the cost of that unit. The producer surplus of a
+market is the sum over all units sold: the area between the price line and the supply curve.
+\end{definition}
+
+For the supply $Q = 2p - 24$, nothing is offered below 12 dalens. At a price of 24, sellers offer 24 units, and the \omterm{def:g10:surplus-and-efficiency:producer-surplus}{producer surplus} is the triangle
+with base 24 and height $24 - 12 = 12$: $\tfrac12 \times 24 \times 12 = 144$ dalens. \omterm{def:g10:surplus-and-efficiency:producer-surplus}{Producer surplus} is not profit: the cost of the fixed equipment
+is not counted in it. It measures what sellers gain from selling, compared with not selling at all, once the equipment is there.
+
+\section{Total surplus and the competitive equilibrium}\label{sec:g10:surplus-and-efficiency:total}
+
+\begin{definition}[Total surplus]\label{def:g10:surplus-and-efficiency:total-surplus}
+The \emph{total surplus}\index{total surplus} of a market is the sum of the consumer and \omterm{def:g10:surplus-and-efficiency:producer-surplus}{producer surplus}: for each unit traded, the buyer's
+\omterm{def:g10:surplus-and-efficiency:wtp}{willingness to pay} minus the seller's cost. The price paid cancels out: it is taken from one side and given to the other.
+\end{definition}
+
+The demand $Q = 120 - 4p$ and the supply $Q = 2p - 24$ meet at $p^* = 24$ and $Q^* = 24$ (from $120 - 4p = 2p - 24$, $6p = 144$). \omterm{def:g10:surplus-and-efficiency:total-surplus}{Total surplus} is
+$72 + 144 = 216$ dalens: the triangle between the two lines, from the axis to the equilibrium quantity, $\tfrac12 \times 24 \times (30 - 12) = 216$.
+
+\begin{definition}[Allocative efficiency]\label{def:g10:surplus-and-efficiency:efficiency}
+An allocation of a good is \emph{allocatively efficient}\index{allocative efficiency} when no change in who buys, who sells and how much is traded
+could raise \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus}.
+\end{definition}
+
+\begin{proposition}[The competitive equilibrium maximises total surplus]\label{prop:g10:surplus-and-efficiency:max}
+In a market where each buyer wants at most one unit and each seller sells at most one, suppose the units are traded at the equilibrium price
+of a competitive market, so that every buyer whose \omterm{def:g10:surplus-and-efficiency:wtp}{willingness to pay} is above the price buys and every seller whose cost is below the price
+sells. Then no other choice of the units traded, of who buys them and of who sells them gives a larger \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus}.
+\end{proposition}
+\begin{proof}
+Rank the buyers by \omterm{def:g10:surplus-and-efficiency:wtp}{willingness to pay}, $v_1 \ge v_2 \ge \dots$, and the sellers by cost, $c_1 \le c_2 \le \dots$. If $q$ units are traded, \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus}
+is the sum of the buyers' values minus the sum of the sellers' costs. For a given $q$ it is largest when the buyers are the $q$ with the highest values and
+the sellers the $q$ with the lowest costs: replacing a buyer by one who values the good more, or a seller by one with a lower cost, raises it. \omterm{def:g10:surplus-and-efficiency:total-surplus}{Total
+surplus} with $q$ units is then $S(q) = (v_1 - c_1) + \dots + (v_q - c_q)$. Since the $v_k$ fall and the $c_k$ rise with $k$, the terms $v_k - c_k$ fall:
+they are positive up to some $q^*$ and negative after. $S(q)$ is therefore largest at $q = q^*$, the last unit for which $v_k \ge c_k$. At the equilibrium
+price $p^*$, the buyers with $v_k \ge p^*$ buy and the sellers with $c_k \le p^*$ sell: these are the $q^*$ buyers with the highest values and the $q^*$
+sellers with the lowest costs, since $v_{q^*} \ge p^* \ge c_{q^*}$ and, for the next unit, $v_{q^*+1} < c_{q^*+1}$ leaves no price at which both would
+trade.
+\end{proof}
+
+The proof makes no use of what anyone knows about the others: each buyer and seller only compares a value or a cost with the price. The price
+does the sorting.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.13cm, y=0.16cm]
+\begin{scope}
+\draw[econ axes] (0,33) node[left, font=\small] {$p$} |- (52,0) node[below left=12pt and 0pt, font=\small] {$Q$};
+\fill[omDef!20] (0,30) -- (24,24) -- (0,24) -- cycle;
+\fill[omThm!15] (0,12) -- (24,24) -- (0,24) -- cycle;
+\draw[demand] (0,30) -- (48,18);
+\draw[supply] (0,12) -- (40,32);
+\draw[guide] (24,24) -- (24,0);
+\node[eqpoint] at (24,24) {};
+\node[font=\scriptsize] at (7,26) {CS 72};
+\node[font=\scriptsize] at (7,20.5) {PS 144};
+\foreach \y in {12,24,30} \draw (0,\y) -- (-0.6,\y) node[left, font=\footnotesize] {\y};
+\node[below, font=\footnotesize] at (24,0) {24};
+\node[font=\scriptsize, anchor=north] at (24,-3.2) {at equilibrium};
+\end{scope}
+\begin{scope}[xshift=7.6cm]
+\draw[econ axes] (0,33) node[left, font=\small] {$p$} |- (52,0) node[below left=12pt and 0pt, font=\small] {$Q$};
+\fill[omDef!20] (0,30) -- (12,27) -- (12,18) -- (0,12) -- cycle;
+\fill[gray!35] (12,27) -- (24,24) -- (12,18) -- cycle;
+\draw[demand] (0,30) -- (48,18);
+\draw[supply] (0,12) -- (40,32);
+\draw[guide] (12,27) -- (12,0);
+\node[font=\scriptsize] at (6,21) {162};
+\node[font=\scriptsize, anchor=north west] at (26,17.5) {lost 54};
+\draw[gray] (19,22.5) -- (26.3,17.3);
+\foreach \y in {12,18,27} \draw (0,\y) -- (-0.6,\y) node[left, font=\footnotesize] {\y};
+\node[below, font=\footnotesize] at (12,0) {12};
+\node[font=\scriptsize, anchor=north] at (24,-3.2) {12 units only};
+\end{scope}
+\end{tikzpicture}
+
+{\small Left: at the equilibrium (24 units at 24 dalens), \omterm{def:g10:surplus-and-efficiency:consumer-surplus}{consumer surplus} is 72 and \omterm{def:g10:surplus-and-efficiency:producer-surplus}{producer surplus} 144, a total of 216. Right: if only 12 units are
+traded, the \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus} is the area between the curves up to 12 units, 162; the grey triangle, 54, is lost.}
+\end{omfigure}
+
+The figure on the right shows what happens away from equilibrium. If only 12 units are traded, the twelfth buyer still values a unit at $(120 - 12)/4
+= 27$ dalens and the twelfth seller's cost is $(12 + 24)/2 = 18$: there are units between the 12th and the 24th that buyers value more than they cost to
+produce, and they are not traded. \omterm{def:g10:surplus-and-efficiency:total-surplus}{Total surplus} is the trapezoid $\tfrac12 \times (18 + 9) \times 12 = 162$, and $216 - 162 = 54$ dalens of surplus are
+lost. Trading 36 units loses the same amount: units 25 to 36 cost more to produce than buyers value them. The lost area is called the deadweight loss;
+\cref{ch:g10:what-prices-do} defines it.
+
+\begin{model}{Efficiency of the competitive market}
+\assumes Price-taking buyers and sellers who know the good's quality; nobody outside the market is affected by the trades; buyers' \omterm{def:g10:surplus-and-efficiency:wtp}{willingness to
+  pay} and sellers' costs measure everything that matters to them about the good.
+\predicts The equilibrium quantity is traded by the buyers who value the good most and the sellers who produce it most cheaply, and \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus} is
+  the largest possible.
+\tested Markets run in laboratories, where the experimenter assigns values and costs and so knows the largest possible surplus, settle near the
+  equilibrium price and quantity within a few rounds (Smith 1962), which by \cref{prop:g10:surplus-and-efficiency:max} is where \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus} is largest.
+\breaks When trades affect people outside the market: the sulphur dioxide from coal power stations harmed people who neither sold nor bought
+  the power (grade 11). When sellers or buyers are few enough to move the price: a market with two or three sellers (grade 11). When buyers cannot see
+  the quality of what they buy: used cars (grade 11).
+\end{model}
+% ledger: g10:smith-1962
+
+\section{What the result does not say}\label{sec:g10:surplus-and-efficiency:limits}
+
+The proposition is precise, and it is easy to read more into it than it says.
+
+\begin{itemize}
+\item \textbf{It says nothing about who gets the surplus.} In the example above sellers get 144 and buyers 72. A different split of the same 216 would be
+  just as efficient. Efficiency and the division of the gains are separate questions.
+\item \textbf{It counts only the people in the market.} If a factory's smoke harms the neighbours, their loss is in no buyer's value and no seller's cost.
+  The market can then trade too much, and the proposition does not apply.
+\item \textbf{It measures in money.} \omterm{def:g10:surplus-and-efficiency:wtp}{Willingness to pay} depends on what one has. A rich person will pay more for a concert ticket than a poor person who
+  would enjoy it more. \omterm{def:g10:surplus-and-efficiency:total-surplus}{Total surplus} adds dalens, not happiness: the equilibrium gives the ticket to whoever will pay most, and that is the person who
+  values it most only in money.
+\item \textbf{It is about one market at a time.} A change in one market moves others, as \cref{ch:g10:market-equilibrium} showed, and the surplus
+  of one market does not count those effects.
+\end{itemize}
+
+The opening chart shows the measure's reach and its limit together. The value that users place on free services is surplus that no account of
+production records; but it is measured by what people say they would accept, and two people with the same answer need not gain the same thing from the
+service.
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g10:surplus-and-efficiency:1}
+Ana is willing to pay 40 dalens for a pair of shoes and buys them for 32. What is her \omterm{def:g10:surplus-and-efficiency:consumer-surplus}{consumer surplus}? What would it be if the price were 45?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:surplus-and-efficiency:2}
+A baker's cost for a cake is 12 dalens and he sells it for 20. What is his \omterm{def:g10:surplus-and-efficiency:producer-surplus}{producer surplus}? Below what price would he not sell?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:surplus-and-efficiency:3}
+Read the opening chart. Which category had the largest median? About how many times larger was it than the median for social media? Which two
+categories were closest?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:surplus-and-efficiency:4}
+The demand for a good is $Q = 60 - 2p$. Compute the \omterm{def:g10:surplus-and-efficiency:consumer-surplus}{consumer surplus} at a price of 10 dalens.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:surplus-and-efficiency:5}
+The supply of a good is $Q = 3p - 15$, for $p \ge 5$. Compute the \omterm{def:g10:surplus-and-efficiency:producer-surplus}{producer surplus} at a price of 15 dalens.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:surplus-and-efficiency:6}
+Demand is $Q = 100 - 2p$ and supply $Q = 3p - 60$, for $p \ge 20$. Find the equilibrium and the consumer, producer and \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:surplus-and-efficiency:7}
+Demand is $Q = 80 - p$ and supply $Q = p$. Find the equilibrium and the \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus}. Show that buyers and sellers get the same surplus,
+and explain why.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:surplus-and-efficiency:8}
+In the market of \cref{exo:g10:surplus-and-efficiency:6}, compute the \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus} if only 18 units are traded (by the buyers who value them most and the
+sellers with the lowest costs), and the surplus lost.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:surplus-and-efficiency:9}
+In the market $Q^d = 120 - 4p$, $Q^s = 2p - 24$ of the text, a new technique lowers every seller's cost by 3 dalens, and supply becomes $Q = 2p - 18$.
+Find the new equilibrium and the new consumer and \omterm{def:g10:surplus-and-efficiency:producer-surplus}{producer surplus}. Who gains?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:surplus-and-efficiency:10}
+In the concert example, a ninth buyer arrives with a \omterm{def:g10:surplus-and-efficiency:wtp}{willingness to pay} of 8 dalens. Draw the new staircase. At a price of 5, who buys, and what is the
+\omterm{def:g10:surplus-and-efficiency:consumer-surplus}{consumer surplus}?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:surplus-and-efficiency:11}
+In the market of the text, demand shifts to $Q = 126 - 4p$. Find the new equilibrium and compute the consumer and \omterm{def:g10:surplus-and-efficiency:producer-surplus}{producer surplus}. Which side gained
+more?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:surplus-and-efficiency:12}
+Describe evidence that would show that a real market fails to trade units that buyers value more than they cost to produce. What would you need to know,
+and how could you learn it?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:surplus-and-efficiency:13}
+For the demand $Q = a - bp$ and the supply $Q = c + dp$ (with $c < 0 < a$, $b, d > 0$), let $Q < Q^*$ be a quantity traded by the buyers with the highest values
+and the sellers with the lowest costs. Using only the areas of triangles, show that the lost surplus is $\tfrac12 (Q^* - Q)\,g$, where $g$ is the gap
+between the demand price and the supply price at $Q$, and deduce that \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus} is largest at $Q^*$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:surplus-and-efficiency:14}
+Give an example in which moving a unit of a good from one person to another lowers \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus} but, plausibly, makes the two people together better off.
+What does this say about using \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus} to judge a market?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:surplus-and-efficiency:15}
+A farm sells eggs in a competitive market, and its smell costs each of its 50 neighbours 2 dalens per hundred eggs produced. Explain why the market
+equilibrium no longer maximises the surplus of everyone concerned. Would the right quantity of eggs be larger or smaller?
+\end{exercise}
+
+\section{Problem: The Saturday Market}
+
+\begin{problem}[{Weekend problem --- ten buyers, eight sellers and a cap on stalls}]
+\label{pb:g10:surplus-and-efficiency:1}
+Every Saturday, in a square of a Brenland town, eight farmers can each sell one basket of vegetables and ten shoppers can each buy one. The shoppers'
+\omterm{def:g10:surplus-and-efficiency:wtp}{willingness to pay} and the farmers' costs, in dalens, are:
+\begin{center}
+\small
+\begin{tabular}{l c c c c c c c c c c}
+\toprule
+shoppers & 30 & 28 & 25 & 22 & 20 & 18 & 15 & 12 & 10 & 8 \\
+farmers  & 6 & 8 & 11 & 13 & 16 & 19 & 23 & 26 & & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent\textbf{Part I --- The market without rules.}
+\begin{enumerate}
+\item Draw the staircase demand and staircase supply on one graph.
+\item How many baskets are wanted at a price of 21 dalens, and how many offered? At 17?
+\item Find the range of prices at which the number of baskets wanted equals the number offered. How many baskets are traded?
+\item Which shoppers buy and which farmers sell?
+\item Compute the largest possible \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus}, and check that the market reaches it.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Splitting the surplus.}
+\begin{enumerate}[resume]
+\item At a price of 18.5 dalens, compute the \omterm{def:g10:surplus-and-efficiency:consumer-surplus}{consumer surplus} and the \omterm{def:g10:surplus-and-efficiency:producer-surplus}{producer surplus}.
+\item At a price of 18 and at a price of 19, compute the two surpluses again. Does the total change?
+\item The sixth shopper (18) and the sixth farmer (19) do not trade. Why would a trade between them lower \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus}?
+\item The shopper who values a basket at 30 pays the same price as the one who values it at 20. Who gains more surplus? Is the market less efficient
+  because of this?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- A cap on stalls.}
+\begin{enumerate}[resume]
+\item The town limits the square to 3 stalls, given to the three farmers with the lowest costs. How many baskets are traded now?
+\item Between which prices does the market now settle? (Find the prices at which exactly three shoppers want a basket.)
+\item Compute the \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus} with the cap.
+\item How much surplus is lost, in dalens and as a share of the largest possible surplus?
+\item Which farmers and which shoppers lose? Can any group gain from the cap?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Who gets the stalls.}
+\begin{enumerate}[resume]
+\item Suppose instead that the 3 stalls go by lottery, to the farmers with costs 11, 19 and 26. Between which prices does the market settle now, how many
+  baskets are traded, and what is the \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus}?
+\item How much is lost now, in dalens and as a share of the largest possible surplus?
+\item Why is the loss larger than in question 13?
+\item With the lottery, the farmer with a cost of 6 has no stall but the farmer with a cost of 26 has one, which he does not use. Explain why both would agree
+  to hand the stall over for a payment.
+\item After that trade the stalls are held by the farmers with costs 6, 11 and 19. How many baskets are traded, what is the \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus}, and how much of
+  the lottery's loss has the trade recovered?
+\item State the result of the problem: the surplus lost to the stall cap, in dalens and as a share of the maximum.
+\end{enumerate}
+\end{problem}

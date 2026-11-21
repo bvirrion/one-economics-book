@@ -1,0 +1,425 @@
+\chapter{Time Series: A First Course}\label{ch:b2:time-series}
+
+Most macroeconomic data are time series: one country, observed quarter after quarter. Each observation resembles the one
+before it, the samples are short, and many series wander without returning to a fixed level. The regression methods of
+the last four chapters assumed independent observations; this chapter shows what changes when they are not. The chart
+shows the main danger: two series that have nothing to do with each other.
+
+\begin{openingchart}{Two independent simulated random walks of 200 steps (each step a standard normal draw), and the
+  regression of one on the other: $R^2 = 0.548$, $t = -15.5$.}{Simulated (seeded); our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.66\linewidth, height=0.38\linewidth, xmin=1, xmax=200, xlabel={Step}, ylabel={Level},
+    legend style={at={(1.03,0.5)}, anchor=west, font=\scriptsize}]
+  \addplot[omDef, thick] table[x=step, y=a] {figdata/bachelor-2/34-time-series/out/walks.csv};
+  \addlegendentry{walk A}
+  \addplot[omThm, thick, dashed] table[x=step, y=b] {figdata/bachelor-2/34-time-series/out/walks.csv};
+  \addlegendentry{walk B}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: walks_fit (r2 0.548, t -15.5, slope -0.552)
+Each walk adds an independent random step to its previous value; the two were drawn separately. Yet the regression of B on
+A has an $R^2$ of 0.55 and a $t$ statistic of $-15.5$. The pair was picked to make the point; the chapter's first listing
+measures how often such a result appears by chance.
+
+\begin{recall}
+From the Year 1 volume: logarithms and growth rates, the OLS estimator, $R^2$, tests and confidence intervals. From
+\cref{ch:b2:regression-inference}: robust standard errors and the size of a test. From \cref{ch:b2:business-cycles}:
+detrending and the \omterm{def:b2:business-cycles:cyclical-component}{cyclical component}.
+\end{recall}
+
+\section{Trend and season}\label{sec:b2:time-series:trend}
+
+A series $y_t$, $t = 1, \dots, T$, often has a \emph{trend}, a slow, persistent movement such as the growth of real GDP,
+and a \emph{season}, a pattern that repeats each year, such as retail sales that peak in December. Official statistics
+usually publish seasonally adjusted series, from which the season has been estimated and removed; the series used below
+are all seasonally adjusted. A trend is handled by taking logarithms and differences: $100\Delta\ln y_t$ is the growth rate
+in per cent, and four times it, for a quarterly series, the annualised rate. The deviation from a smooth trend was the
+business cycle of \cref{ch:b2:business-cycles}.
+
+\section{Autocorrelation}\label{sec:b2:time-series:autocorrelation}
+
+\begin{definition}[Autocorrelation function]\label{def:b2:time-series:acf}
+The \emph{autocorrelation function}\index{autocorrelation function} of a series gives, for each lag $k$, the correlation
+$\rho_k = \operatorname{Cov}(y_t, y_{t-k})/\operatorname{Var}(y_t)$ between the series and itself $k$ periods earlier. Its
+sample version is $r_k = \sum_{t=k+1}^T(y_t - \bar y)(y_{t-k} - \bar y)/\sum_{t=1}^T(y_t - \bar y)^2$.
+\end{definition}
+
+\begin{omchart}{Sample autocorrelations of US quarterly inflation (annualised) and of the unemployment rate, lags 1 to 12
+  quarters, 1959--2009. Dashed lines: $\pm1.96/\sqrt{T}$, the 95 per cent band for a series with no
+  autocorrelation.}{statsmodels macrodata (FRED and Bureau of Labor Statistics); our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.66\linewidth, height=0.38\linewidth, ybar, bar width=4pt, xmin=0.3, xmax=12.7, ymin=-0.2,
+    ymax=1.05, xtick={1,...,12}, xlabel={Lag (quarters)}, ylabel={Autocorrelation},
+    legend style={at={(1.03,0.5)}, anchor=west, font=\scriptsize}]
+  \addplot[fill=omDef!70, draw=omDef] table[x=lag, y=infl] {figdata/bachelor-2/34-time-series/out/acf.csv};
+  \addlegendentry{inflation}
+  \addplot[fill=omThm!60, draw=omThm] table[x=lag, y=unemp] {figdata/bachelor-2/34-time-series/out/acf.csv};
+  \addlegendentry{unemployment}
+  \addplot[black!60, dashed, sharp plot, forget plot, domain=0.3:12.7, samples=2] {1.96/sqrt(203)};
+  \addplot[black!60, dashed, sharp plot, forget plot, domain=0.3:12.7, samples=2] {-1.96/sqrt(203)};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\omcode{code/bachelor-2/34-time-series/listings/acf.py}{1}{14}{Sample autocorrelations, with lag 1 also computed by
+hand.}\label{lst:b2:time-series:acf}
+
+\omoutput{code/bachelor-2/34-time-series/outputs/acf.txt}{Both series remember: unemployment almost perfectly from one
+quarter to the next.}\label{out:b2:time-series:acf}
+
+% code: listings/acf.py; figdata: acf (infl lag 1 0.642, lag 12 0.238; unemp lag 1 0.956, lag 12 0.260)
+Inflation has a first autocorrelation of 0.64, unemployment of 0.96, and both stay above the band for twelve quarters. A
+regression on such data has far fewer independent observations than its 203 quarters suggest.
+
+\section{Stationarity}\label{sec:b2:time-series:stationarity}
+
+\begin{definition}[Weak stationarity]\label{def:b2:time-series:stationarity}
+A series is \emph{weakly stationary}\index{weak stationarity} if its mean $E[y_t]$ and variance $\operatorname{Var}(y_t)$
+do not depend on $t$, and the covariance $\operatorname{Cov}(y_t, y_{t-k})$ depends only on the lag $k$.
+\end{definition}
+
+\begin{definition}[White noise]\label{def:b2:time-series:white-noise}
+A \emph{white noise}\index{white noise} is a series $\varepsilon_t$ with mean zero, constant variance $\sigma^2$ and no
+autocorrelation at any lag.
+\end{definition}
+
+A stationary series returns to its mean; its past is informative about its future, but less and less so at longer
+horizons. A series with a trend is not stationary, nor is a random walk (\cref{sec:b2:time-series:unit-roots}). Least
+squares, its standard errors and its tests keep their usual large-sample behaviour when the series involved are
+stationary and their autocorrelations die out fast enough; they lose it when the series are not.
+
+\section{Autoregressive and moving-average models}\label{sec:b2:time-series:arma}
+
+\begin{definition}[Autoregressive process]\label{def:b2:time-series:ar}
+An \emph{autoregressive process}\index{autoregressive process} of order $p$, AR($p$), is $y_t = c + \phi_1y_{t-1} + \dots
++ \phi_py_{t-p} + \varepsilon_t$ with $\varepsilon_t$ \omterm{def:b2:time-series:white-noise}{white noise}.
+\end{definition}
+
+\begin{definition}[Moving-average process]\label{def:b2:time-series:ma}
+A \emph{moving-average process}\index{moving-average process} of order $q$, MA($q$), is $y_t = \mu + \varepsilon_t +
+\theta_1\varepsilon_{t-1} + \dots + \theta_q\varepsilon_{t-q}$ with $\varepsilon_t$ \omterm{def:b2:time-series:white-noise}{white noise}.
+\end{definition}
+
+\begin{proposition}[Moments of an AR(1)]\label{prop:b2:time-series:ar1}
+If $y_t = c + \phi y_{t-1} + \varepsilon_t$ with $|\phi| < 1$ and $y_t$ stationary, then
+\[
+E[y_t] = \frac{c}{1 - \phi},\qquad \operatorname{Var}(y_t) = \frac{\sigma^2}{1 - \phi^2},\qquad \rho_k = \phi^k.
+\]
+\end{proposition}
+
+\begin{proof}
+Take expectations: $\mu = c + \phi\mu$, so $\mu = c/(1 - \phi)$. Take variances, using that $\varepsilon_t$ is
+uncorrelated with $y_{t-1}$ (which depends only on earlier shocks): $\gamma_0 = \phi^2\gamma_0 + \sigma^2$. Multiply $y_t
+- \mu = \phi(y_{t-1} - \mu) + \varepsilon_t$ by $y_{t-k} - \mu$ and take expectations: $\gamma_k = \phi\gamma_{k-1}$ for $k
+\ge 1$, so $\gamma_k = \phi^k\gamma_0$ and $\rho_k = \phi^k$.
+\end{proof}
+
+A shock to an AR(1) decays geometrically: after $h$ periods a fraction $\phi^h$ remains, and half of it is gone after
+$\ln 0.5/\ln\phi$ periods, the shock's \emph{half-life}. An MA(1) remembers one period only: $\rho_1 = \theta/(1 +
+\theta^2)$ and $\rho_k = 0$ for $k \ge 2$ (Exercise 10). An AR model is fitted by least squares of $y_t$ on its own lags.
+
+\omcode{code/bachelor-2/34-time-series/listings/ar_fit.py}{1}{23}{AR(1) and AR(2) for US unemployment, by least squares and by
+statsmodels' AutoReg.}\label{lst:b2:time-series:ar-fit}
+
+\omoutput{code/bachelor-2/34-time-series/outputs/ar_fit.txt}{The two routes agree. The AR(1) coefficient is close to one;
+the AR(2) has a large negative second lag.}\label{out:b2:time-series:ar-fit}
+
+% code: listings/ar_fit.py
+The AR(1) coefficient of 0.988 implies a half-life of 58 quarters, more than fourteen years, which is not a credible
+description of how unemployment recovers from a recession. The AR(2) tells a different story: a rise in unemployment is
+followed by further rises ($\phi_1 = 1.64$), then a fall ($\phi_2 = -0.68$, $t = -12.9$), the hump of a recession and its
+recovery. A coefficient this close to one also raises the question of the next section.
+
+\section{Unit roots and spurious regression}\label{sec:b2:time-series:unit-roots}
+
+\begin{definition}[Unit root]\label{def:b2:time-series:unit-root}
+A series has a \emph{unit root}\index{unit root} if it is an autoregression whose coefficients sum to one; the simplest
+case is the random walk $y_t = y_{t-1} + \varepsilon_t$. Its shocks never decay, and its variance grows with $t$.
+\end{definition}
+
+\begin{definition}[Spurious regression]\label{def:b2:time-series:spurious}
+A \emph{spurious regression}\index{spurious regression} is a regression between series with \omterm{def:b2:time-series:unit-root}{unit roots} that shows a large
+$R^2$ and significant $t$ statistics although the series are unrelated.
+\end{definition}
+
+\omcode{code/bachelor-2/34-time-series/listings/random_walks.py}{1}{21}{Two thousand pairs of independent random walks,
+regressed in levels and in differences.}\label{lst:b2:time-series:random-walks}
+
+\omoutput{code/bachelor-2/34-time-series/outputs/random_walks.txt}{In levels, a test of size 5 per cent rejects 84 per cent
+of the time; in differences, 6 per cent.}\label{out:b2:time-series:random-walks}
+
+% code: listings/random_walks.py
+In levels the $t$ test rejects the true hypothesis of no relation in 84 per cent of the samples, and the median $R^2$ is
+0.17. The residuals of such a regression are themselves a random walk, and the formulas for the standard errors assume
+they are not. In differences, where each series is \omterm{def:b2:time-series:white-noise}{white noise}, the test rejects 5.9 per cent of the time, as it should.
+
+\begin{definition}[Dickey--Fuller test]\label{def:b2:time-series:dickey-fuller}
+The \emph{Dickey--Fuller test}\index{Dickey--Fuller test} tests the null hypothesis of a \omterm{def:b2:time-series:unit-root}{unit root} by regressing $\Delta y_t$
+on a constant (and possibly a trend), $y_{t-1}$, and lags of $\Delta y_t$; the statistic is the $t$ ratio of the coefficient
+on $y_{t-1}$, compared with critical values derived under the unit-root null, which are more negative than those of the
+normal distribution.
+\end{definition}
+
+Under a \omterm{def:b2:time-series:unit-root}{unit root} the $t$ ratio does not follow the usual distribution: the 5 per cent critical value is about $-2.9$ with a
+constant and $-3.4$ with a constant and a trend, against $-1.65$ for a one-sided normal test. The version with lags of
+$\Delta y_t$ is called augmented.
+
+\omcode{code/bachelor-2/34-time-series/listings/adf.py}{1}{16}{Augmented \omterm{def:b2:time-series:dickey-fuller}{Dickey--Fuller tests} on US log real GDP (with a
+trend) and on its growth rate.}\label{lst:b2:time-series:adf}
+
+\omoutput{code/bachelor-2/34-time-series/outputs/adf.txt}{A \omterm{def:b2:time-series:unit-root}{unit root} is not rejected in the level of log GDP, and clearly
+rejected in its growth rate.}\label{out:b2:time-series:adf}
+
+% code: listings/adf.py
+Log real GDP gives $-2.38$, short of the critical value of $-3.43$: the data cannot reject a \omterm{def:b2:time-series:unit-root}{unit root} around a trend.
+Its growth rate gives $-6.97$, far beyond $-2.88$. The test has low power: it often fails to reject a \omterm{def:b2:time-series:unit-root}{unit root} in series
+that are stationary but persistent, and 50 years of quarterly data rarely settle the question. The practical lesson is
+narrower: a regression in levels of persistent series needs a reason to be believed, and regressions in growth rates are
+the safer default.
+
+\section{Distributed lags}\label{sec:b2:time-series:distributed-lags}
+
+\begin{definition}[Distributed-lag model]\label{def:b2:time-series:distributed-lag}
+A \emph{distributed-lag model}\index{distributed-lag model} relates $y_t$ to current and past values of a regressor:
+$y_t = \alpha + \beta_0x_t + \beta_1x_{t-1} + \dots + \beta_qx_{t-q} + u_t$.
+\end{definition}
+
+\begin{definition}[Dynamic multiplier]\label{def:b2:time-series:dynamic-multiplier}
+In a \omterm{def:b2:time-series:distributed-lag}{distributed-lag model} the \emph{dynamic multiplier}\index{dynamic multiplier} at horizon $h$ is $\beta_h$, the effect
+on $y_{t+h}$ of a one-unit change in $x_t$ alone; the \emph{long-run multiplier} is $\beta_0 + \beta_1 + \dots + \beta_q$,
+the effect of a permanent one-unit change in $x$.
+\end{definition}
+
+If a rise of one point in a tax rate lowers sales by 0.2 per cent in the same quarter, 0.3 in the next and 0.1 in the one
+after, the \omterm{def:b2:time-series:dynamic-multiplier}{dynamic multipliers} are $-0.2$, $-0.3$ and $-0.1$, and the long-run effect of a permanent rise is $-0.6$ per
+cent. The coefficients have a causal reading only if $x$ is unrelated to the error at all leads and lags, the conditions of
+\cref{ch:b2:causality-and-experiments} stated in time; and since $u_t$ is usually autocorrelated, the standard errors need
+the correction of \cref{sec:b2:time-series:hac}.
+
+\section{Forecasting and how to score it}\label{sec:b2:time-series:forecasting}
+
+\begin{definition}[Out-of-sample forecast]\label{def:b2:time-series:oos}
+An \emph{out-of-sample forecast}\index{out-of-sample forecast} of $y_{t+h}$ is made with a model fitted only on data
+available at date $t$; a \emph{pseudo out-of-sample} exercise repeats this for each $t$ in a past period, refitting each
+time, and compares the forecasts with what happened.
+\end{definition}
+
+\begin{definition}[Root mean squared forecast error]\label{def:b2:time-series:rmse}
+The \emph{root mean squared forecast error}\index{root mean squared forecast error} of forecasts $\hat y_{t+h}$ is
+$\sqrt{\tfrac1m\sum_t(y_{t+h} - \hat y_{t+h})^2}$ over the $m$ forecasts made.
+\end{definition}
+
+A model's fit within its own sample flatters it: it was chosen to fit those data. The honest test is out of sample, against
+a simple benchmark. For inflation the benchmark is the \emph{random walk}: inflation over the next four quarters equals
+inflation over the past four.
+
+\omcode{code/bachelor-2/34-time-series/listings/forecast.py}{1}{26}{Each quarter from 1985, a regression forecast of inflation
+four quarters ahead, refitted on the data then available, against the random walk.}\label{lst:b2:time-series:forecast}
+
+\omoutput{code/bachelor-2/34-time-series/outputs/forecast.txt}{The random walk wins.}\label{out:b2:time-series:forecast}
+
+\begin{omchart}{US consumer-price inflation over four quarters, 1986--2009, and its forecasts made four quarters earlier:
+  by a regression on past inflation, refitted each quarter, and by the random walk (past four-quarter inflation), per
+  cent.}{statsmodels macrodata (FRED); our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.66\linewidth, height=0.38\linewidth, xmin=1986, xmax=2009.5, ymin=-2.5, ymax=6.5,
+    xtick={1986,1990,...,2006}, xticklabel style={/pgf/number format/1000 sep={}}, ylabel={Per cent},
+    legend style={at={(1.03,0.5)}, anchor=west, font=\scriptsize}]
+  \addplot[black, thick] table[x=t, y=actual] {figdata/bachelor-2/34-time-series/out/fcst.csv};
+  \addlegendentry{actual}
+  \addplot[omDef, thick, dashed] table[x=t, y=ar] {figdata/bachelor-2/34-time-series/out/fcst.csv};
+  \addlegendentry{regression}
+  \addplot[omThm, thick, dotted] table[x=t, y=rw] {figdata/bachelor-2/34-time-series/out/fcst.csv};
+  \addlegendentry{random walk}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% code: listings/forecast.py; figdata: rmse (ar 1.772, rw 1.624, n 95)
+Over 95 forecasts the regression misses by 1.77 points in root mean square, the random walk by 1.62. The regression
+forecasts lie above the outcome on average (a mean error of $-0.72$): fitted on data that include the high inflation of the
+1970s, it keeps predicting a return toward a higher mean that did not come. Both miss the fall of 2009 by several points.
+
+\begin{record}[Inflation forecasts against a random walk]
+% ledger: b2:atkeson-ohanian2001
+Atkeson and Ohanian (2001) compared three sets of inflation forecasts built on the relation between inflation and
+unemployment (a textbook model, two models of a type then common in research, and the forecasts of the Federal Reserve
+Board) with the naive forecast that inflation over the next year equals inflation over the past year, over the previous 15
+years. None was more accurate than the naive forecast, and they predicted the direction of the change in inflation no
+better than a coin flip.
+\end{record}
+
+\section{What Granger causality does and does not mean}\label{sec:b2:time-series:granger}
+
+\begin{definition}[Granger causality]\label{def:b2:time-series:granger}
+A series $x$ \emph{Granger-causes}\index{Granger causality} a series $y$ if past values of $x$ help predict $y_t$ given
+past values of $y$; the test is an $F$ test that the coefficients on the lags of $x$ are all zero in a regression of $y_t$
+on lags of $y$ and of $x$.
+\end{definition}
+
+\omcode{code/bachelor-2/34-time-series/listings/granger.py}{1}{16}{Does money growth help predict inflation, and the
+reverse? Four lags each.}\label{lst:b2:time-series:granger}
+
+\omoutput{code/bachelor-2/34-time-series/outputs/granger.txt}{Neither test rejects at 5 per cent.}\label{out:b2:time-series:granger}
+
+% code: listings/granger.py
+With four quarterly lags, money growth does not help predict inflation at the 5 per cent level ($p = 0.076$), nor
+inflation money growth ($p = 0.213$). The name promises more than the test delivers. \omterm{def:b2:time-series:granger}{Granger causality} is about
+prediction, not about effects in the sense of \cref{ch:b2:causality-and-experiments}: a variable that responds to
+expectations of the future, such as an asset price, can predict an outcome it does not cause, and a policy that offsets
+shocks can cause an outcome while failing to predict it. The test answers a forecasting question; for that question it is
+the right one.
+
+\section{Serial correlation in regressions}\label{sec:b2:time-series:hac}
+
+When the errors of a regression are autocorrelated, least squares remains unbiased if the regressors are unrelated to the
+errors, but the classical and the \omterm{def:b2:regression-inference:robust-se}{heteroskedasticity-robust standard errors} are both wrong: they ignore that neighbouring
+errors move together. Overlapping data make the problem certain: the change in inflation over the next four quarters,
+measured each quarter, shares three quarters with its neighbour.
+
+\begin{definition}[HAC standard error]\label{def:b2:time-series:hac}
+A \emph{HAC standard error}\index{HAC standard error} (\omterm{def:b2:regression-inference:homoskedasticity}{heteroskedasticity} and autocorrelation consistent) replaces the
+middle term of the sandwich formula by $\sum_t\hat u_t^2x_tx_t' + \sum_{j=1}^Lw_j\sum_t\hat u_t\hat u_{t-j}(x_tx_{t-j}' +
+x_{t-j}x_t')$ with weights $w_j = 1 - j/(L + 1)$; this is the Newey--West estimator.
+\end{definition}
+
+\omcode{code/bachelor-2/34-time-series/listings/hac.py}{1}{20}{The change in inflation over the next four quarters against
+unemployment now: classical and Newey--West standard errors.}\label{lst:b2:time-series:hac}
+
+\omoutput{code/bachelor-2/34-time-series/outputs/hac.txt}{The residuals are strongly autocorrelated, and the honest standard
+error is 60 per cent larger.}\label{out:b2:time-series:hac}
+
+% code: listings/hac.py
+The slope is $-0.29$: higher unemployment is followed by falling inflation. The residuals have a first autocorrelation of
+0.78, and the Newey--West standard error, 0.151, is 1.6 times the classical 0.095. The $t$ statistic falls from $-3.0$ to
+$-1.9$: significant at 5 per cent with the wrong standard error, not quite with the right one.
+
+\begin{model}{AR(1) model}
+\assumes $y_t = c + \phi y_{t-1} + \varepsilon_t$ with $|\phi| < 1$ and white-noise shocks: the series returns to a fixed
+mean, and a shock decays by the factor $\phi$ each period.
+\predicts Autocorrelations $\phi^k$; a forecast that moves from the last value toward the mean $c/(1 - \phi)$; forecast
+intervals that widen with the horizon toward the series' own spread.
+\tested US unemployment fits an AR(1) with $\phi = 0.988$, a half-life of 58 quarters at odds with its recoveries; an AR(2)
+fits its hump far better. Inflation forecasts from regressions on past inflation did no better than a random walk from
+1986 to 2009, as Atkeson and Ohanian (2001) found for richer models.
+\breaks When the mean shifts (inflation in the 1970s and after 1985) or the series has a \omterm{def:b2:time-series:unit-root}{unit root}, the fitted $\phi$ and
+the implied mean describe the sample, not the future; short samples cannot tell a large $\phi$ from a \omterm{def:b2:time-series:unit-root}{unit root}.
+\end{model}
+
+\section{Exercises}\label{sec:b2:time-series:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:time-series:1}
+Read the opening chart. If you knew nothing of how the walks were made, what would the regression suggest? Why is the
+suggestion wrong?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:time-series:2}
+From the ACF chart, give the first and the twelfth autocorrelations of inflation and of unemployment, and the band. Which
+series is more persistent?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:time-series:3}
+A \omterm{def:b2:time-series:distributed-lag}{distributed-lag model} has $\beta_0 = 0.4$, $\beta_1 = 0.3$, $\beta_2 = 0.2$, $\beta_3 = 0.1$. Give the \omterm{def:b2:time-series:dynamic-multiplier}{dynamic
+multipliers} and the long-run multiplier.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:time-series:4}
+A share price predicts next quarter's GDP. Does it Granger-cause GDP? Does it cause GDP?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:time-series:5}
+For an AR(1) with $\phi = 0.5$, $c = 1$, $\sigma = 1$: give the mean, the variance, the first three autocorrelations and
+the half-life of a shock.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:time-series:6}
+From the AR(1) output for unemployment, compute the implied mean and the half-life. Compare the implied mean with the
+sample mean of the unemployment rate (5.9 per cent). What explains the gap?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:time-series:7}
+\textbf{(D)} Add the unemployment rate at the forecast date to the forecasting regression of the listing and repeat the
+exercise. Does the root mean squared error fall?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:time-series:8}
+Why does the regression in differences of the random-walk listing reject at the nominal rate while the regression in
+levels does not?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:time-series:9}
+From the HAC output, compute the $t$ statistic of the slope with each standard error. Which conclusion changes at the
+5 per cent level, and which does not?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:time-series:10}
+For the MA(1) $y_t = \varepsilon_t + \theta\varepsilon_{t-1}$, derive the variance and the autocorrelations. Which
+value of $\theta$ gives the largest first autocorrelation?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:time-series:11}
+For a random walk starting at $y_0 = 0$, show that $\operatorname{Var}(y_t) = t\sigma^2$ and that the correlation of $y_t$
+with $y_{t-k}$ is $\sqrt{(t - k)/t}$. Why does this rule out stationarity?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:time-series:12}
+For an AR(1) with known $c$, $\phi$ and $\sigma$, derive the $h$-step forecast $E[y_{t+h} \mid y_t]$ and its error variance.
+What do they tend to as $h$ grows?
+\end{exercise}
+
+\section{Problem: Brenland's inflation}\label{sec:b2:time-series:problem}
+
+\begin{problem}[{Weekend problem --- Brenland's inflation: growth rates and autocorrelation, an AR(1), a unit-root test,
+and a two-year forecast}]
+\label{pb:b2:time-series:1}
+Brenland's consumer price index for 2000--2025 is in the country's national accounts (\texttt{accounts}, column
+\texttt{cpi}, 2015 = 100). Use annual inflation $\pi_t = 100\ln(\mathit{CPI}_t/\mathit{CPI}_{t-1})$, 2001--2025.
+
+\medskip
+\noindent\textbf{Part I --- Growth rates and autocorrelation.}
+\begin{enumerate}
+  \item How many observations of $\pi_t$ are there?
+  \item Give the mean and standard deviation of inflation.
+  \item In which year was inflation highest, and how high?
+  \item Give inflation in 2025.
+  \item Give the first sample autocorrelation.
+  \item Is it outside the 95 per cent band for \omterm{def:b2:time-series:white-noise}{white noise}?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- An AR(1).}
+\begin{enumerate}[resume]
+  \item Fit $\pi_t = c + \phi\pi_{t-1} + \varepsilon_t$ by least squares: give $c$ and $\phi$.
+  \item Give the standard error of $\phi$ and its $t$ statistic against zero.
+  \item Give the implied mean and compare it with the sample mean.
+  \item Give the half-life of an inflation shock.
+  \item Give the standard deviation of the residuals.
+  \item What does the AR(1) say about the 2022 surge?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- A unit-root test.}
+\begin{enumerate}[resume]
+  \item Write the Dickey--Fuller regression with a constant and no lags.
+  \item Give the statistic.
+  \item Give the 5 per cent critical value for this sample.
+  \item Is a \omterm{def:b2:time-series:unit-root}{unit root} rejected at 5 per cent? At 10 per cent?
+  \item How can $\hat\phi = 0.48$ fail to reject $\phi = 1$?
+  \item What does this mean for Part IV?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- A forecast and its interval.}
+\begin{enumerate}[resume]
+  \item Forecast inflation for 2026.
+  \item Forecast inflation for 2027.
+  \item Give the standard error of each forecast, ignoring the uncertainty in $c$ and $\phi$.
+  \item Give the 95 per cent interval for 2027.
+  \item Why is the 2027 interval wider than the 2026 one, and what width does it tend to?
+  \item What would a random-walk forecast give for 2027?
+  \item State the result: the AR(1) persistence, the half-life of an inflation shock, and the two-year forecast with its
+  interval.
+\end{enumerate}
+\end{problem}

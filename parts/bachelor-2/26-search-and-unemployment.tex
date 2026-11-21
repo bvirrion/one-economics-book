@@ -1,0 +1,338 @@
+\chapter{Search and Unemployment}\label{ch:b2:search-and-unemployment}
+
+At any moment some workers are looking for jobs while some firms are looking for workers. The Year 1 volume described the
+flows between employment and unemployment; this chapter builds a model in which both sides search, wages are bargained,
+and the unemployment rate is an equilibrium outcome. The chart shows the two sides of the euro area's labour market,
+quarter by quarter, since 2009.
+
+\begin{openingchart}{Euro area: job vacancy rate (industry, construction and services) against the unemployment rate (ages
+  15--74), quarterly, seasonally adjusted, 2009--2025.}{Eurostat (jvs\_q\_nace2, une\_rt\_q); our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.62\linewidth, height=0.46\linewidth, xmin=5, xmax=13.5, ymin=0.5, ymax=3.6,
+    xlabel={Unemployment rate, per cent}, ylabel={Job vacancy rate, per cent},
+    legend style={at={(0.97,0.97)}, anchor=north east, font=\scriptsize}]
+  \addplot[omDef, thick, mark=*, mark size=1.1pt, restrict expr to domain={\thisrow{period}}{1:1}] table[x=u, y=v]
+    {figdata/bachelor-2/26-search-and-unemployment/out/beveridge.csv};
+  \addlegendentry{2009--2019}
+  \addplot[omThm, thick, mark=square*, mark size=1.1pt, restrict expr to domain={\thisrow{period}}{0:0}] table[x=u, y=v]
+    {figdata/bachelor-2/26-search-and-unemployment/out/beveridge.csv};
+  \addlegendentry{2020--2025}
+  % positions of the labelled quarters: out/bev_points.csv
+  \node[font=\scriptsize, anchor=north west] at (axis cs:9.0,1.0) {2009-Q1};
+  \node[font=\scriptsize, anchor=west] at (axis cs:12.35,1.3) {2013-Q1};
+  \node[font=\scriptsize, anchor=north] at (axis cs:7.4,2.27) {2019-Q4};
+  \node[font=\scriptsize, anchor=north west] at (axis cs:8.7,1.8) {2020-Q3};
+  \node[font=\scriptsize, anchor=south] at (axis cs:6.7,3.32) {2022-Q2};
+  \node[font=\scriptsize, anchor=east] at (axis cs:6.2,2.2) {2025-Q4};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: bev_summary (2009-Q1 9.0/1.0; 2013-Q1 12.3/1.3; 2019-Q4 7.4/2.3, theta 0.311; 2020-Q3 8.7/1.8; 2022-Q2 6.7/3.3, theta 0.493; 2025-Q4 6.3/2.2)
+From 2013 to 2019 unemployment fell from 12.3 to 7.4 per cent while the vacancy rate rose from 1.3 to 2.3 per cent: the economy
+moved up and to the left along a downward-sloping curve. In 2020 vacancies fell and unemployment rose to 8.7 per cent; then
+vacancies rose to 3.3 per cent in the second quarter of 2022, far above anything seen before, with unemployment at 6.7. By the end of
+2025 the vacancy rate was back at 2.2 per cent with unemployment still lower, at 6.3. The ratio of vacancies to unemployment went
+from 0.31 at the end of 2019 to 0.49 in mid-2022.
+
+\begin{recall}
+From the Year 1 volume: the separation rate and the job-finding rate, the steady-state unemployment rate, the Beveridge
+curve and efficiency wages. From \cref{ch:b2:expectations-and-lucas-critique}: equilibrium with forward-looking agents.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:search-and-unemployment:symbols}
+Time is continuous; rates are per period. $u$ is the unemployment rate and $v$ the vacancy rate, both as shares of the labour force; $s$ is the separation rate; $r$ the interest rate;
+$p$ output per worker; $z$ the value of unemployment per period (benefits and leisure, a local symbol here); $c$ the cost of an open vacancy per period; $\eta$ the
+elasticity of matches with respect to unemployment; $\beta$ the worker's \omterm{def:b2:search-and-unemployment:nash-bargaining}{bargaining power} (a local symbol here, not the
+\omterm{def:b2:intertemporal-choice:discount-factor}{discount factor}).
+\end{notation}
+
+\section{The matching function}\label{sec:b2:search-and-unemployment:matching}
+
+\begin{definition}[Matching function]\label{def:b2:search-and-unemployment:matching-function}
+A \emph{matching function}\index{matching function} gives the number of new hires per period as a function of the number of
+unemployed workers and the number of vacancies: $m = m(u, v)$, increasing in both.
+\end{definition}
+
+The \omterm{def:b2:search-and-unemployment:matching-function}{matching function} summarises frictions the model does not describe: workers and firms do not know where the others are,
+skills and places differ, and applications take time. The usual form has constant returns, $m = Au^\eta v^{1-\eta}$, so that doubling both sides doubles
+hires.
+
+\begin{definition}[Labour-market tightness]\label{def:b2:search-and-unemployment:tightness}
+\emph{Labour-market tightness}\index{labour-market tightness} is the ratio of vacancies to unemployed workers, $\theta = v/u$.
+\end{definition}
+
+\begin{definition}[Vacancy-filling rate]\label{def:b2:search-and-unemployment:vacancy-filling}
+The \emph{vacancy-filling rate}\index{vacancy-filling rate} is the probability per period that an open vacancy is filled,
+$q(\theta) = m/v = A\theta^{-\eta}$.
+\end{definition}
+
+With constant returns everything depends on tightness. The job-finding rate is $f(\theta) = m/u = A\theta^{1-\eta} = \theta q(\theta)$: in a tight market workers find jobs fast and firms fill vacancies
+slowly. With $A = 0.7$, $u = 0.06$ and $v = 0.03$, $\theta = 0.5$, matches are $0.7 \times \sqrt{0.06 \times 0.03} = 0.0297$, the job-finding rate is 0.495 and the \omterm{def:b2:search-and-unemployment:vacancy-filling}{vacancy-filling rate} 0.990.
+
+\section{Flows and the Beveridge curve}\label{sec:b2:search-and-unemployment:beveridge}
+
+Unemployment changes as $\dot u = s(1 - u) - f(\theta)u$. In a steady state inflows equal outflows:
+\begin{equation}\label{eq:b2:search-and-unemployment:bc}
+u = \frac{s}{s + f(\theta)}.
+\end{equation}
+Given $s$, each tightness gives one unemployment rate, and with $v = \theta u$ one vacancy rate. As $\theta$ rises, $u$ falls and $v$ rises: the steady states
+trace a downward-sloping curve in $(u, v)$, the Beveridge curve of the opening chart. A fall in matching efficiency $A$ or a rise in $s$ shifts it
+outward: more of both at once.
+
+\section{Job creation}\label{sec:b2:search-and-unemployment:job-creation}
+
+A firm that opens a vacancy pays $c$ per period until it is filled, which takes $1/q(\theta)$ periods on average. A filled job produces $p$ and pays $w$ until it
+is destroyed at rate $s$; its value, discounted at $r$, is $(p - w)/(r + s)$. Firms open vacancies until the expected value of one more is zero.
+
+\begin{definition}[Job-creation condition]\label{def:b2:search-and-unemployment:job-creation}
+The \emph{job-creation condition}\index{job-creation condition} states that, with free entry of vacancies, the expected cost of filling a vacancy equals the value of a filled job:
+$\dfrac{c}{q(\theta)} = \dfrac{p - w}{r + s}$.
+\end{definition}
+
+A higher wage makes jobs less valuable, so firms open fewer vacancies until the faster filling of each restores the
+balance: the job-creation curve slopes down in $(\theta, w)$.
+
+\section{Wage bargaining}\label{sec:b2:search-and-unemployment:bargaining}
+
+Once a worker and a firm meet, a match produces more than the two would get apart; both would lose by walking away and
+searching again. The wage divides this surplus.
+
+\begin{definition}[Nash bargaining solution]\label{def:b2:search-and-unemployment:nash-bargaining}
+The \emph{Nash bargaining solution}\index{Nash bargaining solution} of a bargain over a surplus sets the terms that
+maximise $(W - U)^\beta(J - V)^{1-\beta}$, where $W - U$ is the worker's gain from the match and $J - V$ the firm's; $\beta \in (0, 1)$ is the worker's \emph{bargaining power}\index{bargaining power},
+and the solution gives the worker the share $\beta$ of the total surplus.
+\end{definition}
+
+With free entry, $V = 0$, and with the value equations of the worker and the firm (Exercise 11) the Nash solution gives
+\begin{equation}\label{eq:b2:search-and-unemployment:wage}
+w = (1 - \beta)z + \beta(p + c\theta).
+\end{equation}
+The wage is a weighted average of what the worker gets unemployed and what the match produces, plus the hiring costs
+the firm saves by keeping the worker, which are larger in a tight market. This wage curve slopes up in $(\theta, w)$.
+
+\section{Equilibrium unemployment}\label{sec:b2:search-and-unemployment:dmp}
+
+\begin{definition}[Diamond--Mortensen--Pissarides model]\label{def:b2:search-and-unemployment:dmp}
+The \emph{Diamond--Mortensen--Pissarides model}\index{Diamond--Mortensen--Pissarides model} is the equilibrium model of
+unemployment that combines a \omterm{def:b2:search-and-unemployment:matching-function}{matching function}, free entry of vacancies and wages set by Nash bargaining.
+\end{definition}
+
+Substituting the wage into the \omterm{def:b2:search-and-unemployment:job-creation}{job-creation condition} gives one equation in $\theta$:
+\begin{equation}\label{eq:b2:search-and-unemployment:theta}
+\frac{(1 - \beta)(p - z)}{r + s + \beta f(\theta)} = \frac{c}{q(\theta)}.
+\end{equation}
+The left side falls with $\theta$ and the right side rises, so there is one equilibrium tightness. It sets the wage through
+\eqref{eq:b2:search-and-unemployment:wage} and unemployment through \eqref{eq:b2:search-and-unemployment:bc}.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=1.2, ymin=0.78, ymax=1.06, width=0.55\linewidth, height=0.42\linewidth,
+    xlabel={Tightness, $\theta$}, ylabel={Wage, $w$}, scaled y ticks=false, yticklabel style={/pgf/number format/fixed},
+    legend style={at={(1.03,0.5)}, anchor=west, font=\small}]
+  \addplot[omDef, very thick, domain=0:1.2, samples=60] {1 - 0.05*sqrt(x)};
+  \addlegendentry{job creation}
+  \addplot[omThm, very thick, domain=0:1.04, samples=2] {0.8 + 0.25*x};
+  \addlegendentry{wage curve, $z = 0.6$}
+  \addplot[omThm, thick, dashed, domain=0:0.84, samples=2] {0.85 + 0.25*x};
+  \addlegendentry{wage curve, $z = 0.7$}
+  \node[eqpoint] at (axis cs:0.64,0.96) {};
+  \node[eqpoint] at (axis cs:0.4638,0.966) {};
+  \draw[guide] (axis cs:0.64,0.96) -- (axis cs:0.64,0.78);
+  \draw[guide] (axis cs:0.4638,0.966) -- (axis cs:0.4638,0.78);
+\end{axis}
+\end{tikzpicture}
+
+{\small Brenland's labour market (the weekend problem): equilibrium tightness and wage where the job-creation curve meets
+the wage curve. A rise in the value of unemployment from 0.6 to 0.7 shifts the wage curve up: tightness falls from 0.64 to 0.46
+and the wage rises from 0.960 to 0.966.}
+\end{omfigure}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=4, xmax=16, ymin=0, ymax=12, width=0.55\linewidth, height=0.42\linewidth,
+    xlabel={Unemployment, per cent}, ylabel={Vacancies, per cent},
+    legend style={at={(1.03,0.5)}, anchor=west, font=\small}]
+  \addplot[omDef, very thick, domain=4.5:16, samples=80] {69.444*(1 - x/100)^2/x};
+  \addlegendentry{Beveridge curve}
+  \addplot[omThm, very thick, domain=0:16, samples=2] {0.64*x};
+  \addlegendentry{$\theta = 0.64$}
+  \addplot[omThm, thick, dashed, domain=0:16, samples=2] {0.4638*x};
+  \addlegendentry{$\theta = 0.46$}
+  \node[eqpoint] at (axis cs:9.43,6.04) {};
+  \node[eqpoint] at (axis cs:10.90,5.06) {};
+\end{axis}
+\end{tikzpicture}
+
+{\small The same economy in $(u, v)$: tightness is a ray from the origin, and the steady state lies where it crosses the Beveridge curve. The benefit
+rise turns the ray down, and unemployment rises from 9.43 to 10.90 per cent.}
+\end{omfigure}
+
+The listing solves \eqref{eq:b2:search-and-unemployment:theta} for a monthly calibration with invented numbers, and asks two questions: what a rise in the value of unemployment does,
+and how much tightness responds to productivity.
+
+\omcode{code/bachelor-2/26-search-and-unemployment/listings/dmp.py}{1}{30}{Equilibrium tightness, unemployment and
+wage.}\label{lst:b2:search-and-unemployment:dmp}
+
+\omoutput{code/bachelor-2/26-search-and-unemployment/outputs/dmp.txt}{A rise in benefits raises unemployment; with $z = 0.4$ a 1 per cent rise in
+productivity raises tightness by only 1.8 per cent.}\label{out:b2:search-and-unemployment:dmp}
+
+\begin{model}{Diamond--Mortensen--Pissarides}
+\assumes Random matching with constant returns; free entry of vacancies; wages renegotiated by Nash bargaining at every
+moment; exogenous separations.
+\predicts A higher value of unemployment, through benefits, lowers tightness and raises unemployment and wages; higher
+productivity raises tightness and lowers unemployment; vacancies and unemployment move in opposite directions along a
+Beveridge curve.
+\tested The sign of the benefit effect agrees with natural experiments in which longer potential benefits lowered
+job-finding rates (Card, Chetty and Weber 2007; Lalive 2008), though these mainly measure how the unemployed search; the
+downward-sloping Beveridge curve of the opening chart.
+\breaks Fluctuations: the vacancy-unemployment ratio varies almost 20 times as much as productivity in the American data, while the
+model with standard parameters predicts nearly the same volatility for the two (Shimer 2005).
+\end{model}
+
+\section{Benefits and productivity}\label{sec:b2:search-and-unemployment:benefits}
+
+% code: listings/dmp.py
+In the listing, a rise in $z$ from 0.4 to 0.5 lowers tightness from 0.529 to 0.436 and raises unemployment from 5.56 to 6.10 per cent: a
+higher value of unemployment strengthens the worker's position in the bargain, raises wages, and makes vacancies less
+profitable. A rise in productivity does the reverse. Both predictions concern the effect of benefits through wages and
+vacancies; the evidence below concerns the more direct effect on how hard the unemployed search, which the model's extensions
+include.
+
+\begin{record}[How benefits change job finding]
+% ledger: b2:ccw2007, b2:lalive2008
+Two studies used sharp rules in Austria's unemployment insurance. Card, Chetty and Weber (2007), with data on over half a
+million job losers, found that extending the potential duration of benefits from 20 to 30 weeks lowered job-finding rates in the
+first 20 weeks of search by 5 to 9 per cent, and that a severance payment of two months' earnings lowered them by 8 to 12 per cent, with
+little or no effect of the longer search on the quality of the next job. Lalive (2008) studied a programme that extended
+the maximum duration from 30 to 209 weeks for job seekers aged 50 or more in some regions: each extra week of benefits
+lengthened unemployment by at least 0.09 weeks for men and 0.32 weeks for women. How large these effects are in other countries
+and periods is a question for the Year 3 volume.
+\end{record}
+
+\section{Where it breaks: unemployment moves too little}\label{sec:b2:search-and-unemployment:puzzle}
+
+\begin{definition}[Unemployment-volatility puzzle]\label{def:b2:search-and-unemployment:volatility-puzzle}
+The \emph{unemployment-volatility puzzle}\index{unemployment-volatility puzzle} is the failure of the
+\omterm{def:b2:search-and-unemployment:dmp}{Diamond--Mortensen--Pissarides model}, with standard parameters, to generate fluctuations in tightness and unemployment as
+large as those observed, given the observed fluctuations in productivity.
+\end{definition}
+
+% ledger: b2:shimer2005; code: listings/dmp.py
+In the listing, with $z = 0.4$, a 1 per cent rise in productivity raises tightness by 1.8 per cent. In the American data the
+vacancy-unemployment ratio varies almost 20 times as much as productivity (Shimer 2005). The reason is in the wage equation:
+when productivity rises, the bargained wage absorbs most of the rise, and the firm's profit from a match, which is what
+drives vacancy creation, barely moves. If $z$ is close to $p$, the profit $p - w$ is small, and a 1 per cent rise in $p$ is a large proportional rise in profit: with $z = 0.9$
+tightness rises by 11.6 per cent. But that calibration says that a job is worth little more to a worker than unemployment, and in
+the listing it puts unemployment at 13.64 per cent unless the vacancy cost is changed too. Wages that respond less to market
+conditions than Nash bargaining implies are the other route the literature has taken; neither has settled the question.
+
+\section{Exercises}\label{sec:b2:search-and-unemployment:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:search-and-unemployment:1}
+Read the opening chart. Give unemployment, vacancies and tightness in 2013-Q1, 2019-Q4 and 2022-Q2.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:search-and-unemployment:2}
+With a separation rate of 0.03 and a job-finding rate of 0.5 per month, compute the steady-state unemployment rate.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:search-and-unemployment:3}
+With $m = 0.7u^{0.5}v^{0.5}$, $u = 0.06$ and $v = 0.03$, compute matches, tightness, the job-finding rate and the \omterm{def:b2:search-and-unemployment:vacancy-filling}{vacancy-filling rate}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:search-and-unemployment:4}
+Why do firms open vacancies until the expected value of one more is zero, rather than stopping when the last one is
+profitable?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:search-and-unemployment:5}
+With $\beta = 0.5$, $z = 0.4$, $p = 1$, $c = 1$ and $\theta = 0.529$, compute the bargained wage. Which part of it rewards the worker for the firm's hiring cost?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:search-and-unemployment:6}
+Predict, then check with the listing: the value of unemployment rises from 0.4 to 0.5. Which way do tightness, the wage and unemployment
+move?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:search-and-unemployment:7}
+In Lalive's study, the maximum duration rose by how many weeks? By at least how many weeks did unemployment lengthen, for men
+and for women?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:search-and-unemployment:8}
+Modify the listing to give workers \omterm{def:b2:search-and-unemployment:nash-bargaining}{bargaining power} 0.7. Report tightness, unemployment and the wage, and explain the change.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:search-and-unemployment:9}
+In the opening chart, compare the fourth quarters of 2019 and 2025. Has the economy moved along a fixed Beveridge curve, or
+has the curve shifted? Which parameters of the model would shift it this way, and in which direction?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:search-and-unemployment:10}
+From \eqref{eq:b2:search-and-unemployment:theta} with $\eta = 0.5$, show that $x = \sqrt\theta$ solves a quadratic equation, and write its positive root.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:search-and-unemployment:11}
+The values of employment and unemployment satisfy $rW = w + s(U - W)$ and $rU = z + f(\theta)(W - U)$; those of a filled job and a vacancy satisfy $rJ = p - w - sJ$ and $rV = -c + q(\theta)(J - V)$. With $V = 0$ and
+$W - U = \beta(W - U + J)$, derive \eqref{eq:b2:search-and-unemployment:wage}.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:search-and-unemployment:12}
+Show that the elasticity of $\theta$ with respect to $p$ is $\dfrac{p/(p - z)}{\eta + (1 - \eta)\beta f/(r + s + \beta f)}$. Evaluate it for the listing's calibration with $z = 0.4$ and with $z = 0.9$.
+\end{exercise}
+
+\section{Problem: Brenland's labour market}\label{sec:b2:search-and-unemployment:problem}
+
+\begin{problem}[{Weekend problem --- Brenland's labour market: flows, matching, the wage and job creation, and a rise in
+benefits}]
+\label{pb:b2:search-and-unemployment:1}
+Per quarter, Brenland's jobs end at rate $s = 0.05$ and the interest rate is $r = 0.01$. Matches are $m = 0.6u^{0.5}v^{0.5}$. A job produces $p = 1$; an open vacancy costs $c = 0.5$; the value of
+unemployment is $z = 0.6$; workers' \omterm{def:b2:search-and-unemployment:nash-bargaining}{bargaining power} is $\beta = 0.5$.
+
+\medskip
+\noindent\textbf{Part I --- Flows.}
+\begin{enumerate}
+  \item Write the law of motion of unemployment.
+  \item If the job-finding rate were 0.45, what would steady-state unemployment be?
+  \item How many quarters, on average, does a spell of unemployment then last?
+  \item And a job?
+  \item Why does a higher separation rate shift the Beveridge curve outward?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Matching.}
+\begin{enumerate}[resume]
+  \item Write $f(\theta)$ and $q(\theta)$.
+  \item Show that the \omterm{def:b2:search-and-unemployment:matching-function}{matching function} has constant returns.
+  \item What tightness gives a job-finding rate of 0.48?
+  \item What is the \omterm{def:b2:search-and-unemployment:vacancy-filling}{vacancy-filling rate} at that tightness?
+  \item Write the Beveridge curve as $v$ in terms of $u$.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- The wage and job creation.}
+\begin{enumerate}[resume]
+  \item Write the \omterm{def:b2:search-and-unemployment:job-creation}{job-creation condition} as $w$ in terms of $\theta$.
+  \item Write the wage curve.
+  \item Write the equation for $x = \sqrt\theta$ and solve it.
+  \item Find the equilibrium tightness, job-finding rate and \omterm{def:b2:search-and-unemployment:vacancy-filling}{vacancy-filling rate}.
+  \item Find unemployment and vacancies.
+  \item Find the wage, and check it in both curves.
+  \item A rise in productivity to 1.02: find tightness and unemployment.
+  \item What is the elasticity of tightness with respect to productivity here?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- A rise in benefits.} The value of unemployment rises to $z = 0.7$.
+\begin{enumerate}[resume]
+  \item Which curve shifts, and which way?
+  \item Find the new tightness and job-finding rate.
+  \item Find the new unemployment rate.
+  \item Find the new wage. Why does it rise so little?
+  \item Why do vacancies fall?
+  \item What channel through which benefits affect unemployment does this model leave out, which the studies of the record
+  measure?
+  \item State the result: equilibrium tightness, unemployment and wage, and the effect of the benefit rise.
+\end{enumerate}
+\end{problem}

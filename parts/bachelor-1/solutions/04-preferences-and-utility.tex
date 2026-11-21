@@ -1,0 +1,206 @@
+\section*{Chapter \ref{ch:b1:preferences-and-utility} --- Preferences and Utility}
+% Numbers recomputed in code/bachelor-1/04-preferences-and-utility/exercises/solutions.py (tested).
+
+\begin{solution}{exo:b1:preferences-and-utility:mrs-cd}
+$u_1 = 0.3x_1^{-0.7}x_2^{0.7}$ and $u_2 = 0.7x_1^{0.3}x_2^{-0.3}$, so
+$\mathrm{MRS} = u_1/u_2 = (0.3/0.7)(x_2/x_1) = 0.429\,x_2/x_1$. At $(1, 1)$
+it is $0.429$: the consumer would give up $0.429$ units of good 2 for one
+more unit of good 1. At $(3, 7)$ it is $(3/7)(7/3) = 1$: she would trade
+one for one, because she now holds much more of good 2.
+\end{solution}
+
+\begin{solution}{exo:b1:preferences-and-utility:axioms}
+\begin{enumerate}
+  \item Transitivity: the three preferences form a cycle.
+  \item Completeness: two options that can never be compared.
+  \item Convexity: the extremes are preferred to a mixture.
+  \item Monotonicity: more bread is worse, although it is not a nuisance (it can be given away).
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:preferences-and-utility:read-chart}
+\begin{enumerate}
+  \item All items: $126.07/71.74 = 1.757$, a rise of $75.7\%$. Rents:
+    $115.46/72.02 = 1.603$, a rise of $60.3\%$. Audio-visual:
+    $71.64/380.88 = 0.188$, a fall of $81.2\%$.
+  \item Rents fell relative to all items: $1.603/1.757 = 0.912$, a fall of
+    $8.8\%$ in the relative price.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:preferences-and-utility:log}
+On positive bundles, $v = \ln(x_1x_2) = \ln u$ with $\ln$ strictly increasing:
+it represents the same preferences
+(\cref{prop:b1:preferences-and-utility:ordinal}); it is not defined where
+$x_1$ or $x_2$ is zero. $w = -u$ reverses every comparison, so it represents
+the opposite preferences. $z = u^2$, with $t \mapsto t^2$ strictly increasing
+for $t \ge 0$, represents the same preferences.
+\end{solution}
+
+\begin{solution}{exo:b1:preferences-and-utility:complements}
+\begin{enumerate}
+  \item Right angles with corners at $(1, 1)$, $(2, 2)$, $(3, 3)$, on the ray $x_2 = x_1$.
+  \item If $x_1 > x_2$, then $u = x_2$ near the bundle: the curve is horizontal, $u_1 = 0$ and $u_2 = 1$, so $\mathrm{MRS} = 0$ (extra good 1 is worth nothing). If $x_1 < x_2$, then $u = x_1$: the curve is vertical, $u_2 = 0$, and the consumer would give up all her surplus good 2 for a little more good 1, a slope that is not a finite number.
+  \item At $(3, 3)$ the curve has a corner: its slope is $0$ to the right and vertical below, so no tangent and no derivative $\dd x_2/\dd x_1$ exist.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:preferences-and-utility:quasi}
+$\mathrm{MRS} = v'(x_1) = 2/\sqrt{x_1}$, so it is $2/2 = 1$ at $(4, 1)$ and
+also $1$ at $(4, 10)$. With $x_2$ money, at four units of good 1 the
+consumer would pay 1 unit of money for a fifth, however much money she
+holds: there is no income effect on this willingness to pay.
+\end{solution}
+
+\begin{solution}{exo:b1:preferences-and-utility:predict}
+\begin{enumerate}
+  \item With $u = \sqrt{x_1x_2}$ the \omterm{def:b1:preferences-and-utility:mrs}{MRS} is $x_2/x_1$, and the tangency
+    $x_2/x_1 = p_1/p_2$ makes the ratio rise in proportion to the price
+    ratio: by the same factor $13.5$.
+  \item $p_1x_1 = p_2x_2$ at the tangency, so she spends half her budget on
+    each good whatever the prices: the share stays at $1/2$.
+  \item A share of electricity in spending on the two goods that rose
+    clearly over the period, or a quantity ratio that rose much less than
+    13.5 times, would contradict these preferences (not the axioms: other
+    \omterm{def:b1:preferences-and-utility:convex}{convex preferences} predict other responses).
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:preferences-and-utility:cycle}
+The choices reveal $x^1 \succsim x^2$ and $x^2 \succsim x^3$. At $p^3$, $x^1$ cost
+strictly less than $x^3$, so a bundle slightly larger than $x^1$ was also
+affordable; by monotonicity it is strictly better than $x^1$, and choosing
+$x^3$ reveals $x^3 \succsim$ that bundle $\succ x^1$, so $x^3 \succ x^1$. Transitivity
+applied to $x^1 \succsim x^2 \succsim x^3$ gives $x^1 \succsim x^3$, which contradicts
+$x^3 \succ x^1$. The choices contradict transitivity, given monotonicity and
+choice of the best affordable bundle.
+\end{solution}
+
+\begin{solution}{exo:b1:preferences-and-utility:refute-convex}
+\omterm{def:b1:preferences-and-utility:perfect}{Perfect substitutes} $u = ax_1 + bx_2$ are \omterm{def:b1:preferences-and-utility:convex}{convex}, and on a straight budget line
+they lead to spending everything on the good with the larger ratio of
+marginal utility to price: corners on every line are what \omterm{def:b1:preferences-and-utility:convex}{convex
+preferences} of that kind predict. (More generally, choices from straight
+budget lines that reveal no cycle can always be produced by \omterm{def:b1:preferences-and-utility:convex}{convex
+preferences}, a result of Afriat admitted here, so such lines can never
+refute convexity alone.) A refutation needs choice sets that are not straight
+lines: she chooses $x$ when offered $x$ or $m^{+}$, and $z$ when offered $z$ or
+$m^{+}$. By completeness $x \succsim z$ or $z \succsim x$; say $x \succsim z$. Convexity
+with $x \succsim z$ and $z \succsim z$ gives $m \succsim z$, and monotonicity gives
+$m^{+} \succ m$, so $m^{+} \succ z$; choosing $z$ over $m^{+}$ contradicts it. The
+other case is symmetric.
+\end{solution}
+
+\begin{solution}{exo:b1:preferences-and-utility:transform}
+$v_i = f'(u)u_i$, so $v_1/v_2 = f'(u)u_1/\bigl(f'(u)u_2\bigr) = u_1/u_2$ wherever
+$f'(u) \neq 0$. With $u = x_1x_2$ and $f(t) = (t - 1)^2$, $f' < 0$ for $t < 1$:
+$u(0.5, 0.5) = 0.25 < u(1, 1) = 1$, but $v(0.5, 0.5) = 0.5625 > v(1, 1) = 0$, so
+$v$ ranks the two bundles the other way and does not represent the same
+preferences. The ratio of the derivatives is still $x_2/x_1$ where $f' \neq 0$:
+equal \omterm{def:b1:preferences-and-utility:mrs}{MRS} everywhere is necessary for two utilities to represent the same
+preferences, not sufficient.
+\end{solution}
+
+\begin{solution}{exo:b1:preferences-and-utility:convex-not-strict}
+$u(4, 2) = \min(4, 4) = 4$. The \omterm{def:b1:preferences-and-utility:convex}{better-than set} $\{x_1 \ge 4, x_2 \ge 2\}$ is
+an intersection of two half-planes, hence \omterm{def:b1:preferences-and-utility:convex}{convex}. Take $x = (4, 3)$ and
+$z = (4, 5)$: $u(x) = \min(4, 6) = 4$ and $u(z) = \min(4, 10) = 4$, so both are
+indifferent to $y$. Their average $(4, 4)$ has $u = \min(4, 8) = 4$: indifferent
+to $y$, not strictly better, so the preferences are not strictly \omterm{def:b1:preferences-and-utility:convex}{convex}.
+\end{solution}
+
+\begin{solution}{exo:b1:preferences-and-utility:design}
+At prices $(1, 2)$ and income 9 she chooses $x^1 = (1, 4)$, which costs 9,
+although $x^2 = (4, 1)$ costs 6. At prices $(2, 1)$ and income 9 she chooses
+$x^2$, which costs 9, although $x^1$ costs 6. Each bundle was chosen when the
+other was strictly cheaper, so (with monotonicity, as in
+\cref{exo:b1:preferences-and-utility:cycle}) $x^1 \succ x^2$ and $x^2 \succ x^1$:
+no \omterm{def:b1:preferences-and-utility:rational}{rational}, \omterm{def:b1:preferences-and-utility:monotone}{monotone} ordering produces these choices. In the laboratory
+record, 80 of 93 subjects scored above 0.90 on the efficiency index, while
+only 12 of 25,000 simulated random choosers did: real subjects make such
+choices, but rarely, and with small losses. % ledger: b1:choi2007-ccei
+\end{solution}
+
+\begin{solution}{pb:b1:preferences-and-utility:fridge}
+\textbf{1.} $u_A(P) = \sqrt 8 = 2.828$, $u_A(Q) = 2.828$, $u_A(R) = 3$,
+$u_A(S) = \sqrt 6 = 2.449$: $R \succ P \sim Q \succ S$.
+
+\textbf{2.} $u_B(P) = 4 + 6\ln 2 = 8.159$, $u_B(Q) = 2 + 6\ln 4 = 10.318$,
+$u_B(R) = 3 + 6\ln 3 = 9.592$, $u_B(S) = 6 + 6\ln 1 = 6.000$: $Q \succ R \succ P \succ S$.
+
+\textbf{3.} Transitivity. Holding $P$, Cleo pays a little to swap it for $R$
+($R \succ P$), then a little to swap $R$ for $Q$, then a little to swap $Q$ for
+$P$: she ends with $P$ again, three payments poorer, and the cycle can be
+repeated.
+
+\textbf{4.} Ana: $P \sim Q$ and their average $R$ is strictly better, as strict
+convexity requires. Ben: $Q \succsim P$ and $P \succsim P$, so strict convexity
+requires $R \succ P$, which holds ($9.592 > 8.159$). Both are consistent.
+
+\textbf{5.} On positive bundles $\partial u_A/\partial m = \tfrac12\sqrt{b/m} > 0$ and
+$\partial u_A/\partial b = \tfrac12\sqrt{m/b} > 0$; for Ben the derivatives are
+$1$ and $6/b > 0$. More of either good raises utility.
+
+\textbf{6.} Yes. Ana ranks $R$ first and Ben ranks $Q$ first; each ranking is
+complete and transitive. Rationality is consistency within one person, not
+agreement between people.
+
+\textbf{7.} $v_A = u_A^2$ and $w_A = 2\ln u_A$, both strictly increasing
+functions of $u_A > 0$ (\cref{prop:b1:preferences-and-utility:ordinal}).
+
+\textbf{8.} $\mathrm{MRS}_A = \bigl(\tfrac12\sqrt{m/b}\bigr)/\bigl(\tfrac12\sqrt{b/m}\bigr) = m/b$:
+2 litres per loaf at $P$, $0.5$ at $Q$.
+
+\textbf{9.} $\mathrm{MRS}_B = (6/b)/1 = 6/b$: 3 litres per loaf at $P$, $1.5$ at $Q$.
+
+\textbf{10.} $\sqrt{mb} = 3$ gives $m = 9/b$; its slope is $\dd m/\dd b = -9/b^2 = -1$ at $b = 3$.
+
+\textbf{11.} Holding four loaves, Ben would give up $1.5$ litres of milk for a
+fifth loaf, in the limit of a small trade.
+
+\textbf{12.} On the curve $mb = c$, $\mathrm{MRS}_A = m/b = c/b^2$, which falls as
+$b$ rises.
+
+\textbf{13.} Cobb--Douglas with exponent $1/2$ on each good.
+
+\textbf{14.} Quasi-linear, with milk as the linear good: $u_B = v(b) + m$, $v(b) = 6\ln b$.
+
+\textbf{15.} $u_D = \min(m/2, b)$, \omterm{def:b1:preferences-and-utility:perfect}{perfect complements}. Where $m/2 < b$ extra
+bread is worthless and the \omterm{def:b1:preferences-and-utility:mrs}{MRS} is 0; where $m/2 > b$ the curve is vertical and
+the \omterm{def:b1:preferences-and-utility:mrs}{MRS} is not a finite number; at the corners $m = 2b$ it is not defined.
+
+\textbf{16.} $u_E = m + 3b$, \omterm{def:b1:preferences-and-utility:perfect}{perfect substitutes}, with a constant \omterm{def:b1:preferences-and-utility:mrs}{MRS} of 3
+litres per loaf.
+
+\textbf{17.} A loaf costs her $1.4$ litres and is worth 3 litres to her, so
+she swaps all her milk: $9/1.4 = 6.43$ loaves, and she holds $(0, 7.43)$, with
+$u_E = 3 \times 7.43 = 22.29$ against $9 + 3 = 12$ before.
+
+\textbf{18.} Ana's \omterm{def:b1:preferences-and-utility:mrs}{MRS} $m/b$ is unchanged when both are multiplied by $k$.
+Ben's $6/b$ becomes $6/(kb)$: it falls by the factor $k$.
+
+\textbf{19.} $\mathrm{MRS}_A = 9/1 = 9$ and $\mathrm{MRS}_B = 6/7 = 0.857$
+litres per loaf. Ana values bread more at the margin.
+
+\textbf{20.} Ana goes to $(7, 2)$: $u_A$ rises from $3$ to $\sqrt{14} = 3.742$.
+Ben goes to $(3, 6)$: $u_B$ rises from $1 + 6\ln 7 = 12.675$ to
+$3 + 6\ln 6 = 13.751$. Both gain.
+
+\textbf{21.} Ana gains from a small purchase of bread if the rate is below what
+a loaf is worth to her, $r < 9$; Ben gains from a small sale if it is above
+what a loaf is worth to him, $r > 0.857$. Both gain for $0.857 < r < 9$.
+
+\textbf{22.} Buying $t$ loaves, Ana holds $(9 - rt, 1 + t)$, and her \omterm{def:b1:preferences-and-utility:mrs}{MRS} equals $r$ when
+$(9 - rt)/(1 + t) = r$, so $9 - rt = r + rt$ and $t = (9 - r)/(2r)$. Selling $t$
+loaves, Ben holds $(1 + rt, 7 - t)$, and $6/(7 - t) = r$ gives $t = 7 - 6/r$.
+
+\textbf{23.} $(9 - r)/(2r) = 7 - 6/r$; multiplying by $2r$, $9 - r = 14r - 12$,
+so $r = 21/15 = 1.4$. Then $t = 7.6/2.8 = 2.714$ loaves, paid with
+$1.4 \times 2.714 = 3.8$ litres.
+
+\textbf{24.} Ana holds $(9 - 3.8, 1 + 2.714) = (5.2, 3.714)$, with
+$u_A = \sqrt{5.2 \times 3.714} = 4.395$; Ben holds $(1 + 3.8, 7 - 2.714) = (4.8, 4.286)$,
+with $u_B = 4.8 + 6\ln 4.286 = 13.532$. Both \omterm{def:b1:preferences-and-utility:mrs}{MRS} are $5.2/3.714 = 6/4.286 = 1.40$.
+Result: the swap rate they agree on is $1.4$ litres of milk per loaf; both
+end better off than at the start (Ana $4.395 > 3$, Ben $13.532 > 12.675$).
+\end{solution}

@@ -1,0 +1,7 @@
+$ python forking_paths.py
+one dataset, 16 p-values, sorted:
+    0.21 0.21 0.22 0.29 0.44 0.47 0.57 0.67 0.72 0.72 0.73 0.74 0.89 0.91 0.95 0.98
+significant at 5 %: 0 of 16
+share of 1,000 null datasets significant on the first path: 0.064
+share with at least one significant path: 0.214
+if the 16 tests were independent: 0.560

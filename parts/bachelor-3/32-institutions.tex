@@ -1,0 +1,448 @@
+\chapter{Institutions and Long-Run Prosperity}\label{ch:b3:institutions}
+
+Two places with the same climate, the same language and the same history can end up
+with incomes that differ by a factor of twenty-five. The difference that the evidence
+points to most often is the rules under which people produce and exchange: who owns
+what, whether contracts are kept, whether the ruler can take what others have made.
+This chapter measures those rules, reads the natural experiments with the methods of
+the first chapters of this volume, and sets out how strong the case is and where it
+is weak.
+
+\begin{openingchart}{GDP per person in China, 1950--2022 (line; the dashed line marks 1978), and Maddison's own estimates for Western and Eastern Europe (marks;
+logarithmic scale, 2011 dollars).}{Maddison Project Database 2023, country and regional
+data}
+\begin{tikzpicture}
+\begin{semilogyaxis}[omtime, width=0.7\linewidth, height=0.44\linewidth, xmin=1950,
+  xmax=2022, ymin=600, ymax=60000, ylabel={Dollars},
+  ytick={1000,10000}, yticklabels={1{,}000, 10{,}000},
+  legend pos=north west, legend style={font=\footnotesize}]
+  \addplot[omThm, thick, no marks] table[x=year, y=gdppc] {figdata/bachelor-3/32-institutions/out/china.csv};
+  \addplot[black, mark=*, mark size=1.5pt] table[x=year, y=gdppc] {figdata/bachelor-3/32-institutions/out/europe_west.csv};
+  \addplot[omDef, mark=square*, mark size=1.5pt] table[x=year, y=gdppc] {figdata/bachelor-3/32-institutions/out/europe_east.csv};
+  \draw[black!50, dashed] (axis cs:1978,600) -- (axis cs:1978,60000);
+  \legend{China, Western Europe, Eastern Europe}
+\end{semilogyaxis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: opening_stats
+China's income per person grew 2.8~\% a year from 1950 to 1978, from 799 to 1{,}744 dollars, and 5.5~\% a year from
+1978 to 2022, to 19{,}238. Eastern Europe's income was 57~\% of Western Europe's in 1950 and 40~\% in 1990, after four
+decades of planning; by 2022 it was 50~\%.
+
+\begin{recall}
+\omterm{def:b3:institutions:institutions}{Institutions}, the two Koreas, the two Germanys and China's reforms appear in the
+grades 6--9 and 10--12 volumes; growth accounting and misallocation in the Year 1
+volume; prices as information in the Year 2 volume. \omterm{def:b3:instrumental-variables:instrument}{Instrumental variables},
+difference in differences with \omterm{def:b3:difference-in-differences:synthetic-control}{synthetic control}, and regression discontinuity are
+\cref{ch:b3:instrumental-variables,ch:b3:difference-in-differences,ch:b3:regression-discontinuity}'s.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:institutions:symbols}
+$p$ is the probability that output is expropriated; $k$ investment; $A k^{a}$ output; $z$ an
+instrument; $s$ a measure of property security; $\pi$ a first-stage slope.
+\end{notation}
+
+\section{Defining and measuring institutions}\label{sec:b3:institutions:defining}
+
+\begin{definition}[Institutions]\label{def:b3:institutions:institutions}
+\index{institutions}
+\emph{Institutions} are the rules of the game in a society --- laws, \omterm{def:b3:institutions:property-rights}{property rights},
+the constraints on rulers and the ways they are enforced --- as distinct from the
+players' choices within them. In data they are measured by indices built from
+surveys of experts, firms and households, or by recorded rules such as the share of
+land with registered titles.
+\end{definition}
+
+\begin{definition}[Property rights; rule of law; expropriation risk]\label{def:b3:institutions:property-rights}
+\index{property rights}\index{rule of law}\index{expropriation risk}
+\emph{Property rights} are the rights to use an asset, to its income and to sell it.
+The \emph{rule of law} is the extent to which rules bind everyone, rulers included,
+and are enforced impartially, measured as an index. \emph{Expropriation risk} is the
+probability that the state or others take an asset or its income.
+\end{definition}
+
+\begin{proposition}[Expropriation lowers investment]\label{prop:b3:institutions:holdup}
+An investor chooses $k$ to maximise $(1 - p)A k^{a} - k$, with $0 < a < 1$: the output is taken with probability $p$ after the
+investment is sunk. Then $k^* = (a(1 - p)A)^{1/(1 - a)}$, which falls with $p$, and output $A k^{*a}$ is proportional to $(1 - p)^{a/(1 - a)}$.
+\end{proposition}
+
+\begin{proof}
+The objective is strictly concave in $k$. The first-order condition $(1 - p)aA k^{a - 1} = 1$ gives $k^*$, and $dk^*/dp = -k^*/((1 - a)(1 - p)) < 0$.
+Substituting, $A k^{*a} = A(aA)^{a/(1 - a)}(1 - p)^{a/(1 - a)}$.
+\end{proof}
+
+With $a = 1/3$, output is proportional to $(1 - p)^{1/2}$: a risk of 50~\% lowers output by 29~\%, and more once the
+investment is in skills, roads and firms that a short horizon also discourages.
+
+\begin{measure}[Measuring institutions]
+Indices of the \omterm{def:b3:institutions:property-rights}{rule of law} or of \omterm{def:b3:institutions:property-rights}{expropriation risk} are built from experts' and
+firms' assessments, so they mix the rules with the outcomes: a rich country's
+courts look reliable partly because the country is rich. Most indicators used to
+show that \omterm{def:b3:institutions:institutions}{institutions} cause growth measure outcomes, not constraints, and some of
+the instruments used are flawed. % ledger: b3in:glls
+Recorded rules --- titled land, the date of an independent court --- are closer to
+the definition but cover less.
+\end{measure}
+
+\section{The natural experiments}\label{sec:b3:institutions:experiments}
+
+\begin{omchart}{GDP per person in South and North Korea, 1990--2022 (logarithmic scale, 2011
+dollars; the North Korea series starts in 1990).}{Maddison Project Database 2023}
+\begin{tikzpicture}
+\begin{semilogyaxis}[omtime, width=0.62\linewidth, height=0.4\linewidth, xmin=1990,
+  xmax=2022, ymin=1000, ymax=50000, ylabel={Dollars},
+  ytick={1000,10000}, yticklabels={1{,}000, 10{,}000},
+  legend style={font=\footnotesize, at={(0.97,0.5)}, anchor=east}]
+  \addplot[omDef, thick] table[x=year, y=gdppc] {figdata/bachelor-3/32-institutions/out/korea_south.csv};
+  \addplot[omThm, thick] table[x=year, y=gdppc] {figdata/bachelor-3/32-institutions/out/korea_north.csv};
+  \legend{South Korea, North Korea}
+\end{semilogyaxis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: koreas_stats
+
+The peninsula was divided in 1945 into two states with opposite rules: private
+property and markets in the South, collective property and central planning in the
+North. In 1990 the South's income per person was 5.6 times the North's; in 2022 it was 26.3 times, the
+North at 1{,}569 dollars. The division is close to an experiment: the border was drawn by
+outside powers along a line of latitude, not along any prior difference in the
+economy. If anything, the starting point favoured the North, which held 80~\% of the
+peninsula's coal and minerals and most of the heavy machinery left from colonial rule,
+while most of the South's people worked small farms. % ledger: b3in:cfr.korea
+It is not a clean experiment: the two states also differed in their allies, their
+aid and the wars they prepared for, and they are two units, which allows no
+standard error.
+
+Germany's division is the second case. Its use as an experiment goes beyond the
+comparison of the two states: after division, West German cities close to the new
+border saw their population growth fall well behind that of other West German
+cities, as a model of market access predicts --- the border cut them off from their
+hinterland. % ledger: b3in:rs
+The comparison of the two states is the less clean one, since the East also paid
+reparations and lost workers until the border was closed.
+
+\begin{record}[China's household responsibility system, 1978--1984]
+From 1978 Chinese farm households were allowed to keep what they produced beyond a
+quota, and the collectives were dissolved. A provincial panel finds that
+decollectivisation raised total factor productivity and accounts for about half of
+the growth of agricultural output in 1978--84; higher state procurement prices helped too,
+mainly by raising the use of inputs, while other market reforms mattered little. % ledger: b3in:lin
+The timing differed across provinces, which is what lets the panel separate the
+reform from the common trend (\cref{ch:b3:difference-in-differences}).
+\end{record}
+
+\begin{model}{Institutions as the cause of income differences}
+\assumes Secure \omterm{def:b3:institutions:property-rights}{property rights} and constraints on rulers raise the return to
+investment in capital, skills and firms
+(\cref{prop:b3:institutions:holdup}).
+\predicts Large income gaps between neighbours that share geography and culture but
+not rules; income responding to changes of rules.
+\tested The two Koreas and the two Germanys; China after 1978; instruments for
+\omterm{def:b3:institutions:institutions}{institutions} across former colonies (next section); a regression discontinuity on
+a colonial labour system in Peru. % ledger: b3in:dell
+\breaks The measures of \omterm{def:b3:institutions:institutions}{institutions} are partly outcomes; \omterm{def:b3:human-capital:human-capital}{human capital} may come
+first, with poor countries growing under good policies, often under dictators, and
+improving their political \omterm{def:b3:institutions:institutions}{institutions} afterwards. % ledger: b3in:glls
+\end{model}
+
+\section{Instruments for institutions}\label{sec:b3:institutions:instruments}
+
+Regressing income on an index of \omterm{def:b3:institutions:institutions}{institutions} across countries runs into all three
+problems of \cref{ch:b3:instrumental-variables}: rich countries can afford better
+\omterm{def:b3:institutions:institutions}{institutions}, the index is measured with error, and omitted factors drive both.
+
+\begin{definition}[Settler-mortality instrument]\label{def:b3:institutions:settler-mortality}
+\index{settler-mortality instrument}
+The \emph{settler-mortality instrument} uses the death rates that European soldiers,
+bishops and sailors faced in the colonies from the seventeenth to the nineteenth
+centuries as an instrument for current \omterm{def:b3:institutions:institutions}{institutions}. Where Europeans could settle
+they built \omterm{def:b3:institutions:institutions}{institutions} that protected property; where they died they set up
+extractive ones; and the early \omterm{def:b3:institutions:institutions}{institutions} persisted. % ledger: b3in:ajr
+\end{definition}
+
+\begin{omfigure}{The causal chain behind the settler-mortality instrument. The exclusion
+restriction is that mortality affects income today only through institutions (the
+crossed arrow must be absent).}
+\begin{tikzpicture}[node distance=2.6cm, every node/.style={font=\small}]
+  \node[draw, rounded corners, align=center] (m) {Settler\\mortality};
+  \node[draw, rounded corners, align=center, right=of m] (s) {Settlement};
+  \node[draw, rounded corners, align=center, right=of s] (i) {Early\\institutions};
+  \node[draw, rounded corners, align=center, right=1.6cm of i] (c) {Current\\institutions};
+  \node[draw, rounded corners, align=center, below=1.4cm of c] (y) {Income\\today};
+  \draw[-{Stealth}, thick] (m) -- (s);
+  \draw[-{Stealth}, thick] (s) -- (i);
+  \draw[-{Stealth}, thick] (i) -- (c);
+  \draw[-{Stealth}, thick] (c) -- (y);
+  \draw[-{Stealth}, dashed, omThm] (m) |- node[pos=0.75, fill=white] {$\times$ health, disease today} (y);
+\end{tikzpicture}
+\end{omfigure}
+
+\begin{proposition}[Two-stage least squares with one instrument]\label{prop:b3:institutions:wald}
+With one \omterm{def:b3:instrumental-variables:endogenous}{endogenous regressor} $s$ and one instrument $z$, the \omterm{def:b3:instrumental-variables:tsls}{two-stage least squares}
+coefficient equals the slope of the \omterm{def:b3:instrumental-variables:tsls}{reduced form} (income on $z$) divided by the slope
+of the \omterm{def:b3:instrumental-variables:tsls}{first stage} ($s$ on $z$).
+\end{proposition}
+
+\begin{proof}
+The \omterm{def:b3:instrumental-variables:tsls}{first stage} gives $\hat s = c + \pi z$, with $\pi = \operatorname{cov}(z, s)/\operatorname{var}(z)$. The second stage regresses $\ln y$ on $\hat s$:
+its slope is $\operatorname{cov}(\hat s, \ln y)/\operatorname{var}(\hat s) = \pi\operatorname{cov}(z, \ln y)/(\pi^2\operatorname{var}(z)) = (\operatorname{cov}(z, \ln y)/\operatorname{var}(z))/\pi$, the reduced-form slope over the first-stage slope.
+\end{proof}
+
+The ratio makes the weak point plain: when the \omterm{def:b3:instrumental-variables:tsls}{first stage} is small and imprecise,
+the estimate is a ratio with a denominator near zero
+(\cref{ch:b3:instrumental-variables}).
+
+\begin{debate}[Geography, institutions or human capital?]
+\textbf{\omterm{def:b3:institutions:institutions}{Institutions} first.} With settler mortality as the instrument, differences in
+\omterm{def:b3:institutions:institutions}{institutions} explain about three-quarters of the differences in income per person across
+former colonies, and once \omterm{def:b3:institutions:institutions}{institutions} are controlled for, being in Africa or far
+from the equator does not lower income (\emph{Grade 3}). % ledger: b3in:ajr
+\emph{Weakness:} the \omterm{def:b3:instrumental-variables:instrument}{exclusion restriction} --- mortality then may affect income now
+through disease and health as well.
+
+\textbf{The data behind the instrument.} In 36 of the 64 countries of the sample, the mortality rate is
+taken from another country, and rates from labourers, bishops and soldiers on
+campaign are combined; with these issues controlled for, the link between mortality
+and \omterm{def:b3:institutions:property-rights}{expropriation risk} is not robust and the instrumental-variable estimates become
+unreliable, often with infinite confidence intervals. % ledger: b3in:albouy
+\emph{Weakness:} a critique of one instrument, not evidence against the effect.
+
+\textbf{Geography directly.} Malaria transmission, set largely by ecology, lowers
+income per person even after the quality of \omterm{def:b3:institutions:institutions}{institutions} is controlled for (\emph{Grade 3}). % ledger: b3in:sachs
+\emph{Weakness:} malaria is itself shaped by income and public health.
+
+\textbf{\omterm{def:b3:human-capital:human-capital}{Human capital} first.} Schooling may be the more basic source of growth,
+with \omterm{def:b3:institutions:institutions}{institutions} improving after it (\emph{Grade 3}). % ledger: b3in:glls
+\emph{Weakness:} cross-country OLS, open to the reverse causation it criticises.
+
+\textbf{Persistence, measured locally.} A regression discontinuity at the boundary of
+the mita, the forced mining labour imposed in Peru and Bolivia from 1573 to 1812, finds household
+consumption about 25~\% lower and child stunting about 6 points higher inside it today, through land
+tenure and public goods: fewer large landowners historically, less schooling, fewer
+roads (\emph{Grade 2}). % ledger: b3in:dell
+\emph{Weakness:} one boundary in one country; it shows that \omterm{def:b3:institutions:institutions}{institutions} persist, not
+how much of world inequality they explain.
+\end{debate}
+
+\section{Planned economies in the data}\label{sec:b3:institutions:planned}
+
+\begin{definition}[Planned economy; soft budget constraint]\label{def:b3:institutions:planned}
+\index{planned economy}\index{soft budget constraint}
+A \emph{planned economy} allocates resources by administrative plan, with state
+ownership of firms and prices set by planners. A firm faces a \emph{soft budget
+constraint} when its losses will be covered by another institution, typically the
+state; the higher the probability that losses are covered, the softer the constraint. % ledger: b3in:kornai
+\end{definition}
+
+The softness weakens firms' response to prices, lowers efficiency and can create
+excess demand; it was extreme in the socialist economies and is present to a lesser
+degree in mixed ones. % ledger: b3in:kornai
+Exercise 11 shows the mechanism: a firm that expects to be bailed out puts in less
+effort to avoid failure. The opening chart shows the result at the scale of a
+continent: Eastern Europe fell from 57 to 40~\% of Western Europe's income between 1950 and 1990.
+
+\section{The transitions of the 1990s}\label{sec:b3:institutions:transition}
+
+\begin{definition}[Transition recession]\label{def:b3:institutions:transition}
+\index{transition recession}
+A \emph{transition recession} is the fall of measured output that followed the end of
+central planning, as old links between firms broke before new markets formed.
+\end{definition}
+
+\begin{omchart}{GDP per person in four economies after central planning, as an index with
+1989 = 100.}{Maddison Project Database 2023 (successor states' own series)}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.68\linewidth, height=0.42\linewidth, xmin=1985,
+  xmax=2022, ymin=40, ymax=380, ylabel={Index, 1989 = 100},
+  legend pos=north west, legend style={font=\footnotesize},
+  extra y ticks={100}, extra y tick labels={}, extra y tick style={grid=major}]
+  \addplot[omDef, thick] table[x=year, y=idx] {figdata/bachelor-3/32-institutions/out/transition_POL.csv};
+  \addplot[omDef, dashed, thick] table[x=year, y=idx] {figdata/bachelor-3/32-institutions/out/transition_CZE.csv};
+  \addplot[omThm, thick] table[x=year, y=idx] {figdata/bachelor-3/32-institutions/out/transition_RUS.csv};
+  \addplot[omThm, dashed, thick] table[x=year, y=idx] {figdata/bachelor-3/32-institutions/out/transition_UKR.csv};
+  \legend{Poland, Czechia, Russia, Ukraine}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: transition_stats
+
+Poland's income per person fell 16~\% to 1991 and was back above its 1989 level by 1995; Czechia's fell
+9~\%. Russia's fell 34~\% and bottomed out only in 1996; Ukraine's fell 54~\%, to 1997, regained the 1989 level
+in 2007, and in 2022 was at 77, after the war. Measured output overstates the fall where
+planned output had no buyers and understates it where queues disappeared; but the
+differences between countries are too large to be measurement alone. The countries
+also differed in how fast they freed prices, how they privatised and how much their
+courts and rulers changed, and they started from different places; no simple
+comparison of two countries separates these.
+
+\section{Crime, deterrence and the rule of law}\label{sec:b3:institutions:crime}
+
+Secure property also means protection from theft. Whether police reduce crime is
+hard to measure: cities with more crime hire more police, so a simple regression
+can even show police going with more crime.
+
+\begin{definition}[Deterrence elasticity of crime]\label{def:b3:institutions:deterrence}
+\index{deterrence elasticity of crime}
+The \emph{deterrence elasticity of crime} is the percentage change in crime for a
+1~\% increase in the resources of enforcement, such as the number of police.
+\end{definition}
+
+Instruments and natural experiments try to break the simultaneity, and the first
+attempt shows how fragile an instrument can be.
+
+\begin{debate}[How much do police reduce crime?]
+In large U.S. cities in 1970--1992, police forces grew disproportionately in mayoral and
+governors' election years. With elections as the instrument, Levitt (1997) found that
+police reduce crime in six of seven categories, each extra officer preventing eight to
+ten serious crimes (\emph{Grade 3} as published: an instrument whose exclusion rests
+on elections affecting crime only through police). % ledger: b3in:levitt
+Replicating the study with the data and code its author supplied, McCrary (2002)
+found a weighting error in the program: with the intended weights, every estimate is
+statistically insignificant, even at the 10~\% level, and a better measure of election
+years strengthens the \omterm{def:b3:instrumental-variables:tsls}{first stage} but leaves the estimates less precise still
+(\emph{Grade 3}: the instrument moves police too little to measure their effect).
+% ledger: b3in:mccrary
+Levitt's reply (2002) turned to another instrument, the number of firefighters per
+head, which tracks city budgets, and found police reducing both violent and property
+crime, most clearly murder and robbery (\emph{Grade 3}: the instrument is valid only
+if budgets for firefighters do not respond to crime). % ledger: b3in:levitt02
+Over 1960--2010, Chalfin and McCrary argued that the larger problem is error in the
+recorded size of police forces, which biases estimates towards zero; correcting for
+it, they put the elasticity of the cost-weighted total of crimes at about $-0.5$, larger
+for violent crime than for property crime (\emph{Grade 2--3}). % ledger: b3in:cm
+After the July 1994 attack on the main Jewish centre in Buenos Aires, every Jewish
+institution received police protection; car thefts fell sharply on the protected
+blocks, with no appreciable change beyond them (\emph{Grade 1--2}: an allocation of
+police unrelated to car theft, though the effect is local and may move theft
+elsewhere). % ledger: b3in:dts
+The local experiment shows that visible police deter where they stand; the size of
+the city-wide elasticity, which is what a hiring decision needs, remains contested.
+\end{debate}
+
+\section{Exercises}\label{sec:b3:institutions:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:institutions:1}
+From the opening chart's numbers, find China's growth rate before and after 1978, and how
+many times faster it grew after.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:institutions:2}
+The South's income per person in 2022 was 41{,}321 dollars and the North's 1{,}569. Find the ratio and the number of
+doublings it represents.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:institutions:3}
+In an invented sample, the slope of log income on log settler mortality is $-0.57$ and the
+slope of an \omterm{def:b3:institutions:institutions}{institutions} index on log mortality is $-0.61$. Find the \omterm{def:b3:instrumental-variables:tsls}{two-stage least squares}
+estimate.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:institutions:4}
+What evidence would contradict the view that \omterm{def:b3:institutions:institutions}{institutions} caused most of the gap
+between the Koreas?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:institutions:5}
+In \cref{prop:b3:institutions:holdup} take $a = 1/2$ and $A = 2$. Find investment and output for $p = 0$ and $p = 0.3$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:institutions:6}
+Corrected mortality data weaken the \omterm{def:b3:instrumental-variables:tsls}{first stage} of exercise 3 to $-0.20$, with the \omterm{def:b3:instrumental-variables:tsls}{reduced form}
+unchanged. What happens to the estimate and to its precision?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:institutions:7}
+Compute the depth, the length and the recovery year of the \omterm{def:b3:institutions:transition}{transition recessions} in
+Poland, Czechia, Russia and Ukraine.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:institutions:8}
+In an invented city, car thefts per block and month are 0.09 on blocks with a protected
+institution and on other blocks before an attack; after it, 0.03 on the protected blocks and
+0.085 on the others. Find the difference in differences and say what pattern would show
+that theft had only moved.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:institutions:9}
+What pattern at the mita boundary would break the regression discontinuity?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:institutions:10}
+Let $\ln y = \beta s + \gamma h + u$, where $h$ is health today, and let both $s$ and $h$ depend on mortality $z$ with
+slopes $\pi_s$ and $\pi_h$. Find what the instrumental-variable estimate with $z$ converges to, and
+its bias.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:institutions:11}
+A firm's manager chooses effort $e$ in $[0, 1]$ at cost $e^2/2$; the project succeeds with
+probability $e$ and pays $R$. On failure, the state covers the losses with probability $b$,
+paying $B$. Find effort and show that it falls with $b$. Take $R = 0.8$, $B = 0.6$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:institutions:12}
+A city has 1{,}000 officers and 50{,}000 serious crimes a year, and considers hiring 100 more
+at 80{,}000 dollars each a year. Take three values of the \omterm{def:b3:institutions:deterrence}{deterrence elasticity of crime} from
+the debate: 0 (the corrected election estimates are not distinguishable from zero),
+$-0.18$ (nine crimes prevented per officer, as in the original estimate) and $-0.5$. For
+each, find the crimes prevented per officer and the social cost per crime above which
+hiring pays. Which estimate decides the verdict, and what would you need to know
+about the crimes prevented?
+\end{exercise}
+
+\section{Problem: Brenland and the Land across the River}\label{sec:b3:institutions:problem}
+
+\begin{problem}[{Weekend problem --- Brenland and the land across the river}]\label{pb:b3:institutions:river}
+Two invented provinces of Brenland face each other across the river Varn. They
+shared one path of income until 1995, when North registered titles to land and firms;
+South did not. Eight other provinces had no reform. A survey of 2025 covers 60
+districts, 30 on each bank: the share of titled plots $s$, log income per person, and the
+distance $z$ to the land-survey office of 1890, which titled plots near it first. % figdata: river_stats
+
+\medskip\noindent\textbf{Part I --- the gap.}
+\begin{enumerate}
+\item Find income per person on each bank in 1980, 1995 and 2025.
+\item Find the log gap in 1995 and in 2025.
+\item Find each bank's growth rate before and after the reform.
+\item Find the difference in differences of log income, 1995 to 2025.
+\item What must hold before 1995 for it to measure the reform's effect? Does it?
+\item Why might it still not measure the effect of the titles?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- a synthetic North.}
+\begin{enumerate}[resume]
+\item Build a synthetic North from the eight other provinces, matching 1980--1995. Give
+the weights.
+\item Find the root mean squared error of the fit before 1995.
+\item Find the gap between North and its \omterm{def:b3:difference-in-differences:synthetic-control}{synthetic control} in 2025.
+\item Compare it with the difference in differences.
+\item Why is South left out of the donors?
+\item What would a large gap before 1995 mean?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- titles and income across districts.}
+\begin{enumerate}[resume]
+\item Regress log income on $s$ by least squares.
+\item Find the \omterm{def:b3:instrumental-variables:tsls}{first stage} of $s$ on $z$ and its $F$ statistic.
+\item Find the \omterm{def:b3:instrumental-variables:tsls}{reduced form} of log income on $z$.
+\item Find the \omterm{def:b3:instrumental-variables:tsls}{two-stage least squares} estimate.
+\item Why is least squares higher?
+\item Name one way distance to the survey office could affect income other than
+through titles.
+\item The banks differ by $\Delta s$ in mean titled share and by $\Delta\ln y$ in mean log income. Find the share of
+the gap the titles explain, by 2SLS and by least squares.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- the investment model.}
+\begin{enumerate}[resume]
+\item With \cref{prop:b3:institutions:holdup} and $a = 1/3$, write the output ratio of the banks in terms of
+their \omterm{def:b3:institutions:property-rights}{expropriation risks}.
+\item The titles explain a log gap of $\beta_{\mathrm{2SLS}}\Delta s$. With a risk of 5~\% in North, what risk in South
+produces it?
+\item Is that risk plausible for untitled land? What else would the titles change?
+\item Why does the model's gap understate the effect of titles if titled land also
+serves as collateral?
+\item State the result: the share of the income gap explained by property security,
+by 2SLS.
+\end{enumerate}
+\end{problem}

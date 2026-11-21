@@ -1,0 +1,4 @@
+$ python moments.py
+zero earnings: 286
+earnings      mean  24350.845  sd  14326.321  skewness  1.645
+log earnings  mean      9.897  sd      0.746  skewness -1.913

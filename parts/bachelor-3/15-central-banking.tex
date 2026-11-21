@@ -1,0 +1,512 @@
+\chapter{Central Banking in Practice}\label{ch:b3:central-banking}
+
+A central bank sets one interest rate, overnight, and wants to move inflation two
+years ahead. Between the two lie its balance sheet, the plumbing of the money
+market, the yield curve and the expectations of everyone who prices a loan. This
+chapter follows the chain: how the rate is set in practice, how guidance and asset
+purchases reach longer rates, how economists measure the effect of a policy
+surprise --- with one estimate made in the chapter --- what limits on mortgages do,
+and what the inflation of 2021--2023 taught.
+
+\begin{openingchart}{Central-bank total assets as a percent of nominal GDP, year
+ends 2003--2025: the Federal Reserve and the Eurosystem.}{Board of Governors of the
+Federal Reserve System, H.4.1 (RESPPMA\_N.WW); European Central Bank, consolidated
+balance sheet of the Eurosystem; World Bank, World Development Indicators; Eurostat
+(nama\_10\_gdp); ratios are ours}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.7\linewidth, height=0.42\linewidth, xmin=2002, xtick distance=5, xmax=2025.5,
+  ymin=0, ymax=75, ylabel={Percent of GDP}, legend pos=north west,
+  legend style={font=\footnotesize}]
+  \addplot[omDef, thick, mark=none] table[x=year, y=fed] {figdata/bachelor-3/15-central-banking/out/cb_assets.csv};
+  \addplot[omThm, thick, mark=none] table[x=year, y=ecb] {figdata/bachelor-3/15-central-banking/out/cb_assets.csv};
+  \legend{Federal Reserve, Eurosystem}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: cb_assets_points
+At the end of 2007 the Federal Reserve's assets were 6~\% of U.S. GDP; by 2014 they were
+26~\%, by 2021 37~\%, and in 2025 still 22~\%. The Eurosystem's went from 16~\% of
+euro-area GDP to 68~\% in 2021, and were 39~\% in 2025. In fifteen years the two
+largest central banks became, in size, the largest investors in their own bond
+markets.
+
+\begin{recall}
+The grades 10--12 volume explained how banks and the central bank create money.
+The Year 2 volume treated inflation targets, credibility and independence, the
+policy rule and the zero lower bound, and the lender of last resort.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:central-banking:symbols}
+$i$ is the policy rate, $i_D$ and $i_L$ the deposit and lending rates of the central
+bank, $r$ the overnight market rate, $R$ \omterm{def:b3:central-banking:balance-sheet}{bank reserves} at the central bank, $y_n$ the
+yield on an $n$-year bond and $\mathit{tp}_n$ its \omterm{def:b3:central-banking:qe}{term premium}.
+\end{notation}
+
+\section{The balance sheet}\label{sec:b3:central-banking:balance-sheet}
+
+\begin{definition}[Central-bank balance sheet; bank reserves]\label{def:b3:central-banking:balance-sheet}
+\index{central-bank balance sheet}\index{bank reserves}
+A \emph{central bank's balance sheet} records on the asset side the securities it
+holds, its loans to banks, gold and foreign reserves, and on the liability side the
+currency in circulation, the government's deposits and \emph{bank reserves}: the
+deposits of commercial banks at the central bank, which they use to settle
+payments with each other.
+\end{definition}
+
+\begin{measure}[What a central bank's balance sheet records]
+When the central bank buys a bond from a bank, it pays by crediting the bank's
+reserve account: assets and reserves rise by the same amount, and no one else can
+create or destroy reserves. Banks can pass reserves among themselves but not,
+together, get rid of them --- except by withdrawing currency, or when the
+government's account at the central bank grows. The total of reserves is the central
+bank's choice; what banks do with them is not.
+\end{measure}
+
+\section{Setting the overnight rate}\label{sec:b3:central-banking:corridor}
+
+\begin{definition}[Corridor system; floor system; standing facility]\label{def:b3:central-banking:corridor}
+\index{corridor system}\index{floor system}\index{standing facility}
+A \emph{standing facility} is a central-bank offer open to any eligible bank at a
+fixed rate: a deposit facility at $i_D$ and a lending facility at $i_L > i_D$. In a
+\emph{corridor system} the central bank supplies scarce reserves and steers the
+overnight rate between the two. In a \emph{floor system} it supplies abundant
+reserves, and the overnight rate sits at the deposit rate.
+\end{definition}
+
+\begin{proposition}[The corridor and the floor]\label{prop:b3:central-banking:corridor}
+The overnight rate satisfies $i_D \le r \le i_L$. If banks' demand for reserves is
+satiated at $\bar R$ and reserves exceed $\bar R$, then $r = i_D$.
+\end{proposition}
+
+\begin{proof}
+No bank lends overnight below $i_D$, because it can deposit at the central bank at
+$i_D$; no bank borrows above $i_L$, because it can borrow from the central bank at
+$i_L$. If reserves exceed what banks want to hold at any rate above $i_D$, each bank
+with extra reserves tries to lend them; competition drives the rate down to the
+point where holding them is as good as lending, $i_D$.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.09cm, y=1.6cm]
+  \draw[econ axes] (0,0) -- (95,0) node[right, font=\scriptsize] {reserves};
+  \draw[econ axes] (0,0) -- (0,3.4) node[above, font=\scriptsize] {overnight rate};
+  \draw[guide] (0,2.5) node[left, font=\scriptsize] {$i_L$} -- (90,2.5);
+  \draw[guide] (0,1.5) node[left, font=\scriptsize] {$i_D$} -- (90,1.5);
+  \draw[curve, omDef] (5,2.5) -- (20,2.5) -- (60,1.5) -- (90,1.5)
+    node[above left, font=\scriptsize] {demand};
+  \draw[curve, omThm] (40,0) -- (40,3.1) node[above, font=\scriptsize] {corridor};
+  \draw[curve, omThm, dashed] (80,0) -- (80,3.1) node[above, font=\scriptsize] {floor};
+  \fill (40,2) circle (2pt) node[right, font=\scriptsize] {$r = i$};
+  \fill (80,1.5) circle (2pt);
+  \foreach \v in {20,40,60,80} \draw (\v,0) -- (\v,-0.06) node[below, font=\scriptsize] {\v};
+\end{tikzpicture}
+\par\smallskip{\small The reserve market of the weekend problem. Demand slopes between
+20 (below which banks pay the lending rate) and 60 (above which they are satiated).
+With 40 of reserves the overnight rate is mid-corridor; with 80 it sits on the
+floor.}
+\end{omfigure}
+
+A central bank that runs a corridor must forecast reserve demand and adjust the
+supply every day to keep the overnight rate near its target. Once asset purchases
+have made reserves abundant, it sets the overnight rate by setting the rate it
+pays on reserves: the policy rate and the size of the balance sheet become two
+separate instruments.
+
+\section{Guidance and the yield curve}\label{sec:b3:central-banking:guidance}
+
+\begin{proposition}[The long rate: expectations plus a term premium]\label{prop:b3:central-banking:term}
+The $n$-year yield can be written $y_n = \frac1n\sum_{k=0}^{n-1}E_ti_{t+k} + \mathit{tp}_n$: the average expected
+short rate over the bond's life plus a \omterm{def:b3:central-banking:qe}{term premium}.
+\end{proposition}
+
+\begin{proof}
+An investor can hold an $n$-year bond or roll over one-year bonds. If the two paid
+the same expected return, the long yield would equal the average expected short
+rate (the expectations hypothesis, to first order in logs). Whatever difference
+remains is, by definition, the \omterm{def:b3:central-banking:qe}{term premium}: the extra return investors require
+for bearing the risk of the long bond.
+\end{proof}
+
+\begin{definition}[Forward guidance]\label{def:b3:central-banking:forward-guidance}
+\index{forward guidance}
+\emph{Forward guidance} is a central bank's communication about the future path of
+its policy rate, meant to move the expected short rates in the long yield.
+\end{definition}
+
+The proposition names the two levers left when the short rate is at its floor:
+lower the expected path (guidance), or lower the \omterm{def:b3:central-banking:qe}{term premium} (asset purchases).
+A promise to keep rates low after recovery is worth what markets believe: the
+Year 2 volume showed that such a promise is not time-consistent, so its effect
+depends on the bank's credibility, and markets read it in the futures curve.
+
+\begin{omchart}{The federal funds rate and the ten-year Treasury yield, monthly averages,
+2005--2025 (percent).}{Board of Governors of the Federal Reserve System, H.15
+(RIFSPFF\_N.M, RIFLGFCY10\_N.M)}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.7\linewidth, height=0.4\linewidth, xmin=2004, xtick distance=5, xmax=2026.2,
+  ymin=0, ymax=6, ylabel={Percent}, legend columns=2,
+  legend style={at={(0.5,1.03)}, anchor=south, font=\footnotesize}]
+  \addplot[omDef, thick, mark=none] table[x=t, y=ff] {figdata/bachelor-3/15-central-banking/out/rates.csv};
+  \addplot[omThm, thick, mark=none] table[x=t, y=y10] {figdata/bachelor-3/15-central-banking/out/rates.csv};
+  \legend{Federal funds, Ten-year Treasury}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\section{Asset purchases}\label{sec:b3:central-banking:qe}
+
+\begin{definition}[Quantitative easing; term premium]\label{def:b3:central-banking:qe}
+\index{quantitative easing}\index{term premium}
+\emph{Quantitative easing} (large-scale asset purchases) is the purchase of
+long-term securities by a central bank, paid for with reserves. The \emph{term
+premium} is the part of a long yield not explained by the expected path of short
+rates.
+\end{definition}
+
+\begin{record}[Asset purchases, 2008--2014]
+% figdata: rates_points
+The federal funds rate fell from 4.24~\% in December 2007 to 0.16~\% in December 2008
+and stayed there for years. The Federal Reserve then bought medium- and long-term
+assets on a large scale. Event studies of the announcements found economically
+meaningful and lasting falls in longer-term rates, including on securities it did
+not buy, mostly through lower risk and \omterm{def:b3:central-banking:qe}{term premiums} rather than lower expected
+short rates. % ledger: b3cb:grrs.lsap
+Over the eight announcement days of the first programme, from November 2008 to
+November 2009, the ten-year Treasury yield fell by 91 basis points, the yield on
+agency mortgage-backed securities by 113 and on ten-year agency debt by 156, while
+the two-year yield fell by 34: most of the fall was in long rates, and 71 points
+of it in one estimate of the ten-year \omterm{def:b3:central-banking:qe}{term premium}. % ledger: b3cb:grrs.t1
+The effects depended on what was bought: mortgage-backed securities purchases in
+the first round lowered mortgage yields and corporate credit risk; the second
+round, Treasuries only, moved Treasuries most, and other yields mainly through
+lower expected policy rates --- a signal, as much as a portfolio effect.
+% ledger: b3cb:kvj.channels
+\end{record}
+
+\begin{omchart}{Cumulative changes in yields over the eight announcement days of the
+Federal Reserve's first asset purchases, November 2008 to November 2009 (basis
+points). The term premium is the Kim--Wright model's estimate.}{Gagnon, Raskin,
+Remache and Sack (2010), Table~1}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xbar, bar width=6pt, xmin=-175, xmax=0, ymin=0.4, ymax=7.6,
+    y dir=reverse, ytick=data,
+    yticklabels from table={figdata/bachelor-3/15-central-banking/out/lsap.csv}{asset},
+    y tick label style={font=\footnotesize}, xlabel={Basis points},
+    grid=none, xmajorgrids, width=0.6\linewidth, height=0.42\linewidth,
+    nodes near coords, every node near coord/.append style={font=\scriptsize, anchor=east}]
+  \addplot[fill=omDef!70, draw=omDef] table[x=events, y=pos]
+    {figdata/bachelor-3/15-central-banking/out/lsap.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+An event study sees the announcement and nothing else. Over the whole period from
+24 November 2008 to 28 January 2010, as the recovery began, the ten-year Treasury
+yield \emph{rose} by 30 basis points; the event days say what the purchases did,
+the whole period what everything together did. % ledger: b3cb:grrs.t1
+A second method, a time-series regression of the \omterm{def:b3:central-banking:qe}{term premium} on the supply of
+long-term debt, put the effect of the 1.725 trillion dollars of announced purchases
+at 38 to 82 basis points, against 50 to 100 in the event studies. % ledger: b3cb:grrs.tp
+
+\begin{model}{The portfolio-balance channel of asset purchases}
+\assumes Bonds of different maturities are imperfect substitutes: investors who
+prefer long bonds pay for them, so a fall in their supply raises their price.
+\predicts Purchases lower term premia and long yields, more for the assets bought
+and those close to them.
+\tested Announcement-day event studies of the first purchases found falls of 91
+basis points in the ten-year Treasury yield and 34 in the two-year, mostly in
+premia; a time-series model of the \omterm{def:b3:central-banking:qe}{term premium} gave a similar range.
+% ledger: b3cb:grrs.t1, b3cb:grrs.tp
+\breaks Later rounds, anticipated by markets, moved yields less on the day; part of
+the effect works through signals about the policy rate, not through premia; and an
+event study sees only the announcement, not the slow effect of holding the bonds.
+% ledger: b3cb:kvj.channels
+\end{model}
+
+\section{Measuring the effect of a policy shock}\label{sec:b3:central-banking:shocks}
+
+\begin{definition}[Monetary policy shock; local projection]\label{def:b3:central-banking:shock}
+\index{monetary policy shock}\index{local projection}
+A \emph{monetary policy shock} is the part of a policy decision that markets did not
+expect. A \emph{local projection} estimates its effect at each horizon $h$ by a
+separate regression of the outcome $h$ periods ahead on the shock and controls.
+\end{definition}
+
+Most policy moves respond to the economy, so a regression of output on the policy
+rate confuses cause and response. The high-frequency approach measures the change
+in interest-rate futures in a narrow window around a scheduled announcement:
+within 30 minutes, nothing but the announcement moves rates. After such a surprise
+tightening, nominal and real rates rise about one for one several years out, and
+expected inflation barely moves --- but forecasts of output growth rise, the
+opposite of what a tightening should do, because the announcement also tells
+markets what the central bank knows about the economy. % ledger: b3cb:ns.hfi
+Identifying a shock is half of the problem; separating the policy news from the
+information about the economy it carries is the other.
+
+Before high-frequency surprises were available, the usual shock was a residual: the
+part of the policy rate not explained by the current state of the economy and its
+recent past. That assumes the central bank sees this quarter's output and inflation
+before it moves, and that they do not respond to its move within the quarter. The
+listing estimates a \omterm{def:b3:central-banking:shock}{local projection} with such a shock on U.S. quarterly data,
+stopping in 2007, before the policy rate reached its floor.
+
+\omcode{code/bachelor-3/15-central-banking/listings/local_projection.py}{1}{30}{A \omterm{def:b3:central-banking:shock}{local projection} of output and prices on a recursively identified rate shock, 1960--2007.}\label{lst:b3:central-banking:lp}
+
+\omoutput{code/bachelor-3/15-central-banking/outputs/local_projection.txt}{Responses in percent, per point of the bill rate; HAC standard errors in parentheses.}\label{out:b3:central-banking:lp}
+
+\begin{omchart}{Estimated responses of U.S. real GDP and of the consumer price level to a
+surprise rise of one point in the Treasury-bill rate, 1960--2007, with 90~\% bands
+(percent, by quarter after the shock).}{Statsmodels macrodata (U.S. national accounts
+and CPI); our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.62\linewidth, height=0.4\linewidth, xmin=0, xmax=16,
+  xtick={0,4,8,12,16}, ymin=-3.2, ymax=0.8, xlabel={Quarters after the shock},
+  ylabel={Percent}, legend pos=south west, legend style={font=\footnotesize}]
+  \addplot[omDef, thick, mark=*, mark size=1pt] table[x=h, y=y] {figdata/bachelor-3/15-central-banking/out/lp.csv};
+  \addplot[omThm, thick, mark=square*, mark size=1pt] table[x=h, y=p] {figdata/bachelor-3/15-central-banking/out/lp.csv};
+  \addplot[omDef, thin, dashed, forget plot] table[x=h, y=y_lo] {figdata/bachelor-3/15-central-banking/out/lp.csv};
+  \addplot[omDef, thin, dashed, forget plot] table[x=h, y=y_hi] {figdata/bachelor-3/15-central-banking/out/lp.csv};
+  \addplot[omThm, thin, dashed, forget plot] table[x=h, y=p_lo] {figdata/bachelor-3/15-central-banking/out/lp.csv};
+  \addplot[omThm, thin, dashed, forget plot] table[x=h, y=p_hi] {figdata/bachelor-3/15-central-banking/out/lp.csv};
+  \draw[guide] (axis cs:0,0) -- (axis cs:16,0);
+  \legend{Real GDP, Price level}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% output: local_projection
+% figdata: lp_stats
+The response at $h = 0$ is zero by construction: the ordering assumes that output
+and prices do not react within the quarter. After a surprise rise of one point,
+output is 0.72~\% lower after two years and back near its path after four; the price
+level barely moves for a year, then falls, by 2.0~\% after four years. Output first,
+prices later, is what the models of the Year 2 volume predict. The bands are wide,
+and the estimate rests on the ordering: if the bank reacts to news that the data of
+the quarter do not contain, part of the ``shock'' is its forecast, the problem the
+high-frequency surprises were built to solve.
+
+\section{Financial stability}\label{sec:b3:central-banking:macroprudential}
+
+\begin{definition}[Macroprudential policy]\label{def:b3:central-banking:macroprudential}
+\index{macroprudential policy}
+\emph{Macroprudential policy} uses regulatory tools --- capital buffers that rise in
+booms, caps on loan-to-value or debt-to-income ratios --- to limit risks to the
+financial system as a whole, rather than to each bank alone.
+\end{definition}
+
+A cap on the loan-to-value ratio binds only for borrowers with small deposits: it
+slows credit to the households most likely to default, without raising the policy
+rate for everyone. It leaves to monetary policy what only it can do --- set the
+price of money --- and to regulation the composition of credit.
+
+\begin{record}[Mortgage limits in Ireland, 2015]
+In February 2015 Ireland capped the loan-to-income and loan-to-value ratios of new
+residential mortgages, with immediate effect; the limits bound for 43~\% of the
+mortgage market. Comparing banks and areas more and less affected, Acharya and
+co-authors found that mortgage credit moved from low- to high-income borrowers and
+from areas of fast to areas of slow house-price growth, cooling the hottest
+markets; the banks most affected took more risk in the securities they held and
+in their lending to firms, which the limits did not cover. % ledger: b3cb:abcem.ireland
+A difference-in-differences across banks and counties, \emph{grade 2}: the policy
+did what it was meant to do to mortgages, and part of the risk moved elsewhere.
+\end{record}
+
+\section{2021--2023}\label{sec:b3:central-banking:inflation}
+
+\begin{omchart}{Twelve-month consumer price inflation, January 2019 to December 2025:
+United States (CPI-U) and the euro area (HICP).}{U.S. Bureau of Labor Statistics
+(CUUR0000SA0, inflation ours); Eurostat (prc\_hicp\_manr)}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.7\linewidth, height=0.4\linewidth, xmin=2018.9, xmax=2026.1,
+  ymin=-1, ymax=11.5, ylabel={Percent}, legend pos=north west, legend style={font=\footnotesize}]
+  \addplot[omDef, thick, mark=none] table[x=t, y=us] {figdata/bachelor-3/15-central-banking/out/inflation.csv};
+  \addplot[omThm, thick, mark=none] table[x=t, y=ea] {figdata/bachelor-3/15-central-banking/out/inflation.csv};
+  \draw[guide] (axis cs:2019,2) -- (axis cs:2026,2);
+  \legend{United States, Euro area}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: inflation_peaks
+U.S. inflation peaked at 9.1~\% in June 2022, the euro area's at 10.6~\% in October
+2022; by December 2025 they were 2.7~\% and 2.0~\%. Both central banks kept their policy
+rates near or below zero through 2021 and raised them in 2022: the ECB's deposit rate went
+from 0.00~\% in July 2022 to 4.00~\% in September 2023. % ledger: b3cb:ecb.rates
+
+\begin{debate}[What caused the inflation of 2021--2023]
+Was the surge a supply shock that policy could wait out, or demand that policy
+should have met sooner?
+\begin{itemize}
+\item Bernanke and Blanchard estimated a model of prices, wages and expectations
+for the United States: most of the surge came from shocks to prices given wages
+--- commodity prices driven by strong demand, and sectoral spikes where demand
+met constrained supply; overheated labour markets mattered less at first, but
+their effects on wages and inflation are more persistent. % ledger: b3cb:bb.inflation
+\emph{Grade 3}: a decomposition that rests on the model's structure.
+\item Jordà and co-authors compared the United States with other OECD economies:
+U.S. core inflation rose from below 2~\% to above 4~\% in 2021 while the OECD average
+rose from about 1~\% to 2.5~\%, and the larger U.S. income transfers may account for
+about 3 points of U.S. inflation by the end of 2021. % ledger: b3cb:jlnr.fiscal
+\emph{Grade 3}: a cross-country comparison with few countries and many other
+differences.
+\item Shapiro classified price categories by whether price and quantity moved
+together (demand) or in opposite directions (supply): of the 4.8-point excess of
+U.S. inflation in April 2022 over its pre-pandemic level, supply explained 2.5
+points and demand 1.4. % ledger: b3cb:sha.supply
+\emph{Grade 3}: the sign restriction is a plausible but untested identification.
+\item Benigno and Eggertsson found the Phillips curve steep when vacancies exceed
+the number of unemployed, and attributed most of the surge to an exceptionally
+tight labour market. % ledger: b3cb:be.nonlinear
+\emph{Grade 3}, with a short sample of tight markets.
+\end{itemize}
+The studies disagree on the share of demand, but agree that supply and demand
+acted together; the sample is short and the shocks simultaneous, which is why
+the debate is open.
+\end{debate}
+
+\begin{dated}{2026}
+The ECB's deposit rate has been 2.50~\% since 16 September 2026. % ledger: b3cb:ecb.rates
+The federal funds rate averaged 3.88~\% in October 2026 (Federal Reserve, H.15).
+% ledger: b3cb:fred.ff
+\end{dated}
+
+\section{Exercises}\label{sec:b3:central-banking:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:central-banking:1}
+In the opening chart, by how many points of GDP did each balance sheet grow from
+2007 to 2021? Which shrank faster afterwards?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:central-banking:2}
+A central bank buys 100 billion of government bonds from commercial banks. Write
+the changes in its T-account and in the banks' T-account.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:central-banking:3}
+In the reserve market of the figure (demand 20 at the lending rate, 60 at the
+deposit rate, linear between), the corridor is 2.5--3.5~\%. Find the overnight rate
+when reserves are 30, 50 and 70.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:central-banking:4}
+What market prices would show that \omterm{def:b3:central-banking:forward-guidance}{forward guidance} is not believed?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:central-banking:5}
+Short rates are expected to be 1~\%, 2~\% and 3~\% over the next three years, and the
+\omterm{def:b3:central-banking:qe}{term premium} on a three-year bond is 0.4 points. Find the three-year yield. If the
+central bank's guidance lowers the expected rate in years 2 and 3 by half a point,
+what is the new yield?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:central-banking:6}
+In a \omterm{def:b3:central-banking:corridor}{floor system} with the deposit rate at 2~\%, the central bank raises it to 2.5~\%
+without changing reserves. What happens to the overnight rate? And in a corridor
+with scarce reserves, if only the deposit rate moves?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:central-banking:7}
+On three announcement days the ten-year yield fell by 22, 47 and 5 basis points and
+the two-year yield by 10, 12 and 4. What share of each fall would you attribute to
+expected short rates over the next two years? What does the third day suggest?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:central-banking:8}
+From the BLS and Eurostat data, find the month and level of peak inflation in the
+United States and the euro area, and the first month each fell back below 3~\%.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:central-banking:9}
+What evidence would contradict the portfolio-balance channel?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:central-banking:10}
+Reserve demand is $R(r) = 60 - 40(r - i_D)/(i_L - i_D)$ for $i_D \le r \le i_L$. With $i_D = 2~\%$, $i_L = 3~\%$
+and supply $S$, find $r(S)$ for all $S$, and the supply that puts the rate at the
+centre. Why does a floor make the rate insensitive to errors in forecasting
+reserve demand?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:central-banking:11}
+A central bank holds 500 of ten-year bonds at 1.5~\% and has 500 of reserves, on
+which it pays the policy rate. Find its net interest income at policy rates of 0.5~\%
+and 4~\%. Who bears the loss, and does it constrain policy?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:central-banking:12}
+A cap of 80~\% on loan-to-value ratios is introduced. Which buyers does it
+constrain, and what should happen to their borrowing and to house prices where
+they buy? How would you estimate its effect?
+\end{exercise}
+
+\section{Problem: The Bank of Brenland's Balance Sheet}\label{sec:b3:central-banking:problem}
+
+\begin{problem}[{Weekend problem --- The Bank of Brenland's balance sheet}]\label{pb:b3:central-banking:bank}
+At the end of 2019 the Bank of Brenland holds government bonds of 60 billion
+dalens yielding 3.0~\%, loans to banks of 10 at the policy rate and foreign reserves of
+30 in kest bonds yielding 3.0~\%; its liabilities are currency 50, \omterm{def:b3:central-banking:balance-sheet}{bank reserves} 40 and
+government deposits 10. Its corridor is half a point either side of the policy
+rate, and reserve demand is that of the figure (20 at the lending rate, 60 at the
+deposit rate, linear between). The policy rate and inflation come from Brenland's
+accounts:
+% figdata: bank_years, bank_stats
+\begin{center}\small
+\pgfplotstabletypeset[col sep=comma, columns={year,policy_rate,infl},
+  columns/year/.style={column name={Year}, int detect, column type=l},
+  columns/policy_rate/.style={column name={Policy rate (\%)}, fixed, fixed zerofill, precision=2},
+  columns/infl/.style={column name={Inflation (\%)}, fixed, fixed zerofill, precision=2},
+  every head row/.style={after row=\hline}, every last row/.style={after row=\hline}]
+  {figdata/bachelor-3/15-central-banking/out/bank_years.csv}
+\end{center}
+
+\medskip\noindent\textbf{Part I --- the T-account.}
+\begin{enumerate}
+\item Write the Bank's T-account. Check that it balances.
+\item The government pays a contractor 4 from its deposit account. What changes?
+\item A household withdraws 2 of currency from its bank. What changes?
+\item The Bank lends 5 more to banks. What changes, and what happens to the
+overnight rate at the 2019 policy rate if the rest is unchanged?
+\item Which items does the Bank control, and which does it not?
+\item Why are reserves not ``money in circulation''?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- from corridor to floor.}
+\begin{enumerate}[resume]
+\item With reserves of 40 and the 2019 policy rate, find the overnight rate.
+\item Find it if reserves fell to 30.
+\item Find the Bank's 2019 net interest income, with reserves paid the deposit rate.
+\item In 2020 the Bank buys 40 of long bonds yielding 2.0~\% from banks. Write the
+changes in its T-account.
+\item Find the overnight rate after the purchase, with the corridor around the 2019
+policy rate.
+\item The Bank moves to a floor: the deposit rate is set equal to the policy rate.
+Why does this restore control of the overnight rate?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- the purchase programme.}
+\begin{enumerate}[resume]
+\item Before the purchase, short rates were expected to average 2.7~\% over ten years
+and the ten-year yield was 3.5~\%. Find the \omterm{def:b3:central-banking:qe}{term premium}.
+\item The purchase lowers the \omterm{def:b3:central-banking:qe}{term premium} by 0.3 points. Find the new yield.
+\item By what channel, in the model box, does this happen?
+\item Write the Bank's net interest income on the floor as a function of the policy
+rate $i$ (in percent).
+\item Find it in 2020 and in 2021.
+\item Above what policy rate does the Bank make a loss?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- inflation overshoots.}
+\begin{enumerate}[resume]
+\item The Year 2 volume's rule is $i = 1 + \pi + 0.5(\pi - 2) + 0.5\,\text{gap}$. With a zero gap, find
+the rule's rate for 2022.
+\item Compare it with the actual 5.42~\%. What could justify the difference?
+\item Find the Bank's net interest income in 2022 at the actual and at the rule's
+rate, and the latter as a share of GDP (335.8 billion dalens).
+\item Does a loss stop the Bank from raising its rate?
+\item In 2023 the Bank announces that rates ``will stay high until inflation is
+clearly back to target''. What market evidence would show it is believed?
+\item State the result: the policy rate implied by the rule and the Bank's net
+interest income at that rate.
+\end{enumerate}
+\end{problem}

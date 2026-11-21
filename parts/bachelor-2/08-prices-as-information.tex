@@ -1,0 +1,606 @@
+\chapter{Prices as Information}\label{ch:b2:prices-as-information}
+
+At an American racetrack, the odds on each horse are set by the bets themselves: the more money bet on
+a horse, the less it pays when it wins. The odds are a price, and the price is a forecast. If the
+forecast were right on average, a dollar bet on any kind of horse would return the same amount, the
+dollar minus the track's share of the pool. The chart shows what a dollar bet to win actually returned
+on all American races of 1992--2001.
+
+\begin{openingchart}{Average rate of return per dollar bet to win, in per cent, on US horse races,
+  1992--2001, by type of bet.}{Snowberg and Wolfers (2010)}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xbar, bar width=13pt, xmin=-70, xmax=0, ymin=0.4, ymax=4.6, y dir=reverse,
+    ytick=data, yticklabels from table={figdata/bachelor-2/08-prices-as-information/out/returns.csv}{bet},
+    xlabel={Rate of return per dollar bet (per cent)}, grid=none, xmajorgrids,
+    width=0.62\linewidth, height=0.42\linewidth, nodes near coords,
+    every node near coord/.append style={font=\footnotesize, anchor=east}]
+  \addplot[fill=omDef!70, draw=omDef] table[x=return, y=pos]
+    {figdata/bachelor-2/08-prices-as-information/out/returns.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: returns_summary (gap 55.5, payback_favourite 0.945, payback_longest 0.39)
+% ledger: b2:sw2010-returns
+A dollar bet on the favourite in every race returned 94.5 cents on average; a dollar bet on a horse at
+odds of 100/1 or longer returned 39 cents. Between the two ends lies a gap of 55.5 points. The prices
+are good forecasts in one sense: favourites win far more often than longshots, as their odds say. They
+are biased in another: measured against their odds, longshots win much less often than favourites do, so
+the betting overvalues longshots and undervalues favourites. The
+authors find that the pattern fits bettors who overweight small probabilities
+(\cref{ch:b2:behavioural-evidence}) better than bettors who love risk.
+
+\Cref{ch:b2:exchange-economies,ch:b2:welfare-theorems} treated prices as the terms on which goods
+trade. This chapter treats them as messages. It counts what a planner would need to know to allocate
+resources, shows how little a market needs instead, and asks how far a price can carry information
+that no single trader has: completely, partly, or with a bias like the racetrack's. The answer depends
+on what information costs, and it can be tested on markets whose prices are forecasts.
+
+\begin{recall}
+From the school volumes: prices signal scarcity and coordinate buyers and sellers. From the Year 1
+volume: supply and demand at work, including price ceilings and the shortages they create. From
+\cref{ch:b2:exchange-economies,ch:b2:welfare-theorems}: \omterm{def:b2:exchange-economies:competitive-equilibrium}{competitive equilibrium}, Pareto efficiency and
+\omterm{def:b2:welfare-theorems:lump-sum}{lump-sum transfers}. From \cref{ch:b2:asset-prices}: asset prices and their unpredictability.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:prices-as-information:symbols}
+$v$ is the value of an asset or the size of a harvest, unknown when trade takes place; $s_1, s_2$ and
+$\theta$ are signals about it, and $\varepsilon$ is the part no signal predicts. $a$ is the \omterm{def:b2:expected-utility:ara}{coefficient of
+absolute risk aversion} of traders with utility $-e^{-aW}$ over wealth $W$; $c$ the cost of a signal;
+$\phi$ the share of \omterm{def:b2:prices-as-information:informed-trader}{informed traders}; $z$ the random net supply of the asset; $\xi$ the combination of
+$\theta$ and $z$ that the price reveals; $\kappa$ the weight of $\xi$ in the forecast of $\theta$. $p$ is a
+price and $\bar p$ a plan price; $\bar q$ a plan quota.
+\end{notation}
+
+\section{What a planner would need to know}\label{sec:b2:prices-as-information:planner}
+
+The second welfare theorem says that any \omterm{def:b2:exchange-economies:pareto-efficient}{Pareto-efficient allocation} can be reached by markets after
+transfers. A planner could also try to reach one directly, by telling every household what to consume
+and every firm what to produce. To do it, the planner must find a point at which every household's
+marginal rate of substitution between every pair of goods equals every firm's marginal rate of
+transformation. That needs every household's preferences and every firm's technology.
+
+% code: exercises/solutions.py counts
+Count the numbers for an economy far simpler than any real one. Kestria has 2 million households and 40
+goods, and every household has Cobb--Douglas preferences, so that one household is described by the 40
+shares of its budget it spends on each good, which sum to one: 39 numbers. The planner must collect 78
+million numbers before considering a single firm, and collect them again whenever tastes change. Worse,
+households have no reason to report them truthfully if the report changes what they receive. A market
+uses a different message: the prices of 39 goods in terms of the fortieth, which every household reads,
+and each household's own purchases, which no one else needs to know.
+
+\begin{definition}[Informational efficiency of an allocation mechanism]\label{def:b2:prices-as-information:informational-efficiency}
+An \omterm{def:b2:exchange-economies:allocation}{allocation} mechanism has agents exchange messages until an \omterm{def:b2:exchange-economies:allocation}{allocation} is reached. It is
+\emph{informationally efficient}\index{informational efficiency} if it reaches \omterm{def:b2:exchange-economies:pareto-efficient}{Pareto-efficient
+allocations} with messages of the smallest dimension among all mechanisms that do so.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, font=\footnotesize,
+    box/.style={draw, rounded corners=2pt, minimum width=17mm, minimum height=6mm, align=center}]
+  \node[box, fill=omDef!15] (pl) at (0,2.4) {Planner};
+  \foreach \i/\x in {1/-1.9,2/0,3/1.9} {
+    \node[box] (h\i) at (\x,0) {Agent \i};
+    \draw[->, omThm, thick] (h\i.north) to[bend left=12] (pl.south);
+    \draw[->, black!70] (pl.south) to[bend left=12] (h\i.north);
+  }
+  \node[align=center, omThm] at (-2.5,1.45) {preferences,\\technologies};
+  \node[align=center] at (2.5,1.45) {quantities};
+  \node[font=\small\bfseries] at (0,3.3) {A planner};
+  \begin{scope}[xshift=7cm]
+    \node[box, fill=omDef!15] (mk) at (0,2.4) {Prices $p$};
+    \foreach \i/\x in {1/-1.9,2/0,3/1.9} {
+      \node[box] (m\i) at (\x,0) {Agent \i};
+      \draw[->, omThm, thick] (m\i.north) to[bend left=12] (mk.south);
+      \draw[->, black!70] (mk.south) to[bend left=12] (m\i.north);
+    }
+    \node[align=center, omThm] at (-2.5,1.45) {own excess\\demand};
+    \node[align=center] at (2.5,1.45) {prices};
+    \node[font=\small\bfseries] at (0,3.3) {A market};
+  \end{scope}
+\end{tikzpicture}
+
+{\small What travels in each mechanism. A planner must learn every agent's preferences and technology
+and send back quantities. In a market each agent keeps its preferences to itself; it reads the prices
+and answers with what it wants to buy or sell at them, and prices move until the answers add up to
+zero.}
+\end{omfigure}
+
+\section{Prices as a short message}\label{sec:b2:prices-as-information:message}
+
+In the competitive mechanism each consumer needs only two things to choose: her own preferences and the
+price vector. Each firm needs its own technology and the prices. No agent needs anyone else's
+information, and the prices, $n - 1$ numbers in an economy with $n$ goods, are the whole of what they share.
+Whether some other mechanism could do with less is a mathematical question, and it has an answer.
+
+\begin{theorem}[Minimal messages]\label{thm:b2:prices-as-information:minimal}
+In exchange economies with smooth preferences, among the mechanisms that always reach \omterm{def:b2:exchange-economies:allocation}{allocations} that
+are \omterm{def:b2:exchange-economies:pareto-efficient}{Pareto-efficient} and leave every consumer at least as well off as her \omterm{def:b2:exchange-economies:endowment}{endowment}, the competitive
+mechanism uses messages of the smallest dimension, and it is the only one of that dimension (Jordan
+1982).
+\end{theorem}
+
+\admitted
+
+\begin{remark}
+The claim that prices carry, in a few numbers, the information that an economy needs to coordinate
+production and consumption is often called \emph{Hayek's result}. \Cref{thm:b2:prices-as-information:minimal}
+is one precise version of it.
+\end{remark}
+
+The theorem is a statement about the static problem: given preferences and technologies, find an
+efficient \omterm{def:b2:exchange-economies:allocation}{allocation}. It does not say that the prices are found quickly, or at all: the t\^atonnement of
+\cref{ch:b2:exchange-economies} need not converge, and real markets find their prices through trading
+institutions whose working \cref{ch:b2:exchange-economies} observed in the laboratory. Nor does it cover
+information about the future, which is the subject of the rest of the chapter. A harvest, a company's
+profits or an election result are unknown to everyone, and each trader holds a fragment of what is known
+about them.
+
+\section{Equilibrium when traders learn from prices}\label{sec:b2:prices-as-information:learning}
+
+An asset will pay $v = s_1 + s_2 + \varepsilon$, where $s_1$, $s_2$ and $\varepsilon$ are independent and
+normally distributed with mean 0 and variance 1. Half the traders observe $s_1$, the other half $s_2$; no
+one observes $\varepsilon$. Every trader has utility $-e^{-aW}$ and the asset is in zero net supply. A
+trader who believes $v$ has mean $m$ and variance $\sigma^2$ demands $x = (m - p)/(a\sigma^2)$ units
+(\cref{exo:b2:prices-as-information:10} recalls why).
+
+If traders ignore what the price says, a trader of the first group expects $v$ to be $s_1$ with variance
+2, and demands $(s_1 - p)/(2a)$; the second group demands $(s_2 - p)/(2a)$. Equal groups clear the market
+when the two demands sum to zero:
+\begin{equation}\label{eq:b2:prices-as-information:naive}
+p = \tfrac12\,(s_1 + s_2).
+\end{equation}
+The price depends on both signals, but it is not the best forecast of $v$, which is $s_1 + s_2$. And a
+trader who knows the rule \eqref{eq:b2:prices-as-information:naive} and sees $p$ can compute $s_1 + s_2 =
+2p$: the price tells her the other group's signal. A trader who ignores that is leaving information on the
+table.
+
+\begin{definition}[Fully revealing equilibrium]\label{def:b2:prices-as-information:fully-revealing}
+A rational expectations equilibrium is a price function, from traders' information to prices,
+such that markets clear when every trader chooses using her own information and what the price
+function lets her infer from the price. It is \emph{fully revealing}\index{fully revealing equilibrium}
+if the price tells every trader everything that all traders together know about the asset's value.
+\end{definition}
+
+\begin{proposition}[A fully revealing price]\label{prop:b2:prices-as-information:revealing}
+In the two-signal market, $p = s_1 + s_2$ is a rational expectations equilibrium, and it is \omterm{def:b2:prices-as-information:fully-revealing}{fully
+revealing}.
+\end{proposition}
+
+\begin{proof}
+Suppose traders know the price function $p = s_1 + s_2$. A trader of the first group sees $p$ and $s_1$
+and so knows $s_1 + s_2$; so does a trader of the second group. Both then expect $v$ to be $s_1 + s_2$, with
+variance 1, and demand $(s_1 + s_2 - p)/a = 0$. Demand sums to zero, so the market clears. The price
+reveals $s_1 + s_2$, which is all the traders together know.
+\end{proof}
+
+For example, if $s_1 = 1.2$ and $s_2 = 0.4$, the naive price is 0.8 and the \omterm{def:b2:prices-as-information:fully-revealing}{fully revealing} price is 1.6.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=-4, xmax=4, ymin=-4, ymax=4, axis lines=middle,
+    xlabel={$s_1 + s_2$}, ylabel={$p$}, xtick={-4,-2,2,4}, ytick={-4,-2,2,4},
+    width=0.5\linewidth, height=0.5\linewidth, xlabel style={anchor=north west},
+    ylabel style={anchor=south east}]
+  \addplot[omDef, very thick, domain=-4:4, samples=2] {x};
+  \addplot[omThm, thick, dashed, domain=-4:4, samples=2] {x/2};
+  \node[anchor=west, font=\footnotesize, omDef] at (axis cs:1.4,3.4) {fully revealing};
+  \node[anchor=north west, font=\footnotesize, omThm] at (axis cs:1.6,0.6) {naive};
+  \node[eqpoint] at (axis cs:1.6,1.6) {};
+  \node[eqpoint] at (axis cs:1.6,0.8) {};
+\end{axis}
+\end{tikzpicture}
+
+{\small The price as a function of the aggregate signal. Both lines are increasing, so either price
+would tell a trader who knows the line what $s_1 + s_2$ is. Only on the solid line does that knowledge leave
+demands unchanged; on the dashed line, traders who learn from the price want to trade again. The dots
+mark $s_1 + s_2 = 1.6$.}
+\end{omfigure}
+
+The proposition is a strong version of the claim that prices aggregate dispersed information: no one
+knows $s_1 + s_2$, and the price shows it to everyone. It also contains a puzzle. In the \omterm{def:b2:prices-as-information:fully-revealing}{fully revealing
+equilibrium} every trader's demand is zero whatever her own signal; the price contains the signals, yet no
+trade depends on them. How the signals got into the price is not explained by the equilibrium, and if
+signals had to be paid for, no one would pay.
+
+\section{The limit: costly information}\label{sec:b2:prices-as-information:costly}
+
+\begin{definition}[Informed trader]\label{def:b2:prices-as-information:informed-trader}
+In a market with costly information, an \emph{informed trader}\index{informed trader} is one who has
+paid the cost $c$ to observe a signal about the asset's value; an uninformed trader observes only the
+price.
+\end{definition}
+
+Let the asset pay $v = \theta + \varepsilon$, with $\theta$ and $\varepsilon$ independent standard normal.
+A share $\phi$ of the traders pays $c$ to observe $\theta$. The net supply of the asset is $z$, normal with
+mean 0 and standard deviation $\sigma_z$, a stand-in for trades made for reasons unrelated to $v$
+(a trader who needs cash, a fund that rebalances). Take $a = 1$. \omterm{def:b2:prices-as-information:informed-trader}{Informed traders} demand $\theta - p$; the
+market clears when
+\[
+\phi(\theta - p) + (1 - \phi)\,x_U = z ,
+\]
+where $x_U$ is the uninformed demand, which depends on the price only. So the price depends on $\theta$ and
+$z$ only through $\xi = \theta - z/\phi$, and an uninformed trader who sees $p$ learns $\xi$: a signal of
+$\theta$ blurred by the noise $z/\phi$, whose standard deviation is $\sigma_z/\phi$. The more traders are
+informed, the less the noise blurs the price. Her forecast of $\theta$ is $\kappa\xi$, with $\kappa = 1/(1 +
+\sigma_z^2/\phi^2)$, and its error variance is $1 - \kappa$.
+
+Who buys the signal? An \omterm{def:b2:prices-as-information:informed-trader}{informed trader} pays $c$ and forecasts $v$ with error variance 1; an uninformed
+trader pays nothing and forecasts with error variance $\mathrm{Var}(v \mid p) = 1 + (1 - \kappa)$. With CARA
+utility and normal returns, the ratio of their expected utilities works out to $e^{ac}\sqrt{\mathrm{Var}(v
+\mid \theta)/\mathrm{Var}(v \mid p)}$ (Grossman and Stiglitz 1980). Traders are indifferent when this ratio
+is one.
+
+\begin{proposition}[The equilibrium share of informed traders]\label{prop:b2:prices-as-information:share}
+With $a = 1$ and unit variances, let $k = e^{2c} - 1$ with $0 < k < 1$. Traders are indifferent between
+buying the signal and not when the price forecasts $\theta$ with error variance
+\[
+\mathrm{Var}(\theta \mid p) = k ,
+\]
+which happens at the informed share $\phi^* = \sigma_z\sqrt{(1 - k)/k}$ when this is below one. If it is
+above one, every trader buys the signal.
+\end{proposition}
+
+\begin{proof}
+Indifference requires $e^{2c}\cdot 1 = \mathrm{Var}(v \mid p) = 1 + \mathrm{Var}(\theta \mid p)$, that is,
+$\mathrm{Var}(\theta \mid p) = e^{2c} - 1 = k$. The price reveals $\xi = \theta + u$ with $u$ of variance
+$\sigma_u^2 = \sigma_z^2/\phi^2$, so $\mathrm{Var}(\theta \mid p) = \sigma_u^2/(1 + \sigma_u^2)$. Setting this to
+$k$ gives $\sigma_u^2 = k/(1 - k)$ and $\phi = \sigma_z/\sigma_u = \sigma_z\sqrt{(1 - k)/k}$. If more traders
+were informed, the price would be more revealing, the uninformed would do better than the informed, and
+some would stop buying; if fewer, the reverse.
+\end{proof}
+
+% code: exercises/solutions.py gs
+With $\sigma_z = 0.25$ and $c = 0.1116$, $k = e^{0.2232} - 1 = 0.250$, $\sigma_u = \sqrt{0.25/0.75} = 0.577$
+and $\phi^* = 0.25/0.577 = 0.433$: 43.3 per cent of the traders buy the signal, and the price forecasts
+$\theta$ with error variance 0.25, a quarter of the variance of $\theta$ itself. The listing checks the
+result by brute force. It draws 400{,}000 periods of the market at that informed share, computes the
+price from the clearing condition, and compares the realised utilities of the two kinds of trader.
+
+\omcode{code/bachelor-2/08-prices-as-information/listings/informed_share.py}{1}{30}{A market with
+informed and uninformed traders, simulated at the equilibrium informed
+share.}\label{lst:b2:prices-as-information:informed-share}
+
+\omoutput{code/bachelor-2/08-prices-as-information/outputs/informed_share.txt}{The price forecasts
+$\theta$ with error variance 0.25; the two kinds of trader are almost equally well
+off.}\label{out:b2:prices-as-information:informed-share}
+
+% code: listings/informed_share.py
+The two utilities, $-0.9917$ and $-0.9922$, differ by less than the sampling noise of the simulation. The
+fitted slope 0.862 is the uninformed trader's reading of the price, $\kappa/b$ in the listing's notation.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=0.4, ymin=0, ymax=1.05, xlabel={Cost of the signal $c$},
+    ylabel={Share}, width=0.62\linewidth, height=0.42\linewidth, xtick={0,0.1,0.2,0.3,0.4},
+    xticklabel style={/pgf/number format/fixed}, legend columns=2,
+    legend style={at={(0.5,-0.25)}, anchor=north, font=\footnotesize}]
+  \addplot[omDef, very thick] table[x=c, y=phi]
+    {figdata/bachelor-2/08-prices-as-information/out/gs.csv};
+  \addplot[omThm, thick, dashed] table[x=c, y=resid]
+    {figdata/bachelor-2/08-prices-as-information/out/gs.csv};
+  \legend{Informed share $\phi^*$, Error variance $\mathrm{Var}(\theta \mid p)$}
+\end{axis}
+\end{tikzpicture}
+
+{\small The Grossman--Stiglitz market with $\sigma_z = 0.25$. As the signal becomes dearer, fewer traders
+buy it and the price forecasts $\theta$ less well. Below $c = 0.029$ every trader is informed; above $c =
+0.347$ no one is, and the price says nothing about $\theta$.}
+\end{omfigure}
+
+Two features of the proposition are worth stating. The price's error variance $k$ depends only on the cost
+of information, not on the noise: more noise in supply attracts more \omterm{def:b2:prices-as-information:informed-trader}{informed traders}, exactly enough to
+restore the same informativeness. And the price can never be \omterm{def:b2:prices-as-information:fully-revealing}{fully revealing} while information costs
+something.
+
+\begin{definition}[Grossman--Stiglitz paradox]\label{def:b2:prices-as-information:gs-paradox}
+The \emph{Grossman--Stiglitz paradox}\index{Grossman--Stiglitz paradox} is the result that when
+information is costly, prices cannot fully reveal it: if they did, no trader would pay for information,
+and then prices would contain none.
+\end{definition}
+
+Without noise ($\sigma_z = 0$) there is no equilibrium at all (\cref{exo:b2:prices-as-information:11}). With
+noise, the market settles where prices are informative enough to make information barely worth its cost.
+Prices are then partly revealing, and the informed earn, on average, exactly enough to pay for what they
+know.
+
+\begin{model}{Grossman--Stiglitz}
+\assumes Traders with CARA utility; normal values and noise; a fixed cost of information; traders who
+learn from prices.
+\predicts An equilibrium share of \omterm{def:b2:prices-as-information:informed-trader}{informed traders}; prices partly revealing, more revealing when
+information is cheaper; returns to being informed that just cover the cost.
+\tested No direct test is reported here: a test would need the informed share and the cost of information,
+which are rarely observed. The model is consistent with the racetrack and election records of this chapter,
+where prices carry much but not all of the information.
+\breaks Normality and CARA are chosen for tractability; noise traders are assumed, not explained; the
+informed share is hard to measure.
+\end{model}
+
+\section{Prediction markets and their record}\label{sec:b2:prices-as-information:prediction}
+
+\begin{definition}[Prediction market]\label{def:b2:prices-as-information:prediction-market}
+A \emph{prediction market}\index{prediction market} trades contracts whose payoff depends on a future
+event, such as a contract that pays one dollar if a candidate wins, or one cent per percentage point of
+her vote share. The price of such a contract is read as the market's forecast of the probability or the
+quantity.
+\end{definition}
+
+A contract that pays one dollar if an event occurs is worth, to a risk-neutral trader, the probability of
+the event. If traders hold scattered information about the event and the market aggregates it, as in
+\cref{prop:b2:prices-as-information:revealing}, the price is a better forecast than any single trader's.
+The racetrack of the opening chart is such a market, and its record shows one systematic error.
+
+\begin{definition}[Favourite--longshot bias]\label{def:b2:prices-as-information:longshot-bias}
+The \emph{favourite--longshot bias}\index{favourite--longshot bias} is the regularity that, in betting
+markets, bets on outcomes with low probability (longshots) return less on average than bets on outcomes
+with high probability (favourites): prices overstate the chance of unlikely outcomes and understate the
+chance of likely ones.
+\end{definition}
+
+% code: exercises/solutions.py payback
+Odds of 100/1 mean that a winning dollar bet returns 101 dollars. If such horses won one race in 101, the
+expected return would be zero: the odds are already net of the track's share. Unbiased odds would return
+what the track leaves, about $-18$ to $-23$ per cent, as for horses at 4/1 to 9/1 and for a horse picked at
+random, so a 100/1 horse would win about $0.77/101 = 0.0076$ of its races. A rate of return of $-61$ per cent
+says instead that such horses win about $0.39/101 = 0.0039$ of their races: about half as often as that
+benchmark implies.
+
+\begin{record}[Election markets against polls]
+% ledger: b2:bfnr2008-polls
+The Iowa Electronic Markets trade vote-share contracts on elections. Berg, Forsythe,
+Nelson and Rietz (2008) compare 237 contract prices, in 49 markets in 13 countries, with the vote shares
+that followed. In 15 national elections with polls to compare, the market's forecast was closer to the
+result than the polls' average in 9 of the 15. Across those elections the average absolute error of the
+final polls was 1.91 percentage points of the vote; the market's was 1.49 points with election-eve prices
+and 1.58 points with prices averaged over the last week. Their markets did better for presidential
+elections than for lower-profile ones, and with more trading volume near the election.
+\end{record}
+
+The record supports aggregation and qualifies it. The market's errors are a little smaller than the
+polls', not dramatically so, and the markets studied are those that existed and drew traders. A market
+can also be pushed: a trader with deep pockets can buy a contract to move its price. Whether such a push
+lasts is itself a test: if other traders treat the moved price as a profit opportunity, it reverts
+(\cref{exo:b2:prices-as-information:9}).
+
+\begin{model}{Prices as information}
+\assumes Traders hold dispersed, partial information; they trade on it and learn from prices; markets
+are thick enough for prices to respond.
+\predicts Prices that aggregate dispersed signals, forecasting better than any single participant;
+unpredictable price changes once the information is in.
+\tested \omterm{def:b2:prices-as-information:prediction-market}{Prediction markets} forecast elections about as well as or better than the polls' average
+(Berg et al.\ 2008); racetrack odds rank horses' chances correctly but overstate those of longshots
+(Snowberg and Wolfers 2010); laboratory markets (\cref{ch:b2:exchange-economies}).
+\breaks Thin markets, manipulation, systematic misperception of small probabilities (the
+\omterm{def:b2:prices-as-information:longshot-bias}{favourite--longshot bias}), and costly information (Grossman--Stiglitz).
+\end{model}
+
+\section{Planned prices as data}\label{sec:b2:prices-as-information:plan}
+
+A planned economy also has prices: the prices at which state enterprises deliver goods to one another
+and to shops. Set by an office rather than by trade, they need not clear markets. When a plan price is
+below the price that would clear the market, the model of a price ceiling predicts that buyers want more
+than sellers supply; the goods are rationed, by queue, by permit or by connection. The plan price then
+carries the planner's information, not the buyers' and sellers'.
+
+\begin{definition}[Dual-track pricing]\label{def:b2:prices-as-information:dual-track}
+\emph{Dual-track pricing}\index{dual-track pricing} is a reform in which producers must still deliver
+fixed plan quotas at plan prices, but may sell any output above the quota, and buy inputs beyond their
+plan \omterm{def:b2:exchange-economies:allocation}{allocation}, at market prices.
+\end{definition}
+
+Take a mine with cost $C(q) = q^2/2$ that must deliver a quota $\bar q = 18$ at the plan price $\bar p = 20$,
+and may sell anything more at the market price $p = 30$. Its profit is $\bar p\bar q + p(q - \bar q) - C(q)$, so
+the last tonne is worth $p$ and it produces where $C'(q) = q = 30$. It delivers 18 tonnes to the plan and sells
+12 on the market, for a profit of $360 + 360 - 450 = 270$. With full liberalisation it would produce the
+same 30 tonnes and earn $900 - 450 = 450$. The difference, $(p - \bar p)\bar q = 180$, is a transfer from the
+mine to the buyers entitled to plan deliveries, and it does not depend on anything the mine chooses.
+
+\begin{proposition}[The plan track as a lump-sum transfer]\label{prop:b2:prices-as-information:dual-track}
+Under \omterm{def:b2:prices-as-information:dual-track}{dual-track pricing}, if the quota is enforced and a producer's output exceeds it, the producer's
+output choice is the one it would make at the market price alone, and the plan track transfers $(p - \bar
+p)\bar q$ from the producer to the holders of plan rights, a \omterm{def:b2:welfare-theorems:lump-sum}{lump-sum transfer}.
+\end{proposition}
+
+\begin{proof}
+Profit is $\bar p\bar q + p(q - \bar q) - C(q) = [pq - C(q)] - (p - \bar p)\bar q$. The bracket is profit at the
+market price; the second term does not depend on $q$. So the $q$ that maximises profit is the one that
+maximises profit at the market price, and the producer pays $(p - \bar p)\bar q$ whatever it does.
+\end{proof}
+
+This is the interpretation of Lau, Qian and Roland (2000): the plan track, kept and enforced, protects
+those who held rights under the plan, while the market track puts every decision at the margin under
+market prices; the reform can then be Pareto-improving, an application of the \omterm{def:b2:welfare-theorems:lump-sum}{lump-sum transfers} of
+\cref{ch:b2:welfare-theorems}. The proposition also says what can go wrong: if quotas are not enforced,
+or plan goods can be resold, the transfer is no longer lump-sum.
+
+\begin{record}[Two prices for the same goods: China's dual track]
+% ledger: b2:zhang2018-text
+From January 1985, Chinese state enterprises could sell output above their quotas at market prices, while
+plan supplies stayed at the 1983 quota. A survey of 429 state-owned industrial enterprises found that
+the output they sold themselves rose from 30.1 per cent of their sales in 1984 to 43.8 per cent in the
+first half of 1985. Coal output rose by 105.1 million tonnes between 1982 and 1984, and 53.2 per cent of
+the increase came from rural and township mines, outside the central plan (Zhang 2018).
+\end{record}
+
+\begin{omchart}{Shares of China's coal output by type of mine, in per cent, 1978--1984.}{Zhang (2018),
+  Table~12.2}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xmin=1977.5, xmax=1984.5, ymin=0, ymax=60, xtick={1978,...,1984},
+    xticklabel style={/pgf/number format/1000 sep={}}, ylabel={Per cent of national output},
+    width=0.62\linewidth, height=0.42\linewidth, legend columns=3,
+    legend style={at={(0.5,-0.2)}, anchor=north, font=\footnotesize}]
+  \addplot[omDef, very thick, mark=*] table[x=year, y=central]
+    {figdata/bachelor-2/08-prices-as-information/out/coal.csv};
+  \addplot[black!60, thick, mark=square*] table[x=year, y=local]
+    {figdata/bachelor-2/08-prices-as-information/out/coal.csv};
+  \addplot[omThm, very thick, mark=triangle*] table[x=year, y=nonstate]
+    {figdata/bachelor-2/08-prices-as-information/out/coal.csv};
+  \legend{Centrally allocated, Local government, Non-state}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: coal_summary (central -7, local -4.1, nonstate +10.6)
+Between 1978 and 1984 the non-state mines' share rose by 10.6 points, from 15.6 to 26.2 per cent, while the
+centrally allocated mines' share fell by 7.0 points. In the model, a mine outside the plan responds only
+to the market price, so its growth is what the market price called for. The chart cannot separate that
+response from other reforms of the same years, and the shares are of output, not of welfare. It shows
+the plan's prices and the market's at work side by side, which is what a single price system cannot show.
+
+Planned prices fail as messages for the reason of \cref{sec:b2:prices-as-information:planner}: the office
+setting them lacks the information that buyers and sellers hold, and those who hold it have no reason to
+report it. Market prices fail in the ways of this chapter: when information is costly, when markets are
+thin, when traders misjudge small probabilities. Neither failure is evidence that the other system works.
+
+\section{Exercises}\label{sec:b2:prices-as-information:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:prices-as-information:1}
+Read the opening chart. How many cents does a dollar bet on the favourite return on average, and a dollar
+bet at odds of 100/1 or longer? If odds were unbiased forecasts, what would the chart look like?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:prices-as-information:2}
+An economy has 2 million households and 40 goods, and each household has Cobb--Douglas preferences. How
+many numbers must a planner collect to know all the preferences? How many prices does a market post?
+What else would the planner need?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:prices-as-information:3}
+In the two-signal market, $s_1 = 2$ and $s_2 = -0.5$. Find the naive price and the \omterm{def:b2:prices-as-information:fully-revealing}{fully revealing} price.
+At the naive price, would traders who learnt $s_1 + s_2$ from the price want to buy or to sell?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:prices-as-information:4}
+Describe data from a \omterm{def:b2:prices-as-information:prediction-market}{prediction market} that would refute the claim that its prices aggregate the
+information of its traders.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:prices-as-information:5}
+In the Grossman--Stiglitz market with $\sigma_z = 0.25$, find the equilibrium informed share and the
+error variance of the price's forecast when $c = 0.05$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:prices-as-information:6}
+Predict, then compute: the cost of the signal rises from 0.1116 to 0.2. What happens to the informed share
+and to the informativeness of the price? What would happen if instead $\sigma_z$ doubled?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:prices-as-information:7}
+Use the record box on election markets. By what percentage was the market's average error smaller than the
+polls', by each measure? In what share of elections was the market closer? What would you need to know to
+judge whether 9 of 15 could be luck?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:prices-as-information:8}
+A favourite at odds of 2/1 returns 3 dollars per dollar bet when it wins. If favourites return $-5.5$ per
+cent on average, how often do such horses win? What probability do the odds suggest? Compare with the
+horse at 100/1 in the text.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:prices-as-information:9}
+A trader buys a large quantity of a candidate's contract in a \omterm{def:b2:prices-as-information:prediction-market}{prediction market}, raising its price from
+0.40 to 0.55 within an hour, with no news about the election. Design a test of whether the market's price
+was manipulated, and say what each outcome would show.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:prices-as-information:10}
+(a) A trader with utility $-e^{-aW}$ buys $x$ units of an asset at price $p$ whose value is normal with mean
+$m$ and variance $\sigma^2$. Using $\mathbb{E}[e^{-Y}] = e^{-\mathbb{E}Y + \mathrm{Var}(Y)/2}$ for normal $Y$, show
+that her best $x$ is $(m - p)/(a\sigma^2)$. (b) In the two-signal market with signal variances $\sigma_1^2$ and
+$\sigma_2^2$ and the noise variance $\sigma_\varepsilon^2$, show that $p = s_1 + s_2$ is still a \omterm{def:b2:prices-as-information:fully-revealing}{fully
+revealing equilibrium}.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:prices-as-information:11}
+Show that in the Grossman--Stiglitz market without noise ($\sigma_z = 0$) and with $0 < c < \tfrac12\ln 2$
+there is no equilibrium: neither $\phi = 0$ nor any $\phi > 0$ leaves traders indifferent or content with
+their choice.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:prices-as-information:12}
+In the equilibrium of the text ($\sigma_z = 0.25$, $c = 0.1116$), how much do traders spend on
+information, per trader? The asset's payoff does not depend on who is informed. Who gains from the
+information, and is spending on it a social gain or a transfer? Under what circumstances would better
+prices have real value?
+\end{exercise}
+
+\section{Problem: Kestria's harvest-forecast market}\label{sec:b2:prices-as-information:problem}
+
+\begin{problem}[{Weekend problem --- Kestria, an invented economy, runs a market in contracts on next
+year's wheat harvest: how well does the price forecast the harvest, how many traders pay for a forecast,
+and does the market beat the national forecast office}]
+\label{pb:b2:prices-as-information:1}
+Kestria's wheat harvest, in thousands of tonnes, will be $H = 100 + s_N + s_S + \varepsilon$. Farmers in the
+north see $s_N$, farmers in the south see $s_S$; the two signals have mean 0 and variance 16, $\varepsilon$
+has mean 0 and variance 9, and all three are independent and normal.
+
+\medskip
+\noindent\textbf{Part I --- Signals and a planner.}
+\begin{enumerate}
+  \item Find the variance of $H$.
+  \item A planner who learns both signals forecasts $H$ with which error variance? With one signal? With
+        none?
+  \item How many numbers must the planner collect each year, and from whom?
+  \item Why might northern farmers report a low $s_N$ if the planner sets the price of seed by the
+        forecast?
+  \item A market forecast that used both signals would have which error variance?
+  \item Which result of the chapter says a market price could achieve it?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The market price.} A contract pays $H$ at harvest. Northern and southern
+traders, equal in number, have utility $-e^{-W}$; the contract is in zero net supply. This year $s_N = 6$ and
+$s_S = -2$.
+\begin{enumerate}[resume]
+  \item If traders ignore the price, find each group's demand and the price.
+  \item At that price, how much does a northern trader buy?
+  \item If traders learn from the price, find the equilibrium price.
+  \item Check that the market clears at that price.
+  \item Which price is the better forecast of $H$, and what is its error variance?
+  \item What does a southern trader learn from the price of question 9?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Costly information.} Use the Grossman--Stiglitz market of
+\cref{sec:b2:prices-as-information:costly}, with $\sigma_z = 0.25$: a forecast of the harvest costs $c =
+0.08$.
+\begin{enumerate}[resume]
+  \item Compute $k$.
+  \item Find the equilibrium informed share.
+  \item Find the error variance of the price's forecast of $\theta$.
+  \item The cost falls to 0.05. What changes?
+  \item Explain why the price cannot reveal $\theta$ fully.
+  \item Who pays for the information the uninformed traders read from the price?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- The market against the forecast office.} The office's forecast is $100 + s_N +
+s_S$ plus a survey error of variance 4; the market's price is $100 + s_N + s_S$ plus noise of variance 2.25.
+The table records twelve seasons.
+
+\begin{center}
+\small
+\begin{tabular}{lrrrrrrrrrrrr}
+\toprule
+Season & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 \\
+\midrule
+Harvest & 93.2 & 118.4 & 108.6 & 91.8 & 101.5 & 109.7 & 86.3 & 106.8 & 96.5 & 95.9 & 100.1 & 96.4 \\
+Office  & 90.9 & 110.2 & 101.2 & 95.5 & 102.9 & 109.9 & 84.4 & 103.6 & 99.4 & 98.0 & 100.4 & 99.6 \\
+Market  & 94.8 & 113.4 & 101.9 & 95.9 & 102.2 & 103.8 & 86.7 & 105.5 & 98.2 & 92.2 & 103.5 & 100.5 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{enumerate}[resume]
+  \item Find the expected squared error of each forecast.
+  \item Compute the mean absolute error of each forecast over the twelve seasons, and the mean squared
+        error.
+  \item In how many seasons was the market closer?
+  \item The difference between the market's and the office's squared errors has mean $-0.72$ and standard
+        deviation 17.8 over the twelve seasons. Is the record informative?
+  \item Compute the mean absolute error of the average of the two forecasts, and its expected squared
+        error.
+  \item State the result: the informed share and the price's error variance in Part III, and what the
+        twelve seasons show.
+\end{enumerate}
+\end{problem}

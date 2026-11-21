@@ -1,0 +1,19 @@
+key,study,orig_r,rep_r,n_orig,n_rep,replicated,ledger
+abeler,Abeler et al. (AER 2011),0.18,0.08,120,318,No,b2:camerer2016-abeler
+ambrus,Ambrus and Greiner (AER 2012),0.31,0.23,117,357,Yes,b2:camerer2016-ambrus
+bartling,Bartling et al. (AER 2012),0.72,0.66,216,360,Yes,b2:camerer2016-bartling
+charness,Charness and Dufwenberg (AER 2011),0.38,0.36,162,264,Yes,b2:camerer2016-charness
+chen,Chen and Chen (AER 2011),0.84,0.17,72,168,No,b2:camerer2016-chen
+declippel,de Clippel et al. (AER 2014),0.12,0.27,158,156,Yes,b2:camerer2016-declippel
+duffy,Duffy and Puzzello (AER 2014),0.76,-0.12,54,96,No,b2:camerer2016-duffy
+dulleck,Dulleck et al. (AER 2011),0.72,0.73,168,128,Yes,b2:camerer2016-dulleck
+ericson,Ericson and Fuster (QJE 2011),0.21,0.12,112,262,No,b2:camerer2016-ericson
+fehr,Fehr et al. (AER 2013),0.45,0.31,60,102,Yes,b2:camerer2016-fehr
+friedman,Friedman and Oprea (AER 2012),0.64,0.44,78,40,Yes,b2:camerer2016-friedman
+fudenberg,Fudenberg et al. (AER 2012),0.30,0.33,124,128,Yes,b2:camerer2016-fudenberg
+huck,Huck et al. (AER 2011),0.83,0.37,120,160,No,b2:camerer2016-huck
+ifcher,Ifcher and Zarghamee (AER 2011),0.28,-0.01,58,131,No,b2:camerer2016-ifcher
+kessler,Kessler and Roth (AER 2012),0.49,0.34,288,48,Yes,b2:camerer2016-kessler
+kirchler,Kirchler et al. (AER 2012),0.66,0.53,120,220,Yes,b2:camerer2016-kirchler
+kogan,Kogan et al. (AER 2011),0.32,0.30,126,90,Yes,b2:camerer2016-kogan
+kuziemko,Kuziemko et al. (QJE 2014),0.28,-0.12,42,144,No,b2:camerer2016-kuziemko

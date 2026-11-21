@@ -1,0 +1,9 @@
+$ python ideas.py
+year  growth of A (%)  output per worker, doubled share / baseline
+   0             4.00       0.980
+  10             3.65       1.175
+  25             3.28       1.461
+  50             2.87       1.902
+ 100             2.45       2.609
+ 200             2.15       3.406
+long run: growth 2.00%, level ratio 3.918

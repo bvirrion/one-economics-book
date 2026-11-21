@@ -1,0 +1,301 @@
+% Provenance (never printed): the markets-with-algebra strand of ../economics_series.md (grade 9: affine demand and
+% supply; equilibrium by one equation; shifts as changes of intercept; the four directions; a real episode; the full
+% model frame). Brief: sources/book1/BRIEFS.md, g9-01. Chart data: figdata/grade-9/01-demand-and-supply-equations
+% (Eurostat prc_hicp_aind CP08202 / CP00 for France; WDI IT.CEL.SETS.P2 FRA; invented worked example and fish
+% market). Ledger: g9:smith-1962. The brief's [A] fallback opening chart is used (France only: the one country with
+% the mobile-telephone-equipment index from 2000); no photograph (the solar case is not used).
+\chapter{Demand and Supply with Equations}\label{ch:g9:demand-and-supply-equations}
+
+\begin{openingchart}{Mobile phones in France, 2000--2010: the real price of mobile telephones (their
+price index divided by all consumer prices, 2000 = 100) against the number of mobile subscriptions per
+100 people, one point a year.}{Eurostat, harmonised index of consumer \omterm{def:g7:money:price}{prices} (prc\_hicp\_aind),
+mobile telephone equipment and all items; World \omterm{def:g8:banks-saving-interest:bank}{Bank}, World Development Indicators, IT.CEL.SETS.P2}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xmin=40, xmax=100, ymin=0, ymax=110,
+  xlabel={Mobile subscriptions per 100 people}, ylabel={Real price of a mobile phone, 2000 = 100},
+  nodes near coords, point meta=explicit symbolic,
+  visualization depends on={value \thisrow{pos} \as \labelpos},
+  every node near coord/.append style={font=\footnotesize, anchor=\labelpos}]
+\addplot[omDef, thick, mark=*, mark size=1.6pt] table[x=subs, y=price, meta=label]
+  {figdata/grade-9/01-demand-and-supply-equations/out/phones.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: phones (2000: 100, 48.8; 2008: 13.9, 92.3; 2010: 9.3, 91.1)
+In 2000, France counted $48.8$ mobile subscriptions per 100 people. In 2010 there were $91.1$. Over the
+same years, the \omterm{def:g7:money:price}{price} of a mobile phone, compared with all other goods, fell to $9.3\,\%$ of its level
+of 2000. The \omterm{def:g7:money:price}{price} went down and the number of subscriptions went up, year after year until 2008; after
+that the \omterm{def:g7:money:price}{price} kept falling while subscriptions stayed near $92$ per 100 people.
+
+Grade 7 explained such moves with demand and \omterm{def:g7:demand-and-supply-first-look:supply-curve}{supply curves} drawn from tables. With equations, the same
+model gives exact numbers: the new \omterm{def:g7:money:price}{price}, the new quantity, and how the change is shared between buyers
+and sellers.
+
+\begin{recall}
+At the \omterm{def:g7:demand-and-supply-first-look:equilibrium-price}{equilibrium price}, the \omterm{def:g7:demand-and-supply-first-look:quantity-demanded}{quantity demanded} equals the \omterm{def:g7:demand-and-supply-first-look:quantity-supplied}{quantity supplied}
+(\cref{ch:g7:demand-and-supply-first-look}). An affine function has the form $y = m x + k$: its graph is
+a straight line with slope $m$ and intercept $k$.
+\end{recall}
+
+\section{Demand as an affine function of the price}
+
+\begin{definition}[Demand function]\label{def:g9:demand-and-supply-equations:demand-function}
+A \emph{demand function}\index{demand function} gives the \omterm{def:g7:demand-and-supply-first-look:quantity-demanded}{quantity demanded} $Q^d$ for each \omterm{def:g7:money:price}{price} $p$.
+In this chapter it is affine: $Q^d = a - b\,p$, with $a > 0$ and $b > 0$.
+\end{definition}
+
+The number $a$ is the \omterm{def:g7:demand-and-supply-first-look:quantity-demanded}{quantity demanded} at a \omterm{def:g7:money:price}{price} of zero; $b$ is how many fewer units buyers want for
+each extra dalen of \omterm{def:g7:money:price}{price}. In the worked example of this chapter, buyers want $Q^d = 120 - 4p$ units a
+day: 120 at a \omterm{def:g7:money:price}{price} of 0, 80 at a \omterm{def:g7:money:price}{price} of 10, none at a \omterm{def:g7:money:price}{price} of 30.
+
+\section{Supply as an affine function}
+
+\begin{definition}[Supply function]\label{def:g9:demand-and-supply-equations:supply-function}
+A \emph{supply function}\index{supply function} gives the \omterm{def:g7:demand-and-supply-first-look:quantity-supplied}{quantity supplied} $Q^s$ for each \omterm{def:g7:money:price}{price} $p$.
+In this chapter it is affine: $Q^s = c + d\,p$, with $d > 0$.
+\end{definition}
+
+In the worked example, sellers offer $Q^s = 20 + 6p$ units a day: 20 at a \omterm{def:g7:money:price}{price} of 0, and 6 more for
+each extra dalen.
+
+\begin{measure}[Reading a slope]
+Economists draw the \omterm{def:g7:money:price}{price} on the vertical axis and the quantity on the horizontal axis. With $Q^d = 120
+- 4p$, a rise of 1 dalen in the \omterm{def:g7:money:price}{price} lowers the quantity by 4 units: on the graph, the line goes 4
+units left for each dalen up. A demand line with a small $b$ looks steep: buyers hardly change their
+purchases when the \omterm{def:g7:money:price}{price} changes. A large $b$ gives a flat line.
+\end{measure}
+
+\section{Solving for the equilibrium}
+
+At the \omterm{def:g7:demand-and-supply-first-look:equilibrium-price}{equilibrium price}, $Q^d = Q^s$. In the worked example:
+\[
+120 - 4p = 20 + 6p \quad\Longrightarrow\quad 100 = 10p \quad\Longrightarrow\quad p^* = 10,
+\]
+and the quantity is $Q^* = 120 - 4 \times 10 = 80$ (check: $20 + 6 \times 10 = 80$).
+
+\begin{proposition}[Equilibrium of affine demand and supply]\label{prop:g9:demand-and-supply-equations:equilibrium}
+If $Q^d = a - b\,p$ and $Q^s = c + d\,p$ with $b + d > 0$, the \omterm{def:g7:demand-and-supply-first-look:equilibrium-price}{equilibrium price} and quantity are
+\[
+p^* = \frac{a - c}{b + d}, \qquad Q^* = a - b\,p^*.
+\]
+\end{proposition}
+
+\begin{proof}
+At the equilibrium, $a - b\,p = c + d\,p$. Adding $b\,p - c$ to both sides gives $a - c = (b + d)\,p$;
+dividing by $b + d$, which is not zero, gives $p^* = (a - c)/(b + d)$. The quantity is the \omterm{def:g7:demand-and-supply-first-look:quantity-demanded}{quantity
+demanded} at that \omterm{def:g7:money:price}{price}.
+\end{proof}
+
+% figdata: facts (ex_p 10, ex_q 80, ex_new_p 8, ex_new_q 88)
+\begin{omchart}{The worked example: demand $Q^d = 120 - 4p$, supply $Q^s = 20 + 6p$ (solid), and supply
+after a fall in costs, $Q^s = 40 + 6p$ (dashed). The equilibrium moves from $p^* = 10$, $Q^* = 80$ to
+$p^* = 8$, $Q^* = 88$.}{Invented}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xmin=0, xmax=160, ymin=0, ymax=20, height=0.5\linewidth,
+  xlabel={Quantity (units a day)}, ylabel={Price (dalens)}, xtick={0,40,80,88,120,160},
+  xticklabel style={font=\scriptsize}]
+\addplot[demand] table[x=qd, y=price] {figdata/grade-9/01-demand-and-supply-equations/out/example.csv};
+\addplot[supply] table[x=qs, y=price, restrict x to domain=0:160] {figdata/grade-9/01-demand-and-supply-equations/out/example.csv};
+\addplot[supply, shifted] table[x=qs_new, y=price, restrict x to domain=0:160] {figdata/grade-9/01-demand-and-supply-equations/out/example.csv};
+\draw[guide] (axis cs:0,10) -- (axis cs:80,10) -- (axis cs:80,0);
+\draw[guide] (axis cs:0,8) -- (axis cs:88,8) -- (axis cs:88,0);
+\node[eqpoint] at (axis cs:80,10) {};
+\node[eqpoint] at (axis cs:88,8) {};
+\node[anchor=south west, font=\footnotesize, text=omDef] at (axis cs:122,0.3) {demand};
+\node[anchor=south east, font=\footnotesize, text=omThm] at (axis cs:112,16.5) {supply};
+\node[anchor=west, font=\footnotesize, text=omThm] at (axis cs:126,12) {new supply};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\section{Shifts as changes of intercept}
+
+\begin{definition}[Shock]\label{def:g9:demand-and-supply-equations:shock}
+A \emph{shock}\index{shock} is a change in something other than the \omterm{def:g7:money:price}{price} of the good that moves the
+demand or the \omterm{def:g7:demand-and-supply-first-look:supply-curve}{supply curve}.
+\end{definition}
+
+A \omterm{def:g9:demand-and-supply-equations:shock}{shock} changes an intercept. A fall in costs that makes sellers offer 20 more units at every \omterm{def:g7:money:price}{price}
+turns $Q^s = 20 + 6p$ into $Q^s = 40 + 6p$: the supply line moves right by 20 units. The new
+equilibrium is $p^* = (120 - 40) \div 10 = 8$ and $Q^* = 120 - 4 \times 8 = 88$. The \omterm{def:g7:money:price}{price} falls by 2
+dalens, the quantity rises by 8 units.
+
+A \omterm{def:g9:demand-and-supply-equations:shock}{shock} to demand changes $a$ in the same way. Each of the four \omterm{def:g9:demand-and-supply-equations:shock}{shocks} moves the equilibrium in a
+definite direction.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.55cm, y=0.55cm]
+  \foreach \col/\row/\title/\kind in {0/0/Demand rises/dup, 9/0/Demand falls/ddown, 0/-9/Supply rises/sup, 9/-9/Supply falls/sdown} {
+    \begin{scope}[shift={(\col,\row)}]
+      \draw[econ axes] (0,5.5) node[above, font=\scriptsize] {price} |- (6.5,0) node[right, font=\scriptsize] {qty};
+      \node[font=\small\bfseries, anchor=south] at (3.2,5.9) {\title};
+      \draw[demand] (0.5,5) -- (5,0.5);
+      \draw[supply] (0.5,0.5) -- (5,5);
+    \end{scope}
+  }
+  % demand rises: new demand right
+  \draw[demand, shifted] (1.5,5) -- (6,0.5);
+  \node[eqpoint, fill=black!45] at (2.75,2.75) {}; \node[eqpoint] at (3.25,3.25) {};
+  % demand falls
+  \draw[demand, shifted] (9.0,4) -- (12.5,0.5);
+  \node[eqpoint, fill=black!45] at (11.75,2.75) {}; \node[eqpoint] at (11,2) {};
+  % supply rises
+  \draw[supply, shifted] (1.5,-8.5) -- (6,-4);
+  \node[eqpoint, fill=black!45] at (2.75,-6.25) {}; \node[eqpoint] at (3.25,-6.75) {};
+  % supply falls
+  \draw[supply, shifted] (9.5,-7.5) -- (13.0,-4);
+  \node[eqpoint, fill=black!45] at (11.75,-6.25) {}; \node[eqpoint] at (11.25,-5.75) {};
+  \node[align=left, font=\footnotesize, anchor=north west] at (0,-0.6) {price up, quantity up};
+  \node[align=left, font=\footnotesize, anchor=north west] at (9,-0.6) {price down, quantity down};
+  \node[align=left, font=\footnotesize, anchor=north west] at (0,-9.6) {price down, quantity up};
+  \node[align=left, font=\footnotesize, anchor=north west] at (9,-9.6) {price up, quantity down};
+\end{tikzpicture}
+
+{\small The four \omterm{def:g9:demand-and-supply-equations:shock}{shocks}: the dashed line is the curve after the \omterm{def:g9:demand-and-supply-equations:shock}{shock}, the grey dot the old equilibrium and
+the black dot the new one. A rise in demand raises both the
+\omterm{def:g7:money:price}{price} and the quantity; a rise in supply lowers the \omterm{def:g7:money:price}{price} and raises the quantity.}
+\end{omfigure}
+
+\section{Four predictions and a test}
+
+\begin{model}{Supply and demand}
+\assumes Many buyers and many sellers of one good; the \omterm{def:g7:money:price}{price} is free to move; buyers buy less at a
+higher \omterm{def:g7:money:price}{price} and sellers offer more.
+\predicts A fall in costs (supply rises) lowers the \omterm{def:g7:money:price}{price} and raises the quantity; a rise in demand
+raises both. With affine curves, the sizes follow from the slopes: a cost fall that adds $k$ units to
+supply at every \omterm{def:g7:money:price}{price} lowers the \omterm{def:g7:money:price}{price} by $k/(b+d)$.
+\tested The opening chart is consistent with a rise in supply: the real \omterm{def:g7:money:price}{price} of mobile phones fell
+and the number of subscriptions rose. It is not a clean test, because the \omterm{def:g7:money:price}{price} is that of handsets
+and the quantity that of subscriptions, two different goods; a test would need the \omterm{def:g7:money:price}{price} and the
+number of handsets sold in one \omterm{def:g7:markets-and-prices:market}{market} (exercise 12 asks what else could produce the same picture). Laboratory \omterm{def:g7:markets-and-prices:market}{markets}, in which buyers and sellers are each told a private
+value or cost and trade by calling out offers: \omterm{def:g7:money:price}{prices} end close to the crossing of the supply and
+demand schedules (Smith, 1962).
+\breaks Few sellers who can choose their \omterm{def:g7:money:price}{price} (\cref{ch:g8:competition-and-monopoly-first-look});
+goods whose quality buyers cannot check; \omterm{def:g7:money:price}{prices} that are not allowed to move
+(\cref{ch:g9:price-controls-taxes-subsidies}).
+\end{model}
+
+\begin{record}[Laboratory markets]
+% ledger: g9:smith-1962
+Classroom experiments published in 1962 (Smith, 1962) worked like this. Each buyer received a card
+with the most they could pay for one unit; each seller a card with their cost. Nobody knew the others' cards,
+so nobody knew where the supply and demand schedules crossed. Buyers and sellers called out bids and
+offers until no more trades were possible; then the \omterm{def:g7:markets-and-prices:market}{market} reopened for a new ``trading day'' with the
+same cards, usually four or five times. \omterm{def:g7:money:price}{Prices} and quantities ended close to the equilibrium of the
+schedules, although no trader knew it. Many later experiments found the same, with as few as six to
+eight traders.
+\end{record}
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g9:demand-and-supply-equations:1}
+Use the opening chart. Give the real \omterm{def:g7:money:price}{price} of a mobile phone and the number of subscriptions per 100
+people in 2000 and in 2010.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g9:demand-and-supply-equations:2}
+Demand is $Q^d = 200 - 5p$. Compute the \omterm{def:g7:demand-and-supply-first-look:quantity-demanded}{quantity demanded} at a \omterm{def:g7:money:price}{price} of 12 dalens.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g9:demand-and-supply-equations:3}
+Demand is $Q^d = 90 - 3p$ and supply is $Q^s = 10 + 5p$. Compute the \omterm{def:g7:demand-and-supply-first-look:equilibrium-price}{equilibrium price} and quantity.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g9:demand-and-supply-equations:4}
+A demand line passes through the points ($p = 0$, $Q = 300$) and ($p = 10$, $Q = 200$). Write its
+equation.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g9:demand-and-supply-equations:5}
+In the worked example, demand rises to $Q^d = 150 - 4p$; supply is still $Q^s = 20 + 6p$. Compute the
+new equilibrium.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g9:demand-and-supply-equations:6}
+In the worked example, supply falls to $Q^s = 6p$; demand is still $Q^d = 120 - 4p$. Compute the new
+equilibrium.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g9:demand-and-supply-equations:7}
+In the worked example, each unit becomes 2 dalens cheaper to make, so sellers now offer at a \omterm{def:g7:money:price}{price} $p$
+what they offered before at $p + 2$: $Q^s = 20 + 6(p + 2)$. Compute the new \omterm{def:g7:demand-and-supply-first-look:equilibrium-price}{equilibrium price}. By how
+much did the \omterm{def:g7:money:price}{price} fall: by the full 2 dalens?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g9:demand-and-supply-equations:8}
+In the worked example, the \omterm{def:g7:money:price}{price} is held at 8 dalens. Compute the quantities demanded and supplied,
+and the \omterm{def:g7:markets-and-prices:shortage}{shortage}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g9:demand-and-supply-equations:9}
+In a \omterm{def:g7:markets-and-prices:market}{market}, a new machine lowers costs and nothing else is said to change. A year later, both the
+\omterm{def:g7:money:price}{price} and the quantity are higher. Does this fit the model? What else might have happened?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g9:demand-and-supply-equations:10}
+In the worked example, demand rises to $Q^d = 150 - 4p$ and, at the same time, supply rises to $Q^s =
+40 + 6p$. Compute the new equilibrium. Which of the \omterm{def:g7:money:price}{price} and the quantity could you predict without
+the numbers?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g9:demand-and-supply-equations:11}
+Supply is $Q^s = 20 + 6p$. A cost fall adds 12 units to supply at every \omterm{def:g7:money:price}{price}. Compute the fall in the
+\omterm{def:g7:money:price}{price} when demand is $Q^d = 50 - p$, and when demand is $Q^d = 200 - 12p$. In which \omterm{def:g7:markets-and-prices:market}{market} do buyers get
+most of the cost fall as a lower \omterm{def:g7:money:price}{price}?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g9:demand-and-supply-equations:12}
+From 2008 to 2010, the opening chart shows the \omterm{def:g7:money:price}{price} still falling while subscriptions stopped rising.
+What can the chart not say about which curves moved?
+\end{exercise}
+
+\section{Problem: The Brenmoor Fish Market}
+
+\begin{problem}[{Weekend problem --- demand and supply lines from tables, the equilibrium, and a new
+harbour}]
+\label{pb:g9:demand-and-supply-equations:1}
+% figdata: fish (qd = 1000 - 50p, qs = 50 + 75p, qs_new = 175 + 75p); facts (fish_p 7.6, fish_q 620;
+% fish_new_p 6.6, fish_new_q 670)
+Everything in this problem is invented. At the fish \omterm{def:g7:markets-and-prices:market}{market} of Brenmoor, buyers and fishermen would
+trade these quantities each morning, in kilograms, at each \omterm{def:g7:money:price}{price} in dalens per kilogram:
+\begin{center}
+\begin{tabular}{lrrrrr}
+\toprule
+\omterm{def:g7:money:price}{Price} (dalens per kg) & 2 & 4 & 6 & 8 & 10 \\
+\midrule
+\omterm{def:g7:demand-and-supply-first-look:quantity-demanded}{Quantity demanded} (kg) & 900 & 800 & 700 & 600 & 500 \\
+\omterm{def:g7:demand-and-supply-first-look:quantity-supplied}{Quantity supplied} (kg) & 200 & 350 & 500 & 650 & 800 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent\textbf{Part I --- The lines.}
+\begin{enumerate}
+  \item By how many kilograms does the \omterm{def:g7:demand-and-supply-first-look:quantity-demanded}{quantity demanded} fall for each extra dalen of \omterm{def:g7:money:price}{price}?
+  \item Write the \omterm{def:g9:demand-and-supply-equations:demand-function}{demand function} $Q^d = a - b\,p$.
+  \item Write the \omterm{def:g9:demand-and-supply-equations:supply-function}{supply function} $Q^s = c + d\,p$.
+  \item Compute the quantities demanded and supplied at 5 dalens per kilogram.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The equilibrium.}
+\begin{enumerate}[resume]
+  \item Solve for the \omterm{def:g7:demand-and-supply-first-look:equilibrium-price}{equilibrium price} and quantity.
+  \item Check the quantity with the \omterm{def:g9:demand-and-supply-equations:supply-function}{supply function}.
+  \item At 10 dalens per kilogram, compute the \omterm{def:g7:markets-and-prices:market-surplus}{market surplus}.
+  \item At 6 dalens per kilogram, compute the \omterm{def:g7:markets-and-prices:shortage}{shortage}.
+  \item Compute the fishermen's \omterm{def:g7:firms:revenue}{revenue} at the equilibrium.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- A new harbour.} A new harbour lowers the fishermen's costs: at every \omterm{def:g7:money:price}{price}
+they now bring 125 kg more, so $Q^s = 175 + 75p$.
+\begin{enumerate}[resume]
+  \item Compute the new \omterm{def:g7:demand-and-supply-first-look:quantity-supplied}{quantity supplied} at 6 dalens per kilogram.
+  \item Solve for the new \omterm{def:g7:demand-and-supply-first-look:equilibrium-price}{equilibrium price} and quantity.
+  \item By how much did the \omterm{def:g7:money:price}{price} and the quantity change?
+  \item Compute the fishermen's new \omterm{def:g7:firms:revenue}{revenue}. Did it rise or fall?
+\end{enumerate}
+\end{problem}

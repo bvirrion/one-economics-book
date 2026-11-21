@@ -1,0 +1,201 @@
+\section*{Chapter \ref{ch:b2:intertemporal-choice} --- Intertemporal Choice}
+
+\begin{solution}{exo:b2:intertemporal-choice:1}
+% code: exercises/solutions.py ex_pv
+$\num{30000} + \num{40000}/1.04 + \num{50000}/1.04^2 = \num{30000} + \num{38461.5} + \num{46227.8} =
+\dal{114689}$.
+\end{solution}
+
+\begin{solution}{exo:b2:intertemporal-choice:2}
+% code: exercises/solutions.py ex_euler_log
+Lifetime resources $\num{40000} + \num{42000}/1.05 = \num{80000}$. With $u = \ln$ the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} is
+$c_1 = \beta(1 + r)c_0 = 0.9975\,c_0$, and the budget $c_0 + c_1/1.05 = c_0(1 + \beta) = \num{80000}$.
+So $c_0 = \num{80000}/1.95 = \dal{41026}$, $c_1 = \dal{40923}$, and saving is $\num{40000} -
+\num{41026} = -\dal{1026}$: the household borrows.
+\end{solution}
+
+\begin{solution}{exo:b2:intertemporal-choice:3}
+% figdata: ce_age (ratio, spending_pp)
+(a) Spending over income after taxes: $61.59/84.94 = 0.725$ at 25--34, and $51.15/49.98 = 1.023$ at 75
+and older. (b) $44.47/2.0 = 22.24$ thousand dollars per person for the youngest group, $72.25/2.2 = 32.84$
+for the 55--64 group. (c) Per person: spending per person rises 1.48 times from the youngest group to
+the 55--64 group, while spending per unit rises 1.85 times to its peak and income after taxes 2.26
+times. Much of the hump in spending per unit is the number of people in the unit.
+\end{solution}
+
+\begin{solution}{exo:b2:intertemporal-choice:4}
+Refutations: a preference reversal (choosing the larger, later reward when both are distant and the
+smaller, sooner one when it is immediate, with the same delay between them); paying a positive price
+for a \omterm{def:b2:intertemporal-choice:commitment-device}{commitment device} (\cref{prop:b2:intertemporal-choice:commitment}); a plan abandoned with no
+new information. Falling consumption over life is what the model predicts when $\beta(1 + r) < 1$ (an
+impatient household, \cref{cor:b2:intertemporal-choice:crra-growth}), so it refutes nothing.
+\end{solution}
+
+\begin{solution}{exo:b2:intertemporal-choice:5}
+% code: exercises/solutions.py ex_crra_growth
+$\gamma = 2$: approximately $(0.04 - 0.02)/2 = 1$ per cent; exactly $(1.04/1.02)^{1/2} - 1 = 0.976$
+per cent. $\gamma = 0.5$: approximately $0.02/0.5 = 4$ per cent; exactly $(1.04/1.02)^{2} - 1 = 3.96$
+per cent. The second household has the larger EIS, $1/\gamma = 2$ against $0.5$: its consumption
+responds four times as much to the gap between $r$ and $\rho$.
+\end{solution}
+
+\begin{solution}{exo:b2:intertemporal-choice:6}
+% code: exercises/solutions.py ex_rate_rise
+By \cref{prop:b2:intertemporal-choice:rate}, saving rises for $\gamma = 0.5$, is unchanged for $\gamma =
+1$ and falls for $\gamma = 2$. With $c_0 = \num{100000}/(1 + 0.96^{1/\gamma}(1 + r)^{1/\gamma - 1})$:
+for $\gamma = 2$, $c_0$ goes from \dal{50880} to \dal{51238} (the income effect wins); for $\gamma = 1$
+it stays at $\num{100000}/1.96 = \dal{51020}$ (the two effects cancel); for $\gamma = 0.5$ it falls from
+\dal{51302} to \dal{50584} (the substitution effect wins). There is no human-wealth effect, since all
+income comes in period 0.
+\end{solution}
+
+\begin{solution}{exo:b2:intertemporal-choice:7}
+% code: exercises/solutions.py ex_borrowing
+(a) Resources $\num{20000} + \num{60000}/1.05 = \num{77143}$; $c_0 = \num{77143}/1.95 = \dal{39560}$
+and $c_1 = 0.9975\,c_0 = \dal{39462}$, so the student borrows \dal{19560}.
+(b) At the endowment, $u'(c_0)/u'(c_1) = \num{60000}/\num{20000} = 3$, far above $\beta(1 + r) = 0.9975$: the Euler
+inequality holds strictly, the student wants to move consumption towards the present, and the limit
+binds. (c) Its income: \dal{20000} now and \dal{60000} next year.
+\end{solution}
+
+\begin{solution}{exo:b2:intertemporal-choice:8}
+% code: exercises/solutions.py ex_brenland
+Band means, disposable income and consumption in dalens, and their ratio: 21--29: \num{21078},
+\num{20033}, $0.950$; 30--39: \num{25501}, \num{23852}, $0.935$; 40--49: \num{28378}, \num{26371},
+$0.929$; 50--59: \num{29813}, \num{27536}, $0.924$; 60--69: \num{24926}, \num{23422}, $0.940$;
+70--79: \num{18654}, \num{18143}, $0.973$. The least-squares slope of consumption on disposable
+income across households is $0.844$. Consumption tracks income closely: the highest band mean is 1.60
+times the lowest for income and 1.52 times for consumption. Smoothing predicts a much flatter
+consumption profile than income profile (flat if $\beta(1 + r) = 1$), with the old spending more than
+their income and the middle-aged much less. Brenland's households look like households at their
+borrowing limit, or households that do not plan.
+\end{solution}
+
+\begin{solution}{exo:b2:intertemporal-choice:9}
+(a) The household's later selves carry out its date-0 plan with or without the account
+(\cref{prop:b2:intertemporal-choice:consistent}); the account removes options and costs \dal{20}, so
+it can only lower utility. (b) The naive household believes its later selves will follow its plan, so
+it sees no reason to restrict them and does not pay the fee, although it would gain from the account.
+(c) Augenblick, Niederle and Sprenger: 59 per cent took a \omterm{def:b2:intertemporal-choice:commitment-device}{commitment device} when it was free; almost
+nobody paid 25 cents for it. The gym members did not buy commitment: they paid for flexibility they
+did not use.
+\end{solution}
+
+\begin{solution}{exo:b2:intertemporal-choice:10}
+Seen from date 0, the marginal rate of substitution between dates $t + k$ and $t + k + 1$ is
+$D(t + k)u'(c_{t+k})/(D(t + k + 1)u'(c_{t+k+1}))$; seen from date $t$ it is
+$D(k)u'(c_{t+k})/(D(k + 1)u'(c_{t+k+1}))$. A date-0 optimal plan sets the first equal to $1 + r$ (by
+the Euler argument); for the date-$t$ self to keep the plan for every $u$ and every budget, the second
+must equal $1 + r$ at the same consumptions. So $D(t + k + 1)/D(t + k) = D(k + 1)/D(k)$ for all $t$ and
+$k$. With $k = 0$: $D(t + 1)/D(t) = D(1)/D(0) = D(1)$ for every $t$, so $D(t) = D(1)^{t}$. Exponential
+discounting satisfies the condition (\cref{prop:b2:intertemporal-choice:consistent}), and nothing else
+does.
+\end{solution}
+
+\begin{solution}{exo:b2:intertemporal-choice:11}
+% code: exercises/solutions.py ex_cake
+(a) The date-1 self maximises $\ln c_1 + 0.5\ln c_2$ with $c_1 + c_2 = W_1$: $c_1 = W_1/1.5$.
+(b) The date-0 self then values $\ln c_0 + 0.5(\ln c_1 + \ln c_2) = \ln c_0 + 0.5 \times 2\ln W_1 +$ a
+constant, with $W_1 = \num{90000} - c_0$: $1/c_0 = 1/(\num{90000} - c_0)$, so $c_0 = \num{90000}/(1 +
+2\varphi) = \dal{45000}$, $W_1 = \num{45000}$, $c_1 = \dal{30000}$, $c_2 = \dal{15000}$. (c) The date-0
+self weights periods 1 and 2 equally, so it wants $c_1 = c_2 = \dal{22500}$. (d) A naive date-0 self
+expects $c_1 = c_2 = W_1/2$, and values $\ln c_0 + 2 \times 0.5\ln(W_1/2)$: the same function of $c_0$
+up to a constant, so the same $c_0 = \dal{45000}$. With logarithmic utility, what the date-0 self
+believes about later choices changes the constant, not the first decision.
+\end{solution}
+
+\begin{solution}{exo:b2:intertemporal-choice:12}
+% code: exercises/solutions.py ex_borrowing
+Unconstrained utility $\ln\num{39560} + 0.95\ln\num{39462}$; constrained utility $\ln\num{20000} +
+0.95\ln\num{60000}$. Scaling resources by $\lambda$ scales both consumptions by $\lambda$ and adds
+$(1 + \beta)\ln\lambda$ to utility, so $\ln\lambda = (U_{\text{limit}} - U_{\text{free}})/1.95$, which
+gives $\lambda = 0.86445$. The limit costs the student as much as losing 13.6 per cent of its lifetime
+resources: $0.13555 \times \num{77143} = \dal{10456}$.
+\end{solution}
+
+\begin{solution}{pb:b2:intertemporal-choice:1}
+% code: exercises/solutions.py problem
+\textbf{1.} $b_0 = m_0 - c_0$, $b_1 = 1.25\,b_0 + m_1 - c_1$, $0 = b_2 = 1.25\,b_1 + m_2 - c_2$.
+Dividing the last by $1.25^2$ and the middle one by $1.25$ and adding: $c_0 + c_1/1.25 + c_2/1.25^2 =
+m_0 + m_1/1.25 + m_2/1.25^2$.
+
+\textbf{2.} $\mathcal{M} = \num{24000} + \num{60000}/1.25 + \num{6000}/1.5625 = \num{24000} +
+\num{48000} + \num{3840} = \dal{75840}$.
+
+\textbf{3.} $\rho = 1/\beta - 1 = 25$ per cent, equal to $r$: $\beta(1 + r) = 1$.
+
+\textbf{4.} $\ln\num{24000} + 0.8\ln\num{60000} + 0.64\ln\num{6000} = 24.4552$. The weights add up to
+$2.44$, so $\bar c_h = \exp(24.4552/2.44) = \dal{22530}$.
+
+\textbf{5.} $1/c_0 = 0.8 \times 1.25/c_1$ and $1/c_1 = 0.8 \times 1.25/c_2$: $c_0 = c_1 = c_2$.
+
+\textbf{6.} $c(1 + 0.8 + 0.64) = \num{75840}$, so $c = \dal{31082}$.
+
+\textbf{7.} $b_0 = \num{24000} - \num{31082} = -\dal{7082}$; $b_1 = 1.25 \times (-\num{7082}) +
+\num{60000} - \num{31082} = \dal{20066}$; $1.25 \times \num{20066} + \num{6000} - \num{31082} = 0$.
+
+\textbf{8.} $\num{31082} - \num{22530} = \dal{8552}$ per period.
+
+\textbf{9.} Growth factor $\beta(1 + r) = 0.8 \times 1.5 = 1.2$. $\mathcal{M} = \num{24000} +
+\num{60000}/1.5 + \num{6000}/2.25 = \dal{66667}$. $c_0 = \num{66667}/2.44 = \dal{27322}$, $c_1 =
+\dal{32787}$, $c_2 = \dal{39344}$.
+
+\textbf{10.} $b_0 = \num{24000} - \num{27322} = -\dal{3322}$: she borrows less. In general the budget is
+$c_0(1 + \beta(1 + r)/(1 + r) + \beta^2(1 + r)^2/(1 + r)^2) = c_0(1 + \beta + \beta^2) = \mathcal{M}$.
+The substitution and income effects cancel under $u = \ln$; what remains is the human-wealth effect:
+her income comes mostly later, and the higher rate lowers its present value from \dal{75840} to
+\dal{66667}.
+
+\textbf{11.} No. With $\beta(1 + r) = 1$ the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} is $u'(c_t) = u'(c_{t+1})$ for any
+strictly concave $u$ (\cref{prop:b2:intertemporal-choice:flat}).
+
+\textbf{12.} Yes: the unconstrained plan has $b_0 = -\num{7082} < 0$.
+
+\textbf{13.} $c_0 = \dal{24000}$. At date 1 she has $\num{60000} + \num{6000}/1.25 = \num{64800}$ in
+present value, and $c_1 = c_2 = \num{64800}/1.8 = \dal{36000}$.
+
+\textbf{14.} $u'(c_0) = 1/\num{24000} > \beta(1 + r)u'(c_1) = 1/\num{36000}$: strict inequality, the
+limit binds. Between 1 and 2: $1/\num{36000} = 1/\num{36000}$.
+
+\textbf{15.} With the limit $\ln\num{24000} + 1.44\ln\num{36000} = 25.1932$; without, $2.44\ln\num{31082}
+= 25.2403$.
+
+\textbf{16.} $\bar c = \exp(25.1932/2.44) = \dal{30488}$; the limit costs $\num{31082} - \num{30488} =
+\dal{594}$ per period ($593.6$ before rounding), or $593.6 \times 2.44 = \dal{1448}$ of lifetime
+resources (1.9 per cent of $\mathcal{M}$).
+
+\textbf{17.} Yes: paying \dal{1000} leaves \dal{74840} and a flat plan of $\num{74840}/2.44 =
+\dal{30672}$, more than the constrained \dal{30488}. She would pay up to \dal{1448}.
+
+\textbf{18.} Date 0: $1$, $\varphi\beta = 0.56$, $\varphi\beta^2 = 0.448$. Date 1: $1$ on period 1 and
+$\varphi\beta = 0.56$ on period 2.
+
+\textbf{19.} Its weights on periods 1 and 2 are in the ratio $\beta$, and $\beta(1 + r) = 1$: $c_1 =
+c_2$, so $c_1 = W_1/1.8$.
+
+\textbf{20.} $1/c_1 = 0.56 \times 1.25/c_2$: $c_2 = 0.7\,c_1$, and $c_1 + c_2/1.25 = W_1$ gives $c_1 =
+W_1/1.56$.
+
+\textbf{21.} $c_0 = \mathcal{M}/(1 + 0.56 \times 1.8) = \num{75840}/2.008 = \dal{37769}$; $W_1 =
+(\num{75840} - \num{37769}) \times 1.25 = \dal{47589}$; $c_1 = \num{47589}/1.56 = \dal{30506}$; $c_2 =
+(\num{47589} - \num{30506}) \times 1.25 = \dal{21354}$.
+
+\textbf{22.} No. A naive self expects $c_1 = c_2 = W_1/1.8$, but either way $W_1$ enters its utility as
+$\varphi\beta(1 + \beta)\ln W_1$ plus a constant, so its choice of $c_0$ is the same; and the date-1
+self then makes the same choice. With logarithmic utility the two types follow the same path.
+
+\textbf{23.} She fixes $c_1 = c_2 = W_1/1.8 = \dal{26438}$, the date-0 self's preferred split. The
+date-0 self values $W_1$ through $1.008\ln W_1$, so the account is worth as much to it as multiplying
+$W_1$ by the $x$ for which $1.008\ln x$ equals its gain in utility, $0.56\ln\num{26438} + 0.448\ln\num{26438}
+- 0.56\ln\num{30506} - 0.448\ln\num{21354}$. Computed with the unrounded consumptions, that gives $x = 1.01554$: $0.01554 \times \num{47589} =
+\dal{740}$ at date 1, \dal{592} at date 0 (the rounded consumptions printed here give \dal{739} and \dal{591}).
+
+\textbf{24.} Exponential plan (\dal{31082} each period): $25.2403$. Present-biased without the account:
+$\ln\num{37769} + 0.8\ln\num{30506} + 0.64\ln\num{21354} = 25.1799$. With the account: $25.2021$. The
+account fixes the split between middle age and retirement, but not the overconsumption of youth
+(\dal{37769} against \dal{31082}), which it cannot reach because the young self chooses it.
+
+\textbf{25.} A ban on borrowing when young costs the engineer \dal{594} of consumption per period,
+\dal{1448} of lifetime resources; if she is present-biased, a commitment savings account opened when
+young is worth about \dal{740} to her, at date 1.
+\end{solution}

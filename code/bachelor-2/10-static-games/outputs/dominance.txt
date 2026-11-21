@@ -1,0 +1,7 @@
+$ python dominance.py
+remove column C
+remove row M
+remove row D
+remove column R
+survivors: ['U'] ['L']
+pure Nash equilibria of the full game: [('U', 'L')]

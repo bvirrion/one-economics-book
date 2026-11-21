@@ -1,0 +1,460 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g10-03. Ricardo's model: unit labour
+% requirements, autarky prices, the pattern of trade, terms of trade, gains, relative wages.
+% Real numbers: figdata/grade-10/03-ricardo-model/ (Penn World Table 11.0). Brenland and Kestria's
+% hours per unit: code/shared/country/ricardo.csv (invented).
+\chapter{Ricardo's Model of Comparative Advantage}\label{ch:g10:ricardo-model}
+
+A worker in the United States produced about \usd{139680} of output in 2019, measured at American
+prices; a worker in Kenya, about \usd{14470}. The American worker was paid, on average, about
+\usd{82660} a year in wages and other labour income, the Kenyan worker about \usd{7810}. The ratio of
+outputs is close to ten, and so is the ratio of pay. The opening chart puts 139 countries on the same
+picture: where output per worker is ten times higher, pay per worker is close to ten times higher too.
+% figdata: wages_selected (USA 139680, 82660; KEN 14470, 7810); wages_summary (n 139)
+
+This chart answers a fear that is as old as foreign trade. If Kenyan workers earn a tenth of American
+wages, how can American firms sell anything against them? And if American workers are more productive
+at everything, how can Kenyan firms sell anything at all? Both fears rest on the same mistake, and the
+model of this chapter, \omterm{prop:g10:ricardo-model:wage}{Ricardo's model} of comparative advantage, shows what it is: wages adjust to
+productivity, and what decides trade is not who is better at everything, but who is \emph{relatively}
+better at what.
+
+\begin{openingchart}{Labour compensation per worker against output per worker, 139 countries, 2019,
+both on times-ten scales, in 2017 dollars at purchasing-power parity. Labour compensation includes wages
+and an estimate of the labour income of the self-employed. Venezuela is left out: its 2019 accounts are
+unreliable.}{Penn World Table 11.0; output-side real GDP,
+persons engaged and share of labour compensation in GDP}
+\begin{tikzpicture}
+\begin{loglogaxis}[omscatter, log basis x=10, log basis y=10, log ticks with fixed point,
+  xtickten={3,...,5}, ytickten={2,...,5}, width=0.84\linewidth, height=7.2cm, xmin=1000, xmax=300000,
+  ymin=100, ymax=200000, xlabel={output per worker (dollars per year)},
+  ylabel={labour compensation per worker (dollars)}]
+\addplot[omDef, only marks, mark=*, mark size=1.3pt, fill opacity=0.7]
+  table[x=opw, y=comp] {figdata/grade-10/03-ricardo-model/out/wages_productivity.csv};
+\addplot[omThm, only marks, mark=square*, mark size=1.8pt, nodes near coords, point meta=explicit symbolic,
+  nodes near coords style={font=\scriptsize, anchor=south east, text=omThm!80!black}]
+  table[x=opw, y=comp, meta=iso3] {figdata/grade-10/03-ricardo-model/out/wages_marked.csv};
+\end{loglogaxis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: a person or a country has an \emph{absolute advantage} in a good when it
+makes the good with fewer hours, and a \emph{comparative advantage} when it makes the good at a lower
+opportunity cost. Two parties gain from trade, even when one is better at everything, if each
+specialises in its comparative advantage and they exchange at a ratio between their opportunity costs.
+From \cref{ch:g10:production-possibility-frontier}: a frontier with a constant opportunity cost is a
+straight line, of slope minus that cost.
+\end{recall}
+
+\section{Two countries, two goods, labour only}\label{sec:g10:ricardo-model:setup}
+
+\omterm{prop:g10:ricardo-model:wage}{Ricardo's model} keeps the bare minimum: two countries, two goods, one factor of production --- labour
+--- and a fixed number of hours of work needed for each unit of each good in each country.
+
+\begin{definition}[Unit labour requirement]\label{def:g10:ricardo-model:unit-labour-requirement}
+The \emph{unit labour requirement}\index{unit labour requirement} of a good in a country is the number of
+hours of work needed to produce one unit of the good there. It is the inverse of output per hour: a
+requirement of 4 hours per roll means a quarter of a roll per hour.
+\end{definition}
+
+The invented economies of this series, Brenland and Kestria, produce cloth and grain with these
+requirements:
+
+\begin{center}
+\small
+\begin{tabular}{lcc}
+\toprule
+hours per unit & cloth (one roll) & grain (one tonne) \\
+\midrule
+Brenland & 4 & 2 \\
+Kestria & 6 & 12 \\
+\bottomrule
+\end{tabular}
+\end{center}
+% figdata: code/shared/country/ricardo.csv (invented)
+
+Brenland needs fewer hours for both goods: it has the absolute advantage in both. To know what each
+country would do without trade, take each one alone. Let Brenland and Kestria each have \num{1200} hours of
+work a week. Brenland can make at most $1200/4 = 300$ rolls of cloth or $1200/2 = 600$ tonnes of grain, and
+its frontier is $4C + 2G = 1200$. Kestria can make at most $1200/6 = 200$ rolls or $1200/12 = 100$ tonnes,
+and its frontier is $6C + 12G = 1200$.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.0085cm, y=0.012cm]
+\begin{scope}
+\draw[econ axes] (0,330) node[left, font=\small] {cloth} |- (680,0) node[below left=12pt and 0pt, font=\small] {grain};
+\draw[ppf] (0,300) -- (600,0);
+\foreach \y in {100,200,300} \draw (0,\y) -- (-10,\y) node[left, font=\footnotesize] {\y};
+\foreach \x in {200,400,600} \draw (\x,0) -- (\x,-7) node[below, font=\footnotesize] {\x};
+\node[font=\small\bfseries] at (330,280) {Brenland};
+\node[font=\footnotesize, anchor=west] at (320,190) {slope $-1/2$};
+\end{scope}
+\begin{scope}[xshift=7.6cm]
+\draw[econ axes] (0,330) node[left, font=\small] {cloth} |- (680,0) node[below left=12pt and 0pt, font=\small] {grain};
+\draw[ppf] (0,200) -- (100,0);
+\foreach \y in {100,200,300} \draw (0,\y) -- (-10,\y) node[left, font=\footnotesize] {\y};
+\foreach \x in {200,400,600} \draw (\x,0) -- (\x,-7) node[below, font=\footnotesize] {\x};
+\node[font=\small\bfseries] at (330,280) {Kestria};
+\node[font=\footnotesize, anchor=west] at (110,120) {slope $-2$};
+\end{scope}
+\end{tikzpicture}
+
+{\small The \omterm{def:g10:production-possibility-frontier:ppf}{production possibility frontiers} of Brenland and Kestria, \num{1200} hours of work a week each,
+drawn on the same scale (cloth in rolls, grain in tonnes). Brenland's lies outside Kestria's everywhere:
+it has the absolute advantage in both goods. The slopes differ: a roll of cloth costs 2 tonnes of grain in
+Brenland and half a tonne in Kestria.}
+\end{omfigure}
+
+Without trade, each country consumes what it produces, and the price of one good in terms of the other
+is set by the hours. In Brenland a roll of cloth takes 4 hours, which could have made 2 tonnes of grain:
+if cloth sold for less than 2 tonnes of grain, nobody would weave; if it sold for more, nobody would grow
+grain. With both goods made, a roll of cloth trades for exactly 2 tonnes.
+
+\begin{definition}[Autarky price]\label{def:g10:ricardo-model:autarky-price}
+A country is in \emph{autarky} when it does not trade with other countries. The \emph{autarky
+price}\index{autarky price} of a good is its price in autarky, measured in units of the other good. In
+\omterm{prop:g10:ricardo-model:wage}{Ricardo's model}, when a country makes both goods, the autarky price of cloth in tonnes of grain is the
+ratio of the \omterm{def:g10:ricardo-model:unit-labour-requirement}{unit labour requirements}, $a_C / a_G$.
+\end{definition}
+
+Brenland's \omterm{def:g10:ricardo-model:autarky-price}{autarky price} of cloth is $4/2 = 2$ tonnes of grain; Kestria's is $6/12 = 0.5$ tonne. The
+\omterm{def:g10:ricardo-model:autarky-price}{autarky price} is the opportunity cost of the grades 6--9 volume, now read as a price.
+
+\section{Who exports what}\label{sec:g10:ricardo-model:pattern}
+
+Open the border. Let $p$ be the price of a roll of cloth in tonnes of grain on the world market, the same
+for both countries (there are no transport costs in the model). A worker in either country can earn, in
+an hour, either the value of the cloth made in that hour or the value of the grain.
+
+\begin{proposition}[The pattern of trade]\label{prop:g10:ricardo-model:pattern}
+Let $a_C$, $a_G$ be one country's \omterm{def:g10:ricardo-model:unit-labour-requirement}{unit labour requirements} of cloth and grain. At a world price $p$ (tonnes
+of grain per roll of cloth):
+\begin{enumerate}
+\item if $p > a_C/a_G$, an hour spent on cloth earns more grain than an hour spent on grain, and the country
+  makes only cloth;
+\item if $p < a_C/a_G$, it makes only grain;
+\item if $p = a_C/a_G$, both uses of an hour earn the same, and the country may make both.
+\end{enumerate}
+Hence, at any world price strictly between the two \omterm{def:g10:ricardo-model:autarky-price}{autarky prices}, each country makes only the good in
+which it has the comparative advantage and exports it.
+\end{proposition}
+\begin{proof}
+An hour on cloth makes $1/a_C$ rolls, worth $p/a_C$ tonnes of grain at the world price. An hour on grain
+makes $1/a_G$ tonnes. The first is larger when $p/a_C > 1/a_G$, that is when $p > a_C/a_G$; workers then
+move to cloth, since nothing in the model stops them, and the country makes only cloth. The other two cases
+follow the same way. If $p$ lies strictly between the two \omterm{def:g10:ricardo-model:autarky-price}{autarky prices}, it is above the lower one and below
+the higher one: the country with the lower \omterm{def:g10:ricardo-model:autarky-price}{autarky price} of cloth makes only cloth, and the other only
+grain. Each sells abroad part of what it alone makes.
+\end{proof}
+
+For Brenland and Kestria, any world price between 0.5 and 2 tonnes of grain per roll makes Kestria a
+weaver and Brenland a farmer. Kestria, worse at both, exports cloth, the good in which its disadvantage
+is \emph{smaller}: 6 hours against 4 for cloth (one and a half times as many), but 12 against 2 for grain (six times as
+many).
+
+\begin{definition}[Complete specialisation]\label{def:g10:ricardo-model:complete-specialisation}
+A country is in \emph{complete specialisation}\index{complete specialisation} when it produces only one of
+the goods and obtains the other entirely by trade.
+\end{definition}
+
+\section{The terms of trade and the gains}\label{sec:g10:ricardo-model:gains}
+
+\begin{definition}[Terms of trade]\label{def:g10:ricardo-model:terms-of-trade}
+A country's \emph{terms of trade}\index{terms of trade} are the price of its exports in units of its
+imports: how many units of the imported good one unit of the exported good buys.
+\end{definition}
+
+Kestria exports cloth: its \omterm{def:g10:ricardo-model:terms-of-trade}{terms of trade} are $p$ tonnes of grain per roll. Brenland exports grain: its
+\omterm{def:g10:ricardo-model:terms-of-trade}{terms of trade} are $1/p$ rolls per tonne. A rise in $p$ improves Kestria's \omterm{def:g10:ricardo-model:terms-of-trade}{terms of trade} and worsens
+Brenland's.
+
+\begin{proposition}[Both countries gain]\label{prop:g10:ricardo-model:gains}
+At any world price strictly between the two \omterm{def:g10:ricardo-model:autarky-price}{autarky prices}, each country obtains its imported good with
+fewer hours of work than it would need to make that good itself.
+\end{proposition}
+\begin{proof}
+Take Kestria, which imports grain. Making a tonne of grain itself takes $a_G^K$ hours. By trade, it makes
+$1/p$ rolls of cloth, which take $a_C^K / p$ hours, and sells them for one tonne. Since $p > a_C^K/a_G^K$
+(the world price is above Kestria's \omterm{def:g10:ricardo-model:autarky-price}{autarky price}), $a_C^K/p < a_G^K$: trade takes fewer hours. The
+argument for Brenland, which imports cloth, is the same with the inequality reversed.
+\end{proof}
+
+\begin{example}[The gains at one roll for one tonne]\label{ex:g10:ricardo-model:gains}
+Let $p = 1$. Brenland gets a roll of cloth by growing one tonne of grain, 2 hours of work, instead of
+weaving it in 4: it saves 2 hours on every roll it consumes. Kestria gets a tonne of grain by weaving one
+roll, 6 hours, instead of growing it in 12: it saves 6 hours on every tonne. Both gain, and the less
+productive country gains more per unit at this price.
+\end{example}
+
+The gains can be drawn. A country in \omterm{def:g10:ricardo-model:complete-specialisation}{complete specialisation} can trade its whole output at the world
+price, and so reach combinations it could never produce.
+
+\begin{definition}[Consumption possibility frontier]\label{def:g10:ricardo-model:cpf}
+A country's \emph{consumption possibility frontier}\index{consumption possibility frontier} is the set of
+combinations of the two goods it can consume when it produces at a point of its \omterm{def:g10:production-possibility-frontier:ppf}{production possibility
+frontier} and trades at the world price.
+\end{definition}
+
+Brenland, specialised in grain, makes 600 tonnes. At $p = 1$ it can exchange any part of them for cloth,
+one tonne for one roll, so it can consume any $(C, G)$ with $C + G = 600$. At 150 rolls of cloth it keeps
+450 tonnes of grain; without trade, 150 rolls would have taken 600 hours and left only 300 tonnes.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.011cm, y=0.011cm]
+\draw[econ axes] (0,660) node[left, font=\small] {cloth (rolls)} |- (680,0) node[below left=12pt and 0pt, font=\small] {grain (tonnes)};
+\draw[ppf] (0,300) -- (600,0);
+\draw[curve, omThm] (0,600) -- (600,0);
+\foreach \y in {150,300,600} \draw (0,\y) -- (-10,\y) node[left, font=\footnotesize] {\y};
+\foreach \x in {300,450,600} \draw (\x,0) -- (\x,-10) node[below, font=\footnotesize] {\x};
+\draw[guide] (0,150) -- (450,150) -- (450,0);
+\draw[guide] (300,0) -- (300,150);
+\node[eqpoint] at (450,150) {}; \node[above right, font=\small] at (450,150) {$T$};
+\node[eqpoint, fill=omMeth] at (300,150) {}; \node[above left, font=\small] at (300,150) {$A$};
+\node[eqpoint] at (600,0) {}; \node[above right, font=\small] at (600,0) {$S$};
+\node[font=\footnotesize, text=omThm!85!black, anchor=west] at (180,450) {consumption possibilities, $C + G = 600$};
+\draw[omMeth!60] (200,200) -- (380,265) node[font=\footnotesize, text=omMeth!85!black, anchor=west] {production possibilities};
+\end{tikzpicture}
+
+{\small Brenland at $p = 1$. It produces at $S$ (600 tonnes of grain, no cloth) and trades along the
+\omterm{def:g10:ricardo-model:cpf}{consumption possibility frontier}. With 150 rolls of cloth it consumes 450 tonnes of grain at $T$; on its
+own it would have only 300 at $A$.}
+\end{omfigure}
+
+Where, between 0.5 and 2, does the world price settle? The model so far says only that it lies in that
+range. Inside the range, each country supplies the world with all of its one good, so the world makes
+200 rolls of cloth (Kestria) and 600 tonnes of grain (Brenland): a relative supply of $200/600 = 1/3$ roll per
+tonne. At $p = 0.5$ Kestria is willing to make any mix; at $p = 2$ Brenland is. The world relative supply of
+cloth is therefore a staircase. The price is set where this staircase meets the world's relative demand for
+cloth, which depends on what people want to buy, the subject of the next chapter.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=3.2cm, y=1.6cm]
+\draw[econ axes] (0,2.7) node[left, font=\small, align=right] {$p$ (tonnes\\per roll)} |- (2.0,0) node[below left=12pt and 0pt, font=\small] {world cloth $\div$ world grain};
+\draw[supply] (0,0.5) -- (1/3,0.5) -- (1/3,2) -- (1.85,2);
+\draw[demand] (0.08,2.55) .. controls (0.25,1.3) and (0.5,0.7) .. (1.6,0.25);
+\foreach \y/\l in {0.5/0.5, 1/1, 2/2} \draw (0,\y) -- (-0.04,\y) node[left, font=\footnotesize] {\l};
+\draw (1/3,0) -- (1/3,-0.06) node[below, font=\footnotesize] {$1/3$};
+\node[font=\footnotesize, text=omThm!85!black, anchor=west] at (1.0,2.15) {relative supply};
+\node[font=\footnotesize, text=omDef!85!black, anchor=west] at (0.62,1.3) {relative demand};
+\draw[guide] (0,1) -- (1/3,1);
+\node[eqpoint] at (1/3,1) {};
+\end{tikzpicture}
+
+{\small The world relative supply of cloth is a staircase: no cloth below $p = 0.5$, Kestria's 200 rolls
+against Brenland's 600 tonnes between 0.5 and 2, and any amount of cloth from Brenland too at $p = 2$. A
+relative demand curve (drawn here so that it crosses at $p = 1$) sets the price.}
+\end{omfigure}
+
+\section{Wages follow productivity}\label{sec:g10:ricardo-model:wages}
+
+Trade is done by firms, which compare money costs, not hours. Money costs depend on wages. \omterm{prop:g10:ricardo-model:wage}{Ricardo's model}
+says where wages end up.
+
+In \omterm{def:g10:ricardo-model:complete-specialisation}{complete specialisation}, a Brenland worker makes half a tonne of grain an hour, and a Kestria worker a
+sixth of a roll of cloth. With competing employers and free movement of workers inside each country, the
+hourly wage equals the value of what a worker makes in an hour. Measure prices in tonnes of grain: a tonne
+of grain is worth 1 and a roll of cloth $p$. Then
+\[
+  w_B = \tfrac12, \qquad w_K = \tfrac{p}{6}, \qquad \frac{w_B}{w_K} = \frac{3}{p}.
+\]
+
+\begin{proposition}[The relative wage]\label{prop:g10:ricardo-model:wage}
+In \omterm{def:g10:ricardo-model:complete-specialisation}{complete specialisation}, the ratio of Brenland's wage to Kestria's lies between the two ratios of output
+per hour: Brenland's output per hour is $6/4 = 1.5$ times Kestria's in cloth and $12/2 = 6$ times in grain,
+and $1.5 < w_B/w_K < 6$.
+\end{proposition}
+\begin{proof}
+$w_B/w_K = 3/p$, and $0.5 < p < 2$, so $3/2 < 3/p < 3/0.5$, that is $1.5 < w_B/w_K < 6$.
+\end{proof}
+
+At $p = 1$, Brenland's wage is three times Kestria's. Compare money costs per unit, in units of Kestria's
+hourly wage: a roll of cloth costs 6 in Kestria and $4 \times 3 = 12$ in Brenland, so Kestria's firms sell
+cloth more cheaply; a tonne of grain costs 12 in Kestria and $2 \times 3 = 6$ in Brenland, so Brenland's firms
+sell grain more cheaply. Each country undersells the other in one good. Kestria's low wage does not let it
+undersell Brenland in everything, because it is low exactly as far as Kestria's productivity is low; and
+Brenland's high wage does not price it out of everything, because it is high only up to its productivity
+lead in grain.
+
+The opening chart is consistent with this prediction across countries. Across 139 countries, the line that
+best fits the cloud on the two times-ten scales has a slope of 1.01: ten times the output per worker goes
+with about ten times the pay. The cloud is tight: the correlation of the two (on the times-ten scales) is
+0.96. It is not a test, because pay is measured as a share of output: with similar labour shares, the link
+is close to built in.
+% figdata: wages_summary (n 139, slope 1.01, r 0.96)
+
+\begin{measure}[Output per worker across countries]
+Output per worker is GDP divided by the number of persons engaged (employees and the self-employed). To
+compare countries, GDP is converted not at the market exchange rate but at \emph{purchasing-power
+parities}: rates that make a common basket of goods cost the same everywhere, so that a haircut in Nairobi
+counts as much as a haircut in Chicago. Labour compensation is GDP times the share of it paid to labour; for
+the self-employed, whose income mixes pay for work and return on their capital, the database estimates the
+labour part. Both axes of the opening chart come from the same national accounts, so part of their link is
+built in: what the chart adds is that the labour share is roughly similar across countries, so pay is
+roughly proportional to output.
+\end{measure}
+
+\begin{model}{Ricardo's model}\index{Ricardo's model}
+\assumes Two countries, two goods; labour is the only factor of production; \omterm{def:g10:ricardo-model:unit-labour-requirement}{unit labour requirements} are
+  fixed; workers move freely between industries inside a country but not between countries; no transport
+  costs; competition.
+\predicts Each country exports the good with the lower relative labour requirement; the \omterm{def:g10:ricardo-model:terms-of-trade}{terms of trade} lie
+  between the \omterm{def:g10:ricardo-model:autarky-price}{autarky prices}; both countries gain; the relative wage lies between the two ratios of output
+  per hour.
+\tested Japan's opening to trade in 1859, told in the grades 6--9 volume, gives a direct test: valued at
+  the prices Japan had before it opened, its net exports had the negative sign that comparative advantage
+  predicts in every year from 1868 to 1875 (Bernhofen and Brown 2004). That pay follows output per worker
+  across 139 countries (opening chart) is consistent with the wage prediction, not a test of it.
+% ledger: g7:bernhofen-brown-2004
+\breaks Other factors (land, capital, skills) matter and are owned by different people, so some people inside a
+  country lose from trade even when the country gains (grade 12); \omterm{def:g10:ricardo-model:complete-specialisation}{complete specialisation} is rare, because
+  costs rise as an industry grows; transport costs and tariffs keep some goods out of trade altogether.
+\end{model}
+
+The model's lesson about the losers deserves a sentence now. Brenland's weavers, when the border opens, must
+move to the farms. In the model this costs nothing; in reality it can cost years of income. The country's
+gain is real, and so is the weavers' loss; grade 12 measures both.
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g10:ricardo-model:1}
+Using Brenland and Kestria's table of hours, say which country has the absolute advantage in cloth and which
+in grain. Explain why absolute advantage alone cannot tell which country exports which good.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:ricardo-model:2}
+Compute the \omterm{def:g10:ricardo-model:autarky-price}{autarky price} of grain, in rolls of cloth per tonne, in Brenland and in Kestria. Check that each is
+the inverse of the \omterm{def:g10:ricardo-model:autarky-price}{autarky price} of cloth given in the chapter.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:ricardo-model:3}
+Country A makes a bicycle in 20 hours and a chair in 5. Country B makes a bicycle in 30 hours and a chair in
+15. Which country has the comparative advantage in bicycles? Between which two prices (chairs per bicycle) must
+the world price lie for both to trade?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:ricardo-model:4}
+Read the opening chart. About how much labour compensation per worker corresponds to output per worker of
+\usd{10000}? Of \usd{100000}?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:ricardo-model:5}
+``Kestria cannot sell anything to Brenland, since Brenland makes everything with fewer hours.'' Explain in three
+sentences why this is wrong.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:ricardo-model:6}
+Let the world price be $p = 1.5$ tonnes of grain per roll. How many hours does Brenland save on each roll of
+cloth it imports? How many does Kestria save on each tonne of grain? Compare with
+\cref{ex:g10:ricardo-model:gains}: which country's gain rose, and why?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:ricardo-model:7}
+A new plough cuts Kestria's hours per tonne of grain from 12 to 3. Predict what happens to the pattern of trade
+and to the gains. What if it cut them to 2?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:ricardo-model:8}
+At $p = 1.5$, what is the ratio of Brenland's wage to Kestria's? Compare the money cost of a roll of cloth and
+of a tonne of grain in the two countries, in units of Kestria's hourly wage, and say which country sells each
+good more cheaply.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:ricardo-model:9}
+Kestria (\num{1200} hours) specialises in cloth and trades at $p = 1.5$. Write its \omterm{def:g10:ricardo-model:cpf}{consumption possibility
+frontier}. How much grain can it consume if it keeps 100 rolls of cloth? How much without trade?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:ricardo-model:10}
+% figdata: wages_selected (USA 139680, 82660; DEU; MEX; CHN; IND 19440, 10370; KEN)
+The table behind the opening chart gives, for the United States, output per worker \usd{139680} and
+compensation \usd{82660}; for India, \usd{19440} and \usd{10370}. Compute the ratio of output per worker and the
+ratio of compensation, United States to India, and the share of output paid to labour in each country.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:ricardo-model:11}
+Without trade, Brenland and Kestria each split their \num{1200} hours half and half between the two goods. Compute
+the world output of each good. Then let Kestria make only cloth while Brenland makes the 50 rolls of cloth still
+needed to keep world cloth at its \omterm{def:g10:ricardo-model:autarky-price}{autarky} level, and grain with the rest of its hours. By how much does world
+grain rise?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:ricardo-model:12}
+Describe an observation about trade between two countries, with their \omterm{def:g10:ricardo-model:unit-labour-requirement}{unit labour requirements} known, that would
+contradict \omterm{prop:g10:ricardo-model:wage}{Ricardo's model}. Then give a reason, outside the model, why such an observation might still be found.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:ricardo-model:13}
+Brenland and Kestria make three goods. Hours per unit (Brenland, Kestria): cloth 4 and 6, grain 2 and 12, tools 5
+and 5. Rank the goods by Kestria's hours divided by Brenland's. A good is made where its money cost, hours times
+the wage, is lower. Show that if Kestria made grain more cheaply than Brenland, it would make all three goods more
+cheaply, and explain why trade, which must be paid for, rules this out. Show that if Brenland makes cloth more
+cheaply, it also makes grain more cheaply. If the wage ratio $w_B/w_K$ lies between 1 and 1.5, which country makes
+each good?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:ricardo-model:14}
+Explain, with the numbers of the chapter at $p = 1$, why Brenland, whose wage is three times Kestria's, still
+exports grain. What would happen to Brenland's exports if its wage were seven times Kestria's?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:ricardo-model:15}
+Prove that two countries trade, each exporting one good, only if the world price lies between their two \omterm{def:g10:ricardo-model:autarky-price}{autarky
+prices} (or equals one of them). Use \cref{prop:g10:ricardo-model:pattern}: what does each country make if the
+price is above both \omterm{def:g10:ricardo-model:autarky-price}{autarky prices}?
+\end{exercise}
+
+\section{Problem: Opening the Bren--Kest Border}
+
+\begin{problem}[{Weekend problem --- autarky, specialisation, trade at one for one, and who gains how much}]
+\label{pb:g10:ricardo-model:1}
+Brenland has 600 million hours of work a year and Kestria \num{1800} million (it has more workers, each less
+productive). The hours per unit are those of the chapter: cloth 4 and grain 2 in Brenland, cloth 6 and grain 12 in
+Kestria. In \omterm{def:g10:ricardo-model:autarky-price}{autarky}, each country spends half of its hours on each good. Quantities are in millions of rolls and
+millions of tonnes.
+
+\medskip
+\noindent\textbf{Part I --- Autarky.}
+\begin{enumerate}
+\item Write each country's \omterm{def:g10:production-possibility-frontier:ppf}{production possibility frontier} and its two ends.
+\item Give each country's \omterm{def:g10:ricardo-model:autarky-price}{autarky price} of cloth, in tonnes of grain per roll.
+\item Compute what each country produces and consumes in \omterm{def:g10:ricardo-model:autarky-price}{autarky}.
+\item Compute world output of cloth and of grain in \omterm{def:g10:ricardo-model:autarky-price}{autarky}.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The pattern.}
+\begin{enumerate}[resume]
+\item Which country has the absolute advantage in each good?
+\item Which country has the comparative advantage in each good?
+\item Between which two values must the world price of cloth lie for both countries to specialise?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Trade at one roll for one tonne.}
+\begin{enumerate}[resume]
+\item The border opens and the world price settles at $p = 1$. What does each country produce?
+\item Each country still spends half the value of its output on each good. What does each consume?
+\item What does each country export and import? Check that world markets clear.
+\item Compare world output with \omterm{def:g10:ricardo-model:autarky-price}{autarky}.
+\item Compute each country's gain in goods, compared with \omterm{def:g10:ricardo-model:autarky-price}{autarky}.
+\item How many hours does Brenland save on each roll of cloth it consumes? How many does Kestria save on each tonne of
+  grain?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Wages and a new plough.}
+\begin{enumerate}[resume]
+\item Measuring prices in tonnes of grain, compute each country's hourly wage and their ratio.
+\item Check that, at these wages, Kestria makes cloth more cheaply than Brenland, and Brenland grain more cheaply than
+  Kestria.
+\item Between which two values can the relative wage lie, whatever the world price in the range of question 7?
+\item A new plough cuts Kestria's hours per tonne of grain from 12 to 8. Does the pattern of trade change? Is $p = 1$
+  still in the range where both specialise?
+\item With the plough and $p = 1$, how many hours does Kestria now save per tonne of grain imported? Explain why a better
+  plough reduces Kestria's gain from importing grain.
+\item At $p = 1$, what plough (hours per tonne of grain in Kestria) would leave Kestria with no gain from
+  importing grain?
+\item State the result of the problem: each country's gain from trade at $p = 1$ (before the plough), in hours of work
+  saved per unit of its imported good, and the relative wage.
+\end{enumerate}
+\end{problem}

@@ -1,0 +1,3 @@
+$ python unemployment_survey.py
+estimates 5.94% and 6.04%; standard error 0.075 points
+change +0.10 points; its standard error 0.106; 90% margin 0.17

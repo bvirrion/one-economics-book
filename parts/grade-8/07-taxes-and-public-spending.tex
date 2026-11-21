@@ -1,0 +1,339 @@
+% Provenance (never printed): the public-finance strand of ../economics_series.md (grade 8: what governments spend
+% on; the main taxes; budget, deficit and debt; a tax changes behaviour, first look; government failure named once,
+% taught in g11). Brief: sources/book1/BRIEFS.md, g8-07. Chart data: figdata/grade-8/07-taxes-and-public-spending
+% (JST R6 expenditure, gdp, debtgdp; Brenland TAX_BANDS and accounts).
+% Ledger: g8:cigarette-tax-elasticity, g8:vat-rate-2026.
+\chapter{Taxes and Public Spending}\label{ch:g8:taxes-and-public-spending}
+
+\begin{openingchart}{Central government spending as a share of GDP in six countries, 1880--2020, in
+percent. Regional and local governments are not included.}{Jord\`a--Schularick--Taylor
+Macrohistory Database, central government expenditure and GDP}
+\begin{tikzpicture}
+\begin{axis}[omtime, xmin=1880, xmax=2020, ymin=0, ymax=70, xlabel={Year},
+  ylabel={Percent of GDP}, xtick={1880,1900,1920,1940,1960,1980,2000,2020},
+  legend style={at={(0.5,-0.2)}, anchor=north, legend columns=6}]
+\addplot table[x=year, y=usa] {figdata/grade-8/07-taxes-and-public-spending/out/public_spending.csv};
+\addplot table[x=year, y=gbr] {figdata/grade-8/07-taxes-and-public-spending/out/public_spending.csv};
+\addplot table[x=year, y=fra] {figdata/grade-8/07-taxes-and-public-spending/out/public_spending.csv};
+\addplot table[x=year, y=swe] {figdata/grade-8/07-taxes-and-public-spending/out/public_spending.csv};
+\addplot table[x=year, y=jpn, unbounded coords=jump] {figdata/grade-8/07-taxes-and-public-spending/out/public_spending.csv};
+\addplot table[x=year, y=deu, unbounded coords=jump] {figdata/grade-8/07-taxes-and-public-spending/out/public_spending.csv};
+\legend{United States, United Kingdom, France, Sweden, Japan, Germany}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: facts (spend_usa_1913 1.8, 1950 14.2, 2019 20.8; spend_gbr_1913 8.0, 1950 26.5, 2019 36.8;
+% spend_fra_1918 63.0; spend_gbr_1944 62.8; spend_usa_1944 40.7)
+In 1913, the central government of the United States spent the equivalent of $1.8\,\%$ of GDP; in
+2019, $20.8\,\%$. In the United Kingdom, the share went from $8.0\,\%$ to $36.8\,\%$. Twice it jumped:
+during the two world wars, France's central government spent $63.0\,\%$ of GDP in 1918, the United
+Kingdom's $62.8\,\%$ in 1944. After each war the share fell back, but not to where it had been.
+
+What do governments spend on, where does the \omterm{def:g7:money:money}{money} come from, and what happens when they spend more
+than they collect?
+
+\begin{recall}
+\omterm{def:g7:households:household}{Households} receive \omterm{def:g7:households:transfer}{transfers} and pay \omterm{def:g8:taxes-and-public-spending:tax}{taxes}; \omterm{def:g7:households:disposable-income}{disposable income} is gross \omterm{def:g7:households:income}{income} minus \omterm{def:g8:taxes-and-public-spending:tax}{taxes} plus
+\omterm{def:g7:households:transfer}{transfers} (\cref{ch:g7:households}). GDP is the value of everything produced in a country in a year
+(\cref{ch:g8:gdp}). A borrower pays \omterm{def:g8:banks-saving-interest:interest}{interest} on a \omterm{def:g8:banks-saving-interest:loan}{loan} (\cref{ch:g8:banks-saving-interest}).
+\end{recall}
+
+\section{What governments spend on}
+
+\begin{definition}[Public spending]\label{def:g8:taxes-and-public-spending:public-spending}
+\emph{Public spending}\index{public spending} is the spending of governments: on the goods and
+services they provide, on the \omterm{def:g7:households:wage}{wages} of the people they employ, on \omterm{def:g7:households:transfer}{transfers} to \omterm{def:g7:households:household}{households} and \omterm{def:g7:firms:firm}{firms},
+and on \omterm{def:g8:banks-saving-interest:interest}{interest} on their debt.
+\end{definition}
+
+Governments run schools, hospitals, courts, the police and the army; they build and repair roads;
+they pay pensions and support people without work. In many rich countries, pensions, health and
+education are among the largest items. Part of the spending buys goods and services that the government
+provides; another part only passes \omterm{def:g7:money:money}{money} from some \omterm{def:g7:households:household}{households} to others, as \omterm{def:g7:households:transfer}{transfers}.
+
+\begin{omfigure}
+\includegraphics[width=0.6\linewidth]{images/book1/ai/g8-taxes-town-street.jpg}
+
+{\small A school, a road being repaired and a health clinic: three things paid for, in many countries,
+by \omterm{def:g8:taxes-and-public-spending:public-spending}{public spending}.}
+\end{omfigure}
+
+\begin{measure}[General and central government]
+The \emph{central government} is the national government. The \emph{general government} adds the
+regions, the towns and the social-security funds that pay pensions and health care. In a country
+where regions run the schools and the hospitals, central government spending is a small part of the
+total: Germany's line in the opening chart is low for that reason, not because German governments
+spend little. Comparing countries therefore needs general government figures; in the database of the
+opening chart, the long series exist only for the central government.
+\end{measure}
+
+\section{The main taxes}
+
+\begin{definition}[Tax]\label{def:g8:taxes-and-public-spending:tax}
+A \emph{tax}\index{tax} is a payment that people or \omterm{def:g7:firms:firm}{firms} must make to a government by law, without
+receiving a particular good or service in exchange.
+\end{definition}
+
+\begin{definition}[Income tax]\label{def:g8:taxes-and-public-spending:income-tax}
+An \emph{income tax}\index{income tax} is a \omterm{def:g8:taxes-and-public-spending:tax}{tax} computed on the \omterm{def:g7:households:income}{income} of a person or a \omterm{def:g7:households:household}{household}.
+\end{definition}
+
+\begin{definition}[Tax on purchases]\label{def:g8:taxes-and-public-spending:tax-on-purchases}
+A \emph{tax on purchases}\index{tax on purchases} is a \omterm{def:g8:taxes-and-public-spending:tax}{tax} added to the \omterm{def:g7:money:price}{price} of goods and services
+when they are bought. A \emph{sales \omterm{def:g8:taxes-and-public-spending:tax}{tax}} is charged once, when the final buyer pays; a
+\emph{value-added \omterm{def:g8:taxes-and-public-spending:tax}{tax}} (VAT) is charged at each stage of production on the \omterm{def:g8:gdp:value-added}{value added} at that stage.
+\end{definition}
+
+\begin{definition}[Payroll tax]\label{def:g8:taxes-and-public-spending:payroll-tax}
+A \emph{payroll tax}\index{payroll tax} is a \omterm{def:g8:taxes-and-public-spending:tax}{tax} computed on the \omterm{def:g7:households:wage}{wages} that employers pay, often used to
+pay for pensions and health care.
+\end{definition}
+
+\begin{dated}{2026}
+% ledger: g8:vat-rate-2026
+In the United Kingdom, the standard rate of VAT is $20\,\%$ (since 4 January 2011): a good priced at
+$100$ pounds before \omterm{def:g8:taxes-and-public-spending:tax}{tax} costs $120$ pounds in the shop.
+\end{dated}
+
+Most \omterm{def:g8:taxes-and-public-spending:income-tax}{income taxes} are cut into bands, with a higher rate on each higher band. Brenland's \omterm{def:g8:taxes-and-public-spending:income-tax}{income tax}
+of 2025 is computed on a \omterm{def:g7:households:household}{household}'s gross \omterm{def:g7:households:income}{income}: nothing on the first $12\,000$ dalens, $20\,\%$ on
+the part between $12\,000$ and $40\,000$, $35\,\%$ on the part between $40\,000$ and $100\,000$, and
+$45\,\%$ on the part above $100\,000$.
+
+\begin{omchart}{Brenland's income tax, 2025: the rate paid on each additional dalen of gross household
+income.}{Brenland (invented)}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xmin=0, xmax=140000, ymin=0, ymax=50, height=0.4\linewidth,
+  xlabel={Gross household income (dalens a year)}, ylabel={Rate (percent)},
+  xtick={0,12000,40000,100000,140000}, scaled x ticks=false,
+  xticklabels={0, 12\,000, 40\,000, 100\,000, 140\,000}]
+\addplot[omDef, very thick, const plot] table[x=income, y=rate] {figdata/grade-8/07-taxes-and-public-spending/out/tax_bands.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\begin{definition}[Average tax rate]\label{def:g8:taxes-and-public-spending:average-tax-rate}
+The \emph{average tax rate}\index{average tax rate} of a \omterm{def:g7:households:household}{household} is the \omterm{def:g8:taxes-and-public-spending:tax}{tax} it pays divided by its
+\omterm{def:g7:households:income}{income}, in percent.
+\end{definition}
+
+\begin{definition}[Marginal tax rate]\label{def:g8:taxes-and-public-spending:marginal-tax-rate}
+The \emph{marginal tax rate}\index{marginal tax rate} of a \omterm{def:g7:households:household}{household} is the rate of \omterm{def:g8:taxes-and-public-spending:tax}{tax} on one more
+dalen of \omterm{def:g7:households:income}{income}: the rate of the band its \omterm{def:g7:households:income}{income} is in.
+\end{definition}
+
+% figdata: facts (tax_30000 3600, tax_60000 12600)
+A Brenland \omterm{def:g7:households:household}{household} with a gross \omterm{def:g7:households:income}{income} of $30\,000$ dalens pays $(30\,000 - 12\,000) \times 0.20 =
+3\,600$ dalens. Its \omterm{def:g8:taxes-and-public-spending:average-tax-rate}{average tax rate} is $3\,600 \div 30\,000 = 12\,\%$, but its marginal rate is
+$20\,\%$: of each extra $100$ dalens it earns, $20$ go in \omterm{def:g8:taxes-and-public-spending:tax}{tax}. The average rate is below the marginal rate
+here for every \omterm{def:g7:households:income}{income} above $12\,000$ dalens, because the first $12\,000$ dalens are not taxed.
+
+\section{The budget, the deficit and the debt}
+
+\begin{definition}[Government budget]\label{def:g8:taxes-and-public-spending:government-budget}
+A \emph{government budget}\index{government budget} is the list of a government's \omterm{def:g7:firms:revenue}{revenue} (mostly
+\omterm{def:g8:taxes-and-public-spending:tax}{taxes}) and spending for a year.
+\end{definition}
+
+\begin{definition}[Budget deficit]\label{def:g8:taxes-and-public-spending:budget-deficit}
+A \emph{budget deficit}\index{budget deficit} is the amount by which spending is larger than \omterm{def:g7:firms:revenue}{revenue}
+in a year.
+\end{definition}
+
+\begin{definition}[Budget surplus]\label{def:g8:taxes-and-public-spending:budget-surplus}
+A \emph{budget surplus}\index{budget surplus} is the amount by which \omterm{def:g7:firms:revenue}{revenue} is larger than spending
+in a year.
+\end{definition}
+
+\begin{definition}[Public debt]\label{def:g8:taxes-and-public-spending:public-debt}
+\emph{Public debt}\index{public debt} is the total that a government owes to its lenders at a given
+date: the sum of its past deficits minus its past surpluses.
+\end{definition}
+
+A government with a deficit borrows the difference, usually by selling bonds
+(\cref{ch:g8:banks-saving-interest}). The debt is like the water in a bathtub: deficits pour in,
+surpluses drain it, and each year's debt is last year's debt plus this year's deficit.
+
+\begin{omfigure}
+\begin{tikzpicture}[font=\small]
+  \draw[very thick] (0,3) -- (0,0) -- (5,0) -- (5,3);
+  \fill[omDef!35] (0.05,0.05) rectangle (4.95,1.8);
+  \node at (2.5,0.9) {public debt};
+  \draw[thick, -{Stealth[length=3mm]}] (1.2,4.2) -- (1.2,2.1);
+  \node[align=center, anchor=south] at (1.2,4.2) {deficit\\(spending $>$ revenue)};
+  \draw[thick] (4.4,0) -- (4.4,-0.5) -- (6.2,-0.5);
+  \draw[thick, -{Stealth[length=3mm]}] (6.2,-0.5) -- (7.0,-0.5);
+  \node[align=left, anchor=west] at (7.1,-0.5) {surplus\\(revenue $>$ spending)};
+\end{tikzpicture}
+
+{\small The debt as a bathtub: a deficit adds to the debt, a surplus takes away from it.}
+\end{omfigure}
+
+Debt is usually measured as a share of GDP, because a country with a larger GDP can carry a larger
+debt: the same debt is a smaller burden when the economy and the \omterm{def:g8:taxes-and-public-spending:tax}{tax} \omterm{def:g7:firms:revenue}{revenue} it brings grow.
+
+% figdata: facts (debt_gbr_max 269.8 1946; debt_gbr_1919 142.8; debt_usa_1946 118.9; debt_usa_2020 128.1;
+% debt_jpn_2020 253.9; debt_fra_max 237.0 1921)
+\begin{omchart}{Public debt as a share of GDP in six countries, 1880--2020, in
+percent.}{Jord\`a--Schularick--Taylor Macrohistory Database, \omterm{def:g8:taxes-and-public-spending:public-debt}{public debt} to GDP ratio}
+\begin{tikzpicture}
+\begin{axis}[omtime, xmin=1880, xmax=2020, ymin=0, ymax=280, xlabel={Year},
+  ylabel={Percent of GDP}, xtick={1880,1900,1920,1940,1960,1980,2000,2020},
+  legend style={at={(0.5,-0.2)}, anchor=north, legend columns=6}]
+\addplot table[x=year, y=usa] {figdata/grade-8/07-taxes-and-public-spending/out/debt_gdp.csv};
+\addplot table[x=year, y=gbr] {figdata/grade-8/07-taxes-and-public-spending/out/debt_gdp.csv};
+\addplot table[x=year, y=fra, unbounded coords=jump] {figdata/grade-8/07-taxes-and-public-spending/out/debt_gdp.csv};
+\addplot table[x=year, y=swe] {figdata/grade-8/07-taxes-and-public-spending/out/debt_gdp.csv};
+\addplot table[x=year, y=jpn, unbounded coords=jump] {figdata/grade-8/07-taxes-and-public-spending/out/debt_gdp.csv};
+\addplot table[x=year, y=deu, unbounded coords=jump] {figdata/grade-8/07-taxes-and-public-spending/out/debt_gdp.csv};
+\legend{United States, United Kingdom, France, Sweden, Japan, Germany}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+Wars built the largest debts: the United Kingdom's reached $269.8\,\%$ of GDP in 1946, the United
+States' $118.9\,\%$. In the following decades both shares fell a long way, as GDP grew faster than
+the debt. In 2020, the share was $128.1\,\%$ in the United States and $253.9\,\%$ in Japan, without a
+war.
+
+\section{A tax changes behaviour}
+
+\begin{model}{Taxes change behaviour}
+\assumes People respond to \omterm{def:g7:money:price}{prices} and \omterm{def:g7:households:wage}{wages} after \omterm{def:g8:taxes-and-public-spending:tax}{tax}.
+\predicts A \omterm{def:g8:taxes-and-public-spending:tax}{tax} on a good raises its \omterm{def:g7:money:price}{price} and lowers the quantity bought, more so when buyers have
+other goods they can switch to.
+\tested Studies of cigarette \omterm{def:g8:taxes-and-public-spending:tax}{taxes} and \omterm{def:g7:money:price}{prices} in rich countries find that a $10\,\%$ rise in the \omterm{def:g7:money:price}{price}
+of cigarettes lowers the quantity smoked by about $4\,\%$; most estimates lie between 2 and $6\,\%$
+(National Cancer Institute and World Health Organization, 2016).
+\breaks In the short run, when buyers have no substitute or are addicted, the quantity hardly moves;
+when the \omterm{def:g8:taxes-and-public-spending:tax}{tax} can be evaded, recorded sales fall while buying from untaxed sellers rises.
+\end{model}
+% ledger: g8:cigarette-tax-elasticity
+
+A \omterm{def:g8:taxes-and-public-spending:tax}{tax} raises \omterm{def:g7:money:money}{money}, and it changes what people buy, sell and do. Both effects matter: a \omterm{def:g8:taxes-and-public-spending:tax}{tax} that
+makes people buy much less of a good also raises less \omterm{def:g7:money:money}{money} than a simple sum would suggest. How much
+the quantity falls is measured with the elasticity of \cref{ch:g9:elasticity-first-look}.
+
+\section{Who decides}
+
+\omterm{def:g8:taxes-and-public-spending:tax}{Taxes} and spending are decided by parliaments and governments, through elections and laws. Those who
+decide face their own pressures, from voters, from groups that gain from a \omterm{def:g8:taxes-and-public-spending:tax}{tax} or a spending item, and
+from the next election, and they can get things wrong just as \omterm{def:g7:markets-and-prices:market}{markets} can. How public decisions are
+made, and when they fail, is studied in the volume for grades 10 to 12.
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g8:taxes-and-public-spending:1}
+Use the text. What share of GDP did central government spend in 1913 and in 2019 in the United States?
+In the United Kingdom?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g8:taxes-and-public-spending:2}
+A government collects $450$ million dalens and spends $500$ million. Compute its deficit.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g8:taxes-and-public-spending:3}
+A government's debt is $1\,200$ million dalens. This year its deficit is $50$ million. What is its debt
+at the end of the year?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g8:taxes-and-public-spending:4}
+A sales \omterm{def:g8:taxes-and-public-spending:tax}{tax} of $20\,\%$ is added to a \omterm{def:g7:money:price}{price} of $15$ dalens. What does the buyer pay?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g8:taxes-and-public-spending:5}
+Compute the \omterm{def:g8:taxes-and-public-spending:income-tax}{income tax} of a Brenland \omterm{def:g7:households:household}{household} with a gross \omterm{def:g7:households:income}{income} of $45\,000$ dalens.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g8:taxes-and-public-spending:6}
+For the \omterm{def:g7:households:household}{household} of exercise 5, compute the \omterm{def:g8:taxes-and-public-spending:average-tax-rate}{average tax rate} (to one decimal) and give the \omterm{def:g8:taxes-and-public-spending:marginal-tax-rate}{marginal
+tax rate}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g8:taxes-and-public-spending:7}
+Use the debt chart. In which years did the United Kingdom's and France's debts peak, and what was
+happening then?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g8:taxes-and-public-spending:8}
+A \omterm{def:g8:taxes-and-public-spending:tax}{tax} raises the \omterm{def:g7:money:price}{price} of cigarettes by $20\,\%$. Using the estimate of the model box, by about what
+percentage does the quantity smoked fall? If $1\,000$ million packs were sold before, about how many
+are sold after?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g8:taxes-and-public-spending:9}
+After a large \omterm{def:g8:taxes-and-public-spending:tax}{tax} rise on cigarettes, recorded sales fall by $15\,\%$, but surveys show that people
+smoke about as much as before. Which part of the model box does this match, and what might explain
+it?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g8:taxes-and-public-spending:10}
+In 2025, Brenland's debt was $236\,818$ million dalens and its GDP $393\,264$ million. Suppose the
+deficit is $8\,000$ million in each of the next two years and GDP grows by $4\,\%$ a year. Compute the
+debt as a share of GDP in 2025 and after two years. Did the share rise or fall?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g8:taxes-and-public-spending:11}
+A worker earns $3\,000$ dalens a month. A \omterm{def:g8:taxes-and-public-spending:payroll-tax}{payroll tax} of $10\,\%$ of the \omterm{def:g7:households:wage}{wage}, paid by the employer,
+is introduced. After some time, the worker's \omterm{def:g7:households:wage}{wage} is $2\,800$ dalens. (a) How much \omterm{def:g8:taxes-and-public-spending:tax}{tax} does the
+employer pay? (b) How much does the worker cost the employer in all, before and after? (c) How much of
+the \omterm{def:g8:taxes-and-public-spending:tax}{tax} is borne by the worker, through a lower \omterm{def:g7:households:wage}{wage}, and how much by the employer?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g8:taxes-and-public-spending:12}
+Explain what the opening chart cannot tell about what the spending achieved.
+\end{exercise}
+
+\section{Problem: Brenland's Budget}
+
+\begin{problem}[{Weekend problem --- Brenland's revenue, spending and deficit, its public debt, and a
+household's income tax}]
+\label{pb:g8:taxes-and-public-spending:1}
+% figdata: budget (2015 248438 99375 104344 4969 159977; 2019 289032 115613 121393 5780 181790;
+% 2020 279869 109149 128740 19591 201381; 2025 393264 157306 165171 7865 236818)
+Everything in this problem is invented. Brenland's public accounts, in millions of dalens:
+\begin{center}
+\begin{tabular}{lrrrr}
+\toprule
+Year & 2015 & 2019 & 2020 & 2025 \\
+\midrule
+GDP & 248\,438 & 289\,032 & 279\,869 & 393\,264 \\
+\omterm{def:g7:firms:revenue}{Revenue} & 99\,375 & 115\,613 & 109\,149 & 157\,306 \\
+Spending & 104\,344 & 121\,393 & 128\,740 & 165\,171 \\
+Debt at the end of the year & 159\,977 & 181\,790 & 201\,381 & 236\,818 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent\textbf{Part I --- The deficit.}
+\begin{enumerate}
+  \item Compute the deficit in 2015.
+  \item Compute the deficit in 2020. Using the table, give two reasons why it was so much larger than in
+        2019.
+  \item Compute the deficit in 2025, and as a share of GDP.
+  \item Compute \omterm{def:g8:taxes-and-public-spending:public-spending}{public spending} as a share of GDP in 2025.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The debt.}
+\begin{enumerate}[resume]
+  \item Check that the debt of 2020 equals the debt of 2019 plus the deficit of 2020.
+  \item Compute the debt as a share of GDP in 2019 and in 2020.
+  \item Why did the share rise so much in 2020?
+  \item Compute the debt as a share of GDP in 2025.
+  \item If the government pays $3\,\%$ \omterm{def:g8:banks-saving-interest:interest}{interest} on its debt of 2025, how much \omterm{def:g8:banks-saving-interest:interest}{interest} does it pay in a
+        year?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- A household's income tax.} Use Brenland's \omterm{def:g8:taxes-and-public-spending:tax}{tax} bands.
+\begin{enumerate}[resume]
+  \item Compute the \omterm{def:g8:taxes-and-public-spending:tax}{tax} of a \omterm{def:g7:households:household}{household} with a gross \omterm{def:g7:households:income}{income} of $30\,000$ dalens.
+  \item Compute the \omterm{def:g8:taxes-and-public-spending:tax}{tax} of a \omterm{def:g7:households:household}{household} with $60\,000$ dalens.
+  \item Compute both \omterm{def:g7:households:household}{households}' \omterm{def:g8:taxes-and-public-spending:average-tax-rate}{average tax rates}.
+  \item What is the \omterm{def:g8:taxes-and-public-spending:marginal-tax-rate}{marginal tax rate} of the second \omterm{def:g7:households:household}{household}? How much more \omterm{def:g8:taxes-and-public-spending:tax}{tax} does it pay if it
+        earns $1\,000$ dalens more?
+\end{enumerate}
+\end{problem}

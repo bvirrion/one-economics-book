@@ -1,0 +1,113 @@
+\section*{Chapter \ref{ch:g12:present-value} --- Present Value}
+% figdata: figdata/grade-12/01-present-value/out/ (yields, bond_index, bridge_npv, bridge_key); the bridge is invented.
+
+\begin{solution}{exo:g12:present-value:1}
+$1000 \times 1.03^{10} \approx 1343.92$.
+\end{solution}
+
+\begin{solution}{exo:g12:present-value:2}
+$500 \times 1.06^{12} \approx 1006.10$: the sum has doubled in 12 years. The rule of 70 gives $70/6 \approx 11.7$ years, close to the 12 found.
+\end{solution}
+
+\begin{solution}{exo:g12:present-value:3}
+$1000/1.04^5 \approx 821.93$.
+\end{solution}
+
+\begin{solution}{exo:g12:present-value:4}
+$200/1.05 + 200/1.05^2 \approx 190.48 + 181.41 = 371.88$.
+\end{solution}
+
+\begin{solution}{exo:g12:present-value:5}
+13.9\,\% and 7.2 in 1981; 0.9\,\% and 111.8 in 2020. The price rose by a factor of $111.8/7.2 \approx 15.5$.
+\end{solution}
+
+\begin{solution}{exo:g12:present-value:6}
+$1000 \times (1 - 1.03^{-20})/0.03 \approx 1000 \times 14.877 = 14\,877$.
+\end{solution}
+
+\begin{solution}{exo:g12:present-value:7}
+The payment $P$ solves $P(1 - 1.05^{-10})/0.05 = 10\,000$: $P = 10\,000 \times 0.05/(1 - 1.05^{-10}) \approx 1295.05$.
+\end{solution}
+
+\begin{solution}{exo:g12:present-value:8}
+$50/0.04 = 1250$ and $50/0.05 = 1000$: a fall of 20\,\%.
+\end{solution}
+
+\begin{solution}{exo:g12:present-value:9}
+One year: $100/1.03 \approx 97.09$, $100/1.04 \approx 96.15$, a fall of about 1.0\,\%. Ten years: $100/1.03^{10} \approx 74.41$, $100/1.04^{10} \approx 67.56$, a fall of
+about 9.2\,\%. The long \omterm{def:g12:present-value:bond}{bond} is far more sensitive to the yield.
+\end{solution}
+
+\begin{solution}{exo:g12:present-value:10}
+The real rate is about $5 - 2 = 3\,\%$. $-1000 + 300 \times (1 - 1.03^{-4})/0.03 \approx -1000 + 300 \times 3.717 \approx 115.1$.
+\end{solution}
+
+\begin{solution}{exo:g12:present-value:11}
+$1000e^{0.5} \approx 1648.72$; $1000 \times 1.05^{10} \approx 1628.89$.
+\end{solution}
+
+\begin{solution}{exo:g12:present-value:12}
+No: the model prices certain payments. A fall in price while safe yields fall means the payments are no longer seen as certain: lenders fear default, or, for \omterm{def:g12:present-value:bond}{bonds} in a
+currency the government can print, higher inflation. The yield on that government's \omterm{def:g12:present-value:bond}{bonds} has risen relative to safe yields; the gap measures the extra return lenders
+ask for the risk.
+\end{solution}
+
+\begin{solution}{exo:g12:present-value:13}
+$5x + 105x^2 = 96.38$, so $105x^2 + 5x - 96.38 = 0$ and $x = \bigl(-5 + \sqrt{25 + 420 \times 96.38}\bigr)/210 \approx (-5 + 201.26)/210 \approx 0.93456$ (the other root is
+negative). Then $y = 1/x - 1 \approx 7.0\,\%$.
+\end{solution}
+
+\begin{solution}{exo:g12:present-value:14}
+$(1 + r/n)^{nt} = \bigl((1 + r/n)^n\bigr)^t$. The inner term tends to $e^r$ by the proposition, and $z \mapsto z^t$ is continuous on $(0, \infty)$, so the whole tends to
+$(e^r)^t = e^{rt}$.
+\end{solution}
+
+\begin{solution}{exo:g12:present-value:15}
+At 2\,\%: A, $150/1.02^{10} - 100 \approx 23.1$; B, $30 \times 3.808 - 100 \approx 14.2$; A is better. At 5\,\%: A, $150/1.05^{10} - 100 \approx -7.9$; B,
+$30 \times 3.546 - 100 \approx 6.4$; B is better. A's receipt lies further in the future, so a higher rate lowers its \omterm{def:g12:present-value:present-value}{present value} more.
+\end{solution}
+
+\begin{solution}{pb:g12:present-value:1}
+\textbf{1.} $1/1.04 \approx 0.9615$; $1/1.04^{10} \approx 0.6756$; $1/1.04^{30} \approx 0.3083$.
+
+\textbf{2.} $7 \times (1 - 0.3083)/0.04 = 7 \times 17.292 \approx 121.0$.
+
+\textbf{3.} $121.0 - 100 = 21.0$ million dalens.
+
+\textbf{4.} $7 \times 22.396 - 100 \approx 56.8$.
+
+\textbf{5.} $7 \times 13.765 - 100 \approx -3.6$.
+
+\textbf{6.} The cost is paid now and does not depend on the rate; each receipt's \omterm{def:g12:present-value:present-value}{present value} $7/(1 + r)^t$ falls as $r$ rises.
+
+\textbf{7.} $7 \times 15.372 - 100 \approx 7.6$. It is positive at 5\,\% and negative at 6\,\%, so it reaches zero between them.
+
+\textbf{8.} About $+1.7$: the rate lies between 5.5 and 6\,\%.
+
+\textbf{9.} About $-1.0$: the rate lies between 5.5 and 5.75\,\%.
+
+\textbf{10.} After $n$ halvings the interval is $2/2^n$ points wide; $2/2^n < 0.01$ needs $2^n > 200$, so $n = 8$. The curve crosses zero at about 5.66\,\%.
+
+\textbf{11.} $0.04 \times 100 = 4$ a year.
+
+\textbf{12.} $7 - 4 = 3$ a year for 30 years: $3 \times 17.292 \approx 51.9$.
+
+\textbf{13.} The \omterm{def:g12:present-value:bond}{coupons} from year 31 on form a \omterm{def:g12:present-value:annuity}{perpetuity} worth $4/0.04 = 100$ at the end of year 30, so $100/1.04^{30} \approx 30.8$ today. $51.9 - 30.8 = 21.1$, the \omterm{def:g12:present-value:npv}{net
+present value} of Question 3 up to rounding (21.0 unrounded).
+
+\textbf{14.} $4/0.05 = 80$ per 100: the bondholders lose 20\,\% of their capital; the town's debt is unchanged.
+
+\textbf{15.} $4/1.05 + 104/1.05^2 \approx 98.14$, a fall of under 2\,\%. The two-year \omterm{def:g12:present-value:bond}{bond} is repaid soon and only two payments are discounted at the higher rate; the
+perpetual \omterm{def:g12:present-value:bond}{bond}'s payments run for ever, and the distant ones lose most.
+
+\textbf{16.} The receipts are in today's prices, so the real rate, about $6 - 2 = 4\,\%$: the \omterm{def:g12:present-value:npv}{net present value} is 21.0, as in Question 3.
+
+\textbf{17.} $5 \times 17.292 - 100 \approx -13.5$.
+
+\textbf{18.} $100/17.292 \approx 5.78$ a year.
+
+\textbf{19.} The town borrows at a low rate because its taxes stand behind the \omterm{def:g12:present-value:bond}{bond}, but the bridge's receipts are risky; and the 100 could earn a different return in
+another use, which is the return given up.
+
+\textbf{20.} The bridge's \omterm{def:g12:present-value:npv}{net present value} at 4\,\% is 21.0 million dalens, and its break-even \omterm{def:g12:present-value:present-value}{discount rate} is about 5.66\,\%.
+\end{solution}

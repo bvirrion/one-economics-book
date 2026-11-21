@@ -1,0 +1,800 @@
+\chapter{Models and Data}\label{ch:b1:models-and-data}
+
+On a Friday at the fish market of Brenmoor the price of cod was higher
+than on Thursday, and more of it was sold. A reader who has drawn a
+demand curve knows that a higher price should mean fewer sales. Either the
+demand for fish slopes up, or the two days are not two points on one
+demand curve. This chapter is about telling those two answers apart. It
+sets out what a model is in this book --- a map from the variables it
+takes as given to the variables it explains --- and the bookkeeping that
+every later chapter uses: \omterm{def:b1:models-and-data:stock-flow}{stocks} and \omterm{def:b1:models-and-data:stock-flow}{flows}, growth rates, real and nominal
+values, and the notation of the series. It ends with the oldest trap in
+the reading of economic data: a cloud of prices and quantities is not a
+curve.
+
+\begin{openingchart}{The labour market as one price and one quantity: the yearly
+change in total hours worked against the yearly change in labour compensation
+per hour (deflated by the GDP deflator), United States, 1981--2023, in per cent.
+Each dot is a year.}{Penn World Table 11.0; hours = persons employed $\times$
+average annual hours; compensation per hour = labour share $\times$ real GDP at
+constant national prices $\div$ hours}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xlabel={Change in real compensation per hour (\%)},
+  ylabel={Change in hours worked (\%)}, xmin=-3, xmax=8, ymin=-8, ymax=6,
+  height=0.55\linewidth]
+  \addplot table[x=dwage, y=dhours] {figdata/bachelor-1/01-models-and-data/out/labour_cloud.csv};
+  \node[font=\footnotesize, anchor=west] at (axis cs:1.5,-5.9) {2009};
+  \node[font=\footnotesize, anchor=east] at (axis cs:6.6,-6.7) {2020};
+  \node[font=\footnotesize, anchor=west] at (axis cs:-0.3,4.4) {2021};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+The chart treats the American labour market as one market with one price,
+the real pay of an hour of work, and one quantity, the hours worked. Its
+43 dots do not lie on a curve. Their correlation is $-0.42$ and the line
+that fits them best has a slope of $-0.53$: a year in which pay per hour
+rose by one per cent more than usual was, on average, a year in which hours
+grew by half a per cent less. % figdata: labour_cloud_stats
+Read as a demand curve for labour, that is a gentle downward slope. Read as
+a supply curve, it says that people work less when they are paid more. Both
+readings are wrong in the same way: each dot is the meeting point of a
+demand curve and a supply curve in one year, and both curves moved every
+year. The 2020 dot makes the point sharply. Hours fell by 6.7 per cent and
+pay per hour rose by 6.8 per cent, % figdata: labour_cloud
+the largest rise of the period, in the year of the steepest fall in hours.
+\Cref{sec:b1:models-and-data:identification} gives the model that reads
+such a cloud, and what it takes to recover a curve from it.
+
+\begin{recall}
+A model keeps the few causes that matter for one question and states what
+would prove it wrong; a fact is not a value judgement, and a correlation is
+not a cause. A growth rate is a relative change, and a quantity growing at
+a constant rate grows by equal ratios. A price index compares the cost of a
+basket in two periods; a real value is a nominal value divided by a price
+index. The logarithm turns products into sums: $\ln(xy) = \ln x + \ln y$.
+\end{recall}
+
+\section{Given and explained variables}\label{sec:b1:models-and-data:variables}
+
+A model in this book has the frame the series has used since the school
+volumes: what it assumes, what it predicts, where it was tested, and where
+it breaks. With calculus at hand the first two fields can be made exact. A
+model is a set of equations. Some of its variables are explained by it,
+others are fed to it from outside, and a few numbers fix the shape of the
+equations.
+
+\begin{definition}[Endogenous and exogenous variables, parameters]\label{def:b1:models-and-data:variables}
+\index{endogenous variable}\index{exogenous variable}\index{parameter}
+A model is a system of equations $F(y, x; \theta) = 0$ that, for each value
+of $x$ and $\theta$, has a solution $y = g(x; \theta)$. The variables $y$
+that the model solves for are its \emph{endogenous variables}. The variables
+$x$ that it takes as given, and that change from one observation to the
+next, are its \emph{exogenous variables}. The numbers $\theta$ that fix the
+shape of the equations and are the same for every observation are its
+\emph{parameters}. The function $g$ is the model's prediction.
+\end{definition}
+
+The same variable can be endogenous in one model and exogenous in another.
+In a model of the fish market, the weather at sea is exogenous: nothing in
+the market changes it. The price of fish is endogenous. In a model of a
+household's grocery budget the price of fish is exogenous, because one
+household cannot move it. The choice is part of the model's assumptions,
+and it is tested like any other: if the weather turned out to depend on
+the market, the model would be wrong.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, every node/.style={font=\small}]
+  \node[draw, thick, rounded corners, minimum width=38mm, minimum height=14mm,
+        align=center] (m) at (0,0) {model\\[1pt] $F(y, x; \theta) = 0$};
+  \node[align=center] (x) at (-4.6,0) {exogenous $x$\\(given)};
+  \node[align=center] (y) at (4.6,0) {endogenous $y$\\(explained)};
+  \node[align=center] (t) at (0,1.9) {parameters $\theta$\\(fixed)};
+  \draw[->, thick] (x) -- (m);
+  \draw[->, thick] (m) -- (y);
+  \draw[->, thick] (t) -- (m);
+\end{tikzpicture}
+
+{\small A model as a map: the \omterm{def:b1:models-and-data:variables}{exogenous variables} and the \omterm{def:b1:models-and-data:variables}{parameters} go in,
+the \omterm{def:b1:models-and-data:variables}{endogenous variables} come out, $y = g(x; \theta)$.}
+\end{omfigure}
+
+The market model is the first example. Demand and supply are linear, and
+each is moved by a term the model does not explain:
+\begin{equation}\label{eq:b1:models-and-data:market}
+Q^d = a - b\,p + u^d, \qquad Q^s = c + d\,p + u^s, \qquad Q^d = Q^s = q,
+\end{equation}
+with $b > 0$ and $d > 0$. The \omterm{def:b1:models-and-data:variables}{endogenous variables} are $p$ and $q$. The
+\emph{shocks} $u^d$ and $u^s$ are exogenous: they stand for everything that
+moves demand or supply in a given period, such as the weather, a festival,
+the price of feed or a change in tastes. The \omterm{def:b1:models-and-data:variables}{parameters} are $a$, $b$, $c$
+and $d$.
+
+\begin{definition}[Equilibrium of a model]\label{def:b1:models-and-data:equilibrium}
+\index{equilibrium (of a model)}
+An \emph{equilibrium} of a model is a value of its \omterm{def:b1:models-and-data:variables}{endogenous variables} at
+which all of its equations hold at once, for given values of the \omterm{def:b1:models-and-data:variables}{exogenous
+variables} and the \omterm{def:b1:models-and-data:variables}{parameters}. When the model describes a process that
+repeats, $y_{t+1} = h(y_t; x, \theta)$, an equilibrium is a fixed point
+$y^* = h(y^*; x, \theta)$: once there, the model stays there.
+\end{definition}
+
+\begin{proposition}[Equilibrium of the linear market]\label{prop:b1:models-and-data:linear}
+\index{market model!linear}
+If $b + d > 0$, the model \eqref{eq:b1:models-and-data:market} has exactly one
+\omterm{def:b1:models-and-data:equilibrium}{equilibrium},
+\[
+p^* = \frac{a - c + u^d - u^s}{b + d}, \qquad
+q^* = \frac{ad + bc + d\,u^d + b\,u^s}{b + d}.
+\]
+\end{proposition}
+
+\begin{proof}
+Setting $Q^d = Q^s$ gives $a - bp + u^d = c + dp + u^s$, a linear equation
+in $p$ with the coefficient $b + d \neq 0$, so it has the single root
+$p^*$. Then $q^* = c + d p^* + u^s
+= \bigl[c(b + d) + d(a - c + u^d - u^s) + (b + d)u^s\bigr]/(b + d)$, which
+simplifies to the expression stated.
+\end{proof}
+
+The proposition is the model's prediction, $g$ of
+\cref{def:b1:models-and-data:variables}. Its derivatives are the
+comparative statics of the market, met in the school volumes:
+$\partial p^*/\partial u^d = 1/(b + d) > 0$ and
+$\partial q^*/\partial u^d = d/(b + d) > 0$, so a rise in demand raises both
+the price and the quantity, while $\partial p^*/\partial u^s < 0 <
+\partial q^*/\partial u^s$. \Cref{ch:b1:comparative-statics} does this for
+any model, linear or not.
+
+\begin{example}[The fish market in numbers]\label{ex:b1:models-and-data:fish}
+At Brenmoor, with $p$ in dalens per kilogram and $q$ in crates sold per
+day, take $Q^d = 180 - 10p + u^d$ and $Q^s = 20 + 10p + u^s$ (invented
+numbers). On a day with no shocks, $p^* = 160/20 = 8$ and
+$q^* = (180 \times 10 + 10 \times 20)/20 = 100$. A storm that keeps 30
+crates of supply in harbour, $u^s = -30$, raises the price to
+$p^* = 190/20 = 9.5$ and lowers the quantity to
+$q^* = (2000 - 300)/20 = 85$. A festival that brings 30 crates of extra
+demand, $u^d = 30$, gives $p^* = 9.5$ and $q^* = 115$: a higher price and
+more fish sold. That is Friday at the market.
+\end{example}
+
+\section{Stocks, flows, levels and rates}\label{sec:b1:models-and-data:stocks}
+
+\begin{definition}[Stock, flow]\label{def:b1:models-and-data:stock-flow}
+\index{stock}\index{flow}
+A \emph{stock} is a quantity measured at a date: it has a unit with no time
+in it (dalens, crates, machines, people). A \emph{flow} is a quantity
+measured over a period: its unit is per unit of time (dalens per year,
+crates per day). A stock changes only through flows: over a period, the
+change in a stock equals its inflows minus its outflows.
+\end{definition}
+
+Wealth, the capital of a country, the money in circulation, public debt
+and the number of people out of work are \omterm{def:b1:models-and-data:stock-flow}{stocks}. Income, investment, GDP,
+the government deficit and the number of people who lose their jobs each
+month are \omterm{def:b1:models-and-data:stock-flow}{flows}. The classic error is to compare the two: a debt of
+\dal{236818} million is not ``larger'' than a GDP of \dal{393264} million in
+the same sense as one GDP is larger than another, % (Brenland 2025, accounts.csv: debt, gdp; invented)
+because the first is an amount and the second an amount per year. Their
+ratio, 60 per cent of a year's GDP, is a number with a time unit in it.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+  \fill[omDef!14] (0,0) rectangle (4,1.6);
+  \draw[very thick] (0,2.6) -- (0,0) -- (4,0) -- (4,2.6);
+  \draw[omDef, thick] (0,1.6) -- (4,1.6);
+  \node at (2,0.8) {stock $K_t$};
+  \draw[->, very thick, omThm] (-1.6,3.2) node[above, black] {inflow $I_t$}
+        to[out=0, in=100] (0.9,1.9);
+  \draw[->, very thick, omThm] (3.6,0.3) to[out=0, in=180] (5.6,-0.4)
+        node[right, black] {outflow $\delta K_t$};
+\end{tikzpicture}
+
+{\small \omterm{def:b1:models-and-data:stock-flow}{Stock} and \omterm{def:b1:models-and-data:stock-flow}{flow}: the capital \omterm{def:b1:models-and-data:stock-flow}{stock} $K_t$ is the water in the tub;
+investment $I_t$ runs in, depreciation $\delta K_t$ runs out, and
+$K_{t+1} = (1 - \delta)K_t + I_t$.}
+\end{omfigure}
+
+The accumulation of capital is the example used most often in this book:
+\begin{equation}\label{eq:b1:models-and-data:accumulation}
+K_{t+1} = (1 - \delta)K_t + I_t ,
+\end{equation}
+where $\delta$ is the share of the capital \omterm{def:b1:models-and-data:stock-flow}{stock} that wears out in a year.
+If investment stays at $I$ forever, the \omterm{def:b1:models-and-data:stock-flow}{stock} settles where inflow equals
+outflow, $\delta K^* = I$, so $K^* = I/\delta$: an \omterm{def:b1:models-and-data:equilibrium}{equilibrium} in the sense
+of \cref{def:b1:models-and-data:equilibrium}, a fixed point of
+\eqref{eq:b1:models-and-data:accumulation}. With $I = 30$ and
+$\delta = 0.05$, $K^* = 600$, twenty years of investment. The Solow model
+of \cref{ch:b1:solow-model} is this equation with investment made
+endogenous.
+
+A growth rate turns a level into a rate. The school volumes measured it as
+the relative change from one year to the next, $(x_{t+1} - x_t)/x_t$. With
+calculus the cleaner object is the rate at an instant.
+
+\begin{definition}[Continuous growth rate]\label{def:b1:models-and-data:growth-rate}
+\index{continuous growth rate}\index{growth rate!continuous}
+The \emph{continuous growth rate} of a positive differentiable quantity
+$x(t)$ is
+\[
+g_x = \frac{\dot x}{x} = \frac{\dd \ln x}{\dd t}, \qquad \dot x = \frac{\dd x}{\dd t}.
+\]
+Between two dates $t_0 < t_1$ its average is
+$\bar g_x = \bigl[\ln x(t_1) - \ln x(t_0)\bigr]/(t_1 - t_0)$, and a quantity
+with a constant continuous growth rate $g$ is $x(t) = x(t_0)\,\eu^{g(t - t_0)}$.
+\end{definition}
+
+\begin{proposition}[Growth of a product and of a ratio]\label{prop:b1:models-and-data:product}
+\index{growth rate!of a product}
+For positive differentiable $x$ and $z$, and any constant $\alpha$,
+\[
+g_{xz} = g_x + g_z, \qquad g_{x/z} = g_x - g_z, \qquad g_{x^\alpha} = \alpha\, g_x .
+\]
+\end{proposition}
+
+\begin{proof}
+$\ln(xz) = \ln x + \ln z$, $\ln(x/z) = \ln x - \ln z$ and
+$\ln x^\alpha = \alpha \ln x$; differentiate each with respect to $t$.
+\end{proof}
+
+So output per worker $Y/L$ grows at the growth rate of output minus that of
+employment, and nominal GDP grows at the growth rate of real GDP plus that
+of the price level. These rules are exact for continuous rates. For yearly
+rates they are approximations, and the size of the error is worth knowing.
+
+\begin{proposition}[Yearly and continuous rates]\label{prop:b1:models-and-data:log-approx}
+\index{growth rate!yearly and continuous}
+A quantity that grows by the yearly rate $g$, $x_{t+1} = (1 + g)x_t$, has
+the \omterm{def:b1:models-and-data:growth-rate}{continuous growth rate} $\ln(1 + g)$, and for $|g| < 1$
+\[
+\ln(1 + g) = g - \frac{g^2}{2} + \frac{g^3}{3} - \dotsb ,
+\qquad 0 \le g - \ln(1 + g) \le \frac{g^2}{2} \text{ for } g \ge 0 .
+\]
+\end{proposition}
+
+\begin{proof}
+$\ln x_{t+1} - \ln x_t = \ln(1 + g)$, so the average continuous rate over
+the year is $\ln(1 + g)$. The series is the Taylor expansion of $\ln(1 + g)$
+at $0$. For the bound, $h(g) = g - \ln(1 + g)$ has $h(0) = 0$ and
+$h'(g) = g/(1 + g) \in [0, g]$ for $g \ge 0$; integrating from $0$ gives
+$0 \le h(g) \le g^2/2$.
+\end{proof}
+
+At $g = 1\%$ the two rates differ by less than $0.005$ points
+($\ln 1.01 = 0.00995$); at $5\%$ by $0.12$ points ($\ln 1.05 = 0.0488$); at
+$40\%$ by more than six points ($\ln 1.40 = 0.336$). For the growth of a
+rich economy the difference is noise. For an inflation of 40 per cent it is
+not, and \cref{sec:b1:models-and-data:real} returns to it.
+
+A logarithmic axis draws $\ln x$ against time while labelling the axis
+with $x$ itself. A constant growth rate then draws a straight line, and the
+slope of the line is the growth rate: the line climbs by the same distance
+whenever $x$ is multiplied by the same factor.
+
+\begin{omchart}{GDP per person, United Kingdom and Japan, 1870--2022, in 2011
+dollars at purchasing-power parity, on a logarithmic axis. Each tick is ten
+times the one below it, so a steeper line is a faster growth rate.}{Maddison
+Project Database 2023; GDP per person}
+\begin{tikzpicture}
+\begin{semilogyaxis}[omtimesten, xlabel={Year}, ylabel={Dollars per person},
+  ymin=1000, ymax=60000, xmin=1870, xmax=2022, legend pos=north west]
+  \addplot table[x=year, y=GBR] {figdata/bachelor-1/01-models-and-data/out/gbr_jpn.csv};
+  \addplot table[x=year, y=JPN] {figdata/bachelor-1/01-models-and-data/out/gbr_jpn.csv};
+  \legend{United Kingdom, Japan}
+\end{semilogyaxis}
+\end{tikzpicture}
+\end{omchart}
+
+Read the slopes. From 1950 to 1973 Japan's GDP per person rose from
+\usd{3062} to \usd{18226}, an average \omterm{def:b1:models-and-data:growth-rate}{continuous growth rate} of
+$\ln(18226/3062)/23 = 7.76\%$ a year, % figdata: gbr_jpn_growth
+the steepest stretch of either line. Over the same years the United
+Kingdom grew at $2.39\%$. % figdata: gbr_jpn_growth
+By 2022 the two levels were within half a per cent of each other, \usd{38406}
+and \usd{38269}. % figdata: gbr_jpn
+On an ordinary axis the first eighty years of the chart would be squeezed
+against the bottom and the slopes could not be compared at all.
+
+\section{Real and nominal}\label{sec:b1:models-and-data:real}
+
+A value in money, the nominal value, mixes two things: a quantity and the
+price it is valued at. National accounts separate them by valuing each
+year's goods at the prices of one base year, which gives real GDP. The
+ratio of the two is the GDP deflator, met in the school volumes:
+\[
+\text{deflator}_t = 100 \times \frac{\text{nominal GDP}_t}{\text{real GDP}_t},
+\qquad
+\text{real GDP}_t = \frac{\text{nominal GDP}_t}{\text{deflator}_t/100}.
+\]
+
+\begin{omchart}{GDP per person in the United States, 1960--2024, in current
+dollars (nominal) and in dollars of 2020 (real), on a logarithmic axis. The
+lines cross in 2020, the base year; the vertical gap between them is the
+price level.}{World Bank, World Development Indicators; GDP per capita in
+current and in constant local currency units}
+\begin{tikzpicture}
+\begin{semilogyaxis}[omtimesten, xlabel={Year}, ylabel={Dollars per person},
+  ymin=1000, ymax=100000, xmin=1960, xmax=2024, legend pos=south east]
+  \addplot table[x=year, y=nominal] {figdata/bachelor-1/01-models-and-data/out/us_gdppc.csv};
+  \addplot table[x=year, y=real] {figdata/bachelor-1/01-models-and-data/out/us_gdppc.csv};
+  \legend{Nominal, Real (2020 dollars)}
+\end{semilogyaxis}
+\end{tikzpicture}
+\end{omchart}
+
+Nominal GDP per person in the United States was \usd{3000} in 1960 and
+\usd{86170} in 2024, 28.7 times as much. % figdata: us_gdppc, us_gdppc_growth
+In dollars of 2020 it went from \usd{20565} to \usd{72395}, 3.52 times as
+much. % figdata: us_gdppc, us_gdppc_growth
+Over the 64 years the average \omterm{def:b1:models-and-data:growth-rate}{continuous growth rates} were $5.25\%$ a year
+for the nominal series, $1.97\%$ for the real series and $3.28\%$ for the
+deflator, and $5.25 = 1.97 + 3.28$, % figdata: us_gdppc_growth
+as \cref{prop:b1:models-and-data:product} says it must: nominal GDP is the
+product of real GDP and the deflator.
+
+\begin{proposition}[Real growth]\label{prop:b1:models-and-data:real-growth}
+\index{real growth}
+If a nominal value grows by the yearly rate $g_N$ and the price index by
+the yearly rate $\pi$, the real value grows by the yearly rate
+\[
+g_R = \frac{1 + g_N}{1 + \pi} - 1 = \frac{g_N - \pi}{1 + \pi},
+\]
+and the continuous rates add exactly: $\ln(1 + g_N) = \ln(1 + g_R) + \ln(1 + \pi)$.
+The rule $g_R \approx g_N - \pi$ overstates $g_R$ by $\pi\, g_R$, the
+product of the two rates.
+\end{proposition}
+
+\begin{proof}
+The real value is $R_t = N_t/P_t$, so
+$R_{t+1}/R_t = (N_{t+1}/N_t)/(P_{t+1}/P_t) = (1 + g_N)/(1 + \pi)$.
+Taking logs gives the second statement. For the third, $1 + g_N =
+(1 + g_R)(1 + \pi) = 1 + g_R + \pi + g_R\pi$, so
+$g_N - \pi = g_R + \pi g_R$.
+\end{proof}
+
+\begin{measure}[Real values and the deflator]
+A statistical office does not divide nominal GDP by a price index it chose
+in advance. It values each year's quantities, product by product, at the
+prices of a base year (or, in a chained index, at the prices of the year
+before, linking the years together), and the deflator is what is left:
+nominal divided by real. The base year is a choice. In the World Bank table
+used for the chart, the American real series is in dollars of 2020, so
+nominal and real are equal in 2020 and the deflator is 100 there; it was
+14.59 in 1960 and 119.03 in 2024. % figdata: us_gdppc
+A change of base year changes the level of every real number and leaves
+\omterm{prop:b1:models-and-data:real-growth}{real growth} rates nearly unchanged; it is the ratios that carry
+information. Real values of different countries are a second, separate
+problem: converting them to one currency needs prices of the same goods in
+both places (\cref{ch:b1:national-accounts-in-depth}).
+\end{measure}
+
+\section{The series notation}\label{sec:b1:models-and-data:notation}
+
+The books of this series that use algebra use one notation, set out in
+\cref{tab:b1:models-and-data:notation}. A symbol keeps its meaning across
+chapters and across books. Where a letter is needed twice --- $M$ for
+imports and for money, $u$ for utility, for unemployment and for a shock ---
+the context separates them, and a subscript or superscript is added where
+the two meet in one equation.
+
+\begin{table}[ht]
+\centering\small
+\caption{The series notation.}\label{tab:b1:models-and-data:notation}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.30\linewidth}
+                >{\raggedright\arraybackslash}p{0.48\linewidth}
+                >{\raggedright\arraybackslash}p{0.14\linewidth}@{}}
+\toprule
+Symbol & Meaning & Used from \\
+\midrule
+$p$, $q$ & price and quantity of one good ($P$ is the price level) & this chapter \\
+$Q^d$, $Q^s$ & quantity demanded and supplied ($D$, $S$ name the curves) & this chapter \\
+$x_1$, $x_2$, $u(x_1, x_2)$ & the consumer's quantities and utility ($m$ income; $\lambda$ a Lagrange multiplier) & \cref{ch:b1:preferences-and-utility} \\
+$\varepsilon$ & an elasticity ($\varepsilon_d$, $\varepsilon_s$); an error term is $u_i$ or $e_t$, never $\varepsilon$ & \cref{ch:b1:comparative-statics} \\
+$Y$ & output ($y = Y/L$; $Y^*$ or $\bar Y$ potential output) & \cref{ch:b1:national-accounts-in-depth} \\
+$C$, $I$, $G$, $X$, $M$, $NX$ & consumption, investment, government purchases, exports, imports, net exports ($T$ net taxes, $S$ saving) & \cref{ch:b1:national-accounts-in-depth} \\
+$K$, $L$, $A$, $H$ & capital, labour, productivity, human capital ($k = K/L$; $\delta$ depreciation, $s$ saving rate, $n$ population growth, $g$ productivity growth) & this chapter \\
+$\alpha$ & capital's share, in $Y = AK^\alpha L^{1-\alpha}$ & \cref{ch:b1:technology} \\
+$w$, $W$ & real wage, nominal wage ($r$ is the rental rate in the firm's problem) & \cref{ch:b1:cost-minimisation} \\
+$i$, $r$ & nominal and real interest rates ($r \approx i - \pi^e$; $i^*$ the foreign rate) & \cref{ch:b1:labour-supply-and-saving} \\
+$\pi$, $\pi^e$ & inflation, expected inflation (profit is $\Pi$) & this chapter \\
+$u$, $u^n$ & unemployment rate, natural rate & \cref{ch:b1:unemployment-flows} \\
+$M$ & money supply ($M^s$ where it would clash with imports) & \cref{ch:b1:money-and-inflation} \\
+$e$, $\varepsilon_r$ & nominal exchange rate (domestic currency per unit of foreign; a rise is a depreciation), real exchange rate & \cref{ch:b1:open-economy} \\
+$\beta$ & the discount factor (Years 2--3); regression coefficients are $\beta_0$, $\beta_1$, with hats for estimates & \cref{ch:b1:simple-regression} \\
+$t$, $\tau$ & time, a tax rate & this chapter \\
+$\mathrm{MC}$, $\mathrm{AC}$, $\mathrm{AVC}$, $\mathrm{MR}$, $\mathrm{TR}$, $\mathrm{TC}$, $\mathrm{FC}$ & cost and revenue measures, set upright & \cref{ch:b1:cost-minimisation} \\
+$\mathrm{CS}$, $\mathrm{PS}$, $\mathrm{DWL}$ & consumer surplus, producer surplus, deadweight loss & \cref{ch:b1:consumer-welfare} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Two conventions in the table do work in later chapters. The exchange rate
+is the price of foreign currency, so a rise in $e$ is a fall in the value of
+the home currency (\cref{ch:b1:open-economy}). The relation
+$r \approx i - \pi^e$, the real interest rate as the nominal rate less
+expected inflation, is \cref{prop:b1:models-and-data:real-growth} applied
+to a loan: a lender who is repaid $1 + i$ dalens when prices have risen by
+$\pi$ gets back $(1 + i)/(1 + \pi)$ in goods (\cref{ch:b1:labour-supply-and-saving}).
+
+\section{Observed prices and quantities}\label{sec:b1:models-and-data:identification}
+
+Return to the opening chart. Each year, the market model
+\eqref{eq:b1:models-and-data:market} produces one point $(p^*_t, q^*_t)$,
+the meeting of that year's demand and supply curves. If only demand moved,
+every point would sit on the one supply curve and the cloud would trace it.
+If only supply moved, the cloud would trace demand. When both move, the
+cloud traces neither.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xlabel={Quantity $q$}, ylabel={Price $p$}, xmin=0, xmax=10,
+  ymin=0, ymax=10, width=0.62\linewidth, height=0.55\linewidth, grid=none,
+  clip=true]
+  \addplot[demand] table[x=qd1, y=p] {figdata/bachelor-1/01-models-and-data/out/curves.csv};
+  \addplot[demand] table[x=qd2, y=p] {figdata/bachelor-1/01-models-and-data/out/curves.csv};
+  \addplot[demand] table[x=qd3, y=p] {figdata/bachelor-1/01-models-and-data/out/curves.csv};
+  \addplot[supply] table[x=qs1, y=p] {figdata/bachelor-1/01-models-and-data/out/curves.csv};
+  \addplot[supply] table[x=qs2, y=p] {figdata/bachelor-1/01-models-and-data/out/curves.csv};
+  \addplot[supply] table[x=qs3, y=p] {figdata/bachelor-1/01-models-and-data/out/curves.csv};
+  \addplot[only marks, mark=*, mark size=1.4pt, black] table[x=q, y=p]
+    {figdata/bachelor-1/01-models-and-data/out/cloud.csv};
+\end{axis}
+\end{tikzpicture}
+
+{\small Thirty draws of the market model with $a = 10$, $b = 1$, $c = 2$,
+$d = 1$ and shocks of equal spread (simulated). Three of the thirty pairs of
+curves are drawn, demand in blue, supply in red; the dots are the thirty
+equilibria. The cloud shows almost no relation between price and quantity:
+it is neither curve.}
+\end{omfigure}
+
+How weak is the relation? The line that fits a cloud of points best, in the sense of least
+squares, has the slope
+\[
+\hat\beta = \frac{\sum_t (p_t - \bar p)(q_t - \bar q)}{\sum_t (p_t - \bar p)^2},
+\]
+where bars are averages over the observations
+(\cref{ch:b1:simple-regression} derives it). Write
+$\tilde u^d_t = u^d_t - \bar u^d$ for the deviation of a shock from its
+average, and
+\[
+S_d = \sum_t (\tilde u^d_t)^2, \qquad S_s = \sum_t (\tilde u^s_t)^2, \qquad
+S_{ds} = \sum_t \tilde u^d_t\, \tilde u^s_t .
+\]
+
+\begin{proposition}[The slope of the cloud]\label{prop:b1:models-and-data:cloud}
+\index{statistical demand curve}
+In the market model \eqref{eq:b1:models-and-data:market}, if the two shocks
+are unrelated in the sense that $S_{ds} = 0$, the least-squares slope of $q$
+on $p$ over the equilibria is
+\[
+\hat\beta = w\,d - (1 - w)\,b, \qquad w = \frac{S_d}{S_d + S_s} \in [0, 1].
+\]
+It is a weighted average of the supply slope $d$ and the demand slope $-b$,
+the weights being the shares of the two shocks in the total variation.
+\end{proposition}
+
+\begin{proof}
+By \cref{prop:b1:models-and-data:linear}, $p_t - \bar p = (\tilde u^d_t -
+\tilde u^s_t)/(b + d)$ and $q_t - \bar q = (d\,\tilde u^d_t + b\,\tilde
+u^s_t)/(b + d)$. Multiply and sum:
+$\sum_t (p_t - \bar p)(q_t - \bar q) = (d S_d - b S_s + (b - d)S_{ds})/(b +
+d)^2$, and $\sum_t (p_t - \bar p)^2 = (S_d + S_s - 2S_{ds})/(b + d)^2$. With
+$S_{ds} = 0$ the ratio is $(d S_d - b S_s)/(S_d + S_s) = w d - (1 - w) b$.
+\end{proof}
+
+In the simulated figure $b = d = 1$ and the two shocks have nearly the same
+spread, so $w$ is close to one half and the least-squares slope of $q$ on $p$
+is close to zero: the
+formula gives $-0.13$ and the fitted line $-0.18$. % figdata: cloud_stats
+The gap is the term $S_{ds}$: in thirty draws the two shocks happened to
+move together a little, and the full formula of
+\cref{exo:b1:models-and-data:cross} gives $-0.18$ exactly. % figdata: cloud_stats
+The proposition answers the question of the opening. The slope of a cloud
+of prices and quantities tells you how large the demand shocks were
+relative to the supply shocks. It does not tell you the slope of either
+curve.
+
+\begin{definition}[Identification problem]\label{def:b1:models-and-data:identification}
+\index{identification problem}\index{identified parameter}
+A \omterm{def:b1:models-and-data:variables}{parameter} of a model is \emph{identified} by a kind of data if no two
+values of it, combined with the model's assumptions, could have produced
+the same data. The \emph{identification problem} of a market is that
+observed \omterm{def:b1:models-and-data:equilibrium}{equilibrium} prices and quantities alone identify neither the slope
+of demand nor the slope of supply.
+\end{definition}
+
+What breaks the deadlock is a variable that moves one curve and not the
+other.
+
+\begin{definition}[Shifter]\label{def:b1:models-and-data:shifter}
+\index{shifter}\index{demand shifter}\index{supply shifter}
+A \emph{supply shifter} is an \omterm{def:b1:models-and-data:variables}{exogenous variable} that enters the supply
+equation and not the demand equation. A \emph{demand shifter} is an
+\omterm{def:b1:models-and-data:variables}{exogenous variable} that enters the demand equation and not the supply
+equation.
+\end{definition}
+
+\begin{proposition}[Tracing a curve with a shifter]\label{prop:b1:models-and-data:trace}
+\index{shifter!tracing a curve}
+Split the observations of the market model into two groups by a \omterm{def:b1:models-and-data:shifter}{supply
+shifter} $z \in \{0, 1\}$: supply is $Q^s = c + dp - \gamma z + u^s$. If the
+demand shocks have the same average in both groups, $\bar u^d_1 = \bar
+u^d_0$, and the average prices differ, then
+\[
+\frac{\bar q_1 - \bar q_0}{\bar p_1 - \bar p_0} = -b ,
+\]
+the slope of demand. Symmetrically, a \omterm{def:b1:models-and-data:shifter}{demand shifter} traces supply.
+\end{proposition}
+
+\begin{proof}
+Each \omterm{def:b1:models-and-data:equilibrium}{equilibrium} lies on that period's demand curve: $q_t = a - b p_t +
+u^d_t$, because $z$ does not enter demand. Average over each group: $\bar
+q_g = a - b \bar p_g + \bar u^d_g$ for $g = 0, 1$. Subtract the two lines and
+use $\bar u^d_1 = \bar u^d_0$: $\bar q_1 - \bar q_0 = -b(\bar p_1 - \bar
+p_0)$. Divide by $\bar p_1 - \bar p_0 \neq 0$.
+\end{proof}
+
+Both assumptions carry weight. The \omterm{def:b1:models-and-data:shifter}{shifter} must stay out of the demand
+equation, and the demand shocks must not differ between the two groups:
+storms must not be more frequent on the days when buyers are fewer. Neither
+can be checked from prices and quantities alone. They are claims about the
+world, defended with knowledge of the market. The idea, an outside variable
+that moves the market along one curve, is the instrument of the Year~3
+volume, where it gets its general form.
+
+\begin{model}{The market model with shifting curves}
+\assumes Linear demand $Q^d = a - bp + u^d_t$ and supply $Q^s = c + dp +
+u^s_t$; the price clears the market each period; the shocks to the two
+curves are unrelated.
+\predicts The least-squares slope of the cloud of equilibria is a weighted
+average of the two slopes, weighted by the variation of the shocks; a
+\omterm{def:b1:models-and-data:shifter}{supply shifter} traces demand, and a \omterm{def:b1:models-and-data:shifter}{demand shifter} traces supply.
+\tested The yearly American labour-market cloud is consistent with it (a
+correlation of $-0.42$ and a slope of $-0.53$, % figdata: labour_cloud_stats
+neither curve), but a cloud alone cannot test it. The Fulton fish market
+does: the fitted line has a slope of $-0.54$, while stormy days at sea, a
+\omterm{def:b1:models-and-data:shifter}{supply shifter}, trace a demand slope of $-1.08$ (see the record box
+below). % ledger: b1:graddy-ols, b1:graddy-iv
+\breaks When the two shocks move together ($S_{ds} \neq 0$), as when one
+event moves both curves; when the quantity is fixed before the price is
+known, as for a crop planted months ahead; and when the price measured is
+an average over a changing mix of goods or of workers.
+\end{model}
+
+The last breaking point applies to the opening chart. In April 2020 the
+average hourly earnings of American private employees rose by \usd{1.34},
+to \usd{30.01}, % ledger: b1:bls2020-ahe
+and the statistical office that publishes them explained that the increase
+largely reflected the job losses among lower-paid workers. % ledger: b1:bls2020-ahe
+Pay per hour rose because the hours that disappeared were cheap ones, not
+because the hour of any one worker cost more. The 2020 dot is not a point
+of any one supply or demand curve; it is a change in the mix of workers.
+
+\begin{record}[A fish market read twice]
+From December 1991 to May 1992 one dealer's daily sales of whiting at the
+Fulton fish market in New York were recorded over 111 market days (Graddy
+1995). % ledger: b1:graddy-days
+The least-squares line through the cloud of log quantities and log prices
+has a slope of $-0.54$ (standard error 0.18): what an early analysis of
+such fitted lines (Working 1927) called a ``\omterm{prop:b1:models-and-data:cloud}{statistical demand curve}.''
+% ledger: b1:graddy-ols, b1:working1927
+Bad weather at sea is a \omterm{def:b1:models-and-data:shifter}{supply shifter}: it keeps boats in harbour and does
+not change how much whiting a fishmonger wants that morning. On stormy days
+the log quantity was lower by 0.36 and the log price higher by 0.34, and
+the ratio, about $-0.36/0.34 = -1.06$ with these rounded effects and
+$-1.08$ (standard error 0.46) with the unrounded ones, is the slope of
+demand that \cref{prop:b1:models-and-data:trace} recovers (Imbens 2014).
+% ledger: b1:graddy-iv
+The two numbers differ by a factor of two. Only the second has a reason to
+be the demand curve, and its standard error shows how much the data still
+leave open.
+\end{record}
+
+\section*{Exercises}\label{sec:b1:models-and-data:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:models-and-data:read-cloud}
+In the opening chart, 2009 has hours $-5.9\%$ and pay per hour $+1.3\%$;
+2021 has hours $+4.4\%$ and pay per hour $-0.4\%$. % figdata: labour_cloud
+\begin{enumerate}
+  \item If only one curve moved between 2008 and 2009, which one, and in which direction?
+  \item The same question for 2020 to 2021.
+  \item Give one reason, from the chapter, not to take the 2009 answer at face value.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:models-and-data:per-worker}
+Output grows at $3\%$ a year and employment at $1\%$.
+\begin{enumerate}
+  \item With continuous rates, at what rate does output per worker grow?
+  \item With yearly rates, compute the exact rate $(1.03/1.01) - 1$ and compare.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:models-and-data:brenland}
+Brenland's nominal GDP was \dal{248438} million in 2015 and \dal{393264}
+million in 2025; its GDP deflator, 2015 = 100, was 134.5 in 2025
+(invented data, \code{accounts.csv}).
+\begin{enumerate}
+  \item Compute real GDP in 2025, in millions of 2015 dalens.
+  \item Compute the average \omterm{def:b1:models-and-data:growth-rate}{continuous growth rates} of nominal GDP, real GDP and the deflator over 2015--2025.
+  \item Check that the first is the sum of the other two.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:models-and-data:stock-or-flow}
+Say whether each is a \omterm{def:b1:models-and-data:stock-flow}{stock} or a \omterm{def:b1:models-and-data:stock-flow}{flow}, and give its unit: (a) the public
+debt of Brenland; (b) the government deficit; (c) the number of people
+unemployed; (d) the number of people who find a job in a month; (e) a
+household's savings account balance; (f) a household's saving; (g) the
+cod in the cold store of Brenmoor; (h) the catch landed at the harbour.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:models-and-data:high-inflation}
+In a year in which nominal wages rise by $50\%$ and prices by $40\%$:
+\begin{enumerate}
+  \item compute the exact \omterm{prop:b1:models-and-data:real-growth}{real growth} of wages;
+  \item compute the rule $g_N - \pi$ and the error it makes;
+  \item compute the difference of the continuous rates, $\ln 1.5 - \ln 1.4$, and say which of the three numbers is the yearly \omterm{prop:b1:models-and-data:real-growth}{real growth}.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:models-and-data:doubling}
+\begin{enumerate}
+  \item How long does a quantity growing at the constant continuous rate $2\%$ take to double?
+  \item And one growing by $2\%$ every year?
+  \item Compare both with the rule of 70, $70/2$, and explain where the 70 comes from.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:models-and-data:slope-numbers}
+In the market model take $b = 2$ and $d = 1$, and suppose the supply shocks
+vary three times as much as the demand shocks: $S_s = 3S_d$, with $S_{ds} =
+0$.
+\begin{enumerate}
+  \item Compute the weight $w$ and the least-squares slope of the cloud.
+  \item Is the cloud closer to the demand curve or to the supply curve? Why?
+  \item Predict how the slope changes if the supply shocks become smaller.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:models-and-data:one-curve}
+Predict the sign and the size of the cloud's slope, from
+\cref{prop:b1:models-and-data:cloud}, when (a) only demand shifts and (b)
+only supply shifts. For each case, say what the cloud traces, and what
+observation in such a market would show the prediction wrong.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:models-and-data:log-chart}
+On the logarithmic chart of the United Kingdom and Japan:
+\begin{enumerate}
+  \item The United Kingdom went from \usd{11061} in 1950 to \usd{19168} in 1973 and from \usd{19168} to \usd{31946} in 2000. % figdata: gbr_jpn_growth
+    Compute the average growth rate of each period. Which is steeper on the chart?
+  \item In 1913 the two countries stood at \usd{8212} and \usd{2431}. % figdata: gbr_jpn_growth
+    By what factor was the United Kingdom ahead, and how does that factor show on a logarithmic axis?
+  \item Why would an ordinary axis make the comparison of question 1 misleading?
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:models-and-data:cross}
+Drop the assumption $S_{ds} = 0$ in \cref{prop:b1:models-and-data:cloud}.
+\begin{enumerate}
+  \item Derive the least-squares slope of the cloud in terms of $b$, $d$, $S_d$, $S_s$ and $S_{ds}$.
+  \item Take $b = 2$, $d = 1$, $S_d = 1$, $S_s = 3$, $S_{ds} = 1$ and compute it.
+  \item Name an event that would move both curves in the same direction on the same day, and say how it makes $S_{ds}$ positive.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:models-and-data:bad-shifter}
+At Brenmoor, $Q^d = 180 - 10p + u^d$ and $Q^s = 20 + 10p + u^s$. A storm
+removes 30 crates of supply, and keeps buyers at home too, removing 10
+crates of demand.
+\begin{enumerate}
+  \item Compute the change in price and in quantity that the storm causes.
+  \item Compute the ratio of the two changes, as \cref{prop:b1:models-and-data:trace} would, and compare it with the demand slope.
+  \item Which assumption of the proposition failed? What data, besides prices and quantities, would reveal the failure?
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:models-and-data:falsify}
+Someone claims that the American labour market of the opening chart was
+moved only by shifts in the demand for labour, so that the cloud traces a
+fixed supply curve.
+\begin{enumerate}
+  \item What would the cloud look like if the claim were true?
+  \item Name the feature of the chart that contradicts the claim, and the
+    one dot that contradicts it most clearly.
+  \item Now take the claim that only supply moved. What would the cloud
+    look like, and what in the chart contradicts it?
+\end{enumerate}
+\end{exercise}
+
+\section{Problem: The Fish Market of Brenmoor}\label{sec:b1:models-and-data:problem}
+
+\begin{problem}[{Weekend problem --- forty days at the fish market}]\label{pb:b1:models-and-data:fish}
+The fish market of Brenmoor (invented) sells cod by the crate, at a price
+in dalens per kilogram; a crate holds 10~kilograms. Over forty days of the
+2025 season the market kept a daily record of the price and the crates
+sold. On ten days a storm kept part of the fleet in harbour. On four days,
+a festival weekend in two parts, the town filled with visitors. The chart
+shows the forty days and the table the sums over each kind of day.
+
+\begin{omchart}{Forty days at the fish market of Brenmoor: price and crates
+sold, by kind of day (invented data).}{the chapter's seeded script; no real data}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xlabel={Price (dalens per kilogram)},
+  ylabel={Crates sold}, xmin=7, xmax=10, ymin=75, ymax=120,
+  width=0.7\linewidth, height=0.48\linewidth, legend pos=south west]
+  \addplot table[x=price, y=crates] {figdata/bachelor-1/01-models-and-data/out/fish_calm.csv};
+  \addplot table[x=price, y=crates] {figdata/bachelor-1/01-models-and-data/out/fish_storm.csv};
+  \addplot table[x=price, y=crates] {figdata/bachelor-1/01-models-and-data/out/fish_fest.csv};
+  \legend{Calm ordinary days, Storm days, Festival days}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\begin{center}\small
+\pgfplotstabletypeset[col sep=comma, string type,
+  columns={kind,days,sum_price,sum_crates},
+  columns/kind/.style={column name={Kind of day}, column type={l}},
+  columns/days/.style={column name={Days}, column type={r}},
+  columns/sum_price/.style={column name={Sum of prices}, column type={r}},
+  columns/sum_crates/.style={column name={Sum of crates}, column type={r}},
+  every head row/.style={before row=\toprule, after row=\midrule},
+  every last row/.style={after row=\bottomrule}]
+  {figdata/bachelor-1/01-models-and-data/out/fish_groups.csv}
+\end{center}
+
+Keep prices to four decimals and crates to two when you compute averages.
+
+\medskip\noindent\textbf{Part I --- The cold store.}
+Unsold cod goes to the market's cold store, where $2\%$ of the \omterm{def:b1:models-and-data:stock-flow}{stock} spoils
+each day. Let $S_t$ be the crates in store at the start of day $t$, $C_t$
+the crates landed on day $t$ and $Q_t$ the crates sold. The cold store
+holds 50 crates at the start of day 1. The boats land 110, 95 and 120 crates
+on days 1 to 3, and the market sells 99, 99 and 80.
+\begin{enumerate}
+  \item Which of $S_t$, $C_t$ and $Q_t$ are \omterm{def:b1:models-and-data:stock-flow}{stocks} and which are \omterm{def:b1:models-and-data:stock-flow}{flows}? Give the units.
+  \item Write the equation that takes $S_t$ to $S_{t+1}$.
+  \item Compute $S_2$, $S_3$ and $S_4$, to one decimal.
+  \item If, every day, two crates more are landed than are sold, at what level does the \omterm{def:b1:models-and-data:stock-flow}{stock} settle?
+  \item Show that this level is an \omterm{def:b1:models-and-data:equilibrium}{equilibrium} in the sense of \cref{def:b1:models-and-data:equilibrium}.
+  \item Starting from $S_1 = 50$, is the \omterm{def:b1:models-and-data:stock-flow}{stock} rising or falling towards that level? Justify.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- Real and nominal.}
+In the same forty days of 2024 the average price was \dal{7.90} per
+kilogram (invented). Over the forty days of 2025 it was \dal{8.50}, to two
+decimals. Brenland's consumer price index was 140.0 in 2024 and 143.5 in
+2025 (\code{accounts.csv}).
+\begin{enumerate}[resume]
+  \item Compute the nominal rise in the price of cod, in per cent, to one decimal.
+  \item Compute the inflation rate of the consumer price index.
+  \item Compute the real rise in the price of cod, exactly, and by the approximate rule.
+  \item Express the 2025 price in 2024 dalens.
+  \item A fisher says ``cod is 7.6~per cent dearer than last year.'' Is that true in real terms? Say what the right statement is.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- The cloud.}
+\begin{enumerate}[resume]
+  \item Compute the average price and the average crates on calm ordinary days, on storm days and on festival days.
+  \item The least-squares slope of crates on price over all forty days is $-5.32$. % figdata: fish_stats
+    Using \cref{prop:b1:models-and-data:cloud}, explain why this is not the slope of the demand for cod.
+  \item Compare the festival days with the calm days. Which curve did the festival move, and in which direction?
+  \item Compute the ratio of differences $(\bar q_{\text{fest}} - \bar q_{\text{calm}})/(\bar p_{\text{fest}} - \bar p_{\text{calm}})$. Which curve's slope does it estimate, and under which assumption?
+  \item Compute the market's revenue, in dalens, on an average calm day and on an average storm day.
+  \item Explain why the two revenues are close, using what you will find in Part IV.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- Using the storms.}
+\begin{enumerate}[resume]
+  \item Explain why a storm is a \omterm{def:b1:models-and-data:shifter}{supply shifter} and not a \omterm{def:b1:models-and-data:shifter}{demand shifter} in this market. What would make it both?
+  \item Compute the ratio of differences between storm days and calm days. Why are the festival days left out?
+  \item Over the forty days the average price is \dal{8.4998} per kilogram and the average sale 98.25 crates. % figdata: fish_stats
+    Compute the price elasticity of demand at these averages implied by the slope of question 19.
+  \item Is demand elastic or inelastic at the averages? What does a storm then do to the fishers' total revenue?
+  \item The script that made the forty days used a demand slope of exactly $-10$ crates per dalen. Compute the elasticity at the averages with that slope, and give one reason why question 19 did not recover $-10$ exactly.
+  \item The storm days are the 3rd, 7th, 8th, 14th, 19th, 22nd, 23rd, 29th, 33rd and 38th. Name one way the assumption of \cref{prop:b1:models-and-data:trace} could still fail with such dates.
+  \item State the chapter's result for this market in one sentence: the demand elasticity of cod at the mean, recovered from storm days, and what the plain cloud would have said instead.
+\end{enumerate}
+\end{problem}

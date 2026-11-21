@@ -1,0 +1,178 @@
+\section*{Chapter \ref{ch:b2:asset-prices} --- Asset Prices: A First Model}
+
+\begin{solution}{exo:b2:asset-prices:1}
+% code: exercises/solutions.py ex_state_prices
+$\psi_1 + \psi_2 = 0.96$ and $2\psi_1 + 0.5\psi_2 = 1.1$. Subtracting half the first from the second,
+$1.5\psi_1 = 0.62$: $\psi_1 = 0.4133$ and $\psi_2 = 0.5467$. Both are positive, so there is no
+arbitrage (\cref{prop:b2:asset-prices:state-prices}).
+\end{solution}
+
+\begin{solution}{exo:b2:asset-prices:2}
+% code: exercises/solutions.py ex_rf
+$R_f = g^{\gamma}/\beta = 1.02^2/0.98 = 1.0616$: a real safe rate of 6.16 per cent, about five points
+above what bills have paid. Patient savers who expect to be richer want to borrow against that future,
+and only a high rate stops them. With a larger $\gamma$, as the \omterm{def:b2:asset-prices:equity-premium}{equity premium} needs, the gap widens.
+\end{solution}
+
+\begin{solution}{exo:b2:asset-prices:3}
+% code: exercises/solutions.py ex_cumulative
+Equities did best in all four countries, then bonds, then bills. French equities grew by a factor of
+11.0 and American ones by 177.6. Average annual real returns: $11.0^{1/71} - 1 = 3.44$ per cent and
+$177.6^{1/71} - 1 = 7.57$ per cent.
+\end{solution}
+
+\begin{solution}{exo:b2:asset-prices:4}
+A rule that uses only past prices and, after trading costs, beats the return that compensates its risk,
+on data the rule was not designed on, over many years. One good year proves nothing: with
+unpredictable returns, about half of all rules beat the market in any given year, and one in twenty
+looks significant at the 5 per cent level by chance.
+\end{solution}
+
+\begin{solution}{exo:b2:asset-prices:5}
+% code: exercises/solutions.py ex_capm
+$\beta_i = 0.024/0.04 = 0.6$; $\mathbb{E}[\tilde R_i] = 1 + 0.6 \times (7 - 1) = 4.6$ per cent.
+\end{solution}
+
+\begin{solution}{exo:b2:asset-prices:6}
+% code: exercises/solutions.py ex_premium_size
+$\mathrm{cov} = 0.5 \times 0.02 \times 0.16 = 0.0016$. Premium $0.32$ per cent for $\gamma = 2$ and
+$1.6$ per cent for $\gamma = 10$. A premium of 6 per cent needs $\gamma = 0.06/0.0016 = 37.5$.
+\end{solution}
+
+\begin{solution}{exo:b2:asset-prices:7}
+% code: exercises/solutions.py ex_geomean
+Over the 121 years 1900--2020: United States, arithmetic mean 8.47 per cent, geometric mean 6.66; United
+Kingdom, 6.63 and 4.88. The geometric mean is the constant annual return that turns a unit of 1899 into
+its value in 2020, so it is the one that tells an investor what the unit became. It is smaller because
+gains and losses of equal size do not cancel ($1.2 \times 0.8 < 1$); approximately, geometric mean
+$\approx$ arithmetic mean $- \sigma^2/2$: $8.47 - 100 \times 0.192^2/2 = 6.63$, close to 6.66.
+\end{solution}
+
+\begin{solution}{exo:b2:asset-prices:8}
+% code: exercises/solutions.py ex_minvar
+Minimising the variance $\theta^2 \times 0.04 + (1 - \theta)^2 \times 0.01$ gives $\theta =
+0.01/0.05 = 0.2$. The standard deviation is $\sqrt{0.2^2 \times 0.04 + 0.8^2 \times 0.01} =
+\sqrt{0.008}$, that is 8.94 per cent, below either asset's.
+\end{solution}
+
+\begin{solution}{exo:b2:asset-prices:9}
+Either the market misprices small firms (prices ignore information, and the \omterm{def:b2:asset-prices:excess-return}{excess return} is a
+profit opportunity), or the CAPM measures their risk badly (small firms are exposed to a risk that
+investors fear and \omterm{def:b2:asset-prices:beta}{beta} misses, such as doing badly in recessions). The first reading is favoured if
+the \omterm{def:b2:asset-prices:excess-return}{excess return} disappears once it is published and traded on, or if it is concentrated around
+announcements; the second if small firms' returns fall in bad times for the economy, beyond what their
+\omterm{def:b2:asset-prices:beta}{beta} says, and the \omterm{def:b2:asset-prices:excess-return}{excess return} persists in new data and in other countries.
+\end{solution}
+
+\begin{solution}{exo:b2:asset-prices:10}
+The \omterm{def:b2:insurance-and-risk-sharing:arrow-security}{Arrow security} for state 1 is a portfolio of the two securities (their payoffs are linearly
+independent). Its payoff, $(1, 0)$, is never negative and positive in state 1. If its price $\psi_1$
+were zero or negative, it would be an arbitrage; so no arbitrage gives $\psi_1 > 0$, and likewise
+$\psi_2 > 0$. With the single security, any $\psi_2$ makes $0.5 = \psi_1 \times 1 + \psi_2 \times 0$
+hold with $\psi_1 = 0.5$: every positive $\psi_2$ is consistent with no arbitrage, so \omterm{def:b2:asset-prices:state-price}{state prices} are
+not determined until the market is complete.
+\end{solution}
+
+\begin{solution}{exo:b2:asset-prices:11}
+Write $a = \ln\tilde g$, $b = \ln\tilde R$. From $\mathbb{E}[\tilde\zeta\tilde R] = 1$:
+$\ln\beta - \gamma\,\mathbb{E}a + \mathbb{E}b + \tfrac12\mathrm{var}(b - \gamma a) = 0$. From
+$\mathbb{E}[\tilde\zeta]R_f = 1$: $\ln R_f = -\ln\beta + \gamma\,\mathbb{E}a - \tfrac12\gamma^2\mathrm{var}(a)$.
+Since $\ln\mathbb{E}[\tilde R] = \mathbb{E}b + \tfrac12\mathrm{var}(b)$, the first equation gives
+$\ln\mathbb{E}[\tilde R] = -\ln\beta + \gamma\,\mathbb{E}a - \tfrac12\gamma^2\mathrm{var}(a) +
+\gamma\,\mathrm{cov}(a, b)$. Subtracting $\ln R_f$ leaves $\gamma\,\mathrm{cov}(\ln\tilde g, \ln\tilde
+R)$.
+\end{solution}
+
+\begin{solution}{exo:b2:asset-prices:12}
+% code: exercises/solutions.py ex_gamma_needed, ex_gamble
+(a) $\mathrm{cov}(\tilde g, \tilde R) = \rho_{gR}\,\sigma_g\sigma_R \le \sigma_g\sigma_R$, so $\gamma =
+\mathbb{E}[\tilde\xi]/\mathrm{cov} \ge \mathbb{E}[\tilde\xi]/(\sigma_g\sigma_R)$. With the listing's
+numbers, $0.0764/0.1629 = 0.469$ and $0.469/0.0187 = 25.1$. (b) The \omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalent} solves $c^{-24}
+= 0.5 \times 0.8^{-24} + 0.5 \times 1.2^{-24}$, so $c = 0.823$ of wealth: a premium of 17.7 per cent,
+almost all of the 20 per cent at stake. (c) Nobody turns down a fair coin toss for a fifth of their
+wealth at that price; \omterm{def:b2:expected-utility:risk-aversion}{risk aversion} of that size contradicts the choices of \cref{ch:b2:expected-utility}
+and of insurance markets, so the consumption model with CRRA utility cannot explain the premium.
+\end{solution}
+
+\begin{solution}{pb:b2:asset-prices:1}
+% code: exercises/solutions.py problem
+\textbf{1.} Bond: $(105, 105)$ for 100; equity: $(130, 80)$ for 95. Not proportional ($105/105 \ne
+130/80$), so the two span every payoff.
+
+\textbf{2.} $105(\psi_1 + \psi_2) = 100$ and $130\psi_1 + 80\psi_2 = 95$: $\psi_1 + \psi_2 = 0.9524$, $50\psi_1
+= 95 - 80 \times 0.9524 = 18.81$, so $\psi_1 = 0.3762$ and $\psi_2 = 0.5762$.
+
+\textbf{3.} No: both \omterm{def:b2:asset-prices:state-price}{state prices} are positive.
+
+\textbf{4.} $R_f = 1/(\psi_1 + \psi_2) = 1/0.9524 = 1.05$.
+
+\textbf{5.} $30 \times 0.3762 = 11.29$ dalens.
+
+\textbf{6.} $130h_e + 105h_b = 30$ and $80h_e + 105h_b = 0$: $h_e = 0.6$, $h_b = -0.4571$ (sell
+$0.4571$ bonds). Cost $0.6 \times 95 - 0.4571 \times 100 = 11.29$. Buy the option at 10 and sell the
+portfolio (sell 0.6 equity, buy 0.4571 bonds): \dal{1.29} today, and the payoffs cancel in both
+states.
+
+\textbf{7.} $\zeta_1 = 0.3762/0.5 = 0.7524$, $\zeta_2 = 0.5762/0.5 = 1.1524$.
+
+\textbf{8.} $0.5 \times 0.7524 \times 130/95 + 0.5 \times 1.1524 \times 80/95 = 0.5148 + 0.4852 = 1$.
+
+\textbf{9.} $\mathbb{E}[\tilde R] = (0.5 \times 130 + 0.5 \times 80)/95 = 1.1053$: 10.53 per cent, a
+premium of 5.53 points over the bond's 5.
+
+\textbf{10.} $\mathbb{E}[\tilde\zeta] = 0.9524$; the deviations are $\mp 0.2$ for $\tilde\zeta$ and
+$\pm 0.2632$ for $\tilde R$, so $\mathrm{cov} = -0.2 \times 0.2632 = -0.0526$, and $-1.05 \times
+(-0.0526) = 0.0553$, the premium.
+
+\textbf{11.} $\zeta_2/\zeta_1 = (0.98/1.04)^{-\gamma}$: $\gamma = \ln(1.1524/0.7524)/\ln(1.04/0.98) =
+0.4263/0.0594 = 7.17$; $\beta = 0.7524 \times 1.04^{7.17} = 0.997$.
+
+\textbf{12.} It is below the bound of 10, but only because the fund's members are assumed to swing by
+6 points of consumption between the states. With the standard deviation of American consumption growth,
+under 2 per cent, the same premium would need several times that $\gamma$
+(\cref{exo:b2:asset-prices:12}).
+
+\textbf{13.} Mean $0.6 \times 7 + 0.4 \times 3 = 5.4$ per cent; variance $0.36 \times 0.0324 + 0.16
+\times 0.0036 + 2 \times 0.24 \times 0.00216 = 0.01328$, standard deviation 11.52 per cent.
+
+\textbf{14.} $\theta_{\min} = (\sigma_b^2 - \sigma_{eb})/(\sigma_e^2 + \sigma_b^2 - 2\sigma_{eb}) =
+(0.0036 - 0.00216)/0.03168 = 0.0455$; standard deviation 5.95 per cent.
+
+\textbf{15.} The first-order condition $\mathbb{E}[\tilde R_e] - \mathbb{E}[\tilde R_b] =
+\gamma(\theta\,0.03168 - 0.00144)$ gives $\theta^{*} = (0.04 + 0.00144\gamma)/(0.03168\gamma)$: 67.7 per
+cent for $\gamma = 2$, 46.6 for $\gamma = 3$, 29.8 for $\gamma = 5$.
+
+\textbf{16.} $0.6 \times 0.03168\gamma = 0.04 + 0.00144\gamma$: $\gamma = 0.04/0.017568 = 2.28$.
+
+\textbf{17.} The weights are proportional to $\Sigma^{-1}(\mathbb{E}[\tilde R] - R_f)$: 42.3 per cent
+equity and 57.7 bonds. Mean 4.69 per cent, standard deviation 8.97, Sharpe ratio $(4.69 - 2)/8.97 =
+0.300$.
+
+\textbf{18.} $(5.4 - 2)/11.52 = 0.295$, just below the tangency portfolio's $0.300$.
+
+\textbf{19.} Maximising over the share $\lambda$ in the tangency portfolio: $\lambda =
+(\mathbb{E}[\tilde R_t] - R_f)/(\gamma\sigma_t^2) = 0.02692/(3 \times 0.008052) = 1.11$: the fund
+borrows 11 per cent of its assets at the safe rate. Its equity share overall is $1.1145 \times 0.4231 =
+47.2$ per cent.
+
+\textbf{20.} $17.55/\sqrt{60} = 2.27$ points: the mean is known only to within about 4.5 points either
+way.
+
+\textbf{21.} $t = -0.153\sqrt{60} = -1.19$, inside $\pm 1.96$: zero is not rejected.
+% figdata: brenland_predict
+
+\textbf{22.} Difference $6.28 - 5.12 = 1.16$ points; standard error $17.55\sqrt{1/38 + 1/21} = 4.77$;
+$t = 0.24$. No evidence that a rise predicts anything.
+
+\textbf{23.} About one of the twenty ($20 \times 0.05$), although no rule has any power: trying many
+rules and reporting the best finds patterns that are not there.
+
+\textbf{24.} If the return that compensates risk is higher in some periods (after a crash, say, when
+investors are poorer and more averse to risk), the expected return changes predictably, and so do
+realised returns on average, without any unexploited profit: the predictable part is the price of
+risk. Only predictability beyond the risk-adjusted return refutes efficiency.
+
+\textbf{25.} Without a safe asset, a fund with $\gamma = 3$ holds 46.6 per cent equity; a 60/40
+portfolio is optimal for $\gamma = 2.28$; and sixty years of returns show no predictability ($t =
+-1.19$ for the autocorrelation, $0.24$ for the rule).
+\end{solution}

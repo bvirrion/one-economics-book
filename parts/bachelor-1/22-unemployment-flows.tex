@@ -1,0 +1,444 @@
+\chapter{Unemployment: Stocks and Flows}\label{ch:b1:unemployment-flows}
+
+In an average month of 2018, American employers hired 5.71 million people
+and 5.51 million left or lost a job. % figdata: jolts_stats
+The annual unemployment rate fell from $4.36\%$ in 2017 to $3.9\%$ in 2018.
+% figdata: us_unemp_points
+The rate is a stock; behind it are flows many times its monthly change.
+This chapter models unemployment as the balance of those flows, asks why
+wages do not fall until every job seeker is hired, and reads the evidence
+on how benefits change the flows.
+
+\begin{openingchart}{Hires and total separations, United States, monthly,
+2001--2025 (millions, seasonally adjusted, total nonfarm).}{U.S. Bureau of Labor
+Statistics, Job Openings and Labor Turnover Survey}
+\begin{tikzpicture}
+\begin{axis}[omtime, xlabel={Year}, ylabel={Millions a month}, xmin=2001, xmax=2026, ymin=0, ymax=12,
+  width=0.72\linewidth, height=0.4\linewidth, legend style={font=\footnotesize, at={(0.5,-0.24)}, anchor=north,
+  legend columns=2}]
+  \addplot+[thick, no marks] table[x=t, y=HI, col sep=comma] {figdata/bachelor-1/22-unemployment-flows/out/jolts_flows.csv};
+  \addplot+[thick, no marks] table[x=t, y=TS, col sep=comma] {figdata/bachelor-1/22-unemployment-flows/out/jolts_flows.csv};
+  \legend{Hires, Separations}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+The two lines nearly coincide; the gap between them is the monthly change
+in employment. In 2009 separations exceeded hires by about 0.4 million a
+month, 4.33 million against 3.9; in April 2020 11.53 million jobs ended,
+9.17 million of them layoffs, while 4.03 million people were hired.
+% figdata: jolts_stats
+% figdata: jolts_2020
+Recessions show up as a fall in hiring as much as a rise in separations.
+
+\begin{recall}
+The unemployment and participation rates and the survey that measures
+them were met at school, as were the flows into and out of unemployment,
+the natural rate and the reasons wages may not clear the market. \omterm{def:b1:factor-markets:monopsony}{Monopsony}
+and wage floors are in \cref{ch:b1:factor-markets}.
+\end{recall}
+
+\section{Flows and the steady state}\label{sec:b1:unemployment-flows:flows}
+
+Take a labour force of fixed size, normalised to one, with a share $u$
+unemployed. Each month a share $s$ of the employed lose or leave their job
+and become unemployed, and a share $f$ of the unemployed find a job.
+
+\begin{definition}[Separation rate, job-finding rate]\label{def:b1:unemployment-flows:rates}
+\index{separation rate}\index{job-finding rate}
+The \emph{separation rate} $s$ is the share of the employed who become
+unemployed in a period; the \emph{job-finding rate} $f$ is the share of the
+unemployed who find a job in a period.
+\end{definition}
+
+The unemployment rate then changes as
+\[
+\dot u = s(1 - u) - fu .
+\]
+
+\begin{definition}[Steady-state unemployment rate]\label{def:b1:unemployment-flows:steady-state-rate}
+\index{steady-state unemployment rate}
+The \emph{steady-state unemployment rate} is the rate at which inflows equal
+outflows, $s(1 - u^*) = fu^*$:
+\[
+u^* = \frac{s}{s + f}.
+\]
+\end{definition}
+
+\begin{proposition}[Convergence]\label{prop:b1:unemployment-flows:convergence}
+With constant $s$ and $f$, $u(t) = u^* + (u(0) - u^*)e^{-(s + f)t}$: the gap closes at the rate $s + f$.
+\end{proposition}
+
+\begin{proof}
+$\dot u = s - (s + f)u = -(s + f)(u - u^*)$, a linear equation whose solution is the one stated.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Unemployment rate $u$}, ylabel={Flow (share of labour force a month)},
+  xmin=0, xmax=0.15, ymin=0, ymax=0.045, width=0.56\linewidth, height=0.4\linewidth, scaled ticks=false,
+  xticklabel style={/pgf/number format/fixed}, yticklabel style={/pgf/number format/fixed}]
+  \addplot[supply, domain=0:0.15] {0.01917*(1 - x)};
+  \addplot[demand, domain=0:0.15] {0.30*x};
+  \addplot[guide] coordinates {(0.06006,0) (0.06006,0.01802)};
+  \node[font=\footnotesize, anchor=south] at (axis cs:0.128,0.0168) {$s(1 - u)$};
+  \node[font=\footnotesize, anchor=west] at (axis cs:0.1,0.035) {$fu$};
+  \node[font=\footnotesize, anchor=north west] at (axis cs:0.061,0.004) {$u^* = 6.0\%$};
+\end{axis}
+\end{tikzpicture}
+
+{\small The \omterm{def:b1:solow-model:steady-state}{steady state} of the weekend problem: the inflow into
+unemployment $s(1 - u)$ (red) and the outflow $fu$ (blue), with $s = 0.01917$ and
+$f = 0.30$ a month, cross at $u^* = 6.0\%$. Above it the outflow is larger and $u$
+falls; below it $u$ rises.}
+\end{omfigure}
+
+Monthly rates are large: with $f = 0.30$ and $s$ near $0.02$, $s + f$ is about $0.32$,
+and half of any gap closes in a little over two months. The actual rate is
+therefore never far from the steady-state rate of the moment; when it moves
+for years, it is because $s$ and $f$ have moved. The two rates are not the
+natural rate of unemployment met at school, the rate around which
+unemployment fluctuates and at which inflation is stable
+(\cref{ch:b1:aggregate-supply}); the steady-state rate at the separation
+and finding rates of normal, non-recession years is one way to estimate it.
+
+\begin{measure}[The flow data]
+Flows of workers between employment, unemployment and inactivity are
+measured by matching people in the monthly household survey from one
+month to the next: about three-quarters of the households interviewed in a
+month were also interviewed the month before. The United States publishes
+nine core flows, in a series starting in February 1990. % ledger: b1:bls-flows-method
+The hires and separations of the opening chart come from a different
+survey, of employers, and include moves from one job to another.
+\end{measure}
+
+Which flow moves unemployment in recessions? Since 1948, changes in the
+job-finding probability account for three-quarters of the fluctuations of
+the American unemployment rate and changes in the probability of leaving
+employment for one-quarter; over the last two decades of that study, the
+second was negligible (Shimer 2012). % ledger: b1:shimer2012
+Unemployment rises in a recession less because more people lose their jobs
+than because those without one find a new one more slowly.
+
+Over a longer span the American rate moved far more than in any recent
+recession: $24.9\%$ in 1933, $1.2\%$ in 1944, $9.7\%$ in 1982. % figdata: us_unemp_points
+
+\begin{omchart}{Unemployment rate, United States, 1890--2018.}{Jord\`a--Schularick--Taylor
+Macrohistory Database, release 6}
+\begin{tikzpicture}
+\begin{axis}[omtime, xlabel={Year}, ylabel={Per cent of the labour force}, xmin=1890, xmax=2018, ymin=0, ymax=27,
+  width=0.72\linewidth, height=0.36\linewidth]
+  \addplot+[thick, no marks] table[x=year, y=unemp, col sep=comma] {figdata/bachelor-1/22-unemployment-flows/out/us_unemp.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\begin{model}{The flow model of unemployment}
+\assumes Constant separation and \omterm{def:b1:unemployment-flows:rates}{job-finding rates}; a fixed labour force;
+no flows into or out of inactivity.
+\predicts A steady-state rate $u^* = s/(s + f)$, and convergence to it at the rate
+$s + f$, fast at monthly frequency.
+\tested In American data, most of the cyclical movement comes from the
+\omterm{def:b1:unemployment-flows:rates}{job-finding rate} (Shimer 2012). % ledger: b1:shimer2012
+\breaks Flows to and from inactivity are large and ignored; rates vary with
+the duration of unemployment and across workers, so the averages hide
+long spells.
+\end{model}
+
+\section{Duration}\label{sec:b1:unemployment-flows:duration}
+
+\begin{definition}[Expected unemployment duration]\label{def:b1:unemployment-flows:duration}
+\index{unemployment duration}
+With a constant monthly \omterm{def:b1:unemployment-flows:rates}{job-finding rate} $f$, the number of months until a
+job is found is geometric, and the \emph{expected duration} of a spell is $1/f$.
+\end{definition}
+
+With $f = 0.30$ the expected spell is 3.33 months. But $f$ is not the same for
+everyone: if it falls the longer a person has been unemployed --- because
+skills or contacts fade, or because employers read a long spell as a bad
+signal --- there is \emph{duration dependence}, and a minority of long spells
+makes up much of total unemployment. With two groups, one finding jobs at
+$0.4$ a month and one at $0.05$, each with half of the spells, the average
+spell lasts $(2.5 + 20)/2 = 11.25$ months, and at any moment the long-term group is
+$20/22.5$, about $89\%$, of the unemployed.
+% computed: code/bachelor-1/22-unemployment-flows/exercises/solutions.py
+
+\section{Why wages stay above the clearing level}\label{sec:b1:unemployment-flows:wages}
+
+If wages fell until everyone who wants a job had one, unemployment would
+only be the time spent between jobs. Three mechanisms keep the wage above
+that level.
+
+\subsection*{Efficiency wages}
+
+Suppose effort cannot be enforced directly. A worker who works hard bears
+a cost $e$ (per month, in money terms); a worker who shirks is caught with
+probability $q$ per month and fired. Unemployed, a worker receives $z$
+(benefits and home production) and finds a job at the rate $f$; the
+interest rate is $r$.
+
+\begin{definition}[Efficiency wage, no-shirking condition]\label{def:b1:unemployment-flows:efficiency-wage}
+\index{efficiency wage}\index{no-shirking condition}
+An \emph{efficiency wage} is a wage above the market-clearing level, paid
+because it raises productivity --- through effort, lower turnover or
+better recruits. The \emph{no-shirking condition} is the lowest wage at which
+a worker prefers effort to shirking.
+\end{definition}
+
+\begin{proposition}[The no-shirking wage]\label{prop:b1:unemployment-flows:nsc}
+In continuous time, with values $V_E$ (employed, working), $V_S$ (employed,
+shirking) and $V_U$ (unemployed), workers do not shirk if and only if
+\[
+w \ge z + e + \frac{e}{q}(r + s + f).
+\]
+\end{proposition}
+
+\begin{proof}
+The asset equations are $rV_E = w - e + s(V_U - V_E)$, $rV_S = w + (s + q)(V_U - V_S)$ and
+$rV_U = z + f(V_E - V_U)$. Workers exert effort if $V_E \ge V_S$; the firm pays the
+lowest such wage, so $V_E = V_S$. Subtracting the first two equations with
+$V_E = V_S$ gives $e = q(V_E - V_U)$: the rent from the job must be $e/q$. Subtracting the
+third from the first, $r(V_E - V_U) = w - e - z - (s + f)(V_E - V_U)$, so
+$w = z + e + (r + s + f)\,e/q$.
+\end{proof}
+
+The wage must exceed the worker's alternative by a rent, and the rent is
+larger when detection is rare (small $q$) and when a fired worker finds a
+new job quickly (large $f$). In a \omterm{def:b1:solow-model:steady-state}{steady state} $f = s(1 - u)/u$, so the condition
+becomes $w = z + e + (e/q)(r + s/u)$: the lower unemployment, the higher the wage
+needed. Unemployment is what makes the threat of dismissal bite.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Employment (share of labour force)}, ylabel={Wage},
+  xmin=0.8, xmax=1, ymin=0, ymax=12, width=0.56\linewidth, height=0.4\linewidth, samples=80,
+  xtick={0.8,0.85,0.9,0.95,1}, xticklabel style={/pgf/number format/fixed}]
+  \addplot[supply, domain=0.8:0.985] {1.2 + 0.5 + 5*(0.005 + 0.01917/(1 - x))};
+  \addplot[demand, domain=0.8:1] {3.3209 + 30*(0.94 - x)};
+  \addplot[guide] coordinates {(0.94,0) (0.94,3.3209)};
+  \addplot[guide] coordinates {(1,0) (1,12)};
+  \node[font=\footnotesize, anchor=south east] at (axis cs:0.98,9) {NSC};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:0.81,8.2) {labour demand};
+\end{axis}
+\end{tikzpicture}
+
+{\small The \omterm{def:b1:unemployment-flows:efficiency-wage}{no-shirking condition} of the weekend problem (red) rises steeply
+as employment approaches the whole labour force; with labour demand
+(blue) it sets employment at $94\%$ and the wage at $3.32$ thousand dalens a
+month. Unemployment is involuntary: the unemployed would work for less,
+but a lower wage would not be credible.}
+\end{omfigure}
+
+\begin{record}[Five dollars a day]
+In 1914 Ford introduced the five-dollar day, roughly doubling the pay of
+its production workers. The decision followed labour problems of the kind
+efficiency-wage models stress --- high turnover and absenteeism --- and it
+was followed by long queues for Ford jobs and significant increases in
+productivity and profits (Raff and Summers 1987). % ledger: b1:raff1987
+A firm paid more than it needed to hire, and gained by it.
+\end{record}
+
+\begin{model}{Efficiency wages}
+\assumes Effort that is costly to the worker and imperfectly observed;
+dismissal as the penalty; workers who value the job by its rent over
+unemployment.
+\predicts Wages above the clearing level; involuntary unemployment; lower
+turnover and more effort at high-wage firms.
+\tested Ford's wage of 1914 brought queues of applicants, lower turnover
+and higher productivity (Raff and Summers 1987). % ledger: b1:raff1987
+\breaks It does not explain why wages fall so little in deep recessions,
+when the rent from a job rises on its own as $f$ falls.
+\end{model}
+
+\subsection*{Bargaining and minimum wages}
+
+Where unions or individual workers bargain, the wage splits the surplus of
+the match between the firm and the worker; a stronger bargaining position
+raises the wage above the worker's alternative and lowers the number of
+jobs firms open. A legal minimum above the clearing wage has the effects of
+\cref{ch:b1:factor-markets}: in a competitive market it lowers employment,
+in a \omterm{def:b1:factor-markets:monopsony}{monopsony} it can raise it.
+
+\section{The Beveridge curve}\label{sec:b1:unemployment-flows:beveridge}
+
+\begin{definition}[Beveridge curve]\label{def:b1:unemployment-flows:beveridge}
+\index{Beveridge curve}
+The \emph{Beveridge curve} is the downward-sloping relation between the
+vacancy rate and the unemployment rate: when firms look for many workers,
+few workers look for jobs.
+\end{definition}
+
+Along the curve, an economy moves with the cycle: in a boom vacancies rise
+and unemployment falls. A shift of the curve outwards means more vacancies
+\emph{and} more unemployment at once: jobs and workers are matched less
+well, because skills, places or sectors do not fit. The matching function
+behind the curve is a subject of the second university year.
+
+\begin{omchart}{The Beveridge curve of the European Union: job vacancy rate
+against unemployment rate, quarterly, 2010--2025 (seasonally adjusted).}{Eurostat
+(jvs\_q\_nace2, une\_rt\_q)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xlabel={Unemployment rate (\%)}, ylabel={Job vacancy rate (\%)}, xmin=5.5, xmax=12,
+  ymin=0.8, ymax=3.4, width=0.6\linewidth, height=0.42\linewidth]
+  \addplot[omDef, thin, sharp plot, mark=*, mark size=1.2pt] table[x=u, y=vac, col sep=comma] {figdata/bachelor-1/22-unemployment-flows/out/beveridge.csv};
+  \addplot[only marks, mark=none, nodes near coords, point meta=explicit symbolic, nodes near coords style={font=\scriptsize, anchor=south west}]
+    table[x=u, y=vac, meta=time, col sep=comma] {figdata/bachelor-1/22-unemployment-flows/out/beveridge_labels.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+From early 2013 to the end of 2019 the Union moved up along its curve, to
+the left,
+from $11.7\%$ unemployment and a vacancy rate of $1.2\%$ to $6.7\%$ and $2.3\%$.
+In 2022 the vacancy rate reached $3.1\%$ with unemployment at $6.2\%$; by the end
+of 2025 it was back to $2.1\%$ with unemployment at $6\%$. % figdata: beveridge_points
+Whether the curve shifted after 2020, or the economy only travelled along
+it fast, is the kind of question the matching function is built to answer.
+
+\section{Benefits and hiring rules as evidence}\label{sec:b1:unemployment-flows:benefits}
+
+Unemployment benefits raise $z$: in the flow model they lower the \omterm{def:b1:unemployment-flows:rates}{job-finding
+rate} if they make the unemployed search less or accept fewer offers. Rules
+that make dismissal costly lower the \omterm{def:b1:unemployment-flows:rates}{separation rate}, but also make firms
+hire more cautiously, lowering $f$; with both falling in proportion, $u^*$ does
+not change, but spells are longer and adjustment slower.
+
+\begin{debate}[Do longer benefits lengthen unemployment?]
+In Germany the maximum duration of benefits depends on exact age, so
+workers just above and just below an age threshold can be compared. Over
+20 years of such comparisons, the effect of an extra month of benefits on
+time out of work is at best somewhat smaller in recessions, while the share
+of workers who exhaust their benefits rises sharply; the cost in
+incentives of longer benefits is lower in recessions (Schmieder, von
+Wachter and Bender 2012). % ledger: b1:schmieder2012
+In Austria, extending benefits from 20 to 30 weeks lowered \omterm{def:b1:unemployment-flows:rates}{job-finding rates}
+in the first 20 weeks by $5$ to $9\%$, but a severance payment of two months'
+earnings, which changes no incentive at the margin, lowered them by $8$ to
+$12\%$: much of the effect of benefits may come from cash in hand, not from
+distorted incentives (Card, Chetty and Weber 2007). % ledger: b1:card2007
+Each design has a weakness: age thresholds compare workers near one age
+only, and severance pay goes to workers whose jobs and firms differ in
+other ways. The measured effects are clear; their reading is not.
+\end{debate}
+
+\section*{Exercises}\label{sec:b1:unemployment-flows:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:unemployment-flows:ustar}
+With $s = 2\%$ and $f = 28\%$ a month, compute the \omterm{def:b1:unemployment-flows:steady-state-rate}{steady-state unemployment rate}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:unemployment-flows:dur}
+With $f = 25\%$ a month, what is the expected duration of a spell?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:unemployment-flows:read}
+The American unemployment rate was $24.9\%$ in 1933, $1.2\%$ in 1944, $9.7\%$ in
+1982 and $9.25\%$ in 2009. % figdata: us_unemp_points
+Using the chart of the American rate in \cref{sec:b1:unemployment-flows:flows},
+say which flow, $s$ or $f$, you would expect to have moved most in 1933 and in
+2009, and why the 1944 rate was so low.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:unemployment-flows:predict}
+In the economy of \cref{exo:b1:unemployment-flows:ustar}, the \omterm{def:b1:unemployment-flows:rates}{job-finding rate}
+falls to $20\%$. Predict the new steady-state rate.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:unemployment-flows:half}
+With $s + f = 0.30$ a month, how long does it take to close half of a gap
+between $u$ and $u^*$?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:unemployment-flows:which}
+In month A, $s = 0.015$ and $f = 0.30$; in month B, $s = 0.017$ and $f = 0.22$. Compute $u^*$ in
+each, and the $u^*$ that each change alone would give. Which flow moved
+unemployment more?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:unemployment-flows:nsw}
+With $z = 1$, $e = 0.4$, $q = 0.2$, $r = 0.004$, $s = 0.02$ and $f = 0.28$ (monthly), find the
+no-shirking wage.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:unemployment-flows:firing}
+A firing cost lowers both $s$ and $f$ by $20\%$ in the economy of
+\cref{exo:b1:unemployment-flows:ustar}. Predict $u^*$ and the \omterm{def:b1:solow-model:speed}{half-life} of
+convergence.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:unemployment-flows:youth}
+In 2023 the unemployment rate of 15--24-year-olds and of all 15--74-year-olds
+was $5.9\%$ and $3.1\%$ in Germany, $28.7\%$ and $12.2\%$ in Spain, $22.1\%$ and $7.7\%$
+in Sweden, and $11.4\%$ and $2.8\%$ in Poland. % figdata: youth
+Compute the ratios. Why are young people's rates higher, in flow terms?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:unemployment-flows:solve}
+Solve $\dot u = s(1 - u) - fu$ for constant $s$ and $f$, and show that $u$ converges to $u^*$
+at the rate $s + f$ from any $u(0)$ in $[0, 1]$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:unemployment-flows:three}
+Add inactivity: the unemployed leave the labour force at the rate $x$, and
+the inactive enter unemployment at the rate $y$, with no other flows to or
+from inactivity. Derive the steady-state shares and the unemployment rate.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:unemployment-flows:refute}
+What observation would refute the claim that recessions raise
+unemployment mainly through more separations?
+\end{exercise}
+
+
+\section{Problem: Brenland after a Factory Closes}\label{sec:b1:unemployment-flows:problem}
+
+\begin{problem}[{Weekend problem --- a layoff and a reform}]\label{pb:b1:unemployment-flows:brenland}
+In 2025 Brenland (invented) had a labour force of 4,645 thousand and
+employment of 4,366 thousand. Rates are monthly. Take a \omterm{def:b1:unemployment-flows:rates}{job-finding rate}
+$f = 0.30$ and calibrate the \omterm{def:b1:unemployment-flows:rates}{separation rate} so that 2025 is a \omterm{def:b1:solow-model:steady-state}{steady state}.
+
+\medskip\noindent\textbf{Part I --- Flows and the steady state.}
+\begin{enumerate}
+  \item Compute the number unemployed and the unemployment rate.
+  \item Calibrate $s$.
+  \item Compute the monthly inflow into and outflow from unemployment.
+  \item Compute the expected duration of a spell.
+  \item Compute the \omterm{def:b1:solow-model:speed}{speed of convergence} and the \omterm{def:b1:solow-model:speed}{half-life}.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- A factory closes.} In one month $2\%$ of the
+employed lose their jobs at once; $s$ and $f$ are unchanged.
+\begin{enumerate}[resume]
+  \item How many lose their jobs?
+  \item Compute the unemployment rate just after.
+  \item Write the path of $u$.
+  \item Compute $u$ after 1, 3, 6 and 12 months.
+  \item Why does the rate return so fast?
+  \item What would make the return slower?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- Efficiency wages at the new employer.} A
+firm that hires the laid-off workers cannot observe effort. Take $z = 1.2$,
+$e = 0.5$ (thousand dalens a month), $q = 0.1$ and $r = 0.005$.
+\begin{enumerate}[resume]
+  \item Compute the no-shirking wage.
+  \item What rent does it leave the worker over $z + e$?
+  \item How does the wage change if $z$ rises to 1.5?
+  \item How does it change if $f$ falls to 0.25?
+  \item Why does the firm not cut the wage when the unemployed queue for its jobs?
+  \item What would a better monitoring technology (higher $q$) do?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- A benefit reform.} A longer benefit duration
+lowers the \omterm{def:b1:unemployment-flows:rates}{job-finding rate} to $0.25$; $s$ is unchanged.
+\begin{enumerate}[resume]
+  \item Compute the new steady-state rate.
+  \item Compute the number unemployed in the new \omterm{def:b1:solow-model:steady-state}{steady state}.
+  \item Compute the new expected duration.
+  \item Compute the new \omterm{def:b1:solow-model:speed}{half-life}.
+  \item By the Austrian evidence, part of the fall in $f$ may come from cash in hand. Why does that matter for judging the reform?
+  \item What would you measure to tell the two channels apart?
+  \item Which flow of the model would a firing cost act on instead?
+  \item State the result: by how much does the reform raise the steady-state rate?
+\end{enumerate}
+\end{problem}

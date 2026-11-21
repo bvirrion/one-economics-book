@@ -1,0 +1,150 @@
+\section*{Chapter \ref{ch:b1:profit-maximisation} --- Profit Maximisation and Supply}
+% Numbers recomputed in code/bachelor-1/11-profit-maximisation/exercises/solutions.py (tested).
+
+\begin{solution}{exo:b1:profit-maximisation:supply-q2}
+$p = C'(q) = q/2$, so $q = 2p$; $\pi = p \times 2p - (2p)^2/4 = p^2$. (There is no fixed
+cost, so the firm never shuts down at a positive price.)
+\end{solution}
+
+\begin{solution}{exo:b1:profit-maximisation:shutdown}
+$AVC = 10 - q + q^2/3$ is lowest where $-1 + 2q/3 = 0$, at $q = 1.5$, where it is
+$10 - 1.5 + 0.75 = 9.25$. Marginal cost $10 - 2q + q^2$ is also $9.25$ there. The
+\omterm{def:b1:profit-maximisation:shut-down}{shut-down price} is 9.25.
+\end{solution}
+
+\begin{solution}{exo:b1:profit-maximisation:read}
+$45.907/11.487 = 4.0$. A supply curve with given technology and land
+explains only movements along it as prices change; most of a fourfold rise
+over 34 years came from new land and new varieties, which shift the curve.
+\end{solution}
+
+\begin{solution}{exo:b1:profit-maximisation:sign}
+Negative (or zero): the law of supply
+(\cref{prop:b1:profit-maximisation:law-of-supply}), from the convexity of the
+\omterm{def:b1:profit-maximisation:profit-function}{profit function} and Hotelling's lemma.
+\end{solution}
+
+\begin{solution}{exo:b1:profit-maximisation:cd}
+The first-order conditions $p f_K = r$ and $pf_L = w$ give $rK = \tfrac14pq$ and
+$wL = \tfrac12pq$. Substituting into $q = K^{1/4}L^{1/2}$:
+$q = (p/4r)^{1/4}(p/2w)^{1/2}q^{3/4}$, so $q = (p/4r)(p/2w)^2 = p^3/(16rw^2)$, then
+$K = p^4/(64r^2w^2)$ and $L = p^4/(32rw^3)$. At $p = 8$, $w = r = 1$: $q = 32$, $K = 64$,
+$L = 128$; check: $64^{1/4} \times 128^{1/2} = 2.828 \times 11.314 = 32$.
+\end{solution}
+
+\begin{solution}{exo:b1:profit-maximisation:hotelling-check}
+$\pi = pq - rK - wL = pq(1 - \tfrac14 - \tfrac12) = \tfrac14 \times p^4/(16rw^2) = p^4/(64rw^2)$:
+64 at $p = 8$, $w = r = 1$ (revenue 256, costs $64 + 128$).
+$\partial\pi/\partial p = 4p^3/(64rw^2) = 32 = q$ and
+$-\partial\pi/\partial w = 2p^4/(64rw^3) = 128 = L$.
+\end{solution}
+
+\begin{solution}{exo:b1:profit-maximisation:predict}
+About $0.1 \times 30\% = 3\%$ (exactly $1.3^{0.1} - 1 = 2.7\%$ with a constant elasticity).
+\end{solution}
+
+\begin{solution}{exo:b1:profit-maximisation:yield}
+World: $(4.206/1.353)^{1/63} - 1 = 1.82\%$ a year. Africa:
+$(1.676/0.81)^{1/63} - 1 = 1.16\%$ a year.
+\end{solution}
+
+\begin{solution}{exo:b1:profit-maximisation:crs}
+Profit is $pq - cq = (p - c)q$. If $p < c$ every positive output loses money:
+$q = 0$. If $p > c$ profit grows without limit with $q$: no maximum. If $p = c$
+profit is zero at every size.
+\end{solution}
+
+\begin{solution}{exo:b1:profit-maximisation:convex}
+Since $q^0$ is best at $p^0$: $p^0q^0 - C(q^0) \ge p^0q^1 - C(q^1)$; since $q^1$ is
+best at $p^1$: $p^1q^1 - C(q^1) \ge p^1q^0 - C(q^0)$. Adding, the costs cancel:
+$p^0q^0 + p^1q^1 \ge p^0q^1 + p^1q^0$, that is $(p^1 - p^0)(q^1 - q^0) \ge 0$.
+\end{solution}
+
+\begin{solution}{exo:b1:profit-maximisation:fixed-factor}
+$paAx^{a-1}\bar K^b = v$ gives $x = (paA\bar K^b/v)^{1/(1-a)}$ and
+$q = A\bar K^bx^a = A\bar K^b(paA\bar K^b/v)^{a/(1-a)}$, proportional to
+$p^{a/(1-a)}$: the elasticity is $a/(1 - a)$.
+\end{solution}
+
+\begin{solution}{exo:b1:profit-maximisation:refute}
+Planted areas that fall when expected prices rise, other things equal (with
+weather and input prices controlled), would refute it; so would areas that
+do not respond at all to large and well-known price changes. In input use:
+farmers who do not use fertiliser when trials on their own fields show that
+its value of \omterm{def:b1:technology:marginal-product}{marginal product} far exceeds its price, for reasons other than
+risk, credit or knowledge.
+\end{solution}
+
+\begin{solution}{pb:b1:profit-maximisation:farm}
+\textbf{1.} $40(tN)^{1/4}(tT)^{1/4} = t^{1/2}q$: decreasing returns (degree $\tfrac12$).
+Profit does not grow in proportion to size, so a finite plan is best.
+
+\textbf{2.} $p \times \tfrac14q/N = v$ and $p \times \tfrac14q/T = \rho$.
+
+\textbf{3.} The conditions say $vN = \tfrac14pq$ and $\rho T = \tfrac14pq$. Then
+$N = pq/(4v) = 12.5q$ and $T = pq/(4\rho) = q/8$, so
+$q = 40(12.5 \times 0.125)^{1/4}q^{1/2} = 40 \times 1.118\,q^{1/2} = 44.72\,q^{1/2}$, which gives
+$q^{1/2} = 44.72$ and $q = 2000$ tonnes, $N = 25000$ kilograms, $T = 250$ hectares.
+
+\textbf{4.} Revenue 200,000; fertiliser 50,000; land 50,000; profit 100,000
+kests. Yield $2000/250 = 8$ tonnes a hectare.
+
+\textbf{5.} From question 3 in general, $q = pA^2/(4\sqrt{v\rho})$ with $A^2 = 1600$, and
+profit is half the revenue: $\pi = \tfrac12pq = 1600p^2/(8\sqrt{v\rho})$. At the
+given prices, $1600 \times 10000/(8 \times 20) = 100000$.
+
+\textbf{6.} $\partial\pi/\partial p = 2 \times 1600p/(8\sqrt{v\rho}) = 320000/160 = 2000 = q$.
+
+\textbf{7.} $q = 1600p/(4\sqrt{v\rho}) = 400p/\sqrt{v\rho}$: $20p$ at the given input prices.
+
+\textbf{8.} One: output is proportional to $p$.
+
+\textbf{9.} $N = pq/(4v) = 100p^2/(v^{3/2}\rho^{1/2})$; 25,000 at the given prices.
+
+\textbf{10.} $-1.5$.
+
+\textbf{11.} $T = pq/(4\rho) = 100p^2/(v^{1/2}\rho^{3/2})$. Both cross derivatives are
+$-50p^2v^{-3/2}\rho^{-3/2}$.
+
+\textbf{12.} With decreasing returns, doubling land and fertiliser less than
+doubles output: the \omterm{def:b1:technology:marginal-product}{marginal products} would fall below the input prices.
+
+\textbf{13.} $q = 40 \times 250^{1/4}N^{1/4} = 159.05N^{1/4}$.
+
+\textbf{14.} $p \times \tfrac14 \times 159.05N^{-3/4} = v$ gives $N = (159.05p/4v)^{4/3}$ and
+$q = 159.05^{4/3}(p/4v)^{1/3}$: elasticity $1/3$. At $p = 100$ it gives 2,000, as in
+the long run.
+
+\textbf{15.} $q = 2000 \times 1.5^{1/3} = 2000 \times 1.1447 = 2289.43$ tonnes, and
+$N = \tfrac14 \times 150 \times 2289.43/2 = 42926.78$ kilograms.
+
+\textbf{16.} $q = 20 \times 150 = 3000$ tonnes; $T = \tfrac14 \times 450000/200 = 562.5$
+hectares; $N = \tfrac14 \times 450000/2 = 56250$ kilograms.
+
+\textbf{17.} Short run: $150 \times 2289.43 - 2 \times 42926.78 - 50000 = 343414.5 - 85853.56 - 50000
+= 207560.94$ with these rounded values (207,560.7 unrounded); long run: $\tfrac12 \times 450000 = 225000$. The long-run plan
+does better, since it could have kept 250 hectares.
+
+\textbf{18.} With land fixed, extra fertiliser runs into diminishing returns
+faster ($a/(1 - a) = 1/3$ against $(a + b)/(1 - a - b) = 1$). Allowing more inputs
+to adjust makes supply more elastic.
+
+\textbf{19.} $\sqrt{4.5 \times 200} = 30$, so $q = 400 \times 150/30 = 2000$: unchanged.
+
+\textbf{20.} $q = 2000 \times (150/4.5 \div 100/2)^{1/3} = 2000 \times (2/3)^{1/3} = 1747.16$ tonnes.
+
+\textbf{21.} $N = \tfrac14 \times 150 \times 1747.16/4.5 = 14559.67$ kilograms, $58.24$ a hectare
+against 100.
+
+\textbf{22.} Revenue $300000$; $T = 75000/200 = 375$ hectares and
+$N = 75000/4.5 = 16666.67$ kilograms.
+
+\textbf{23.} In the short run only fertiliser can change, and its price rose
+by more ($125\%$) than the maize price ($50\%$): the farm uses less of it and
+makes less. In the long run it also rents more land, whose price did not
+change, substituting land for fertiliser; with these technologies the two
+price changes exactly offset ($q$ depends on $p/\sqrt{v\rho}$).
+
+\textbf{24.} The farm's long-run supply elasticity is 1.0, against 0.33 in the
+short run.
+\end{solution}

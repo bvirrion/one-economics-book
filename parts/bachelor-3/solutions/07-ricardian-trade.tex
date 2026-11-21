@@ -1,0 +1,207 @@
+\section*{Chapter \ref{ch:b3:ricardian-trade} --- Ricardian Trade in Full}
+
+\begin{solution}{exo:b3:ricardian-trade:1}
+Negative in every year, as the law predicts. % figdata: japan
+It is closest to zero in 1868, at $-0.18$ million ryō. The prediction is about
+the sign, not the size; and 1868 was a year in which Japan ran a surplus on
+current account, so the negative sign there owes nothing to borrowing.
+% ledger: b3rt:bb04.surplus
+\end{solution}
+
+\begin{solution}{exo:b3:ricardian-trade:2}
+$A = 10/2 = 5$, $9/3 = 3$, $6/4 = 1.5$, $6/6 = 1$, $3/5 = 0.6$: the chain is goods 1, 2,
+3, 4, 5 in that order. At $\omega = 1.2$ Home makes goods 1, 2 and 3; at $\omega = 3.5$,
+good 1 only.
+\end{solution}
+
+\begin{solution}{exo:b3:ricardian-trade:3}
+\begin{enumerate}
+\item Brenland $4/2 = 2$ units of grain per unit of cloth; Kestria $6/12 = 0.5$.
+\item $p_{\text{cloth}}/p_{\text{grain}} = w^* \times 6/(w \times 2) = 6/(2 \times 2) =
+1.5$, between the two \omterm{def:b3:ricardian-trade:autarky}{autarky prices}. Brenland exports grain: its \omterm{def:b3:ricardian-trade:terms-of-trade}{terms of trade}
+are $1/1.5 = 0.67$ units of cloth per unit of grain, against 0.5 in autarky.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:ricardian-trade:4}
+Japan exporting goods whose prices had been high before 1859 relative to world
+prices and importing goods that had been cheap: net trade valued at \omterm{def:b3:ricardian-trade:autarky}{autarky
+prices} would then be positive.
+\end{solution}
+
+\begin{solution}{exo:b3:ricardian-trade:5}
+$B(z) = z/(1 - z)$. Setting $3 - 2z = z/(1 - z)$ gives $(3 - 2z)(1 - z) = z$, or $2z^2 - 6z
++ 3 = 0$, so $\bar z = (6 - \sqrt{12})/4 = 0.634$ (the other root exceeds 1) and $\omega = 3
+- 2 \times 0.634 = 1.732$.
+\end{solution}
+
+\begin{solution}{exo:b3:ricardian-trade:6}
+\begin{enumerate}
+\item $A_{\text{grain}} = 6$, $A_{\text{cloth}} = 1.5$. With Brenland making grain only,
+half of world spending goes to it: $wL = \tfrac12(wL + w^* \times 2L)$, so $\omega = 2$,
+which lies between 1.5 and 6 as \cref{prop:b3:ricardian-trade:cut} requires. Cloth
+now costs Brenland $w^* \times 6 = 3w$, against $4w$ in autarky; grain is unchanged.
+With equal shares, real income rises by $(4/3)^{1/2} - 1 = 15.5~\%$.
+\item $A_{\text{grain}} = 3$, still above 2: the equilibrium, cloth's price and
+Brenland's real income are unchanged.
+\item $A_{\text{grain}} = 1.5 = A_{\text{cloth}}$: the relative \omterm{def:b3:ricardian-trade:autarky}{autarky prices} are equal,
+\omterm{def:b3:ricardian-trade:comparative-advantage}{comparative advantage} is gone and so is the reason to trade. Brenland's real
+income falls back to autarky, by $1 - 1/1.155 = 13.4~\%$. The gain abroad was in
+the good Brenland exports, not uniform, and
+\cref{prop:b3:ricardian-trade:abroad} does not apply.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:ricardian-trade:7}
+$\kappa\omega = 1.56$ and $\omega/\kappa = 1.083$. Home exports goods 1 and 2 ($A = 5$ and
+3), above 1.56; imports goods 4 and 5 ($A = 1$ and 0.6), below 1.083; and makes good 3
+($A = 1.5$), the only one inside the band, for itself.
+\end{solution}
+
+\begin{solution}{exo:b3:ricardian-trade:8}
+The tested solution is \code{ex08_crops.py}, in the chapter's \code{exercises/}
+folder. Wheat against maize: 73 countries, correlation $-0.30$; wheat against
+barley: 77 countries, 0.22. % output: ex08_crops
+Wheat and maize grow in different climates, and in a dry country maize is
+often confined to a few irrigated fields with high yields, so actual yields
+are strongly selected; wheat and barley grow on similar land in similar seasons,
+and the selection may matter less. Actual yields answer neither question
+cleanly, which is why the published test used potential yields.
+\end{solution}
+
+\begin{solution}{exo:b3:ricardian-trade:9}
+$0.8^{-1/5} - 1 = 4.6~\%$; $0.8^{-1/10} - 1 = 2.3~\%$. $\lambda$ is measured from trade and
+output data with modest error; the elasticity is estimated, and halving it
+doubles the answer, so it is the input to know better.
+\end{solution}
+
+\begin{solution}{exo:b3:ricardian-trade:10}
+Home's workers make the goods it exports, $[0, z_E]$, bought by both countries,
+and the \omterm{def:b3:ricardian-trade:iceberg}{non-traded goods} $(z_E, z_M)$, bought only at Home. Its wage bill equals
+spending on its goods:
+$wL = \vartheta(z_E)(wL + w^*L^*) + (\vartheta(z_M) - \vartheta(z_E))wL$, where \omterm{def:b3:ricardian-trade:iceberg}{iceberg}
+losses are paid to Home's workers as part of the delivered price. Simplifying,
+$wL(1 - \vartheta(z_M)) = \vartheta(z_E)w^*L^*$, which is the stated equation. As $\omega$
+rises, $z_E$ and $z_M$ fall because $A$ is decreasing, so $\vartheta(z_E)$ falls and $1 -
+\vartheta(z_M)$ rises: the left side increases strictly with $\omega$ and the right side
+decreases. The left side is near 0 for small $\omega$ (where $z_M$ is near 1) and the
+right side near 0 for large $\omega$, so they cross exactly once.
+\end{solution}
+
+\begin{solution}{exo:b3:ricardian-trade:11}
+At the old $\omega$, $\kappa\omega$ falls and $\omega/\kappa$ rises: goods at the top of the band
+($A$ just below $1.2\omega$) become Home exports and goods at its bottom ($A$ just
+above $\omega/1.2$) Home imports. With equal spending $\Delta$ on each end, the right
+side of the equation of \cref{exo:b3:ricardian-trade:10} rises by $\Delta L^*$ and the
+left by $\omega\Delta L$. With $L = L^*$, the left rises by more if $\omega > 1$: Home's new
+imports cost more than its new exports earn, and $\omega$ must fall; if $\omega < 1$, it
+rises.
+\end{solution}
+
+\begin{solution}{exo:b3:ricardian-trade:12}
+Inside the model: the marginal good, at $A = \omega$, is made in both countries;
+trade costs leave a band of goods made in both; an industry in the statistics
+groups many goods with different $A_i$, so an industry can both export and
+import. Outside it: products are differentiated by firm, and countries trade
+varieties of the same good (\cref{ch:b3:scale-variety-firms}); other factors
+(land, capital, skills) and rising costs make specialisation incomplete
+(\cref{ch:b3:factor-endowments}).
+\end{solution}
+
+\begin{solution}{pb:b3:ricardian-trade:twelve}
+\textbf{1.} $A$: grain $12/2 = 6$, timber 4, fish 3, wool 2.4, cheese 2, paper 1.75,
+cloth 1.5, glass 1.38, tools 1.25, shoes 1, clocks 0.8, radios 0.6: decreasing down
+the table. % figdata: twelve_goods
+
+\textbf{2.} Brenland needs fewer hours in the first nine goods, as many in shoes,
+more in clocks and radios. It does not matter: the pattern depends on relative
+costs, and the wage absorbs absolute differences.
+
+\textbf{3.} Cloth in grain: Brenland $4/2 = 2$, Kestria $6/12 = 0.5$. Radios in grain:
+Brenland $10/2 = 5$, Kestria $6/12 = 0.5$.
+
+\textbf{4.} At $\omega = 1$: the nine goods with $A > 1$, with shoes ($A = 1$) made in
+both. At $\omega = 2$: grain, timber, fish and wool, with cheese made in both.
+
+\textbf{5.} Above 6 Brenland would make nothing and below 0.6 everything; neither
+lets trade balance.
+
+\textbf{6.} If Brenland makes $e$ goods and Kestria $m = 12 - e$, world spending on
+Brenland's goods is $e/12$ of world income: $wL = \tfrac{e}{12}(wL + w^*L)$, so $\omega(12 -
+e) = e$ and $\omega = e/m$.
+
+\textbf{7.} $7/5 = 1.4$, and $A_7 = 1.5 > 1.4 > 1.38 = A_8$: at that wage Brenland makes
+exactly the first seven goods. % figdata: twelve_results
+
+\textbf{8.} At 1.2 Brenland would make the nine goods with $A > 1.2$, and trade would
+balance only at $9/3 = 3$. At 2 it would make four goods and part of cheese,
+which balances at a wage between $4/8 = 0.5$ and $5/7 = 0.71$, not 2.
+
+\textbf{9.} Autarky: a unit of grain buys $2/10 = 0.2$ radios. With trade: $p_{\text{grain}}
+= 2w$, $p_{\text{radio}} = 6w^*$, so grain buys $2\omega/6 = 2.8/6 = 0.47$ radios.
+
+\textbf{10.} Autarky: $1/10 = 0.1$ radio an hour. Trade: $w/(6w^*) = 1.4/6 = 0.23$.
+
+\textbf{11.} With equal shares the price index is the geometric mean of the twelve
+prices. Goods Brenland makes keep their price $wa_i$; an imported good's price
+falls from $wa_i$ to $w^*a_i^*$, a ratio of $a_i\omega/a_i^* = \omega/A_i$, so real income is
+multiplied by the twelfth root of the product of those ratios: $1.0145 \times 1.12
+\times 1.4 \times 1.75 \times 2.333 = 6.496$, whose twelfth root is 1.169: a gain of
+16.9~\%.
+
+\textbf{12.} Kestria imports the first seven goods; the ratios $A_i/\omega$ are 4.286,
+2.857, 2.143, 1.714, 1.429, 1.25 and 1.071, with product 86.06 and twelfth root 1.450:
+45.0~\%. Kestria gains more because world prices, set by the relative wage of 1.4,
+are far from its \omterm{def:b3:ricardian-trade:autarky}{autarky prices} for the goods it imports (grain cost it six
+times as much labour relative to Brenland), while for Brenland's imports the
+ratios are smaller.
+
+\textbf{13.} Export if $A_i > 1.1\omega$; import if $A_i < \omega/1.1$; make for itself
+between the two.
+
+\textbf{14.} $1.1 \times 1.5 = 1.65$ and $1.5/1.1 = 1.364$. Exports: grain, timber, fish,
+wool, cheese, paper (6). Non-traded: cloth, glass. Imports: tools, shoes, clocks,
+radios (4).
+
+\textbf{15.} Brenland's exports earn Kestria's spending on six goods, $\tfrac{6}{12}w^*L$;
+its imports cost $\tfrac{4}{12}wL$. Balance requires $4\omega = 6$, $\omega = 1.5$, and the
+groups of Question 14 are those of that wage.
+
+\textbf{16.} Cloth leaves Brenland's exports and glass its imports. Losing one
+import out of five cuts Brenland's spending abroad by a larger proportion than
+losing one export out of seven cuts its earnings, so its wage must rise to
+restore balance: $6/4 > 7/5$.
+
+\textbf{17.} The ratios $\omega/(\kappa A_i)$ for the four imports are 1.091, 1.364, 1.705
+and 2.273, with product 5.763 and twelfth root 1.157: 15.7~\%. Both countries gain
+less than in free trade (16.9~\% and 45.0~\%); Kestria loses more.
+
+\textbf{18.} $A_i/1.2$: 5, 3.333, 2.5, 2, 1.667, 1.458, 1.25, 1.15, 1.042, 0.833, 0.667, 0.5.
+
+\textbf{19.} If Brenland made the six goods with $A > 1.25$, trade would balance at
+$6/6 = 1$, below $A_{\text{cloth}} = 1.25$; if it made seven, at $7/5 = 1.4$, above it.
+So cloth is shared and $\omega = 1.25$. Brenland's share of world income is then
+$1.25/2.25 = 0.556$, which must equal $(6 + s)/12$: $s = 0.667$, two thirds of the
+world's cloth.
+
+\textbf{20.} 20.3~\% against 16.9~\%: Brenland's real wage rises, as
+\cref{prop:b3:ricardian-trade:abroad} says. % figdata: twelve_results
+
+\textbf{21.} No. Its autarky real wage has risen by 20~\% in every good, and its
+gain over that new autarky is 39.2~\%: its real wage is $1.2 \times 1.392 = 1.67$ times
+its old autarky level, against 1.45 before.
+
+\textbf{22.} Brenland spends on the seven goods it makes: $\lambda = 7/12 = 0.583$. The
+formula gives $0.583^{-1/5} - 1 = 11.4~\%$.
+
+\textbf{23.} $\varepsilon = \ln(12/7)/\ln 1.169 = 0.539/0.156 = 3.46$.
+
+\textbf{24.} The formula holds when the trade elasticity is constant, as with
+the productivity distributions of Eaton and Kortum. With twelve goods and fixed
+labour requirements, trade responds to costs in jumps, as whole goods switch
+country, and no single elasticity describes it.
+
+\textbf{25.} Computed directly from the prices of imported goods, Brenland's gain
+from free trade is 16.9~\% of real income; the \omterm{def:b3:ricardian-trade:acr}{gains-from-trade formula} with an
+elasticity of 5 gives 11.4~\%, and the two agree only with an elasticity of 3.46.
+\end{solution}

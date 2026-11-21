@@ -1,0 +1,15 @@
+type,region,n,mean,ledger
+Rail,Europe,23,34.2,b3cba:fhb.t2
+Rail,North America,19,40.8,b3cba:fhb.t2
+Rail,Other,16,64.6,b3cba:fhb.t2
+Rail,All,58,44.7,b3cba:fhb.t1
+Fixed links,Europe,15,43.4,b3cba:fhb.t2
+Fixed links,North America,18,25.7,b3cba:fhb.t2
+Fixed links,All,33,33.8,b3cba:fhb.t1
+Roads,Europe,143,22.4,b3cba:fhb.t2
+Roads,North America,24,8.4,b3cba:fhb.t2
+Roads,All,167,20.4,b3cba:fhb.t1
+All,Europe,181,25.7,b3cba:fhb.t2
+All,North America,61,23.6,b3cba:fhb.t2
+All,Other,16,64.6,b3cba:fhb.t2
+All,All,258,27.6,b3cba:fhb.t1

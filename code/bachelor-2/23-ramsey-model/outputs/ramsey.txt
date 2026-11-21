@@ -1,0 +1,6 @@
+$ python ramsey.py
+steady state: k* = 8.505, saving rate 0.250
+theta 2: saving rate 0.343, 0.294 after 10 years,
+  0.257 after 40; capital gap halved after 13 years
+theta 6: saving rate 0.209, 0.221 after 10 years,
+  0.240 after 40; capital gap halved after 27 years

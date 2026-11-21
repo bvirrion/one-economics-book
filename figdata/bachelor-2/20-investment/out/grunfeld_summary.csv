@@ -1,0 +1,2 @@
+n,firms,corr,slope,fe_value,fe_capital,fe_value_se,fe_capital_se,fe_r2,pooled_value,pooled_capital,pooled_r2
+220,11,0.57,0.93,0.11,0.31,0.011,0.017,0.95,0.115,0.228,0.82

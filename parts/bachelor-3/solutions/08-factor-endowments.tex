@@ -1,0 +1,179 @@
+\section*{Chapter \ref{ch:b3:factor-endowments} --- Factor Endowments}
+
+\begin{solution}{exo:b3:factor-endowments:1}
+China (19.1~\% of capital against 17.5~\% of output), Japan (4.4 against 3.8),
+Russia (5.8 against 3.4), France (3.0 against 2.4), Indonesia (3.2 against 2.4), the
+United Kingdom (2.4 against 2.3), Italy (2.9 against 1.9) and South Korea (2.0
+against 1.8). % figdata: endow
+By HOV, with output standing in for spending, they should be net exporters of
+capital services. The United States, India, Germany and Brazil have smaller
+shares of capital than of output.
+\end{solution}
+
+\begin{solution}{exo:b3:factor-endowments:2}
+Steel uses $4/20 = \$0.2$ million of capital per worker, clothing $1/40 =
+\$0.025$ million: steel is capital-intensive. If wages double, firms in both
+industries substitute capital for labour; the ranking survives unless the
+industries' abilities to substitute differ so much that their capital per
+worker crosses, which the model rules out by assumption.
+\end{solution}
+
+\begin{solution}{exo:b3:factor-endowments:3}
+$2w + r = 10$ and $w + 2r = 8$. Twice the first minus the second: $3w = 12$, $w = 4$;
+then $r = 2$.
+\end{solution}
+
+\begin{solution}{exo:b3:factor-endowments:4}
+In its two-good form, yes. But with many factors the comparison of capital per
+worker in exports and imports is not the right test: the country could be
+abundant in capital relative to land or skills even if it has little capital per
+worker. Check the factor content of its trade against the HOV equation for every
+factor, and check whether its technology differs from that of its partners.
+\end{solution}
+
+\begin{solution}{exo:b3:factor-endowments:5}
+$0.7\hat w + 0.3\hat r = 10$ and $0.4\hat w + 0.6\hat r = 0$. From the second, $\hat r = -\tfrac23\hat
+w$; then $0.7\hat w - 0.2\hat w = 10$, $\hat w = 20~\%$ and $\hat r = -13.3~\%$. So $\hat w = 20 >
+\hat p_1 = 10 > \hat p_2 = 0 > \hat r = -13.3$: the \omterm{def:b3:factor-endowments:magnification}{magnification effect}.
+\end{solution}
+
+\begin{solution}{exo:b3:factor-endowments:6}
+Labour: $2Q_1 + Q_2 = 100$; capital: $Q_1 + 2Q_2 = 80$. So $Q_1 = 40$, $Q_2 = 20$. With $K = 88$:
+$Q_2 = 100 - 2Q_1$ and $Q_1 + 200 - 4Q_1 = 88$, so $Q_1 = 37.33$ and $Q_2 = 25.33$: good 1
+falls by 6.7~\% and good 2, capital-intensive, rises by 26.7~\%, more than the 10~\%
+rise in capital.
+\end{solution}
+
+\begin{solution}{exo:b3:factor-endowments:7}
+Short run (\cref{prop:b3:factor-endowments:specific}): landowners gain in terms
+of both goods; owners of capital in manufacturing lose in terms of both; workers'
+wage rises by less than 20~\%, so they gain in manufactures and lose in grain.
+Long run: capital moves into farming until its return is equal across sectors;
+the conflict becomes one between factors, decided by which factor grain uses
+intensively.
+\end{solution}
+
+\begin{solution}{exo:b3:factor-endowments:8}
+The tested solution is \code{ex08_factor_content.py}, in the chapter's
+\code{exercises/} folder. Capital: $4 \times 10 + 2 \times (-5) + 1 \times (-8) = 22$;
+labour: $10 - 10 - 24 = -24$. % output: ex08_factor_content
+The country exports the services of 22 units of capital, 5.5~\% of its endowment,
+and imports those of 24 units of labour, 4.8~\% of its own: it trades as a
+capital-abundant country.
+\end{solution}
+
+\begin{solution}{exo:b3:factor-endowments:9}
+Wages for the same skill, in the same occupation, that differ persistently
+between countries that trade freely with each other contradict it --- and they
+differ many times over. They reject an assumption: identical technologies above
+all (a worker with better technology earns more), together with the assumption
+that both countries make the same goods.
+\end{solution}
+
+\begin{solution}{exo:b3:factor-endowments:10}
+The system $a_{L1}w + a_{K1}r = p_1$, $a_{L2}w + a_{K2}r = p_2$ has determinant $D = a_{L1}a_{K2} -
+a_{K1}a_{L2} \ne 0$, so by Cramer's rule exactly one solution: $w = (p_1a_{K2} - p_2a_{K1})/D$
+and $r = (p_2a_{L1} - p_1a_{L2})/D$. It depends only on prices and technology, so two
+countries with the same prices and technology, both making both goods, have the
+same $w$ and $r$. Both are positive when $p_1/p_2$ lies strictly between
+$a_{K1}/a_{K2}$ and $a_{L1}/a_{L2}$; otherwise one good cannot break even and the country
+specialises.
+\end{solution}
+
+\begin{solution}{exo:b3:factor-endowments:11}
+The tested solution is \code{ex11_hov_sign.py}, in the chapter's \code{exercises/}
+folder. Exact HOV: signs match 1.00, slope 1.00. \omterm{def:b3:factor-endowments:factor-content}{Missing trade}: signs 1.00, slope
+0.20. With noise: signs 0.57, slope 0.13. % output: ex11_hov_sign
+A sign test cannot see \omterm{def:b3:factor-endowments:factor-content}{missing trade}, which shrinks contents without changing
+their signs; the slope sees it at once. Noise of a size realistic for measured
+data pushes the sign test toward one half.
+\end{solution}
+
+\begin{solution}{exo:b3:factor-endowments:12}
+In a small open economy goods prices are set abroad and do not move; with both
+goods still made, the zero-profit conditions fix $w$ and $r$
+(\cref{def:b3:factor-endowments:fpe}). The inflow is absorbed by the \omterm{def:b3:factor-endowments:rybczynski}{Rybczynski
+effect}: the labour-intensive sector expands and the other contracts. Conditions:
+prices unaffected (a small economy, or immigrants who do not change world
+prices), the same technology, and an inflow small enough that the economy still
+makes both goods; a larger inflow would move it out of the range and wages
+would fall.
+\end{solution}
+
+\begin{solution}{pb:b3:factor-endowments:boom}
+\textbf{1.} Machines use $3/1 = 3$ units of capital per worker, textiles $1/2 = 0.5$:
+machines are capital-intensive. % figdata: boom_params
+
+\textbf{2.} Kestria $60/40 = 1.5$, Brenland $30/50 = 0.6$, the world $1{,}300/1{,}100 = 1.18$.
+Kestria is capital-abundant, Brenland labour-abundant.
+
+\textbf{3.} $3Q_M + Q_T = 60$ and $Q_M + 2Q_T = 40$: $Q_T = 60 - 3Q_M$, $Q_M + 120 - 6Q_M = 40$, so
+$Q_M = 16$ and $Q_T = 12$ million. % figdata: boom_results
+
+\textbf{4.} $p_M/p_T = 12/16 = 0.75$.
+
+\textbf{5.} $3r + w = 0.75$ and $r + 2w = 1$: $r = 1 - 2w$, $3 - 5w = 0.75$, $w = 0.45$ and $r =
+0.10$.
+
+\textbf{6.} $0.75 \times 16 + 12 = 24$; $0.10 \times 60 + 0.45 \times 40 = 6 + 18 = 24$.
+
+\textbf{7.} $3r + w = 4$ and $r + 2w = 3$: $w = 1$ and $r = 1$ kest.
+
+\textbf{8.} $3Q_M + Q_T = 30$ and $Q_M + 2Q_T = 50$: $Q_M = 2$, $Q_T = 24$. Both countries
+face the same prices with the same technology and make both goods, so the
+zero-profit conditions give both the same factor prices.
+
+\textbf{9.} GDP $= 4 \times 16 + 3 \times 12 = 100$; consumption $50/4 = 12.5$ machines and $50/3
+= 16.67$ textiles; net exports $3.5$ machines and $-4.67$ textiles. $3.5 \times 4 = 14 =
+4.67 \times 3$: trade balances.
+
+\textbf{10.} Autarky: $w/p_T = 0.45$, $w/p_M = 0.45/0.75 = 0.60$; $r/p_T = 0.10$, $r/p_M =
+0.13$. Trade: $w/p_T = 1/3 = 0.33$, $w/p_M = 1/4 = 0.25$; $r/p_T = 0.33$, $r/p_M = 0.25$.
+
+\textbf{11.} $p_M/p_T$ rises from 0.75 to 1.33, by 77.8~\%. In textiles, the wage falls
+from 0.45 to 0.33, by 25.9~\%, and the rental rises from 0.10 to 0.33, by 233~\%. So
+$\hat r > \hat p_M > \hat p_T = 0 > \hat w$: the \omterm{def:b3:factor-endowments:magnification}{magnification effect}.
+
+\textbf{12.} Owners of capital gain in terms of both goods; workers lose in terms
+of both (\cref{prop:b3:factor-endowments:ss}).
+
+\textbf{13.} $3Q_M + Q_T = 75$ and $Q_M + 2Q_T = 40$: $Q_M = 22$ and $Q_T = 9$ million.
+
+\textbf{14.} Machines rise by $6/16 = 37.5~\%$, more than capital's 25~\%; textiles fall
+by $3/12 = 25~\%$: \cref{prop:b3:factor-endowments:rybczynski}.
+
+\textbf{15.} The new capital can only be used with workers; at unchanged factor
+prices each machine needs one worker, and the workers come from textiles.
+
+\textbf{16.} Prices are unchanged, so $w = r = 1$: workers' real wage does not change.
+
+\textbf{17.} GDP $= 4 \times 22 + 3 \times 9 = 115 = 75 + 40$. Consumption $57.5/4 = 14.375$
+machines and $57.5/3 = 19.17$ textiles; net exports 7.625 machines and $-10.17$
+textiles.
+
+\textbf{18.} Kestria's 75 million units are under 6~\% of the world's capital: its
+outputs barely move world supply. If Kestria were large, the price of machines
+would fall relative to textiles, and by Stolper--Samuelson its workers' real wage
+would rise and the rental fall.
+
+\textbf{19.} Capital: $3 \times 3.5 + 1 \times (-4.67) = 5.83$; labour: $3.5 + 2 \times (-4.67) =
+-5.83$ (millions).
+
+\textbf{20.} World GDP $= 1{,}300 + 1{,}100 = 2{,}400$, so $s = 100/2{,}400 = 0.0417$.
+
+\textbf{21.} $60 - 0.0417 \times 1{,}300 = 60 - 54.17 = 5.83$ and $40 - 0.0417 \times 1{,}100 = 40 -
+45.83 = -5.83$: equal to the factor content.
+
+\textbf{22.} GDP 80, $s = 0.0333$; consumption 10 machines and 13.33 textiles; net
+exports $-8$ and 10.67; factor content $3(-8) + 10.67 = -13.33$ of capital and $-8 +
+21.33 = 13.33$ of labour; HOV: $30 - 43.33 = -13.33$ and $50 - 36.67 = 13.33$.
+
+\textbf{23.} Measured factor contents much smaller than 5.83 million: Kestria
+trading less than the model says. Causes: consumers who prefer home-made goods,
+trade costs that keep goods at home, or a Kestrian technology that differs from
+Brenland's, so that Kestria's own input requirements, not a common $A$, should be
+used.
+
+\textbf{24.} After the boom Kestria's textile output falls from 12 to 9 million
+units, by 25~\%, while its workers' real wage is unchanged at world prices.
+\end{solution}

@@ -1,0 +1,267 @@
+% Provenance (never printed): the growth strand of ../economics_series.md (grade 8: growth rate, compound growth with
+% powers, doubling time and the rule of 70, small differences over decades). Brief: sources/book1/BRIEFS.md, g8-04.
+% Chart data: figdata/grade-8/04-growth-and-compounding (WDI NY.GDP.PCAP.KD 1960-2024; Maddison Project US; Brenland
+% accounts; Kestria invented in the script).
+\chapter{Growth and Compounding}\label{ch:g8:growth-and-compounding}
+
+\begin{openingchart}{Real GDP per person in Argentina, the United States and South Korea,
+1960--2024, in US dollars of 2015, on a times-ten scale. The three were chosen for their average
+growth: about 1, 2 and 6 percent a year.}{World Bank, World Development Indicators,
+NY.GDP.PCAP.KD}
+\begin{tikzpicture}
+\begin{semilogyaxis}[omtimesten, xmin=1960, xmax=2024, ymin=500, ymax=100000, ytickten={3,4,5},
+  xtick={1960,1970,1980,1990,2000,2010,2020}, xlabel={Year},
+  ylabel={Dollars of 2015 per person}, legend pos=south east]
+\addplot table[x=year, y=slow] {figdata/grade-8/04-growth-and-compounding/out/three_speeds.csv};
+\addplot table[x=year, y=mid] {figdata/grade-8/04-growth-and-compounding/out/three_speeds.csv};
+\addplot table[x=year, y=fast] {figdata/grade-8/04-growth-and-compounding/out/three_speeds.csv};
+\legend{Argentina ($0.86\,\%$ a year), United States ($1.99\,\%$), South Korea ($5.75\,\%$)}
+\end{semilogyaxis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: speeds (ARG 7397 -> 12774, 0.86; USA 18992 -> 66857, 1.99; KOR 1038 -> 37048, 5.75);
+% facts (slow_ratio 1.7, mid_ratio 3.5, fast_ratio 35.7)
+In 1960, a person in Argentina had an \omterm{def:g7:households:income}{income} of $7\,397$ dollars (in dollars of 2015), a person in
+South Korea $1\,038$: Argentina was about seven times richer. In 2024, a person in Argentina had
+$12\,774$ dollars, a person in South Korea $37\,048$. In 64 years, Argentina's \omterm{def:g6:living-standards:income-per-person}{income per person}
+was multiplied by $1.7$, that of the United States by $3.5$, and South Korea's by $35.7$. The
+yearly rates behind these numbers look close: $0.86\,\%$, $1.99\,\%$ and $5.75\,\%$. Over decades,
+small differences in a yearly rate become enormous differences in \omterm{def:g7:households:income}{income}.
+
+\begin{recall}
+The \omterm{def:g6:reading-economic-charts:rate-of-change}{rate of change} from a starting value to a new value is $(\text{new} - \text{start}) \div
+\text{start}$ (\cref{ch:g6:reading-economic-charts}). A power $a^n$ multiplies $a$ by itself $n$
+times. Some poorer countries grow faster than the richest and catch up
+(\cref{ch:g6:living-standards}).
+\end{recall}
+
+\section{The growth rate}
+
+\begin{definition}[Growth rate]\label{def:g8:growth-and-compounding:growth-rate}
+The \emph{growth rate}\index{growth rate} of a quantity over a year is its \omterm{def:g6:reading-economic-charts:rate-of-change}{rate of change} over
+that year, in percent:
+\[
+\text{growth rate} = \frac{\text{value this year} - \text{value last year}}{\text{value last
+year}} \times 100.
+\]
+\end{definition}
+
+\begin{measure}[Real GDP per person]
+Economic growth is measured with real \omterm{def:g8:gdp:gdp-per-person}{GDP per person}: GDP in the \omterm{def:g7:money:price}{prices} of a \omterm{def:g8:inflation-and-price-indices:base-year}{base year}
+(\cref{ch:g8:inflation-and-price-indices}), divided by the population. Using \omterm{def:g8:inflation-and-price-indices:real-gdp}{real GDP} removes the
+rise in \omterm{def:g7:money:price}{prices}; dividing by the population removes the growth that comes only from having more
+people. Comparing countries also needs the same currency: the opening chart converts every
+country's \omterm{def:g8:inflation-and-price-indices:real-gdp}{real GDP} into US dollars of 2015.
+\end{measure}
+
+\section{Growth on growth}
+
+\begin{definition}[Compound growth]\label{def:g8:growth-and-compounding:compound-growth}
+A quantity has \emph{compound growth}\index{compound growth} when each year it grows by a fixed
+percentage of its value of the year before. After $n$ years at a rate of $g\,\%$, a starting value
+$V$ becomes
+\[
+V \times \left(1 + \frac{g}{100}\right)^{n}.
+\]
+\end{definition}
+
+Growth by a fixed percentage is growth on growth: the second year's growth applies to the first
+year's growth too. A town of $100$ families that grows by $10\,\%$ a year has 110 families after one
+year, $110 \times 1.1 = 121$ after two, $100 \times 1.1^{10} \approx 259.4$ after ten. Growing by a
+fixed \emph{amount} of 10 families a year, it would have only 200.
+
+\begin{omchart}{The same start, 100, grown for ten years by a fixed amount of 10 a year (simple
+growth) and by $10\,\%$ a year (compound growth).}{Computed}
+\begin{tikzpicture}
+\begin{axis}[omrecord, ybar=0.5pt, bar width=5pt, xmin=-0.6, xmax=10.6, ymin=0, ymax=280,
+  xtick={0,...,10}, xlabel={Year}, ylabel={Value}, height=0.45\linewidth, area legend,
+  legend style={at={(0.04,0.96)}, anchor=north west}]
+\addplot[fill=black!35, draw=none] table[x=year, y=simple] {figdata/grade-8/04-growth-and-compounding/out/compound.csv};
+\addplot[fill=omDef, draw=none] table[x=year, y=compound] {figdata/grade-8/04-growth-and-compounding/out/compound.csv};
+\legend{$+10$ a year, $+10\,\%$ a year}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\begin{definition}[Average annual growth rate]\label{def:g8:growth-and-compounding:average-growth-rate}
+The \emph{average annual growth rate}\index{average annual growth rate} of a quantity over $n$
+years is the fixed yearly rate that would take its starting value to its final value in $n$
+years.
+\end{definition}
+
+The average rate of South Korea in the opening chart is $5.75\,\%$ because $1.0575^{64} \approx
+35.7$: growing by $5.75\,\%$ each year for 64 years multiplies a value by about $35.7$, as South
+Korea's \omterm{def:g6:living-standards:income-per-person}{income per person} was multiplied from 1960 to 2024. In no single year did it grow by
+exactly $5.75\,\%$.
+
+\begin{omfigure}
+\includegraphics[width=0.34\linewidth]{images/book1/ai/g8-growth-door-frame.jpg}
+
+{\small A child's height marked on a door frame, one line a year. Height grows by an amount each
+year, not by a fixed percentage, and stops; \omterm{def:g6:living-standards:income-per-person}{income per person} can keep growing by a percentage.}
+\end{omfigure}
+
+\section{Doubling time}
+
+\begin{definition}[Doubling time]\label{def:g8:growth-and-compounding:doubling-time}
+The \emph{doubling time}\index{doubling time} of a quantity that grows at a fixed rate is the
+number of years it takes to double.
+\end{definition}
+
+\begin{proposition}[Rule of 70]\label{prop:g8:growth-and-compounding:rule-of-70}
+A quantity that grows by $g\,\%$ a year, with $g$ between about $0.5$ and $10$, doubles in about
+$70 \div g$ years.
+\end{proposition}
+\admitted
+
+The rule is proved in the volume for grades 10 to 12, with the logarithm. Here it can be checked
+with powers: at $2\,\%$, $70 \div 2 = 35$ years, and indeed $1.02^{35} \approx 2.00$. At $7\,\%$,
+it gives 10 years: $1.07^{10} \approx 1.97$.
+
+\begin{model}{Steady growth}
+\assumes \omterm{def:g6:living-standards:income-per-person}{Income per person} grows at the same yearly rate, year after year.
+\predicts \omterm{def:g6:living-standards:income-per-person}{Income per person} doubles every $70 \div g$ years; on a \omterm{def:g6:reading-economic-charts:times-ten-scale}{times-ten scale}, its path is a
+straight line.
+\tested United States, 1870--2022: an average of $1.66\,\%$ a year, a doubling about every 42
+years; the record stays close to the straight line of the chart below for a century and a half.
+\breaks Countries catching up grow fast for some decades and then slow down (South Korea);
+wars, crises and depressions (the United States after 1929); countries whose growth stalls for
+decades (Argentina since 1960).
+\end{model}
+
+\begin{omchart}{GDP per person in the United States, 1820--2022, in dollars of 2011, on a
+times-ten scale, with the steady path at the 1870--2022 average rate of $1.66\,\%$ a year
+(dashed).}{Maddison Project Database}
+\begin{tikzpicture}
+\begin{semilogyaxis}[omtimesten, xmin=1820, xmax=2022, ymin=1000, ymax=100000, ytickten={3,4,5},
+  xtick={1820,1870,1920,1970,2020}, xlabel={Year}, ylabel={Dollars of 2011 per person},
+  legend pos=north west]
+\addplot[omDef, thick] table[x=year, y=gdppc] {figdata/grade-8/04-growth-and-compounding/out/us_two_centuries.csv};
+\addplot[black!70, dashed, thick, unbounded coords=jump] table[x=year, y=steady] {figdata/grade-8/04-growth-and-compounding/out/us_two_centuries.csv};
+\legend{GDP per person, steady $1.66\,\%$ path}
+\end{semilogyaxis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: facts (us_1870 4803, us_2022 58488, us_growth_1870 1.66, us_1929 11954, us_1933 8048)
+The path is close to the dashed line, with one large dip: \omterm{def:g8:gdp:gdp-per-person}{GDP per person} fell from $11\,954$
+dollars in 1929 to $8\,048$ in 1933, and came back close to the line only in the 1940s.
+
+\section{Small differences, large gaps}
+
+Two countries start with the same \omterm{def:g6:living-standards:income-per-person}{income per person}. One grows by $1\,\%$ a year, the other by
+$3\,\%$. After 35 years, the first has multiplied its \omterm{def:g7:households:income}{income} by $1.01^{35} \approx 1.42$, the
+second by $1.03^{35} \approx 2.81$: the second is twice as rich. After 70 years, the factors are
+about $2.01$ and $7.92$. Over decades, a difference of one or two points in the yearly \omterm{def:g8:growth-and-compounding:growth-rate}{growth rate}
+adds up to a larger difference in \omterm{def:g7:households:income}{income} than most events of a single year.
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g8:growth-and-compounding:1}
+Use the text. What was \omterm{def:g6:living-standards:income-per-person}{income per person} in South Korea and in Argentina in 1960 and in 2024?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g8:growth-and-compounding:2}
+Real \omterm{def:g8:gdp:gdp-per-person}{GDP per person} rises from $20\,000$ to $20\,600$ dalens in a year. Compute the \omterm{def:g8:growth-and-compounding:growth-rate}{growth rate}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g8:growth-and-compounding:3}
+A value of $1\,000$ grows by $5\,\%$ a year for 3 years. Compute its value after each year.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g8:growth-and-compounding:4}
+Using the rule of 70, how long does a quantity growing by $7\,\%$ a year take to double?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g8:growth-and-compounding:5}
+Compute $1.02^{35}$ with a calculator. What does the result say about growth at $2\,\%$ a year?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g8:growth-and-compounding:6}
+\omterm{def:g6:living-standards:income-per-person}{Income per person} is $10\,000$ dalens. Compute it after 20 years of growth at $1\,\%$ a year, and at
+$3\,\%$ a year.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g8:growth-and-compounding:7}
+South Korea's \omterm{def:g6:living-standards:income-per-person}{income per person} was multiplied by $35.7$ in 64 years. Check with a calculator that
+$1.0575^{64}$ is close to $35.7$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g8:growth-and-compounding:8}
+A country's \omterm{def:g6:living-standards:income-per-person}{income per person} is $2\,000$ dollars and grows by $5\,\%$ a year. (a) Use the rule of 70
+to estimate it after 28 years. (b) Compute it with a power.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g8:growth-and-compounding:9}
+Use the text on the United States in 1929--1933. By what percentage did \omterm{def:g8:gdp:gdp-per-person}{GDP per person} fall? Does this
+fit the model ``Steady growth''?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g8:growth-and-compounding:10}
+A poorer country has an \omterm{def:g6:living-standards:income-per-person}{income per person} of $5\,000$ dollars growing by $6\,\%$ a year; a richer one
+has $20\,000$ dollars growing by $2\,\%$ a year. Make a table every 10 years, then year by year near
+the crossing, to find after how many years the poorer country passes the richer one.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g8:growth-and-compounding:11}
+A country's \omterm{def:g8:growth-and-compounding:growth-rate}{growth rate} falls from $4\,\%$ to $2\,\%$ a year. How does its \omterm{def:g8:growth-and-compounding:doubling-time}{doubling time} change?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g8:growth-and-compounding:12}
+The rule of 70 tells how fast a country doubles its \omterm{def:g7:households:income}{income} at a given rate. Explain what it cannot
+tell about why one country grows faster than another.
+\end{exercise}
+
+\section{Problem: Two Neighbours, Sixty Years}
+
+\begin{problem}[{Weekend problem --- real GDP per person of Brenland and Kestria, their growth
+rates, and when Kestria would catch up}]
+\label{pb:g8:growth-and-compounding:1}
+% figdata: neighbours (2000 24680 10400; 2005 26270 13040; 2010 26170 15900; 2015 28390 19300; 2020 28370 22730;
+% 2025 31470 27700). Kestria 2025 = 30000 kests (g8-02 ex. 6, g9-05) x 1.242 / 1.345, from the frozen package.
+Everything in this problem is invented. The table gives real \omterm{def:g8:gdp:gdp-per-person}{GDP per person} of Brenland and of its
+neighbour Kestria, in dalens of 2015 (Kestria's converted into dalens at the \omterm{def:g7:markets-and-prices:market}{market} exchange rate).
+\begin{center}
+\begin{tabular}{lrrrrrr}
+\toprule
+Year & 2000 & 2005 & 2010 & 2015 & 2020 & 2025 \\
+\midrule
+Brenland & 24\,680 & 26\,270 & 26\,170 & 28\,390 & 28\,370 & 31\,470 \\
+Kestria & 10\,400 & 13\,040 & 15\,900 & 19\,300 & 22\,730 & 27\,700 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent\textbf{Part I --- The record.}
+\begin{enumerate}
+  \item How many times richer per person was Brenland than Kestria in 2000? In 2025?
+  \item By what percentage did each country's real \omterm{def:g8:gdp:gdp-per-person}{GDP per person} grow from 2000 to 2025?
+  \item In which five-year periods did Brenland's real \omterm{def:g8:gdp:gdp-per-person}{GDP per person} fall?
+  \item Compute Kestria's growth from 2020 to 2025, in percent.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Growth rates.}
+\begin{enumerate}[resume]
+  \item Compute $1.01^{25}$ and $1.04^{25}$. Which is close to Brenland's growth factor from 2000 to
+        2025, and which to Kestria's?
+  \item Using the rule of 70, what is the \omterm{def:g8:growth-and-compounding:doubling-time}{doubling time} of each country at these rates?
+  \item At these rates, in which year would Brenland's 2025 \omterm{def:g6:living-standards:income-per-person}{income per person} double? And Kestria's?
+  \item Explain why a country far behind can grow faster for a long time.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Projections.} From 2025, assume Brenland grows by $1\,\%$ and Kestria by
+$4\,\%$ a year.
+\begin{enumerate}[resume]
+  \item Compute both countries' real \omterm{def:g8:gdp:gdp-per-person}{GDP per person} in 2035, to the nearest 10 dalens. Which is
+        higher?
+  \item Compute both in 2030. Between which two of the years 2025, 2030 and 2035 does Kestria pass
+        Brenland?
+  \item Find, year by year, the first year in which Kestria's real \omterm{def:g8:gdp:gdp-per-person}{GDP per person} is above
+        Brenland's.
+  \item Name one reason why these projections may turn out wrong.
+\end{enumerate}
+\end{problem}

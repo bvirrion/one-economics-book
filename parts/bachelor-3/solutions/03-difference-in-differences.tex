@@ -1,0 +1,255 @@
+\section*{Chapter \ref{ch:b3:difference-in-differences} --- Difference-in-Differences}
+
+\begin{solution}{exo:b3:difference-in-differences:1}
+\begin{enumerate}
+\item Pennsylvania: $21.17 - 23.33 = -2.16$. New Jersey: $21.03 - 20.44 = 0.59$.
+Difference in differences: $0.59 - (-2.16) = 2.75$ workers per restaurant (the
+paper's 2.76 comes from unrounded means). % figdata: ck_stats
+\item $0.59/20.44 = 0.0289$: employment rose by 2.9~\%.
+\item That without the rise, New Jersey's employment per restaurant would have
+fallen by as much as Pennsylvania's did, from 20.44 to 18.28.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:difference-in-differences:2}
+\begin{enumerate}
+\item First region: $21 - 20 = 1$. Second: $26.5 - 24 = 2.5$. Estimate: $2.5 - 1 =
+\dal{1.5}$ an hour.
+\item Parallel trends: without the cut, wages in the second region would have
+risen by 1 dalen like the first's. Check that the two regions' wages moved in
+parallel in the years before 2024.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:difference-in-differences:3}
+At $k = 2$ the estimate is 0.69 with an interval of 0.56 to 0.82, covering the
+true 0.7. % figdata: event_study
+Leads rising steadily from $-0.4$ to $-0.1$ would show the treated units
+already gaining on the others before adoption, at about 0.1 a period. Parallel
+trends would be rejected, and the lags would mix that trend with the effect.
+\end{solution}
+
+\begin{solution}{exo:b3:difference-in-differences:4}
+Contradicting: a gap between the groups that widens or narrows steadily before
+the treatment (a differential trend); a dip in the treated group just before
+treatment (Ashenfelter's dip). Not contradicting: a constant gap in levels, with
+both groups moving up and down together.
+\end{solution}
+
+\begin{solution}{exo:b3:difference-in-differences:5}
+\begin{enumerate}
+\item Levels: $20 - 10 = 10$. Logs: $\ln(120/100) - \ln(60/50) = \ln 1.2 -
+\ln 1.2 = 0$.
+\item Parallel trends is about A's counterfactual: in levels, A without the
+treatment would have gained 10, like B; in logs, it would have grown 20~\% like B,
+that is by 20. Starting from different levels, a gain of 10 and a growth of 20~\%
+are different numbers for A, so at most one can hold. Choose the scale on which the groups moved in
+parallel before the treatment, and on which the outcome's changes are
+comparable across its levels: for sales, percentage changes usually.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:difference-in-differences:6}
+The tested solution is \code{ex06_placebo_1974.py}, in the chapter's
+\code{exercises/} folder.
+\begin{enumerate}
+\item Trainees' change $-\usd{564}$; population survey $-\usd{366}$,
+placebo estimate $-198$ (s.e.\ 280); the second survey $-\usd{365}$, placebo
+$-198$ (s.e.\ 317). % output: ex06_placebo_1974
+(From the printed changes the second difference is $-199$; the script works with
+unrounded means.)
+\item Both estimates are small relative to their standard errors: the
+trainees' earnings did not fall significantly faster than the surveys' before the
+programme. That is consistent with parallel trends from 1974 to 1975. It cannot
+show they held from 1975 to 1978, and it does not rule out a dip that began
+in 1975 itself, after the date the data measure.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:difference-in-differences:7}
+Upward. The before year is abnormally low, so part of the rise afterwards is a
+recovery that would have happened anyway, and the comparison group, without a
+dip, has no such recovery to subtract. Using a before year earlier than the dip
+compares from a normal level and removes that part of the bias.
+\end{solution}
+
+\begin{solution}{exo:b3:difference-in-differences:8}
+\begin{enumerate}
+\item The dummy is E: $(0, 1, 1)$, L: $(0, 0, 1)$. Group means: E $2/3$, L
+$1/3$; period means $0, 1/2, 1$; overall mean $1/2$. Subtracting the group and
+period means and adding the overall mean gives E: $(-1/6, 1/3, -1/6)$ and L:
+$(1/6, -1/3, 1/6)$.
+\item The sum of squares is $4 \times 1/36 + 2 \times 1/9 = 1/3$. Unit and period
+effects in $Y$ are orthogonal to the demeaned dummy, so only the treatment
+effects count: $\sum \tilde D Y = \frac13 \tau - \frac16(\tau + \gamma) + \frac16
+\tau = \frac{\tau}{3} - \frac{\gamma}{6}$. Dividing by $1/3$ gives $\tau -
+\gamma/2$.
+\item With $\tau = 1$ and $\gamma = 3$ the coefficient is $-0.5$, although every
+effect is positive. The cell weights are 1 on (E, period 2), $-1/2$ on (E,
+period 3) and $1/2$ on (L, period 3); the negative weight is on the early
+group's later, larger effect, which serves as a comparison for L.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:difference-in-differences:9}
+Placebo group: provinces far from the western border, split at random into
+``treated'' and ``untreated'', or an eastern province given a fictitious tax
+date; an effect there would show a shock specific to some provinces. Placebo
+outcome: sales of goods the tax did not touch, such as groceries; a fall there
+would point to a regional downturn rather than the tax. Placebo date: pretend
+the tax came two years earlier and use only the years before the true date; an
+effect would reveal different pre-existing trends.
+\end{solution}
+
+\begin{solution}{exo:b3:difference-in-differences:10}
+The tested solution is \code{ex10_anticipation.py}, in the chapter's
+\code{exercises/} folder.
+\begin{enumerate}
+\item With $k = -1$ as reference: $-0.36$, $-0.31$, $0.16$, $0.28$ and $0.39$ at
+$k = -3, -2, 0, 1, 2$. % output: ex10_anticipation
+\item With $k = -2$ as reference: $-0.05$ at $k = -3$, $0.31$ at $k = -1$, and
+$0.47$, $0.59$, $0.70$ at $k = 0, 1, 2$, close to the truth (0.3, then 0.5, 0.6,
+0.7). In the first regression every coefficient is measured against a period
+already raised by 0.3, so all shift down by about 0.3: the leads look like a
+pre-trend and the effects are understated. The reference period must be one that
+the treatment cannot have reached.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:difference-in-differences:11}
+\begin{enumerate}
+\item Solve $2w_A + 6w_B + 4w_C = 4$, $4w_A + 6w_B + 10w_C = 6$, $w_A + w_B + w_C =
+1$. Substituting $w_C = 1 - w_A - w_B$, the first gives $w_A = w_B$, the second
+$-6w_A - 4w_B = -4$, so $w_A = w_B = 0.4$ and $w_C = 0.2$, all non-negative.
+Check: $0.8 + 2.4 + 0.8 = 4$ and $1.6 + 2.4 + 2 = 6$.
+\item Synthetic: $0.4 \times 3 + 0.4 \times 7 + 0.2 \times 9 = 5.8$. Effect: $5 -
+5.8 = -0.8$.
+\item Negative weights, or weights above one, would let the synthetic unit lie
+outside the range of the donors: an extrapolation that can fit the past exactly
+and predict the future badly, and that no reader could interpret as a
+comparison with real places.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b3:difference-in-differences:12}
+\begin{enumerate}
+\item With $\Delta$ the after-minus-before change of a group's mean, the
+estimator is $[\Delta(\text{old, state}) - \Delta(\text{young, state})] -
+[\Delta(\text{old, others}) - \Delta(\text{young, others})]$.
+\item It needs the gap between the old's and the young's untreated trends to be
+the same in the state as elsewhere. That allows any shock to the whole state
+(hitting old and young alike) and any nationwide shock specific to the old,
+both of which bias the simple comparison of the old; it fails only for a shock
+that hits the old in that state alone.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{pb:b3:difference-in-differences:border}
+\textbf{1.} West: $5.0773 - 5.1633 = -0.0860$. North: $5.1788 - 5.1871 =
+-0.0083$. Difference in differences: $-0.0860 - (-0.0083) = -0.0777$.
+% figdata: kestria_means
+
+\textbf{2.} $\eu^{-0.0777} - 1 = -0.0748$: sales 7.5~\% lower.
+
+\textbf{3.} $-0.0777 \pm 1.96 \times 0.0225 = -0.0777 \pm 0.0441$: from $-0.1218$
+to $-0.0336$.
+
+\textbf{4.} Nine: three western and six northern provinces. Cluster-robust
+standard errors are justified as the number of clusters grows and tend to be too
+small with few; with three treated clusters, the interval should be checked by
+methods that resample or permute whole provinces.
+
+\textbf{5.} No. Parallel trends allow any difference in levels; only a
+difference in changes would bias the estimate.
+
+\textbf{6.} For instance, a large shopping centre opening on the Brenland side
+of the border in 2019 would draw western shoppers whatever the tax, and make
+the estimate more negative. A downturn in the west's main industry would do the
+same.
+
+\textbf{7.} Dividing each lead by its standard error, from $k = -5$ to $-2$:
+$-0.0088/0.0211 = -0.42$, $-0.0004/0.0221 = -0.02$, $-0.0036/0.0173 = -0.21$
+and $-0.0163/0.0217 = -0.75$. None is near 2: the west
+and north moved together before the tax. % figdata: kestria_event
+
+\textbf{8.} The panel is balanced, every western shop is treated in the same
+year, and each event-time dummy picks one year. With shop and year effects, the
+coefficient on one year's dummy is the difference in differences between that
+year and the reference year; $k = 1$ is 2020 against 2018, the comparison of
+Part~I.
+
+\textbf{9.} $-0.030$ in 2019, $-0.078$ in 2020, $-0.112$ in 2021, then $-0.146$,
+$-0.157$ and $-0.144$: the effect builds for about three years and then levels
+off near $-0.15$. Shoppers learn of the price gap, try the trip, and change
+habits; shops across the border adapt their opening hours and stock.
+
+\textbf{10.} Each coefficient compares one year with 2018. Persistent province
+shocks drift apart as the two years grow further apart, so the comparison
+carries more noise; and with nine clusters the standard errors are themselves
+imprecise.
+
+\textbf{11.} Sales in the west would be high in 2018, the reference year. Every
+coefficient would be measured from an inflated base: the leads would turn
+negative, as if the west had been rising before the tax, and the lags would
+overstate the fall.
+
+\textbf{12.} The east is treated from 2021. In a regression whose dummies mark
+only western event times, eastern shops would count as untreated in 2021--2024,
+and their fall would be read as a fall of the comparison group.
+
+\textbf{13.} The west against the north; the east against the north; the west
+against the east before 2021, while the east is untreated; and the east
+against the west from 2021, while the west is already treated.
+
+\textbf{14.} The last. From 2020 to 2021 the west's own effect deepens, from
+$-0.08$ to $-0.12$ in the design; subtracting the west's change from the east's
+subtracts that deepening, which makes the east's effect look smaller.
+
+\textbf{15.} $(-0.0907) - (-0.106) = 0.0153$, and $0.0153/0.106 = 0.144$: \omterm{def:b3:panel-data:twfe}{two-way
+fixed effects} understates the effect by 14~\%. % figdata: kestria_estimates
+
+\textbf{16.} It compares each treated province only with the never-treated north,
+and from its own last untreated year: no already-treated province ever serves
+as a comparison.
+
+\textbf{17.} 0.0225 against 0.0102; the two-way regression uses all years and
+provinces. A smaller standard error around a biased number is no reason to
+prefer it: the two-way estimate's interval, $-0.0907 \pm 0.0200$, from
+$-0.1107$ to $-0.0707$, covers the truth only near its edge.
+
+\textbf{18.} No. If each province's effect were constant over time, the
+already-treated comparison group's change would contain no change in its
+effect, and the forbidden comparisons would be harmless; differences across
+provinces would affect only how the effects are weighted.
+
+\textbf{19.} $0.5184 + 0.2863 + 0.1231 + 0.0722 = 1.0000$; four donors, N1--N4,
+receive weight. % figdata: kestria_synth
+
+\textbf{20.} The squares of the five gaps sum to $0.00124087$; divided by 5 and
+square-rooted, $0.0158$. % figdata: kestria_synth_gap
+
+\textbf{21.} $(-0.1527 - 0.1479 - 0.1975 - 0.1846)/4 = -0.1707$. The west's lags
+for 2021--2024 ($k = 2$ to 5) average $-0.5589/4 = -0.1397$: W1's gap is larger.
+
+\textbf{22.} W1 is the province where the trip to Brenland is shortest, so more
+of its shoppers can switch.
+
+\textbf{23.} The squares of the six gaps for 2019--2024 sum to $0.13078737$;
+divided by 6 and square-rooted, $0.1476$. Ratio: $0.1476/0.0158 = 9.3$.
+
+\textbf{24.} With W1 and six donors there are seven ratios; the smallest
+$p$-value is $1/7 = 0.14$. A rank of 1 is the strongest evidence the test can
+give, but it cannot reach the 5~\% level.
+
+\textbf{25.} The east is taxed from 2021, so its later path contains the tax
+effect. A synthetic W1 built partly from eastern provinces would fall with
+them after 2021 and understate W1's effect.
+
+\textbf{26.} The effect of the tax on western shops' sales: $-0.078$ by the
+two-by-two comparison of 2020 with 2018, when the effect was still building;
+$-0.091$ by \omterm{def:b3:panel-data:twfe}{two-way fixed effects}, biased toward zero by the roll-out to the
+east; $-0.106$ by clean comparisons with the north, the number to report, with
+the event-study path beside it; and, for the border province W1 alone,
+$-0.171$ a year over 2021--2024 by \omterm{def:b3:difference-in-differences:synthetic-control}{synthetic control}, with a \omterm{def:b3:difference-in-differences:placebo}{placebo test} that
+cannot be significant at 5~\% with six donors.
+\end{solution}

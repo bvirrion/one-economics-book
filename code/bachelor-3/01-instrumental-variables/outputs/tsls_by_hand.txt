@@ -1,0 +1,8 @@
+$ python tsls_by_hand.py
+first stage     0.7811
+reduced form    0.0610
+Wald ratio      0.0781
+2SLS slope      0.0781
+2SLS s.e.       0.0081
+naive s.e.      0.0091   (OLS on the fitted x)
+first-stage F   782.1

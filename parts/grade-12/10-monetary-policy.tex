@@ -1,0 +1,328 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g12-10. What a central bank aims at and controls; transmission and
+% lags; rules and discretion (a Taylor-type rule as a description; time inconsistency; credibility and independence); the
+% record (1979-83, the zero lower bound, 2021-23); one policy for many countries. Real numbers:
+% figdata/grade-12/10-monetary-policy/ (Federal Reserve H.15 fed funds, H.4.1 total assets; BLS CPI-U; WDI GDP for the gap;
+% JST unemployment 1979 and 1982; Brenland's invented accounts). Ledger: the Federal Reserve's policy-rules page and target-range
+% table, the ECB key rates, the Bank of England's Bank Rate, Alesina-Summers 1993, and Book 3's rows on October 1979 and the
+% 2008 and 2015 target ranges.
+\chapter{Monetary Policy}\label{ch:g12:monetary-policy}
+
+In June 1981 the average rate at which American banks lent to each other overnight reached 19.1\,\%. Fifteen months earlier, consumer prices had been rising at 14.8\,\% a
+year. Twenty-seven years later, from December 2008, the same rate was held near zero for seven years. Both were decisions of the same institution, the Federal Reserve,
+acting on the same instrument.
+% figdata: policy_key (max_rate 19.1 at 1981.46 = June 1981; max_infl 14.76 at 1980.21 = March 1980); ledger: b1:fed-zlb-2008, b1:fed-liftoff-2015
+
+This chapter asks what central banks try to achieve, what they control, how a change in their rate reaches the economy, and why a central bank that could choose freely
+might do better by tying its own hands.
+
+\begin{openingchart}{United States: effective federal funds rate (blue) and consumer price inflation over the previous twelve months (red), in per cent, monthly, January
+1965 to October 2026.}{Board of Governors of the Federal Reserve System (H.15); U.S. Bureau of Labor Statistics (CPI-U, all items)}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.9\linewidth, height=6.0cm, xmin=1965, xmax=2027, ymin=-3, ymax=20, ytick={0,5,...,20}, ylabel={per cent}, xtick={1970,1980,...,2020}]
+\addplot[gray, thin, domain=1965:2027, samples=2] {0};
+\addplot[omDef, thick] table[x=t, y=rate] {figdata/grade-12/10-monetary-policy/out/fedfunds.csv};
+\addplot[omThm, thick] table[x=t, y=infl] {figdata/grade-12/10-monetary-policy/out/fedfunds.csv};
+\node[font=\scriptsize, omDef, anchor=west] at (axis cs:1987,16) {federal funds rate};
+\node[font=\scriptsize, omThm, anchor=west] at (axis cs:1993,-1.6) {inflation};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From \cref{ch:g11:money-and-banking}: the central bank and its \omterm{def:g11:money-and-banking:policy-rate}{policy rate}. From \cref{ch:g10:price-indices}: the \omterm{def:g10:price-indices:real-interest-rate}{real interest rate}. From \cref{ch:g12:inflation-and-money}:
+money and inflation in the long run. From \cref{ch:g12:aggregate-demand-and-supply}: \omterm{def:g12:aggregate-demand-and-supply:ad}{aggregate demand}, the \omterm{def:g12:aggregate-demand-and-supply:potential-output}{output gap}, and the return to the long run.
+\end{recall}
+
+\section{Aims and instruments}\label{sec:g12:monetary-policy:aims}
+
+\begin{definition}[Inflation target]\label{def:g12:monetary-policy:inflation-target}
+An \emph{inflation target}\index{inflation target} is a rate of inflation that a central bank announces it will aim at over time.
+\end{definition}
+
+Many central banks have one, often 2\,\% a year; some, like the Federal Reserve, are also asked to aim at high employment. The instrument is short: the central bank sets the
+interest rate on overnight loans of \omterm{def:g11:money-and-banking:reserves}{central bank money}, and through it moves everything else.
+% ledger: g12:boe-2026, g12:fed-rules
+
+\begin{measure}[How a central bank sets an overnight rate]
+% ledger: g12:ecb-2026
+A central bank cannot order banks to lend to each other at its rate, but it can make other rates pointless. It pays a rate on the money banks leave with it overnight and
+charges a higher rate on overnight loans it makes to them against collateral. No bank lends to another for less than it could earn at the central bank, and none borrows
+for more than the central bank charges, so the market rate stays in the corridor between the two. From 16 September 2026 the European Central Bank paid 2.50\,\% on
+deposits and charged 2.90\,\% on overnight loans, with its main lending rate at 2.65\,\%.
+\end{measure}
+
+\begin{dated}{2026}
+% ledger: g12:fomc-2026, g12:ecb-2026, g12:boe-2026
+\omterm{def:g11:money-and-banking:policy-rate}{Policy rates} in November 2026: Federal Reserve, a target range of 3.75--4.00\,\% since 17 September 2026; European Central Bank, 2.50\,\% on deposits since 16 September
+2026; Bank of England, 4\,\% since 5 November 2026, with a target of 2\,\% inflation.
+\end{dated}
+
+\section{From the policy rate to the economy}\label{sec:g12:monetary-policy:transmission}
+
+\begin{definition}[Monetary transmission]\label{def:g12:monetary-policy:transmission}
+\emph{Monetary transmission}\index{monetary transmission} is the chain of effects by which a change in the \omterm{def:g11:money-and-banking:policy-rate}{policy rate} reaches spending, output and inflation.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}[font=\scriptsize, node distance=0.45cm, box/.style={draw, rounded corners, fill=omDef!10, align=center, minimum height=0.9cm, text width=2.2cm}]
+\node[box] (a) {policy rate rises};
+\node[box, right=of a] (b) {market rates rise; asset prices fall};
+\node[box, right=of b] (c) {borrowing, investment and consumption fall};
+\node[box, right=of c, fill=omThm!10] (d) {output falls below potential};
+\node[box, below=0.5cm of d, fill=omThm!10] (e) {inflation falls};
+\node[box, below=0.5cm of b] (f) {currency rises; net exports fall};
+\draw[->, thick] (a) -- (b); \draw[->, thick] (b) -- (c); \draw[->, thick] (c) -- (d); \draw[->, thick] (d) -- (e);
+\draw[->, thick] (a.south) |- (f.west); \draw[->, thick] (f.east) -| (d.south west);
+\end{tikzpicture}
+
+{\small How a rise in the \omterm{def:g11:money-and-banking:policy-rate}{policy rate} reaches inflation: through the cost of borrowing, the prices of assets, and the exchange rate.}
+\end{omfigure}
+
+\begin{definition}[Policy lag]\label{def:g12:monetary-policy:lag}
+A \emph{policy lag}\index{policy lag} is the delay between a change in the economy and its effects after a policy responds: the time to see the change in the data, to decide,
+and for the decision to work through the chain.
+\end{definition}
+
+Because of the lags, a central bank must act on forecasts. A bank that waits until inflation is high to raise its rate, and until inflation has fallen to cut it, acts
+too late both times.
+
+\section{Rules and discretion}\label{sec:g12:monetary-policy:rules}
+
+\begin{definition}[Policy rule and Taylor rule]\label{def:g12:monetary-policy:policy-rule}
+A \emph{policy rule}\index{policy rule} is a formula that sets the \omterm{def:g11:money-and-banking:policy-rate}{policy rate} from data on the economy. A \emph{Taylor rule}\index{Taylor rule}%
+\phantomsection\label{def:g12:monetary-policy:taylor-rule} sets the nominal rate at
+\[ i = r^* + \pi + 0.5\,(\pi - \pi^*) + 0.5 \times \text{gap}, \]
+where $r^*$ is a neutral real rate, $\pi$ inflation, $\pi^*$ the target and the gap is the \omterm{def:g12:aggregate-demand-and-supply:potential-output}{output gap} in per cent; the usual numbers are $r^* = 2$ and $\pi^* = 2$.
+\end{definition}
+% ledger: g12:fed-rules
+
+The rule raises the nominal rate by more than any rise in inflation, so the real rate rises when inflation rises and falls when output is below potential.
+
+\begin{omchart}{United States: the federal funds rate (blue) and the rate given by a Taylor rule (red), annual averages, 1965--2024, in per cent.}{Board of Governors of the
+Federal Reserve System (H.15); U.S. Bureau of Labor Statistics; World Bank, World Development Indicators; rule computed in this book with consumer price inflation and the
+\omterm{def:g12:aggregate-demand-and-supply:potential-output}{output gap} of \cref{ch:g12:aggregate-demand-and-supply}}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.9\linewidth, height=5.4cm, xmin=1965, xmax=2024, ymin=-2, ymax=22, ytick={0,5,...,20}, ylabel={per cent}]
+\addplot[gray, thin, domain=1965:2024, samples=2] {0};
+\addplot[omDef, thick] table[x=year, y=actual] {figdata/grade-12/10-monetary-policy/out/taylor.csv};
+\addplot[omThm, thick, dashed] table[x=year, y=rule] {figdata/grade-12/10-monetary-policy/out/taylor.csv};
+\node[font=\scriptsize, omThm, anchor=south] at (axis cs:2014,13.5) {rule};
+\node[font=\scriptsize, omDef, anchor=west] at (axis cs:1967,1) {actual};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: policy_key (corr_8707 0.69, mad_8707 1.5; rule2021 8.2 vs 0.08; rule2022 13.1 vs 1.68; rule2009 -1)
+
+\begin{model}{A Taylor rule, as a description of policy}
+\assumes The central bank reacts to inflation above its target and to the \omterm{def:g12:aggregate-demand-and-supply:potential-output}{output gap}, with fixed weights.
+\predicts The path of the \omterm{def:g11:money-and-banking:policy-rate}{policy rate}, from data on inflation and output.
+\tested As a description, not a test: in this book's version, from 1987 to 2007 the rule and the federal funds rate moved together (correlation 0.69), and the actual rate was on average 1.5 points away
+  from the rule.
+\breaks In 2009 the rule asked for a rate of $-1\,\%$, below zero; in 2021 it gave 8.2\,\% and in 2022 13.1\,\%, while the Federal Reserve kept its rate near zero until March
+  2022. Its inputs, the neutral rate and \omterm{def:g12:aggregate-demand-and-supply:potential-output}{potential output}, are themselves estimates; policymakers consult such rules but do not follow them mechanically.
+\end{model}
+
+\begin{definition}[Time inconsistency]\label{def:g12:monetary-policy:time-inconsistency}
+A policy is subject to \emph{time inconsistency}\index{time inconsistency} when a plan that is best before others act is no longer best for the policymaker once they have
+acted.
+\end{definition}
+
+\begin{omfigure}
+\centering
+\small
+\begin{tabular}{lcc}
+\toprule
+ & bank keeps inflation at 0\,\% & bank lets inflation reach 5\,\% \\
+\midrule
+wage setters expect 0\,\% & 0 & $+1$ \\
+wage setters expect 5\,\% & $-3$ & $-1$ \\
+\bottomrule
+\end{tabular}
+
+\medskip
+{\small The central bank's \omterm{def:g11:oligopoly-and-games:game}{payoffs} in an invented \omterm{def:g11:oligopoly-and-games:game}{game}. Wage setters choose what to expect first, and want to be right; then the bank chooses inflation. A surprise
+inflation raises output for a time ($+1$ net of the cost of inflation); a surprise of low inflation, after wages were set for 5\,\%, causes a slump ($-3$).}
+\end{omfigure}
+
+The bank would like everyone to expect 0\,\% and then keep inflation at 0\,\%, a \omterm{def:g11:oligopoly-and-games:game}{payoff} of 0. But once wages are set for 0\,\%, it gains by letting inflation reach 5\,\%.
+Wage setters know this, expect 5\,\%, and the bank then lets inflation reach 5\,\% to avoid a slump: the outcome is high inflation and a \omterm{def:g11:oligopoly-and-games:game}{payoff} of $-1$, worse than the
+plan.
+
+\begin{definition}[Credibility and central bank independence]\label{def:g12:monetary-policy:credibility}
+A central bank has \emph{credibility}\index{credibility} when people believe it will do what it announces. \emph{Central bank independence}\index{central bank independence}%
+\phantomsection\label{def:g12:monetary-policy:independence} is the setting of policy by a central bank free of instructions from the government of the day.
+\end{definition}
+
+An independent bank with a clear target can be believed when it promises low inflation, because the government cannot order the surprise. Across sixteen rich countries,
+central banks under political control were more likely to have high and variable inflation, and there was little sign that independence changed growth, unemployment or
+\omterm{def:g10:price-indices:real-interest-rate}{real interest rates}. A correlation of this kind does not show by itself that independence lowers inflation: countries that dislike inflation may also choose independent
+central banks.
+% ledger: g12:as1993
+
+\section{The record}\label{sec:g12:monetary-policy:record}
+
+\begin{record}[The disinflation of 1979--83]
+% ledger: b1:fed-targets; figdata: policy_key (pi1980 13.5, pi1983 3.2, actual1981 16.38, unemp1979 5.8, unemp1982 9.7)
+On 6 October 1979 the Federal Reserve changed its procedure, targeting the growth of bank reserves to control the money supply, and let the overnight rate rise. The
+federal funds rate averaged 16.4\,\% in 1981. Consumer price inflation fell from 13.5\,\% in 1980 to 3.2\,\% in 1983. The cost was a deep \omterm{def:g12:aggregate-demand-and-supply:recession}{recession}: unemployment rose from
+5.8\,\% in 1979 to 9.7\,\% in 1982. In July 1982 the Federal Reserve's chairman told Congress that it was backing off its tight money targets. The expectations-augmented Phillips
+curve of \cref{ch:g12:phillips-curve} predicts this cost when expectations are slow to fall: inflation came down only after a deep \omterm{def:g12:aggregate-demand-and-supply:recession}{recession}, and the
+sacrifice ratio of that chapter's problem measures how deep.
+\end{record}
+
+\begin{definition}[Zero lower bound]\label{def:g12:monetary-policy:zlb}
+The \emph{zero lower bound}\index{zero lower bound} is the floor, near zero, below which a central bank cannot push its \omterm{def:g11:money-and-banking:policy-rate}{policy rate} far, because people can hold cash, which
+pays zero.
+\end{definition}
+
+On 16 December 2008 the Federal Reserve set a target range of 0 to $\tfrac14\,\%$, where it stayed until December 2015. With the rate at its floor, it used two other tools.
+
+\begin{definition}[Quantitative easing and forward guidance]\label{def:g12:monetary-policy:qe}
+\emph{Quantitative easing}\index{quantitative easing} is the purchase by a central bank of large amounts of long-term \omterm{def:g12:present-value:bond}{bonds} and other assets, paid for with new \omterm{def:g11:money-and-banking:reserves}{central bank
+money}, to lower long-term interest rates. \emph{Forward guidance}\index{forward guidance}\phantomsection\label{def:g12:monetary-policy:forward-guidance} is a central bank's
+announcement of how it expects to set its rate in the future.
+\end{definition}
+
+The Federal Reserve's total assets were 0.87 trillion dollars in August 2007, 4.5 trillion at the end of 2014 and 8.97 trillion at their peak in April 2022.
+% ledger: b1:fed-zlb-2008, b1:fed-liftoff-2015; figdata: policy_key (assets_2007 0.87, assets_2014 4.5, assets_peak 8.97, 2022-04-13)
+
+\begin{record}[2021--23]
+% ledger: g12:fomc-2022; figdata: policy_key (pi2021 4.7, pi2022 8, pi2023 4.1, pi2024 2.9)
+Consumer price inflation rose to 4.7\,\% in 2021 and 8.0\,\% in 2022. The Federal Reserve kept its target range at its floor until 17 March 2022, then raised it eleven
+times, to 5.25--5.50\,\% on 27 July 2023. Inflation fell to 4.1\,\% in 2023 and 2.9\,\% in 2024. The rule of the chart had asked for higher rates a year earlier; whether
+acting earlier would have cost less output, or whether inflation would have fallen anyway as supplies recovered, the record of one episode cannot say.
+\end{record}
+
+\section{One policy for many countries}\label{sec:g12:monetary-policy:union}
+
+On 1 January 1999 the European Central Bank began setting one \omterm{def:g11:money-and-banking:policy-rate}{policy rate} for the countries of the euro area. One rate cannot fit every member at once: a country in a boom
+with high inflation would want a higher rate than one in a slump. Within one country, too, regions differ, but they share a budget that moves money towards regions in
+trouble and workers who move between them; how far a currency union can manage without these is a question for the chapters on trade and integration.
+% ledger: g12:ecb-2026
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g12:monetary-policy:1}
+From the opening chart, when did the federal funds rate reach its highest level, and roughly how high?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:monetary-policy:2}
+From the opening chart, name the two periods since 2000 when the rate was near zero.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:monetary-policy:3}
+With $r^* = 2$ and $\pi^* = 2$, find the Taylor-rule rate when inflation is 3\,\% and the \omterm{def:g12:aggregate-demand-and-supply:potential-output}{output gap} is $+1\,\%$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:monetary-policy:4}
+Find the Taylor-rule rate when inflation is 1\,\% and the \omterm{def:g12:aggregate-demand-and-supply:potential-output}{output gap} is $-2\,\%$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:monetary-policy:5}
+The \omterm{def:g11:money-and-banking:policy-rate}{policy rate} is 5.25\,\% and inflation 3\,\%. Find the real \omterm{def:g11:money-and-banking:policy-rate}{policy rate}, approximately.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:monetary-policy:6}
+With a zero \omterm{def:g12:aggregate-demand-and-supply:potential-output}{output gap}, inflation is 2, 4 and then 6\,\% in three years. Find the rule's rate and the real rate it implies in each year.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:monetary-policy:7}
+With inflation at 2\,\%, the \omterm{def:g12:aggregate-demand-and-supply:potential-output}{output gap} is $-4$, $-2$ and 0\,\% in three years. Find the rule's rate in each.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:monetary-policy:8}
+Trace a cut in the \omterm{def:g11:money-and-banking:policy-rate}{policy rate} through the chain of transmission, link by link, to inflation.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:monetary-policy:9}
+Inflation starts to rise in January. It shows in the data in March; the bank decides in June; a rate rise starts to lower inflation a year after it is made. When does
+inflation start to fall because of the policy? What would a bank acting on forecasts do differently?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:monetary-policy:10}
+From the chart of the rule, give the rule's rate and the actual rate in 2022, and the difference.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:monetary-policy:11}
+In 2009 the rule gave $-1\,\%$. Why could the central bank not follow it, and what could it do instead?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:monetary-policy:12}
+In 2021 the rule gave 8.2\,\% and the actual rate was close to zero. Does this show that the rule is wrong, that the central bank was wrong, or neither? Give two reasons a
+bank might depart from the rule.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:monetary-policy:13}
+In the \omterm{def:g11:oligopoly-and-games:game}{game} of this chapter, show that \emph{expect 0\,\%, keep 0\,\%} is not an equilibrium and that \emph{expect 5\,\%, let 5\,\%} is. How would a bank that could commit
+in advance to 0\,\% do?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:monetary-policy:14}
+State the cross-country finding on independence and inflation. Why does it not prove that making a central bank independent would lower inflation in a given country?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:monetary-policy:15}
+Two regions of equal size share a currency. Region A has inflation of 4\,\% and an \omterm{def:g12:aggregate-demand-and-supply:potential-output}{output gap} of $+2\,\%$; region B has inflation of 0\,\% and a gap of $-3\,\%$. Find the rule's
+rate for each region alone and for the union, using the average inflation and gap.
+\end{exercise}
+
+\section{Problem: Brenland's Central Bank}
+
+\begin{problem}[{Weekend problem --- a rule against the record}]
+\label{pb:g12:monetary-policy:1}
+The table gives Brenland's \omterm{def:g11:money-and-banking:policy-rate}{policy rate}, consumer price inflation and \omterm{def:g12:aggregate-demand-and-supply:potential-output}{output gap} (real GDP against a log-linear trend fitted on 2001--2025, which grows by 1.52\,\% a year),
+all in per cent. Brenland's central bank has an \omterm{def:g12:monetary-policy:inflation-target}{inflation target} of 2\,\%. Use the rule $i = 2 + \pi + 0.5(\pi - 2) + 0.5 \times \text{gap}$.
+
+\medskip
+\begin{center}
+\small
+\pgfplotstabletypeset[col sep=comma, columns={year,rate,infl,gap},
+  columns/year/.style={column name=year, int detect, column type=l},
+  columns/rate/.style={column name={\omterm{def:g11:money-and-banking:policy-rate}{policy rate}}, fixed, precision=2, zerofill},
+  columns/infl/.style={column name=inflation, fixed, precision=1, zerofill},
+  columns/gap/.style={column name={\omterm{def:g12:aggregate-demand-and-supply:potential-output}{output gap}}, fixed, precision=1, zerofill},
+  every head row/.style={before row=\toprule, after row=\midrule}, every last row/.style={after row=\bottomrule}]
+  {figdata/grade-12/10-monetary-policy/out/brenland.csv}
+\end{center}
+% figdata: brenland (rule and diff columns not printed)
+
+\medskip
+\noindent\textbf{Part I --- The record.}
+\begin{enumerate}
+\item In which year was inflation highest, and what was the \omterm{def:g11:money-and-banking:policy-rate}{policy rate} that year?
+\item Find the real \omterm{def:g11:money-and-banking:policy-rate}{policy rate} in 2019 and in 2022.
+\item In which year was the \omterm{def:g12:aggregate-demand-and-supply:potential-output}{output gap} most negative? What kind of event would explain it?
+\item Was output above or below trend from 2016 to 2019?
+\item Did the central bank raise its rate in 2022? By how much?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The rule.}
+\begin{enumerate}[resume]
+\item Find the rule's rate in 2015.
+\item Find the rule's rate in 2020.
+\item Find the rule's rate in 2022.
+\item Find the gap between the rule's rate and the actual rate in 2022.
+\item Find the rule's rate and the gap in 2023.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Reading the gap.}
+\begin{enumerate}[resume]
+\item The rule's rates for 2016--2019 are 5.65, 4.65, 5.15 and 4.95\,\%. Find the average gap between rule and actual in those years.
+\item A rule that is too high in calm years may use the wrong neutral rate. With $r^* = 0$ instead of 2, what is the rule's rate in 2022?
+\item What real rate does the rule ask for in 2022, and what was the actual real rate?
+\item If \omterm{def:g12:aggregate-demand-and-supply:potential-output}{potential output} were higher than the trend, so that the 2022 gap was $-2\,\%$, what would the rule give?
+\item Which inputs of the rule are measured, and which are estimated?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Interpretation.}
+\begin{enumerate}[resume]
+\item Inflation fell to 5.6\,\% in 2023 and 3.8\,\% in 2024. Does this show that the bank was right not to follow the rule?
+\item Give one reason, from the lags, why a bank might set its rate below the rule's when inflation is high.
+\item Give one reason, from \omterm{def:g12:monetary-policy:credibility}{credibility}, why it might regret doing so.
+\item Why might the rule's weights of 0.5 not suit Brenland?
+\item State the result of the problem: the gap between the rule's rate and the actual \omterm{def:g11:money-and-banking:policy-rate}{policy rate} in 2022, and the inflation the rule would have reacted to.
+\end{enumerate}
+\end{problem}

@@ -1,0 +1,7 @@
+$ python cluster_sim.py
+true s.d. of the slope across samples: 0.0696
+mean classical standard error: 0.0323
+mean robust    standard error: 0.0322
+mean cluster   standard error: 0.0684
+Moulton factor sqrt(1 + (m - 1) rho): 2.191
+cluster over classical: 2.115

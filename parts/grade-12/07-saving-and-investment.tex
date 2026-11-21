@@ -1,0 +1,301 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g12-07. Saving equals investment; private and public saving; net
+% lending; the market for loanable funds; crowding out; how firms finance investment; bubbles and crises. Real numbers:
+% figdata/grade-12/07-saving-and-investment/ (WDI gross saving and gross capital formation, 2010-2019 means, 155 countries; JST
+% USA rgdpmad, unemp, hpnom). Ledger: Feldstein-Horioka 1980 (abstract: the question only; no coefficient read), Federal
+% Reserve History on 1929 and 2007-09, Wikipedia on Lehman Brothers. No stock-exchange photograph (Commons rate-limited the download; see PROGRESS). Brenland's
+% saving and investment functions are invented.
+\chapter{Saving, Investment and the Financial System}\label{ch:g12:saving-and-investment}
+
+From 2010 to 2019, Singapore saved 46\,\% of its national income on average and invested 27\,\% of its GDP at home. Mozambique saved 12\,\% and invested 42\,\%. Across 155
+countries, the two rates are related, but loosely: a country that saved ten points more invested, on average, only about two and a half points more.
+% figdata: si (SGP 45.7/27.1, MOZ 11.8/42.1); si_key (n 155, slope 0.251, corr 0.477)
+
+In a closed economy, every unit invested must be saved at home. In the world as it is, saving crosses borders, and a country can invest more than it saves by borrowing
+from abroad. This chapter starts from the closed economy, where saving equals investment and the interest rate brings them together, then opens it, then looks at the
+institutions that move savings to investors, and at what happens when they fail.
+
+\begin{openingchart}{Gross national saving in per cent of gross national income, against gross capital formation (investment) in per cent of GDP, means of 2010--2019,
+155 countries; the line marks equal rates.
+Three countries with saving below 0 or above 70\,\% lie outside the frame.}{World Bank, World Development Indicators (NY.GNS.ICTR.ZS, NE.GDI.TOTL.ZS)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.72\linewidth, height=6.4cm, xmin=0, xmax=70, ymin=0, ymax=70, xlabel={national saving, per cent of national income},
+  ylabel={investment, per cent of GDP}, xtick={0,10,...,70}, ytick={0,10,...,70}]
+\addplot+[omDef, mark=*, mark size=1.2pt, only marks] table[x=s, y=i] {figdata/grade-12/07-saving-and-investment/out/si.csv};
+\addplot[gray, dashed, sharp plot, no marks, domain=0:70, samples=2] {x};
+\node[font=\scriptsize, anchor=west] at (axis cs:45.7,27.1) {Singapore};
+\node[font=\scriptsize, anchor=west] at (axis cs:11.8,42.1) {Mozambique};
+\node[font=\scriptsize, anchor=west] at (axis cs:46.2,44.3) {China};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: saving, banks, loans and interest. From \cref{ch:g10:national-accounts}: the identity $Y = C + I + G + X - M$. From \cref{ch:g10:price-indices}:
+the \omterm{def:g10:price-indices:real-interest-rate}{real interest rate}. From \cref{ch:g11:money-and-banking}: what banks do. From \cref{ch:g12:present-value}: \omterm{def:g12:present-value:bond}{bonds} and their prices.
+\end{recall}
+
+\section{Saving equals investment}\label{sec:g12:saving-and-investment:identity}
+
+\begin{definition}[National, private and public saving]\label{def:g12:saving-and-investment:national-saving}
+\emph{National saving}\index{national saving} is output not spent on private or public consumption: $S = Y - C - G$. \emph{Private saving}\index{private saving}%
+\phantomsection\label{def:g12:saving-and-investment:private-saving} is what households and firms keep from their income after taxes $T$ and consumption, $Y - T - C$.
+\emph{Public saving}\index{public saving}\phantomsection\label{def:g12:saving-and-investment:public-saving} is the government's revenue minus its spending, $T - G$:
+negative when it runs a deficit.
+\end{definition}
+
+\begin{proposition}[Saving and investment]\label{prop:g12:saving-and-investment:identity}
+\omterm{def:g12:saving-and-investment:national-saving}{National saving} is the sum of private and \omterm{def:g12:saving-and-investment:national-saving}{public saving}. In a closed economy ($X = M = 0$), \omterm{def:g12:saving-and-investment:national-saving}{national saving} equals investment; in an open economy, $S - I = X - M$.
+\end{proposition}
+\begin{proof}
+$(Y - T - C) + (T - G) = Y - C - G = S$. From $Y = C + I + G + X - M$, $S = Y - C - G = I + X - M$; with $X = M = 0$, $S = I$.
+\end{proof}
+
+\begin{definition}[Net lending]\label{def:g12:saving-and-investment:net-lending}
+A sector's \emph{net lending}\index{net lending} is its saving minus its investment: positive when it has funds to lend to other sectors (a financing capacity), negative
+when it must borrow (a financing need).
+\end{definition}
+
+\begin{measure}[Net lending in the accounts]
+National accounts divide the economy into sectors: households, firms, financial institutions, government and the rest of the world. For each they record saving and
+investment, and the difference, \omterm{def:g12:saving-and-investment:net-lending}{net lending} or net borrowing. Households are usually net lenders, firms net borrowers, the government a borrower when in deficit; the
+sectors' \omterm{def:g12:saving-and-investment:net-lending}{net lending} adds up to the nation's, and that is lent to or borrowed from the rest of the world.
+\end{measure}
+
+\section{The market for loanable funds}\label{sec:g12:saving-and-investment:market}
+
+\begin{definition}[Market for loanable funds]\label{def:g12:saving-and-investment:loanable-funds}
+The \emph{market for loanable funds}\index{market for loanable funds} is the model of a market in which savers supply funds and investors demand them, at a price that is the
+\omterm{def:g10:price-indices:real-interest-rate}{real interest rate}.
+\end{definition}
+
+Saving rises with the real rate, since each dollar saved earns more; investment falls with it, since fewer projects earn more than the cost of borrowing (the \omterm{def:g12:present-value:present-value}{present value} of
+\cref{ch:g12:present-value}). The rate settles where they are equal.
+
+\begin{definition}[Crowding out]\label{def:g12:saving-and-investment:crowding-out}
+\emph{Crowding out}\index{crowding out} is the fall in private investment that follows a rise in government borrowing, because the borrowing raises the \omterm{def:g10:price-indices:real-interest-rate}{real interest rate}.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[width=0.66\linewidth, height=5.4cm, xmin=10, xmax=30, ymin=0, ymax=5, xlabel={funds, per cent of GDP}, ylabel={real interest rate, per cent},
+  xtick={19,20}, ytick={2,2.5}, grid=major, grid style={gray!20}]
+\addplot[omDef, thick, domain=0:5, samples=2] ({24 - 2*x}, {x}) node[pos=0.05, above right, font=\scriptsize] {investment};
+\addplot[omThm, thick, domain=0:5, samples=2] ({16 + 2*x}, {x}) node[pos=0.9, right, font=\scriptsize] {saving};
+\addplot[omThm, thick, dashed, domain=0:5, samples=2] ({14 + 2*x}, {x}) node[pos=0.9, left, font=\scriptsize] {saving with a deficit};
+\fill (axis cs:20,2) circle (1.5pt) (axis cs:19,2.5) circle (1.5pt);
+\end{axis}
+\end{tikzpicture}
+
+{\small A deficit of 2\,\% of GDP, with the numbers of the weekend problem. \omterm{def:g12:saving-and-investment:national-saving}{National saving} shifts left by the deficit; the rate rises from 2 to 2.5\,\%; \omterm{def:g12:saving-and-investment:national-saving}{private saving} rises
+by 1 point, investment falls by 1 point. Half the deficit is financed by \omterm{def:g12:saving-and-investment:crowding-out}{crowding out} investment.}
+\end{omfigure}
+
+\begin{model}{The loanable-funds market}
+\assumes A closed economy; saving rises and investment falls with the \omterm{def:g10:price-indices:real-interest-rate}{real interest rate}.
+\predicts \omterm{def:g12:saving-and-investment:national-saving}{National saving} and investment are equal in each country; a government deficit raises the real rate and crowds out investment.
+\tested In the world of 2010--2019 the closed-economy prediction fails: across 155 countries, investment rose by only about a quarter of a point for each extra point of
+  \omterm{def:g12:saving-and-investment:national-saving}{national saving} (the opening chart). Feldstein and Horioka (1980) asked whether a country's saving stays at home or flows to wherever it earns most; for 16 rich countries
+  in 1960--74 they found that investment rose almost point for point with saving, a coefficient of 0.89. Across 155 countries in 2010--19 the slope
+  is only 0.25: a country's own saving accounts for a small part of the differences in investment.
+% ledger: b1:feldstein1980
+\breaks Where capital flows freely, a country can borrow abroad at the world rate, so a deficit raises borrowing from abroad more than the rate; and when the rate is near
+  zero and cannot fall, the market does not bring saving and investment together through the rate.
+\end{model}
+% ledger: g12:fh1980
+
+\section{How firms pay for investment}\label{sec:g12:saving-and-investment:firms}
+
+\begin{definition}[Gross operating surplus and self-financing]\label{def:g12:saving-and-investment:gross-operating-surplus}
+A firm's \emph{gross operating surplus}\index{gross operating surplus} is its value added minus the wages and taxes on production it pays: what is left to pay interest,
+profits and taxes on profits, and to invest. \emph{Self-financing}\index{self-financing}\phantomsection\label{def:g12:saving-and-investment:self-financing} is investment
+paid for out of the firm's own saving, the profits it keeps.
+\end{definition}
+
+\begin{definition}[Financial intermediary and share]\label{def:g12:saving-and-investment:intermediary}
+A \emph{financial intermediary}\index{financial intermediary} is an institution, such as a bank, an insurer or a fund, that collects savings and lends or invests them. A
+\emph{share}\index{share (in a company)}\phantomsection\label{def:g12:saving-and-investment:share} in a company is a part of its ownership, which gives a claim on its
+profits and a vote on its management.
+\end{definition}
+
+A firm that needs more than it keeps can borrow from a bank, sell \omterm{def:g12:present-value:bond}{bonds}, or sell new \omterm{def:g12:saving-and-investment:intermediary}{shares}. A loan or a \omterm{def:g12:present-value:bond}{bond} must be repaid with interest whatever happens; a \omterm{def:g12:saving-and-investment:intermediary}{share} pays
+dividends only if there are profits, so it shares the risk with the investor. Banks lend to small firms whose quality only a close lender can judge; large, well-known firms
+can borrow directly from savers by selling \omterm{def:g12:present-value:bond}{bonds} and \omterm{def:g12:saving-and-investment:intermediary}{shares}.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[xbar stacked, /pgf/bar width=12pt, width=0.7\linewidth, height=3.6cm, xmin=0, xmax=100, xlabel={per cent of investment},
+  ytick={1,2}, yticklabels={{young firm}, {mature firm}}, enlarge y limits=0.5, legend style={at={(0.5,1.05)}, anchor=south, font=\scriptsize, draw=none},
+  legend columns=4]
+\addplot[fill=omDef!60, draw=omDef] coordinates {(20,1) (70,2)};
+\addplot[fill=omThm!60, draw=omThm] coordinates {(50,1) (10,2)};
+\addplot[fill=omProp!60, draw=omProp] coordinates {(0,1) (15,2)};
+\addplot[fill=omMeth!60, draw=omMeth] coordinates {(30,1) (5,2)};
+\legend{own saving, bank loans, bonds, new shares}
+\end{axis}
+\end{tikzpicture}
+
+{\small How two invented firms pay for a year's investment. The young firm keeps little profit and depends on its bank and on new owners; the mature firm pays for most of
+its investment itself and borrows the rest by selling \omterm{def:g12:present-value:bond}{bonds}.}
+\end{omfigure}
+
+\section{When finance fails}\label{sec:g12:saving-and-investment:crises}
+
+\begin{definition}[Speculative bubble]\label{def:g12:saving-and-investment:bubble}
+A \emph{speculative bubble}\index{speculative bubble} is a rise in an asset's price above the \omterm{def:g12:present-value:present-value}{present value} of the income it will bring, sustained by buyers' expectation that
+the price will keep rising.
+\end{definition}
+
+A fall in asset prices reaches output and jobs through several channels. Households who feel poorer spend less. Borrowers whose collateral loses value can borrow less. Banks
+that lose on loans lend less to everyone, and lenders that must sell assets quickly push prices down further, hurting other holders.
+
+\begin{omfigure}
+\begin{tikzpicture}[font=\scriptsize, node distance=0.5cm, box/.style={draw, rounded corners, fill=omDef!10, align=center, minimum height=0.9cm, text width=2.0cm}]
+\node[box] (a) {asset prices fall};
+\node[box, right=of a] (b) {wealth and collateral fall};
+\node[box, right=of b] (c) {losses at banks; fire sales};
+\node[box, right=of c] (d) {less credit, less spending};
+\node[box, below=0.6cm of d, fill=omThm!10] (e) {output and jobs fall};
+\draw[->, thick] (a) -- (b); \draw[->, thick] (b) -- (c); \draw[->, thick] (c) -- (d); \draw[->, thick] (d) -- (e);
+\draw[->, thick, dashed] (e.west) -| (a.south) node[pos=0.25, below, font=\scriptsize] {more defaults};
+\end{tikzpicture}
+
+{\small How a fall in asset prices reaches the real economy, and feeds back on itself.}
+\end{omfigure}
+
+\begin{omchart}{United States: real GDP per person (index, 100 in the year before the crisis, solid) and the unemployment rate (per cent, dashed), 1926--1940 and
+2004--2016.}{Jordà--Schularick--Taylor Macrohistory Database}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 1, horizontal sep=1.3cm}, omtime, height=5.0cm, ymin=0, ymax=110]
+\nextgroupplot[omtime, width=0.48\linewidth, xmin=1926, xmax=1940, xtick={1926,1930,...,1938}, ylabel={index; per cent}]
+\addplot[omDef, thick] table[x=year, y=gdp] {figdata/grade-12/07-saving-and-investment/out/crisis1929.csv};
+\addplot[omThm, thick, dashed] table[x=year, y=unemp] {figdata/grade-12/07-saving-and-investment/out/crisis1929.csv};
+\nextgroupplot[omtime, width=0.48\linewidth, xmin=2004, xmax=2016, xtick={2004,2008,2012,2016}]
+\addplot[omDef, thick] table[x=year, y=gdp] {figdata/grade-12/07-saving-and-investment/out/crisis2007.csv} node[pos=0.5, below, font=\scriptsize] {GDP per person};
+\addplot[omThm, thick, dashed] table[x=year, y=unemp] {figdata/grade-12/07-saving-and-investment/out/crisis2007.csv} node[pos=0.5, above, font=\scriptsize] {unemployment};
+\end{groupplot}
+\end{tikzpicture}
+\end{omchart}
+% figdata: crisis_key (gdp1933 69.2, u1929 3.2, u1933 24.9, gdp2009 94.5, u2007 4.6, u2010 9.6, house2012 84.5)
+
+\begin{record}[1929--33 and 2007--09: from a crash to output and jobs]
+% ledger: g12:crash1929, g12:gr2007, g12:lehman
+The Dow Jones index of American \omterm{def:g12:saving-and-investment:intermediary}{shares} closed at 381 on 3 September 1929; it fell by nearly 13\,\% on 28 October and by nearly 12\,\% the next day, and by 8 July 1932 it stood at
+41, 89\,\% below its peak. Real output per person fell by almost a third from 1929 to 1933, and unemployment rose from 3.2\,\% to 24.9\,\%. In the second crisis, American
+home prices fell by roughly 30\,\% from their peak in mid-2006 to mid-2009; the investment bank Lehman Brothers filed for bankruptcy on 15 September 2008, the largest
+filing in American history. The recession ran from December 2007 to June 2009; real GDP fell by 4.3\,\% and unemployment rose from 5\,\% to a peak of 10\,\% in October
+2009. The second crisis was smaller than the first; the chart shows how much.
+\end{record}
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g12:saving-and-investment:1}
+A closed economy has $Y = 1000$, $C = 600$ and $G = 200$. Find \omterm{def:g12:saving-and-investment:national-saving}{national saving} and investment.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:saving-and-investment:2}
+An open economy has $Y = 1000$, $C = 650$, $G = 200$ and $I = 180$. Find \omterm{def:g12:saving-and-investment:national-saving}{national saving} and \omterm{def:g10:national-accounts:net-exports}{net exports}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:saving-and-investment:3}
+From the opening chart, which country saves much more than it invests, and which invests much more than it saves? What does each do with the difference?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:saving-and-investment:4}
+$Y = 1000$, $T = 250$, $C = 600$, $G = 280$. Find private, public and \omterm{def:g12:saving-and-investment:national-saving}{national saving}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:saving-and-investment:5}
+Households save 120 and invest 40 (in housing); firms save 90 and invest 150. Find each sector's \omterm{def:g12:saving-and-investment:net-lending}{net lending}, and their total.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:saving-and-investment:6}
+Saving is $S = 100 + 20r$ and investment $I = 180 - 20r$, $r$ in per cent. Find the equilibrium rate and amount.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:saving-and-investment:7}
+In \cref{exo:g12:saving-and-investment:6}, firms become more optimistic and investment becomes $I = 200 - 20r$. Find the new equilibrium.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:saving-and-investment:8}
+In \cref{exo:g12:saving-and-investment:6}, the government runs a deficit of 20. Find the new rate, investment and \omterm{def:g12:saving-and-investment:national-saving}{private saving}, and the \omterm{def:g12:saving-and-investment:intermediary}{share} of the deficit crowded out.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:saving-and-investment:9}
+In \cref{exo:g12:saving-and-investment:6}, households decide to save 40 more at every rate. Find the new rate and investment. What would happen in an open economy at a fixed
+world rate?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:saving-and-investment:10}
+A firm invests 500, keeps profits of 350 and borrows the rest. Find its \omterm{def:g12:saving-and-investment:gross-operating-surplus}{self-financing} ratio.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:saving-and-investment:11}
+From the chart of the two crises, give the index of GDP per person and the unemployment rate in 1933 and in 2009, and say which crisis was deeper.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:saving-and-investment:12}
+What evidence contradicts the closed-economy model of loanable funds? Use the opening chart and its fitted slope.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:saving-and-investment:13}
+An asset pays 5 a year for ever, and the interest rate is 5\,\%. Its price is 150, and buyers expect it to rise by 10\,\% a year. What is its \omterm{def:g12:present-value:present-value}{present value}? Show that a buyer
+earns more than 5\,\% as long as the expectation holds. What happens when buyers stop expecting the rise?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:saving-and-investment:14}
+A bank holds assets of 100 and capital of 8. It must sell 30 of assets quickly, and fire sales fetch 80\,\% of their value. What does it lose, and what is left of its
+capital? What happens to other banks that hold the same assets?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:saving-and-investment:15}
+In the open economy of the weekend problem, why does a deficit leave investment unchanged? Who lends the government the money, and what does the country owe in return?
+\end{exercise}
+
+\section{Problem: Brenland's Loanable Funds}
+
+\begin{problem}[{Weekend problem --- a deficit, closed and open}]
+\label{pb:g12:saving-and-investment:1}
+In Brenland, \omterm{def:g12:saving-and-investment:national-saving}{private saving} is $S_p = 16 + 2r$ and investment $I = 24 - 2r$, both in per cent of GDP, with $r$ the \omterm{def:g10:price-indices:real-interest-rate}{real interest rate} in per cent. Brenland's GDP is 393\,264
+million dalens.
+
+\medskip
+\noindent\textbf{Part I --- A balanced budget, closed economy.}
+\begin{enumerate}
+\item With a balanced budget, find the equilibrium real rate.
+\item Find saving and investment, in per cent of GDP and in dalens.
+\item What is \omterm{def:g12:saving-and-investment:national-saving}{public saving}? \omterm{def:g12:saving-and-investment:national-saving}{National saving}?
+\item Firms invest more if the rate falls. Why, using \omterm{def:g12:present-value:present-value}{present value}?
+\item Households save more if the rate rises. Give one reason.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- A deficit, closed economy.}
+\begin{enumerate}[resume]
+\item The government runs a deficit of 2\,\% of GDP. Write \omterm{def:g12:saving-and-investment:national-saving}{national saving} as a function of $r$.
+\item Find the new equilibrium rate.
+\item Find investment and \omterm{def:g12:saving-and-investment:national-saving}{private saving}.
+\item By how much has investment fallen? What is the crowding-out ratio, investment lost per unit of deficit?
+\item Who finances the rest of the deficit?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Open to Kestria.}
+\begin{enumerate}[resume]
+\item Capital now flows freely between Brenland and Kestria, and Brenland is small enough to borrow at a world real rate of 2\,\%. With the deficit, find investment and
+  \omterm{def:g12:saving-and-investment:national-saving}{national saving}.
+\item Find $S - I$, and so \omterm{def:g10:national-accounts:net-exports}{net exports}, in per cent of GDP and in dalens.
+\item Who lends Brenland the difference?
+\item Compare the effects of the deficit on investment in the closed and the open economy.
+\item What does Brenland owe in future years as a result?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Interpretation.}
+\begin{enumerate}[resume]
+\item The opening chart shows saving and investment loosely related across countries. Which part of the problem does that support?
+\item If the world rate rose to 3\,\%, what would Brenland's investment be?
+\item Why might a large country's deficit raise the world rate?
+\item Under what condition would the deficit pay for itself by raising future output?
+\item State the result of the problem: the crowding-out ratio in the closed economy, and the deficit of \omterm{def:g10:national-accounts:net-exports}{net exports} once capital flows.
+\end{enumerate}
+\end{problem}

@@ -1,0 +1,9 @@
+stat,value
+r0,30
+t_attack,8
+t_exhaust,10
+r_at_attack,6
+money_before,120
+money_after,114
+dep_rate_after,2.5
+t_attack_mu6,3

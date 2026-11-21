@@ -1,0 +1,400 @@
+\chapter{Aggregate Supply and the Phillips Curve}\label{ch:b1:aggregate-supply}
+
+In the United States from 1960 to 2018, the years of low unemployment were
+years in which inflation rose, and the years of high unemployment years in
+which it fell. In 1974, with unemployment at $5.6\%$, inflation rose by $4.82$
+points; in 1982, at $9.7\%$, it fell by $4.16$. % figdata: accel_points
+(Inflation here is the percent change of the yearly average consumer price
+index.)
+The level of inflation in a year says little about unemployment; its
+change says more. This chapter lets the price level move: it builds
+\omterm{def:b1:aggregate-supply:sras}{aggregate supply}, joins it to the demand side of the last chapter, and
+derives the relation between inflation, expected inflation and
+unemployment that central banks still use.
+
+\begin{openingchart}{The change in inflation from the year before against the
+unemployment rate, United States, 1960--2018, with the fitted line;
+inflation is the percent change of the annual average CPI-U.}{US Bureau of
+Labor Statistics, CPI-U all items; unemployment: Jord\`a--Schularick--Taylor
+Macrohistory Database, release 6}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xlabel={Unemployment rate (\%)}, ylabel={Change in inflation (points)}, xmin=2.5, xmax=10.5,
+  ymin=-6, ymax=6, width=0.6\linewidth, height=0.45\linewidth]
+  \addplot[only marks, mark=*, mark size=1.5pt, omDef] table[x=unemp, y=dpi, col sep=comma] {figdata/bachelor-1/25-aggregate-supply/out/accel.csv};
+  \addplot[omThm, thick, sharp plot, mark=none] table[x=u, y=fit, col sep=comma] {figdata/bachelor-1/25-aggregate-supply/out/accel_fit.csv};
+  \addplot[only marks, mark=none, nodes near coords, point meta=explicit symbolic, nodes near coords style={font=\scriptsize, anchor=south west, inner sep=1.5pt}]
+    table[x=unemp, y=dpi, meta=year, col sep=comma] {figdata/bachelor-1/25-aggregate-supply/out/accel_labels.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+The fitted line falls by $0.47$ points of inflation per point of
+unemployment and crosses zero at $6.07\%$: below that rate inflation tended
+to rise, above it to fall. The correlation is $-0.443$. % figdata: accel_stats
+That crossing is an estimate of the natural rate of unemployment.
+
+\begin{recall}
+The Phillips curve and its breakdown in the 1970s, stagflation, the
+natural rate of unemployment, aggregate demand and supply in words, the
+output gap, supply and demand shocks, and the sacrifice ratio were met at
+school. IS--LM is \cref{ch:b1:is-lm}; the \omterm{def:b1:unemployment-flows:steady-state-rate}{steady-state unemployment rate} is
+\cref{def:b1:unemployment-flows:steady-state-rate}.
+\end{recall}
+
+\section{Three short-run supply stories}\label{sec:b1:aggregate-supply:stories}
+
+In the long run output is $\bar Y = F(\bar K, \bar L)$, whatever the price level
+(\cref{ch:b1:long-run-model}). In the short run, three stories make output
+rise when prices are higher than expected.
+
+\emph{Sticky wages.} Nominal wages are set in advance from the expected
+price level; if prices turn out higher, the real wage is lower and firms
+hire more. \emph{Sticky prices.} Some firms set prices in advance; when
+demand is high, those that cannot adjust sell more. \emph{Imperfect
+information.} Producers see their own price before the general price
+level, and mistake part of a general rise for a rise in their relative
+price.
+
+\begin{definition}[Short-run aggregate supply curve]\label{def:b1:aggregate-supply:sras}
+\index{short-run aggregate supply curve}\index{aggregate supply}
+The \emph{short-run aggregate supply curve} relates output to the price level
+for a given expected price level: $Y = \bar Y + a(P - P^e)$, with $a > 0$. In the long
+run $P = P^e$ and the curve is vertical at $\bar Y$.
+\end{definition}
+
+\begin{proposition}[Sticky prices give the SRAS]\label{prop:b1:aggregate-supply:sticky}
+Suppose a share $1 - s$ of firms set their price flexibly at $p = P + b(Y - \bar Y)$, and a
+share $s$ set it in advance at $p = P^e$. Then $P = P^e + \frac{(1 - s)b}{s}(Y - \bar Y)$, that is
+$Y = \bar Y + a(P - P^e)$ with $a = s/[(1 - s)b]$.
+\end{proposition}
+
+\begin{proof}
+The price level is the average, $P = sP^e + (1 - s)[P + b(Y - \bar Y)]$. Subtract $(1 - s)P$:
+$sP = sP^e + (1 - s)b(Y - \bar Y)$, and divide by $s$.
+\end{proof}
+
+The more firms keep their prices fixed (larger $s$), the flatter the curve:
+demand then moves output more and prices less.
+
+\section{AD--AS}\label{sec:b1:aggregate-supply:adas}
+
+\begin{definition}[Aggregate demand curve]\label{def:b1:aggregate-supply:ad}
+\index{aggregate demand curve}
+The \emph{aggregate demand curve} gives, for each price level, the output at
+which the goods and money markets are both in \omterm{def:b1:models-and-data:equilibrium}{equilibrium}: the IS--LM
+\omterm{def:b1:models-and-data:equilibrium}{equilibrium} output when $M/P$ varies with $P$.
+\end{definition}
+
+A higher $P$ lowers \omterm{def:b1:money-and-inflation:money-demand}{real money balances}, shifts LM up, raises the interest
+rate and lowers output: the \omterm{def:b1:aggregate-supply:ad}{aggregate demand curve} slopes down. A rise in
+$G$ or $M$ shifts it right.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Output $Y$}, ylabel={Price level $P$}, xmin=80, xmax=120, ymin=0.8,
+  ymax=1.25, width=0.56\linewidth, height=0.42\linewidth, samples=60]
+  \addplot[demand, domain=82:120] {100/x};
+  \addplot[shifted, domain=86:120] {108/x};
+  \addplot[supply, domain=80:120] {1 + (x - 100)/200};
+  \addplot[supply, dashed, domain=80:120] {1.08 + (x - 100)/200};
+  \addplot[black, thick] coordinates {(100,0.8) (100,1.25)};
+  \node[font=\footnotesize, anchor=south] at (axis cs:100,1.25) {LRAS};
+  \node[font=\footnotesize, anchor=west] at (axis cs:114,1.06) {SRAS};
+  \node[font=\footnotesize, anchor=west] at (axis cs:113,0.84) {AD};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:113,0.955) {AD$'$};
+\end{axis}
+\end{tikzpicture}
+
+{\small A demand shock in AD--AS. AD shifts right (dashed blue): in the short
+run output and prices rise along SRAS (red). As expected prices catch up,
+SRAS shifts up (dashed red) until output is back at $\bar Y = 100$ on the long-run
+curve, with prices $8\%$ higher.}
+\end{omfigure}
+
+A supply shock --- a rise in the price of oil --- shifts SRAS up: output
+falls and prices rise at once, the combination the 1970s called
+stagflation. Demand policy can then hold output or hold prices, not both.
+
+\section{The expectations-augmented Phillips curve}\label{sec:b1:aggregate-supply:phillips}
+
+\begin{definition}[Okun's law]\label{def:b1:aggregate-supply:okun}
+\index{Okun's law}
+\emph{Okun's law} is the empirical rule that output falls below its natural
+level by a roughly constant multiple of the excess of unemployment over its
+natural rate: $(Y - \bar Y)/\bar Y = -\omega(u - u^n)$.
+\end{definition}
+
+In the American data after the Second World War, each point by which
+unemployment fell was associated with real output about $3\%$ higher, within
+the range of unemployment rates from 3 to 7.5\% (Okun's estimate on data to
+1960). % ledger: b1:okun-coefficient
+
+\begin{definition}[Expectations-augmented Phillips curve]\label{def:b1:aggregate-supply:phillips}
+\index{Phillips curve, expectations-augmented}\index{expectations-augmented Phillips curve}
+The \emph{expectations-augmented Phillips curve} relates inflation to
+expected inflation and the unemployment gap: $\pi = \pi^e - \beta(u - u^n) + v$, with $\beta > 0$
+and $v$ a supply shock. (Here $\beta$ is the slope of the curve, not a discount
+factor.)
+\end{definition}
+
+It follows from \omterm{def:b1:aggregate-supply:sras}{aggregate supply}: writing $P - P^e$ in logarithms as $\pi - \pi^e$ (the
+price level of last year is known), $\pi = \pi^e + (Y - \bar Y)/a$, and \omterm{def:b1:aggregate-supply:okun}{Okun's law}
+replaces $Y - \bar Y$ by $-\omega\bar Y(u - u^n)$, so $\beta = \omega\bar Y/a$ (\cref{exo:b1:aggregate-supply:derive}).
+There is a trade-off between inflation and unemployment only for given
+expectations. When $u = u^n$ and there are no shocks, $\pi = \pi^e$, at any rate of
+inflation: in the long run the curve is vertical.
+
+\section{Adaptive expectations}\label{sec:b1:aggregate-supply:adaptive}
+
+\begin{definition}[Adaptive expectations]\label{def:b1:aggregate-supply:adaptive}
+\index{adaptive expectations}
+Expectations are \emph{adaptive} when expected inflation is formed from
+past inflation; in the simplest form, $\pi^e_t = \pi_{t-1}$.
+\end{definition}
+
+\begin{proposition}[Accelerating inflation]\label{prop:b1:aggregate-supply:accelerate}
+With $\pi^e_t = \pi_{t-1}$ and no shocks, $\pi_t - \pi_{t-1} = -\beta(u_t - u^n)$. Holding unemployment
+below $u^n$ by $d$ points makes inflation rise by $\beta d$ every year, without limit.
+\end{proposition}
+
+\begin{proof}
+Substitute $\pi^e_t = \pi_{t-1}$ into the Phillips curve; with $u_t = u^n - d$, $\pi_t = \pi_{t-1} + \beta d$, so
+$\pi_t = \pi_0 + t\beta d$.
+\end{proof}
+
+This is what the opening chart tests: the change in inflation against
+unemployment, with the slope $-\beta$ and the crossing at $u^n$. Since the mid-1990s
+the slope has been flatter, $-0.134$ over 1996--2018, with a correlation of
+only $-0.176$. % figdata: accel_stats
+Inflation stopped following its own past.
+
+\begin{model}{The expectations-augmented Phillips curve}
+\assumes Expectations formed from past inflation; a natural rate of
+unemployment set by real factors; a stable slope.
+\predicts Accelerating inflation when $u < u^n$; no long-run trade-off; a
+disinflation that costs unemployment, the same total whatever its speed.
+\tested The stable trade-off of the 1960s broke in the 1970s; the
+change in inflation against unemployment in the United States,
+1960--2018, gives a slope of $-0.47$ and a natural rate of $6.07\%$.
+% figdata: accel_stats
+Across 65 disinflations, the cost per point of inflation was lower when
+disinflation was fast and wages flexible (Ball 1994). % ledger: b1:ball1994
+\breaks After the mid-1990s inflation stopped responding to its past
+(expectations anchored); the curve flattened; and in 2021--23 inflation
+moved fast with unemployment low and stable.
+\end{model}
+
+\begin{measure}[Estimating the natural rate]
+The crossing of the opening chart's line, $6.07\%$, is an estimate over sixty
+years. % figdata: accel_stats
+Official estimates let the natural rate change over time, as
+demographics, matching and benefits change $s$ and $f$
+(\cref{ch:b1:unemployment-flows}); they are revised as data arrive. A
+natural rate is never observed, only inferred from what inflation did.
+\end{measure}
+
+\section{The cost of disinflation}\label{sec:b1:aggregate-supply:disinflation}
+
+With \omterm{def:b1:aggregate-supply:adaptive}{adaptive expectations}, bringing inflation down by $\Delta\pi$ points requires
+$\sum_t(u_t - u^n) = \Delta\pi/\beta$ point-years of excess unemployment, whatever the path: each
+year's fall in inflation is $\beta$ times that year's excess unemployment. With
+Okun's coefficient $\omega$, the output lost is $\omega\Delta\pi/\beta$, and the sacrifice ratio is $\omega/\beta$.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Unemployment rate $u$ (\%)}, ylabel={Inflation $\pi$ (\%)},
+  xmin=3, xmax=18, ymin=0, ymax=12, width=0.56\linewidth, height=0.42\linewidth]
+  \addplot[demand, domain=3:18] {10 - 0.5*(x - 5)};
+  \addplot[demand, dashed, domain=3:18] {4 - 0.5*(x - 5)};
+  \addplot[black, thick] coordinates {(5,0) (5,12)};
+  \addplot[omThm, thick, mark=*, mark size=1.5pt] coordinates {(5,10) (7,9) (7,8) (7,7) (7,6) (7,5) (7,4) (5,4)};
+  \addplot[omThm, thin, dotted, mark=square*, mark size=1.5pt] coordinates {(5,10) (17,4) (5,4)};
+  \node[font=\footnotesize, anchor=south] at (axis cs:5,12) {long run};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:13.5,6.3) {$\pi^e = 10$};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:8.3,2.4) {$\pi^e = 4$};
+\end{axis}
+\end{tikzpicture}
+
+{\small Two disinflations from $10\%$ to $4\%$ in the weekend problem ($\beta = 0.5$,
+$u^n = 5\%$): gradual, one point a year at $u = 7\%$ for six years (solid), or cold turkey,
+$u = 17\%$ for one year, along the short-run curve for $\pi^e = 10$, then back to $u^n$
+(squares). Both cost 12 point-years of unemployment above
+$u^n$. The blue lines are the short-run curves for expected inflation of 10 and
+4.}
+\end{omfigure}
+
+\begin{record}[The 1970s]
+The stable trade-off of the 1960s promised lower unemployment for a little
+more inflation. In the 1970s both rose: in 1974 American inflation rose by
+$4.82$ points with unemployment at $5.6\%$, and in 1975 unemployment reached
+$8.5\%$ with inflation still at $9.13\%$. % figdata: accel_points
+With expected inflation rising, the short-run curve had moved up; the
+stable trade-off was refuted.
+\end{record}
+
+\begin{record}[The Volcker disinflation]
+In October 1979 the Federal Reserve changed its operating procedure to
+control money growth more firmly, and the federal funds rate reached a
+record $20\%$ in late 1980. % ledger: b1:fed-targets
+American inflation was $13.5\%$ in 1980 and $3.21\%$ in 1983; unemployment was
+$9.7\%$ in 1982 and $9.6\%$ in 1983. % figdata: accel_points
+Across 65 disinflations in moderate-inflation countries, fast disinflations
+cost less output per point of inflation than gradual ones (Ball 1994).
+% ledger: b1:ball1994
+The \omterm{def:b1:aggregate-supply:adaptive}{adaptive} model says the speed does not matter; the record says it
+does, as if expectations moved faster when the policy was clear.
+\end{record}
+
+How much credibility saves depends on how expectations are formed, the
+subject of the second university year. If an announcement lowers expected
+inflation at once, part of the disinflation is free.
+
+\section{The record}\label{sec:b1:aggregate-supply:record}
+
+\begin{omchart}{Inflation (HICP, annual average) against the unemployment
+rate, euro area, 2009--2024, as a path.}{Eurostat (prc\_hicp\_aind,
+une\_rt\_a)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xlabel={Unemployment rate (\%)}, ylabel={Inflation (\%)}, xmin=6, xmax=13, ymin=-0.5,
+  ymax=9.5, width=0.58\linewidth, height=0.42\linewidth]
+  \addplot[omDef, thin, sharp plot, mark=*, mark size=1.4pt] table[x=u, y=pi, col sep=comma] {figdata/bachelor-1/25-aggregate-supply/out/euro.csv};
+  \addplot[only marks, mark=none, nodes near coords, point meta=explicit symbolic, nodes near coords style={font=\scriptsize, anchor=south west, inner sep=1.5pt}]
+    table[x=u, y=pi, meta=year, col sep=comma] {figdata/bachelor-1/25-aggregate-supply/out/euro_points.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+From 2013 to 2019 euro-area unemployment fell from $12.2\%$ to $7.6\%$ while
+inflation stayed between $0.2\%$ and $1.8\%$, with no upward trend: a flat
+curve. In 2022 inflation
+reached $8.4\%$ with unemployment at $6.7\%$, and in 2024 it was back to $2.4\%$
+with unemployment at $6.4\%$. % figdata: euro_points
+Such a rise and fall, with almost no movement in unemployment, is
+consistent with supply shocks ($v$) and with expectations that stayed
+anchored; how much demand added is still debated
+(\cref{ch:b1:stabilisation-policy}).
+
+\begin{record}[2021--23]
+American consumer prices rose by $9.1\%$ over the twelve months to June 2022,
+the peak of the episode, and by $2.9\%$ over the twelve months to December
+2024. % figdata: cpi_peak
+The \omterm{def:b1:aggregate-supply:adaptive}{adaptive} model would have needed years of high unemployment to bring
+inflation down by six points; unemployment barely rose.
+\end{record}
+
+\section*{Exercises}\label{sec:b1:aggregate-supply:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:aggregate-supply:sras-ex}
+With $Y = \bar Y + a(P - P^e)$, $\bar Y = 10{,}000$, $a = 2000$, $P^e = 1$ and $P = 1.05$, find output.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:aggregate-supply:read}
+In the opening chart's table, the change in inflation was $4.82$ points in
+1974 and $-4.16$ in 1982, with unemployment at $5.6\%$ and $9.7\%$.
+% figdata: accel_points
+Place each year relative to the fitted line's crossing.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:aggregate-supply:predict}
+With $\pi^e = \pi_{-1} = 3\%$, $u = 4\%$, $u^n = 5\%$ and $\beta = 0.5$, predict inflation this year.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:aggregate-supply:okun-ex}
+With an Okun coefficient of 2, unemployment is 1 point above the natural
+rate. Find the output gap.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:aggregate-supply:five}
+Starting from $\pi_{-1} = 3\%$, unemployment is held 1 point below $u^n$ for five years, with
+$\beta = 0.5$ and \omterm{def:b1:aggregate-supply:adaptive}{adaptive expectations}. Give the inflation path.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:aggregate-supply:sacrifice}
+Inflation is cut from $10\%$ to $4\%$ with $\beta = 0.5$ and an Okun coefficient of 2.
+Compute the point-years of excess unemployment, the output lost and the
+sacrifice ratio.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:aggregate-supply:estimate}
+The fitted line of the opening chart is $\Delta\pi = 2.853 - 0.47u$. % figdata: accel_stats
+Estimate $u^n$ and $\beta$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:aggregate-supply:supply}
+A supply shock $v = 2$ hits an economy at $u = u^n$ with $\pi^e = \pi_{-1}$ and $\beta = 0.5$.
+Compare holding unemployment at $u^n$ with holding inflation at its previous
+level.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:aggregate-supply:demand}
+In AD--AS, the money supply rises by $8\%$. Describe the short-run and
+long-run effects on output and prices.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:aggregate-supply:derive}
+Derive the \omterm{def:b1:aggregate-supply:phillips}{expectations-augmented Phillips curve} from the sticky-price SRAS
+and \omterm{def:b1:aggregate-supply:okun}{Okun's law}, and express $\beta$ in terms of $a$ and $\omega$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:aggregate-supply:lambda}
+Let $\pi^e_t = \lambda\pi_{t-1} + (1 - \lambda)\bar\pi$, with $0 \le \lambda \le 1$. Show that a permanent trade-off between
+inflation and unemployment exists unless $\lambda = 1$, and say what the 1970s
+suggest about $\lambda$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:aggregate-supply:refute}
+What pattern after 1995 would refute \omterm{def:b1:aggregate-supply:adaptive}{adaptive expectations}? Does the slope
+of $-0.134$ over 1996--2018 show it? % figdata: accel_stats
+\end{exercise}
+
+\section{Problem: Kestria's Disinflation}\label{sec:b1:aggregate-supply:problem}
+
+\begin{problem}[{Weekend problem --- the cost of bringing inflation down}]\label{pb:b1:aggregate-supply:kestria}
+Kestria (invented) has inflation of $10\%$ and wants $4\%$. Its Phillips curve
+is $\pi_t = \pi^e_t - 0.5(u_t - 5)$, with expectations $\pi^e_t = \pi_{t-1}$ unless stated, and
+\omterm{def:b1:aggregate-supply:okun}{Okun's law} gives an output gap of $-2(u - 5)\%$.
+
+\medskip\noindent\textbf{Part I --- The curve.}
+\begin{enumerate}
+  \item What is the natural rate?
+  \item What unemployment keeps inflation at $10\%$?
+  \item If unemployment were held at $3\%$, give inflation for five years.
+  \item What is the sacrifice ratio implied by the two coefficients?
+  \item Why is there no long-run trade-off?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- Cold turkey.} Inflation is brought to $4\%$ in one
+year and held there.
+\begin{enumerate}[resume]
+  \item Find unemployment in the first year.
+  \item Find unemployment in the following years.
+  \item Compute the point-years of excess unemployment.
+  \item Compute the output lost.
+  \item What makes this path politically hard?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- Gradualism.}
+\begin{enumerate}[resume]
+  \item Inflation falls one point a year. Find unemployment each year.
+  \item Compute the point-years of excess unemployment.
+  \item In two steps, to $7\%$ then $4\%$: find unemployment each year.
+  \item Show that every path costs the same under \omterm{def:b1:aggregate-supply:adaptive}{adaptive expectations}.
+  \item What does Ball's evidence on 65 disinflations say about that result?
+  \item Why might the cost depend on the speed in reality?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- Credibility.} The central bank announces the
+target, and the announcement lowers expected inflation in the first year
+by 4 points.
+\begin{enumerate}[resume]
+  \item Find expected inflation in the first year.
+  \item Find the unemployment needed to reach $4\%$ at once.
+  \item Compute the point-years of excess unemployment.
+  \item Compute the saving.
+  \item Compute the output lost and compare.
+  \item What would make the announcement believed?
+  \item What happens if the bank announces but does not act?
+  \item How does the 2021--23 episode bear on credibility?
+  \item State the result: the cost of the cold-turkey and gradual paths, and what credibility saves.
+\end{enumerate}
+\end{problem}

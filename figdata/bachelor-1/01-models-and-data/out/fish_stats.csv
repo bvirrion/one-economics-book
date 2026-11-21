@@ -1,0 +1,2 @@
+p_calm,q_calm,p_storm,q_storm,p_fest,q_fest,p_mean,q_mean,slope_storm,slope_fest,ols_all,elasticity,elasticity_true
+7.9912,101.12,9.425,84.8,9.4925,113.25,8.4998,98.25,-11.38,8.08,-5.32,-0.98,-0.87

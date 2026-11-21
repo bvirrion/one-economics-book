@@ -1,0 +1,6 @@
+profession,s1,s2,s3,s4,s5,ledger
+Doctors,0.88,3.49,5.78,7.72,9.14,b1:bresnahan1991-doctors
+Dentists,0.71,2.54,4.18,5.43,6.41,b1:bresnahan1991-dentists
+Druggists,0.53,2.12,5.04,7.67,9.39,b1:bresnahan1991-druggists
+Plumbers,1.43,3.02,4.53,6.20,7.47,b1:bresnahan1991-plumbers
+Tire dealers,0.49,1.78,3.41,4.74,6.10,b1:bresnahan1991-tire-dealers

@@ -1,0 +1,378 @@
+\chapter{Growth Empirics and Convergence}\label{ch:b3:growth-empirics}
+
+The Year 1 volume built the Solow model and the Year 2 volume the models of growth
+through ideas. This chapter takes them to the data of some 180 countries over sixty
+years. Do poor countries catch up? Which national characteristics go with fast growth,
+and how much can a regression across countries say? Why do some economies take off
+and others stall? And how much of growth comes from workers leaving farms? The data
+answer some of these questions well and others hardly at all; the chapter separates
+the two.
+
+\begin{openingchart}{Annual growth of real GDP per person by country, decade by
+decade (the 2010s are 2010--2019). Each dot is a country; the diamonds are the
+medians. Values beyond $-8$ and $+12$~\% are drawn at those limits. Growth is measured
+with the national-accounts series, which the source recommends for changes over
+time.}{Penn World Table 11.0, rgdpna and pop}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.72\linewidth, height=0.44\linewidth, xmin=-0.6,
+  xmax=5.6, ymin=-8.5, ymax=12.5, xtick={0,...,5},
+  xticklabels={1960s, 1970s, 1980s, 1990s, 2000s, 2010s},
+  ylabel={Percent a year}, mark size=0.8pt,
+  extra y ticks={0}, extra y tick labels={}, extra y tick style={grid=major}]
+  \addplot table[x=pos, y=growth] {figdata/bachelor-3/31-growth-empirics/out/decades.csv};
+  \addplot[only marks, mark=diamond*, mark size=3pt, omThm] table[x=pos, y=median] {figdata/bachelor-3/31-growth-empirics/out/decades_median.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: decades_stats
+The median country grew 2.9~\% a year in the 1960s, 1.2~\% in the 1980s and 2.4~\% in the 2000s. In
+every decade the spread is wide: the middle half of countries spans 2.6 to 3.8 points,
+and in the 1980s 37~\% of countries saw income per person fall. A country's place in one
+decade is a weak guide to its place in the next: the correlation of growth between
+successive decades is 0.45 from the 1960s to the 1970s, 0.33 from the 1980s to the 1990s,
+$-0.08$ from the 1990s to the 2000s and 0.32 from the 2000s to the 2010s.
+
+\begin{recall}
+The Solow model, its steady state and the speed of convergence, and growth
+accounting are the Year 1 volume's, as is regression to the mean; the Ramsey model and
+growth through ideas are the Year 2 volume's. Panel data and fixed effects are
+\cref{ch:b3:panel-data}'s, specification search \cref{ch:b3:credible-empirical-work}'s.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:growth-empirics:symbols}
+$y_{it}$ is real GDP per person; $g_i$ the average annual log growth over $T$ years; $\beta$ the slope of
+growth on $\ln y_{i0}$; $\lambda$ the speed of convergence; $\sigma_t$ the cross-country standard deviation of $\ln y_{it}$; $\alpha$
+the capital share.
+\end{notation}
+
+\section{Convergence}\label{sec:b3:growth-empirics:convergence}
+
+\begin{definition}[Beta convergence; sigma convergence]\label{def:b3:growth-empirics:convergence}
+\index{beta convergence}\index{sigma convergence}
+Countries show \emph{beta convergence} if, in a regression of growth on initial log
+income, the slope $\beta$ is negative: the initially poor grow faster. They show \emph{sigma
+convergence} if the dispersion of log income $\sigma_t$ falls over time.
+\end{definition}
+
+\begin{proposition}[Reading the slope as a speed]\label{prop:b3:growth-empirics:speed}
+Near its steady state $y^*$, the Solow model gives $\ln y_T - \ln y_0 = -(1 - e^{-\lambda T})(\ln y_0 - \ln y^*)$, with $\lambda = (1 - \alpha)(n + g + \delta)$. A
+regression of average growth on $\ln y_0$ among countries with the same $y^*$ therefore has slope
+$\beta = -(1 - e^{-\lambda T})/T$, and $\lambda = -\ln(1 + \beta T)/T$.
+\end{proposition}
+
+\begin{proof}
+The Year 1 volume linearised the capital accumulation equation around the steady
+state: $d\ln y/dt = -\lambda(\ln y - \ln y^*)$. Integrating from 0 to $T$ gives $\ln y_T - \ln y^* = e^{-\lambda T}(\ln y_0 - \ln y^*)$; subtracting $\ln y_0 - \ln y^*$ from both
+sides gives the first equation. Dividing by $T$, growth is linear in $\ln y_0$ with slope $-(1 - e^{-\lambda T})/T$;
+solving for $\lambda$ gives the last expression.
+\end{proof}
+
+With $\alpha = 1/3$ and $n + g + \delta$ near 6~\%, the model predicts $\lambda$ near 4~\% a year.
+
+\begin{proposition}[Beta does not imply sigma]\label{prop:b3:growth-empirics:galton}
+\omterm{def:b3:growth-empirics:convergence}{Beta convergence} is necessary for \omterm{def:b3:growth-empirics:convergence}{sigma convergence} but not sufficient: with shocks,
+the poor can grow faster on average while the dispersion of incomes stays constant.
+\end{proposition}
+
+\begin{proof}
+Let $\ln y_{i1} = a + (1 + b)\ln y_{i0} + e_i$, with shocks $e_i$ independent of $\ln y_{i0}$ and variance $s^2$, so that the slope of growth on
+$\ln y_{i0}$ is $b$. Then $\sigma_1^2 = (1 + b)^2\sigma_0^2 + s^2$. If $b \ge 0$, $\sigma_1 \ge \sigma_0$: no \omterm{def:b3:growth-empirics:convergence}{sigma convergence} without \omterm{def:b3:growth-empirics:convergence}{beta convergence}.
+If $b < 0$ but $s^2 = (1 - (1 + b)^2)\sigma_0^2$, then $\sigma_1 = \sigma_0$: \omterm{def:b3:growth-empirics:convergence}{beta convergence} without \omterm{def:b3:growth-empirics:convergence}{sigma convergence}. This is
+regression to the mean.
+\end{proof}
+
+\begin{omchart}{Annual growth of real GDP per person, 1960--2019, against GDP per person
+in 1960 (logarithmic scale). Filled dots: Western Europe and its offshoots (Maddison's
+regions), a group fixed by geography; with least-squares lines for all countries and
+for the group. Growth from the national-accounts series, the 1960 level from the
+expenditure-side series, which compares countries in one year.}{Penn World Table 11.0,
+rgdpna, rgdpe and pop; Maddison Project Database 2023, regions}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.62\linewidth, height=0.42\linewidth,
+  xlabel={GDP per person in 1960, dollars}, ylabel={Growth 1960--2019, \% a year},
+  xtick={2.5,3,3.5,4,4.5}, xticklabels={300, 1{,}000, 3{,}000, 10{,}000, 30{,}000},
+  scatter/classes={False={mark=o, draw=black!50}, True={mark=*, fill=omDef, draw=omDef}},
+  scatter, point meta=explicit symbolic]
+  \addplot table[x=lx, y=growth, meta=rich] {figdata/bachelor-3/31-growth-empirics/out/convergence.csv};
+  \addplot[black!60, thick, no marks, sharp plot] table[x=lx, y=growth] {figdata/bachelor-3/31-growth-empirics/out/convergence_fit_all.csv};
+  \addplot[omThm, thick, no marks, sharp plot] table[x=lx, y=growth] {figdata/bachelor-3/31-growth-empirics/out/convergence_fit_rich.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: convergence_stats
+
+Across all 111 countries with data for 1960 there is no absolute convergence: the slope is
+$-0.0011$, with a standard error of 0.0014. Among the 23 countries of Western Europe and its offshoots
+the slope is $-0.0108$ (0.0018), a speed of convergence of 1.7~\% a year --- under half what the
+Solow model predicts with standard parameters.
+
+\begin{model}{The augmented Solow model in cross-country data}
+\assumes Countries share one technology; saving, schooling and population growth
+are given; output depends on physical and \omterm{def:b3:human-capital:human-capital}{human capital}.
+\predicts Conditional convergence: holding the determinants of the steady state
+fixed, poor countries grow faster, at a speed the model's parameters fix.
+\tested The augmented model explains about 80~\% of the international variation in
+income per person, and, holding population growth and capital accumulation
+constant, countries converge at about the predicted rate. % ledger: b3ge:mrw
+\breaks Physical and \omterm{def:b3:human-capital:human-capital}{human capital} explain only part of output per worker; the
+Solow residual varies greatly across countries, with institutions and policies
+behind it. % ledger: b3ge:hj
+With country effects in a panel, which let production functions differ, the
+estimates differ significantly from those of a single cross-section. % ledger: b3ge:islam
+\end{model}
+
+The panel estimates are not simply better. As \cref{ch:b3:panel-data} showed, a
+lagged dependent variable with a fixed effect is biased in short panels, and short
+periods mix convergence with the business cycle.
+
+\section{Growth regressions and their fragility}\label{sec:b3:growth-empirics:regressions}
+
+\begin{definition}[Growth regression; extreme-bounds analysis]\label{def:b3:growth-empirics:growth-regression}
+\index{growth regression}\index{extreme-bounds analysis}
+A \emph{growth regression} relates countries' average growth to their initial income
+and other characteristics. \emph{Extreme-bounds analysis} re-estimates the coefficient
+of a variable with every combination of other candidate controls and calls it robust
+if the lowest and highest estimates (less and plus two standard errors) have the same
+sign.
+\end{definition}
+
+\begin{record}[Fragile determinants]
+With a hundred or so countries and dozens of candidate variables, results depend on
+which controls enter. Extreme bounds found almost all results fragile; only the
+share of investment in GDP was robustly correlated with growth, and investment with
+trade. % ledger: b3ge:lr
+Looking instead at the whole distribution of a variable's estimates across millions
+of regressions, a substantial number of variables are strongly related to growth. % ledger: b3ge:sim
+The two conclusions use the same data and differ in what they call robust.
+Exercise 11 shows why extreme bounds is a harsh test: a variable with a true effect can
+fail it when its candidate controls are correlated with it.
+\end{record}
+
+\begin{measure}[Which vintage of the data?]
+Penn World Table estimates of growth change from one version to the next, though the
+underlying data and methods are almost the same; the variation is systematic and comes
+from the method. Studies that use growth over long periods are robust to the revisions;
+studies of annual growth are much less so. % ledger: b3ge:jlps
+This book uses version 11.0; an exercise run on another version would give somewhat
+different numbers, and long averages should be preferred. The choice of series within
+a version matters too: the expenditure-side series compares countries' living
+standards in one year, but it also moves with relative prices and the \omterm{def:b3:ricardian-trade:terms-of-trade}{terms of trade},
+so this chapter measures growth with the national-accounts series, as the table's
+documentation advises; with the expenditure-side series the correlation of growth
+between the 2000s and the 2010s is $-0.09$ instead of 0.32.
+\end{measure}
+
+Growth is also hard to explain because it does not persist. Country characteristics
+such as schooling are stable from decade to decade, with correlations of 0.6 to 0.9, while
+growth rates correlate at only 0.1 to 0.3; shocks, especially to the \omterm{def:b3:ricardian-trade:terms-of-trade}{terms of trade}, account for
+much of the variation. % ledger: b3ge:ekps
+
+\section{Accelerations, miracles and collapses}\label{sec:b3:growth-empirics:accelerations}
+
+\begin{definition}[Growth acceleration; growth collapse]\label{def:b3:growth-empirics:acceleration}
+\index{growth acceleration}\index{growth collapse}
+A \emph{growth acceleration} is a rise in a country's growth rate, to a rapid pace,
+sustained for at least eight years. A \emph{growth collapse} is a sustained fall of
+income per person.
+\end{definition}
+
+% ledger: b3ge:hpr
+Since the 1950s there have been more than 80 accelerations. They go with rising investment
+and trade and with real depreciation; changes of political regime predict them;
+those that follow external shocks fizzle out, while those that follow economic
+reform tend to last. But most accelerations are unrelated to the usual determinants,
+and most reforms produce none: turning points are hard to predict.
+
+The filter used here to date one is the same in spirit as the study's: year $t$
+qualifies when mean growth over the next eight years is at least 3.5~\%, at least 2
+points above the mean of the past five, and income at the end is a new peak. Several
+consecutive years usually qualify for one episode; of those, the filter keeps the year
+with the largest rise in growth, which the study's own choice of the best-fitting
+break resembles.
+
+\begin{omchart}{GDP per person, 1900--2022, five economies (logarithmic scale, 2011
+dollars).}{Maddison Project Database 2023}
+\begin{tikzpicture}
+\begin{semilogyaxis}[omtime, width=0.7\linewidth, height=0.44\linewidth, xmin=1900,
+  xmax=2022, ymin=700, ymax=80000, ylabel={Dollars},
+  yticklabels={1{,}000, 10{,}000}, ytick={1000,10000},
+  legend pos=north west, legend style={font=\footnotesize}, legend columns=2]
+  \addplot[black, thick] table[x=year, y=y] {figdata/bachelor-3/31-growth-empirics/out/paths_USA.csv};
+  \addplot[omDef, thick] table[x=year, y=y] {figdata/bachelor-3/31-growth-empirics/out/paths_ARG.csv};
+  \addplot[omThm, thick] table[x=year, y=y] {figdata/bachelor-3/31-growth-empirics/out/paths_JPN.csv};
+  \addplot[omThm, dashed, thick] table[x=year, y=y] {figdata/bachelor-3/31-growth-empirics/out/paths_KOR.csv};
+  \addplot[omDef, dashed, thick] table[x=year, y=y] {figdata/bachelor-3/31-growth-empirics/out/paths_VEN.csv};
+  \legend{United States, Argentina, Japan, South Korea, Venezuela}
+\end{semilogyaxis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: paths_points
+
+\begin{record}[Growth that stops: Argentina and Venezuela]
+In 1913 Argentina's income per person was 6{,}052 dollars of 2011, 60~\% of the U.S. level; in 2022 it was 18{,}292,
+31~\% of it. Venezuela was richer than Argentina in 1950, at 8{,}462 dollars, and reached 16{,}270 in 1980; in
+2022 it was back to 5{,}267, below its 1950 level. Japan went from 3{,}062 in 1950 to 38{,}269 in 2022, and South
+Korea from 998 to 41{,}321. % figdata: paths_points
+\end{record}
+
+\begin{record}[The East Asian growth miracle]
+Over the two and a half decades to the early 1990s, output per person grew 6 to 7~\% a
+year in Hong Kong,
+Singapore, South Korea and Taiwan. Participation, schooling and investment rose
+quickly; outside Hong Kong, non-farm employment grew one and a half to two times as
+fast as the working population. Output per effective worker outside farming grew
+only 3 to 4~\% a year, and once the doubling to quadrupling of investment rates is
+allowed for, total factor productivity grew at rates within those of other economies
+over equally long periods. The growth was extraordinary; its productivity growth was
+not. % ledger: b3ge:young
+\end{record}
+
+\section{The move out of agriculture}\label{sec:b3:growth-empirics:structural}
+
+\begin{definition}[Structural transformation; agricultural productivity gap]\label{def:b3:growth-empirics:structural}
+\index{structural transformation}\index{agricultural productivity gap}
+\emph{Structural transformation} is the shift of workers and output from agriculture
+to industry and services as income grows. The \emph{agricultural productivity gap} is
+the ratio of value added per worker outside agriculture to value added per worker in
+it.
+\end{definition}
+
+\begin{omchart}{Employment in agriculture against GDP per person (PPP, constant 2021
+dollars, logarithmic scale), 2019, 177 countries.}{World Bank, World Development
+Indicators, SL.AGR.EMPL.ZS (modelled ILO estimates) and NY.GDP.PCAP.PP.KD}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.6\linewidth, height=0.4\linewidth,
+  xlabel={GDP per person, dollars}, ylabel={Agriculture, \% of employment},
+  xtick={3,4,5}, xticklabels={1{,}000, 10{,}000, 100{,}000}, ymin=0, ymax=90]
+  \addplot table[x=lx, y=agri] {figdata/bachelor-3/31-growth-empirics/out/agri.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: agri_stats
+
+In the poorest fifth of countries the median share of workers in agriculture is 45~\%; in
+the richest fifth it is 2~\%. Value added per worker is much higher outside agriculture than
+in it, especially in poor countries. Taken at face value the gap means that moving
+workers out of farming raises output; after correcting for hours and schooling, and
+with output measured from household surveys, a large gap remains. % ledger: b3ge:glw
+How much of growth the move explains is a decomposition of the kind built in
+\cref{ch:b3:platforms-and-innovation}, across sectors instead of firms; the weekend
+problem performs one.
+
+\section{Exercises}\label{sec:b3:growth-empirics:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:growth-empirics:1}
+In the opening chart, in which decade was the median lowest, and what share of
+countries saw income per person fall in it?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:growth-empirics:2}
+A regression over 40 years gives $\beta = -0.015$. Find the speed of convergence.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:growth-empirics:3}
+How long does income take to double at 2~\% and at 7~\% a year?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:growth-empirics:4}
+What data would contradict conditional convergence?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:growth-empirics:5}
+Estimate absolute convergence from 1960 to 2019 for all countries, for the 25 richest in
+1960 and for the 25 richest in 2019. Why does the last sample show convergence?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:growth-empirics:6}
+Compute the correlation of growth between successive decades, and of log income at the
+start of successive decades.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:growth-empirics:7}
+In the augmented Solow model with capital shares $\alpha = \phi = 1/3$ for physical and \omterm{def:b3:human-capital:human-capital}{human
+capital}, steady-state income is proportional to
+$(s_k^{\alpha}s_h^{\phi}/(n + g + \delta)^{\alpha + \phi})^{1/(1 - \alpha - \phi)}$. Country A saves 24~\% and invests 12~\% in schooling; country B saves 12~\% and
+invests 6~\%, with the same $n + g + \delta$. Find the ratio of their steady-state incomes.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:growth-empirics:8}
+Growth is 1~\% a year for five years, then 5~\% for eight years. Does the chapter's
+acceleration filter (mean growth over the next eight years at least 3.5~\%, at least 2 points above
+the past five, and a new peak of income) date an acceleration?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:growth-empirics:9}
+The dispersion of log incomes across countries rose from 1960 to 2000, while a regression
+shows the poor growing faster in a sample. How is that possible?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:growth-empirics:10}
+Derive the speed of convergence $\lambda = (1 - \alpha)(n + g + \delta)$ from the Solow model with $k$ per effective worker.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:growth-empirics:11}
+On an invented table of 80 countries, run \omterm{def:b3:growth-empirics:growth-regression}{extreme-bounds analysis} for seven candidate
+variables. Which are robust, and which variable with a true effect fails?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:growth-empirics:12}
+Farming employs 40~\% of workers at output per worker 1, the rest at 3. If 10~\% of all workers move
+out of farming at unchanged sector productivities, by how much does output per worker
+rise? What if the true output per worker outside farming is 1.5, the gap halved?
+\end{exercise}
+
+\section{Problem: Brenland's Fifty Years}\label{sec:b3:growth-empirics:problem}
+
+\begin{problem}[{Weekend problem --- Brenland's fifty years}]\label{pb:b3:growth-empirics:fifty}
+Brenland's real GDP per person for 2000--2025 comes from its accounts
+(\code{load("accounts")}, real GDP over population). Before 2000 the series is extended
+with annual growth of 0.5~\% in 1976--1981, 4.0~\% in 1982--1995 and 2.0~\% in 1996--2000. Twenty invented
+peers have incomes in 1975 spread around 9{,}000 dalens and grow until 2025 at
+$2.5 - 1.2\ln(y_{75}/9{,}000)$~\% a year, plus noise. % figdata: brenland_stats
+
+\medskip\noindent\textbf{Part I --- fifty years of growth.}
+\begin{enumerate}
+\item Find income per person in 1975, 2000 and 2025.
+\item Find average growth in 1975--2000 and in 2000--2025.
+\item At the 2000--2025 rate, how long does income take to double?
+\item Over 1975--2025, by what factor did income grow?
+\item Why do two decades of 4~\% growth matter more than they look?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- Brenland among its peers.}
+\begin{enumerate}[resume]
+\item Regress the peers' and Brenland's growth on the log of their 1975 incomes. Find $\beta$.
+\item Find the implied speed of convergence.
+\item What growth does the regression predict for Brenland, and how did it do?
+\item Is this absolute or conditional convergence? What do the peers share?
+\item Find the standard deviation of the peers' log incomes in 1975 and 2025. Explain the
+change with \cref{prop:b3:growth-empirics:galton}.
+\item Name one reason the estimated speed could be biased.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- an acceleration.}
+\begin{enumerate}[resume]
+\item Apply the chapter's acceleration filter to Brenland, keeping, of consecutive
+qualifying years, the one with the largest rise. Which years qualify, and which does it date?
+\item Find mean growth in the five years before and the eight years after.
+\item Is the episode sustained?
+\item Suppose Brenland reformed its trade rules in 1981. What would have to be checked
+before calling the reform the cause?
+\item Why would a regression of growth on policies over 1975--2025 miss the timing?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- leaving the farms.} Farming had 20~\% of Brenland's workers in 1975
+and 5~\% in 2025, with output per worker of 6 and 12 thousand dalens; the rest had 16 and 36 thousand.
+\begin{enumerate}[resume]
+\item Find output per worker in both years.
+\item Find the \omterm{def:b3:growth-empirics:structural}{agricultural productivity gap} in both years.
+\item Decompose the change into within, between and cross terms.
+\item What share of the growth came from the move out of farming?
+\item Why might this overstate the gain from reallocation?
+\item How would hours worked and schooling change the measured gap?
+\item What would Brenland's growth have been with the farm share frozen at 20~\%?
+\item State the result: Brenland's convergence speed and the share of its growth from
+the move out of farming.
+\end{enumerate}
+\end{problem}

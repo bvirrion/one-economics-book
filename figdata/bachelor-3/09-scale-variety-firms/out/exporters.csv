@@ -1,0 +1,22 @@
+pos,industry,firms,exporting,export_share
+1,Computers and electronics,4.5,38,21
+2,Electrical equipment,1.7,38,13
+3,Chemicals,3.1,36,14
+4,Machinery,9,33,16
+5,Primary metals,1.5,30,10
+6,Plastics and rubber,4.4,28,10
+7,Transport equipment,3.4,28,13
+8,Textile mills,1,25,13
+9,Leather,0.4,24,13
+10,Paper,1.4,24,9
+11,Beverages and tobacco,0.7,23,7
+12,Petroleum and coal,0.4,18,12
+13,Fabricated metals,19.9,14,12
+14,Food,6.8,12,15
+15,Textile products,1.9,12,12
+16,Nonmetallic minerals,4,9,12
+17,Apparel,3.2,8,14
+18,Wood products,5.5,8,19
+19,Furniture,6.4,7,10
+20,Printing,11.9,5,14
+21,Miscellaneous,9.1,2,15

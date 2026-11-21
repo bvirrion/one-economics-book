@@ -1,0 +1,9 @@
+$ python dummies.py
+no controls:     elasticity 0.288
+size dummies:    elasticity 0.196, R2 0.924
+  size 2 against size 1: +0.246
+  size 3 against size 1: +0.440
+  size 4 against size 1: +0.597
+  size 5 against size 1: +0.738
+  owner: +0.001 (s.e. 0.004)
+interaction: tenants 0.187, owners 0.211, difference +0.024 (s.e. 0.009)

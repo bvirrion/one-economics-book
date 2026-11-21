@@ -1,0 +1,446 @@
+\chapter{Exchange-Rate Regimes and Currency Unions}\label{ch:b3:exchange-rate-regimes}
+
+A country chooses whether its currency floats, is pegged, or is given up. The
+choice decides what its central bank can do, how its economy absorbs shocks, and
+whether speculators can attack it. This chapter puts the regimes in the record
+since 1870, tests the trilemma that constrains them, models the three kinds of
+currency crisis, and asks when a group of countries is better off with one
+money --- the question the euro has answered in real time.
+
+\begin{openingchart}{Share of the 18 economies of the Macrohistory Database with a
+pegged exchange rate, 1870--2020 (percent; the base country of a fixed system,
+such as Britain under gold, counts as pegged).}{Jordà, Schularick and Taylor,
+Macrohistory Database (\omterm{def:b3:exchange-rate-regimes:regimes}{peg}); our computation}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.72\linewidth, height=0.4\linewidth, xmin=1865, xmax=2025,
+  ymin=0, ymax=105, ylabel={Percent pegged}]
+  \addplot[omDef, thick, const plot, mark=none] table[x=year, y=share] {figdata/bachelor-3/14-exchange-rate-regimes/out/pegs.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: pegs_points
+In 1870, 24~\% of these economies were pegged; by 1880, 82~\%, as the \omterm{def:b3:exchange-rate-regimes:gold-standard}{gold standard}
+spread. It broke in the 1930s (39~\% in 1932), came back as the Bretton Woods dollar
+system (100~\% in 1970), and broke again in the 1970s. Since then about half have
+pegged, most of them to the Deutsche Mark and then inside the euro.
+
+\begin{recall}
+The Year 1 volume stated the trilemma --- a country cannot have a fixed exchange
+rate, free capital movements and its own monetary policy all at once --- and the
+Mundell--Fleming model. \Cref{ch:b3:current-account} treated \omterm{def:b3:current-account:sudden-stop}{sudden stops}, and
+\cref{ch:b3:exchange-rates} interest parity.
+\end{recall}
+
+\section{Regimes in the data}\label{sec:b3:exchange-rate-regimes:regimes}
+
+\begin{definition}[Exchange-rate regime; peg; currency board; dollarisation]\label{def:b3:exchange-rate-regimes:regimes}
+\index{exchange-rate regime}\index{peg}\index{currency board}\index{dollarisation}
+An \emph{exchange-rate regime} is the rule by which a country's exchange rate is
+set. A \emph{peg} fixes it against another currency or a basket: a \emph{soft peg}
+can be changed by the government, a \emph{hard peg} is built into law. A
+\emph{currency board} is a hard peg in which the monetary base must be fully
+backed by reserves of the anchor currency. \emph{Dollarisation} abandons the
+national currency for a foreign one.
+\end{definition}
+
+\begin{definition}[Gold standard]\label{def:b3:exchange-rate-regimes:gold-standard}
+\index{gold standard}
+Under the \emph{gold standard}, each central bank converts its currency into gold
+at a fixed price on demand. Two currencies with fixed gold prices have a fixed
+exchange rate between them, within the cost of shipping gold.
+\end{definition}
+
+\section{The trilemma, tested}\label{sec:b3:exchange-rate-regimes:trilemma}
+
+If capital is free and the \omterm{def:b3:exchange-rate-regimes:regimes}{peg} credible, \omterm{def:b3:exchange-rates:interest-parity}{uncovered interest parity} with no
+expected depreciation forces the home interest rate to follow the base country's
+one for one. A floating country can set its own. The test regresses the yearly
+change in the home short rate on the change in the base country's rate.
+
+\begin{omchart}{The trilemma test, 1999--2020: yearly change in the short-term interest
+rate against the change in the base country's rate (points), pegs and floats, with
+their fitted lines.}{Jordà, Schularick and Taylor, Macrohistory Database (stir,
+\omterm{def:b3:exchange-rate-regimes:regimes}{peg}\_type, \omterm{def:b3:exchange-rate-regimes:regimes}{peg}\_base); our computation}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.6\linewidth, height=0.44\linewidth, xmin=-4.8, xmax=2.8,
+  ymin=-6, ymax=4, xlabel={Change in the base rate (points)},
+  ylabel={Change in the home rate (points)}, legend pos=north west,
+  legend style={font=\footnotesize}]
+  \addplot[only marks, omDef, mark=*, mark size=1.2pt] table[x=db, y=d] {figdata/bachelor-3/14-exchange-rate-regimes/out/tri_peg.csv};
+  \addplot[only marks, omThm, mark=o, mark size=1.4pt] table[x=db, y=d] {figdata/bachelor-3/14-exchange-rate-regimes/out/tri_float.csv};
+  \addplot[omDef, thick, no marks, sharp plot] table[x=db, y=peg] {figdata/bachelor-3/14-exchange-rate-regimes/out/tri_fit.csv};
+  \addplot[omThm, thick, dashed, no marks, sharp plot] table[x=db, y=float] {figdata/bachelor-3/14-exchange-rate-regimes/out/tri_fit.csv};
+  \legend{Pegs, Floats}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: tri_eras
+Since 1999 the \omterm{def:b3:exchange-rate-regimes:regimes}{pegs} --- most of them inside the euro, where the rate is literally
+common --- have followed the base with a slope of 0.91 (standard error 0.04), the
+floats with 0.45 (0.06). The constraint shows in each era, but in the way the
+trilemma says it should, not always as \omterm{def:b3:exchange-rate-regimes:regimes}{pegs} against floats: under Bretton Woods,
+\omterm{def:b3:exchange-rate-regimes:regimes}{pegs} followed the base least of all (slope 0.28), because capital controls, the
+third corner of the triangle, let them keep their own rates. Over more than 130
+years the constraints of the trilemma are largely borne out. % ledger: b3rg:ost.trilemma
+
+\section{Currency crises}\label{sec:b3:exchange-rate-regimes:crises}
+
+\begin{definition}[First-, second- and third-generation crisis models]\label{def:b3:exchange-rate-regimes:crisis-models}
+\index{first-generation crisis model}\index{second-generation crisis model}\index{third-generation crisis}
+A \emph{first-generation crisis model} explains an attack on a \omterm{def:b3:exchange-rate-regimes:regimes}{peg} by fundamentals
+inconsistent with it: domestic credit that grows while the \omterm{def:b3:exchange-rate-regimes:regimes}{peg} holds drains
+reserves until speculators take the rest. A \emph{second-generation crisis model}
+lets the government choose whether to defend, weighing the \omterm{def:b3:exchange-rate-regimes:regimes}{peg} against its costs,
+so that expectations of devaluation can fulfil themselves. A \emph{third-generation
+crisis} runs through balance sheets: banks and firms with debts in foreign currency
+are ruined by the devaluation, which turns a currency crisis into a banking and
+output crisis.
+\end{definition}
+
+Take the first-generation model in levels. The money supply is domestic credit
+plus reserves, $M = D + R$, and credit grows at $\mu$ a year. Money demand is $M = kS -
+c\dot S$: it rises with the price level, which under parity in goods is the exchange
+rate $S$ (foreign prices fixed at one), and falls with the expected depreciation $\dot S$,
+which under uncovered parity is the interest rate's excess over the foreign one.
+Under the \omterm{def:b3:exchange-rate-regimes:regimes}{peg} $\bar S$, $\dot S = 0$ and $M = k\bar S$ is constant, so reserves fall by $\mu$ a year. The
+\emph{shadow exchange rate} $\tilde S$ is the rate that would hold if the \omterm{def:b3:exchange-rate-regimes:regimes}{peg} were given up
+with no reserves left, $D = k\tilde S - c\dot{\tilde S}$.
+
+\begin{proposition}[The timing of the attack]\label{prop:b3:exchange-rate-regimes:attack}
+The shadow rate is $\tilde S_t = D_t/k + c\mu/k^2$. Speculators attack when $\tilde S$ reaches $\bar S$, at
+$T = R_0/\mu - c/k$: before reserves would run out, and taking the remaining $c\mu/k$ at
+once.
+\end{proposition}
+
+\begin{proof}
+Try $\tilde S = D/k + a$: then $\dot{\tilde S} = \mu/k$ and $k\tilde S - c\dot{\tilde S} = D + ka - c\mu/k$, which equals
+$D$ for $a = c\mu/k^2$. Before $\tilde S$ reaches $\bar S$, an attack would leave the rate below the
+\omterm{def:b3:exchange-rate-regimes:regimes}{peg}, a capital loss on the foreign currency bought: no one attacks. After, the
+\omterm{def:b3:exchange-rate-regimes:regimes}{peg} would offer a sure gain: speculators would have attacked earlier. So the
+attack comes when $\tilde S_T = \bar S$, that is $D_T = k\bar S - c\mu/k$, and reserves are then $R_T = k\bar S -
+D_T = c\mu/k$. With $D_T = D_0 + \mu T$ and $R_0 = k\bar S - D_0$, $T = (R_0 - c\mu/k)/\mu$. At $T$ money demand falls
+from $k\bar S$ to $k\bar S - c\mu/k$, because the expected depreciation, and so the interest rate,
+jumps: the attack is the portfolio shift that matches it.
+\end{proof}
+
+\begin{omchart}{The first-generation model with the weekend problem's numbers:
+reserves (billions of dalens, left) and the exchange rate with its shadow value
+(dalens per kest, right).}{Our simulation (\code{attack.py})}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.44\linewidth, height=0.36\linewidth, xmin=0, xmax=10,
+  ymin=0, ymax=32, xlabel={Years}, ylabel={Reserves}]
+  \addplot[omDef, thick, mark=none] table[x=t, y=reserves] {figdata/bachelor-3/14-exchange-rate-regimes/out/attack.csv};
+\end{axis}
+\begin{axis}[omrecord, at={(0.5\linewidth,0)}, width=0.44\linewidth, height=0.36\linewidth,
+  xmin=0, xmax=10, ymin=0.9, ymax=1.3, xlabel={Years}, ylabel={Dalens per kest},
+  legend pos=north west, legend style={font=\footnotesize}]
+  \addplot[omDef, thick, mark=none] table[x=t, y=rate] {figdata/bachelor-3/14-exchange-rate-regimes/out/attack.csv};
+  \addplot[omThm, thick, dashed, mark=none] table[x=t, y=shadow] {figdata/bachelor-3/14-exchange-rate-regimes/out/attack.csv};
+  \legend{Actual, Shadow}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\begin{model}{The first-generation crisis model}
+\assumes A \omterm{def:b3:exchange-rate-regimes:regimes}{peg} defended with reserves, and domestic credit growing to finance
+deficits; perfect foresight.
+\predicts An attack that ends the \omterm{def:b3:exchange-rate-regimes:regimes}{peg} before reserves run out, when the shadow rate
+reaches the \omterm{def:b3:exchange-rate-regimes:regimes}{peg}, with no jump in the exchange rate at the attack.
+\tested Kaminsky, Lizondo and Reinhart (1998) asked which indicators, crossing a
+threshold, signalled a currency crisis within 24 months in past episodes: the ratio
+of broad money to reserves, the model's variable, was among the best, together
+with exports, output, equity prices and the real exchange rate, which the model
+does not use. % ledger: b3rg:klr.signals
+A signal warns of a crisis; it does not date the attack, as perfect foresight would.
+\breaks Attacks on \omterm{def:b3:exchange-rate-regimes:regimes}{pegs} with ample reserves and sound budgets, as in 1992.
+\end{model}
+
+\begin{record}[Sterling leaves the ERM, 16 September 1992]
+Sterling had joined the European exchange-rate mechanism with base rates at 15~\%;
+they had fallen to 10~\% in eighteen months. In July 1992 German rates rose, and
+holding the parity meant British rates following them up. On 16 September, in
+exceptionally turbulent conditions and after heavy official purchases of sterling,
+the United Kingdom suspended sterling's membership; Italy stopped supporting the
+lira, and the peseta was devalued. % ledger: b3rg:boe.erm
+No reserve arithmetic forced this. The question was whether the government
+would bear the cost of defence.
+\end{record}
+
+\begin{proposition}[Multiple equilibria]\label{prop:b3:exchange-rate-regimes:multiple}
+Let a central bank hold reserves of 10 and defend until they are gone. Two
+speculators can each sell 6 of the currency at a cost of 0.5; a devaluation by 25~\%
+gains each seller $0.25 \times 6 = 1.5$. Both selling and neither selling are Nash
+equilibria.
+\end{proposition}
+
+\begin{proof}
+Payoffs (first speculator, second):
+\begin{center}\small
+\begin{tabular}{lcc}
+ & Sell & Hold \\ \hline
+Sell & $1, 1$ & $-0.5, 0$ \\
+Hold & $0, -0.5$ & $0, 0$ \\ \hline
+\end{tabular}
+\end{center}
+One seller alone (6) cannot exhaust reserves of 10, so the \omterm{def:b3:exchange-rate-regimes:regimes}{peg} holds and he pays
+the cost; together (12) they can. If the other sells, selling pays $1 > 0$; if the
+other holds, holding pays $0 > -0.5$. Each strategy is a best response to itself.
+\end{proof}
+
+With reserves above 12 no attack can succeed, and below 6 one speculator alone
+breaks the \omterm{def:b3:exchange-rate-regimes:regimes}{peg}: only the middle range has two equilibria, and in it a \omterm{def:b3:exchange-rate-regimes:regimes}{peg} that
+fundamentals could sustain can fall because markets expect it to. What the
+government will bear decides the middle range: high unemployment, which makes
+defending with high interest rates painful, widens it. % ledger: b3rg:obs.selffulfil
+
+\begin{record}[The Asian crisis, 1997]
+The Thai baht averaged 25.3 per dollar in 1996 and 41.4 in 1998; the Korean won
+went from 804 to 1{,}403, the Indonesian rupiah from 2{,}342 to 10{,}014. Thai output fell
+by 7.6~\% in 1998, Korean by 4.9~\% and Indonesian by 13.1~\% (World Bank, World
+Development Indicators). Output collapses of this size are what the third
+generation explains: when banks and firms owe dollars, a devaluation multiplies
+their debts in home currency, and the currency crisis becomes a banking crisis
+and a slump.
+\end{record}
+
+\section{Optimum currency areas}\label{sec:b3:exchange-rate-regimes:oca}
+
+\begin{definition}[Optimum currency area]\label{def:b3:exchange-rate-regimes:oca}
+\index{optimum currency area}
+An \emph{optimum currency area} is a region whose members gain more from sharing a
+currency --- lower transaction costs and no exchange risk on their trade --- than
+they lose by giving up their own exchange rate and monetary policy. The loss is
+small when members trade much with each other, when their shocks are alike, when
+labour moves between them, and when a common budget transfers income to members
+hit by bad shocks.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.5cm, y=0.5cm]
+  \draw[econ axes] (0,0) -- (10.5,0) node[right, font=\scriptsize] {trade integration};
+  \draw[econ axes] (0,0) -- (0,8.5) node[above, font=\scriptsize] {correlation of shocks};
+  \draw[curve, omDef] (1.5,8) -- (9.5,1) node[right, font=\scriptsize] {OCA line};
+  \draw[curve, omThm, dashed] (1,1.5) -- (9.5,6.8) node[right, font=\scriptsize] {integration path};
+  \node[font=\scriptsize] at (7.8,6.9) {join};
+  \node[font=\scriptsize] at (4.2,0.8) {keep own money};
+  \fill (3,2.75) circle (2pt); \fill (6.5,4.9) circle (2pt);
+  \draw[->, thick] (3.2,2.9) -- (6.3,4.8);
+\end{tikzpicture}
+\par\smallskip{\small Above the OCA line, the gains of a common currency exceed the
+losses. Integration moves countries along the dashed path: trade raises the
+correlation of their cycles.}
+\end{omfigure}
+
+\begin{model}{Optimum currency areas}
+\assumes Shocks that hit members differently, and wages and prices that adjust
+slowly, so that a member hit by a bad shock needs a depreciation it no longer has.
+\predicts Unions work among members that trade much, share shocks, move labour or
+share a budget; elsewhere, members hit by bad shocks suffer long slumps.
+\tested Over thirty years of data for twenty industrialised countries, closer trade
+links go with more correlated cycles. % ledger: b3rg:fr.endog
+That most of the real appreciation of the euro area's periphery was still there
+seven years after its inflows stopped (the chart below) is consistent with the
+prediction; a test would compare unions with and without the adjustment margins.
+\breaks The criteria are endogenous: countries are more likely to meet them after
+integrating than before, so a union can create the conditions it needs.
+\end{model}
+
+\section{The record of the euro}\label{sec:b3:exchange-rate-regimes:euro}
+
+\begin{omchart}{Consumer prices in six euro-area economies, 1999--2015 (harmonised
+index of consumer prices, annual average, 1999 = 100).}{Eurostat (prc\_hicp\_aind); our
+rebasing}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.66\linewidth, height=0.42\linewidth, xmin=1998.5, xmax=2015.5,
+  ymin=98, ymax=150, ylabel={1999 = 100}, legend pos=north west, legend columns=2,
+  legend style={font=\footnotesize}]
+  \addplot[black, thick, mark=none] table[x=year, y=DE] {figdata/bachelor-3/14-exchange-rate-regimes/out/euro_prices.csv};
+  \addplot[black, thick, dashed, mark=none] table[x=year, y=FR] {figdata/bachelor-3/14-exchange-rate-regimes/out/euro_prices.csv};
+  \addplot[omDef, thick, mark=none] table[x=year, y=EL] {figdata/bachelor-3/14-exchange-rate-regimes/out/euro_prices.csv};
+  \addplot[omThm, thick, mark=none] table[x=year, y=ES] {figdata/bachelor-3/14-exchange-rate-regimes/out/euro_prices.csv};
+  \addplot[omThm, thick, dashed, mark=none] table[x=year, y=IE] {figdata/bachelor-3/14-exchange-rate-regimes/out/euro_prices.csv};
+  \addplot[omDef, thick, dotted, mark=none] table[x=year, y=PT] {figdata/bachelor-3/14-exchange-rate-regimes/out/euro_prices.csv};
+  \legend{Germany, France, Greece, Spain, Ireland, Portugal}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: euro_prices_points
+From 1999 to 2008, consumer prices rose by 17~\% in Germany and by 30 to 36~\% in Greece,
+Spain, Ireland and Portugal. With a common currency, that is a real appreciation of
+the periphery of 11 to 16~\% against Germany: its goods became dearer while capital flowed in
+(\cref{ch:b3:current-account}). When the inflows stopped, the periphery needed
+the real depreciation back, without a currency to depreciate.
+
+\begin{definition}[Internal devaluation]\label{def:b3:exchange-rate-regimes:internal-devaluation}
+\index{internal devaluation}
+An \emph{internal devaluation} is a real depreciation achieved inside a fixed
+exchange rate or a currency union by a fall of domestic wages and prices relative
+to those of trading partners.
+\end{definition}
+
+From 2008 to 2015 Irish prices rose by 0.5~\% (135.7 to 136.4) while German ones rose
+by 9.4~\% (117.5 to 128.5): an \omterm{def:b3:exchange-rate-regimes:internal-devaluation}{internal devaluation} of about 8~\% in seven years. Greek,
+Spanish and Portuguese prices rose by 7 to 8~\%, barely less than German ones; most of
+the periphery's real appreciation was still there in 2015. \omterm{def:b3:exchange-rate-regimes:internal-devaluation}{Internal devaluation}
+works through unemployment, which lowers wages slowly: it is the slow adjustment
+the optimum-currency-area model predicts.
+
+\begin{record}[The euro, 1999 to today]
+\begin{dated}{2026}
+On 1 January 2026 Bulgaria introduced the euro, bringing the number of member
+states of the European Union that use it to 21, with about 358 million people; the
+lev was converted at 1.95583 per euro. % ledger: b3rg:ecb.bulgaria
+\end{dated}
+Every member gave up its exchange rate and its own interest rate, the two
+instruments whose loss the optimum-currency-area criteria price.
+\end{record}
+
+\section{Currency boards and dollarisation}\label{sec:b3:exchange-rate-regimes:boards}
+
+A \omterm{def:b3:exchange-rate-regimes:regimes}{currency board} removes the central bank's discretion: base money is issued only
+against reserves, so it cannot finance deficits, and the first-generation attack
+cannot happen. The cost is that the base shrinks whenever capital leaves, with no
+lender of last resort to banks, and that the \omterm{def:b3:exchange-rate-regimes:regimes}{peg} can be undone only by changing
+the law. \omterm{def:b3:exchange-rate-regimes:regimes}{Dollarisation} removes even that exit.
+
+\begin{record}[Argentina's convertibility, 1991--2002]
+The convertibility regime began with the law of 27 March 1991. % ledger: b3rg:arg.law
+The official rate was 1.00 peso per dollar every year from 1995 to 2001, after
+inflation that had seen the rate multiply by more than ten between 1989 and 1990.
+Output fell in 1999, 2000 and 2001 ($-3.4$, $-0.8$ and $-4.4~\%$) with the \omterm{def:b3:exchange-rate-regimes:regimes}{peg} intact; the
+law's core articles were repealed by a law published on 7 January 2002, the rate
+averaged 3.06 pesos per dollar that year, and output fell by 10.9~\%. (Rates and
+growth: World Bank, World Development Indicators.)
+\end{record}
+
+\section{Exercises}\label{sec:b3:exchange-rate-regimes:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:exchange-rate-regimes:1}
+Name the eras visible in the opening chart and their dates. When was the share of
+pegged economies highest?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:exchange-rate-regimes:2}
+Which two corners of the trilemma does each choose: (a) a euro-area member; (b) a
+floating economy with open capital markets; (c) a Bretton Woods \omterm{def:b3:exchange-rate-regimes:regimes}{peg} with capital
+controls; (d) a country on the \omterm{def:b3:exchange-rate-regimes:gold-standard}{gold standard} in 1900?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:exchange-rate-regimes:3}
+In the first-generation model with $k = 50$, $c = 100$, $\mu = 2$ and domestic credit of 40,
+find the shadow exchange rate. If the \omterm{def:b3:exchange-rate-regimes:regimes}{peg} is 1.0, is the \omterm{def:b3:exchange-rate-regimes:regimes}{peg} under attack?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:exchange-rate-regimes:4}
+What observation about a credible \omterm{def:b3:exchange-rate-regimes:regimes}{peg} with free capital movements would
+contradict the trilemma?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:exchange-rate-regimes:5}
+Estimate the trilemma regression on the JST data for \omterm{def:b3:exchange-rate-regimes:regimes}{pegs} and floats in four eras:
+1870--1913, 1950--1972, 1973--1998 and 1999--2020. Where does the result follow the
+trilemma, and where does it need the third corner to make sense?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:exchange-rate-regimes:6}
+With $k = 100$, $c = 200$, a \omterm{def:b3:exchange-rate-regimes:regimes}{peg} of 1.0, reserves of 40 and credit growing at 4 a year,
+find the date of the attack and the reserves lost in it. How does the date
+change if $c$ doubles, and why?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:exchange-rate-regimes:7}
+In the game of the chapter, the central bank's reserves are 14, then 5. Find the
+equilibria in each case. Which policies move a country out of the middle range?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:exchange-rate-regimes:8}
+From Eurostat's harmonised index, compute inflation in Greece and Germany each year
+of 1999--2008, the mean gap and the rise of Greek prices relative to German ones.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:exchange-rate-regimes:9}
+What evidence would show that the criteria for an \omterm{def:b3:exchange-rate-regimes:oca}{optimum currency area} are
+endogenous? What would show they are not?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:exchange-rate-regimes:10}
+Prove that in the first-generation model the exchange rate does not jump at the
+attack, and that an attack at any other date would leave speculators with a loss
+or an unexploited gain.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:exchange-rate-regimes:11}
+A member of a currency union needs a real depreciation of 15~\% against its
+partners, whose wages grow by 2~\% a year. If its own wages can at most be frozen,
+how long does the depreciation take? If they can fall by 1~\% a year? (Take prices
+proportional to wages.)
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:exchange-rate-regimes:12}
+A \omterm{def:b3:exchange-rate-regimes:regimes}{currency board} has a monetary base of 100, fully backed by reserves, and banks
+hold reserves of 20 against deposits of 200. Capital of 8 leaves the country, drawn
+from bank deposits and converted at the board. Find the new base and, if banks
+restore their reserve ratio, the fall in deposits. What would a central bank have
+done?
+\end{exercise}
+
+\section{Problem: Brenland Pegs the Dalen to the Kest}\label{sec:b3:exchange-rate-regimes:problem}
+
+\begin{problem}[{Weekend problem --- Brenland pegs the dalen to the kest}]\label{pb:b3:exchange-rate-regimes:peg}
+Brenland \omterm{def:b3:exchange-rate-regimes:regimes}{pegs} the dalen at $\bar S = 1.20$ dalens per kest. Money demand is $M = kS - c\dot S$
+with $k = 100$ and $c = 200$ (billions of dalens; $\dot S$ in dalens per kest per year). Domestic
+credit is 90 billion dalens at year 0 and grows by 3 billion a year to finance the
+budget. % figdata: attack_stats, attack
+
+\medskip\noindent\textbf{Part I --- the peg and its arithmetic.}
+\begin{enumerate}
+\item Find the money supply under the \omterm{def:b3:exchange-rate-regimes:regimes}{peg} and the reserves at year 0.
+\item Why do reserves fall when credit grows under a \omterm{def:b3:exchange-rate-regimes:regimes}{peg}? Write the reserves at year $t$.
+\item When would reserves run out if no one attacked?
+\item Find the shadow exchange rate at year 0. Is the \omterm{def:b3:exchange-rate-regimes:regimes}{peg} under pressure?
+\item Write the shadow rate at year $t$.
+\item What is the kest value of the reserves at year 0?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- the attack.}
+\begin{enumerate}[resume]
+\item Find the date of the attack.
+\item How many reserves are lost in the attack?
+\item Find the money supply just after the attack.
+\item At what rate does the dalen depreciate after the attack, in percent a year at
+first?
+\item By how much does Brenland's interest rate jump at the attack?
+\item Why does the exchange rate not jump at the attack?
+\item If the budget deficit doubled, so that credit grew by 6 billion a year, when
+would the attack come?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- a scare.} At year 4, two funds can each sell 10 billion
+dalens for kests, at a cost of 0.4 billion each; if the \omterm{def:b3:exchange-rate-regimes:regimes}{peg} falls, the dalen is
+devalued by 20~\%.
+\begin{enumerate}[resume]
+\item Find the reserves at year 4, and the shadow rate. Do the fundamentals call for
+an attack?
+\item Write the payoff table of the two funds.
+\item Find the Nash equilibria.
+\item Unemployment is high, and the government will not raise rates to defend the
+\omterm{def:b3:exchange-rate-regimes:regimes}{peg} once reserves fall below 12 billion. Find the equilibria now.
+\item In what sense is an attack in Question 16 self-fulfilling? What does the
+government's threshold in Question 17 change?
+\item Name two things the government could have done to rule out the attack.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- a currency board instead.}
+\begin{enumerate}[resume]
+\item What reserves would a \omterm{def:b3:exchange-rate-regimes:regimes}{currency board} need at year 0?
+\item What share of them does Brenland hold? How large is the shortfall, in kests?
+\item What happens to the budget's financing under the board?
+\item Capital of 12 billion dalens leaves. Find the new base, and say what happens to
+interest rates.
+\item State the result: the date of the speculative attack, and the reserve cover a
+\omterm{def:b3:exchange-rate-regimes:regimes}{currency board} needs.
+\end{enumerate}
+\end{problem}

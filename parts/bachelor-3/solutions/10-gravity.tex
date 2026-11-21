@@ -1,0 +1,176 @@
+\section*{Chapter \ref{ch:b3:gravity} --- Gravity and the Trade Data}
+
+\begin{solution}{exo:b3:gravity:1}
+By $2^{1.18} - 1 = 127~\%$: the slope is 1.18. % figdata: opening_stats
+At the left end, the binned points lie above the line: the smallest and most
+distant pairs trade more than the line predicts, partly because only pairs with
+positive trade are in the data --- among small, distant pairs, those that trade at
+all are the ones with unusually large flows.
+\end{solution}
+
+\begin{solution}{exo:b3:gravity:2}
+$X_A/X_B = (500/1{,}000) \times (1{,}000/4{,}000)^{-0.9} = 0.5 \times 4^{0.9} = 0.5 \times 3.482 = 1.74$:
+pair A trades 1.74 times as much.
+\end{solution}
+
+\begin{solution}{exo:b3:gravity:3}
+$2^{-0.9} - 1 = -46.4~\%$; $0.9^{-0.9} - 1 = +9.9~\%$.
+\end{solution}
+
+\begin{solution}{exo:b3:gravity:4}
+Two large, close countries with no other obstacle between them that trade far
+less than gravity predicts --- or far more than a pair of the same size and
+distance. One pair can be explained by its own pair variables (an embargo, a war,
+a shared language the regression omits); gravity is a statement about the
+average across pairs, and is rejected only if the average relation fails.
+\end{solution}
+
+\begin{solution}{exo:b3:gravity:5}
+The tested solution is \code{ex05_language.py}, in the chapter's \code{exercises/}
+folder. Distance moves from $-1.206$ to $-1.175$ and colonial link from 1.412 to 0.945;
+the language coefficient is 0.812, so a common language multiplies trade by 2.25.
+% output: ex05_language
+Former colonies often share their former ruler's language, so without the
+language dummy the colonial link picked up part of the language effect; close
+countries also share languages more often, so distance had absorbed a little of
+it too.
+\end{solution}
+
+\begin{solution}{exo:b3:gravity:6}
+The tested solution is \code{ex06_fta.py}, in the chapter's \code{exercises/}
+folder. 2005: OLS 0.503, trade $\times 1.65$ (+65~\%); \omterm{def:b3:gravity:ppml}{PPML} 0.373, $\times 1.45$ (+45~\%). 2019:
+OLS 0.464, $\times 1.59$; \omterm{def:b3:gravity:ppml}{PPML} 0.380, $\times 1.46$. % output: ex06_fta
+\omterm{def:b3:gravity:ppml}{PPML} gives the smaller effect in both years; the gap narrows from 0.13 to 0.08,
+but given standard errors of 0.04 to 0.06 the difference between the two years is
+not clearly significant.
+\end{solution}
+
+\begin{solution}{exo:b3:gravity:7}
+Not sharing a border multiplies trade by $e^{-b}$, equivalent to a tariff $e^{b/\varepsilon} - 1$:
+$e^{1.027/5} - 1 = 22.8~\%$ with fixed effects by OLS, $e^{0.537/5} - 1 = 11.3~\%$ by \omterm{def:b3:gravity:ppml}{PPML}.
+\end{solution}
+
+\begin{solution}{exo:b3:gravity:8}
+Trade varies as $t^{-5}$: $(1.2/1.1)^5 = 1.545$, a rise of 54.5~\%. With \omterm{def:b3:gravity:multilateral-resistance}{multilateral
+resistance} the effect on this pair is smaller, since the country's resistance
+falls as one of its costs falls; trade with other partners falls, because the
+partner with the new port is now relatively cheaper (diversion).
+\end{solution}
+
+\begin{solution}{exo:b3:gravity:9}
+The log of zero is not defined, so the rows drop out. The pairs that survive at
+long distances are those with unusually large shocks; the regression sees
+large flows where the truth has many zeros, so distance seems to cost less than
+it does: the elasticity is biased toward zero.
+\end{solution}
+
+\begin{solution}{exo:b3:gravity:10}
+The tested solution is \code{ex10_distance_puzzle.py}, in the chapter's
+\code{exercises/} folder. The elasticities are $-1.345$, $-1.425$, $-1.453$, $-1.503$,
+$-1.543$, $-1.506$ and $-1.440$; the trend is $-0.048$ per decade (s.e.\ 0.026), $t = -1.82$.
+% output: ex10_distance_puzzle
+If anything, distance mattered slightly more over the period, though the trend is
+not significant at 5~\% (and seven estimates from overlapping data are a thin basis
+for a test). The elasticity is not falling: the puzzle.
+\end{solution}
+
+\begin{solution}{exo:b3:gravity:11}
+By symmetry $\Pi_1 = \Pi_2 = P_1 = P_2 = P$, and $P^{1-\sigma} = \tfrac12(1 + t^{1-\sigma})P^{\sigma - 1}$, so
+$P^{2(1-\sigma)} = \tfrac12(1 + t^{1-\sigma})$. Then $X_{12}/X_{11} = t^{1-\sigma}$: imports relative to home
+purchases are $t^{1-\sigma}$. The import share of spending is $X_{21}/(X_{11} + X_{21}) = t^{1-\sigma}/(1
++ t^{1-\sigma})$; it falls with $t$ and falls faster the larger $\sigma$, from $\tfrac12$ at $t = 1$
+toward 0.
+\end{solution}
+
+\begin{solution}{exo:b3:gravity:12}
+The tested solution is \code{ex12_ppml_vs_ols.py}, in the chapter's
+\code{exercises/} folder. Mean OLS slope 0.490, mean \omterm{def:b3:gravity:ppml}{PPML} slope 0.996; spreads 0.080
+and 0.128. % output: ex12_ppml_vs_ols
+$E[\ln \eta \mid x] = -(0.5 + x)/2$, so $E[\ln y \mid x] = 0.75 + 0.5x$: OLS estimates
+$1 - 0.5 = 0.5$, exactly what it finds. \omterm{def:b3:gravity:ppml}{PPML} is consistent, at the cost of a larger
+spread.
+\end{solution}
+
+\begin{solution}{pb:b3:gravity:union}
+\textbf{1.} OLS 374, \omterm{def:b3:gravity:ppml}{PPML} 380. OLS on logs drops the 6 pairs with no recorded
+trade. % figdata: union_estimates, union_stats
+
+\textbf{2.} $2^{-0.904} - 1 = -46.6~\%$.
+
+\textbf{3.} $(300/3{,}544)^{0.680} \times (1.08/4.31)^{-0.904} = 0.187 \times 3.48 = 0.65$: Brenland should
+export to Kestria about two thirds of what it exports to N10. % figdata: union_table
+
+\textbf{4.} $e^{0.574} - 1 = 77.5~\%$.
+
+\textbf{5.} It omits the \omterm{def:b3:gravity:multilateral-resistance}{multilateral resistance} terms. Large economies have many
+nearby partners and low resistance, which lowers their bilateral trade with any
+one partner relative to their size: the omitted term is correlated with GDP, and
+its effect loads onto the GDP coefficients.
+
+\textbf{6.} $-0.90$ against a median of $-0.89$ in the published estimates:
+remarkably close. % ledger: b3gr:hm.t4
+
+\textbf{7.} An exporter dummy absorbs everything specific to the exporter --- its
+GDP and its resistance term --- and an importer dummy the same for the importer.
+
+\textbf{8.} 19 for exporters and 19 for importers: 38 with a constant.
+
+\textbf{9.} $(-0.979 + 1)/0.063 = 0.34$ standard errors: yes.
+
+\textbf{10.} $0.750 \pm 1.96 \times 0.174$: from 0.41 to 1.09. It contains the true 0.5.
+
+\textbf{11.} With a large partner close by, Brenland's resistance is low: its
+alternatives are good. Relative to that, N10 is far away, and Brenland trades
+less with it than with a remote country's equally distant partner.
+
+\textbf{12.} A remote country has high resistance: all its alternatives are
+costly, so a given bilateral cost is low relative to them, and two remote
+countries trade more with each other than distance alone predicts.
+
+\textbf{13.} \omterm{def:b3:gravity:ppml}{PPML} works with flows in levels, and a zero is a valid value of a
+non-negative variable whose conditional mean is modelled.
+
+\textbf{14.} $0.382 \pm 1.96 \times 0.170$: from 0.05 to 0.71. Partial effect $e^{0.382} - 1 =
+46.5~\%$.
+
+\textbf{15.} When the variance of the error falls with the size of the flow,
+$E[\ln \eta \mid z]$ is more negative for small flows; small flows are the distant
+and non-member pairs, so the log regression confounds the noise with distance
+and with membership.
+
+\textbf{16.} Distance: OLS with fixed effects ($-0.979$), then \omterm{def:b3:gravity:ppml}{PPML} ($-0.928$); the
+union: \omterm{def:b3:gravity:ppml}{PPML} (0.382, against 0.750 with fixed effects by OLS and 0.574 by OLS);
+both \omterm{def:b3:gravity:ppml}{PPML} errors are well within their standard errors.
+
+\textbf{17.} $1 - e^{-0.382/5} = 7.3~\%$.
+
+\textbf{18.} $e^{1.5/5} - 1 = 35.0~\%$.
+
+\textbf{19.} The union lowers the members' \omterm{def:b3:gravity:multilateral-resistance}{multilateral resistance}: with cheaper
+access to each other, each member's average trade cost falls, which offsets part
+of the fall in their bilateral cost. Trade with members rises by 27.0~\%, not 46.5~\%.
+% figdata: union_brenland
+
+\textbf{20.} It falls by 10.5~\%: trade diversion, purchases switched from
+non-members to members because members' goods became relatively cheaper.
+
+\textbf{21.} Members' goods compete with Brenland's own at home; with Brenland's
+output fixed and more of it exported, home sales fall, by 20.2~\%.
+
+\textbf{22.} From $89.8 + 62.9 = 152.7$ to $114.1 + 56.3 = 170.4$: $+11.6~\%$.
+
+\textbf{23.} No: gravity measures flows, not welfare. One needs the prices paid:
+whether Brenland now buys from members goods that non-members supplied more
+cheaply before (and loses the tariff revenue it collected on them), against the
+gain from cheaper goods from members --- a model of welfare such as the gains
+formula of \cref{ch:b3:ricardian-trade}.
+
+\textbf{24.} In percent of trade with members, slightly larger: distant members
+would be a small share of Brenland's trade, so its resistance would fall less,
+and the rise would be closer to the 46.5~\% partial effect. But the union would act
+on small flows, so the rise in Brenland's total trade, and the diversion away from
+non-members, would be smaller.
+
+\textbf{25.} The union raises Brenland's trade with its members by 27.0~\% and lowers
+its trade with non-members by 10.5~\%.
+\end{solution}

@@ -1,0 +1,36 @@
+item,value
+autarky p_M/p_T,0.75
+autarky r,0.1
+autarky w,0.45
+trade r,1
+trade w,1
+Kestria Q_M,16
+Kestria Q_T,12
+Kestria GDP,100
+Kestria T_M,3.5
+Kestria T_T,-4.66667
+Kestria F_K,5.83333
+Kestria F_L,-5.83333
+Kestria s,0.0416667
+Kestria HOV_K,5.83333
+Kestria HOV_L,-5.83333
+Brenland Q_M,2
+Brenland Q_T,24
+Brenland GDP,80
+Brenland T_M,-8
+Brenland T_T,10.6667
+Brenland F_K,-13.3333
+Brenland F_L,13.3333
+Brenland s,0.0333333
+Brenland HOV_K,-13.3333
+Brenland HOV_L,13.3333
+Kestria boom Q_M,22
+Kestria boom Q_T,9
+Kestria boom GDP,115
+Kestria boom T_M,7.625
+Kestria boom T_T,-10.1667
+Kestria boom F_K,12.7083
+Kestria boom F_L,-12.7083
+Kestria boom s,0.0479167
+Kestria boom HOV_K,12.7083
+Kestria boom HOV_L,-12.7083

@@ -1,0 +1,5 @@
+$ python informed_share.py
+every market clears           True
+theta given the price: slope 0.862, error variance 0.250
+expected utility, informed   -0.9917
+expected utility, uninformed -0.9922

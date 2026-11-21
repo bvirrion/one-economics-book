@@ -1,0 +1,448 @@
+\chapter{Signalling and Screening}\label{ch:b2:signalling-and-screening}
+
+Earnings rise with schooling. If each year of school taught skills worth a little more pay, the rise would be gradual.
+The chart shows average earnings in 1975 of American men by the number of years they spent at school. The rise is
+not gradual: it jumps at twelve years, when a high-school diploma is earned, and at sixteen, when a college degree is.
+
+\begin{openingchart}{Mean earnings in 1975 by years of schooling, in thousands of dollars: 15{,}992 men aged 16 to 55 of
+  a 1970s United States population survey (the comparison sample of a job-training study). Dark bars: twelve and
+  sixteen years. Earnings are capped at 25{,}244 dollars, the cap reached by 3{,}007 men; years 0 to 7 have fewer than
+  300 men each.}{Dehejia and Wahba's NSW files (survey comparison sample); our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, ybar=0pt, bar width=7pt, width=0.85\linewidth, height=0.42\linewidth, xmin=-0.7,
+    xmax=18.7, ymin=0, ymax=18.5, xlabel={Years of schooling}, ylabel={Thousands of dollars},
+    xtick={0,2,...,18}, minor xtick={1,3,...,17}, xmajorgrids=false]
+  \addplot[fill=omThm!35, draw=omThm] table[x=education, y=other]
+    {figdata/bachelor-2/16-signalling-and-screening/out/schooling.csv};
+  \addplot[fill=omDef!80, draw=omDef] table[x=education, y=diploma]
+    {figdata/bachelor-2/16-signalling-and-screening/out/schooling.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: summary (jump12 4.81, jump16 3.51, max_other 1.17, dollars11 9903, dollars12 14715, dollars15 12749, dollars16 16256)
+Mean earnings rise from 9{,}903 dollars at eleven years to 14{,}715 at twelve, a jump of 4{,}812, and from 12{,}749 at
+fifteen years to 16{,}256 at sixteen, a jump of 3{,}507. Between nine and eighteen years no other year adds more than
+1{,}200 dollars, and several subtract. (Means at nine to eleven years are pulled down by young men still at school: the
+sample starts at age 16.) A diploma seems to be worth more than the year of school that earns it.
+
+One explanation is that the diploma is a \omterm{def:b2:signalling-and-screening:signal}{signal}. Employers cannot see a worker's productivity; they can see her
+diploma; and finishing school is easier for those who will be productive. Then a diploma raises pay even if it adds no
+skill. This chapter builds that model, then its mirror image, in which the uninformed side moves first and offers a
+menu that makes the informed sort themselves. It ends with the evidence on how much of a diploma's value is \omterm{def:b2:signalling-and-screening:signal}{signal}.
+
+\begin{recall}
+From \cref{ch:b2:adverse-selection}: hidden information, \omterm{def:b2:adverse-selection:adverse-selection}{adverse selection} and the market for insurance. From
+\cref{ch:b2:bayesian-games}: types, beliefs and \omterm{def:b2:bayesian-games:pbe}{perfect Bayesian equilibrium}. From the Year 1 volume: price
+discrimination by a monopoly.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:signalling-and-screening:symbols}
+In the signalling model, a worker's productivity is $\theta_L$ or $\theta_H$, her years of schooling $s$, and her cost of a year of
+schooling $c_L$ or $c_H$; $s^*$ is the schooling level that the high type chooses. In \omterm{def:b2:signalling-and-screening:screening}{screening}, $q$ is a quantity bought,
+$\mathit{F}$ a fee, $\theta_L$ and $\theta_H$ the consumer types, $n_L$ and $n_H$ their shares and $c$ the cost of a unit.
+\end{notation}
+
+\section{The job-market signalling model}\label{sec:b2:signalling-and-screening:signalling}
+
+\begin{definition}[Signal]\label{def:b2:signalling-and-screening:signal}
+A \emph{signal}\index{signal} is a costly action chosen by an informed party, which the uninformed party observes and
+which is cheaper for some types than for others, so that it can reveal the type.
+\end{definition}
+
+Workers are of two types, equally many: low productivity $\theta_L = 10$ and high productivity $\theta_H = 20$, in thousands of
+dalens a year. Before working, each chooses years of schooling $s$, which in this model add nothing to productivity. A
+year costs the low type $c_L = 4$ and the high type $c_H = 2$, in effort, fees and earnings forgone: school is easier for
+those who are more able. Employers see $s$ but not the type; competition among them sets the wage equal to expected
+productivity given $s$. A worker's payoff is her wage minus $c\,s$.
+
+The game is a signalling game: the worker moves first, the employers update their beliefs on seeing $s$, then pay. Its
+equilibria are perfect Bayesian (\cref{def:b2:bayesian-games:pbe}).
+
+\begin{definition}[Separating equilibrium]\label{def:b2:signalling-and-screening:separating}
+A \emph{separating equilibrium}\index{separating equilibrium} is an equilibrium of a signalling game in which different
+types choose different actions, so that the uninformed party learns each type from its action.
+\end{definition}
+
+\begin{definition}[Pooling equilibrium]\label{def:b2:signalling-and-screening:pooling}
+A \emph{pooling equilibrium}\index{pooling equilibrium} is an equilibrium of a signalling game in which all types choose
+the same action, so that the uninformed party learns nothing beyond its prior.
+\end{definition}
+
+Try this separating outcome: low types choose $s = 0$, high types $s = s^*$; employers believe that anyone with $s \ge s^*$ is high and
+anyone else low, and pay 20 and 10. The low type does not imitate if $20 - 4s^* \le 10$; the high type does not prefer $s = 0$ if
+$20 - 2s^* \ge 10$.
+
+\begin{proposition}[The range of separating equilibria]\label{prop:b2:signalling-and-screening:range}
+In the two-type signalling model, the outcome in which low types choose no schooling and high types choose $s^*$ is a
+\omterm{def:b2:signalling-and-screening:separating}{separating equilibrium} if and only if
+\[
+  \frac{\theta_H - \theta_L}{c_L} \le s^* \le \frac{\theta_H - \theta_L}{c_H}.
+\]
+With the numbers above, $2.5 \le s^* \le 5$.
+\end{proposition}
+
+\begin{proof}
+With beliefs as described, wages are $\theta_H$ for $s \ge s^*$ and $\theta_L$ otherwise. A worker choosing $s$ below $s^*$ gets $\theta_L$, so if she
+does not choose $s^*$ she chooses $s = 0$; above $s^*$ she pays more for the same wage. So each type compares only 0 and $s^*$. The low
+type keeps $s = 0$ if and only if $\theta_H - c_L s^* \le \theta_L$, which is the left inequality; the high type keeps $s^*$ if and only if
+$\theta_H - c_H s^* \ge \theta_L$, the right one. Beliefs on the equilibrium path are correct by Bayes' rule, and off it any beliefs are
+allowed, so these are all the conditions. The range is not empty because $c_H < c_L$.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=6.2, ymin=0, ymax=27, width=0.62\linewidth,
+    height=0.45\linewidth, xlabel={Years of schooling $s$}, ylabel={Thousands of dalens a year},
+    xtick={0,2.5,5}, ytick={10,15,20}, legend style={at={(1.03,0.5)}, anchor=west}]
+  \addplot[black, very thick, const plot] coordinates {(0,10) (2.5,20) (6.2,20)};
+  \addplot[omDef, thick, domain=0:4.25, samples=2] {10 + 4*x};
+  \addplot[omThm, thick, dashed, domain=0:6.2, samples=2] {15 + 2*x};
+  \node[eqpoint] at (axis cs:0,10) {};
+  \node[eqpoint] at (axis cs:2.5,20) {};
+  \node[anchor=north west, font=\footnotesize] at (axis cs:0,10) {low};
+  \node[anchor=north west, font=\footnotesize] at (axis cs:2.5,20) {high};
+  \legend{Wage schedule, Low type's indifference, High type's indifference}
+\end{axis}
+\end{tikzpicture}
+
+{\small The least-cost \omterm{def:b2:signalling-and-screening:separating}{separating equilibrium}. The wage is 10 below $s^* = 2.5$ and 20 from it. The low type's indifference
+line through her choice $(0, 10)$ rises by 4 a year and just reaches $(2.5, 20)$: imitating gains her nothing. The high type's
+line rises by 2 a year; through $(2.5, 20)$ it lies above $(0, 10)$, so she prefers to \omterm{def:b2:signalling-and-screening:signal}{signal}.}
+\end{omfigure}
+
+\subsection{Pooling, and which equilibrium}
+
+Pooling outcomes exist too. If both types choose $s_p$ and employers believe any other choice comes from a low type, the
+wage at $s_p$ is the average, 15. The low type stays if $15 - 4s_p \ge 10$, that is $s_p \le 1.25$; the high type stays if $15 - 2s_p \ge 10$,
+which is then implied. So every $s_p$ from 0 to 1.25 is a \omterm{def:b2:signalling-and-screening:pooling}{pooling equilibrium}.
+
+The model has many equilibria because beliefs off the equilibrium path are free. A refinement called the
+\emph{intuitive criterion} narrows them: an employer who sees a choice that one type could never gain from, whatever the
+wage, should believe it was made by the other type. In the \omterm{def:b2:signalling-and-screening:separating}{separating equilibrium} with $s^* = 4$, a worker choosing $s = 3$
+would get at most $20 - 12 = 8$ if low, less than her 10; so the choice must come from a high type, who gets $20 - 6 = 14$, more
+than her $20 - 8 = 12$. So $s^* = 4$ fails, and by the same argument only the least-cost \omterm{def:b2:signalling-and-screening:separating}{separating equilibrium}, $s^* = 2.5$,
+survives (\cref{exo:b2:signalling-and-screening:5}). In this example the pooling equilibria fail too.
+
+\subsection{Signalling as waste}
+
+In this model schooling produces nothing; it only sorts. In the least-cost \omterm{def:b2:signalling-and-screening:separating}{separating equilibrium} the high type earns 20
+and spends 5 on schooling, keeping 15; the low type keeps 10. If signalling were impossible, both would be paid 15 and spend
+nothing: the high type would be no worse off and the low type better off. With more high types the gap is starker: if 80
+per cent were high, pooling would pay everyone 18, and the high type would gain from a ban on signalling too
+(\cref{exo:b2:signalling-and-screening:3}). The private return to schooling exceeds its social return. Whether this matters
+depends on how much of the return to schooling is \omterm{def:b2:signalling-and-screening:signal}{signal}, an empirical question (\cref{sec:b2:signalling-and-screening:diplomas}).
+
+\begin{model}{Job-market signalling}
+\assumes Productivity known to the worker only; schooling cheaper for the more productive; competitive employers who pay
+expected productivity given what they see.
+\predicts Pay that jumps at the levels of schooling that sort workers, such as diplomas, more than with years of schooling
+as such; a private return to schooling above its social return.
+\tested Jumps in earnings at diploma years in survey data (Hungerford and Solon 1987, as summarised by Clark and Martorell
+2014; the opening chart).
+\breaks When workers who barely pass and barely fail an exam that grants a diploma are compared, the diploma adds little
+to earnings (Clark and Martorell 2014).
+\end{model}
+
+\section{Screening by a menu}\label{sec:b2:signalling-and-screening:screening}
+
+\begin{definition}[Screening]\label{def:b2:signalling-and-screening:screening}
+\emph{Screening}\index{screening} is the offer, by the uninformed party, of a menu of contracts designed so that each
+type of informed party chooses a different one, revealing its type.
+\end{definition}
+
+\begin{definition}[Incentive-compatibility constraint]\label{def:b2:signalling-and-screening:ic}
+An \emph{incentive-compatibility constraint}\index{incentive-compatibility constraint} requires that each type prefer
+the contract designed for it to the contract designed for any other type.
+\end{definition}
+
+\begin{definition}[Participation constraint]\label{def:b2:signalling-and-screening:pc}
+A \emph{participation constraint}\index{participation constraint} requires that each type prefer the contract designed
+for it to not contracting at all.
+\end{definition}
+
+Take the insurance market of \cref{ch:b2:adverse-selection} with competing insurers that offer contracts rather than one
+price. Everyone has wealth 100 (thousands of kests) and may lose 50; high risks lose with probability 0.5, low risks with
+probability 0.2. Both have log utility. A contract is a cover $x$ bought at a premium; a person ends with $W_1$ if no loss
+occurs and $W_2$ if it does. With fair premiums, a high risk buying cover $x$ pays $0.5x$, a low risk $0.2x$.
+
+The separating menu gives high risks full cover at their fair premium, 25, so that $W_1 = W_2 = 75$. Low risks get cover at
+their fair premium, but only up to the point where high risks do not want it: with log utility and probability 0.5, a
+high risk is indifferent when $W_1 W_2 = 75^2 = 5{,}625$. With cover $x$ at the low-risk price, $(100 - 0.2x)(50 + 0.8x) = 5{,}625$,
+or $0.16x^2 - 70x + 625 = 0$, whose smaller root is $x = 9.12$. Low risks get only 9.12 of cover against a loss of 50: the
+price of separating them from high risks is that they are under-insured.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=55, xmax=106, ymin=45, ymax=96, width=0.55\linewidth,
+    height=0.55\linewidth, xlabel={$W_1$: wealth if no loss}, ylabel={$W_2$: wealth if loss},
+    xtick={75,90,100}, ytick={50,57.29,75,90}, yticklabels={50,57.3,75,90},
+    legend style={at={(1.05,0.5)}, anchor=west}]
+  \addplot[black!50, thin, domain=45:96, samples=2] {x};
+  \addplot[omDef, thick, domain=75:100, samples=2] {150 - x};
+  \addplot[omThm, thick, domain=90:100, samples=2] {450 - 4*x};
+  \addplot[omDef, thick, dashed, domain=60:100, samples=60] {5625/x};
+  \addplot[omThm, thick, dashed, domain=93:103, samples=40] {exp((4.479 - 0.8*ln(x))/0.2)};
+  \node[eqpoint] at (axis cs:100,50) {};
+  \node[eqpoint] at (axis cs:75,75) {};
+  \node[eqpoint] at (axis cs:98.18,57.29) {};
+  \node[anchor=north east, font=\footnotesize] at (axis cs:99.5,49.5) {endowment};
+  \node[anchor=south east, font=\footnotesize] at (axis cs:75,75) {high};
+  \node[anchor=east, font=\footnotesize] at (axis cs:97.5,57.29) {low};
+  \legend{Full cover, High risks' fair line, Low risks' fair line, High risks' indifference,
+    Low risks' indifference}
+\end{axis}
+\end{tikzpicture}
+
+{\small The separating menu. High risks get full cover on their fair line. Low risks get the point of their fair line on
+the high risks' indifference curve through 75: any more cover and high risks would take it. The low risks' indifference
+curve through their contract is steeper than the high risks' everywhere.}
+\end{omfigure}
+
+\begin{proposition}[No pooling equilibrium]\label{prop:b2:signalling-and-screening:no-pooling}
+In a competitive insurance market with two risk types and insurers that offer contracts, no single contract bought by
+both types at a break-even premium is an equilibrium.
+\end{proposition}
+
+\begin{proof}
+A pooling contract that breaks even charges the average probability of loss, above the low risks' probability. At that
+contract, a low risk will give up more wealth in the loss state for a unit of wealth in the no-loss state than a high risk
+will, since a loss is less likely for her: her indifference curve is steeper. So there are contracts with slightly less
+cover and a slightly lower premium that low risks prefer to the pooling contract and high risks do not. An insurer that
+offers one attracts only low risks; since its premium is still close to the pooled one, above the low risks' expected
+loss, it makes a profit. So the pooling contract cannot survive competition.
+\end{proof}
+
+The separating menu need not be an equilibrium either. If low risks are a large enough share, a single pooled contract
+priced at the average probability, for instance full cover at the pooled premium, is better for them than their small
+cover; high risks take it too, and an insurer that offers it breaks even. The separating menu is undercut, and no
+equilibrium exists. The best such contract has partial cover, and it breaks the menu at a lower share than full cover does (\cref{exo:b2:signalling-and-screening:12}).
+
+\section{Price discrimination as screening}\label{sec:b2:signalling-and-screening:pricing}
+
+A seller with market power screens too. A phone company cannot tell light users from heavy users, but it can offer plans:
+a small allowance for a small fee and a large one for a large fee. A user of type $\theta$ values $q$ units at $\theta q - q^2/2$; a unit
+costs the company $c$. The light type, a share $n_L$, has $\theta_L$; the heavy type, a share $n_H$, has $\theta_H > \theta_L$.
+
+\begin{definition}[Information rent]\label{def:b2:signalling-and-screening:information-rent}
+An \emph{information rent}\index{information rent} is the surplus that a type keeps in a \omterm{def:b2:signalling-and-screening:screening}{screening} menu because of its
+private information: what the party offering the menu must leave it so that it does not take another type's contract.
+\end{definition}
+
+With full information, the company would sell each type the quantity at which its marginal value equals cost, $\theta - c$, for
+a fee equal to its whole value. Without it, a heavy user offered those two plans takes the light plan, which leaves him
+surplus. The company must design the plans around four constraints: each type participates, and each prefers its own plan.
+
+\begin{proposition}[The two-type screening menu]\label{prop:b2:signalling-and-screening:menu}
+If the company offers two plans $(q_L, F_L)$ and $(q_H, F_H)$ to maximise profit, then (i) the heavy type gets the quantity of full
+information, $q_H = \theta_H - c$ (no distortion at the top); (ii) the light type gets less than it would with full information,
+\[
+  q_L = \theta_L - c - \frac{n_H}{n_L}(\theta_H - \theta_L),
+\]
+or nothing when this is negative; (iii) the light type keeps no surplus, and the heavy type keeps an \omterm{def:b2:signalling-and-screening:information-rent}{information rent} of
+$(\theta_H - \theta_L)\,q_L$.
+\end{proposition}
+
+\begin{proof}
+At the optimum, the light type's \omterm{def:b2:signalling-and-screening:pc}{participation constraint} binds: otherwise both fees could be raised by the same amount.
+The heavy type's incentive constraint binds too: otherwise $F_H$ could be raised. So $F_L = \theta_L q_L - q_L^2/2$, and the heavy user's
+surplus equals what he would get from the light plan, $(\theta_H q_L - q_L^2/2) - F_L = (\theta_H - \theta_L)q_L$; that is his rent, and
+$F_H = \theta_H q_H - q_H^2/2 - (\theta_H - \theta_L)q_L$. Profit is then
+\[
+  n_L\bigl(\theta_L q_L - \tfrac12 q_L^2 - c q_L\bigr) + n_H\bigl(\theta_H q_H - \tfrac12 q_H^2 - c q_H - (\theta_H - \theta_L) q_L\bigr).
+\]
+The first-order condition for $q_H$ gives $\theta_H - q_H = c$; that for $q_L$ gives $n_L(\theta_L - q_L - c) = n_H(\theta_H - \theta_L)$, which is (ii). The
+two constraints left aside hold: the heavy type's surplus $(\theta_H - \theta_L)q_L$ is not negative, and the light type does not want
+the heavy plan, since $q_H \ge q_L$ and the heavy plan charges for its extra units what the heavy type values them at, which is more
+than the light type does.
+\end{proof}
+
+Each unit sold to light users raises the rent the company must leave heavy users, so it sells light users fewer units:
+it gives up some surplus from them to extract more from heavy users. The listing finds the best menu by search over
+both quantities, to check the formula.
+
+\omcode{code/bachelor-2/16-signalling-and-screening/listings/menu.py}{1}{31}{The best two-plan menu, found by searching
+over the two quantities.}\label{lst:b2:signalling-and-screening:menu}
+
+\omoutput{code/bachelor-2/16-signalling-and-screening/outputs/menu.txt}{Light users get 2 units, not 4; heavy users get
+8, as with full information, and keep a rent of 8.}\label{out:b2:signalling-and-screening:menu}
+
+% code: listings/menu.py
+With $\theta_L = 6$, $\theta_H = 10$, $c = 2$ and two thirds light users, the formula gives $q_L = 6 - 2 - \tfrac12 \times 4 = 2$ and $q_H = 8$, as the search
+found. The light plan's fee, 10, is the light user's whole value of 2 units; the heavy plan's fee, 40, leaves the heavy
+user $48 - 40 = 8$, exactly what he would get from the light plan.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=10.5, ymin=0, ymax=52, width=0.62\linewidth,
+    height=0.45\linewidth, xlabel={$q$: units in the plan}, ylabel={Fee},
+    xtick={0,2,4,6,8,10}, ytick={10,20,40}, legend style={at={(1.03,0.5)}, anchor=west}]
+  \addplot[omDef, thick, domain=0:10, samples=50] {6*x - x^2/2};
+  \addplot[omThm, thick, dashed, domain=0.8:10, samples=50] {10*x - x^2/2 - 8};
+  \addplot[black!60, thin, domain=0:10, samples=2] {2*x};
+  \node[eqpoint] at (axis cs:2,10) {};
+  \node[eqpoint] at (axis cs:8,40) {};
+  \node[anchor=south east, font=\footnotesize] at (axis cs:2,10.5) {light plan};
+  \node[anchor=south east, font=\footnotesize] at (axis cs:8,40.5) {heavy plan};
+  \legend{Light user's value, Heavy user's value less 8, Cost}
+\end{axis}
+\end{tikzpicture}
+
+{\small The \omterm{def:b2:signalling-and-screening:screening}{screening} menu. The light plan sits on the light user's value curve: he keeps nothing. Both plans sit on the
+heavy user's indifference curve with surplus 8: he is indifferent between them and is assumed to take his own. Selling the
+light user more units would move the light plan up the heavy user's value curve and raise his rent.}
+\end{omfigure}
+
+\begin{model}{Screening by a menu}
+\assumes An uninformed party that moves first and can offer several contracts; buyers who choose the contract that is
+best for them; a single trait on which buyers differ.
+\predicts Each type sorts into its own contract; the type with the strongest demand gets the efficient contract and a rent;
+the others get distorted contracts.
+\tested Only consistency is reported here: UK annuity buyers of different mortality sorted into different products
+(Finkelstein and Poterba 2004; \cref{ch:b2:adverse-selection}), but those products were priced on age and sex, not
+designed as a menu. A test of the model needs a seller's menu and data on who chose what, to check the distortion at
+the bottom and the absence of distortion at the top.
+\breaks When buyers differ in several hidden traits at once, such as risk and aversion to risk, which can offset each other
+(Chiappori and Salani\'e 2012).
+\end{model}
+
+\section{Diplomas: signal or skill?}\label{sec:b2:signalling-and-screening:diplomas}
+
+\begin{definition}[Sheepskin effect]\label{def:b2:signalling-and-screening:sheepskin}
+A \emph{sheepskin effect}\index{sheepskin effect} is the part of the earnings return to education that comes from
+holding a diploma, over and above the return to the years of schooling it takes.
+\end{definition}
+
+The opening chart shows jumps at diploma years, but it compares different people. Those who finish twelve years are not
+those who stop at eleven; they may differ in ability, health or family, and employers may see some of it. A jump in
+raw means is consistent with signalling and with selection. To isolate the diploma, one needs people who differ in
+holding it but in little else.
+
+\begin{debate}[Diplomas: signal or skill?]
+% ledger: b2:cm2014-design, b2:cm2014-results, b2:cm2014-prior, b2:cm2014-ged
+Earlier survey studies, among them Hungerford and Solon (1987), estimated that diplomas and the completion of twelfth grade
+come with large wage increases; in their own data Clark and Martorell (2014) find a diploma earnings differential of 10 to 20
+per cent among workers who completed grade 12 and did not go to college. To separate \omterm{def:b2:signalling-and-screening:signal}{signal} from selection, Clark and
+Martorell compared the earnings of workers who barely passed and barely failed the exit exam that a Texas student must pass
+to earn a diploma. The diploma's estimated effect was always under 3 per cent of mean earnings and never statistically
+different from zero; combined with Florida, the estimates rule out effects above 5 to 6 per cent. One reading: employers learn
+productivity quickly and pay little for the paper itself. Another: this design measures the \omterm{def:b2:signalling-and-screening:signal}{signal} only for students at the
+margin of passing, and for the high-school diploma only; for a General Educational Development certificate, Tyler, Murnane and
+Willett (2000) estimated returns of 10 to 20 per cent for some workers, though later work found much smaller ones (both as
+summarised by Clark and Martorell 2014).
+\end{debate}
+
+\section{Exercises}\label{sec:b2:signalling-and-screening:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:signalling-and-screening:1}
+Read the opening chart. How large are the jumps at twelve and sixteen years, and how large is the largest other rise
+between nine and eighteen years? Why might mean earnings at ten and eleven years be below those at eight?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:signalling-and-screening:2}
+In the signalling model let $\theta_L = 12$, $\theta_H = 18$, $c_L = 3$ and $c_H = 1.5$. Find the range of separating equilibria.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:signalling-and-screening:3}
+Predict, then compute: in the model of the chapter, compare each type's payoff in the least-cost \omterm{def:b2:signalling-and-screening:separating}{separating equilibrium}
+with pooling at $s = 0$, first with half the workers high, then with 80 per cent.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:signalling-and-screening:4}
+For the menu found by the listing, compute each user's surplus from his own plan and from the other, and check the four
+constraints.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:signalling-and-screening:5}
+In the \omterm{def:b2:signalling-and-screening:separating}{separating equilibrium} with $s^* = 4$, show that a deviation to $s = 3$ could only come from a high type, and that it pays.
+Explain why every $s^*$ above 2.5 fails in the same way.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:signalling-and-screening:6}
+With 80 per cent high types, find the range of pooling equilibria in which employers believe any other choice comes from a
+low type.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:signalling-and-screening:7}
+Check the low-risk contract of \cref{sec:b2:signalling-and-screening:screening}: compute $W_1$ and $W_2$, the premium, and the low
+risk's expected utility. Does she prefer it to the high risks' contract?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:signalling-and-screening:8}
+Rerun the \omterm{def:b2:signalling-and-screening:screening}{screening} model of the listing with half the users light. What does the company do with light users, and what is
+its profit per user?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:signalling-and-screening:9}
+What does the human-capital view, in which each year of school adds skill, predict for the opening chart, and what does
+signalling predict? Why does the chart alone not settle the question?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:signalling-and-screening:10}
+Show that the \omterm{def:b2:signalling-and-screening:separating}{separating equilibrium} with $s^* = (\theta_H - \theta_L)/c_L$ is the only one that survives the intuitive criterion.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:signalling-and-screening:11}
+In \cref{prop:b2:signalling-and-screening:menu}, find the share of heavy users above which the company sells nothing to light
+users. Evaluate it for the listing's numbers.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:signalling-and-screening:12}
+In the insurance market of \cref{sec:b2:signalling-and-screening:screening}, let 90 per cent of people be low risks. Find the
+pooled fair premium for full cover and the low risks' utility from it. Is the separating menu an equilibrium? Find the
+share of low risks above which it is not.
+\end{exercise}
+
+\section{Problem: Brenmoor phone plans}\label{sec:b2:signalling-and-screening:problem}
+
+\begin{problem}[{Weekend problem --- a phone company in Brenmoor cannot tell light users from heavy users: what plans does it
+offer, who keeps a rent, and what does the screening cost in surplus}]
+\label{pb:b2:signalling-and-screening:1}
+The company has 9{,}000 customers; 6{,}000 are light users and 3{,}000 heavy. A user of type $\theta$ values $q$ gigabytes a month at
+$\theta q - q^2/2$ dalens, with $\theta = 30$ for light and $\theta = 40$ for heavy users. A gigabyte costs the company 10 dalens.
+
+\medskip
+\noindent\textbf{Part I --- Two consumer types.}
+\begin{enumerate}
+  \item Write each type's marginal value of a gigabyte.
+  \item How many gigabytes would each type buy at a price of 10 a gigabyte?
+  \item What is each type's surplus at that price?
+  \item Which type values any given allowance more, and by how much per gigabyte?
+  \item What does the company know, and what does it not?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Full-information plans.}
+\begin{enumerate}[resume]
+  \item If the company could tell the types apart, what allowance and fee would it give each?
+  \item What is its profit per light and per heavy user, and in total?
+  \item What surplus do users keep?
+  \item If it offered the two plans openly, which would a heavy user take, and with what surplus?
+  \item What would the company's profit then be?
+  \item Would it do better selling only the heavy plan?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- The screening menu.}
+\begin{enumerate}[resume]
+  \item Write the two participation and two incentive constraints.
+  \item Which two bind at the optimum, and why?
+  \item Find the light plan's allowance.
+  \item Find the heavy plan's allowance.
+  \item Find the light plan's fee.
+  \item Find the heavy user's rent and the heavy plan's fee.
+  \item Check that the light user does not want the heavy plan.
+  \item Find the profit per user of each type and in total.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Welfare and the information rent.}
+\begin{enumerate}[resume]
+  \item What is the total of the heavy users' rents?
+  \item How much surplus is lost on each light user, and in total?
+  \item Show that the company's lost profit, compared with full information, equals the rents plus the lost surplus.
+  \item If half the customers were heavy users, what allowance would light users get?
+  \item Above what share of heavy users would light users get nothing?
+  \item State the result: the menu, the distortion at the bottom and the heavy users' rent, in dalens.
+\end{enumerate}
+\end{problem}

@@ -1,0 +1,15 @@
+label,method,lo,hi,ledger
+Blanchard--Perotti SVAR (US),ts,0.6,0.8,g12:ramey-bp
+military news (US; Ramey--Zubairy),ts,0.5,0.8,g12:ramey-rz
+news shocks (US; Ben Zeev--Pappa),ts,1.1,2,g12:ramey-bzp
+defence spending (US; Hall; Barro--Redlick),ts,0.6,0.7,g12:ramey-br
+sign restrictions (US; Mountford--Uhlig),ts,0.65,0.65,g12:ramey-mu
+high-income countries (Ilzetzki et al.),ts,0.3,0.7,g12:ramey-imv
+Corsetti--Meier--Mueller,ts,0.7,0.7,g12:ramey-cmm
+spending cuts in 17 OECD countries,ts,0.3,0.3,g12:ramey-glp
+austerity plans in 16 OECD countries,ts,0.3,0.3,g12:ramey-afg
+Cogan et al.,dsge,0.6,0.7,g12:ramey-cogan
+Coenen et al.,dsge,0.7,1,g12:ramey-coenen
+Zubairy,dsge,0.7,1.05,g12:ramey-zubairy
+Leeper--Traum--Walker,dsge,0.7,1.36,g12:ramey-ltw
+Sims--Wolff,dsge,1.07,1.07,g12:ramey-sw

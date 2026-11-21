@@ -1,0 +1,411 @@
+\chapter{The Competitive Industry}\label{ch:b1:competitive-industry}
+
+In March 2014 a licence to run a taxi in New York City, a medallion, sold for
+an average of 1.16 million dollars (for the corporate, wheelchair-accessible
+kind); in November 2019 the average medallion sold for
+164,518 dollars. % ledger: b1:nyc-medallions
+The number of medallions was capped at about 13,600. The cap kept the earnings of each cab, at fares set by the city, above
+what \omterm{def:b1:competitive-industry:free-entry}{free entry} would have allowed, and the
+price of a medallion was the value of those extra earnings. When ride-hailing
+apps brought in thousands of cars without medallions, the extra earnings,
+and the price, collapsed. This chapter builds an industry from the firms of
+\cref{ch:b1:profit-maximisation}, lets firms enter and leave, and follows
+the payments that entry cannot remove --- rents --- into the price of the
+assets that earn them.
+
+\begin{openingchart}{Real house prices, five countries, 1870--2020 (Canada from
+1921, the United Kingdom from 1899, the United States from 1890), nominal
+house price index divided by the consumer price index, 1990 = 100,
+logarithmic axis.}{Jord\`a--Schularick--Taylor Macrohistory Database: house
+prices (nominal) and consumer prices}
+\begin{tikzpicture}
+\begin{semilogyaxis}[omtime, log ticks with fixed point, ytick={10,20,50,100,200}, xmin=1870, xmax=2020,
+  ymin=6, ymax=320, xlabel={Year}, ylabel={Real house price (1990 = 100)},
+  width=0.72\linewidth, height=0.46\linewidth, legend pos=south east, unbounded coords=jump]
+  \addplot+[no marks, thick] table[x=year, y=aus, col sep=comma] {figdata/bachelor-1/12-competitive-industry/out/real_house_prices.csv};
+  \addplot+[no marks, thick] table[x=year, y=can, col sep=comma] {figdata/bachelor-1/12-competitive-industry/out/real_house_prices.csv};
+  \addplot+[no marks, thick] table[x=year, y=fra, col sep=comma] {figdata/bachelor-1/12-competitive-industry/out/real_house_prices.csv};
+  \addplot+[no marks, thick] table[x=year, y=gbr, col sep=comma] {figdata/bachelor-1/12-competitive-industry/out/real_house_prices.csv};
+  \addplot+[no marks, thick] table[x=year, y=usa, col sep=comma] {figdata/bachelor-1/12-competitive-industry/out/real_house_prices.csv};
+  \legend{Australia, Canada, France, United Kingdom, United States}
+\end{semilogyaxis}
+\end{tikzpicture}
+\end{openingchart}
+
+For eighty years real house prices went nowhere in particular; after 1950
+they rose several times over. From 1950 to 2020 they were multiplied by 5.1
+in the United Kingdom, 5.3 in Australia and 22.5 in France (from a very low
+point after the wars), and by 1.9 in the United States. % figdata: house_points
+Builders are a competitive industry with \omterm{def:b1:competitive-industry:free-entry}{free entry}, so a house cannot cost
+much more than it costs to build for long. What rose was the price of the
+land under it: a study of fourteen countries attributes about $80\%$ of the
+rise in house prices since the Second World War to land (Knoll, Schularick
+and Steger 2017). % ledger: b1:knoll2017
+Land in the places people want to live is in fixed supply, and fixed
+supply earns a rent.
+
+\begin{recall}
+In a competitive market firms enter when economic profit is positive and
+leave when it is negative; the present value of $R$ a year for ever at the
+interest rate $i$ is $R/i$. Both were met at school. A firm's supply is its
+marginal cost above the \omterm{def:b1:profit-maximisation:shut-down}{shut-down price}
+(\cref{ch:b1:profit-maximisation}).
+\end{recall}
+
+\section{The short run: a given number of firms}\label{sec:b1:competitive-industry:short-run}
+
+\begin{definition}[Industry supply]\label{def:b1:competitive-industry:industry-supply}
+\index{industry supply}\index{supply curve!of an industry}
+With $n$ firms whose supply functions are $q_i(p)$, the short-run
+\emph{industry supply} is their sum at each price,
+$Q(p) = \sum_{i=1}^n q_i(p)$: the horizontal sum of their supply curves.
+\end{definition}
+
+Brenland's fishing boats (invented) each have the \omterm{def:b1:cost-minimisation:cost-function}{cost function}
+$C(q) = 50 + 2q^2$, in thousands of dalens a year for $q$ tonnes of fish. A
+boat's marginal cost is $4q$, so it supplies $q = p/4$, and 400 boats supply
+$Q = 100p$. Against the demand $Q = 3000 - 50p$, the price is 20 thousand
+dalens a tonne, each boat lands 5 tonnes and the industry 2,000. The
+short-run \omterm{def:b1:competitive-industry:industry-supply}{industry supply} is flatter than one firm's supply curve: a rise
+in price of one thousand dalens adds a quarter of a tonne for each boat, 100
+tonnes for the industry.
+
+\section{The long run: free entry}\label{sec:b1:competitive-industry:long-run}
+
+\begin{definition}[Free entry]\label{def:b1:competitive-industry:free-entry}
+\index{free entry}\index{entry and exit}
+An industry has \emph{free entry} if any number of firms with access to the
+same technology and input prices can enter it, and incumbents can leave,
+without paying a cost that those already in it did not pay.
+\end{definition}
+
+With \omterm{def:b1:competitive-industry:free-entry}{free entry} and identical firms, the long-run price cannot stay above
+the minimum of average cost, or firms would enter and make a profit; it
+cannot stay below it, or firms would leave. So $p = \min AC$, each firm
+produces at its \omterm{def:b1:cost-minimisation:mes}{minimum efficient scale}, and the number of firms is
+whatever it takes to meet demand at that price. For the boats, average
+cost $50/q + 2q$ is lowest at $q = 5$, where it is 20: with 2,000 tonnes
+demanded at that price, the industry holds 400 boats.
+
+\begin{definition}[Long-run industry supply]\label{def:b1:competitive-industry:lr-supply}
+\index{long-run industry supply}
+The \emph{long-run \omterm{def:b1:competitive-industry:industry-supply}{industry supply}} gives the quantity the industry
+offers at each price once the number of firms has adjusted to make profit
+zero.
+\end{definition}
+
+\begin{definition}[Constant-cost and increasing-cost industries]\label{def:b1:competitive-industry:cost-industry}
+\index{constant-cost industry}\index{increasing-cost industry}
+An industry is \emph{constant-cost} if its expansion leaves the input prices
+its firms pay unchanged, so its long-run supply is flat at the minimum of
+average cost; it is \emph{increasing-cost} if its expansion raises the price
+of an input in limited supply, so its long-run supply rises.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 1, horizontal sep=16mm}, omrecord, grid=none,
+  width=0.44\linewidth, height=0.42\linewidth, samples=80, ymin=0, ymax=40]
+\nextgroupplot[xlabel={Boat's catch $q$}, ylabel={Thousand dalens a tonne}, xmin=0, xmax=10,
+  title={\small One boat}, width=0.44\linewidth]
+  \fill[omDef!14] (axis cs:0,20.24) rectangle (axis cs:5.83,23.33);
+  \addplot[shifted, domain=1.5:10] {50/x + 2*x};
+  \addplot[supply, domain=0:10] {4*x};
+  \addplot[guide] coordinates {(0,20) (10,20)};
+  \addplot[guide] coordinates {(0,23.33) (10,23.33)};
+  \addplot[only marks, mark=*, black] coordinates {(5,20) (5.83,23.33)};
+  \node[font=\footnotesize, anchor=north west] at (axis cs:6.5,38) {$MC$};
+  \node[font=\footnotesize, anchor=south] at (axis cs:2,30) {$AC$};
+\nextgroupplot[xlabel={Industry catch $Q$}, xmin=0, xmax=3500, title={\small The industry},
+  width=0.44\linewidth, scaled x ticks=false, xticklabel style={/pgf/number format/.cd, fixed, 1000 sep={\,}}]
+  \addplot[demand, domain=0:3000] {60 - x/50};
+  \addplot[demand, dashed, domain=0:3500] {70 - x/50};
+  \addplot[supply, domain=0:3500] {x/100};
+  \addplot[supply, dashed, domain=0:3500] {x/125};
+  \addplot[shifted] coordinates {(0,20) (3500,20)};
+  \addplot[only marks, mark=*, black] coordinates {(2000,20) (2333,23.33) (2500,20)};
+\end{groupplot}
+\end{tikzpicture}
+
+{\small Demand for fish rises from $Q = 3000 - 50p$ to $3500 - 50p$ (blue, dashed).
+With 400 boats (red) the price rises to 23.33 and each boat lands 5.83
+tonnes at an average cost of 20.24: the shaded profit. Boats enter until
+there are 500 (red, dashed), and the price returns to 20, the long-run
+supply (black, dashed) of a \omterm{def:b1:competitive-industry:cost-industry}{constant-cost industry}.}
+\end{omfigure}
+
+In a \omterm{def:b1:competitive-industry:cost-industry}{constant-cost industry}, a rise in demand raises the price only for as
+long as entry takes; the long-run effect falls on the number of firms.
+Most industries draw on some input whose supply is limited --- fishing
+grounds, land near cities, skilled people --- and then the long-run supply
+rises. If the industry's long-run supply is $p = 10 + Q/100$ because each
+extra tonne must come from poorer or more distant grounds, and demand is
+$Q = 2000 - 50p$, the price is 20 and the quantity 1,000. Every tonne but the
+last costs less than 20 to land; the difference goes to whoever owns the
+better grounds.
+
+\section{Rents and quasi-rents}\label{sec:b1:competitive-industry:rents}
+
+\begin{definition}[Economic rent]\label{def:b1:competitive-industry:rent}
+\index{economic rent}\index{rent (economic)}
+An \emph{economic rent} is a payment to a factor of production above the
+least payment that would keep it in its current use. A factor in fixed
+supply earns a pure rent: all of its payment is rent, since it would be
+supplied at any price.
+\end{definition}
+
+In the increasing-cost example the owners of the fishing grounds earn the
+triangle between the price and the long-run supply curve,
+$\tfrac12 \times 1000 \times (20 - 10) = 5000$ thousand dalens a year. Competition does not
+remove it: entrants would have to use worse grounds, at a cost of 20. Any
+profit a firm seems to make from a better ground is a rent to the ground,
+and if the firm rents it, competition among firms passes the rent to the
+owner.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Quantity $Q$}, ylabel={Price}, xmin=0, xmax=2100, ymin=0, ymax=45,
+  width=0.52\linewidth, height=0.4\linewidth, samples=60, scaled x ticks=false,
+  xticklabel style={/pgf/number format/.cd, fixed, 1000 sep={\,}}]
+  \addplot[cs area, forget plot] coordinates {(0,10) (1000,20) (0,20)} -- cycle;
+  \addplot[demand, domain=0:2000] {40 - x/50};
+  \addplot[supply, domain=0:2000] {10 + x/100};
+  \addplot[guide] coordinates {(0,20) (1000,20) (1000,0)};
+  \node[font=\footnotesize] at (axis cs:300,17.3) {rent};
+\end{axis}
+\end{tikzpicture}
+
+{\small An \omterm{def:b1:competitive-industry:cost-industry}{increasing-cost industry}: long-run supply $p = 10 + Q/100$ (red),
+demand $Q = 2000 - 50p$ (blue). The shaded triangle, 5,000 a year, is the rent
+earned by the owners of the scarce input.}
+\end{omfigure}
+
+\begin{definition}[Quasi-rent]\label{def:b1:competitive-industry:quasi-rent}
+\index{quasi-rent}
+A \emph{quasi-rent} is revenue minus variable cost: the payment to the
+fixed factors of a firm in the short run. It is a rent while the factors
+are fixed and becomes a cost when they must be replaced.
+\end{definition}
+
+A boat that lands 5.83 tonnes at the price 23.33 earns a \omterm{def:b1:competitive-industry:quasi-rent}{quasi-rent} of
+$23.33 \times 5.83 - 2 \times 5.83^2 \approx 68.04$ thousand dalens (68.06 unrounded), against its fixed
+cost of 50. A firm stays in business in the short run if its \omterm{def:b1:competitive-industry:quasi-rent}{quasi-rent} is
+positive, and stays in the long run only if it covers the fixed cost.
+
+\section{Capitalisation}\label{sec:b1:competitive-industry:capitalisation}
+
+\begin{definition}[Capitalisation]\label{def:b1:competitive-industry:capitalisation}
+\index{capitalisation}
+\emph{Capitalisation} is the inclusion of an expected stream of rents in
+the price of the asset that earns them: with free trade in the asset, its
+price is the present value of the rents, $R/i$ for a permanent rent $R$ at
+the interest rate $i$.
+\end{definition}
+
+In the capped fishery of the figure below, a licence lets its owner earn
+62,500 dalens a year above the normal return. It sells, at $4\%$, for $62500/0.04 = 1.5625$ million. The person who
+received it free when the cap was set gains that sum. Whoever buys it later
+pays the price and earns only $4\%$ on it: the normal return. The rent has
+become a cost, and the buyer's earnings look ordinary, although the cap
+still keeps prices up for the industry's customers. When the rule changes,
+the price of the licence falls at once, by the value of the lost rents,
+and the loss falls on whoever owns it then.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Catch $Q$ (tonnes)}, ylabel={Thousand dalens a tonne},
+  xmin=0, xmax=3100, ymin=0, ymax=62, width=0.6\linewidth, height=0.44\linewidth, samples=60,
+  scaled x ticks=false, xticklabel style={/pgf/number format/.cd, fixed, 1000 sep={\,}}]
+  \fill[omDef!20] (axis cs:0,21.67) rectangle (axis cs:1500,30);
+  \fill[omThm!25] (axis cs:0,20) rectangle (axis cs:1500,21.67);
+  \fill[omProp!25] (axis cs:1500,30) -- (axis cs:2000,20) -- (axis cs:1500,20) -- cycle;
+  \addplot[demand, domain=0:3000] {60 - x/50};
+  \addplot[supply, domain=0:3000] {x/50};
+  \addplot[shifted] coordinates {(0,20) (3000,20)};
+  \addplot[only marks, mark=*, black] coordinates {(1500,30) (2000,20)};
+  \node[font=\footnotesize] at (axis cs:750,25.8) {licence rents};
+  \node[font=\footnotesize, anchor=west] at (axis cs:2450,50) {200 boats};
+  \node[font=\footnotesize, anchor=south] at (axis cs:2600,20) {free entry};
+\end{axis}
+\end{tikzpicture}
+
+{\small A cap of 200 boats: their supply $Q = 50p$ (red) meets demand at a price of 30
+and a catch of 1,500 tonnes. The top rectangle is the licence rents,
+$200 \times 62.5 = 12500$ thousand dalens a year; the thin rectangle is the extra cost
+of boats fishing above their \omterm{def:b1:cost-minimisation:mes}{minimum efficient scale}; the triangle is the
+catch not landed. The last two, 5,000 a year, are what the cap costs.}
+\end{omfigure}
+
+\begin{record}[Taxi medallions]
+New York City limits the number of taxi medallions, about 13,600 in 2019.
+The average price of a corporate wheelchair-accessible medallion was 1.16
+million dollars in March 2014; the average price of all medallions sold in
+November 2019 was 164,518 dollars. The City Council attributes the fall to
+large-scale disruption of the industry by app-based companies, which
+could put cars on the street without medallions. % ledger: b1:nyc-medallions
+\omterm{def:b1:competitive-industry:capitalisation}{Capitalisation} explains the high price, the value of the rents that a
+capped licence was expected to earn, and why the price fell as soon as
+those rents were expected to shrink. The loss fell on whoever owned a
+medallion when the fall came, including those who had just paid the peak
+price.
+\end{record}
+
+\begin{model}{Free entry}
+\assumes Many potential firms with the same U-shaped average cost, free to
+enter and leave, at given input prices.
+\predicts Zero long-run profit, a price at the minimum of average cost, and
+entry after a rise in demand that brings the price back down; a flat
+long-run supply unless some input is scarce.
+\tested The post-war rise in house prices was mostly a rise in the price of
+land, the input in fixed supply, not in the cost of building: about $80\%$
+of it in Knoll, Schularick and Steger (2017). % ledger: b1:knoll2017
+\breaks Licences and patents block entry; when firms differ in cost, the
+low-cost firms keep inframarginal rents, which then belong to whatever
+makes them cheaper.
+\end{model}
+
+\begin{model}{Capitalisation}
+\assumes A known, permanent stream of rents, a discount rate, and an asset
+that can be bought and sold.
+\predicts The asset's price equals the present value of the rents; a rule
+change is priced in at once; later buyers earn the normal return.
+\tested Consistent with it: taxi medallion prices were high while the cap
+held and fell steeply once app-based cars entered. % ledger: b1:nyc-medallions
+A test would compare the fall in an asset's price with an independent
+estimate of the present value of the rents lost, measured when the rule
+changed.
+\breaks When the stream is uncertain, when buyers are wrong about it, or
+when the asset cannot be sold (a licence tied to its owner), the price need
+not follow the present value.
+\end{model}
+
+\begin{measure}[A house-price index]
+A house-price index compares the prices of houses sold in different
+years. Since no two houses are alike, the index must correct for what is
+sold: \emph{repeat-sales} indexes use the change in price of the same house
+sold twice; \emph{hedonic} indexes regress prices on the characteristics of
+the houses (size, rooms, location) and track the price of a fixed bundle of
+characteristics. Long series join several such indexes and older sources,
+so their early decades are less precise.
+\end{measure}
+
+\section*{Exercises}\label{sec:b1:competitive-industry:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:competitive-industry:sum}
+Fifty identical firms each supply $q = p/2$. Write the \omterm{def:b1:competitive-industry:industry-supply}{industry supply}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:competitive-industry:entry}
+Identical firms have $C(q) = 100 + q^2$, entry is free and demand is
+$Q = 1000 - 10p$. Find the long-run price, the output of each firm and the
+number of firms.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:competitive-industry:read}
+From the opening chart's table, the real house price index was 35.8 in
+1950 and 181.9 in 2020 in the United Kingdom, and 84.8 and 158.5 in the
+United States. % figdata: house_points
+Compute the ratios.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:competitive-industry:demand-rise}
+Demand rises by $20\%$ at every price in a \omterm{def:b1:competitive-industry:cost-industry}{constant-cost industry}. Predict
+the price and the number of firms in the short run and in the long run.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:competitive-industry:increasing}
+An industry's long-run supply is $p = 10 + Q/100$ and demand is $Q = 2000 - 50p$.
+Find the price, the quantity and the rent to the scarce input. Demand rises
+to $Q = 2600 - 50p$: what happens to the rent?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:competitive-industry:quasi}
+A firm with $C(q) = 50 + 2q^2$ faces the price 24. Compute its output, its
+\omterm{def:b1:competitive-industry:quasi-rent}{quasi-rent} and its profit.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:competitive-industry:licence}
+A licence lets its owner earn 40,000 dollars a year above the normal return,
+for ever. What is it worth at an interest rate of $5\%$?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:competitive-industry:more-licences}
+In the weekend problem's fishery the authority raises the number of
+licences from 200 to 240. Compute the new price, the rent per licence and
+the licence price at $4\%$. By what percentage does the licence price fall?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:competitive-industry:growth}
+Using the ratios of \cref{exo:b1:competitive-industry:read}, compute the
+yearly growth of real house prices from 1950 to 2020 in both countries.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:competitive-industry:subsidy}
+A subsidy of $s$ per unit is given to the producers of a competitive
+industry. Show that in the long run buyers gain all of it if the industry
+is constant-cost, and that in an \omterm{def:b1:competitive-industry:cost-industry}{increasing-cost industry} part of it goes
+to the owners of the scarce input.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:competitive-industry:expected}
+A city announces that its taxi cap will be lifted in ten years. Who loses:
+the owners at the announcement, or those who own medallions in ten years?
+Compare with a cap lifted without warning.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:competitive-industry:refute}
+``House prices rose because land is scarce.'' What observation would refute
+this? Name one comparison between places and one over time.
+\end{exercise}
+
+\section{Problem: Fishing Licences in Brenland}\label{sec:b1:competitive-industry:problem}
+
+\begin{problem}[{Weekend problem --- the capitalised value of a licence}]\label{pb:b1:competitive-industry:fishing}
+Each Brenland fishing boat (invented) has the \omterm{def:b1:cost-minimisation:cost-function}{cost function}
+$C(q) = 50 + 2q^2$, in thousands of dalens a year, where $q$ is its catch in
+tonnes; the fixed cost includes a normal return on the boat. Demand for
+fish is $Q = 3000 - 50p$, with $p$ in thousands of dalens a tonne.
+
+\medskip\noindent\textbf{Part I --- Free entry.}
+\begin{enumerate}
+  \item Compute marginal and average cost, and the minimum of average cost.
+  \item Write one boat's supply.
+  \item What is the long-run price with \omterm{def:b1:competitive-industry:free-entry}{free entry}?
+  \item Compute the catch.
+  \item How many boats fish?
+  \item Demand rises to $Q = 3500 - 50p$. Find the long-run price and the number of boats.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- A cap.} Before demand rose, the authority
+caps the fleet at 200 boats, with one licence each.
+\begin{enumerate}[resume]
+  \item Write the \omterm{def:b1:competitive-industry:industry-supply}{industry supply} of 200 boats.
+  \item Find the price and the catch.
+  \item Compute each boat's catch and average cost.
+  \item Compute each boat's profit.
+  \item Compute each boat's \omterm{def:b1:competitive-industry:quasi-rent}{quasi-rent}.
+  \item Why does entry not remove the profit?
+  \item What is the rent earned by a licence?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- Capitalisation.} Licences can be sold;
+the interest rate is $4\%$.
+\begin{enumerate}[resume]
+  \item What is a licence worth?
+  \item A fisher buys a licence. What return does she earn on what she paid?
+  \item Who gained from the cap?
+  \item What is a licence worth if the interest rate falls to $2.5\%$?
+  \item The authority announces that the cap will be lifted in ten years. What is a licence worth now?
+  \item How much did the announcement cost the owner of one licence?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- The cap goes.} The cap is lifted without warning.
+\begin{enumerate}[resume]
+  \item Find the new price and the number of boats.
+  \item By how much does the price of a licence fall?
+  \item Compute \omterm{def:b1:consumer-welfare:consumer-surplus}{consumer surplus} with the cap and without it.
+  \item Show that buyers gain more than licence owners lose, and explain the difference.
+  \item Who bears the loss?
+  \item State the result: the capitalised value of one licence, and its fall when the cap goes.
+\end{enumerate}
+\end{problem}

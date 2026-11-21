@@ -1,0 +1,145 @@
+\section*{Chapter \ref{ch:b2:prices-as-information} --- Prices as Information}
+
+\begin{solution}{exo:b2:prices-as-information:1}
+% ledger: b2:sw2010-returns
+% figdata: returns_summary
+A dollar on the favourite returns 94.5 cents on average ($1 - 0.055$); a dollar at odds of 100/1 or longer
+returns 39 cents ($1 - 0.61$). If the odds were unbiased forecasts, every bar would have the same length:
+every kind of bet would lose the track's share of the pool and nothing more.
+\end{solution}
+
+\begin{solution}{exo:b2:prices-as-information:2}
+% code: exercises/solutions.py counts
+Each household's 40 budget shares sum to one, so 39 numbers describe it: $2{,}000{,}000 \times 39 = 78$
+million numbers. A market posts 39 prices. The planner would also need every firm's technology and every
+household's \omterm{def:b2:exchange-economies:endowment}{endowment}, and a way to make people report truthfully.
+\end{solution}
+
+\begin{solution}{exo:b2:prices-as-information:3}
+% code: exercises/solutions.py two_signal
+The naive price is $(2 - 0.5)/2 = 0.75$; the \omterm{def:b2:prices-as-information:fully-revealing}{fully revealing} price is $2 - 0.5 = 1.5$. At 0.75, a trader who
+learnt $s_1 + s_2 = 1.5$ would expect the asset to be worth 1.5 and would want to buy, whichever group she
+belongs to: the naive price is not an equilibrium once traders learn from it.
+\end{solution}
+
+\begin{solution}{exo:b2:prices-as-information:4}
+Prices that are badly calibrated across many contracts (contracts priced near 0.8 whose events happen far
+less or far more than 80 per cent of the time); forecast errors that public information available at the
+time (polls, earlier prices) could have predicted; or prices that do not move when traders learn news
+that is relevant to the event.
+\end{solution}
+
+\begin{solution}{exo:b2:prices-as-information:5}
+% code: exercises/solutions.py gs
+$k = e^{0.1} - 1 = 0.1052$. Then $\phi^* = 0.25\sqrt{(1 - 0.1052)/0.1052} = 0.25 \times 2.917 = 0.729$, and the
+error variance of the price's forecast is $k = 0.105$.
+\end{solution}
+
+\begin{solution}{exo:b2:prices-as-information:6}
+% code: exercises/solutions.py gs
+A dearer signal should attract fewer buyers and leave the price less informative. At $c = 0.2$, $k = e^{0.4} -
+1 = 0.492$ and $\phi^* = 0.25\sqrt{0.508/0.492} = 0.254$: the informed share falls from 0.433 to 0.254 and the
+error variance rises from 0.25 to 0.492. If $\sigma_z$ doubled instead, $\phi^*$ would double, to 0.866 at
+$c = 0.1116$, and the error variance would stay at 0.25: more noise attracts exactly enough \omterm{def:b2:prices-as-information:informed-trader}{informed
+traders} to offset it.
+\end{solution}
+
+\begin{solution}{exo:b2:prices-as-information:7}
+% ledger: b2:bfnr2008-polls
+% code: exercises/solutions.py iem luck
+$(1.91 - 1.49)/1.91 = 22$ per cent smaller with election-eve prices, $(1.91 - 1.58)/1.91 = 17$ per cent with
+last-week prices. The market was closer in $9/15 = 60$ per cent of the elections. If each election were a
+fair coin flip between market and polls, at least 9 wins out of 15 would happen with probability 0.304; so
+9 of 15 is weak evidence on its own. One needs the size of the errors in each election, how independent the
+elections are, and the number of elections, which only a longer record supplies.
+\end{solution}
+
+\begin{solution}{exo:b2:prices-as-information:8}
+% code: exercises/solutions.py payback
+A return of $-5.5$ per cent means the average dollar comes back as 0.945, so these horses win $0.945/3 =
+0.315$ of their races; the odds suggest $1/3 = 0.333$. They win $0.315/0.333 = 94.5$ per cent as often as the
+odds say. The horse at 100/1 wins $0.0039/0.0099 = 39$ per cent as often as its odds say. Both shortfalls
+include the track's share; the difference between them is the bias.
+\end{solution}
+
+\begin{solution}{exo:b2:prices-as-information:9}
+Follow the price over the next hours and days, and compare it with any other market or poll on the same
+election. If, without news, the price falls back towards 0.40 as other traders sell, the push was treated
+as noise and did not last: the market resisted it. If the price stays near 0.55 while other forecasts do
+not move, either the other traders believed the buyer had information, or the market is too thin for
+them to correct it; the volume of their selling helps tell the two apart. If later news justifies 0.55, the
+buyer was informed, not manipulating.
+\end{solution}
+
+\begin{solution}{exo:b2:prices-as-information:10}
+(a) Wealth is $W = x(v - p)$, normal with mean $x(m - p)$ and variance $x^2\sigma^2$. Then $\mathbb{E}[-e^{-aW}] =
+-\exp(-ax(m - p) + a^2x^2\sigma^2/2)$, which is largest where the exponent is smallest: $-a(m - p) + a^2x\sigma^2 =
+0$, so $x = (m - p)/(a\sigma^2)$. (b) If $p = s_1 + s_2$, every trader knows $s_1 + s_2$ and expects $v$ to be $s_1 + s_2$
+with variance $\sigma_\varepsilon^2$; her demand is $(s_1 + s_2 - p)/(a\sigma_\varepsilon^2) = 0$. Demands sum to
+zero, so the market clears, and the price reveals $s_1 + s_2$, all the information traders hold together. The
+variances of the signals do not matter, because once $s_1 + s_2$ is known each signal adds nothing.
+\end{solution}
+
+\begin{solution}{exo:b2:prices-as-information:11}
+With $\sigma_z = 0$ and $\phi > 0$, the price reveals $\xi = \theta$ exactly, so an uninformed trader knows as much as
+an informed one without paying; each \omterm{def:b2:prices-as-information:informed-trader}{informed trader} would do better by not buying, so $\phi > 0$ is not an
+equilibrium. With $\phi = 0$ the price carries no information about $\theta$, and $\mathrm{Var}(v \mid p) = 2$.
+A trader who bought the signal would have the utility ratio $e^{c}\sqrt{1/2}$, which is below one, so better,
+when $c < \tfrac12\ln 2$. Then someone would buy, and $\phi = 0$ is not an equilibrium either.
+\end{solution}
+
+\begin{solution}{exo:b2:prices-as-information:12}
+% code: exercises/solutions.py spending
+Spending per trader is $\phi^* c = 0.433 \times 0.1116 = 0.0483$. The asset pays $\theta + \varepsilon$ whoever knows
+$\theta$, so trading only moves wealth between traders: the informed gain from the noise traders whose
+supply they absorb at better prices, and the uninformed gain from reading the price. In this model the
+spending is a social cost and the gains are transfers. Better prices have real value when decisions with
+real consequences depend on them: how much to plant, store or import, which firms to fund. The model leaves
+those out.
+\end{solution}
+
+\begin{solution}{pb:b2:prices-as-information:1}
+% code: exercises/solutions.py harvest gs record expected_msq seasons_needed
+\textbf{Part I.}
+1. $16 + 16 + 9 = 41$.
+2. With both signals the error is $\varepsilon$, variance 9; with one, $16 + 9 = 25$; with none, 41.
+3. Two numbers a year, but each is spread among the region's farmers: the planner must collect every farmer's
+observation and combine them.
+4. If a low forecast brings cheaper seed or more aid, northern farmers gain by reporting a low $s_N$: the
+planner's information depends on reports that people have reasons to bend.
+5. 9.
+6. \Cref{prop:b2:prices-as-information:revealing}: a \omterm{def:b2:prices-as-information:fully-revealing}{fully revealing} price shows $s_N + s_S$ to everyone.
+\textbf{Part II.}
+7. Northern traders expect $106$ with variance 25 and demand $(106 - p)/25$; southern traders $(98 - p)/25$. The
+sum is zero at $p = 102$.
+8. $(106 - 102)/25 = 0.16$ contracts.
+9. $p = 100 + 6 - 2 = 104$.
+10. Every trader then expects 104 with variance 9 and demands $(104 - 104)/9 = 0$: the market clears.
+11. The price 104, with error variance 9. The naive price has error variance $\mathrm{Var}((s_N + s_S)/2 + \varepsilon)
+= 8 + 9 = 17$.
+12. $s_N = 104 - 100 - s_S = 6$: the northern farmers' signal.
+\textbf{Part III.}
+13. $k = e^{0.16} - 1 = 0.1735$.
+14. $\phi^* = 0.25\sqrt{0.8265/0.1735} = 0.25 \times 2.183 = 0.546$.
+15. $\mathrm{Var}(\theta \mid p) = k = 0.174$.
+16. At $c = 0.05$ the informed share rises to 0.729 and the error variance falls to 0.105.
+17. If it did, no trader would pay 0.08 for a forecast that the price gives free, and then the price would
+contain no forecast: the \omterm{def:b2:prices-as-information:gs-paradox}{Grossman--Stiglitz paradox}.
+18. The \omterm{def:b2:prices-as-information:informed-trader}{informed traders} pay, and recover the cost by trading against the noise in supply; the uninformed
+read the price free.
+\textbf{Part IV.}
+19. Office: $9 + 4 = 13$; market: $9 + 2.25 = 11.25$.
+20. The office's errors are $-2.3, -8.2, -7.4, 3.7, 1.4, 0.2, -1.9, -3.2, 2.9, 2.1, 0.3, 3.2$, the market's
+$1.6, -5.0, -6.7, 4.1, 0.7, -5.9, 0.4, -1.3, 1.7, -3.7, 3.4, 4.1$. Mean absolute errors: $36.8/12 = 3.07$ for the
+office, $38.6/12 = 3.22$ for the market. Mean squared errors: $179.98/12 = 15.00$ and $171.36/12 = 14.28$.
+21. In 7 of the 12 seasons.
+22. The standard error of the mean difference is $17.8/\sqrt{12} = 5.1$; $-0.72$ is far less than one standard
+error from zero. The record cannot tell the forecasts apart. Even the expected difference, $11.25 - 13 = -1.75$,
+would be two standard errors from zero only after $(2 \times 17.8/1.75)^2 = 414$ seasons.
+23. The average's errors sum to 33.4 in absolute value: a mean absolute error of $33.4/12 = 2.78$. Its expected
+squared error is $9 + (4 + 2.25)/4 = 10.56$, below both forecasts, because the two errors are independent.
+24. With a forecast costing 0.08, 54.6 per cent of traders buy it and the price forecasts $\theta$ with error
+variance 0.174. Over twelve seasons the market and the office cannot be told apart: most of each error is the
+weather that no one forecasts. The model gives the market a small edge (11.25 against 13) and the average of the
+two a larger one (10.56).
+\end{solution}

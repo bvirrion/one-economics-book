@@ -1,0 +1,7 @@
+$ python logit_demand.py
+price coefficient: true -2.0, estimated -2.033 (s.e. 0.060)
+shares in town 1: [0.065 0.194 0.097 0.14 ]  outside 0.504
+product 1: own  -3.06  with respect to each other price  0.40  0.32  0.47
+product 2: own  -1.65  with respect to each other price  0.21  0.32  0.47
+product 3: own  -2.94  with respect to each other price  0.21  0.40  0.47
+product 4: own  -2.87  with respect to each other price  0.21  0.40  0.32

@@ -1,0 +1,731 @@
+\chapter{Insurance and Risk Sharing}\label{ch:b2:insurance-and-risk-sharing}
+
+A household cannot change the weather, a factory fire or a lay-off, but it can change who bears the
+loss. Insurance contracts, mutual societies, family transfers, savings and public programmes all move
+income from the states of the world where it is plentiful to those where it is scarce. If those
+arrangements worked perfectly, a country's consumption would not rise and fall with its own output:
+its households would share their risks with the rest of the world, and only the world's common
+fluctuations would remain. The chart tests that idea on 123 countries.
+% figdata: summary (n 123)
+
+\begin{openingchart}{Year-to-year volatility of household consumption per person against that of GDP
+  per person, 1991--2023: one point per country with at least 25 years of both series. Standard
+  deviations of the annual growth rates, in percentage points; times-ten scales on both axes. Points
+  above the dotted line are countries whose consumption moved more than their output.}{World Bank,
+  World Development Indicators: growth of household final consumption expenditure per person
+  (NE.CON.PRVT.PC.KD.ZG) and of GDP per person (NY.GDP.PCAP.KD.ZG), constant prices}
+\begin{tikzpicture}
+\begin{loglogaxis}[omscatter, xmin=1, xmax=25, ymin=1, ymax=25, log basis x=10, log basis y=10,
+    log ticks with fixed point, xtick={1,10}, ytick={1,10}, minor tick num=0,
+    xlabel={Volatility of GDP growth (points)}, ylabel={Volatility of consumption growth (points)},
+    height=0.62\linewidth, width=0.72\linewidth]
+  \addplot+[mark size=1.3pt] table[x=sd_gdp, y=sd_cons]
+    {figdata/bachelor-2/02-insurance-and-risk-sharing/out/volatility.csv};
+  \draw[black!70, densely dotted, thick] (axis cs:1,1) -- (axis cs:25,25);
+  \node[font=\footnotesize, anchor=north west] at (axis cs:12,11) {equal volatility};
+\end{loglogaxis}
+\end{tikzpicture}
+\end{openingchart}
+
+Full sharing of risk predicts points well below the dotted line: consumption should move with the
+world, and less than output. Instead, 73 per cent of the countries lie above the line, and the median
+% figdata: summary (share_ratio_above_1 73.2, median_ratio 1.18)
+country's consumption growth is 1.18 times as volatile as its GDP growth: 1.53 times among low-income
+% figdata: summary (median_ratio_low_income 1.53, median_ratio_high_income 1.12)
+countries, 1.12 times among high-income ones. This chapter builds the theory of insurance and risk sharing that makes the
+prediction. It then tests that theory twice: on villages, where it does far better, and on countries,
+where it does far worse.
+
+\begin{recall}
+From the previous chapter: expected utility, \omterm{def:b2:expected-utility:risk-aversion}{risk aversion} as the concavity of the utility of money,
+the \omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalent} and the \omterm{def:b2:expected-utility:risk-premium}{risk premium}, CARA and CRRA utilities, and the small-risk
+approximation of the premium, $\tfrac12\mathcal{A}\sigma^2$. From the school volumes: pooling many
+independent risks makes the average loss predictable. From mathematics: the law of large numbers.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:insurance-and-risk-sharing:symbols}
+As in \cref{ch:b2:expected-utility}: money $z$, claim probability $\mu$, cover $\chi$ bought at $\psi$
+per unit. A household with wealth $z_0$ faces a loss $\Lambda$; $\eta$ is a \omterm{def:b2:insurance-and-risk-sharing:loading}{loading} and $d$ a
+\omterm{def:b2:insurance-and-risk-sharing:deductible}{deductible}. States of the world are $s$, with probabilities $\mu_s$; household $i$'s endowment is
+$\omega_i(s)$ and the aggregate endowment $\Omega(s)$. In the tests, household $i$'s consumption and
+income in year $t$ are $c_{it}$ and $m_{it}$. A portfolio puts the share $\theta$ of wealth in an
+asset whose return exceeds the safe real rate $r$ by $\tilde\xi$, with mean $\bar\xi$ and variance
+$\sigma^2$.
+\end{notation}
+
+\section{The demand for insurance}\label{sec:b2:insurance-and-risk-sharing:demand}
+
+A household with wealth $z_0$ loses $\Lambda$ with probability $\mu$. An insurer sells cover: for each
+unit of cover $\chi$, the household pays $\psi$ in every state and receives $1$ if the loss occurs.
+Its final wealth is
+\[
+z_G = z_0 - \psi\chi \quad\text{(no loss)}, \qquad z_B = z_0 - \Lambda + (1 - \psi)\chi \quad
+\text{(loss)}.
+\]
+
+\begin{definition}[Actuarially fair premium]\label{def:b2:insurance-and-risk-sharing:fair-premium}
+A premium is an \emph{actuarially fair premium}\index{actuarially fair premium} if it equals the
+expected payment of the contract: $\psi\chi = \mu\chi$, that is, a price $\psi = \mu$ per unit of
+cover. The insurer then breaks even on average.
+\end{definition}
+
+\begin{definition}[Loading]\label{def:b2:insurance-and-risk-sharing:loading}
+The \emph{loading}\index{loading} of a premium is its excess over the fair premium, as a share of the
+fair premium: $\eta = \psi/\mu - 1$. It pays for the insurer's costs of selling contracts and settling
+claims, and for its capital.
+\end{definition}
+
+\begin{definition}[Deductible]\label{def:b2:insurance-and-risk-sharing:deductible}
+A contract has a \emph{deductible}\index{deductible} $d$ if it pays $\max(x - d, 0)$ on a loss of
+size $x$: the household bears every loss up to $d$, and the insurer the rest.
+\end{definition}
+
+\begin{proposition}[Full cover at a fair price]\label{prop:b2:insurance-and-risk-sharing:mossin}
+Let $u$ be strictly concave and differentiable, and let the household choose $\chi \in [0, \Lambda]$
+to maximise $(1 - \mu)u(z_G) + \mu u(z_B)$.
+\begin{enumerate}
+  \item At a fair price ($\psi = \mu$), it buys full cover, $\chi = \Lambda$, and its wealth is $z_0 -
+        \mu\Lambda$ in both states.
+  \item With a positive \omterm{def:b2:insurance-and-risk-sharing:loading}{loading} ($\psi > \mu$), it buys less than full cover, and nothing at all when
+        $(1 - \mu)\psi\,u'(z_0) \ge \mu(1 - \psi)\,u'(z_0 - \Lambda)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Expected utility $V(\chi)$ is strictly concave in $\chi$, and
+\[
+V'(\chi) = -(1 - \mu)\psi\,u'(z_G) + \mu(1 - \psi)\,u'(z_B).
+\]
+(1) With $\psi = \mu$, $V'(\chi) = \mu(1 - \mu)\bigl(u'(z_B) - u'(z_G)\bigr)$. For $\chi < \Lambda$,
+$z_B < z_G$, so $u'(z_B) > u'(z_G)$ and $V' > 0$: more cover is better up to $\chi = \Lambda$, where
+$z_B = z_G$. (2) At $\chi = \Lambda$, $z_B = z_G$ and $V'(\Lambda) = u'(z_G)(\mu - \psi) < 0$, so the
+optimum is below $\Lambda$. It is $0$ when $V'(0) \le 0$, which is the stated inequality.
+\end{proof}
+
+\begin{example}[A loading of a quarter]\label{ex:b2:insurance-and-risk-sharing:loading}
+Let $u = \ln$, $z_0 = \num{100000}$, $\Lambda = \num{40000}$, $\mu = 0.05$. At the fair price the
+household buys \num{40000} of cover for a premium of \num{2000}. With a \omterm{def:b2:insurance-and-risk-sharing:loading}{loading} of 25 per cent,
+$\psi = 0.0625$, and $V'(\chi) = 0$ gives
+\[
+\chi^{*} = \frac{\mu(1 - \psi)z_0 - (1 - \mu)\psi(z_0 - \Lambda)}{\psi(1 - \psi)} =
+\frac{\num{4687.5} - \num{3562.5}}{\num{0.05859375}} = \num{19200},
+\]
+under half of the loss. A \omterm{def:b2:insurance-and-risk-sharing:loading}{loading} of a quarter halves the cover.
+\end{example}
+
+The \omterm{def:b2:insurance-and-risk-sharing:deductible}{deductible} is the form most contracts take, and expected utility explains why.
+
+\begin{proposition}[Deductibles (Arrow)]\label{prop:b2:insurance-and-risk-sharing:arrow}
+Let losses take many values, and let the premium be the expected payment times a fixed factor $1 +
+\eta$. Among all contracts with the same premium whose payment is between $0$ and the loss, a
+risk-averse household prefers a contract with a straight \omterm{def:b2:insurance-and-risk-sharing:deductible}{deductible}.
+\end{proposition}
+\admitted
+
+The intuition: a \omterm{def:b2:insurance-and-risk-sharing:deductible}{deductible} concentrates the cover on the large losses, where marginal utility is
+highest, and leaves the small ones, which cost little utility, with the household.
+
+\begin{model}{Demand for insurance}
+\assumes A household maximises expected utility of wealth, knows the probability of its loss, and
+buys cover at a price set before the loss.
+\predicts Full cover at a fair price; partial cover, falling as the \omterm{def:b2:insurance-and-risk-sharing:loading}{loading} rises, when the price
+exceeds the expected payment; \omterm{def:b2:insurance-and-risk-sharing:deductible}{deductibles} rather than other partial contracts.
+\tested \omterm{def:b2:insurance-and-risk-sharing:deductible}{Deductible} and cover choices in home and flood insurance (Collier et al.\ 2018: most households
+take low \omterm{def:b2:insurance-and-risk-sharing:deductible}{deductibles} and full cover at loads well above one); purchases of rainfall insurance at
+randomised prices (Karlan et al.\ 2014: fewer buyers at higher prices).
+\breaks When the buyer knows its risk better than the insurer (\cref{ch:b2:adverse-selection}), when
+cover changes the care the buyer takes (\cref{ch:b2:moral-hazard}), and in the size of the demand for
+small-stakes cover (\cref{ch:b2:expected-utility}).
+\end{model}
+
+\section{State-contingent goods}\label{sec:b2:insurance-and-risk-sharing:contingent}
+
+Insurance is a trade between states of the world. That idea turns the theory of choice under risk into
+ordinary consumer theory.
+
+\begin{definition}[State of the world]\label{def:b2:insurance-and-risk-sharing:state}
+A \emph{state of the world}\index{state of the world} is a complete description of whatever is
+uncertain and relevant to the choice: whether the house burns, how much rain falls, which firms
+succeed. The states $s = 1, \dots, S$ are mutually exclusive, and exactly one occurs.
+\end{definition}
+
+\begin{definition}[Contingent commodity]\label{def:b2:insurance-and-risk-sharing:contingent-commodity}
+A \emph{contingent commodity}\index{contingent commodity} is a good delivered only if a given state
+occurs: ``one dalen if it rains less than \qty{300}{mm} this season''. A plan of consumption under
+risk is a bundle of contingent commodities, one per state.
+\end{definition}
+
+\begin{definition}[Arrow security]\label{def:b2:insurance-and-risk-sharing:arrow-security}
+An \emph{Arrow security}\index{Arrow security} for state $s$ is an asset that pays one unit of money
+if state $s$ occurs and nothing otherwise. With one Arrow security for every state, any pattern of
+payments across states can be bought.
+\end{definition}
+
+The insurance contract of the previous section is an \omterm{def:b2:insurance-and-risk-sharing:arrow-security}{Arrow security} for the loss state, bought at the
+price $\psi$ and paid for in every state. Plot wealth after no loss, $z_G$, across and wealth after a
+loss, $z_B$, up. Buying cover moves the household from its endowment $(z_0, z_0 - \Lambda)$ along a
+\emph{budget line} of slope $-(1 - \psi)/\psi$: giving up $\psi$ in the good state buys $1 - \psi$ net
+in the bad one. The fair price gives the \emph{fair-odds line}, of slope $-(1 - \mu)/\mu$. The
+\emph{certainty line} $z_G = z_B$ holds the riskless plans.
+
+\begin{proposition}[Tangency on the certainty line]\label{prop:b2:insurance-and-risk-sharing:certainty-line}
+Under expected utility, the marginal rate of substitution between wealth in the good and in the bad
+state is $\mathrm{MRS} = (1 - \mu)u'(z_G)/(\mu\,u'(z_B))$. On the certainty line it equals $(1 -
+\mu)/\mu$, the slope of the fair-odds line, for every utility of money.
+\end{proposition}
+
+\begin{proof}
+Expected utility is $U = (1 - \mu)u(z_G) + \mu u(z_B)$, so along an indifference curve
+\[
+\frac{\dd z_B}{\dd z_G} = -\frac{(1 - \mu)\,u'(z_G)}{\mu\,u'(z_B)} .
+\]
+When $z_G = z_B$ the two marginal utilities cancel.
+\end{proof}
+
+So every risk-averse household's indifference curves cross the certainty line with the slope of the
+fair odds, and a fair budget line is tangent there: this is
+\cref{prop:b2:insurance-and-risk-sharing:mossin} again, in a picture. A loaded line is flatter, and the
+tangency moves below the certainty line, towards the endowment.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, width=0.62\linewidth, height=0.58\linewidth, xmin=0, xmax=125, ymin=0,
+    ymax=125, xlabel={Wealth with no loss, $z_G$ (thousands)}, ylabel={Wealth after a loss, $z_B$
+    (thousands)}, grid=none, axis lines=left, xtick={40,80,100}, ytick={40,63.33,80},
+    yticklabels={40,63,80}]
+  \addplot[guide, domain=0:125, samples=2] {x};
+  \addplot[omThm, thick, domain=60:120, samples=2] {40 - 2*(x - 100)};
+  \addplot[omExo, thick, dashed, domain=60:120, samples=2] {40 - 1.5*(x - 100)};
+  \addplot[curve, domain=58:125, samples=80] {80^3/x^2};
+  \addplot[curve, thin, domain=58:125, samples=80] {63.333*84.444^2/x^2};
+  \node[eqpoint, label={[font=\footnotesize]below left:$E$}] at (axis cs:100,40) {};
+  \node[eqpoint, label={[font=\footnotesize]above left:$F$}] at (axis cs:80,80) {};
+  \node[eqpoint, label={[font=\footnotesize]below left:$L$}] at (axis cs:84.444,63.333) {};
+  \node[font=\footnotesize, anchor=west] at (axis cs:96,118) {certainty line};
+  \node[font=\footnotesize, anchor=east, omThm] at (axis cs:59,120) {fair odds};
+  \node[font=\footnotesize, anchor=east, omExo] at (axis cs:59,100) {loaded};
+\end{axis}
+\end{tikzpicture}
+
+{\small Insurance in contingent goods: $z_0 = 100$, $\Lambda = 60$, $\mu = 1/3$ (thousands of dalens),
+$u = \ln$. From the endowment $E$, the fair-odds line (slope $-2$) is tangent to an indifference curve
+at $F$, full insurance at $80$. With a 20 per cent \omterm{def:b2:insurance-and-risk-sharing:loading}{loading} ($\psi = 0.4$, slope $-1.5$) the best point
+is $L$: cover \num{38.9}, wealth $84.4$ and $63.3$.}
+\end{omfigure}
+
+\section{Efficient risk sharing}\label{sec:b2:insurance-and-risk-sharing:sharing}
+
+Now take two households and no insurer. In state $s$ (probability $\mu_s$) household $i$ has the
+endowment $\omega_i(s)$, and the aggregate endowment is $\Omega(s) = \omega_1(s) + \omega_2(s)$. An
+allocation gives household $i$ the amounts $z_i(s)$ with $z_1(s) + z_2(s) = \Omega(s)$ in every
+state.
+
+\begin{definition}[Idiosyncratic and aggregate risk]\label{def:b2:insurance-and-risk-sharing:idiosyncratic-risk}
+A household's \emph{idiosyncratic risk}\index{idiosyncratic risk} is the part of the variation of its
+endowment that cancels out across households, leaving the aggregate unchanged.
+\end{definition}
+
+\begin{definition}[Aggregate risk]\label{def:b2:insurance-and-risk-sharing:aggregate-risk}
+\emph{Aggregate risk}\index{aggregate risk} is variation of the aggregate endowment $\Omega(s)$ across
+states. No arrangement among the households themselves can remove it: whatever they share, the total
+they share is $\Omega(s)$.
+\end{definition}
+
+\begin{definition}[Efficient risk sharing]\label{def:b2:insurance-and-risk-sharing:efficient-risk-sharing}
+An allocation achieves \emph{efficient risk sharing}\index{efficient risk sharing} if no other
+allocation of the same aggregate endowment gives one household a higher expected utility without
+giving the other a lower one.
+\end{definition}
+
+(\Cref{ch:b2:exchange-economies} gives this criterion its general form, for any goods and any number
+of people.)
+
+\begin{proposition}[The sharing rule (Borch)]\label{prop:b2:insurance-and-risk-sharing:borch}
+Let $u_1$, $u_2$ be differentiable, increasing and strictly concave. An allocation with $z_i(s) > 0$
+in every state is efficient only if the ratio of marginal utilities is the same in every state:
+\[
+\frac{u_1'(z_1(s))}{u_2'(z_2(s))} = \kappa \quad\text{for every } s,
+\]
+for some constant $\kappa > 0$.
+\end{proposition}
+
+\begin{proof}
+Suppose the ratio is higher in state $s$ than in state $t$: $u_1'(s)/u_2'(s) > u_1'(t)/u_2'(t)$,
+writing $u_i'(s)$ for $u_i'(z_i(s))$. Move a small amount $\epsilon > 0$ from household 2 to
+household 1 in state $s$, and $\delta > 0$ from household 1 to household 2 in state $t$. To first
+order the expected utilities change by
+\[
+\Delta U_1 = \mu_s u_1'(s)\,\epsilon - \mu_t u_1'(t)\,\delta, \qquad \Delta U_2 = -\mu_s
+u_2'(s)\,\epsilon + \mu_t u_2'(t)\,\delta .
+\]
+Both are positive when $\frac{\mu_s u_2'(s)}{\mu_t u_2'(t)}\,\epsilon < \delta < \frac{\mu_s
+u_1'(s)}{\mu_t u_1'(t)}\,\epsilon$, an interval that is not empty by the assumption. For $\epsilon$
+small enough the first-order terms dominate, both households gain, and the allocation was not
+efficient.
+\end{proof}
+
+\begin{corollary}[What efficient sharing does]\label{cor:b2:insurance-and-risk-sharing:aggregate-only}
+In an efficient allocation with positive amounts:
+\begin{enumerate}
+  \item if there is no \omterm{def:b2:insurance-and-risk-sharing:aggregate-risk}{aggregate risk} ($\Omega(s)$ the same in every state), each household's
+        consumption is the same in every state: full mutual insurance;
+  \item in general, each household's consumption depends on the state only through $\Omega(s)$, and
+        rises with it.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Take two states $s$, $t$ with $\Omega(s) \ge \Omega(t)$, and suppose $z_1(s) < z_1(t)$. Then
+$u_1'(s) > u_1'(t)$, so by \cref{prop:b2:insurance-and-risk-sharing:borch} $u_2'(s) > u_2'(t)$, that
+is $z_2(s) < z_2(t)$. Adding up, $\Omega(s) < \Omega(t)$: a contradiction. So $\Omega(s) \ge
+\Omega(t)$ implies $z_1(s) \ge z_1(t)$, and likewise $z_2(s) \ge z_2(t)$. With $\Omega(s) =
+\Omega(t)$, applying this both ways gives equality, which proves (1) and the first half of (2).
+\end{proof}
+
+Efficient sharing ignores whose boat came back full: only the size of the total catch matters. Each
+household's own endowment, once the aggregate is known, tells nothing about its consumption. This is
+the prediction the tests of \cref{sec:b2:insurance-and-risk-sharing:tests} look for.
+
+\begin{example}[Two CARA households]\label{ex:b2:insurance-and-risk-sharing:cara}
+With $u_i(z) = -e^{-a_i z}/a_i$, $u_i'(z) = e^{-a_i z}$ and the rule says $a_2 z_2(s) - a_1 z_1(s)$ is
+the same in every state. With $z_2 = \Omega - z_1$,
+\[
+z_1(s) = \frac{a_2}{a_1 + a_2}\,\Omega(s) + k,
+\]
+for a constant $k$ that sets how the expected total is divided. Each household bears a fixed share of
+the \omterm{def:b2:insurance-and-risk-sharing:aggregate-risk}{aggregate risk}, its risk tolerance $1/a_i$ divided by the total risk tolerance: the less
+risk-averse household bears more.
+\end{example}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, scale=0.055]
+  \draw[thick] (0,0) rectangle (100,100);
+  \draw[guide] (0,0) -- (100,100);
+  \node[below left] at (0,0) {$O_1$};
+  \node[above right] at (100,100) {$O_2$};
+  \node[below, font=\footnotesize] at (50,-1) {household 1's wealth in state $G$ $\rightarrow$};
+  \node[above, font=\footnotesize] at (50,101) {$\leftarrow$ household 2's wealth in state $G$};
+  \node[rotate=90, above, font=\footnotesize] at (-1,50) {household 1, state $B$ $\rightarrow$};
+  \draw[omDef, thick, domain=16:100, samples=80] plot (\x, {1600/\x});
+  \draw[omThm, thick, domain=16:100, samples=80] plot ({100 - \x}, {100 - 1600/\x});
+  \draw[omDef, thin, domain=40:100, samples=60] plot (\x, {2500/\x});
+  \draw[omThm, thin, domain=40:100, samples=60] plot ({100 - \x}, {100 - 2500/\x});
+  \node[eqpoint, label={[font=\footnotesize]right:$\omega$}] at (80,20) {};
+  \node[eqpoint] at (40,40) {};
+  \node[eqpoint] at (60,60) {};
+  \node[font=\footnotesize, anchor=west] at (62,74) {efficient allocations};
+  \draw[->, thin] (66,72) -- (55,56);
+\end{tikzpicture}
+
+{\small Two households, two equally likely states $G$ and $B$, no \omterm{def:b2:insurance-and-risk-sharing:aggregate-risk}{aggregate risk}: the total is 100 in
+both states, so the box is square. Household 1 is rich in $G$, household 2 in $B$ (endowment
+$\omega$). Indifference curves (blue for household 1, red for household 2, here $u = \ln$) are tangent
+only on the diagonal, which is both households' certainty line: every efficient allocation is full
+mutual insurance.}
+\end{omfigure}
+
+Pooling is the same logic with many households.
+
+\begin{proposition}[Pooling]\label{prop:b2:insurance-and-risk-sharing:pooling}
+Let $n$ households each face an independent loss with mean $\mu\Lambda$ and variance $\sigma^2$, and
+let them share the total equally. Each then bears a loss with the same mean $\mu\Lambda$ and variance
+$\sigma^2/n$; by the small-risk approximation its \omterm{def:b2:expected-utility:risk-premium}{risk premium} falls from about
+$\tfrac12\mathcal{A}\sigma^2$ to about $\tfrac12\mathcal{A}\sigma^2/n$.
+\end{proposition}
+
+\begin{proof}
+Each bears $\frac1n\sum_j \tilde x_j$; the mean is $\mu\Lambda$ and, the losses being independent, the
+variance is $n\sigma^2/n^2$.
+\end{proof}
+
+This is the insurer's business: by the law of large numbers, the average claim of a large pool is
+almost certain, so the insurer can sell cover near the expected payment. Pooling fails when the losses
+are not independent (a drought, a flood, a recession hit everyone at once), and then the premium of
+the shared risk stays large however many join.
+
+\section{A first portfolio choice}\label{sec:b2:insurance-and-risk-sharing:portfolio}
+
+Buying insurance reduces risk at a price; buying a risky asset takes on risk for a reward. The same
+tools answer both.
+
+\begin{definition}[Portfolio share]\label{def:b2:insurance-and-risk-sharing:portfolio-share}
+A household with wealth $z_0$ that puts the amount $\theta z_0$ in a risky asset and the rest in a safe
+one holds the \emph{portfolio share}\index{portfolio share} $\theta$. Its wealth next period is $z_0(1
++ r + \theta\tilde\xi)$, where $r$ is the safe real rate and $\tilde\xi$ the risky asset's excess
+return.
+\end{definition}
+
+\begin{proposition}[A small risky holding]\label{prop:b2:insurance-and-risk-sharing:arrow-portfolio}
+A risk-averse expected-utility maximiser holds some of the risky asset ($\theta^{*} > 0$) if and only
+if its expected excess return $\bar\xi$ is positive.
+\end{proposition}
+
+\begin{proof}
+Let $V(\theta) = \mathbb{E}[u(z_0(1 + r + \theta\tilde\xi))]$, which is concave in $\theta$. Then
+$V'(0) = z_0\,u'(z_0(1 + r))\,\bar\xi$, positive exactly when $\bar\xi > 0$. If $V'(0) > 0$ a small
+holding raises $V$; if $V'(0) \le 0$, concavity makes $\theta = 0$ at least as good as every positive
+share.
+\end{proof}
+
+So the risk-averse household that insures its house also buys some shares: at the margin, a small
+risk costs a premium of second order (\cref{prop:b2:expected-utility:small-risk}) and earns a return of
+first order.
+
+\begin{proposition}[The share, small risks]\label{prop:b2:insurance-and-risk-sharing:share}
+For small risks, $\theta^{*} \approx \bar\xi/(\mathcal{R}\,\sigma^2)$, with $\mathcal{R}$ the relative
+\omterm{def:b2:expected-utility:risk-aversion}{risk aversion} at $z_0(1 + r)$. Under CRRA the share does not depend on wealth.
+\end{proposition}
+
+\begin{proof}
+To second order, $u(z_0(1 + r) + z_0\theta\tilde\xi) \approx u + u'z_0\theta\tilde\xi +
+\tfrac12u''z_0^2\theta^2\tilde\xi^2$. Taking expectations, and neglecting $\bar\xi^2$ against
+$\sigma^2$, $V(\theta) \approx u + u'z_0\bigl(\theta\bar\xi - \tfrac12\mathcal{R}\theta^2\sigma^2
+\bigr)$ with $\mathcal{R} = -z_0(1 + r)u''/u'$ and $1 + r \approx 1$. The bracket is largest at $\theta
+= \bar\xi/(\mathcal{R}\sigma^2)$. Under CRRA, $\mathcal{R} = \gamma$ at every wealth.
+\end{proof}
+
+\begin{proposition}[CARA and normal returns]\label{prop:b2:insurance-and-risk-sharing:cara-normal}
+If utility is CARA with coefficient $a$ and $\tilde\xi$ is normal, the amount invested in the risky
+asset is exactly $\theta^{*}z_0 = \bar\xi/(a\sigma^2)$, whatever the wealth.
+\end{proposition}
+
+\begin{proof}
+With $A = \theta z_0$ invested, final wealth is normal with mean $z_0(1 + r) + A\bar\xi$ and variance
+$A^2\sigma^2$. For a normal $\tilde y$, $\mathbb{E}[e^{-a\tilde y}] = e^{-a\mathbb{E}[\tilde y] +
+a^2\mathrm{Var}(\tilde y)/2}$, so maximising expected utility is maximising $A\bar\xi -
+\tfrac12aA^2\sigma^2$, whose maximum is at $A = \bar\xi/(a\sigma^2)$.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, width=0.66\linewidth, height=0.42\linewidth, xmin=1, xmax=10, ymin=0,
+    ymax=1.6, xlabel={Relative risk aversion $\gamma$}, ylabel={Portfolio share $\theta^{*}$}, grid=none,
+    xtick={1,2,3,4,5,6,7,8,9,10}]
+  \addplot[omDef, thick, domain=1:10, samples=100] {0.05/(x*0.0324)};
+  \addplot[guide, domain=1:10, samples=2] {1};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:5.5,1) {all wealth in the risky asset};
+  \node[eqpoint] at (axis cs:3,0.5144) {};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:3.1,0.53) {$\gamma = 3$: $\theta^{*} = 0.51$};
+\end{axis}
+\end{tikzpicture}
+
+{\small The \omterm{def:b2:insurance-and-risk-sharing:portfolio-share}{portfolio share} $\bar\xi/(\gamma\sigma^2)$ for an expected excess return of 5 per cent and a
+standard deviation of 18 per cent, round numbers chosen for the illustration. Above the dotted line the
+household borrows to invest. \Cref{ch:b2:asset-prices} confronts such numbers with the returns
+actually earned.}
+\end{omfigure}
+
+\section{Testing full risk sharing}\label{sec:b2:insurance-and-risk-sharing:tests}
+
+With many households and identical attitudes to risk, efficient sharing has a sharp implication.
+
+\begin{proposition}[Constant shares]\label{prop:b2:insurance-and-risk-sharing:constant-shares}
+Let $n$ households have the same CRRA utility with coefficient $\gamma$. In an efficient allocation
+with positive amounts, each household consumes a constant share of the aggregate: $c_i(s) =
+k_i\,\Omega(s)$, so that $\ln c_i(s) - \ln \bar c(s)$ does not depend on $s$, where $\bar c(s)$ is the
+geometric mean of the households' consumptions.
+\end{proposition}
+
+\begin{proof}
+The argument of \cref{prop:b2:insurance-and-risk-sharing:borch} applies to any pair $i$, $j$:
+$u'(c_i(s))/u'(c_j(s)) = (c_i(s)/c_j(s))^{-\gamma}$ is the same in every state, so $c_i(s)/c_j(s)$ is.
+Then $c_i(s)/\Omega(s) = c_i(s)/\sum_j c_j(s) = 1/\sum_j (c_j(s)/c_i(s))$ is constant. The log of
+$c_i/\bar c$ is the log of a ratio of constants.
+\end{proof}
+
+Year to year, then, every household's consumption grows at the same rate as the group's, whatever
+happens to its own income. The test regresses the growth of household consumption on the growth of
+average consumption and of the household's own income.
+
+\begin{measure}[The consumption-insurance regression]
+With a panel of households $i$ observed over years $t$, estimate
+\[
+\Delta\ln c_{it} = \beta_0 + \beta_1\,\Delta\ln\bar c_t + \beta_2\,\Delta\ln m_{it} + u_{it},
+\]
+where $\bar c_t$ is the group's average consumption (the village, the region, the country) and
+$m_{it}$ the household's income. Full sharing predicts $\beta_1 = 1$ and $\beta_2 = 0$: own income
+matters only through the aggregate, which $\bar c_t$ already measures. Under partial sharing, in which
+a household keeps a share of its own shock, $\beta_2$ estimates that share. Two cautions.
+Measurement error in consumption only adds noise; measurement error in income biases $\hat\beta_2$
+towards zero and makes sharing look better than it is. And income can respond to choices (work
+more after a bad harvest), so the test is strongest with shocks the household does not choose:
+illness, rainfall on its own plots, a lay-off.
+\end{measure}
+
+\begin{model}{Full risk sharing}
+\assumes Households in a group can make and enforce any agreement to share their incomes across
+states; they maximise expected utility with the same CRRA coefficient.
+\predicts Household consumption moves one for one with the group's and does not respond to own
+income once the group's consumption is controlled for ($\beta_1 = 1$, $\beta_2 = 0$).
+\tested Village panels in India (Townsend 1994); national accounts across countries (this chapter's
+two charts).
+\breaks Everywhere at the margin: own income keeps a small but significant coefficient in villages,
+and across countries consumption follows domestic output far more than world consumption.
+\end{model}
+
+\begin{record}[Village risk sharing]
+Townsend (1994) followed about 40 households in each of three villages of semi-arid southern India,
+Aurepalle, Shirapur and Kanzara, from 1975 to 1984.
+% ledger: b2:townsend1994-design
+Harvests there are risky, and formal insurance was absent. Household by household, he regressed
+consumption on village average consumption and on own income. The average coefficient on village
+consumption was $0.97$, $0.94$ and $0.47$ in the three villages; the average coefficient on own income
+% ledger: b2:townsend1994-cbar
+was $0.11$, $-0.05$ and $0.11$, and the averages for every measure of income stayed below $0.35$ but
+% ledger: b2:townsend1994-income
+one. Full sharing is rejected statistically, yet, in the author's words, it gives a surprisingly good
+benchmark: in villages with no insurance company, families, neighbours, lenders and grain stores
+spread most of the \omterm{def:b2:insurance-and-risk-sharing:idiosyncratic-risk}{idiosyncratic risk}. The landless were less well insured than their neighbours in
+one of the three villages.
+\end{record}
+
+Across countries the same test fails much more clearly. With full international sharing and identical
+CRRA utilities, every country's consumption would grow at the world's rate. Its consumption growth
+would correlate perfectly with world consumption growth, and its volatility would be the world's,
+1.79 points, below the GDP volatility of all but 8 of the 123 countries. The opening chart shows the
+% figdata: summary (world_sd_cons 1.79, n_sd_gdp_below_world 8)
+opposite. The chart below checks the correlations: in 71 per cent of countries, consumption growth is
+% figdata: summary (share_cons_corr_below_gdp 70.7, median_corr_gdp 0.54, median_corr_cons 0.38)
+less correlated with the world's consumption growth than output growth is with the world's output
+growth (medians $0.38$ and $0.54$).
+
+\begin{omchart}{Correlation of each country's growth with world growth, 1991--2023: GDP per person
+  (across) and household consumption per person (up). Full international risk sharing puts every point
+  at the top of the chart; points below the dotted line are countries whose consumption follows the
+  world less than their output does.}{World Bank, World Development Indicators: NE.CON.PRVT.PC.KD.ZG
+  and NY.GDP.PCAP.KD.ZG, each country against the World aggregate of the same indicator (which
+  includes the country itself)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xmin=-0.4, xmax=1, ymin=-0.4, ymax=1, width=0.68\linewidth,
+    height=0.6\linewidth, xlabel={Correlation of GDP growth with the world's},
+    ylabel={Correlation of consumption growth with the world's}]
+  \addplot+[mark size=1.3pt] table[x=corr_gdp, y=corr_cons]
+    {figdata/bachelor-2/02-insurance-and-risk-sharing/out/correlation.csv};
+  \draw[black!70, densely dotted, thick] (axis cs:-0.4,-0.4) -- (axis cs:1,1);
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+Part of the gap may be measurement. Private consumption leaves out public services; much of what
+households consume (housing, haircuts) is not traded across borders, so its price moves with local
+conditions; and consumption, like output, is measured with error. The model points to two other
+reasons, each a claim to test rather than a finding of this chart: a household that holds most of its
+wealth at home shares little of its country's risk, and contracts across borders are harder to enforce
+than village ones, where the neighbour who does not pay back can be excluded from the next round of
+help. \Cref{exo:b2:insurance-and-risk-sharing:9} asks which observation would tell these apart.
+
+\section{Answers outside insurance markets}\label{sec:b2:insurance-and-risk-sharing:outside}
+
+Formal insurance is one answer among several, and each has its evidence and its limits.
+
+\begin{itemize}
+  \item \textbf{Families and neighbours.} The village record shows informal sharing doing most of the
+        work where no insurer operates. Its limit is the one \cref{prop:b2:insurance-and-risk-sharing:pooling}
+        names: a village shares its \omterm{def:b2:insurance-and-risk-sharing:idiosyncratic-risk}{idiosyncratic risk}, but a drought hits all its fields together.
+  \item \textbf{Mutual societies and cooperatives.} Members insure each other and own the pool, so no
+        profit margin is charged; they still face the information problems of
+        \cref{ch:b2:adverse-selection,ch:b2:moral-hazard}, and a small pool carries its members' common
+        risks. The weekend problem prices one.
+  \item \textbf{Index insurance.} A contract that pays on a measured index (rainfall at the nearest
+        station) rather than on the farmer's own loss costs little to settle and cannot be
+        manipulated by the farmer, but it pays when the index says so, not when the field fails: the
+        gap is called basis risk.
+  \item \textbf{Public insurance.} A state programme can pool the whole population and make
+        membership compulsory, which solves the selection problem of \cref{ch:b2:adverse-selection}.
+        Its prices are set by law rather than by claims, so some members pay more than their expected
+        cost and others less, and subsidised cover changes where people build and what they plant;
+        government failure is a cost to weigh, as market failure is.
+\end{itemize}
+
+\begin{record}[Index insurance for farmers]
+Karlan et al.\ (2014) offered rainfall index insurance to farmers in northern Ghana at prices drawn at
+random. In one year, of \num{1095} farmers offered cover, 63.9 per cent bought at a subsidised price,
+% ledger: b2:karlan2014-demand
+55.6 per cent at the actuarially fair price and 40.0 per cent at the market price. Across their
+experiments, 40 to 50 per cent bought at the fair price, and buyers covered more than 60 per cent of
+% ledger: b2:karlan2014-acreage
+their acreage. Insured farmers spent \usd{266} more on cultivation (standard error \usd{134}) than the
+% ledger: b2:karlan2014-invest
+control group, whose mean was \usd{2058}: uninsured risk, more than lack of credit, held back their
+investment. Demand the next year rose after the farmer, or others in his network, had received a
+payout, consistent with basis risk and with imperfect trust that payouts would be made. The model of
+\cref{sec:b2:insurance-and-risk-sharing:demand} gets the direction of the price effect right; it does
+not predict that only about half the farmers buy at a fair price.
+\end{record}
+
+\section{Exercises}\label{sec:b2:insurance-and-risk-sharing:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:insurance-and-risk-sharing:1}
+In the table behind the opening chart, the standard deviations of GDP and consumption growth are 1.76
+% figdata: volatility (USA 1.758 1.966; JPN 2.05 1.503)
+and 1.97 points for the United States, 2.05 and 1.50 for Japan. Place each country with respect to
+the dotted line. Under full international risk sharing with identical CRRA utilities, what would each
+country's consumption volatility be, and where would the points lie?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:insurance-and-risk-sharing:2}
+A house worth \dal{40000} burns down in a year with probability $0.005$. Find the \omterm{def:b2:insurance-and-risk-sharing:fair-premium}{actuarially fair
+premium} for full cover. An insurer charges \dal{260}: find the \omterm{def:b2:insurance-and-risk-sharing:loading}{loading}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:insurance-and-risk-sharing:3}
+A household has \dal{50000} and loses \dal{20000} with probability $0.1$; cover costs $\psi = 0.12$ per
+dalen. Write $z_G$ and $z_B$ as functions of the cover. Find the slope of the budget line, the slope of
+the fair-odds line, the \omterm{def:b2:insurance-and-risk-sharing:loading}{loading}, and the point where the budget line meets the certainty line.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:insurance-and-risk-sharing:4}
+A survey follows households of a village for ten years. Name two observations that would reject full
+risk sharing within the village, and one that would not, even though it may look like it (think of a
+drought).
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:insurance-and-risk-sharing:5}
+For the household of \cref{exo:b2:insurance-and-risk-sharing:3}, with $u = \ln$, find the best cover
+and its wealth in each state. Check that it is below full cover, as
+\cref{prop:b2:insurance-and-risk-sharing:mossin} says.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:insurance-and-risk-sharing:6}
+Predict, then compute: what happens to the household's best cover if the price rises to $\psi = 0.15$?
+Find the price, and the \omterm{def:b2:insurance-and-risk-sharing:loading}{loading}, at which it stops buying cover altogether.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:insurance-and-risk-sharing:7}
+Two Brenland farmers have CARA utilities with $a_1 = \num{0.0002}$ and $a_2 = \num{0.0001}$ per dalen.
+Their joint harvest is \dal{100000} or \dal{60000}, with probability $\tfrac12$ each. Find the
+efficient sharing rule that gives farmer 1 an expected income of \dal{30000}, and each farmer's
+income in each state. Which farmer bears more of the \omterm{def:b2:insurance-and-risk-sharing:aggregate-risk}{aggregate risk}, and why?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:insurance-and-risk-sharing:8}
+With the World Bank series of the opening chart (a few lines of Python with pandas do it), compute, for
+1991--2023, the standard deviations of the two growth rates and their ratio for the United States,
+Japan, Korea, France, Brazil and India. Which of these countries come closest to the prediction of full
+international sharing?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:insurance-and-risk-sharing:9}
+Read the chart of correlations. What does full international sharing predict for every point? Give
+two reasons why measured correlations could fall short of that prediction even if financial markets
+shared risk perfectly, and one observation that would separate those reasons from a genuine lack of
+sharing.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:insurance-and-risk-sharing:10}
+Two households have CRRA utilities with different coefficients $\gamma_1 < \gamma_2$. Show that in an
+efficient allocation $\gamma_1\ln c_1(s) - \gamma_2\ln c_2(s)$ is the same in every state, and deduce
+that household 1's share of the aggregate rises with the aggregate. What would the regression of the
+measure box find for household 1 when the aggregate grows, and is full sharing then rejected by a
+coefficient $\beta_1 \neq 1$?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:insurance-and-risk-sharing:11}
+$n$ households with CARA utility, $a = \num{0.0001}$ per dalen, each lose \dal{10000} with probability
+$0.1$, independently, and share the total loss equally. Show that the certainty-equivalent cost of the
+risk to each household is $\frac{n}{a}\ln\bigl(1 - \mu + \mu e^{a\Lambda/n}\bigr)$. Evaluate it for $n
+= 1$, $10$ and $100$, prove that it falls with $n$ towards the expected loss, and say what happens if
+the losses are perfectly correlated.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:insurance-and-risk-sharing:12}
+With an expected excess return of 5 per cent and a standard deviation of 18 per cent, find the
+\omterm{def:b2:insurance-and-risk-sharing:portfolio-share}{portfolio share} of a CRRA household with $\gamma = 3$. Under CRRA, and under CARA with normal returns,
+what happens to the share and to the amount invested when the household's wealth doubles? Which
+pattern, in data on the portfolios of rich and poor households, would reject each model?
+\end{exercise}
+
+\section{Problem: The Kestrian fishing cooperative}\label{sec:b2:insurance-and-risk-sharing:problem}
+
+\begin{problem}[{Weekend problem --- two boats of Kestria, an invented economy, whose catches are
+risky and correlated: sharing within a cooperative, insurance bought outside, and a survey that tests
+how much risk the cooperative really shares}]
+\label{pb:b2:insurance-and-risk-sharing:1}
+Two fishing households each own a boat. A boat's catch earns \kst{30000} in a good season and
+\kst{10000} in a bad one. The four states have probabilities: both good $0.4$, only boat 1 good $0.2$,
+only boat 2 good $0.2$, both bad $0.2$. Each household maximises $\mathbb{E}[\ln z]$ of its income.
+Round amounts to the nearest kest.
+
+\medskip
+\noindent\textbf{Part I --- Two risky catches.}
+\begin{enumerate}
+  \item Find the probability that a boat has a good season and that both have one. Are the catches
+        independent?
+  \item Find the mean and the standard deviation of one household's income.
+  \item Find the correlation coefficient between the two incomes.
+  \item Give the aggregate catch in each state and its distribution.
+  \item Find the expected utility and the \omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalent} of a household that keeps its own catch.
+  \item Write each household's income as half the aggregate plus a remainder. Show that the two
+        remainders add up to zero in every state, and find the standard deviation of each part.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The cooperative.}
+\begin{enumerate}[resume]
+  \item Use \cref{prop:b2:insurance-and-risk-sharing:constant-shares} to show that every efficient
+        allocation gives household 1 a constant share $k$ of the aggregate catch.
+  \item The cooperative splits the catch equally. Give each household's income in each state, its mean,
+        its expected utility and its \omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalent}.
+  \item What is the cooperative worth to each household, in kests a year?
+  \item By what percentage does the variance of a household's income fall? What share of its
+        \omterm{def:b2:insurance-and-risk-sharing:idiosyncratic-risk}{idiosyncratic risk} is removed?
+  \item Suppose instead that both skippers have CARA utility and that skipper 1 is twice as risk-averse
+        as skipper 2. Find the efficient rule that keeps skipper 1's expected income at \kst{22000},
+        and his income in each state.
+  \item Why can the cooperative not remove the risk that remains, and who could take it?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- An insurer outside.}
+An insurer sells cover against a household's own bad season, at a \omterm{def:b2:insurance-and-risk-sharing:loading}{loading} of 20 per cent.
+\begin{enumerate}[resume]
+  \item Find the fair price and the loaded price per kest of cover.
+  \item A household on its own (no cooperative) buys cover against a fall of \kst{20000}. Find its best
+        cover, using the formula of \cref{ex:b2:insurance-and-risk-sharing:loading}.
+  \item Find its income in each state and its \omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalent}.
+  \item Compare with the cooperative. Which arrangement does the household prefer, and why, although
+        the insurer charges a \omterm{def:b2:insurance-and-risk-sharing:loading}{loading} and the cooperative does not? What does the insurer expect to
+        earn on the contract?
+  \item The cooperative shares the catch equally and buys, for each household, cover paid only when
+        both seasons are bad, at a \omterm{def:b2:insurance-and-risk-sharing:loading}{loading} of 20 per cent. Find the best cover (numerically) and the
+        \omterm{def:b2:expected-utility:certainty-equivalent}{certainty equivalent}.
+  \item Rank the four arrangements of Parts I--III. What would a cover that pays on a household's own
+        bad season do to the care its skipper takes, and does sharing in the cooperative have the same
+        effect?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- The cooperative's survey.}
+A larger Kestrian cooperative of 100 households records their incomes and consumptions for 8 years.
+The regression of the measure box on the 700 yearly changes gives:
+
+\begin{center}
+\pgfplotstabletypeset[col sep=comma,
+  columns={term,coef,se,t},
+  columns/term/.style={string type, column name={Regressor}, column type={l},
+    string replace={const}{constant},
+    string replace={dlncbar}{$\Delta\ln\bar c_t$},
+    string replace={dlnm}{$\Delta\ln m_{it}$}},
+  columns/coef/.style={column name={Coefficient}, column type={r},
+    fixed, fixed zerofill, precision=3},
+  columns/se/.style={column name={Standard error}, column type={r},
+    fixed, fixed zerofill, precision=3},
+  columns/t/.style={column name={$t$}, column type={r}, fixed, fixed zerofill, precision=1},
+  every head row/.style={before row=\toprule, after row=\midrule},
+  every last row/.style={after row=\bottomrule}]
+  {figdata/bachelor-2/02-insurance-and-risk-sharing/out/coop_regression.csv}
+\end{center}
+{\small (The constant is $\beta_0$. The survey is simulated.)}
+\begin{enumerate}[resume]
+  \item What values of $\beta_1$ and $\beta_2$ does full sharing predict, and why?
+  \item Read $\hat\beta_1$ and $\hat\beta_2$ with their standard errors.
+  \item Test $\beta_2 = 0$ at the 5 per cent level.
+  \item Test $\beta_1 = 1$. Compute $\hat\beta_1 + \hat\beta_2$, and explain why a household that keeps a
+        share of its own shock produces estimates that add up to about one.
+  \item What share of the idiosyncratic income risk does the cooperative insure?
+  \item If incomes were recorded with error, in which direction would $\hat\beta_2$ move, and what
+        would that do to the answer to question 23?
+  \item State the result: what the two-boat cooperative is worth to a household in kests a year, and
+        what share of \omterm{def:b2:insurance-and-risk-sharing:idiosyncratic-risk}{idiosyncratic risk} the larger cooperative insures.
+\end{enumerate}
+\end{problem}

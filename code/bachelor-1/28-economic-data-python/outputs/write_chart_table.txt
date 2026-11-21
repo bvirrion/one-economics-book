@@ -1,0 +1,4 @@
+$ python write_chart_table.py
+run 1: sha256 0bf49671a392deed
+run 2: sha256 0bf49671a392deed
+['year,real_gdp,unemp_rate', '2000,197403,6.0', '2001,198967,6.3']

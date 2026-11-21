@@ -1,0 +1,7 @@
+$ python winners_curse.py
+true effect                 0.150
+share significant (power)   0.324
+mean published estimate     0.262
+mean replication estimate   0.149
+replications significant    0.319
+relative effect size        0.568

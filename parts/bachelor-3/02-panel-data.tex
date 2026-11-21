@@ -1,0 +1,612 @@
+\chapter{Panel Data}\label{ch:b3:panel-data}
+
+Richer countries emit more carbon dioxide per person. Across 200 countries,
+a country whose income per person is one log point higher emits, on average,
+2.7 more tonnes per person. % figdata: co2_stats (between 2.71597)
+Follow each country over time instead, and the slope shrinks to about one
+tonne. % figdata: co2_stats (within 0.999459)
+Both numbers come from the same 6{,}419 observations. The first compares
+countries with each other; the second compares each country with itself in
+other years. They differ because countries differ in many fixed ways --- coal
+under the ground, a cold winter, a car-built city --- that go with both their
+income and their emissions. A data set that follows the same units over time
+can take those fixed differences out, without measuring them. This chapter is
+about how, at what price, and what the method cannot remove.
+
+\begin{openingchart}{Carbon dioxide emissions per person against income per
+person, 1990--2022, 200 countries. Left: across countries, each dot a
+country's average over the years (GDP per person in constant 2015 dollars, log
+scale). Right: inside countries, each dot the mean of one twentieth of the
+6{,}419 country-years, after removing each country's own averages. Lines:
+least-squares fits. Palau, at 104 tonnes, lies above the left panel's scale.}% figdata: between (PLW 104.489)
+{World Bank, World Development Indicators
+(EN.GHG.CO2.PC.CE.AR5, tonnes of CO$_2$ per person; NY.GDP.PCAP.KD); our
+computation}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 1, horizontal sep=14mm},
+  omscatter, height=0.5\linewidth]
+\nextgroupplot[xmode=log, width=0.5\linewidth, xmin=100, xmax=200000,
+  xtick={100,1000,10000,100000}, log ticks with fixed point, ymin=0, ymax=50,
+  xlabel={GDP per person (2015 \$, log scale)}, ylabel={CO$_2$ per person (tonnes)},
+  title={\small Between countries}]
+  \addplot table[x=gdp, y=co2] {figdata/bachelor-3/02-panel-data/out/between.csv};
+  \addplot[omThm, thick, no marks, sharp plot] table[x=gdp, y=co2] {figdata/bachelor-3/02-panel-data/out/between_line.csv};
+\nextgroupplot[width=0.5\linewidth, xmin=-0.8, xmax=0.8, ymin=-1.2, ymax=1.2,
+  xlabel={Log income, minus the country's mean}, ylabel={CO$_2$, minus the country's mean},
+  title={\small Within countries},
+  x tick label style={/pgf/number format/.cd, fixed, precision=1},
+  y tick label style={/pgf/number format/.cd, fixed, precision=1}]
+  \addplot table[x=dly, y=dco2] {figdata/bachelor-3/02-panel-data/out/within_bins.csv};
+  \addplot[omThm, thick, no marks, sharp plot] table[x=dly, y=dco2] {figdata/bachelor-3/02-panel-data/out/within_line.csv};
+\end{groupplot}
+\end{tikzpicture}
+\end{openingchart}
+
+The left panel is the familiar cross-section. The rich oil producers sit high
+above the line, and several rich countries with nuclear or hydroelectric power
+sit below it. The right panel removes every country's average income and
+average emissions, so that a country only ever meets itself: a year in which
+it was ten per cent richer than its own average is compared with its own
+average emissions. That slope, 1.0, is less than half of the slope across
+countries, 2.7. % figdata: co2_stats
+Note the horizontal scale of the right panel. Almost all the variation in
+income is between countries. What is left inside them is a band of a few
+tenths of a log point, and the within slope is estimated from that narrow
+band alone.
+
+\begin{recall}
+The Year 1 volume introduced panel data as a data shape: the same units observed
+at several dates. The Year 2 volume proved the Frisch--Waugh--Lovell theorem (the
+coefficient on $x$ in a regression on $x$ and $W$ is the slope of $y$ on the
+part of $x$ that $W$ does not predict), derived omitted-variable bias, and
+defined cluster-robust standard errors and the Moulton factor.
+\Cref{ch:b3:instrumental-variables} met an \omterm{def:b3:instrumental-variables:endogenous}{endogenous regressor} and one cure,
+the instrument.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:panel-data:symbols}
+A unit (a country, a firm) is $i = 1, \dots, n$ and a period $t = 1, \dots, T$;
+here $T$ is the length of the panel, not taxes. The unit effect is $a_i$ and a
+period effect $\mu_t$. A bar over a variable is its mean over the periods of
+one unit, $\bar x_i = \frac1T \sum_t x_{it}$, and a double dot the deviation
+from it, $\ddot x_{it} = x_{it} - \bar x_i$.
+\end{notation}
+
+\section{The same units over time}\label{sec:b3:panel-data:units}
+
+The model of this chapter is
+\begin{equation}\label{eq:b3:pd:model}
+  y_{it} = \beta x_{it} + a_i + u_{it}, \qquad \E[u_{it} \mid x_{i1}, \dots, x_{iT}, a_i] = 0.
+\end{equation}
+The unit effect $a_i$ collects everything about unit $i$ that does not change
+over the panel and affects $y$. It is not observed. It may be correlated with
+$x$, and in most applications it is: the reason to use a panel is that it is.
+The condition on $u_{it}$, called strict exogeneity, says that the remaining
+error is unrelated to the regressor in every period, past and future.
+
+\begin{definition}[Pooled regression]\label{def:b3:panel-data:pooled}
+\index{pooled regression}
+The \emph{pooled regression} is the OLS regression of $y_{it}$ on $x_{it}$ (and a
+constant) over all $nT$ observations, ignoring which unit each comes from.
+\end{definition}
+
+The \omterm{def:b3:panel-data:pooled}{pooled regression} leaves $a_i$ in its error. By the omitted-variable formula,
+its slope converges to $\beta + \Cov(x_{it}, a_i)/\Var(x_{it})$. The figure
+below shows the pattern with three units: within each unit the relation has
+slope $\beta$, but the units with high $x$ also have high $a_i$, and the pooled
+line, steeper than any of them, joins the clouds.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, scale=0.85]
+  \draw[econ axes] (0,5.4) node[above] {$y$} |- (8,0) node[right] {$x$};
+  \foreach \cx/\cy/\col in {1.6/0.9/omDef, 3.9/2.7/omThm, 6.2/4.5/omMeth} {
+    \draw[\col, very thick] (\cx-0.9,\cy-0.225) -- (\cx+0.9,\cy+0.225);
+    \foreach \dx/\dy in {-0.7/-0.12, -0.3/0.14, 0.1/-0.1, 0.5/0.12, 0.8/-0.08} {
+      \fill[\col] (\cx+\dx,\cy+0.25*\dx+\dy) circle (1.6pt);
+    }
+  }
+  \draw[curve, dashed] (0.6,0.12) -- (7.3,5.35) node[right] {pooled};
+  \node[font=\footnotesize, omDef, anchor=north] at (1.6,0.45) {unit 1};
+  \node[font=\footnotesize, omThm, anchor=north] at (3.9,2.25) {unit 2};
+  \node[font=\footnotesize, omMeth, anchor=north] at (6.2,4.05) {unit 3};
+\end{tikzpicture}
+\par\smallskip{\small Three units with the same slope and different
+intercepts $a_i$. The units with larger $x$ have larger $a_i$, so the pooled
+line (dashed) is steeper than the slope inside every unit.}
+\end{omfigure}
+
+\section{Fixed effects}\label{sec:b3:panel-data:fixed-effects}
+
+\begin{definition}[Unit fixed effect, within estimator]\label{def:b3:panel-data:within}
+\index{unit fixed effect}\index{within estimator}
+In model~\eqref{eq:b3:pd:model}, treating $a_i$ as a parameter to be estimated
+for each unit makes it a \emph{unit fixed effect}. The \emph{within estimator}
+(or fixed-effects estimator) of $\beta$ is the OLS slope of the deviations
+$\ddot y_{it}$ on the deviations $\ddot x_{it}$:
+\[
+  \hat\beta_{\mathrm{FE}} = \frac{\sum_i \sum_t \ddot x_{it}\, \ddot y_{it}}{\sum_i \sum_t \ddot x_{it}^2}.
+\]
+\end{definition}
+
+Averaging model~\eqref{eq:b3:pd:model} over $t$ gives $\bar y_i = \beta \bar
+x_i + a_i + \bar u_i$; subtracting it from the model removes $a_i$:
+$\ddot y_{it} = \beta \ddot x_{it} + \ddot u_{it}$. Under strict exogeneity,
+$\ddot u_{it}$, which contains $\bar u_i$ and hence the errors of every period,
+is uncorrelated with $\ddot x_{it}$, and the \omterm{def:b3:panel-data:within}{within estimator} is consistent as
+$n$ grows. Whatever $a_i$ is, and however it is related to $x$, it is gone.
+
+\begin{proposition}[Within estimator and unit dummies]\label{prop:b3:panel-data:dummies}
+The \omterm{def:b3:panel-data:within}{within estimator} equals the coefficient on $x_{it}$ in the OLS regression of
+$y_{it}$ on $x_{it}$ and $n$ unit dummies $d^{(1)}_{it}, \dots, d^{(n)}_{it}$,
+where $d^{(j)}_{it} = 1$ if $i = j$.
+\end{proposition}
+
+\begin{proof}
+By the Frisch--Waugh--Lovell theorem, the coefficient on $x$ is the slope of $y$
+on the residual of $x$ after a regression of $x$ on the dummies. Regressing on the
+dummies fits one constant per unit, and the least-squares constant for unit $i$
+is the unit's mean, $\bar x_i$. The residual is $x_{it} - \bar x_i = \ddot
+x_{it}$. The theorem also allows $y$ to be replaced by its own residual, $\ddot
+y_{it}$, so the coefficient is $\sum \ddot x_{it} \ddot y_{it} / \sum \ddot
+x_{it}^2$.
+\end{proof}
+
+The dummies give the same slope with $n$ more parameters; the within transform
+gives it without them. Either way, the degrees of freedom of the residual
+variance are $nT - n - 1$, a point that software using the transform must
+handle.
+
+\begin{definition}[First-difference estimator]\label{def:b3:panel-data:first-difference}
+\index{first-difference estimator}
+The \emph{first-difference estimator} of $\beta$ is the OLS slope of $\Delta
+y_{it} = y_{it} - y_{i,t-1}$ on $\Delta x_{it} = x_{it} - x_{i,t-1}$, for $t =
+2, \dots, T$.
+\end{definition}
+
+Differencing also removes $a_i$. With two periods the two estimators are
+identical (\cref{exo:b3:panel-data:10}). With more, they weight the data
+differently and are both consistent under strict exogeneity; they differ when
+the errors are serially correlated, when $x$ is measured with error, and when
+the model is wrong. A gap between them is a warning worth reading.
+
+\begin{definition}[Two-way fixed effects]\label{def:b3:panel-data:twfe}
+\index{two-way fixed effects}
+The \emph{two-way fixed effects} model adds a period effect to
+model~\eqref{eq:b3:pd:model}: $y_{it} = \beta x_{it} + a_i + \mu_t + u_{it}$.
+It is estimated with unit and period dummies, or, in a balanced panel, by the
+slope of $y_{it} - \bar y_i - \bar y_t + \bar y$ on the same transform of $x$.
+\end{definition}
+
+\Cref{lst:b3:panel-data:co2} computes the slopes behind the opening chart.
+
+\omcode{code/bachelor-3/02-panel-data/listings/pooled_vs_within.py}{1}{24}{Pooled, between, within, dummies and two-way slopes, on the World Development Indicators.}\label{lst:b3:panel-data:co2}
+
+\omoutput{code/bachelor-3/02-panel-data/outputs/pooled_vs_within.txt}{Tonnes of CO$_2$ per person per log point of income.}\label{out:b3:panel-data:co2}
+
+The pooled and between slopes are close, 2.756 and 2.716, because most of the
+variation is between countries; only 3.6~\% of the variance of log income is
+within. % output: pooled_vs_within
+The within slope and the slope with 200 country dummies agree to every printed
+digit, 0.999, as \cref{prop:b3:panel-data:dummies} requires. Adding year
+effects doubles it, to 2.068. % output: pooled_vs_within
+The year effects take out what all countries share in a year: world income
+rose over the period while some large rich emitters cut their emissions per
+person, so a common time path pulled the one-way within slope down. Which
+slope answers which question is the subject of
+\cref{sec:b3:panel-data:identifying}.
+
+\begin{model}{The fixed-effects model}
+\assumes Each unit has a constant unobserved level $a_i$, possibly correlated
+with $x$; the slope $\beta$ is the same for all units; the remaining error is
+unrelated to the regressor in every period (strict exogeneity).
+\predicts The within and \omterm{def:b3:panel-data:first-difference}{first-difference estimators} agree, up to sampling
+error; adding variables that are fixed for each unit changes nothing;
+regressing $y$ on future values of $x$ gives nothing once current $x$ is in.
+\tested Not once for all: its predictions are checked in each application,
+by comparing within, first-difference and two-way estimates and by the lead
+test of \cref{exo:b3:panel-data:12}. One of its working assumptions has been
+tested on real data and failed: errors independent over time. In state panels
+of female wages, placebo laws came out significant far more often than 5~\%
+(\cref{sec:b3:panel-data:clustering}; Bertrand, Duflo and Mullainathan 2004). % ledger: b3pd:bdm04.placebo
+\breaks When the confounder changes over time (a new manager, a policy that
+moves with the business cycle); when today's $x$ responds to yesterday's $u$
+(feedback, as in a dynamic panel, \cref{sec:b3:panel-data:dynamic}); when
+the slope differs across units, in which case the \omterm{def:b3:panel-data:within}{within estimator} is a
+weighted average of unit slopes, weighted by each unit's variance of $x$.
+\end{model}
+
+\section{Random effects}\label{sec:b3:panel-data:random-effects}
+
+The fixed-effects estimator throws away the between variation, which is most of
+the data. If $a_i$ were known to be uncorrelated with $x$, nothing would need
+throwing away: the \omterm{def:b3:panel-data:pooled}{pooled regression} would be consistent, but its errors $a_i +
+u_{it}$ would be correlated within each unit, and a better estimator would use
+that structure.
+
+\begin{definition}[Random-effects estimator]\label{def:b3:panel-data:random-effects}
+\index{random-effects estimator}
+In model~\eqref{eq:b3:pd:model}, suppose $a_i$ has variance $\sigma_a^2$, $u_{it}$
+has variance $\sigma_u^2$, and both are uncorrelated with each other and with
+$x$. The \emph{random-effects estimator} is the OLS slope after quasi-demeaning,
+$y_{it} - \theta \bar y_i$ on $x_{it} - \theta \bar x_i$ (with a constant), where
+$\theta = 1 - \sqrt{\sigma_u^2/(\sigma_u^2 + T\sigma_a^2)}$, the variances being
+replaced by estimates.
+\end{definition}
+
+The weight $\theta$ runs from 0, when there is no unit effect and random effects
+is the \omterm{def:b3:panel-data:pooled}{pooled regression}, to 1, when the unit effect dominates and random
+effects is the \omterm{def:b3:panel-data:within}{within estimator}. It is the generalised least squares estimator
+for this error structure.
+\admitted
+The proof that quasi-demeaning makes the composite errors uncorrelated with
+equal variances is a computation with the $T \times T$ covariance matrix
+$\sigma_u^2 I + \sigma_a^2 \mathbf 1 \mathbf 1'$, found in graduate texts on panel
+econometrics.
+
+\begin{proposition}[When random effects is consistent]\label{prop:b3:panel-data:re}
+Under strict exogeneity of $u$, and with $\theta < 1$, the \omterm{def:b3:panel-data:random-effects}{random-effects
+estimator} is consistent if $\Cov(a_i, x_{it}) = 0$ and in general inconsistent
+otherwise.
+\end{proposition}
+
+\begin{proof}
+After quasi-demeaning, the error of the transformed model is $(1 - \theta)a_i +
+u_{it} - \theta \bar u_i$. The terms in $u$ are uncorrelated with the transformed
+regressor $x_{it} - \theta \bar x_i$ by strict exogeneity. The term $(1 -
+\theta)a_i$ is uncorrelated with it if and only if $\Cov(a_i, x_{it} - \theta \bar
+x_i) = 0$, which holds when $a_i$ is uncorrelated with $x$ in every period. When
+it is not, the transformed error is correlated with the transformed regressor
+and the omitted-variable formula gives a bias proportional to $1 - \theta$.
+\end{proof}
+
+\omcode{code/bachelor-3/02-panel-data/listings/random_effects.py}{1}{33}{Random against fixed effects, with and without a correlated unit effect.}\label{lst:b3:panel-data:re}
+
+\omoutput{code/bachelor-3/02-panel-data/outputs/random_effects.txt}{True slope 1 in both panels.}\label{out:b3:panel-data:re}
+
+With the unit effect unrelated to $x$, both estimators find the truth, 0.996
+and 0.999. When the correlation is 0.45, the fixed-effects estimate stays at
+1.003 and random effects moves to 1.149. % output: random_effects
+The comparison is the logic of the Hausman test: under the null that $a_i$ is
+unrelated to $x$ the two estimates converge to the same value, and a large
+gap rejects random effects. In observational economics the null rarely
+survives. A useful compromise, due to Mundlak (1978), adds the unit means
+$\bar x_i$ to a random-effects regression; the coefficient on $x_{it}$ is then
+exactly the within estimate, and the coefficient on $\bar x_i$ measures how
+far between and within disagree.
+
+\section{What variation identifies the coefficient}\label{sec:b3:panel-data:identifying}
+
+\begin{definition}[Identifying variation]\label{def:b3:panel-data:identifying-variation}
+\index{identifying variation}
+The \emph{identifying variation} of an estimator is the part of the variation
+of the regressor that the estimator uses: the variation left in $x$ after the
+fixed effects and controls are removed, which by the Frisch--Waugh--Lovell
+theorem is all the slope depends on.
+\end{definition}
+
+The definition turns a statistical fact into a question about the world. The
+within slope of the opening chart uses only the 3.6~\% of income variation that
+happens inside countries over three decades: % output: pooled_vs_within
+booms, recessions, and three decades of growth. Its comparison is between a
+country in a good year and the same country in a bad one, and a bad year's
+emissions fall for reasons that have to do with the energy used in a recession,
+not with the slow change in technology that the between slope reflects. The two
+slopes answer different questions, and neither is the long-run effect of
+becoming richer on emissions.
+
+\begin{measure}[What a fixed effect absorbs]
+A \omterm{def:b3:panel-data:within}{unit fixed effect} absorbs every variable that is constant within the unit
+over the panel: geography, climate, legal origin, the energy endowment, a
+firm's founding year. Their coefficients cannot be estimated with unit effects,
+and a regression that reports one is reporting noise or a collinearity the
+software resolved silently. A period effect absorbs everything common to all
+units in a period: world prices, global recessions, a change in a survey's
+method. What is left --- the \omterm{def:b3:panel-data:identifying-variation}{identifying variation} --- is often small: 3.6~\%
+of the variance of log income in the opening chart. % output: pooled_vs_within
+Two consequences follow. Measurement error, which is mostly within-unit noise,
+becomes a larger share of what is left, so attenuation bias is worse in the
+within estimate than in the pooled one. And the standard errors of a
+fixed-effects estimate are larger, honestly, because there is less information.
+\end{measure}
+
+\section{Errors that move together: clustering in panels}\label{sec:b3:panel-data:clustering}
+
+In a panel, a unit's errors are rarely independent from one year to the next. A
+firm that has a good year tends to have a good next year, and a state's wage
+level drifts slowly. When the regressor is also persistent --- a law that
+switches on and stays on --- the observations of one unit carry much less
+information than their number suggests. Classical and heteroskedasticity-robust
+standard errors both assume independent observations; cluster-robust
+standard errors, clustered by unit, allow any correlation within a unit and
+none across units.
+
+\begin{record}[Placebo laws]
+Bertrand, Duflo and Mullainathan (2004) took state-level data on women's wages
+from the Current Population Survey, about twenty years of it, and assigned
+laws at random to states and dates. The laws were fictitious and could have no
+effect. Estimated with state and year effects and conventional standard
+errors, up to 45~\% of these placebo laws had an ``effect'' significant at
+5~\%. % ledger: b3pd:bdm04.placebo
+Clustering the standard errors by state, or collapsing each state's data into a
+before and an after period, brought the rejection rate close to the nominal 5~\%
+when the number of states was large. The paper changed the default: in a panel,
+cluster at the level at which the treatment is assigned.
+\end{record}
+
+\Cref{lst:b3:panel-data:cluster} repeats the experiment on simulated data with
+50 states, 20 years and errors whose persistence is 0.8.
+
+\omcode{code/bachelor-3/02-panel-data/listings/cluster_sim.py}{1}{30}{Placebo laws on a simulated panel; \texttt{ols\_cluster} returns the three kinds of standard error.}\label{lst:b3:panel-data:cluster}
+
+\omoutput{code/bachelor-3/02-panel-data/outputs/cluster_sim.txt}{500 placebo laws.}\label{out:b3:panel-data:cluster}
+
+Conventional and robust standard errors reject the true zero in about 40~\% of
+the samples; clustered errors in 6.6~\%. % output: cluster_sim
+(The listing divides by $n - 1$ rather than by the $n - 70$ degrees of freedom left
+after the state and year means are removed, which makes the conventional and robust
+errors about 3.5~\% too small and flatters their rejection rates a little; the
+clustered rate is barely affected.)
+Clustering is not free: it needs many clusters, since its justification is
+asymptotic in the number of clusters. With fewer than about thirty or forty,
+clustered standard errors are themselves too small, and methods that resample
+whole clusters are used instead.
+
+\section{Dynamic panels}\label{sec:b3:panel-data:dynamic}
+
+Many economic variables depend on their own past: this year's employment on last
+year's, this year's income on last year's. The natural model is
+\[
+  y_{it} = \rho\, y_{i,t-1} + a_i + u_{it}, \qquad |\rho| < 1.
+\]
+Here strict exogeneity cannot hold: the regressor $y_{i,t-1}$ depends on
+$u_{i,t-1}$, which sits inside $\bar u_i$, which sits inside the demeaned
+error.
+
+\begin{definition}[Dynamic panel bias]\label{def:b3:panel-data:nickell}
+\index{dynamic panel bias}
+The \emph{dynamic panel bias} (Nickell bias) is the inconsistency, as $n$ grows
+with $T$ fixed, of the \omterm{def:b3:panel-data:within}{within estimator} of $\rho$ in a model with a lagged
+dependent variable and unit effects.
+\end{definition}
+
+For large $T$ the bias is approximately $-(1 + \rho)/(T - 1)$ (Nickell 1981).
+\admitted
+The exact expression is a ratio of two sums of geometric series; its
+derivation, and the approximation, are in Nickell's paper. The chart shows a
+simulation.
+
+\begin{omchart}{The within estimate of persistence in a dynamic panel with unit
+effects, against the number of periods (true $\rho = 0.5$; 500 units; mean of
+200 simulated panels). Dashed: the approximation $\rho - (1+\rho)/(T-1)$.}{simulated
+data, the chapter's seeded script}
+\begin{tikzpicture}
+\begin{axis}[omtime, xlabel={Periods in the panel, $T$}, ylabel={Estimated $\rho$},
+  xmin=0, xmax=31, ymin=-0.3, ymax=0.6, legend pos=south east,
+  y tick label style={/pgf/number format/.cd, fixed, precision=1}, height=0.42\linewidth]
+  \addplot+[mark=*, mark size=1.4pt] table[x=T, y=estimate] {figdata/bachelor-3/02-panel-data/out/nickell.csv};
+  \addplot+[dashed, no marks] table[x=T, y=approx] {figdata/bachelor-3/02-panel-data/out/nickell.csv};
+  \addplot[guide, thick, domain=0:31, samples=2] {0.5};
+  \legend{within estimate, approximation, true value}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+With five periods the estimate is 0.168 instead of 0.5; with thirty, 0.448.
+% figdata: nickell
+In a panel of countries over decades the bias is small; in a panel of firms over
+five years it is most of the estimate. The cure is the tool of
+\cref{ch:b3:instrumental-variables}. In first differences, $\Delta y_{i,t-1}$ is
+correlated with $\Delta u_{it}$ through $u_{i,t-1}$, but $y_{i,t-2}$, dated
+before that error, is not: under no serial correlation in $u$, the level two
+periods back is a valid instrument for the lagged difference. Estimators built
+on this idea, using every earlier level as an instrument, are standard in
+dynamic panels, and so are their weak-instrument problems when $\rho$ is close
+to one.
+
+\section{Exercises}\label{sec:b3:panel-data:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:panel-data:1}
+Read the opening chart.
+\begin{enumerate}
+\item State the between and within slopes in tonnes per person per log point,
+and say which comparison each one makes.
+\item Give two characteristics of a country that are roughly fixed over three
+decades and raise both its income and its emissions.
+\item The right panel's horizontal axis runs from $-0.8$ to $0.8$. Why is it so
+much narrower than the left panel's range of log incomes?
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:panel-data:2}
+Unit A has $(x, y) = (1, 2), (2, 4), (3, 5)$ in three years, and unit B has
+$(4, 9), (5, 10), (6, 12)$.
+\begin{enumerate}
+\item Compute the pooled slope.
+\item Compute the deviations from each unit's means and the within slope.
+\item Draw the six points and explain the difference.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:panel-data:3}
+For the data of \cref{exo:b3:panel-data:2}, compute the first differences and
+the first-difference slope, without a constant. Why can the slope not be
+estimated with a constant in these data?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:panel-data:4}
+The fixed-effects model assumes that the unit effect is constant over the panel.
+Describe two results, from data you could compute with the opening chart's
+panel, that would show it is not.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:panel-data:5}
+Using the panel of \cref{lst:b3:panel-data:co2} and the helpers
+\texttt{twoway\_demean} and \texttt{ols\_cluster}, estimate the within slope with
+country effects only and with country and year effects, each with conventional
+and country-clustered standard errors.
+\begin{enumerate}
+\item Report the four standard errors and the ratio of clustered to conventional.
+\item By how much did the cross-country mean of log income rise between 1990
+and 2022? Use it to explain why the year effects change the slope.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:panel-data:6}
+Suppose that, among countries, the richer ones have cleaner technologies for
+reasons that do not change over the panel, so $\Cov(\bar x_i, a_i) < 0$ in a
+regression of emissions on log income.
+\begin{enumerate}
+\item In which direction is the between slope biased?
+\item The opening chart's between slope exceeds its within slope. Is that
+consistent with this story alone? What else must be at work?
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:panel-data:7}
+In \cref{exo:b3:panel-data:5}, the within slope has a conventional standard
+error of 0.122 and a clustered one of 0.265.
+\begin{enumerate}
+\item Compute the ratio of the two variances (the design effect).
+\item Dividing the 6{,}419 country-years by the design effect gives an
+``effective'' number of independent observations. Compute it.
+\item Give a 95~\% confidence interval for the within slope with each standard
+error.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:panel-data:8}
+In \cref{out:b3:panel-data:re}, the gap between random and fixed effects is
+0.003 in the first panel and 0.146 in the second.
+\begin{enumerate}
+\item Which estimate moves when the unit effect becomes correlated with $x$, and
+why does the other not?
+\item The weight $\theta$ is 0.610 in the first panel. Compute
+$\sigma_u^2/(\sigma_u^2 + T\sigma_a^2)$ and compare it with the true value
+when $\sigma_u^2 = \sigma_a^2 = 1$ and $T = 6$.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:panel-data:9}
+Repeat \cref{lst:b3:panel-data:co2} with the total fertility rate
+(\texttt{SP.DYN.TFRT.IN}) in place of emissions, for 1990--2022.
+\begin{enumerate}
+\item Report the between and within slopes.
+\item Unlike emissions, the two slopes are close. What does that suggest about
+the fixed differences between countries, for this variable?
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:panel-data:10}
+Prove that with $T = 2$ the \omterm{def:b3:panel-data:within}{within estimator} and the \omterm{def:b3:panel-data:first-difference}{first-difference estimator}
+(without a constant) are equal.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:panel-data:11}
+Simulate the dynamic panel of \cref{sec:b3:panel-data:dynamic} with $\rho = 0.5$
+and 500 units, for $T = 5$, 10 and 20.
+\begin{enumerate}
+\item Report the mean within estimate over 200 panels and its bias.
+\item Compare the bias with $-(1 + \rho)/(T - 1)$. For which $T$ is the
+approximation good?
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:panel-data:12}
+Strict exogeneity can fail through feedback: a shock to $y$ this year changes
+$x$ next year.
+\begin{enumerate}
+\item Show that under feedback, $\ddot x_{it}$ is correlated with $\ddot u_{it}$
+even when $x_{it}$ is uncorrelated with $u_{it}$.
+\item Propose a test: add the lead $x_{i,t+1}$ to the within regression. Under
+strict exogeneity, what should its coefficient be? Under feedback, what sign do
+you expect if $u$ raises future $x$?
+\end{enumerate}
+\end{exercise}
+
+\section{Problem: Fifteen Years of Brenland's Firms}\label{sec:b3:panel-data:problem}
+
+\begin{problem}[{Weekend problem --- fifteen years of Brenland's firms}]\label{pb:b3:panel-data:firms}
+Brenland (invented) keeps a register of 300 manufacturing firms, observed every
+year from 2011 to 2025: 4{,}500 firm-years. For each firm-year it records the
+logarithm of output $y_{it}$ and of capital $k_{it}$. The quality of a firm's
+management, $m_i$, is not recorded; it raises output with a coefficient of 0.5
+per standard deviation and is the same in every year. In 2018 a training
+subsidy was given to 100 firms, chosen by a panel that judged, among other
+things, how well they were run; $s_{it} = 1$ for those firms from 2018 on. The
+table gives the estimates of a statistician, with standard errors computed
+twice: as if all firm-years were independent, and clustered by firm. In the
+register, the variance of $k_{it}$ is 0.8675 and its covariance with $m_i$ is
+0.9512. % figdata: firms_facts
+\begin{center}
+\pgfplotstabletypeset[col sep=comma, string type,
+  columns/model/.style={column name={Model}, column type=l},
+  columns/coef/.style={column name={Variable}, column type=c},
+  columns/estimate/.style={column name={Estimate}, column type=c},
+  columns/se_iid/.style={column name={s.e. (iid)}, column type=c},
+  columns/se_cluster/.style={column name={s.e. (clustered)}, column type=c},
+  every head row/.style={after row=\hline}, every last row/.style={after row=\hline}]
+  {figdata/bachelor-3/02-panel-data/out/firms_results.csv}
+\end{center}
+Here ``within'' uses firm effects, ``two-way'' firm and year effects, and
+``first difference'' regresses $\Delta y$ on $\Delta k$.
+
+\medskip\noindent\textbf{Part I --- the pooled regression.}
+\begin{enumerate}
+\item Interpret the pooled coefficient on $k$ in words, as an elasticity.
+\item Use the omitted-variable formula and the register's variance and
+covariance to predict the probability limit of the pooled slope, if the true
+elasticity is 0.30.
+\item Compare your prediction with the pooled estimate.
+\item Why can the statistician not simply add management quality to the
+regression?
+\item If better-run firms used less capital, in which direction would the
+pooled estimate be biased?
+\item Compute the ratio of the clustered to the iid standard error of the pooled
+slope. Is a precise standard error a reason to trust the estimate?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- within and first differences.}
+\begin{enumerate}[resume]
+\item Interpret the within estimate, and say which comparisons it makes.
+\item The within and first-difference estimates differ by about 0.05. Give two
+reasons why they may differ.
+\item The two-way estimate is closer to 0.30 than the within estimate. What
+does the year effect remove?
+\item Give a 95~\% confidence interval for the two-way coefficient on $k$ with
+the clustered standard error.
+\item What part of the variation in capital identifies the two-way estimate?
+\item A consultant advised some firms from 2015 and, she says, raised both their
+capital and their output. Would the two-way estimate still be consistent?
+Explain.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- the training subsidy.}
+\begin{enumerate}[resume]
+\item Why is the pooled estimate of the subsidy's effect likely to be biased
+upward?
+\item Compare the pooled and two-way estimates of the subsidy's effect.
+\item Convert the two-way estimate into a percentage change in output.
+\item With firm and year effects, which comparison identifies the subsidy's
+effect?
+\item What must be true of the treated and untreated firms' output paths for
+that comparison to give the effect of the subsidy?
+\item How would you use the years 2011--2017 to check that assumption?
+\item Suppose the panel had picked firms whose output had just fallen. In which
+direction would the two-way estimate be biased?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- the standard errors.}
+\begin{enumerate}[resume]
+\item Compute the ratio of the clustered to the iid standard error of the
+two-way subsidy estimate, and its square.
+\item Give 95~\% confidence intervals for the subsidy's effect with each standard
+error.
+\item Why is the iid standard error too small here? Name the two features of
+the data that combine.
+\item If the design effect (your square from Question~20) is $1 + (T - 1)\rho$
+with $T = 15$, what correlation $\rho$ does it imply?
+\item How many independent firm-years is the panel worth for this coefficient?
+\item State the two results of this problem, each with its clustered 95~\%
+interval.
+\end{enumerate}
+\end{problem}

@@ -1,0 +1,8 @@
+$ python rd_sharp.py
+elections 6000, within 0.05 of the cutoff 1220
+window   jump    s.e.   elections used
+ 0.05   0.078   0.010    1220
+ 0.10   0.081   0.007    2366
+ 0.25   0.076   0.005    4704
+difference of means within 0.05: 0.102
+balance: jump in the PAST vote share  0.007 (s.e. 0.006)

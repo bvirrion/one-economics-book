@@ -1,0 +1,431 @@
+\chapter{Factor Markets}\label{ch:b1:factor-markets}
+
+In a town with one large employer, a higher wage floor can raise
+employment. In a competitive labour market it cannot: a floor above the
+market wage moves employers up their demand curve and they hire fewer
+people. Which case holds depends on who sets the wage. This chapter
+studies the markets for labour and capital from the buyer's side: what a
+firm will pay for a factor, what happens when there is one buyer, and what
+sets the share of income that goes to each factor.
+
+\begin{openingchart}{Labour's share of GDP against GDP per person at
+purchasing-power parity, 140 countries, 2019.}{Penn World Table 11.0
+(labsh, rgdpe, pop)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xmode=log, log ticks with fixed point, xtickten={3,4,5}, xmin=200, xmax=200000, ymin=0, ymax=0.85,
+  xlabel={GDP per person, PPP dollars (log scale)}, ylabel={Labour share of GDP},
+  width=0.74\linewidth, height=0.44\linewidth]
+  \addplot[only marks, mark=*, mark size=1.3pt, omDef, fill opacity=0.6] table[x=gdp, y=labsh, col sep=comma] {figdata/bachelor-1/16-factor-markets/out/labsh_2019.csv};
+  \addplot[only marks, mark=none, nodes near coords, point meta=explicit symbolic, nodes near coords style={font=\scriptsize, anchor=west}]
+    table[x=gdp, y=labsh, meta=country, col sep=comma] {figdata/bachelor-1/16-factor-markets/out/labsh_labels.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+The median country pays $0.521$ of its GDP to labour; a tenth pay less than
+$0.329$ and a tenth more than $0.642$. % figdata: labsh_stats
+The share is barely related to income: the correlation with the logarithm
+of income per person is $0.12$. % figdata: labsh_stats
+The lowest shares are in oil exporters such as Qatar, at $0.177$, where most
+income is a return to oil in the ground. % figdata: labsh_points
+The chart's shares are measured with care: a naive share, counting only
+the wages of employees, looks very different, as
+\cref{sec:b1:factor-markets:rent} shows.
+
+\begin{recall}
+Labour demand from the \omterm{def:b1:factor-markets:vmp}{value of the marginal product}, and the minimum wage
+in a competitive market and with one large employer, were met at school.
+Factor demands of a price-taking firm are in \cref{ch:b1:profit-maximisation},
+\omterm{def:b1:competitive-industry:rent}{economic rent} in \cref{ch:b1:competitive-industry}, and monopoly in
+\cref{ch:b1:monopoly-pricing}.
+\end{recall}
+
+\section{Derived demand}\label{sec:b1:factor-markets:derived}
+
+\begin{definition}[Derived demand]\label{def:b1:factor-markets:derived-demand}
+\index{derived demand}
+The demand for a factor of production is a \emph{derived demand}: firms want
+the factor not for itself but for the output it helps produce, so its
+demand depends on the demand for that output.
+\end{definition}
+
+\begin{definition}[Marginal revenue product]\label{def:b1:factor-markets:mrp}
+\index{marginal revenue product}
+The \emph{marginal revenue product} of a factor is the extra revenue from
+one more unit of it: $\mathrm{MRP}_L = MR(q)\cdot\partial f/\partial L$, the marginal revenue of output
+times the factor's \omterm{def:b1:technology:marginal-product}{marginal product}.
+\end{definition}
+
+\begin{definition}[Value of the marginal product]\label{def:b1:factor-markets:vmp}
+\index{value of the marginal product}
+For a firm that takes the output price $p$ as given, $MR = p$, and the
+\omterm{def:b1:factor-markets:mrp}{marginal revenue product} is the \emph{value of the \omterm{def:b1:technology:marginal-product}{marginal product}},
+$\mathrm{VMP}_L = p\,\partial f/\partial L$.
+\end{definition}
+
+A firm that takes the wage as given hires until $\mathrm{MRP}_L = w$; its labour
+demand is the downward-sloping part of the MRP curve. How elastic that
+demand is follows a set of rules often given the label \emph{Marshall's
+rules}: the demand for a factor is more elastic when the demand for the
+output is more elastic, when other factors substitute for it more easily,
+when their supply is more elastic, and (usually) when the factor's share of
+cost is larger. For a firm with constant returns and an \omterm{def:b1:technology:sigma}{elasticity of
+substitution} $\sigma$, the long-run elasticity of labour demand is
+\[
+\eta_L = -\bigl[(1 - s_L)\sigma + s_L|\varepsilon|\bigr],
+\]
+with $s_L$ labour's share of cost and $\varepsilon$ the elasticity of output demand: a
+\omterm{def:b1:income-and-substitution-effects:effects}{substitution effect} at given output plus a scale effect. We prove the first
+part.
+
+\begin{proposition}[The substitution effect]\label{prop:b1:factor-markets:substitution}
+For the Cobb--Douglas technology $q = L^{\alpha}K^{1-\alpha}$, the cost-minimising labour
+demand at a given output has elasticity $-(1 - \alpha) = -(1 - s_L)$ with respect
+to the wage.
+\end{proposition}
+
+\begin{proof}
+The tangency gives $K/L = \frac{1 - \alpha}{\alpha}\frac wr$, so $q = L\,(K/L)^{1-\alpha}$ and
+$L^* = q\left(\frac{\alpha}{1 - \alpha}\frac rw\right)^{1-\alpha}$, whose elasticity with respect to $w$ is $-(1 - \alpha)$.
+Labour's share of cost is $\alpha$ (\cref{ch:b1:cost-minimisation}), and $\sigma = 1$.
+\end{proof}
+
+\section{One buyer}\label{sec:b1:factor-markets:monopsony}
+
+A firm that is the only employer in a valley faces the whole upward-sloping
+labour supply $w(L)$: to hire more workers it must raise the wage, for the
+new workers and, with one wage for all, for those already employed.
+
+\begin{definition}[Monopsony]\label{def:b1:factor-markets:monopsony}
+\index{monopsony}\index{single buyer}
+A \emph{monopsony} is a market with a single buyer; in a labour market, a
+single employer who faces an upward-sloping labour supply and sets the
+wage.
+\end{definition}
+
+\begin{definition}[Marginal cost of labour]\label{def:b1:factor-markets:mcl}
+\index{marginal cost of labour}
+The \emph{marginal cost of labour} is the increase in the wage bill from one
+more worker: $\mathrm{MCL} = \frac{\dd}{\dd L}\bigl(w(L)L\bigr) = w(L) + Lw'(L)$, above the wage when supply
+slopes up.
+\end{definition}
+
+The monopsonist hires where $\mathrm{MRP} = \mathrm{MCL}$ and pays the wage on the supply
+curve at that employment, below the \omterm{def:b1:factor-markets:mrp}{marginal revenue product}.
+
+\begin{definition}[Markdown]\label{def:b1:factor-markets:markdown}
+\index{markdown}
+The \emph{markdown} of a wage is the gap between the \omterm{def:b1:factor-markets:mrp}{marginal revenue
+product} and the wage, as a share of the wage: $(\mathrm{MRP} - w)/w$.
+\end{definition}
+
+\begin{proposition}[The markdown rule]\label{prop:b1:factor-markets:markdown}
+At the monopsonist's choice, $\dfrac{\mathrm{MRP} - w}{w} = \dfrac1{\varepsilon_L}$, where
+$\varepsilon_L = \frac{\dd L}{\dd w}\frac wL$ is the elasticity of labour supply to the firm.
+\end{proposition}
+
+\begin{proof}
+$\mathrm{MCL} = w + Lw'(L) = w\bigl(1 + \frac Lw\frac{\dd w}{\dd L}\bigr) = w(1 + 1/\varepsilon_L)$. Setting it equal to
+MRP gives $\mathrm{MRP}/w - 1 = 1/\varepsilon_L$.
+\end{proof}
+
+The rule is the mirror of the inverse-elasticity rule of
+\cref{prop:b1:monopoly-pricing:inverse-elasticity}: the less easily workers
+can leave, the larger the \omterm{def:b1:factor-markets:markdown}{markdown}. A firm facing an elasticity of 4 pays
+$1/1.25 = 80\%$ of the \omterm{def:b1:factor-markets:mrp}{marginal revenue product}.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Workers $L$}, ylabel={Dalens an hour}, xmin=0, xmax=240, ymin=0, ymax=30,
+  width=0.56\linewidth, height=0.42\linewidth]
+  \fill[omProp!35] (axis cs:100,11.667) -- (axis cs:100,18.333) -- (axis cs:150,15) -- cycle;
+  \addplot[demand, domain=0:240] {25 - x/15};
+  \addplot[supply, domain=0:240] {5 + x/15};
+  \addplot[shifted, domain=0:150] {5 + 2*x/15};
+  \addplot[guide] coordinates {(0,11.667) (100,11.667) (100,0)};
+  \addplot[guide] coordinates {(100,18.333) (0,18.333)};
+  \addplot[guide] coordinates {(150,15) (150,0)};
+  \node[font=\footnotesize, anchor=west] at (axis cs:200,13.5) {MRP};
+  \node[font=\footnotesize, anchor=south east] at (axis cs:236,21) {supply $w(L)$};
+  \node[font=\footnotesize, anchor=south east] at (axis cs:138,25) {MCL};
+\end{axis}
+\end{tikzpicture}
+
+{\small The mill of the weekend problem: supply $w = 5 + L/15$ (red),
+\omterm{def:b1:factor-markets:mrp}{marginal revenue product} $25 - L/15$ (blue), \omterm{def:b1:factor-markets:mcl}{marginal cost of labour}
+$5 + 2L/15$ (dashed). The mill hires 100 workers at 11.67 an hour, whose MRP is
+18.33; a competitive market would employ 150 at 15. The triangle is the
+\omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss}.}
+\end{omfigure}
+
+\section{A wage floor under one buyer}\label{sec:b1:factor-markets:floor}
+
+A legal minimum wage $\bar w$ changes the monopsonist's \omterm{def:b1:factor-markets:mcl}{marginal cost of
+labour}. Up to the number of workers willing to work at $\bar w$, each extra
+worker costs exactly $\bar w$: the firm no longer has to raise everyone's wage
+to hire one more.
+
+\begin{proposition}[A floor can raise employment]\label{prop:b1:factor-markets:floor}
+Suppose MRP falls and MCL rises with $L$. Let $L_m$, $w_m$ be the \omterm{def:b1:factor-markets:monopsony}{monopsony}
+employment and wage and $L_c$, $w_c$ the competitive ones. A floor $\bar w$ with $w_m < \bar w \le w_c$ raises employment to the
+labour supplied at $\bar w$, which is largest, $L_c$, at $\bar w = w_c$. A floor above
+$w_c$ sets employment on the MRP curve, which falls as the floor rises, and
+it lowers employment below $L_m$ once $\bar w$ exceeds $\mathrm{MRP}(L_m)$.
+\end{proposition}
+
+\begin{proof}
+Under the floor the \omterm{def:b1:factor-markets:mcl}{marginal cost of labour} is $\bar w$ up to $L^s(\bar w)$ and
+$\mathrm{MCL}(L)$ beyond. If $\bar w \le w_c$, $\mathrm{MRP} \ge \bar w$ for all $L \le L^s(\bar w)$, so the firm hires
+all $L^s(\bar w)$ workers. Beyond that point $L > L^s(\bar w) \ge L_m$, and since
+$\mathrm{MCL} - \mathrm{MRP}$ is increasing and zero at $L_m$, $\mathrm{MCL}(L) > \mathrm{MRP}(L)$: it hires no
+more. $L^s$ increases with $\bar w$. If $\bar w > w_c$, the firm can hire as many
+as it wants at $\bar w$ and hires until $\mathrm{MRP} = \bar w$, which gives an $L$ falling in
+$\bar w$, below $L_m$ when $\bar w > \mathrm{MRP}(L_m)$.
+\end{proof}
+
+In the mill town a floor of 13 raises employment from 100 to 120, a floor of
+15 to 150, and a floor of 20 cuts it to 75; floors between 11.67 and 18.33
+all raise it. The result needs the floor in the right range, and a real
+labour market has many firms with different \omterm{def:b1:factor-markets:markdown}{markdowns}, so one floor cannot
+be right for all. Whether actual minimum wages raised or lowered employment
+is the subject of a debate in Year~3.
+
+\begin{model}{Monopsony}
+\assumes One employer, or a few, facing an upward-sloping labour supply,
+and one wage for all workers in a job.
+\predicts A wage below the \omterm{def:b1:factor-markets:mrp}{marginal revenue product} with a \omterm{def:b1:factor-markets:markdown}{markdown} of
+$1/\varepsilon_L$; employment below the competitive level; employment that rises with
+a wage floor up to the competitive wage.
+\tested Firms differ in what they pay similar workers: firm-specific
+premiums explain about $20\%$ of the variation of wages, and wages rise
+with the firm's value added per worker with an elasticity of 0.05 to 0.15
+(Card, Cardoso, Heining and Kline 2018). % ledger: b1:card2018
+Across more than 8,000 US local labour markets, going from the 25th to the
+75th percentile of employer concentration is associated with posted wages
+5 to $17\%$ lower (Azar, Marinescu and Steinbaum 2022). % ledger: b1:azar2022
+\breaks With many employers competing for the same workers; when the
+employer can pay each worker a different wage, as in first-degree \omterm{def:b1:monopoly-pricing:discrimination}{price
+discrimination}, and so hires the competitive number.
+\end{model}
+
+\section{Rent, capital and factor shares}\label{sec:b1:factor-markets:rent}
+
+A factor in fixed supply --- land, a licence, a rare talent --- earns an
+\omterm{def:b1:competitive-industry:rent}{economic rent} (\cref{def:b1:competitive-industry:rent}): its price is set
+by demand alone and its supply does not respond. Capital is different: it
+is produced, wears out, and can be rented or bought.
+
+\begin{definition}[Rental price of capital]\label{def:b1:factor-markets:rental-price}
+\index{rental price of capital}
+The \emph{rental price of capital} is the price per period at which a unit
+of capital (a machine) can be hired:
+\[
+R = P_K(r + \delta) - \dot P_K,
+\]
+where $P_K$ is the price of the machine, $r$ the interest rate, $\delta$ its rate of
+depreciation and $\dot P_K$ the change in its price over the period.
+\end{definition}
+
+The formula follows from no \omterm{def:b1:price-theory-at-work:arbitrage}{arbitrage}, as for housing in
+\cref{def:b1:price-theory-at-work:rental-yield}: an owner who buys the
+machine at $P_K$, rents it out for $R$ and sells what is left at the end
+earns $R + (1 - \delta)(P_K + \dot P_K) - P_K \approx R - \delta P_K + \dot P_K$, which must equal the interest $rP_K$
+he could have earned (ignoring the small product $\delta\dot P_K$). A machine of
+10,000 dalens at $r = 4\%$, $\delta = 10\%$, whose price falls $2\%$ a year, rents for
+$10000 \times 0.14 + 200 = 1600$ dalens a year: a falling price is a cost to its owner.
+A price-taking firm rents capital until its value of \omterm{def:b1:technology:marginal-product}{marginal product}
+equals $R$.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, ybar stacked, bar width=26pt, xmin=0.4, xmax=3.6, ymin=0, ymax=1800, xtick={1,2,3},
+  xticklabels={{$r = 4\%$, $\delta = 10\%$, no price change}, {$\dot P_K/P_K = -2\%$}, {$\dot P_K/P_K = +2\%$}},
+  xticklabel style={font=\footnotesize, text width=3.2cm, align=center}, ylabel={Dalens a year},
+  width=0.7\linewidth, height=0.38\linewidth, legend style={font=\footnotesize, at={(0.5,-0.32)}, anchor=north, legend columns=3}]
+  \addplot[fill=omDef!40, draw=omDef] coordinates {(1,400) (2,400) (3,400)};
+  \addplot[fill=omThm!35, draw=omThm] coordinates {(1,1000) (2,1000) (3,800)};
+  \addplot[fill=omProp!40, draw=omProp] coordinates {(1,0) (2,200) (3,0)};
+  \legend{Interest, Depreciation net of any price rise, Price fall}
+\end{axis}
+\end{tikzpicture}
+
+{\small The rental price of a machine costing 10,000 dalens as the sum of its
+costs to the owner: 1,400 a year with a steady price, 1,600 when its price
+falls $2\%$ a year, 1,200 when it rises $2\%$.}
+\end{omfigure}
+
+\begin{definition}[Factor share]\label{def:b1:factor-markets:factor-share}
+\index{factor share}\index{labour share}
+A \emph{factor share} is the part of an economy's income paid to a factor;
+the \emph{labour share} is total labour compensation divided by GDP (often
+measured at basic prices, without taxes on products).
+\end{definition}
+
+With price-taking firms and constant returns, each factor is paid its
+\omterm{def:b1:technology:marginal-product}{marginal product} and the shares exhaust income; with a Cobb--Douglas
+technology the shares are the exponents, whatever the factor prices. With
+an \omterm{def:b1:technology:sigma}{elasticity of substitution} below one, as \cref{ch:b1:technology} found, a rising wage
+relative to the rental price raises labour's share. \omterm{def:b1:monopoly-pricing:markup}{Markups} and \omterm{def:b1:factor-markets:markdown}{markdowns}
+lower both \omterm{def:b1:factor-markets:factor-share}{factor shares} and leave a share of pure profit.
+
+\begin{measure}[Labour's share and the self-employed]
+A farmer working her own land earns one income for her labour, her land
+and her tools together, and national accounts record it as ``mixed
+income''. Counting only employees' compensation as labour income makes
+labour's share very low where most people are self-employed: such naive
+shares range from about $0.05$ to $0.80$ across countries, while shares that
+count part of the self-employed's income as labour lie between $0.65$ and $0.80$
+for most countries (Gollin 2002). % ledger: b1:gollin2002
+The Penn World Table chooses among four adjustments --- all mixed income
+to labour, the same \omterm{def:b1:factor-markets:factor-share}{labour share} for mixed income as for the rest of the
+economy, the same wage for the self-employed as for employees, all of
+agriculture's value added to labour --- because mixed income is recorded
+for only about 60 countries; employees are 85 to $95\%$ of those working in
+advanced economies but below $50\%$, and as low as $4\%$, in many emerging ones.
+In 2005 the naive share averaged $42\%$ and ranged from $5\%$ (Nigeria) to $89\%$
+(Bhutan) (Inklaar and Timmer 2013). % ledger: b1:pwt-labsh
+\end{measure}
+
+\begin{omchart}{Labour's share of GDP against the self-employed share of
+employment, 134 countries, 2019.}{Penn World Table 11.0 (labsh); World
+Bank, World Development Indicators (SL.EMP.SELF.ZS)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xmin=0, xmax=100, ymin=0, ymax=0.85, xlabel={Self-employed (\% of employment)},
+  ylabel={Labour share of GDP}, width=0.66\linewidth, height=0.4\linewidth]
+  \addplot[only marks, mark=*, mark size=1.3pt, omDef, fill opacity=0.6] table[x=self, y=labsh, col sep=comma] {figdata/bachelor-1/16-factor-markets/out/labsh_self.csv};
+  \addplot[only marks, mark=none, nodes near coords, point meta=explicit symbolic, nodes near coords style={font=\scriptsize, anchor=west}]
+    table[x=self, y=labsh, meta=country, col sep=comma] {figdata/bachelor-1/16-factor-markets/out/labsh_labels.csv};
+  % figdata: labsh_points (United States: self 6.5, labsh 0.592)
+  \draw[black!60] (axis cs:6.5,0.592) -- (axis cs:14,0.78) node[anchor=west, font=\scriptsize, black] {United States};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+After the adjustment, labour's share is nearly unrelated to how many
+people are self-employed: the correlation across 134 countries is $-0.12$.
+% figdata: labsh_stats
+India, where $77.2\%$ of workers are self-employed, has a share of $0.533$; the
+United States, with $6.5\%$, has $0.592$. % figdata: labsh_points
+The adjustment does what it was meant to do; whether it does it right in
+each country is harder to know.
+
+\section*{Exercises}\label{sec:b1:factor-markets:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:factor-markets:vmp-ex}
+A price-taking firm produces $q = 10L^{0.5}$ and sells at $p = 4$. Find its VMP of
+labour and the number of workers it hires at a wage of 5.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:factor-markets:read}
+From the charts' table, France's \omterm{def:b1:factor-markets:factor-share}{labour share} is $0.642$ with $12.1\%$ of
+workers self-employed, and Nigeria's $0.312$ with $86.6\%$. % figdata: labsh_points
+What would a naive share, counting only employees, probably show for
+Nigeria, and why?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:factor-markets:mono-ex}
+Labour supply to a firm is $w = 2 + 0.1L$ and $\mathrm{MRP} = 20 - 0.1L$. Find the
+\omterm{def:b1:factor-markets:monopsony}{monopsony} wage and employment, and the competitive ones.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:factor-markets:floor12}
+In the market of \cref{exo:b1:factor-markets:mono-ex}, predict employment
+after a wage floor of 12.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:factor-markets:best-floor}
+In the same market, find the floor that maximises employment and the
+number of jobs it adds.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:factor-markets:markdown4}
+The elasticity of labour supply to a firm is 4. Compute the \omterm{def:b1:factor-markets:markdown}{markdown} and
+the wage as a share of the MRP.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:factor-markets:derived-ex}
+A Cobb--Douglas firm with constant returns has labour's share of cost 0.7
+and faces an output demand of elasticity $-2$. Compute its long-run
+elasticity of labour demand and predict what happens if its output demand
+becomes less elastic.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:factor-markets:rental}
+Compute the rental price of a machine costing 10,000 with $r = 4\%$, $\delta = 10\%$,
+when its price falls $2\%$ a year. Why do computers rent for so much of
+their price?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:factor-markets:corr}
+The correlation of the \omterm{def:b1:factor-markets:factor-share}{labour share} with the self-employed share across
+134 countries is $-0.12$. % figdata: labsh_stats
+What would you expect it to be for naive shares, and why?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:factor-markets:derive}
+Derive the \omterm{def:b1:factor-markets:markdown}{markdown} rule, and show that a monopsonist facing a perfectly
+elastic labour supply pays the MRP.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:factor-markets:above}
+In the market of \cref{exo:b1:factor-markets:mono-ex}, a floor of 13 is set.
+Compare employment with the \omterm{def:b1:factor-markets:monopsony}{monopsony} and with a competitive market with
+the same supply and MRP curves.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:factor-markets:separate}
+A rising labour supply to a whole industry raises wages as the industry
+grows even if every firm is a price taker. What evidence would tell a
+monopsonist apart from such a competitive industry?
+\end{exercise}
+
+\section{Problem: The Mill Town}\label{sec:b1:factor-markets:problem}
+
+\begin{problem}[{Weekend problem --- the employment-maximising floor}]\label{pb:b1:factor-markets:mill}
+A valley has one mill (invented). The labour supply from the valley is
+$w = 5 + L/15$ dalens an hour for $L$ workers, and the mill's \omterm{def:b1:factor-markets:mrp}{marginal revenue
+product} is $25 - L/15$. Sums below are in dalens an hour.
+
+\medskip\noindent\textbf{Part I --- The competitive benchmark.}
+\begin{enumerate}
+  \item Find the wage and employment if the mill took the wage as given.
+  \item Compute the elasticity of labour supply there.
+  \item Compute the workers' surplus (the area between the wage and the supply curve).
+  \item Compute the mill's surplus (the area between MRP and the wage).
+  \item Compute \omterm{def:b1:partial-equilibrium-welfare:surplus}{total surplus}.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- The mill sets the wage.}
+\begin{enumerate}[resume]
+  \item Write the wage bill and the \omterm{def:b1:factor-markets:mcl}{marginal cost of labour}.
+  \item Find the \omterm{def:b1:factor-markets:monopsony}{monopsony} employment and wage.
+  \item Compute the MRP at that employment and the \omterm{def:b1:factor-markets:markdown}{markdown}.
+  \item Check the \omterm{def:b1:factor-markets:markdown}{markdown} against the supply elasticity.
+  \item Compute the mill's surplus.
+  \item Compute the workers' surplus.
+  \item Compute the \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss}.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- A wage floor.}
+\begin{enumerate}[resume]
+  \item Find employment under a floor of 13.
+  \item Under a floor of 15.
+  \item Under a floor of 17.
+  \item Find the range of floors that raise employment above the \omterm{def:b1:factor-markets:monopsony}{monopsony} level.
+  \item Find employment under a floor of 20.
+  \item Compute the workers' and the mill's surplus under a floor of 15, and compare with Part II.
+  \item Explain why the floor of 15 raises employment here, while a floor of 15 would lower it in a competitive market whose wage is 12.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- A second mill.} An identical mill opens;
+each has the \omterm{def:b1:factor-markets:mrp}{marginal revenue product} $25 - L_i/15$ and both hire from the
+same valley, choosing their employment and taking the other's as given.
+\begin{enumerate}[resume]
+  \item Write mill 1's \omterm{def:b1:factor-markets:mcl}{marginal cost of labour}.
+  \item Find the symmetric \omterm{def:b1:models-and-data:equilibrium}{equilibrium}: employment at each mill, in all, and the wage.
+  \item Compute the MRP and the \omterm{def:b1:factor-markets:markdown}{markdown}.
+  \item What elasticity of labour supply does each mill face? Check the \omterm{def:b1:factor-markets:markdown}{markdown} rule.
+  \item Compare with a competitive market with two mills.
+  \item State the result: the employment-maximising wage floor in the one-mill town, and the workers it adds.
+\end{enumerate}
+\end{problem}

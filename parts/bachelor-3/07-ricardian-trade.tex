@@ -1,0 +1,571 @@
+\chapter{Ricardian Trade in Full}\label{ch:b3:ricardian-trade}
+
+In 1859, after more than two centuries in which almost no foreign trade was
+allowed, Japan opened its ports. Within a few years it was exporting silk,
+silkworm eggs and tea, and importing cotton yarn, cotton cloth, woollens, rice
+and sugar. % ledger: b3rt:bb04.t1
+For an economist it was close to a laboratory: a country whose prices had been
+set by its own costs alone was suddenly exposed to world prices. \omterm{def:b3:ricardian-trade:comparative-advantage}{Comparative
+advantage} predicts which way the goods should flow. The school volumes stated
+the prediction for two goods and two countries. This chapter states it for any
+number of goods, finds the wage that settles who makes what, adds the cost of
+shipping, asks who gains when a trading partner becomes more productive, and
+looks at the tests.
+
+\begin{openingchart}{Japan's trade in each year from 1868 to 1875, valued at
+the prices of 1851--53, before the ports opened (millions of ryō; the ryō was
+worth about one dollar in 1873). Bars: imports (negative) and exports (positive),
+each the sum of the components printed in the source; dots: the printed total.
+The law of comparative advantage predicts a negative total.}{Bernhofen and Brown
+(2004), Table 2; sums of components ours}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.8\linewidth, height=0.42\linewidth, xmin=1867.4, xmax=1875.6,
+  ymin=-14, ymax=7, xtick={1868,...,1875}, xticklabel style={/pgf/number format/1000 sep={}},
+  ylabel={Millions of ryō at 1851--53 prices}, legend columns=3,
+  legend style={at={(0.5,1.03)}, anchor=south}]
+  \addplot[ybar, bar shift=0pt, bar width=12pt, area legend, fill=omDef!25, draw=omDef!60]
+    table[x=year, y=imports] {figdata/bachelor-3/07-ricardian-trade/out/japan.csv};
+  \addplot[ybar, bar shift=0pt, bar width=12pt, area legend, fill=omThm!45, draw=omThm]
+    table[x=year, y=exports] {figdata/bachelor-3/07-ricardian-trade/out/japan.csv};
+  \addplot[only marks, mark=*, mark size=2.2pt, black]
+    table[x=year, y=total] {figdata/bachelor-3/07-ricardian-trade/out/japan.csv};
+  \draw[guide] (axis cs:1867.4,0) -- (axis cs:1875.6,0);
+  \legend{imports, exports, total}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+Each year Japan's imports, valued at what they would have cost in Japan
+before trade, were worth more than its exports valued the same way. The
+total is negative in all eight years, from $-0.18$ million ryō in 1868 to $-8.06$
+million in 1875. % figdata: japan
+(The printed totals differ from the sums of the printed components by at most
+0.02, an effect of rounding.) In words: Japan sold what had been cheap at home
+and bought what had been dear. \Cref{prop:b3:ricardian-trade:law} below shows
+why the sign is the test.
+
+\begin{recall}
+The grades 10--12 volume taught Ricardo's model with two goods and two
+countries: opportunity cost, the production possibility frontier,
+specialisation and the \omterm{def:b3:ricardian-trade:terms-of-trade}{terms of trade} between the two \omterm{def:b3:ricardian-trade:autarky}{autarky prices}. The Year 2
+volume built general equilibrium with the Edgeworth box. Here the same logic is
+extended to many goods and closed with the labour market.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:ricardian-trade:symbols}
+Home and Foreign (starred) have labour forces $L$ and $L^*$ and wages $w$ and
+$w^*$; $\omega = w/w^*$ is the relative wage. Good $i$ (or $z$, on a continuum)
+needs $a_i$ hours of labour at Home and $a_i^*$ abroad; $A_i = a_i^*/a_i$. $b(z)$ is
+the share of spending on good $z$ and $\vartheta(z)$ the share on goods up to $z$.
+$\kappa \ge 1$ is an \omterm{def:b3:ricardian-trade:iceberg}{iceberg} factor (not a regression coefficient). $T$ is a vector
+of net exports and $p^A$ of \omterm{def:b3:ricardian-trade:autarky}{autarky prices}; $\lambda$ is a \omterm{def:b3:ricardian-trade:acr}{domestic expenditure
+share} and $\varepsilon > 0$ a trade elasticity.
+\end{notation}
+
+\section{From two goods to many}\label{sec:b3:ricardian-trade:chain}
+
+\begin{definition}[Autarky price]\label{def:b3:ricardian-trade:autarky}
+\index{autarky price}
+The \emph{autarky price} of a good is its price in a country that does not
+trade. With labour the only factor and constant labour requirements, the
+autarky price of good $i$ at Home is $w a_i$, and relative autarky prices are
+ratios of labour requirements: $p^A_i/p^A_j = a_i/a_j$.
+\end{definition}
+
+\begin{definition}[Comparative advantage; chain of comparative advantage]\label{def:b3:ricardian-trade:comparative-advantage}
+\index{comparative advantage}\index{chain of comparative advantage}
+Home has a \emph{comparative advantage} in good $i$ relative to good $j$ if its
+relative \omterm{def:b3:ricardian-trade:autarky}{autarky price} of $i$ is lower than Foreign's: $a_i/a_j < a_i^*/a_j^*$, or
+$A_i > A_j$. Ranking all goods so that $A_1 > A_2 > \dots > A_n$ gives the
+\emph{chain of comparative advantage}: Home's advantage is strongest in good 1
+and weakest in good $n$.
+\end{definition}
+
+\begin{proposition}[The relative wage cuts the chain]\label{prop:b3:ricardian-trade:cut}
+With perfect competition and free trade, at relative wage $\omega$ Home makes
+every good with $A_i > \omega$ and Foreign every good with $A_i < \omega$; a good
+with $A_i = \omega$ may be made in both.
+\end{proposition}
+
+\begin{proof}
+Under perfect competition a good's price equals its lowest unit cost, $\min(w
+a_i, w^* a_i^*)$, and only the countries achieving it produce. Home's cost is
+lower when $w a_i < w^* a_i^*$, that is when $\omega < a_i^*/a_i = A_i$; Foreign's when
+$A_i < \omega$; the two are equal when $A_i = \omega$.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=1.05cm, font=\footnotesize]
+  \draw[->] (0,0) -- (11.2,0) node[right] {$A_i$ falls};
+  \foreach \x/\g/\a in {0.6/grain/6.0, 1.9/timber/4.0, 3.2/fish/3.0, 4.5/wool/2.4,
+     5.8/cloth/1.5, 8.2/tools/1.25, 9.5/shoes/1.0, 10.8/radios/0.6} {
+    \fill[omDef] (\x,0) circle (2pt);
+    \node[above] at (\x,0.1) {\g};
+    \node[below] at (\x,-0.1) {$\a$};
+  }
+  \draw[omThm, very thick] (7.0,-0.9) -- (7.0,1.0) node[above] {$\omega = 1.4$};
+  \node[omDef, align=center] at (3.2,-1.1) {made at Home (Brenland)};
+  \node[omDef, align=center] at (9.5,-1.1) {made abroad (Kestria)};
+\end{tikzpicture}
+\par\smallskip{\small The \omterm{def:b3:ricardian-trade:comparative-advantage}{chain of comparative advantage}, with some of the goods
+of this chapter's weekend problem: goods ranked by $A_i$, Home's relative
+productivity, and cut by the relative wage. Raise $\omega$ and the cut moves left:
+Home makes fewer goods.}
+\end{omfigure}
+
+The proposition settles who makes what once $\omega$ is known. It does not say
+what $\omega$ is; that needs the demand side and the labour market.
+
+\section{A continuum of goods}\label{sec:b3:ricardian-trade:dfs}
+
+\begin{definition}[Dornbusch--Fischer--Samuelson model]\label{def:b3:ricardian-trade:dfs}
+\index{Dornbusch--Fischer--Samuelson model}
+The \emph{Dornbusch--Fischer--Samuelson model} has two countries, one factor,
+and a continuum of goods $z \in [0, 1]$ ranked so that $A(z) = a^*(z)/a(z)$ is
+continuous and strictly decreasing. Consumers everywhere spend a fixed share
+$b(z)$ of income on good $z$ (Cobb--Douglas preferences), with $\vartheta(z) =
+\int_0^z b(s)\, ds$. Trade is free and balanced, and labour is fully employed.
+\end{definition}
+
+If Home makes goods $[0, \bar z]$, world spending on Home's goods is $\vartheta(\bar
+z)$ times world income, and it must pay Home's workers: $wL = \vartheta(\bar z)(wL +
+w^*L^*)$. Solving for the relative wage,
+\begin{equation}\label{eq:b3:rt:B}
+  \omega = \frac{\vartheta(\bar z)}{1 - \vartheta(\bar z)}\,\frac{L^*}{L} \equiv B(\bar z),
+\end{equation}
+which rises with $\bar z$: the more goods Home makes, the more of world spending
+falls on its labour, and the higher its wage must be. \Cref{prop:b3:ricardian-trade:cut}
+gives the other relation, $\omega = A(\bar z)$.
+
+\begin{proposition}[The DFS equilibrium exists and is unique]\label{prop:b3:ricardian-trade:dfs}
+If $b(z) > 0$ for all $z$, there is exactly one $\bar z \in (0, 1)$ with $A(\bar z) =
+B(\bar z)$, and the equilibrium relative wage is $\omega = A(\bar z)$.
+\end{proposition}
+
+\begin{proof}
+$B$ is continuous and strictly increasing, since $\vartheta$ is, with $B(0) = 0$ and
+$B(z) \to \infty$ as $z \to 1$. $A$ is continuous, strictly decreasing and positive.
+The difference $A - B$ is therefore continuous and strictly decreasing, positive
+at $z = 0$ and negative near $z = 1$; by the intermediate value theorem it is
+zero at some $\bar z$, and strict monotonicity makes that zero unique.
+\end{proof}
+
+\begin{omchart}{Simulated: the Dornbusch--Fischer--Samuelson diagram for 200
+goods with equal spending shares and a Foreign labour force 1.5 times Home's.
+$A(z)$ is Home's relative productivity, falling along the chain; $B(z)$ is the
+relative wage at which trade balances when Home makes goods up to $z$.}{Simulated
+by the authors (seed 1977)}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.72\linewidth, height=0.42\linewidth, xmin=0, xmax=1, ymin=0,
+  ymax=4, xlabel={Good $z$}, ylabel={Relative wage $\omega$},
+  x tick label style={/pgf/number format/.cd, fixed, precision=1}]
+  \addplot[omDef, thick, no marks, const plot] table[x=z, y=A] {figdata/bachelor-3/07-ricardian-trade/out/dfs_A.csv};
+  \addplot[omThm, thick, no marks, sharp plot] table[x=z, y=B] {figdata/bachelor-3/07-ricardian-trade/out/dfs_B.csv};
+  \draw[guide] (axis cs:0.4475,0) -- (axis cs:0.4475,1.2106);
+  \draw[guide] (axis cs:0,1.2106) -- (axis cs:0.4475,1.2106);
+  \node[font=\scriptsize, anchor=south west, omDef] at (axis cs:0.05,2.9) {$A(z)$};
+  \node[font=\scriptsize, anchor=west, omThm] at (axis cs:0.74,3.6) {$B(z)$};
+  \node[font=\scriptsize, anchor=north east] at (axis cs:0.44,1.15) {$(\bar z, \omega)$};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+In the example Home makes the first 89 of the 200 goods and earns 1.21 times
+Foreign's wage. % figdata: dfs_eq
+The diagram does comparative statics at a glance. A larger Foreign labour force
+raises $B$: Home makes fewer goods at a higher relative wage. A shift of
+spending toward Home's goods raises $\vartheta$ at every $z$, with the same effect.
+
+\begin{definition}[Terms of trade]\label{def:b3:ricardian-trade:terms-of-trade}
+\index{terms of trade}
+A country's \emph{terms of trade} are the price of its exports relative to the
+price of its imports. In the Ricardian model the price of a Home export $z$ is
+$w a(z)$ and of a Home import $z'$ is $w^* a^*(z')$, so Home's terms of trade
+between them are $\omega\, a(z)/a^*(z')$: given technology, they move one for one
+with the equilibrium relative wage.
+\end{definition}
+
+\section{Transport costs and non-traded goods}\label{sec:b3:ricardian-trade:iceberg}
+
+\begin{definition}[Iceberg trade cost; non-traded good]\label{def:b3:ricardian-trade:iceberg}
+\index{iceberg trade cost}\index{non-traded good}
+A trade cost is of the \emph{iceberg} form if, for one unit of a good to arrive
+abroad, $\kappa \ge 1$ units must be shipped; the rest ``melts'' on the way. A
+\emph{non-traded good} is one that each country makes for itself, because the
+cost of shipping exceeds the difference in production costs.
+\end{definition}
+
+\begin{proposition}[A band of non-traded goods]\label{prop:b3:ricardian-trade:band}
+With \omterm{def:b3:ricardian-trade:iceberg}{iceberg} factor $\kappa > 1$ and relative wage $\omega$, Home exports every good
+with $A(z) > \kappa\omega$, imports every good with $A(z) < \omega/\kappa$, and both
+countries make for themselves every good with $\omega/\kappa < A(z) < \kappa\omega$.
+\end{proposition}
+
+\begin{proof}
+Delivered abroad, Home's good costs $\kappa w a(z)$, against Foreign's own cost
+$w^* a^*(z)$: Home sells abroad if $\kappa w a(z) < w^* a^*(z)$, that is $A(z) >
+\kappa\omega$. At Home, Foreign's good costs $\kappa w^* a^*(z)$ against $w a(z)$:
+Foreign sells at Home if $A(z) < \omega/\kappa$. Between the two bounds each
+country's own good is cheaper in its own market. Since $\kappa > 1$, $\omega/\kappa <
+\kappa\omega$ and the band is not empty.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, xscale=7, yscale=1.1]
+  \draw[econ axes] (0,0) -- (1.05,0) node[right] {$z$};
+  \draw[econ axes] (0,0) -- (0,3.6) node[above] {$A(z)$};
+  \draw[curve, omDef, domain=0.02:1, samples=50] plot (\x, {3.2*exp(-2.3*\x)});
+  \draw[guide] (0,1.65) node[left] {$\kappa\omega$} -- (1,1.65);
+  \draw[guide] (0,1.0) node[left] {$\omega/\kappa$} -- (1,1.0);
+  \draw[guide] (0.288,0) -- (0.288,1.65);
+  \draw[guide] (0.506,0) -- (0.506,1.0);
+  \node[font=\scriptsize, below] at (0.144,-0.05) {Home exports};
+  \node[font=\scriptsize, below, align=center] at (0.397,-0.05) {non-traded};
+  \node[font=\scriptsize, below] at (0.76,-0.05) {Home imports};
+\end{tikzpicture}
+\par\smallskip{\small With an \omterm{def:b3:ricardian-trade:iceberg}{iceberg} cost, the relative wage cuts the chain
+twice: goods between $\omega/\kappa$ and $\kappa\omega$ are not traded. A fall in
+$\kappa$ narrows the band, and goods at both of its ends start to be traded.}
+\end{omfigure}
+
+The band explains a fact the frictionless model cannot: most of what a
+country consumes --- haircuts, housing, meals, much of construction --- is made
+at home, in every country, rich or poor. Services with high trade costs are the
+\omterm{def:b3:ricardian-trade:iceberg}{non-traded goods} of the model.
+
+\section{A productivity gain abroad}\label{sec:b3:ricardian-trade:gain}
+
+When a trading partner becomes more productive, is Home threatened? The model
+gives a sharp answer for a gain spread evenly over all goods.
+
+\begin{proposition}[A uniform productivity gain abroad raises Home's real wage]\label{prop:b3:ricardian-trade:abroad}
+In the DFS model, let Foreign's labour requirements all fall by the same factor,
+$a^*(z) \to a^*(z)/(1 + \gamma)$ with $\gamma > 0$. Then Home's real wage in terms of
+every good rises or stays the same.
+\end{proposition}
+
+\begin{proof}
+The new $A$ is $A(z)/(1 + \gamma)$, lower at every $z$, while $B$ is unchanged; the
+curves now cross at $\bar z' \le \bar z$, with $\omega' = A(\bar z')/(1 + \gamma)$. For a
+good that Home still makes, its real wage in that good, $w/(w a(z)) = 1/a(z)$, is
+unchanged. For a good that Home imports after the gain, its real wage is
+$w/(w^* a^*(z)(1 + \gamma)^{-1}) = \omega'(1 + \gamma)/a^*(z) = A(\bar z')/a^*(z)$, and
+$A(\bar z') \ge A(\bar z) = \omega$ because $A$ is decreasing and $\bar z' \le \bar z$; so it
+is at least $\omega/a^*(z)$, the old real wage in that good if it was imported, and
+at least $1/a(z)$ if Home made it before, since it is now cheaper to import.
+\end{proof}
+
+Foreign's gain lowers Home's relative wage but lowers the prices of Home's
+imports by more. A gain concentrated in the goods Home exports is another matter:
+it can erode Home's \omterm{def:b3:ricardian-trade:comparative-advantage}{comparative advantage} and its gains from trade
+(\cref{exo:b3:ricardian-trade:6}).
+
+\section{Many countries and the gains from trade}\label{sec:b3:ricardian-trade:many}
+
+With many countries, each good is bought from the cheapest supplier after trade
+costs, and the pattern is no longer a single chain. Eaton and Kortum (2002)
+made the model tractable by assuming that each country's productivity in each
+good is a random draw from one family of distributions. Bilateral trade then
+falls with distance in a way that can be estimated, and the response of trade to
+trade costs is governed by one number, the \emph{trade elasticity} $\varepsilon$.
+Arkolakis, Costinot and Rodríguez-Clare (2012) showed that in this model, and in a
+wide class of others, the gains from trade depend on two statistics only.
+
+\begin{definition}[Domestic expenditure share; gains-from-trade formula]\label{def:b3:ricardian-trade:acr}
+\index{domestic expenditure share}\index{gains-from-trade formula}
+A country's \emph{domestic expenditure share} $\lambda$ is the share of its
+spending on goods made at home. The \emph{gains-from-trade formula} gives the
+change in real income $W$ after a change in trade costs as $\widehat W =
+\hat\lambda^{-1/\varepsilon}$, where a hat is the ratio of new to old values.
+\end{definition}
+
+\begin{proposition}[The ACR formula]\label{prop:b3:ricardian-trade:acr}
+In models with one factor, perfect or monopolistic competition, balanced trade
+and a constant trade elasticity $\varepsilon$, the formula of
+\cref{def:b3:ricardian-trade:acr} holds. In particular, moving to autarky
+($\lambda' = 1$) multiplies real income by $\lambda^{1/\varepsilon}$, so the gain from
+trade over autarky is $\lambda^{-1/\varepsilon} - 1$.
+\end{proposition}
+
+\admitted
+The proof expresses the price index through the cost of the domestic good and
+its share in spending; it is in Arkolakis, Costinot and Rodríguez-Clare (2012).
+
+\begin{measure}[Domestic expenditure share]
+$\lambda$ is measured as one minus the share of imports in a country's absorption,
+its spending on goods and services: absorption is output minus exports plus
+imports, with output measured gross (including inputs) when the imports include
+intermediate goods. A large economy that trades little relative to its size has
+$\lambda$ near 0.9; a small open one, much lower. The formula's other input, $\varepsilon$,
+comes from estimates of how trade responds to trade costs. Both matter: with
+$\lambda = 0.8$, an elasticity of 5 gives a gain of $0.8^{-1/5} - 1 = 4.6~\%$, and an
+elasticity of 10 half that.
+\end{measure}
+
+\section{The tests}\label{sec:b3:ricardian-trade:tests}
+
+The model's central prediction is about \omterm{def:b3:ricardian-trade:autarky}{autarky prices}: a country exports the
+goods that were relatively cheap before it traded. A country's \omterm{def:b3:ricardian-trade:autarky}{autarky prices}
+are almost never observed, because almost every country has always traded.
+Japan before 1859 is the exception, and Bernhofen and Brown used it to test a
+general form of the prediction.
+
+\begin{proposition}[The law of comparative advantage]\label{prop:b3:ricardian-trade:law}
+Suppose a country's production maximises the value of output at the prices it
+faces, its consumers choose the best bundle they can afford, and with trade they
+consume a bundle $C$ they could not have chosen in autarky. Let $T = Q - C$ be its
+net exports with trade, $Q$ its output with trade and $p^A$ its \omterm{def:b3:ricardian-trade:autarky}{autarky prices}.
+Then $p^A \cdot T < 0$: its trade, valued at \omterm{def:b3:ricardian-trade:autarky}{autarky prices}, is negative.
+\end{proposition}
+
+\begin{proof}
+In autarky consumption equals output $Q^A$, and since $C$ was not chosen, it
+cost more at \omterm{def:b3:ricardian-trade:autarky}{autarky prices}: $p^A \cdot C > p^A \cdot Q^A$. Production in autarky
+maximised the value of output at $p^A$ over all feasible outputs, so $p^A \cdot Q^A
+\ge p^A \cdot Q$. Together, $p^A \cdot C > p^A \cdot Q$, that is $p^A \cdot (Q - C) < 0$.
+\end{proof}
+
+The proposition needs no assumption about the number of goods or the
+technology; it is the many-good Ricardian prediction stated so that it can be
+checked with one vector of prices and one of trade flows. The opening chart is
+the check, year by year.
+
+\begin{record}[Japan opens its ports, 1859]
+Bernhofen and Brown collected Japanese prices of 1851--53 for the goods Japan
+later traded, and trade flows from 1868, when comprehensive statistics begin.
+Silk and silkworm eggs made up 51.6~\% of exports in 1868--75 and tea 28.2~\%;
+cotton yarn and cloth 33.5~\% of imports and woollens 19.2~\%. % ledger: b3rt:bb04.t1
+Valued at \omterm{def:b3:ricardian-trade:autarky}{autarky prices}, net trade was negative in every year from 1868 to 1875.
+% ledger: b3rt:bb04.t2.1868, b3rt:bb04.t2.1875
+In a second paper they asked how much richer Japan would have had to be in
+1851--53 to afford the bundle trade would have offered, and put the upper bound
+at about 8 to 9~\% of GDP. % ledger: b3rt:bb05.gains
+\end{record}
+
+\begin{record}[Labour productivity and exports]
+Tests on modern data compare countries' exports sector by sector with their
+relative labour productivity. Golub and Hsieh, for several countries against
+the United States, found the coefficients on relative productivity and unit
+labour costs almost always of the predicted sign and statistically significant,
+while much of the variation of trade across sectors remained unexplained.
+% ledger: b3rt:gh00.result
+\end{record}
+
+A sharper test needs the productivity of every country in every good,
+including goods it does not make. Agriculture provides it: agronomists can
+compute what a field would yield in a crop that is not planted. Costinot and
+Donaldson used such potential yields for 17 crops on 1.6 million parcels of land
+in 55 countries, and found that Ricardo's theory has significant explanatory
+power for what is grown. % ledger: b3rt:cd12.data
+The chart shows why actual yields could not have done the job.
+
+\begin{omchart}{Relative yields and relative areas, wheat against maize,
+2020--2022 averages, 73 countries with at least 10{,}000 ha of each crop in each
+year. These are actual yields on the land planted, not the potential yields of
+the published test. Line: least squares.}{FAOSTAT (crops); our computation}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.72\linewidth, height=0.45\linewidth, xmin=-2, xmax=2,
+  ymin=-6, ymax=6, xlabel={$\ln$(wheat yield / maize yield)},
+  ylabel={$\ln$(wheat area / maize area)},
+  x tick label style={/pgf/number format/.cd, fixed, precision=1}]
+  \addplot table[x=x, y=y] {figdata/bachelor-3/07-ricardian-trade/out/crops.csv};
+  \addplot[omThm, thick, no marks, sharp plot] table[x=x, y=y] {figdata/bachelor-3/07-ricardian-trade/out/crops_fit.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+The relation is negative: the correlation is $-0.30$. % figdata: crops_stats
+Countries that plant mostly wheat, such as Kazakhstan, Iran and Australia, have
+high maize yields relative to wheat, because the little maize they grow is on
+their best or irrigated land; countries that plant mostly maize do the same with
+wheat. The yield of a crop on the land where it is grown is chosen along with
+the land, so it measures a selected sample of fields. Potential yields, computed
+for every field and every crop, remove the selection, and with them the
+prediction holds.
+
+\begin{model}{The Ricardian model with many goods}
+\assumes One factor of production, labour, with constant labour requirements that
+differ across countries and goods; perfect competition; balanced trade; full
+employment.
+\predicts Each country exports the goods in which its relative labour cost is
+lowest, cut along the \omterm{def:b3:ricardian-trade:comparative-advantage}{chain of comparative advantage} by the relative wage; net
+trade valued at \omterm{def:b3:ricardian-trade:autarky}{autarky prices} is negative; trade raises real wages in both
+countries; a uniform productivity gain abroad raises Home's real wage.
+\tested Japan after 1859: net trade at \omterm{def:b3:ricardian-trade:autarky}{autarky prices} negative in each of the
+eight years observed. Sectoral exports rise with relative labour productivity
+across countries; potential crop yields predict what farms grow.
+\breaks Complete specialisation, which the model predicts for almost every good,
+is rare: countries make and export goods in the same industries. Capital, land
+and skills differ across countries (\cref{ch:b3:factor-endowments}), and firms
+within an industry differ (\cref{ch:b3:scale-variety-firms}).
+\end{model}
+
+\section{Exercises}\label{sec:b3:ricardian-trade:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:ricardian-trade:1}
+In the opening chart, what is the sign of the total in each year, and what does
+the law of \omterm{def:b3:ricardian-trade:comparative-advantage}{comparative advantage} predict? In which year is the total closest to
+zero, and why does that year still count as a success?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:ricardian-trade:2}
+Five goods need 2, 3, 4, 6 and 5 hours at Home and 10, 9, 6, 6 and 3 hours abroad.
+Rank them on the \omterm{def:b3:ricardian-trade:comparative-advantage}{chain of comparative advantage}. Which goods does Home make at a
+relative wage of 1.2? Of 3.5?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:ricardian-trade:3}
+In Brenland a unit of cloth needs 4 hours and of grain 2; in Kestria 6 and 12.
+\begin{enumerate}
+\item Give each country's \omterm{def:b3:ricardian-trade:autarky}{autarky price} of cloth in grain.
+\item After trade, Brenland makes only grain, Kestria only cloth, and the relative
+wage is $\omega = 2$. Compute the world price of cloth in grain, and Brenland's
+\omterm{def:b3:ricardian-trade:terms-of-trade}{terms of trade}.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:ricardian-trade:4}
+What pattern in Japan's prices and trade after 1859 would have contradicted the
+law of \omterm{def:b3:ricardian-trade:comparative-advantage}{comparative advantage}?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:ricardian-trade:5}
+In a DFS model $A(z) = 3 - 2z$, spending shares are equal ($\vartheta(z) = z$) and
+$L = L^*$. Find $\bar z$ and $\omega$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:ricardian-trade:6}
+Take the two goods of \cref{exo:b3:ricardian-trade:3}, equal spending shares and
+a Kestrian labour force twice Brenland's.
+\begin{enumerate}
+\item Check that $\omega = 2$ with complete specialisation is the equilibrium, and
+compute Brenland's gain over autarky in real income.
+\item Kestria's grain now needs 6 hours. What changes for Brenland?
+\item Kestria's grain now needs 3 hours. What happens to trade and to Brenland's
+real income? Compare with \cref{prop:b3:ricardian-trade:abroad}.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:ricardian-trade:7}
+For the five goods of \cref{exo:b3:ricardian-trade:2}, at a relative wage of 1.3
+and an \omterm{def:b3:ricardian-trade:iceberg}{iceberg} factor of 1.2, which goods does Home export, import and make for
+itself?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:ricardian-trade:8}
+Using FAOSTAT through the series loader, compute the correlation between
+relative yields and relative areas for wheat against maize, as in the chart,
+and for wheat against barley. Why might the two differ?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:ricardian-trade:9}
+A country's \omterm{def:b3:ricardian-trade:acr}{domestic expenditure share} is 0.8. Compute its gain from trade over
+autarky with a trade elasticity of 5 and of 10. Which input would you most like
+to know better?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:ricardian-trade:10}
+In the DFS model with an \omterm{def:b3:ricardian-trade:iceberg}{iceberg} factor $\kappa > 1$, let $z_E$ and $z_M$ solve
+$A(z_E) = \kappa\omega$ and $A(z_M) = \omega/\kappa$. Show that Home's wage bill equals its
+earnings when $\omega L(1 - \vartheta(z_M)) = \vartheta(z_E) L^*$, and that this equation has
+exactly one solution $\omega$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:ricardian-trade:11}
+Trade costs fall, from $\kappa = 1.2$ to $\kappa = 1.1$, with $\omega$ held at its old
+value. Which goods start to be traded? Then let $\omega$ adjust: using
+\cref{exo:b3:ricardian-trade:10}, in which direction does it move if the goods at
+the two ends of the band carry equal spending shares and $L = L^*$?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:ricardian-trade:12}
+Countries export and import goods in the same industries, and few industries
+are left entirely to foreign producers. Give two reasons inside the Ricardian
+model and two outside it.
+\end{exercise}
+
+\section{Problem: Brenland and Kestria with Twelve Goods}\label{sec:b3:ricardian-trade:problem}
+
+\begin{problem}[{Weekend problem --- Brenland and Kestria with twelve goods}]\label{pb:b3:ricardian-trade:twelve}
+Brenland and Kestria (invented) make twelve goods with labour alone. The table
+gives the hours of labour per unit in each country; cloth and grain are the
+series' usual values. Consumers in both countries spend one twelfth of their
+income on each good, and the two labour forces are equal. % figdata: twelve_goods
+
+\begin{center}\small
+\pgfplotstabletypeset[col sep=comma, skip rows between index={6}{12},
+  columns/good/.style={column name={Good}, string type, column type=l},
+  columns/hours_B/.style={column name={Brenland}, fixed, precision=1},
+  columns/hours_K/.style={column name={Kestria}, fixed, precision=1},
+  every head row/.style={after row=\hline}, every last row/.style={after row=\hline}]
+  {figdata/bachelor-3/07-ricardian-trade/out/twelve_goods.csv}
+\qquad
+\pgfplotstabletypeset[col sep=comma, skip rows between index={0}{6},
+  columns/good/.style={column name={Good}, string type, column type=l},
+  columns/hours_B/.style={column name={Brenland}, fixed, precision=1},
+  columns/hours_K/.style={column name={Kestria}, fixed, precision=1},
+  every head row/.style={after row=\hline}, every last row/.style={after row=\hline}]
+  {figdata/bachelor-3/07-ricardian-trade/out/twelve_goods.csv}
+\end{center}
+
+\medskip\noindent\textbf{Part I --- autarky and the chain.}
+\begin{enumerate}
+\item Compute $A_i$ for each good and check that the table lists the goods in
+the order of the chain.
+\item In which goods does Brenland have an absolute advantage? Does it matter
+for the pattern of trade?
+\item Give each country's \omterm{def:b3:ricardian-trade:autarky}{autarky price} of cloth in grain, and of radios in
+grain.
+\item Which goods would Brenland make at $\omega = 1$? At $\omega = 2$?
+\item Explain why the equilibrium $\omega$ must lie between 0.6 and 6.
+\item Show that with equal spending shares and equal labour forces, trade
+balances when $\omega$ equals the number of goods Brenland makes divided by the
+number Kestria makes.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- the free-trade equilibrium.}
+\begin{enumerate}[resume]
+\item Show that $\omega = 1.4$, with Brenland making the first seven goods, is an
+equilibrium.
+\item Why is $\omega = 1.2$ not an equilibrium? And $\omega = 2$?
+\item Compute Brenland's \omterm{def:b3:ricardian-trade:terms-of-trade}{terms of trade} between grain and radios, in autarky
+and with trade.
+\item Compute Brenland's real wage in radios, in autarky and with trade.
+\item With equal shares, Brenland's real income over autarky is multiplied by
+the twelfth root of the product of $\omega/A_i$ over the goods it imports. Explain
+why, and compute the gain.
+\item Compute Kestria's gain the same way. Which country gains more, and why?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- a 10~\% iceberg cost.}
+\begin{enumerate}[resume]
+\item With $\kappa = 1.1$, state the conditions for Brenland to export, to import
+and to make a good for itself.
+\item At $\omega = 1.5$, list the goods in each group.
+\item Check that $\omega = 1.5$ is the equilibrium.
+\item Why does Brenland's relative wage rise from 1.4 to 1.5?
+\item Compute Brenland's gain over autarky with the \omterm{def:b3:ricardian-trade:iceberg}{iceberg} cost; Kestria's is
+32.8~\%. Compare with Part II.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- a productivity gain in Kestria, and the
+formula.}
+\begin{enumerate}[resume]
+\item Trade is free again, and Kestria's labour requirements all fall by a sixth
+(its productivity rises by 20~\%). Give the new values of $A_i$.
+\item Show that the new equilibrium has $\omega = 1.25$, with cloth made in both
+countries, and find Brenland's share of the world's cloth.
+\item Brenland's gain over autarky is now 20.3~\%. Check the direction against
+\cref{prop:b3:ricardian-trade:abroad}.
+\item Kestria's gain over its own new autarky falls from 45.0~\% to 39.2~\%. Has
+Kestria become worse off?
+\item Compute Brenland's \omterm{def:b3:ricardian-trade:acr}{domestic expenditure share} in free trade (Part II) and
+the gain given by the formula of \cref{prop:b3:ricardian-trade:acr} with $\varepsilon =
+5$.
+\item What trade elasticity would make the formula give the gain computed in
+Part II?
+\item Why do the two methods differ in this model?
+\item State the results: Brenland's gain from trade, in percent of real income,
+computed two ways.
+\end{enumerate}
+\end{problem}

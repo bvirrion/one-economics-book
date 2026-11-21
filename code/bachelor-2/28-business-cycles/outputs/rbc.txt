@@ -1,0 +1,5 @@
+$ python rbc.py
+rho 0.0: output 1.00 0.33 0.11 0.04 0.01 0.00 0.00 0.00
+rho 0.9: output 1.00 1.23 1.22 1.14 1.03 0.94 0.84 0.76
+sd of c / sd of y 1.00, sd of i / sd of y 1.00
+first-order autocorrelation of output 0.95

@@ -1,0 +1,16 @@
+stat,value
+k_infl,2.7
+k_rate,3
+rho,0.947941
+half_life,12.9651
+real_mean,102.4
+real_max,113.251
+real_min,92.5097
+rmse_rw,2.32485
+rmse_uip,1.73281
+rmse_ppp,2.64314
+lambda,4
+hl_dornbusch,2.5
+theta,0.277259
+impact,19.0168
+overshoot,9.01684

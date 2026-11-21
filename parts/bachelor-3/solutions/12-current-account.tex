@@ -1,0 +1,156 @@
+\section*{Chapter \ref{ch:b3:current-account} --- The Current Account}
+
+\begin{solution}{exo:b3:current-account:1}
+In 2006, at 1.5~\% of world GDP. That year China's surplus was 0.45~\% of world GDP,
+Japan's 0.34~\% and Germany's 0.32~\%; all other countries together had 0.58~\%, and the
+sum over all countries was $+0.14~\%$, not zero. % figdata: ca_world_points
+\end{solution}
+
+\begin{solution}{exo:b3:current-account:2}
+(a) \omterm{def:b3:current-account:accounts}{Current account}: export of goods $+100$; \omterm{def:b3:current-account:accounts}{financial account}: acquisition of a
+foreign asset (the deposit) $+100$. (b) Primary income $+10$; a foreign asset (the
+dividends, held abroad) $+10$. (c) \omterm{def:b3:current-account:accounts}{Financial account} only: incurrence of a liability
+(the bonds) $+50$, acquisition of an asset (the kests received) $+50$; net zero.
+(d) Secondary income $-5$; foreign assets $-5$. The \omterm{def:b3:current-account:accounts}{current account} is $100 + 10 - 5 =
+105$, matched by net acquisition of foreign assets of $100 + 10 + 50 - 50 - 5 = 105$.
+\end{solution}
+
+\begin{solution}{exo:b3:current-account:3}
+$CA = S - I = 22 - 25 = -3~\%$ of GDP. National saving falls by 2 points, to 20~\%, so
+with investment unchanged the deficit widens to 5~\% of GDP.
+\end{solution}
+
+\begin{solution}{exo:b3:current-account:4}
+Smoothing predicts that the \omterm{def:b3:current-account:accounts}{current account} falls when output is temporarily low
+and rises when it is temporarily high. A series in which consumption falls one
+for one with a temporary fall in output, and the \omterm{def:b3:current-account:accounts}{current account} does not move
+--- or moves toward surplus in the slump --- contradicts it.
+\end{solution}
+
+\begin{solution}{exo:b3:current-account:5}
+$\beta(1 + r) = 1$, so $C_1 = C_2 = (90 + 100/1.05)/(1 + 1/1.05) = 185.238/1.952 = 94.88$. $CA_1 = 90 -
+94.88 = -4.88$; in period 2 net exports are $100 - 94.88 = 5.12$, interest paid $0.05 \times 4.88
+= 0.24$, so $CA_2 = +4.88$: the debt is repaid. With $Y_1 = Y_2 = 90$, $C_1 = C_2 = 90$ and the
+\omterm{def:b3:current-account:accounts}{current account} is zero in both periods.
+\end{solution}
+
+\begin{solution}{exo:b3:current-account:6}
+$nx = 0.6 \times (0.04 - 0.03)/1.03 = 0.58~\%$ of GDP. With growth of 1~\%: $0.6 \times 0.03/1.01 =
+1.78~\%$, three times as much.
+\end{solution}
+
+\begin{solution}{exo:b3:current-account:7}
+The tested solution is \code{ex07_feldstein_horioka.py}, in the chapter's
+\code{exercises/} folder. Slopes 0.129 (s.e.\ 0.063, 82 countries) for 1990--1999, 0.002
+(0.048, 107) for 2000--2011 and 0.437 (0.053, 124) for 2012--2024. % output: ex07_feldstein_horioka
+Not stable: the coefficient moves from about zero to 0.44 between periods, far
+more than its standard errors. The samples differ (more countries report later),
+and saving and investment both respond to common shocks such as commodity booms;
+the slope measures capital mobility only under strong assumptions.
+\end{solution}
+
+\begin{solution}{exo:b3:current-account:8}
+A permanent fall lowers permanent income by the same proportion as current
+income: consumption adjusts at once and the \omterm{def:b3:current-account:accounts}{current account} barely moves. If the
+fall is expected to reverse in two years, it is temporary: the country borrows to
+keep consumption up, and the \omterm{def:b3:current-account:accounts}{current account} moves into deficit during the two
+years.
+\end{solution}
+
+\begin{solution}{exo:b3:current-account:9}
+(1) Expected returns on comparable assets equalised, for instance covered
+interest parity holding with tiny deviations; (2) domestic investment rates
+unrelated to domestic saving rates across countries. Others: consumption growth
+highly correlated across countries (risk sharing); large gross flows in response to
+small return differences.
+\end{solution}
+
+\begin{solution}{exo:b3:current-account:10}
+$7.18^{1.5} = 19.2$ with $\alpha = 0.4$; $7.18^2 = 51.6$ with $\alpha = 1/3$. With human capital,
+$\mathrm{MPK} = \alpha A^{1/\alpha}y^{(\alpha - 1)/\alpha}h^{(1 - \alpha)/\alpha}$, so the ratio is $(7.18/2.5)^{1.5} = 2.872^{1.5}
+= 4.87$. Differences in human capital remove three quarters of the predicted gap.
+\end{solution}
+
+\begin{solution}{exo:b3:current-account:11}
+$6/0.25 = 24~\%$ real depreciation. Through spending alone, imports must fall by 6~\% of
+GDP: $0.3\,\Delta E = 6$, so spending falls by 20~\% of GDP --- why \omterm{def:b3:current-account:sudden-stop}{sudden stops} come
+with deep recessions, and why the real exchange rate does most of the work when it
+can.
+\end{solution}
+
+\begin{solution}{exo:b3:current-account:12}
+The tested solution is \code{ex12_reversals.py}, in the chapter's \code{exercises/}
+folder. 273 reversals in 118 countries; the \omterm{def:b3:current-account:accounts}{current account} averages $-12.3$, $-8.7$
+and $-3.2~\%$ of GDP in years $t - 1$, $t$, $t + 1$; growth averages 4.2, 3.3, 3.6 and
+3.0~\% in years $t - 2$ to $t + 1$. % output: ex12_reversals
+On average growth slows by about a point before the reversal and does not
+collapse: the average mixes forced reversals with deficits that closed because aid
+or an investment project ended. The rule picks out large deficits (12~\% of GDP on
+average) in small economies; a \omterm{def:b3:current-account:sudden-stop}{sudden stop} needs data on the inflows themselves.
+\end{solution}
+
+\begin{solution}{pb:b3:current-account:borrowing}
+\textbf{1.} $CA = NX - \text{interest} = -278 - 1{,}786.5 = -2{,}064.5$ million dalens. % figdata: borrow_points, borrow_stats
+
+\textbf{2.} 2025: net exports $+1{,}113$, but interest of 7{,}855 makes the \omterm{def:b3:current-account:accounts}{current
+account} $-6{,}742$. (In 2008 and 2010 the trade surplus exceeded the interest bill.)
+
+\textbf{3.} $-6{,}742/393{,}264 = -1.71~\%$ of GDP, financed by new net borrowing from
+abroad: the debt rose by 6{,}742.
+
+\textbf{4.} $63{,}053.3 - 64{,}908.7 = -1{,}855.4 = -CA_{2010}$.
+
+\textbf{5.} Current-account deficits (trade deficits and the interest bill) raise
+the debt; growth of GDP below the interest rate raises the ratio for a given debt.
+(Valuation changes are a third channel, excluded here.) In 2020 both worked: a
+deficit of 2.8~\% of GDP and nominal GDP down 3.2~\% (279{,}869 against 289{,}032).
+
+\textbf{6.} Half of 146{,}511 is 73{,}256 in kests; its dalen value rises by 7{,}326, or
+1.86~\% of 2025 GDP: the NIIP falls by that amount.
+
+\textbf{7.} $C = (96.7 + 100/1.03)/(1 + 1/1.03) = 193.787/1.971 = 98.33$ in both periods.
+
+\textbf{8.} $96.7 - 98.33 = -1.63~\%$ of normal output ($3.3/2.03$).
+
+\textbf{9.} Brenland's \omterm{def:b3:current-account:accounts}{current account} went from $+0.50~\%$ of GDP in 2008 to $-1.71~\%$ in
+2009, a fall of 2.21 points, somewhat more than the model's 1.63.
+
+\textbf{10.} No change in the \omterm{def:b3:current-account:accounts}{current account}: consumption falls by the full 3.3.
+
+\textbf{11.} The model has no investment, and investment usually falls in a
+recession, which reduces the deficit; it also takes the shock to be known as
+temporary and borrowing to be free at a fixed rate.
+
+\textbf{12.} Real GDP fell by 4.85~\%; a temporary shock predicts a deficit widening
+by about half of it, 2.4 points. The deficit widened from 1.67~\% to 2.77~\% of GDP, by
+1.1 points: in the right direction, but less than full smoothing.
+
+\textbf{13.} $d_t = d_{t-1}(1 + i_t)/(1 + g_t) - nx_t$.
+
+\textbf{14.} $nx = 0.3726 \times (0.0590 - 0.0476)/1.0476 = 0.40~\%$ of GDP.
+
+\textbf{15.} $0.28 < 0.40$: the ratio rises, by roughly 0.12 points of GDP a year at
+these rates.
+
+\textbf{16.} $0.3726 \times (0.04 - 0.0476)/1.0476 = -0.27~\%$: with $r < g$, a trade deficit of
+0.27~\% of GDP keeps the ratio constant.
+
+\textbf{17.} No: it requires only that the debt not grow faster than the interest
+rate for ever. The debt can be rolled over indefinitely, provided the present value
+of future trade balances covers it.
+
+\textbf{18.} Repayment depends on the willingness to pay as well as the ability,
+and there is no court to enforce it on a country; if each lender fears the others
+will stop, a run can be self-fulfilling, since higher rates make the debt harder to
+carry.
+
+\textbf{19.} A \omterm{def:b3:current-account:accounts}{current account} of at least zero: no new net borrowing.
+
+\textbf{20.} Net exports must cover the interest bill, $7{,}855/393{,}264 = 2.0~\%$ of GDP; the
+swing from 0.28~\% is 1.71 points, the 2025 current-account deficit.
+
+\textbf{21.} $1.71/0.3 = 5.7~\%$.
+
+\textbf{22.} Brenland's external debt stabilises at 37~\% of GDP with a trade surplus
+of 0.40~\% of GDP; a \omterm{def:b3:current-account:sudden-stop}{sudden stop} would require 2.0~\%.
+\end{solution}

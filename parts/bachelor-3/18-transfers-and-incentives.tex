@@ -1,0 +1,383 @@
+\chapter{Transfers, Incentives and Redistribution}\label{ch:b3:transfers-and-incentives}
+
+Every transfer that is paid to people with low incomes must be withdrawn as their
+income rises, or it would be paid to everyone. The withdrawal is a tax on earning,
+and for the households that face it, it is often the highest tax in the system.
+This chapter reads budget sets under real benefit schedules, sets the predicted
+responses against the experiments and reforms that measured them, and states the
+formula that turns elasticities and social weights into a tax rate.
+
+\begin{openingchart}{Marginal effective tax rate of a single parent with two
+children, by annual earnings, United States, 2024: federal income tax, employee
+payroll tax, earned income credit and child tax credit (state taxes and benefits
+such as food assistance left out).}{Internal Revenue Service: Revenue Procedure
+2023-34, 2024 Instructions for Schedule 8812, Topic 751; our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.72\linewidth, height=0.4\linewidth, xmin=0,
+  xmax=70, ymin=-55, ymax=50, xlabel={Annual earnings (thousands of dollars)},
+  ylabel={Marginal rate (\%)}]
+  \addplot[omDef, thick, mark=none] table[x expr=\thisrow{mid}/1000, y=mtr] {figdata/bachelor-3/18-transfers-and-incentives/out/mtr.csv};
+  \draw[guide] (axis cs:0,0) -- (axis cs:70,0);
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: mtr_stats
+Up to 2{,}500 dollars of earnings, each extra dollar earns 40 cents of earned income
+credit less 7.65 cents of \omterm{def:b3:efficiency-cost-of-taxation:payroll-tax}{payroll tax}: a marginal rate of $-32$~\%. From 2{,}500 to 17{,}400
+dollars the refundable child credit adds 15 cents: $-47$~\%. Between about 25{,}000 and 55{,}800 dollars the credit is
+withdrawn at 21~\% while payroll and income taxes are paid: the rate reaches 41~\%.
+Above 55{,}800 it falls to 20~\%. The highest marginal rate this parent faces is twice
+the one she pays at 60{,}000 dollars, and it falls in the middle of the earnings
+distribution, not at the top.
+
+\begin{recall}
+The Year 1 volume drew budget sets with kinks and defined the implicit marginal
+tax rate: the share of an extra unit of earnings lost to taxes and withdrawn
+benefits. The grades 10--12 volume defined the Lorenz curve and the Gini
+coefficient, and the Year 2 volume social welfare functions. The previous chapter
+defined the \omterm{def:b3:efficiency-cost-of-taxation:eti}{elasticity of taxable income} and the revenue-maximising top rate.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:transfers-and-incentives:symbols}
+$G$ is a guarantee (the transfer at zero income) and $t$ the rate at which it is
+withdrawn; $g$ a \omterm{def:b3:transfers-and-incentives:weights}{social welfare weight}; $a$ and $e$ the Pareto parameter and the
+\omterm{def:b3:efficiency-cost-of-taxation:eti}{elasticity of taxable income} of the previous chapter.
+\end{notation}
+
+\section{Budget sets under a benefit system}\label{sec:b3:transfers-and-incentives:budget}
+
+\begin{definition}[Participation tax rate; poverty trap]\label{def:b3:transfers-and-incentives:ptr}
+\index{participation tax rate}\index{poverty trap}
+The \emph{participation tax rate} at earnings $E$ is the share of $E$ lost to taxes and
+withdrawn benefits when a person moves from not working to earning $E$: $1 - (N(E) - N(0))/E$,
+with $N$ net income. A \emph{poverty trap} is a range of earnings over which the
+implicit marginal tax rate is so high that working more raises net income little,
+or lowers it.
+\end{definition}
+
+\begin{measure}[Marginal effective and participation tax rates]
+The marginal rate governs how much to work; the participation rate governs whether
+to work at all. They can differ widely: the parent of the opening chart faces a
+\omterm{def:b3:transfers-and-incentives:ptr}{participation tax rate} of $-40$~\% at 20{,}000 dollars (she keeps 1.40 dollars of net
+income per dollar earned, counting the credits) and of $-6$~\% at 40{,}000, while her
+marginal rate there is 41~\%. % figdata: mtr_points
+Both are computed for a household type from the statutory schedule; adding the
+benefits left out here (food assistance, housing aid, state taxes) raises both, and
+each household faces its own.
+\end{measure}
+
+\begin{omchart}{Net income of a household of three (a parent and two children) in
+Brenland, by gross income, under the 2025 schedule and under the reform of the
+weekend problem (dalens a year).}{Invented data: Brenland (\code{country}); our
+computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.58\linewidth, height=0.4\linewidth, xmin=0, xmax=40,
+  ymin=0, ymax=40, xlabel={Gross income (thousands of dalens)},
+  ylabel={Net income (thousands of dalens)}, legend pos=north west,
+  legend style={font=\footnotesize}]
+  \addplot[omDef, thick, mark=none] table[x expr=\thisrow{gross}/1000, y expr=\thisrow{old}/1000] {figdata/bachelor-3/18-transfers-and-incentives/out/brenland_budget.csv};
+  \addplot[omThm, thick, dashed, mark=none] table[x expr=\thisrow{gross}/1000, y expr=\thisrow{new}/1000] {figdata/bachelor-3/18-transfers-and-incentives/out/brenland_budget.csv};
+  \legend{2025 schedule, reform}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: brenland_stats
+Brenland's income support is paid in full below 12{,}000 dalens and not at all above.
+A parent of two who earns 11{,}990 has a net income of 22{,}190; at 12{,}000 she has
+13{,}200. She must earn 23{,}240 before she is as well off as just below the line ---
+2{,}113 hours a year at 11 dalens an hour, more than a full-time year. A cliff is the
+extreme \omterm{def:b3:transfers-and-incentives:ptr}{poverty trap}: a marginal rate above 100~\%.
+
+\section{Measured responses: income guarantees}\label{sec:b3:transfers-and-incentives:nit}
+
+\begin{definition}[Negative income tax]\label{def:b3:transfers-and-incentives:nit}
+\index{negative income tax}
+A \emph{negative income tax} pays every household a guarantee $G$ withdrawn at a
+constant rate $t$ of its income, so that net income is $E + \max(G - tE, 0)$.
+\end{definition}
+
+\begin{proposition}[Break-even income]\label{prop:b3:transfers-and-incentives:breakeven}
+Under a \omterm{def:b3:transfers-and-incentives:nit}{negative income tax} with guarantee $G$ and rate $t$, the transfer falls to zero
+at the break-even income $G/t$. Halving $t$ doubles the number of incomes that receive
+something.
+\end{proposition}
+
+\begin{proof}
+The transfer $G - tE$ is zero at $E = G/t$, positive below. Halving $t$ moves the break-even
+to $2G/t$.
+\end{proof}
+
+The proposition is the dilemma of every guarantee. A generous $G$ withdrawn slowly
+reaches far up the income distribution and costs much; withdrawn fast, it is cheap
+but imposes a high marginal rate on everyone below $G/t$.
+
+\begin{model}{The negative income tax}
+\assumes A guarantee withdrawn at a constant rate; people choose hours, given
+their wage, to maximise utility over consumption and leisure.
+\predicts The guarantee raises income at zero hours (an income effect) and the
+withdrawal lowers the reward to an hour of work (a substitution effect): both
+lower hours, and some people stop working.
+\tested Four randomised negative-income-tax experiments in the United States came
+to similar results: averaged across them, married men cut their working time by
+roughly two weeks of full-time work a year, women by three and young people by four.
+% ledger: b3ti:robins.nit
+In Finland, 2{,}000 randomly chosen unemployed people received a tax-free 560 euros a
+month in 2017 and 2018. In the first year, the clean one, their employment did not
+change; over November 2017 to October 2018 they worked 6 more days than the control
+group, a period that is mostly the second year. % ledger: b3ti:stm.finland
+\breaks The experiments were small and short: a programme known to end changes
+little in long-run choices, and none could measure what happens when a whole
+labour market is covered. In the Finnish trial the second year, and so most of the
+6 days, is confounded with stricter conditions for unemployment benefits that came
+in at the start of 2018 for both groups.
+\end{model}
+
+\section{In-work credits}\label{sec:b3:transfers-and-incentives:in-work}
+
+\begin{definition}[In-work tax credit; phase-in rate; phase-out rate]\label{def:b3:transfers-and-incentives:in-work}
+\index{in-work tax credit}\index{phase-in rate}\index{phase-out rate}
+An \emph{in-work tax credit} is a transfer paid only to people with earnings, which
+rises with earnings at the \emph{phase-in rate} up to a maximum, stays flat, and is
+then withdrawn at the \emph{phase-out rate}.
+\end{definition}
+
+The United States credit of the opening chart has, for two children, a \omterm{def:b3:transfers-and-incentives:in-work}{phase-in rate}
+of 40~\% (6{,}960 dollars over the first 17{,}400 of earnings) and a \omterm{def:b3:transfers-and-incentives:in-work}{phase-out rate} of
+21~\% (the 6{,}960 dollars withdrawn between 22{,}720 and 55{,}768). % ledger: b3ti:irs.eitc
+A guarantee lowers the reward to the first hours of work; a credit raises it, and
+moves the high marginal rates to earnings where people already work.
+
+\begin{record}[The 1987 expansion of the in-work credit]
+The tax reform of 1986 expanded the United States earned income credit from 1987.
+Between 1984--1986 and 1988--1989 the labour-force participation of single women with
+children rose by 1.4 percentage points, from a base of 73.1~\%, relative to single
+women without children, whom the credit did not reach. The hours of women already
+working did not change. % ledger: b3ti:el.eitc
+\end{record}
+
+The record fits the theory of the phase-out range only in part: the predicted fall in
+hours among women in the phase-out did not show. People respond to whether to work
+more than to how much, and they may not know the marginal rate the credit imposes
+--- the salience of the previous chapter.
+
+\begin{proposition}[Saez's participation result]\label{prop:b3:transfers-and-incentives:participation}
+If people respond to taxes mainly by choosing whether to work, the optimal transfer
+programme resembles an in-work credit, with negative marginal rates at low earnings
+and a small guarantee; if they respond mainly by choosing hours, it is a \omterm{def:b3:transfers-and-incentives:nit}{negative
+income tax} with a large guarantee and a high withdrawal rate.
+\end{proposition}
+
+\noindent The result is stated here, not proved; it is Saez's (2002) solution of the
+optimal-tax problem with both margins. % ledger: b3ti:saez.margins
+\emph{A two-type example} shows its logic. With two types --- non-workers and low-paid workers earning $w$ --- a guarantee $G$ to
+non-workers withdrawn fully at earnings $w$ raises the \omterm{def:b3:transfers-and-incentives:ptr}{participation tax rate} on the
+low-paid to $(G + T)/w$, with $T$ their tax; a credit $C$ paid to low-paid workers lowers it to
+$(T - C)/w$. When the number who work falls with the \omterm{def:b3:transfers-and-incentives:ptr}{participation tax rate}, the guarantee
+shrinks the base that finances it and the credit enlarges it; with hours fixed, the
+intensive margin adds no offsetting cost to the credit.
+\cref{exo:b3:transfers-and-incentives:11} puts numbers on it.
+
+\section{The optimal income tax: elasticities and weights}\label{sec:b3:transfers-and-incentives:optimal}
+
+\begin{definition}[Social welfare weight]\label{def:b3:transfers-and-incentives:weights}
+\index{social welfare weight}
+A \emph{social welfare weight} is the value a social welfare function puts on one more
+dalen of consumption for a given person, relative to one more dalen of public
+revenue.
+\end{definition}
+
+\begin{definition}[Optimal top tax rate]\label{def:b3:transfers-and-incentives:top-rate}
+\index{optimal top tax rate}
+The \emph{optimal top tax rate} is the marginal rate on incomes above a threshold that
+maximises social welfare, given the \omterm{def:b3:efficiency-cost-of-taxation:eti}{elasticity of taxable income}, the shape of the
+top of the distribution and the weight on top incomes.
+\end{definition}
+
+\begin{proposition}[The top-rate formula]\label{prop:b3:transfers-and-incentives:formula}
+With weight $g$ on the consumption of top-bracket taxpayers, Pareto parameter $a$ and
+elasticity $e$, the optimal top rate is $\tau = (1 - g)/(1 - g + ae)$.
+\end{proposition}
+
+\begin{proof}
+Raise the top rate by $d\tau$. Per taxpayer, the mechanical revenue gain is $(z_m - \bar z)\,d\tau$, and
+the taxpayer loses the same amount, valued at $g$: a net gain $(1 - g)(z_m - \bar z)\,d\tau$. The
+behavioural response lowers revenue by $\tau ez_m\,d\tau/(1 - \tau)$, with no first-order welfare effect on
+the taxpayer, who was optimising. At the optimum the two balance: $(1 - g)(z_m - \bar z)(1 - \tau) = \tau ez_m$.
+Dividing by $z_m$, $(1 - g)(1 - \tau)/a = \tau e$, so $\tau = (1 - g)/(1 - g + ae)$. With $g = 0$ it is the revenue-maximising
+rate of the previous chapter.
+\end{proof}
+
+The formula separates what the evidence gives from what it does not. The
+elasticity $e$ and the tail $a$ are measured; the weight $g$ is a value judgement, and
+the formula says how much each judgement implies, not which to hold. With $a = 2$
+and $e = 0.25$, a weight of zero gives 67~\% and a weight of 0.5 gives 50~\%; the debate
+about the elasticity, from 0.1 to above 0.8 in the United Kingdom's 50~\% episode,
+moves the answer more than the weights do.
+
+\section{Redistribution measured}\label{sec:b3:transfers-and-incentives:redistribution}
+
+Redistribution is measured by comparing inequality of market income (before taxes
+and transfers) with inequality of disposable income (after). In Brenland's survey
+the Gini coefficient of gross income is 0.290 and that of disposable income 0.223:
+taxes and transfers lower it by almost a quarter. % figdata: brenland_stats
+Across real economies the comparison needs household surveys that record both
+incomes on the same basis. The World Bank's Gini coefficients mix disposable income
+and consumption by country and cannot make it; the European survey of income and
+living conditions can, for social transfers.
+
+\begin{omchart}{Gini coefficients of equivalised household income, 34 European
+countries, 2024 (points): before social transfers, with pensions counted as
+transfers and with pensions counted as income, and of disposable income. All three
+are measured after direct taxes, so the gaps show what social transfers do, not
+taxes.}{Eurostat (ilc\_di12b, ilc\_di12c, ilc\_di12); our sorting}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.62\linewidth, height=0.95\linewidth, xmin=18, xmax=58,
+    ymin=0.3, ymax=34.7, y dir=reverse, ytick=data,
+    yticklabels from table={figdata/bachelor-3/18-transfers-and-incentives/out/gini_eu.csv}{country},
+    y tick label style={font=\scriptsize}, xlabel={Gini (points)}, grid=none, xmajorgrids,
+    legend columns=3, legend style={at={(0.5,1.02)}, anchor=south, font=\footnotesize}]
+  \addplot[only marks, mark=*, mark size=1.5pt, omDef] table[x=disposable, y=pos]
+    {figdata/bachelor-3/18-transfers-and-incentives/out/gini_eu.csv};
+  \addplot[only marks, mark=square*, mark size=1.4pt, omThm] table[x=before_ex_pensions, y=pos]
+    {figdata/bachelor-3/18-transfers-and-incentives/out/gini_eu.csv};
+  \addplot[only marks, mark=triangle*, mark size=1.7pt, black] table[x=before_all, y=pos]
+    {figdata/bachelor-3/18-transfers-and-incentives/out/gini_eu.csv};
+  \legend{disposable, before transfers other than pensions, before all transfers}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: gini_eu_stats, gini_eu
+The median country's disposable-income Gini is 29.8 points. Social transfers other
+than pensions lower the Gini by a median of 4.1 points, from 1.3 in Turkey to 8.0
+in Belgium; counting pensions as transfers, the median fall is 16.2 points. The
+second number is mostly an artefact of where pensions are counted: a retired person
+with a public pension has no income before transfers, so systems that pay pensions
+publicly look more redistributive than systems that pay them through private saving.
+Neither number includes taxes, which the survey deducts before either Gini. And the
+measure is static: it holds incomes before transfers fixed, while the responses of
+this chapter change them.
+
+\section{Exercises}\label{sec:b3:transfers-and-incentives:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:transfers-and-incentives:1}
+In the opening chart, where does the marginal rate peak, and what makes it fall above
+55{,}800 dollars?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:transfers-and-incentives:2}
+With the opening chart's schedule, the parent's net income is 14{,}360 dollars at
+earnings of 10{,}000, 36{,}322 at 30{,}000 and 48{,}349 at 50{,}000. Compute her average gain per
+dollar earned between each pair of levels.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:transfers-and-incentives:3}
+A \omterm{def:b3:transfers-and-incentives:nit}{negative income tax} has a guarantee of 8{,}000 dalens and a rate of 40~\%. Find the
+break-even income, and the transfer at earnings of 5{,}000 and 15{,}000.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:transfers-and-incentives:4}
+What data on hours would contradict the \omterm{def:b3:transfers-and-incentives:nit}{negative income tax}'s prediction?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:transfers-and-incentives:5}
+In Brenland, a parent of two who does not work has a net income of 10{,}200 dalens.
+Compute her \omterm{def:b3:transfers-and-incentives:ptr}{participation tax rate} at gross incomes of 8{,}000 and 15{,}000 under the 2025
+schedule.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:transfers-and-incentives:6}
+Find the optimal top rate with $g = 0.2$, $a = 2$ and $e = 0.25$. How does it change if $e$ is 0.5?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:transfers-and-incentives:7}
+The \omterm{def:b3:transfers-and-incentives:in-work}{phase-out rate} of an in-work credit is lowered, with the same maximum. Who is
+expected to work more, and who less? What happens to the cost?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:transfers-and-incentives:8}
+Compute, with the 2024 parameters, the marginal effective tax rate of a single parent
+with one child from 0 to 60{,}000 dollars of earnings. Where is it highest, and how
+does it compare with the two-child schedule?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:transfers-and-incentives:9}
+What evidence would contradict the claim that the participation of single mothers
+responds strongly to taxes?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:transfers-and-incentives:10}
+Prove the top-rate formula, and show that it is decreasing in $g$, $a$ and $e$. Why does the
+behavioural response have no first-order effect on the taxpayer's welfare?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:transfers-and-incentives:11}
+A population of 100 can earn 10{,}000 by working; a share $1 - \mathrm{PTR}$ of them works, where PTR is
+the \omterm{def:b3:transfers-and-incentives:ptr}{participation tax rate}. The budget for transfers is 200{,}000. Compare (a) a
+guarantee paid to non-workers only, set so as to use the whole budget, with (b) a
+credit paid equally to all workers: the number who work and the transfer per
+recipient, assuming no tax otherwise.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:transfers-and-incentives:12}
+With Brenland's survey, compute the Gini coefficients of gross and of disposable
+income, and the share of the reduction due to taxes and to transfers (compute the
+Gini of gross income minus tax).
+\end{exercise}
+
+\section{Problem: Reforming Brenland's Income Support}\label{sec:b3:transfers-and-incentives:problem}
+
+\begin{problem}[{Weekend problem --- Reforming Brenland's income support}]\label{pb:b3:transfers-and-incentives:brenland}
+Brenland's 2025 income support pays $6{,}000 + 1{,}500(n - 1)$ dalens a year to a household of
+$n$ members whose gross income is below 12{,}000, and nothing above. A child benefit of
+1{,}200 per member beyond two is paid to all. Income tax follows the bands of the
+previous chapter. The household survey (\code{load("households")}) records the
+transfers. The wage of a low-paid parent is 11 dalens an hour. % figdata: brenland_stats, brenland_budget
+
+\medskip\noindent\textbf{Part I --- the current schedule.}
+\begin{enumerate}
+\item Compute the support and the net income of a non-working parent of two
+($n = 3$).
+\item Compute her net income at gross incomes of 11{,}990 and 12{,}000.
+\item What is the implicit marginal tax rate on the last 10 dalens?
+\item Below 12{,}000, what is her marginal rate?
+\item How many of the survey's 2{,}000 households are below the line?
+\item Rebuild the survey's \code{transfers} column from the rules.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- the poverty trap.}
+\begin{enumerate}[resume]
+\item Find the gross income at which she is as well off as at 11{,}990.
+\item How many hours a year must she work to reach it?
+\item Compute her \omterm{def:b3:transfers-and-incentives:ptr}{participation tax rate} at 15{,}000.
+\item Why might she choose to earn 11{,}990 rather than 15{,}000?
+\item What would the survey show around 12{,}000 if households respond?
+\item Why is the trap worse for larger households?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- the reform.} The support is withdrawn at 50~\% of
+gross income instead of all at once, and an in-work credit pays 20~\% of the earnings of
+households that work, up to 2{,}000, withdrawn at 10~\% of gross income above 20{,}000.
+\begin{enumerate}[resume]
+\item Find the break-even income of the support for $n = 3$.
+\item Compute her net income at 15{,}000 after the reform.
+\item Compute her \omterm{def:b3:transfers-and-incentives:ptr}{participation tax rate} at 15{,}000 after the reform.
+\item Compute her \omterm{def:b3:transfers-and-incentives:ptr}{participation tax rate} at 8{,}000, before and after.
+\item Who loses from the reform? Give an example household.
+\item Compute the static cost of the reform per household of the survey.
+\item How many households gain and how many lose?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- redistribution.}
+\begin{enumerate}[resume]
+\item Compute the Gini coefficient of gross income.
+\item Compute it for disposable income, before and after the reform.
+\item By how much does the reform reduce inequality as measured?
+\item Why is this a static measure?
+\item What responses would change the cost of the reform, and in which direction?
+\item State the result: the \omterm{def:b3:transfers-and-incentives:ptr}{participation tax rate} at 15{,}000 before and after the
+reform, and its cost per household.
+\end{enumerate}
+\end{problem}

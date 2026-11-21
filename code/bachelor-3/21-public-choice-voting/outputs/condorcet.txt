@@ -1,0 +1,4 @@
+$ python condorcet.py
+  3 voters: any ranking 0.057, one dimension 0.000, two dimensions 0.014
+ 25 voters: any ranking 0.085, one dimension 0.000, two dimensions 0.005
+301 voters: any ranking 0.090, one dimension 0.000, two dimensions 0.001

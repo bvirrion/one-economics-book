@@ -1,0 +1,167 @@
+\section*{Chapter \ref{ch:b3:trade-policy} --- Trade Policy}
+
+\begin{solution}{exo:b3:trade-policy:1}
+In points, India: from 56.4~\% in 1990 to 4.6~\% in 2022, 51.8 points. In percent,
+China: from 32.2~\% to 2.2~\%, a cut of 93~\% (India's is 92~\%). % figdata: tariffs_points
+China's fell most in the 1990s, from 32.2~\% in 1992 to 14.7~\% in 2000, and then to
+4.7~\% by 2010. % figdata: tariffs
+\end{solution}
+
+\begin{solution}{exo:b3:trade-policy:2}
+Free trade: demand 40, supply 20, imports 20. With the tariff, $P = 45$: demand 35,
+supply 25, imports 10. Revenue $5 \times 10 = 50$. Deadweight loss $\tfrac12 \times 5 \times 5 +
+\tfrac12 \times 5 \times 5 = 25$ (production and consumption triangles).
+\end{solution}
+
+\begin{solution}{exo:b3:trade-policy:3}
+$a = 12{,}000/20{,}000 = 0.6$. ERP $= (0.10 - 0.6 \times 0.05)/0.4 = 0.07/0.4 = 17.5~\%$, nearly
+twice the nominal tariff. With 20~\% on inputs: $(0.10 - 0.12)/0.4 = -5~\%$: the industry is
+taxed, not protected.
+\end{solution}
+
+\begin{solution}{exo:b3:trade-policy:4}
+Compare the prices foreign exporters receive, before the tariff (at the border,
+tariff excluded), for the goods targeted against comparable goods not targeted, or
+against the same goods sold to other countries. Full absorption means these
+prices fell by the full tariff, so that the duty-inclusive price paid by importers
+did not change.
+\end{solution}
+
+\begin{solution}{exo:b3:trade-policy:5}
+Free trade: $100 - 2P = 2P - 20$, $P = 30$, $M = 40$. Tariff: $100 - 2(P^* + 10) = 2P^* - 20$,
+so $P^* = 25$, $P = 35$, $M = 30$. Terms-of-trade gain $(30 - 25) \times 30 = 150$; deadweight
+loss $\tfrac12 \times (35 - 30) \times (40 - 30) = 25$; net $+125$. (Check: revenue $10 \times 30 = 300$,
+minus the loss of home surplus $5 \times (40 + 30)/2 = 175$.)
+\end{solution}
+
+\begin{solution}{exo:b3:trade-policy:6}
+$t = 1/4 = 25~\%$. As the elasticity grows, the \omterm{def:b3:trade-policy:optimal-tariff}{optimal tariff} falls toward zero, the
+small-country case.
+\end{solution}
+
+\begin{solution}{exo:b3:trade-policy:7}
+Free trade for ever gives 0 each year. Deviating gives 4 once and $-2$ for ever
+after: $4 - 2\beta/(1 - \beta)$ in present value. Free trade is an equilibrium when $0 \ge 4 -
+2\beta/(1 - \beta)$, that is $4(1 - \beta) \le 2\beta$, or $\beta \ge 2/3$. Punishing by tariffs is
+itself a Nash equilibrium of the stage game, so the threat is credible.
+\end{solution}
+
+\begin{solution}{exo:b3:trade-policy:8}
+The tested solution is \code{ex08_overhang.py}, in the chapter's \code{exercises/}
+folder. With income per head available, 128 countries; the median overhang is 20.9
+points, and 82~\% of the countries could double their applied tariff within their
+bindings. The overhang falls with income: the correlation with log income per head
+is $-0.41$, and the median overhang is 32.6 points in the poorer half against 12.1 in
+the richer half. % output: ex08_overhang
+\end{solution}
+
+\begin{solution}{exo:b3:trade-policy:9}
+No: the industry might have grown without protection, as did others in the same
+country, or grown in spite of it. Refutation: the protected industry's
+productivity growth no faster than that of comparable unprotected industries, or
+than the same industry abroad; its costs still above world costs when protection
+ends; or the gains smaller than the cost of protection to buyers in the meantime.
+A clean test needs protection that varies for reasons unrelated to the industry's
+prospects, as in the Napoleonic blockade.
+\end{solution}
+
+\begin{solution}{exo:b3:trade-policy:10}
+Home welfare is surplus plus revenue $sM$. With $dP = ds + dP^*$: $dW = -M\,dP + M\,ds +
+s\,dM = -M\,dP^* + s\,dM$. Market clearing gives $dM = X^{*\prime}dP^*$, so $dW = 0$ when $-M + sX^{*\prime} =
+0$: $s = M/X^{*\prime} = X^*/X^{*\prime}$, and $s/P^* = X^*/(P^*X^{*\prime}) = 1/\varepsilon^*$.
+\end{solution}
+
+\begin{solution}{exo:b3:trade-policy:11}
+Tariff: imports available at 50; the firm produces where $20 + q = 50$, $q = 30$;
+demand $100 - 50 = 50$; imports 20. Quota of 20: residual demand $P = 80 - q$, marginal
+revenue $80 - 2q = 20 + q$, so $q = 20$ and $P = 60$; demand 40, imports 20. Same imports,
+but the quota gives a price of 60 instead of 50, and domestic output of 20 instead
+of 30: the quota creates market power, the tariff does not.
+\end{solution}
+
+\begin{solution}{exo:b3:trade-policy:12}
+The tested solution is \code{ex12_shift_share.py}, in the chapter's
+\code{exercises/} folder. Exposures: A 2.75, B 1.60, C 0.75, D 2.30, E 0.30 (for A,
+$0.30 \times 8 + 0.10 \times 3 + 0.05 \times 1 = 2.75$). Slope $-1.194$ points per thousand
+dalens of exposure. % output: ex12_shift_share
+It is causal if the industry shocks are as good as randomly assigned with respect
+to other regional shocks (and there are many of them), or if the initial shares
+are unrelated to other causes of the regions' later employment --- for example,
+if regions specialised in textiles were not already declining for other reasons.
+\end{solution}
+
+\begin{solution}{pb:b3:trade-policy:steel}
+\textbf{1.} $M(P) = (100 - 2P) - (-20 + 2P) = 120 - 4P$. % figdata: steel_cases, grain_cases, payoffs
+
+\textbf{2.} $120 - 4P = -40 + 4P$: $P = 20$, $M = 40$ (production 20, consumption 60).
+
+\textbf{3.} $P = 25$: production 30, consumption 50, imports 20.
+
+\textbf{4.} Consumers lose $5 \times (60 + 50)/2 = 275$; producers gain $5 \times (20 + 30)/2 = 125$;
+revenue $5 \times 20 = 100$.
+
+\textbf{5.} Deadweight loss $\tfrac12 \times 5 \times 10 + \tfrac12 \times 5 \times 10 = 50$; net $-275 + 125 + 100
+= -50$.
+
+\textbf{6.} The world price does not move, so there is no terms-of-trade gain to
+set against the efficiency loss.
+
+\textbf{7.} $120 - 5P^* = -40 + 4P^*$: $P^* = 160/9 = 17.78$, $P = 22.22$, $M = 31.11$.
+
+\textbf{8.} The wedge is $22.22 - 17.78 = 4.44$; Kestrian exporters' price fell by 2.22,
+half of it. Brenland's buyers pay the other half.
+
+\textbf{9.} Terms-of-trade gain $(20 - 17.78) \times 31.11 = 69.1$; efficiency loss $\tfrac12 \times
+(22.22 - 20) \times (40 - 31.11) = 9.9$.
+
+\textbf{10.} $69.1 - 9.9 = 59.3$. Check: consumers $-128.4$, producers $+49.4$, revenue $4.44
+\times 31.11 = 138.3$; sum 59.3.
+
+\textbf{11.} Kestrian producer surplus falls by $(20 - 17.78) \times (40 + 31.11)/2 = 79.0$.
+
+\textbf{12.} $\varepsilon^* = 4P^*/X^*$: $4 \times 20/40 = 2$ at free trade, $4 \times 17.78/31.11 = 2.29$ at the
+tariff. $1/2.29 = 0.44 > 0.25$: the 25~\% tariff is below the optimum.
+
+\textbf{13.} $t = 1/\varepsilon^*$ with $P^* = 40/(2 + t)$ from market clearing: $t = (4P^* - 40)/(4P^*) =
+1 - (2 + t)/4$, so $t = 0.4$. Then $P^* = 16.67$, $P = 23.33$, $M = 26.67$, and Brenland gains
+66.7.
+
+\textbf{14.} $-20 + 2p = 100 - 3p$: $p = 24$, exports 28.
+
+\textbf{15.} $-20 + 2p = 100 - 3.75p$: $p = 20.87$, $p_K = 26.09$, exports 21.74.
+
+\textbf{16.} Brenland's grain producers lose $(24 - 20.87) \times (28 + 21.74)/2 = 77.9$.
+
+\textbf{17.} Terms-of-trade gain $(24 - 20.87) \times 21.74 = 68.1$, minus deadweight loss
+$\tfrac12 \times (26.09 - 24) \times (28 - 21.74) = 6.5$: $+61.5$.
+
+\textbf{18.} With Brenland's payoff first: (free, free) $0, 0$; (free, tariff) $-77.9,
+61.5$; (tariff, free) $59.3, -79.0$; (tariff, tariff) $-18.6, -17.5$.
+
+\textbf{19.} A tariff is each country's dominant strategy ($59.3 > 0$ and $-18.6 > -77.9$
+for Brenland; $61.5 > 0$ and $-17.5 > -79.0$ for Kestria): both levy tariffs, and both
+are worse off than under free trade, a prisoner's dilemma.
+
+\textbf{20.} In 2018--2019 the world prices of targeted U.S. imports did not fall:
+foreign export supply behaved as if perfectly elastic, and the terms-of-trade
+gain of Part II did not appear. % ledger: b3tp:arw.passthrough, b3tp:fgkk.loss
+
+\textbf{21.} Steel's price rises by $22.22/20 - 1 = 11.1~\%$. ERP $= (0 - 0.3 \times 0.111)/0.7 =
+-4.8~\%$.
+
+\textbf{22.} Steel output rises from 20 to 24.44 million tonnes: about 4{,}440 jobs.
+
+\textbf{23.} $50{,}000 \times 4.8~\% \approx 2{,}380$ jobs.
+
+\textbf{24.} Jobs moved between industries are not a gain or a loss of welfare in
+themselves; welfare depends on the surpluses, revenue and \omterm{def:b3:ricardian-trade:terms-of-trade}{terms of trade} computed
+above, and workers who move find other jobs (with real costs of moving that this
+count omits).
+
+\textbf{25.} For: steel producers and their workers, whose gain is concentrated.
+Against: car makers and other steel users, and grain farmers exposed to
+retaliation; consumers lose most in total but are dispersed.
+
+\textbf{26.} The tariff raises Brenland's welfare by 59.3 million dalens without
+retaliation and lowers it by 18.6 million dalens with Kestria's retaliation.
+\end{solution}

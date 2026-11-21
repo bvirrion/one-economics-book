@@ -1,0 +1,5 @@
+$ python proxy.py
+true return to schooling      0.080
+no control for ability        0.105
+test score as a proxy         0.091
+ability itself (unobservable) 0.080

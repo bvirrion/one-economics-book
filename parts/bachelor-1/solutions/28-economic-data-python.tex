@@ -1,0 +1,130 @@
+\section*{Chapter \ref{ch:b1:economic-data-python} --- Economic Data with Python}
+% Numbers recomputed in code/bachelor-1/28-economic-data-python/exercises/ (solutions.py, exo_05.py,
+% exo_06.py, exo_09.py, exo_10.py, exo_11.py; tested in tests/test_exercises.py).
+
+\begin{solution}{exo:b1:economic-data-python:shapes-ex}
+First look: 18 rows and 6 columns, a country in a year, key \texttt{(iso3, year)}.
+Long table: 25 rows and 3 columns, same unit and key; wide table: 5 rows
+(countries) and 5 columns (years), key \texttt{iso3}. Monthly series: one value per
+month, key \texttt{(year, month)}.
+\end{solution}
+
+\begin{solution}{exo:b1:economic-data-python:yoy}
+$9.06\%$ unadjusted, $8.98\%$ adjusted. Over twelve months the season cancels
+almost exactly; the small difference comes from the adjusted series'
+factors changing slowly from year to year.
+\end{solution}
+
+\begin{solution}{exo:b1:economic-data-python:annualise}
+$1.004^{12} - 1 = 4.91\%$.
+\end{solution}
+
+\begin{solution}{exo:b1:economic-data-python:aggregate}
+Unemployment rate: mean. Exports (a flow): sum. Consumer price index: mean.
+Population: mean for a yearly average, or the last value for the end of
+the year, said which. Debt (a stock): last value.
+\end{solution}
+
+\begin{solution}{exo:b1:economic-data-python:maddison}
+161 keys match; 24 are only in the Penn table and 8 only in the Maddison
+table. Only in Penn: small economies such as Aruba, Anguilla and the Cayman
+Islands. Only in Maddison: units that no longer exist (the Soviet Union,
+Yugoslavia, Czechoslovakia, kept as historical aggregates) and economies
+Penn does not cover (Afghanistan, Cuba).
+\end{solution}
+
+\begin{solution}{exo:b1:economic-data-python:rebase}
+$69.7$ in 2015, $77.8$ in 2020 and $100$ in 2025; mean log growth $3.61$ log points a
+year.
+\end{solution}
+
+\begin{solution}{exo:b1:economic-data-python:toy}
+The centred moving average of $100 + t + s_t$ is exactly $100 + t$, since the
+season sums to zero over four quarters. The differences are then $s_t$, and
+their averages by quarter are $+2$, $-1$, $-2$ and $+1$.
+\end{solution}
+
+\begin{solution}{exo:b1:economic-data-python:falling}
+Positive: GDP per person grows faster than GDP, by about the rate at which
+population falls.
+\end{solution}
+
+\begin{solution}{exo:b1:economic-data-python:hook}
+$2.90\%$ nominal, $1.28\%$ in volumes, $0.98\%$ per person. The nominal rate changes
+most (from $3.24\%$ to $2.90\%$): the inflation of 2021--23 is left out.
+\end{solution}
+
+\begin{solution}{exo:b1:economic-data-python:quarterly}
+As \texttt{adjust}, with a four-quarter moving average centred with weights $1/8$,
+$1/4$, $1/4$, $1/4$, $1/8$ and factors averaged by quarter. On the known series it
+recovers $0.98$, $1.0099$, $1.03$ and $0.9801$: the season to within $0.0001$.
+\end{solution}
+
+\begin{solution}{exo:b1:economic-data-python:silent}
+All 199 rows of the World Bank table, none with Penn data: no code matches,
+and a left join keeps the rows with empty columns. Counting the matches
+(\texttt{indicator=True}) or checking that the joined columns are not all empty
+would catch it; after converting the codes to upper case, 178 rows match.
+\end{solution}
+
+\begin{solution}{exo:b1:economic-data-python:base}
+In the stated base year, real and nominal GDP must be equal. If they are
+not, the deflator's base year is not the one stated.
+\end{solution}
+
+\begin{solution}{pb:b1:economic-data-python:portal}
+\textbf{1.} 26 rows, 2000 to 2025.
+
+\textbf{2.} The largest absolute difference is 0: the identity holds.
+
+\textbf{3.} The largest difference is 0.
+
+\textbf{4.} 26 and 130: five goods in each of 26 years.
+
+\textbf{5.} 100: the index is based in 2015, as stated.
+
+\textbf{6.} A table that fails its own identities makes every later result
+wrong; it is cheaper to find that out first.
+
+\textbf{7.} 2021.
+
+\textbf{8.} 2012: the 2021 row was typed as 2012.
+
+\textbf{9.} Raised an error, because 2012 appears twice in the trade file.
+
+\textbf{10.} With 2021 restored, all 26 years match one to one.
+
+\textbf{11.} $40{,}231/129{,}777 = 31.0\%$.
+
+\textbf{12.} $40{,}231/1.242 = 32{,}392$ million kests.
+
+\textbf{13.} $1 + 0.004\sin(\pi/2) = 1.004$.
+
+\textbf{14.} $1.0041$.
+
+\textbf{15.} $0.996$ true and recovered.
+
+\textbf{16.} $0.0003$.
+
+\textbf{17.} $3.19\%$ over the twelve months to December 2024, against $3.79\%$ for the
+yearly average.
+
+\textbf{18.} The yearly average for a year's inflation, as the statistical
+office publishes it; the December change for where inflation stood at the
+end of the year. Either, if the report says which.
+
+\textbf{19.} From nominal GDP: $(393{,}264/248{,}438)^{1/10} - 1 = 4.70\%$, which mixes price and
+volume.
+
+\textbf{20.} $1.64\%$ a year.
+
+\textbf{21.} $1.63$ log points: $\ln(1 + g) < g$ for $g > 0$.
+
+\textbf{22.} $1.04\%$ a year.
+
+\textbf{23.} $0.99\%$: the consumer price index rose faster than the GDP
+deflator ($43.5\%$ against $34.5\%$), since it prices a different basket.
+
+\textbf{24.} The corrected \omterm{prop:b1:models-and-data:real-growth}{real growth} of Brenland, 2015--2025, is $1.6\%$ a year, not
+the portal's $4.7\%$, which was nominal growth.
+\end{solution}

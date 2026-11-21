@@ -1,0 +1,282 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g11-09. The same assumption about incentives for voters, officials
+% and agencies; rational ignorance; concentrated benefits and dispersed costs; rent seeking; capture; imperfect market
+% against imperfect government. Real numbers: figdata/grade-11/09-public-choice-first-look/ (GAO/RCED-00-126 cited table
+% and WDI population). Ledger: GAO 2000 (cost, benefit, farms, net loss), Motor Carrier Act 1980, Moore (trucking),
+% Gelman, Silver and Edlin 2012. No published estimate of total lobbying or rent-seeking spending was read; none is
+% printed. The second chart (Brenland's quota) is drawn as a diagram from the problem's numbers. Brenland is invented.
+\chapter{Public Choice: A First Look}\label{ch:g11:public-choice-first-look}
+
+In 1998 the American government's sugar programme, which kept the price of sugar in the United States above the world price by limiting imports, cost the country's
+sugar users about 1.9 billion dollars. Spread over 276 million people, that was 6.89 dollars a person, too little for anyone to notice. Its benefit to sugar producers was
+about 1.0 billion dollars; spread over the 8070 farms that grew sugar cane or sugar beet, that was up to 124 thousand dollars a farm. The programme had been in place for
+decades, and it survived.
+% figdata: sugar_key (pop 275.9 million, 8070 farms, 6.89, 123900); ledger: g11:gao-sugar-cost, g11:gao-sugar-benefit, g11:gao-sugar-farms
+
+The earlier chapters asked how markets fail and how a government can correct them. This one asks how governments decide, using the same assumption the book uses for
+buyers and firms: that voters, elected officials and agencies respond to their own costs and benefits. That assumption does not say they are selfish; it says they
+respond to incentives. It explains why a programme like sugar's lasts.
+
+\begin{openingchart}{The US sugar programme in 1998: its cost per US resident against its benefit per farm growing sugar cane or beet, in 1999 dollars, on a times-ten
+scale. The benefit includes the processors' share, so the bar is an upper bound for a grower.}{US General Accounting Office (2000), report GAO/RCED-00-126; World Bank,
+World Development Indicators (population)}
+\begin{tikzpicture}
+\begin{semilogyaxis}[width=0.62\linewidth, height=5.4cm, ybar, /pgf/bar width=34pt, xtick={0,1}, xticklabels={cost per person, benefit per farm},
+  enlarge x limits=0.5, ymin=1, ymax=1000000, ytick={1,10,100,1000,10000,100000,1000000}, log ticks with fixed point, ylabel={dollars},
+  y tick label style={/pgf/number format/1000 sep={\,}}, log origin=infty,
+  nodes near coords={\pgfmathprintnumber[fixed, precision=2, 1000 sep={\,}]{\pgfplotspointmeta}}, point meta=rawy,
+  every node near coord/.append style={font=\scriptsize}]
+\addplot[fill=omDef!60, draw=omDef] table[x=x, y=dollars] {figdata/grade-11/09-public-choice-first-look/out/sugar.csv};
+\end{semilogyaxis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: governments raise taxes and spend them on public services and transfers. From \cref{ch:g10:tax-incidence}: the
+\omterm{def:g10:what-prices-do:dwl}{deadweight loss} of a tax. From \cref{ch:g11:oligopoly-and-games}: the \omterm{def:g11:oligopoly-and-games:prisoners-dilemma}{prisoner's dilemma}. From \cref{ch:g11:externalities}: the instruments that
+correct an \omterm{def:g11:externalities:externality}{externality}, which a government must choose and set.
+\end{recall}
+
+\begin{definition}[Government failure]\label{def:g11:public-choice-first-look:government-failure}
+\emph{Government failure}\index{government failure} occurs when a government's action lowers \omterm{def:g10:surplus-and-efficiency:total-surplus}{total surplus}, or fails to raise it as much as it could, because of the
+incentives and information of those who decide.
+\end{definition}
+
+\section{The uninformed voter}\label{sec:g11:public-choice-first-look:voter}
+
+A week before the American presidential election of 2008, the chance that one vote would decide it was estimated at about 1 in 60 million on average, and about 1 in
+10 million in the closest states. If the outcome is worth a large sum to a voter, say 10\,000 dollars, the expected value of his vote changing it is
+$10\,000/60\,000\,000$, less than a cent. Studying the candidates' programmes for many hours does not pay on such a stake. Most voters vote for other reasons (duty,
+identity, the pleasure of taking part), but they have little reason to learn the details of the sugar programme.
+% ledger: g11:gse2012
+
+\begin{definition}[Rational ignorance]\label{def:g11:public-choice-first-look:rational-ignorance}
+\emph{Rational ignorance}\index{rational ignorance} is a voter's choice not to learn about a policy, because the cost of learning is larger than the expected benefit,
+which is small since one vote rarely decides anything.
+\end{definition}
+
+\section{Concentrated benefits, dispersed costs}\label{sec:g11:public-choice-first-look:interest-groups}
+
+\begin{definition}[Interest group]\label{def:g11:public-choice-first-look:interest-group}
+An \emph{interest group}\index{interest group} is an organised group that seeks to influence policy for its members' benefit: growers, an industry, a profession, a
+union.
+\end{definition}
+
+\begin{definition}[Concentrated benefits and dispersed costs]\label{def:g11:public-choice-first-look:concentrated-benefits}
+A policy has \emph{concentrated benefits and dispersed costs}\index{concentrated benefits and dispersed costs} when its gains go to a few, each of whom gains much,
+and its costs fall on many, each of whom loses little.
+\end{definition}
+
+The few have both the motive and the means to organise: a large stake each, and few members to bring together. The many have neither. Each would gain from
+organising against the policy, but each would rather others paid for it: organising is a \omterm{def:g11:public-goods-and-commons:private-good}{public good} for the losers, and they free ride.
+
+\begin{model}{Concentrated benefits, dispersed costs}
+\assumes Each group spends on influence up to what the policy is worth to it; organising a group costs more the larger and more scattered it is; voters are rationally
+  ignorant of small costs.
+\predicts Policies that give large gains to a few and small losses to many survive, even when the losses add up to more than the gains.
+\tested Consistent with the US sugar programme, which cost users about 1.9 billion dollars in 1998 and brought producers about 1.0 billion; after the share
+  that went to foreign suppliers and the losses from producing and consuming the wrong amounts, the country lost about 900 million dollars that year, and
+  the programme lasted. The end of US trucking regulation in 1980, against the carriers and the drivers' union (record below), is a case the simple model
+  does not predict. A test would need many programmes, with the ones that ended counted as well as the ones that lasted.
+\breaks When an issue becomes salient, so that voters notice; when the costs also fall heavily on a few organised groups, which then lobby back.
+\end{model}
+% ledger: g11:gao-sugar-cost, g11:gao-sugar-benefit, g11:gao-sugar-net
+
+\begin{record}[Sugar in the United States]
+% ledger: g11:gao-sugar-cost, g11:gao-sugar-benefit, g11:gao-sugar-farms, g11:gao-sugar-net; figdata: sugar_key
+A government audit of the programme estimated, in 1999 dollars, that it cost American users of sugar 1.5 billion dollars in 1996 and 1.9 billion in 1998, and brought
+domestic producers 800 million and 1.0 billion. About 70\,\% of the producers' gain went to sugar beet growers and processors, 30\,\% to sugar cane. Of the net loss to
+the country, about 300 million dollars in 1996 and 500 million in 1998 was surplus destroyed, and about 400 million each year was paid to foreign producers allowed to
+sell sugar into the American market at the high domestic price. The audit's 1997 census count was 973 cane farms and 7097 beet farms.
+\end{record}
+
+The diagram below shows the same accounts for an invented country, Brenland, which limits sugar imports by a quota. The rise in the domestic price transfers surplus from
+buyers to domestic growers (area $a$) and to the holders of import licences (area $c$); areas $b$ and $d$ are destroyed, as in any restriction of trade.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.0105cm, y=0.62cm]
+\fill[omDef!20] (0,2) -- (100,2) -- (300,4) -- (0,4) -- cycle; \node[font=\small] at (120,3) {$a$};
+\fill[omThm!25] (100,2) -- (300,2) -- (300,4) -- cycle; \node[font=\small] at (240,2.6) {$b$};
+\fill[omProp!25] (300,2) rectangle (500,4); \node[font=\small] at (400,3) {$c$};
+\fill[omThm!25] (500,2) -- (700,2) -- (500,4) -- cycle; \node[font=\small] at (560,2.6) {$d$};
+\draw[econ axes] (0,9.5) node[left, font=\small] {dalens a kg} |- (950,0) node[below left=12pt and 0pt, font=\small] {thousand tonnes};
+\draw[demand] (0,9) -- (900,0) node[above right, font=\scriptsize] {demand};
+\draw[supply] (0,1) -- (800,9) node[right, font=\scriptsize] {domestic supply};
+\draw[guide] (0,2) -- (850,2) node[right, font=\scriptsize] {world price};
+\draw[guide] (0,4) -- (500,4);
+\foreach \x in {100,300,500,700} \draw[guide] (\x,0) -- (\x,2);
+\draw[guide] (300,2) -- (300,4); \draw[guide] (500,2) -- (500,4);
+\foreach \x in {100,300,500,700} \node[below, font=\footnotesize] at (\x,0) {\x};
+\foreach \y in {2,4} \draw (0,\y) -- (-8,\y) node[left, font=\footnotesize] {\y};
+\end{tikzpicture}
+
+{\small Brenland's sugar market (the weekend problem). At the world price of 2 dalens a kilogram, growers produce 100 thousand tonnes and buyers want 700. A quota of 200
+thousand tonnes of imports raises the domestic price to 4. Growers gain $a$ = 400 million dalens; licence holders $c$ = 400; buyers lose $a + b + c + d$ = 1200; $b + d$
+= 400 is the \omterm{def:g10:what-prices-do:dwl}{deadweight loss}.}
+\end{omfigure}
+
+\section{Rent seeking}\label{sec:g11:public-choice-first-look:rent-seeking}
+
+\begin{definition}[Rent seeking]\label{def:g11:public-choice-first-look:rent-seeking}
+\emph{Rent seeking}\index{rent seeking} is spending resources to obtain a transfer, a protected position or a licence from the government, rather than to produce
+something of value.
+\end{definition}
+
+The cost of a programme is not only its \omterm{def:g10:what-prices-do:dwl}{deadweight loss}. Firms competing for a licence or a quota spend on lobbyists, lawyers and campaigns, and that spending is lost
+to everyone. Suppose two firms compete for an import licence worth $V$, and each wins with a probability equal to its share of the total spent. If firm 1 spends $x_1$
+and firm 2 spends $x_2$, firm 1 expects $V x_1/(x_1 + x_2) - x_1$. Its best spending satisfies $V x_2/(x_1 + x_2)^2 = 1$; in the symmetric equilibrium $x_1 = x_2 = x$,
+this gives $V/(4x) = 1$, so each spends $V/4$ and together they spend half the prize. With more competitors, more of the prize is spent getting it.
+
+\begin{model}{Rent seeking}
+\assumes A transfer goes to whoever spends most on obtaining it, or with a chance that rises with spending; contestants are free to compete.
+\predicts Spending on the contest rises towards the value of the prize; the \omterm{def:g11:externalities:private-cost}{social cost} of a transfer is its \omterm{def:g10:what-prices-do:dwl}{deadweight loss} plus the resources spent seeking it.
+\tested Hard to measure, since much of the spending is not recorded as such. Licences that could be sold had prices: in the 1970s the right to carry certain goods on
+  certain routes by truck sold for hundreds of thousands of dollars, a measure of the rent the regulation created.
+\breaks When the rules are open to all bidders (an auction of the licence turns the rent into government revenue instead of lobbying), or when rents are small.
+\end{model}
+% ledger: g11:moore-trucking
+
+\section{Capture}\label{sec:g11:public-choice-first-look:capture}
+
+\begin{definition}[Regulatory capture]\label{def:g11:public-choice-first-look:capture}
+\emph{Regulatory capture}\index{regulatory capture} occurs when a regulator comes to serve the interests of the industry it regulates rather than those of the public it
+was set up to protect.
+\end{definition}
+
+A regulator deals every day with the firms it oversees, depends on them for information, and may hire from them or move to them. The firms are few and attentive; the
+public is many and rationally ignorant. Capture follows from the same incentives as the sugar programme.
+
+\begin{record}[Capture: trucking in the United States until 1980]
+% ledger: g11:moore-trucking, g11:mca-1980
+For decades a federal commission set American trucking rates and decided who could carry what on which route. Rights to routes became valuable, selling for hundreds of
+thousands of dollars by the 1970s, and unionised drivers earned about 50\,\% more than comparable workers. Both the truckers' association and the drivers' union strongly
+opposed ending the regulation. The Motor Carrier Act, signed on 1 July 1980, opened entry and pricing. Truckload rates fell about 25\,\% in real terms between 1977 and
+1982, the value of route rights fell close to zero, and by 1990 there were more than 40\,000 licensed carriers, over twice as many as in 1980.
+\end{record}
+
+\section{Imperfect markets, imperfect governments}\label{sec:g11:public-choice-first-look:comparison}
+
+The earlier chapters showed real market failures with measured costs: pollution that markets do not price, fisheries emptied, insurance pools that unravel. This
+chapter shows that the cure is chosen by people with their own incentives. The comparison that matters is never a failing market against a perfect government, or a
+failing government against a perfect market, but one imperfect arrangement against another, each judged by its evidence. A \omterm{def:g11:externalities:pigouvian-tax}{Pigouvian tax} that a lobby can lower, a
+quota that its holders can capture, a regulator that the regulated can win over: each is a case to be measured, not assumed.
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g11:public-choice-first-look:1}
+A programme costs consumers 600 million dalens a year; Brenland has 3 million households. What does it cost each household?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:public-choice-first-look:2}
+The same programme gives 300 million dalens a year to 1500 producers. What does each gain? How many times the cost to a household is that?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:public-choice-first-look:3}
+From the opening chart, how many times larger was the benefit per farm than the cost per person? Why is the benefit per farm an upper bound for a grower?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:public-choice-first-look:4}
+For each policy, who has concentrated benefits and who has dispersed costs? A tariff on imported steel; a licence required to work as a hairdresser; a subsidy to
+a country's few aircraft makers.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:public-choice-first-look:5}
+A voter's vote decides an election with probability 1 in 10 million, and the better candidate's win is worth 50\,000 dalens to her. What is the expected value of her
+vote changing the outcome? Is it worth 10 hours of study at 20 dalens an hour?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:public-choice-first-look:6}
+Two firms compete for a licence worth 800 thousand dalens; each wins with a probability equal to its share of the total spent. Find each firm's spending and the total in
+equilibrium.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:public-choice-first-look:7}
+With $n$ identical firms in the contest of \cref{exo:g11:public-choice-first-look:6}, each spends $V(n-1)/n^2$. Check this for $n = 2$, and compute the total spent for
+$n = 4$ and $n = 10$. What happens as $n$ grows?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:public-choice-first-look:8}
+Brenland lowers its sugar quota of the diagram from 200 to 100 thousand tonnes. Find the new domestic price, the growers' gain and the \omterm{def:g10:what-prices-do:dwl}{deadweight loss}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:public-choice-first-look:9}
+Learning how a programme affects her costs a voter 200 dalens of time. The programme costs her 30 dalens a year, and her vote is decisive with probability 1 in a million.
+Should she learn? What would change her answer?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:public-choice-first-look:10}
+In the diagram of Brenland's sugar market, read the areas $a$, $b$, $c$, $d$, and check that the buyers' loss equals their sum.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:public-choice-first-look:11}
+A newspaper campaign makes the sugar programme of the opening chart known to most voters. Which assumption of the interest-group model does this change, and what does the
+model then predict?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:public-choice-first-look:12}
+What evidence would contradict the interest-group model? Use the trucking record: who gained from the regulation, who opposed its end, and why its end is a puzzle
+for the model. Suggest what the model leaves out.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:public-choice-first-look:13}
+A regulator's official earns 60 thousand dalens a year and can expect a job in the regulated industry at 150 thousand if the industry finds him helpful, with probability
+$\pi$. A ruling in the industry's favour raises $\pi$ from 0.1 to 0.4. What is that ruling worth to him, for a job that lasts five years? What rules could weaken this
+incentive?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:public-choice-first-look:14}
+A factory's pollution causes a \omterm{def:g10:what-prices-do:dwl}{deadweight loss} of 100 million dalens a year. A tax would remove it, but the lobbying it provokes is expected to set the tax at twice the
+right level, causing a \omterm{def:g10:what-prices-do:dwl}{deadweight loss} of 100 million of its own, and the contest costs 30 million. Compare the outcomes. What does the comparison depend on?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:public-choice-first-look:15}
+Three legislators vote on two projects, each costing 30 to each of them in taxes. Project X brings benefits of 80, 10 and 10 to legislators 1, 2 and 3; project Y brings
+10, 80 and 10. Does each project pass a majority vote alone? What happens if legislators 1 and 2 agree to vote for both? Is the outcome efficient?
+\end{exercise}
+
+\section{Problem: Brenland's Sugar Quota}
+
+\begin{problem}[{Weekend problem --- who gains, who pays and what it costs}]
+\label{pb:g11:public-choice-first-look:1}
+In Brenland, demand for sugar is $Q_d = 900 - 100p$ and domestic supply $Q_s = 100p - 100$ (thousand tonnes a year; $p$ in dalens a kilogram). The world price is 2.
+Brenland has 200 sugar growers and 3 million households. A thousand tonnes at one dalen a kilogram is one million dalens.
+
+\medskip
+\noindent\textbf{Part I --- Free trade.}
+\begin{enumerate}
+\item Find consumption, domestic production and imports at the world price.
+\item Compute the growers' \omterm{def:g10:surplus-and-efficiency:producer-surplus}{producer surplus}.
+\item Compute the buyers' \omterm{def:g10:surplus-and-efficiency:consumer-surplus}{consumer surplus}.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- A quota.}
+\begin{enumerate}[resume]
+\item Imports are limited to 200 thousand tonnes. Find the domestic price.
+\item Find consumption and domestic production.
+\item Compute the gain of the growers (area $a$).
+\item Compute the quota rent of the licence holders (area $c$).
+\item Compute the buyers' loss.
+\item Compute the \omterm{def:g10:what-prices-do:dwl}{deadweight loss} ($b + d$) and check that the accounts add up.
+\item Which areas are lost to Brenland if the licences go to foreign exporters?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Who organises.}
+\begin{enumerate}[resume]
+\item Compute the gain per grower and the cost per household.
+\item How many times the cost per household is the gain per grower?
+\item The growers' association spends 40 million dalens a year lobbying for the quota. What share of the growers' gain is that?
+\item Is it worth a household's while to spend one hour, worth 20 dalens, writing to its representative? Explain with the free-rider problem.
+\item Firms compete for the import licences in a contest like the chapter's, with two equal contestants. How much do they spend in all?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- The full cost.}
+\begin{enumerate}[resume]
+\item Add the \omterm{def:g10:what-prices-do:dwl}{deadweight loss}, the growers' lobbying and the licence contest of questions 13 and 15. What is the full yearly cost of the quota to Brenland?
+\item What share of the buyers' loss reaches the growers as a gain, net of their lobbying?
+\item If the licences were auctioned, what would change in your answer to question 16?
+\item Suggest one change that would make the quota's cost salient to voters.
+\item State the result of the problem: the gain per grower against the cost per household, and the share of the growers' gain spent on lobbying.
+\end{enumerate}
+\end{problem}

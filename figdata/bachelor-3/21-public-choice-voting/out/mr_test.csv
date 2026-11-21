@@ -1,0 +1,11 @@
+stat,value
+countries,75
+slope,-0.6951
+se,0.133572
+slope_ctrl,-0.438028
+se_ctrl,0.139698
+eu_slope_b,0.00893015
+eu_se_b,0.268259
+eu_slope_c,-0.429175
+eu_se_c,0.314028
+eu_countries,36

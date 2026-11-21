@@ -1,0 +1,141 @@
+\section*{Chapter \ref{ch:b3:labour-supply-and-demand} --- Labour Supply and Demand in the Data}
+
+\begin{solution}{exo:b3:labour-supply-and-demand:1}
+Germany, by 10.1 points (45.2 to 55.3~\%), just ahead of Korea's 9.6 (47.2 to 56.8). % figdata: women_points
+Older women work less than younger ones at every date, so a larger share of women
+over 65 lowers the average rate even if each age group's rate rises.
+\end{solution}
+
+\begin{solution}{exo:b3:labour-supply-and-demand:2}
+$0.33 \times 10~\% = 3.3~\%$ more hours.
+\end{solution}
+
+\begin{solution}{exo:b3:labour-supply-and-demand:3}
+$-(1 - 0.3) \times 1 - 0.3 \times 2 = -0.7 - 0.6 = -1.3$: substitution effect $-0.7$, \omterm{def:b3:labour-supply-and-demand:hicks-marshall}{scale effect} $-0.6$.
+\end{solution}
+
+\begin{solution}{exo:b3:labour-supply-and-demand:4}
+Middle-wage occupations rich in \omterm{def:b3:labour-supply-and-demand:tasks}{routine tasks} holding their share while
+non-routine ones decline; or shares that shift without regard to the routine
+content of jobs.
+\end{solution}
+
+\begin{solution}{exo:b3:labour-supply-and-demand:5}
+The tested solution is \code{ex05_hours.py}, in the chapter's \code{exercises/} folder.
+Hours fell by 0.78~\% a year in Germany (from 1960), 0.68 in Korea (from 1963), 0.63 in France,
+0.39 in the United Kingdom, 0.29 in Japan (from 1953) and 0.17 in the United States. The
+later starting years are the first the source observes: before them its series grows at
+a constant rate, which is interpolation, not measurement. % output: ex05_hours
+\end{solution}
+
+\begin{solution}{exo:b3:labour-supply-and-demand:6}
+The threshold $\sqrt{2F/a}$ falls, so workers with wages between the new and the old
+threshold enter. They work $aw$ hours at their wages, below those of the workers already
+in, and the jump at the threshold, $\sqrt{2aF}$, is smaller: average hours among workers fall
+while total hours rise.
+\end{solution}
+
+\begin{solution}{exo:b3:labour-supply-and-demand:7}
+$w_R = \sqrt{2 \times 3{,}200/100} = 8$ dalens an hour; hours at it $100 \times 8 = 800$ a year.
+\end{solution}
+
+\begin{solution}{exo:b3:labour-supply-and-demand:8}
+The tested solution is \code{ex08_ushape.py}, in the chapter's \code{exercises/} folder.
+The square term is positive both years, 2.72 (s.e.\ 0.99) in 2000 and 3.97 (0.89) in 2019, and
+the minimum moves from about 16{,}500 to about 11{,}000 dollars a person. % output: ex08_ushape
+With an $R^2$ near 0.1 the minimum is poorly determined.
+\end{solution}
+
+\begin{solution}{exo:b3:labour-supply-and-demand:9}
+No change in the employment of older workers when the pension age, an earnings
+test or the reward for working longer changes; no bunching of retirements at the
+ages where incentives change.
+\end{solution}
+
+\begin{solution}{exo:b3:labour-supply-and-demand:10}
+The derivation is in the text. The absolute elasticity $(1 - s)\sigma + s\eta$ has derivative $\eta - \sigma$ in $s$:
+a larger labour share raises it if and only if $\eta > \sigma$.
+\end{solution}
+
+\begin{solution}{exo:b3:labour-supply-and-demand:11}
+Take-home pay rises by $4 \times 1.0/1.5 = 2.67~\%$, labour cost falls by $1.33~\%$, and hours rise by
+$0.5 \times 2.67 = 1.33~\%$ (equal to $1.0 \times 1.33$ on the demand side).
+\end{solution}
+
+\begin{solution}{exo:b3:labour-supply-and-demand:12}
+$Y = \sqrt{16/3} = 2.309$: the low and middle groups earn 0.385, the high group 0.770. Middle workers keep the
+middle task at capital's price $\rho$ when $\rho$ exceeds what they would earn in the low task,
+$\sqrt{2/(3\rho)}/6$, that is when $\rho^3 > 1/54$, or $\rho > 0.265$; above $1/3$ capital is not used at all.
+\end{solution}
+
+\begin{solution}{pb:b3:labour-supply-and-demand:hours}
+% figdata: brenland_stats
+\textbf{1.} 28.1~\% of heads work no hours; among heads under 65, 5.1~\% (94.9~\% work).
+
+\textbf{2.} 1{,}652 hours a year.
+
+\textbf{3.} 16.89 dalens an hour.
+
+\textbf{4.} 0.013 (s.e.\ 0.010): no measurable relation.
+
+\textbf{5.} Workers with higher wages differ in skills and tastes for work; only those
+who work are in the sample, so it is selected; and differences in wages between
+people are permanent, mixing income and substitution effects, whereas the
+elasticity of the chapter is the response of one person to a change in her wage.
+
+\textbf{6.} Hours measured with error appear on both sides: an overstated $h$ raises log
+hours and lowers the computed log wage, pulling the slope toward $-1$.
+
+\textbf{7.} $0.33 \times 4 = 1.32~\%$.
+
+\textbf{8.} $0.25 \times 4 = 1.0~\%$: $0.01 \times 4{,}366 = 43.7$ thousand workers.
+
+\textbf{9.} The \omterm{def:b3:labour-supply-and-demand:frisch}{intensive margin}: 1.32~\% more hours from those already working, against
+1.0~\% more workers, who enter near the threshold and work fewer hours than the
+average.
+
+\textbf{10.} Frictions: adjusting hours takes time and attention, and a small gain is not
+worth it at once.
+
+\textbf{11.} Compare hours and participation before and after in reform and other
+regions: a difference in differences under parallel trends.
+
+\textbf{12.} $s = 0.479$.
+
+\textbf{13.} $-(1 - 0.479) \times 0.7 - 0.479 \times 1.5 = -1.083$.
+
+\textbf{14.} Substitution $-0.365$, scale $-0.719$.
+
+\textbf{15.} The \omterm{def:b3:labour-supply-and-demand:hicks-marshall}{scale effect}: a firm selling into a competitive world market faces a
+very elastic product demand, so $\eta$ is large.
+
+\textbf{16.} Estimates vary mostly with the method and the setting, and published ones
+are inflated: use a range, and the rules, not one number.
+
+\textbf{17.} $5 \times 1.083/(0.58 + 1.083) = 3.256~\%$.
+
+\textbf{18.} $5 - 3.256 = 1.744~\%$.
+
+\textbf{19.} Workers: supply (0.58) is less elastic than demand (1.08), and the less elastic
+side gets the larger share of a cut in the wedge.
+
+\textbf{20.} $0.58 \times 3.256 = 1.889~\%$.
+
+\textbf{21.} Extensive $0.25 \times 3.256 = 0.814~\%$; intensive $0.33 \times 3.256 = 1.075~\%$.
+
+\textbf{22.} $0.00814 \times 4{,}366 = 35.5$ thousand workers.
+
+\textbf{23.} $0.01075 \times 4{,}366 = 46.9$ thousand full-time equivalents.
+
+\textbf{24.} Workers would move hours into the years of the cut: the \omterm{def:b3:labour-supply-and-demand:frisch}{Frisch elasticity}
+applies, and the intensive response is larger while it lasts; firms, which hire for
+the long run, may respond less.
+
+\textbf{25.} 35.5 thousand more workers, and 46.9 thousand full-time equivalents of longer
+hours among those already working. The two do not add up to a count of full-time
+equivalents: question 9 found that entrants work fewer hours than the average, so
+82.5 thousand, the sum, is an upper bound, reached only if each entrant worked full time.
+The figures also use compensated elasticities for an uncompensated cut, which ignores
+the income effect of the higher take-home pay; with leisure a normal good, the
+intensive response is smaller.
+\end{solution}

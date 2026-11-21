@@ -1,0 +1,8 @@
+$ python lpm_logit_probit.py
+men 15992, share with earnings in 1978 0.864
+              LPM     logit   probit |  AME logit  AME probit
+earn75      0.0160   0.1405   0.0722 |    0.0135     0.0131
+age        -0.0067  -0.0517  -0.0283 |   -0.0050    -0.0051
+education  -0.0118  -0.0754  -0.0420 |   -0.0073    -0.0076
+married    -0.0525  -0.2981  -0.1659 |   -0.0287    -0.0301
+LPM fitted values above 1: 0.157 of the sample, largest 1.193

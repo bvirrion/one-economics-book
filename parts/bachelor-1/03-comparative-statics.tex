@@ -1,0 +1,565 @@
+\chapter{Comparative Statics}\label{ch:b1:comparative-statics}
+
+A government raises the tax on a litre of fuel by ten cents. Before anyone
+fills a tank at the new price, a ministry wants to know how much the pump
+price will rise, how much less fuel will be sold, and how much the tax will
+raise. A model gives the \omterm{def:b1:models-and-data:equilibrium}{equilibrium} for the old tax; the question is about
+how the \omterm{def:b1:models-and-data:equilibrium}{equilibrium} moves when the tax changes. That question, asked of
+every model in this book, is \omterm{def:b1:comparative-statics:comparative-statics}{comparative statics}. This chapter gives its
+three tools: the derivative of a solution found from an equation it solves,
+the elasticity as a derivative of logarithms, and the envelope theorem,
+which tells how the best attainable value moves without solving the
+problem again.
+
+\begin{openingchart}{Energy use per person against GDP per person, 183 countries,
+2019, both on logarithmic axes, with the least-squares line through the
+logarithms. Its slope, 1.25, is an elasticity read off a chart.}{U.S. Energy
+Information Administration, energy consumption per person (million British
+thermal units); World Bank, World Development Indicators, GDP per person at
+purchasing-power parity, constant 2021 international dollars}
+% figdata: energy_income_stats (slope 1.25, n 183)
+\begin{tikzpicture}
+\begin{loglogaxis}[omscatter, log ticks with fixed point, xtickten={-3,...,9}, ytickten={-3,...,9},
+  xlabel={GDP per person (dollars, logarithmic axis)},
+  ylabel={Energy use per person (million Btu)}, xmin=500, xmax=200000,
+  ymin=0.1, ymax=1000, height=0.55\linewidth]
+  \addplot table[x=gdppc, y=energy] {figdata/bachelor-1/03-comparative-statics/out/energy_income_2019.csv};
+  \addplot[omThm, thick, no marks, sharp plot] table[x=gdppc, y=fit]
+    {figdata/bachelor-1/03-comparative-statics/out/energy_fit_2019.csv};
+\end{loglogaxis}
+\end{tikzpicture}
+\end{openingchart}
+
+On logarithmic axes, the cloud of 183 countries lies close to a straight
+line: the correlation of the two logarithms is $0.94$. % figdata: energy_income_stats
+The slope of the line is 1.25. % figdata: energy_income_stats
+\Cref{sec:b1:comparative-statics:elasticity} shows that the slope of a
+straight line on such a chart is an elasticity: across countries, one per
+cent more income per person goes with 1.25 per cent more energy use per
+person. India, at \usd{7702} a head, used 21.85 million British thermal
+units a person; the United States, nine times richer at \usd{69121}, used
+292.7, thirteen times as much. % figdata: energy_income_2019
+Whether this number says anything about how one country's energy use will
+move when its income moves is a question of what the chart can identify,
+and the chapter returns to it in a measure box. The chapter's main concern
+is the opposite kind of number: the response of a model's solution to a
+change made on purpose, a tax.
+
+\begin{recall}
+The price elasticity of demand is the percentage change in quantity
+demanded divided by the percentage change in price; demand is elastic when
+it is below $-1$. Arc and point elasticities differ in the base of the
+percentages. A tax on sellers shifts supply up by the tax; buyers bear the
+larger share of it when demand is less elastic than supply.
+\end{recall}
+
+\section{How a solution moves}\label{sec:b1:comparative-statics:moves}
+
+A model with one \omterm{def:b1:models-and-data:variables}{endogenous variable} $x$ and one \omterm{def:b1:models-and-data:variables}{exogenous variable} or
+parameter $\theta$ can be written as one equation $F(x, \theta) = 0$, whose
+solution is $x^*(\theta)$ (\cref{def:b1:models-and-data:variables}).
+
+\begin{definition}[Comparative statics]\label{def:b1:comparative-statics:comparative-statics}
+\index{comparative statics}
+The \emph{comparative statics} of a model are the derivatives of its
+solution with respect to its \omterm{def:b1:models-and-data:variables}{exogenous variables} and parameters,
+$\dd x^*/\dd\theta$: how the \omterm{def:b1:models-and-data:equilibrium}{equilibrium} or the optimum moves when one given
+variable changes and the others are held fixed.
+\end{definition}
+
+\begin{proposition}[Implicit derivative]\label{prop:b1:comparative-statics:implicit}
+\index{implicit derivative}\index{comparative statics!implicit derivative}
+Let $F$ have continuous partial derivatives, let $x^*(\theta)$ be a
+differentiable solution of $F(x, \theta) = 0$, and let
+$F_x(x^*, \theta) \neq 0$. Then
+\[
+\frac{\dd x^*}{\dd\theta} = -\frac{F_\theta(x^*, \theta)}{F_x(x^*, \theta)} .
+\]
+\end{proposition}
+
+\begin{proof}
+$F(x^*(\theta), \theta) = 0$ for every $\theta$. Differentiate with respect to
+$\theta$ by the chain rule: $F_x \,\dd x^*/\dd\theta + F_\theta = 0$. Divide by
+$F_x \neq 0$.
+\end{proof}
+
+That $x^*$ is differentiable when $F_x \neq 0$ is again the implicit
+function theorem, admitted. The condition $F_x \neq 0$ matters: where it
+fails, a small change in $\theta$ can make the solution jump or vanish. The
+proposition is \cref{prop:b1:constrained-optimisation:level-slope} in
+another dress: there $\theta$ was $x$ and $x^*$ was $y$.
+
+Apply it to a market with a per-unit tax $\tau$ collected from sellers.
+Buyers pay $p$, sellers keep $p - \tau$, demand is $D(p)$ and supply
+$S(p - \tau)$. The \omterm{def:b1:models-and-data:equilibrium}{equilibrium} price solves $F(p, \tau) = D(p) - S(p - \tau) =
+0$, with $F_p = D'(p) - S'(p - \tau)$ and $F_\tau = S'(p - \tau)$.
+
+\begin{proposition}[Incidence of a per-unit tax]\label{prop:b1:comparative-statics:incidence}
+\index{tax incidence}\index{pass-through}
+If $D' < 0$ and $S' > 0$, the price paid by buyers, the price kept by
+sellers and the quantity move with the tax as
+\[
+\frac{\dd p}{\dd\tau} = \frac{S'}{S' - D'} \in (0, 1), \qquad
+\frac{\dd (p - \tau)}{\dd\tau} = \frac{D'}{S' - D'} \in (-1, 0), \qquad
+\frac{\dd q}{\dd\tau} = \frac{D' S'}{S' - D'} < 0 .
+\]
+\end{proposition}
+
+\begin{proof}
+By \cref{prop:b1:comparative-statics:implicit},
+$\dd p/\dd\tau = -S'/(D' - S') = S'/(S' - D')$; numerator and denominator
+are positive and the numerator is smaller. Subtracting 1 gives the second
+expression. The quantity is $q = D(p)$, so $\dd q/\dd\tau = D' \,\dd p/\dd\tau$.
+\end{proof}
+
+The fraction $\dd p/\dd\tau$ is the \emph{pass-through} of the tax: the part
+of each unit of tax that shows up in the price buyers pay. With
+$D(p) = 100 - 2p$ and $S(p - \tau) = 3(p - \tau)$, $D' = -2$ and $S' = 3$, so
+the pass-through is $3/5 = 0.6$ and the quantity falls by $1.2$ units per unit
+of tax. Here the model can be solved outright, $p = 20 + 0.6\tau$ and
+$q = 60 - 1.2\tau$, and the derivatives agree; the proposition gives them
+when it cannot.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, name=left, xlabel={Quantity}, ylabel={Price},
+  xmin=0, xmax=80, ymin=0, ymax=50, width=0.48\linewidth, height=0.42\linewidth,
+  title={\small More elastic demand}, samples=2]
+  \addplot[demand, domain=0:80] {50 - x/2};
+  \addplot[supply, domain=0:80] {x/3};
+  \addplot[supply, shifted, domain=0:80] {x/3 + 5};
+  \addplot[only marks, mark=*, black] coordinates {(60,20) (54,23)};
+  \addplot[guide] coordinates {(0,23) (54,23) (54,0)};
+  \addplot[guide] coordinates {(0,20) (60,20) (60,0)};
+\end{axis}
+\begin{axis}[omrecord, grid=none, at={(left.east)}, anchor=west, xshift=12mm,
+  xlabel={Quantity}, xmin=0, xmax=80, ymin=0, ymax=50, width=0.48\linewidth,
+  height=0.42\linewidth, title={\small Less elastic demand}, samples=2]
+  \addplot[demand, domain=30:70] {140 - 2*x};
+  \addplot[supply, domain=0:80] {x/3};
+  \addplot[supply, shifted, domain=0:80] {x/3 + 5};
+  \addplot[only marks, mark=*, black] coordinates {(60,20) (57.857,24.286)};
+  \addplot[guide] coordinates {(0,24.286) (57.857,24.286)};
+  \addplot[guide] coordinates {(0,20) (60,20)};
+\end{axis}
+\end{tikzpicture}
+
+{\small A tax of 5 on sellers shifts supply $q = 3(p - \tau)$ up by 5 (dashed),
+from the same starting point $(60, 20)$. Left, demand $q = 100 - 2p$: the price
+rises by 3 and the quantity falls by 6. Right, demand $q = 70 - 0.5p$: the
+price rises by 4.29 and the quantity falls by 2.14.}
+\end{omfigure}
+
+\section{Elasticities as logarithmic derivatives}\label{sec:b1:comparative-statics:elasticity}
+
+The two panels start from the same point and differ only in the slope of
+demand. Slopes depend on units; a model that must be compared across goods
+and countries needs a measure that does not. The school volumes used the
+ratio of percentage changes. With calculus it becomes a derivative.
+
+\begin{definition}[Point elasticity]\label{def:b1:comparative-statics:point-elasticity}
+\index{elasticity!point}\index{point elasticity}
+The \emph{elasticity} of a positive differentiable function $y(x)$, with
+$x > 0$, is
+\[
+\varepsilon_{y,x} = \frac{\dd\ln y}{\dd\ln x} = \frac{x}{y}\,\frac{\dd y}{\dd x}.
+\]
+It is the percentage change in $y$ per percentage change in $x$, in the
+limit of small changes, and it has no unit.
+\end{definition}
+
+The two expressions agree by the chain rule, since $\dd\ln y = \dd y/y$ and
+$\dd\ln x = \dd x/x$. In the left panel at $(60, 20)$, the demand elasticity
+is $-2 \times 20/60 = -0.67$; in the right panel, $-0.5 \times 20/60 = -0.17$.
+Supply has the elasticity $3 \times 20/60 = 1$ in both.
+
+\begin{proposition}[Pass-through in elasticities]\label{prop:b1:comparative-statics:pass-through}
+\index{pass-through!in elasticities}
+At a point where $\tau = 0$, with $\varepsilon_d < 0$ and $\varepsilon_s > 0$ the
+elasticities of demand and supply there,
+\[
+\frac{\dd p}{\dd\tau} = \frac{\varepsilon_s}{\varepsilon_s - \varepsilon_d} .
+\]
+\end{proposition}
+
+\begin{proof}
+Multiply the numerator and the denominator of $S'/(S' - D')$ in
+\cref{prop:b1:comparative-statics:incidence} by $p/q$: $S'p/q = \varepsilon_s$
+and $D'p/q = \varepsilon_d$, since at $\tau = 0$ both curves pass through $(p, q)$.
+\end{proof}
+
+Left panel: $1/(1 + 0.67) = 0.6$; right panel: $1/(1 + 0.17) = 0.86$. The less
+elastic side of the market bears more of the tax. The proposition uses only
+two numbers that can be estimated, which is why the incidence of a tax is
+discussed in elasticities.
+
+\begin{definition}[Constant-elasticity function]\label{def:b1:comparative-statics:constant-elasticity}
+\index{constant-elasticity function}
+A \emph{constant-elasticity function} is $y = A x^{\varepsilon}$ with $A > 0$:
+its elasticity is $\varepsilon$ at every $x$, and its graph on logarithmic axes
+is the straight line $\ln y = \ln A + \varepsilon \ln x$.
+\end{definition}
+
+\begin{proposition}[Rules for elasticities]\label{prop:b1:comparative-statics:rules}
+\index{elasticity!rules}
+For positive differentiable functions,
+$\varepsilon_{yz, x} = \varepsilon_{y,x} + \varepsilon_{z,x}$,
+$\varepsilon_{y/z, x} = \varepsilon_{y,x} - \varepsilon_{z,x}$, and if $y$
+depends on $x$ through $z$, $\varepsilon_{y,x} = \varepsilon_{y,z}\,\varepsilon_{z,x}$.
+\end{proposition}
+
+\begin{proof}
+Take logarithms: $\ln(yz) = \ln y + \ln z$ and $\ln(y/z) = \ln y - \ln z$, and
+differentiate with respect to $\ln x$. For the third, the chain rule gives
+$\dd\ln y/\dd\ln x = (\dd\ln y/\dd\ln z)(\dd\ln z/\dd\ln x)$.
+\end{proof}
+
+Spending on a good is $pq$, so its elasticity with respect to the price is
+$1 + \varepsilon_d$: spending rises with the price when demand is inelastic,
+$\varepsilon_d > -1$, and falls when it is elastic. That is the school rule,
+now a one-line consequence of the logarithm.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, name=lin, xlabel={Price $p$}, ylabel={Quantity $q$},
+  xmin=0, xmax=25, ymin=0, ymax=60, width=0.46\linewidth, height=0.4\linewidth,
+  title={\small Ordinary axes}, samples=80]
+  \addplot[demand, domain=0.7:25] {50/sqrt(x)};
+\end{axis}
+\begin{loglogaxis}[omrecord, grid=none, at={(lin.east)}, anchor=west, xshift=12mm,
+  log ticks with fixed point, xtickten={-3,...,9}, ytickten={-3,...,9},
+  xlabel={Price $p$}, xmin=0.5, xmax=100, ymin=1, ymax=100,
+  width=0.46\linewidth, height=0.4\linewidth, title={\small Logarithmic axes}, samples=2]
+  \addplot[demand, domain=0.5:100] {50/sqrt(x)};
+\end{loglogaxis}
+\end{tikzpicture}
+
+{\small The constant-elasticity demand $q = 50p^{-0.5}$: a curve on ordinary
+axes, a straight line of slope $-0.5$ on logarithmic axes.}
+\end{omfigure}
+
+\begin{measure}[An elasticity from a logarithmic chart]
+The slope of a straight line through a cloud on logarithmic axes is an
+elasticity of the line, not necessarily of anything that causes anything.
+The opening chart's 1.25 compares countries that differ in climate, in the
+size of their territory, in the share of industry in output and in the price
+of energy. % figdata: energy_income_stats
+It is not the response of one country's energy use to a rise in its own
+income, still less the response of one household's. It is a measure of how
+energy and income go together across the world in one year, and it can
+change: on the 152 countries present in both years, the slope was 1.35 in
+1990 and 1.25 in 2019. % figdata: energy_income_common
+To turn a slope into an effect, one needs what
+\cref{sec:b1:models-and-data:identification} required: a reason why the
+variation on the horizontal axis moves only the curve one wants to trace.
+\end{measure}
+
+\begin{omchart}{Energy use per person against GDP per person, 1990 and 2019,
+logarithmic axes, with the least-squares line of each year.}{U.S. Energy
+Information Administration; World Bank, World Development Indicators; as in
+the opening chart}
+\begin{tikzpicture}
+\begin{loglogaxis}[omscatter, log ticks with fixed point, xtickten={-3,...,9}, ytickten={-3,...,9},
+  xlabel={GDP per person (dollars, logarithmic axis)},
+  ylabel={Energy use per person (million Btu)}, xmin=300, xmax=200000,
+  ymin=0.1, ymax=1000, height=0.5\linewidth, legend pos=north west]
+  \addplot table[x=gdppc, y=energy] {figdata/bachelor-1/03-comparative-statics/out/energy_income_1990.csv};
+  \addplot table[x=gdppc, y=energy] {figdata/bachelor-1/03-comparative-statics/out/energy_income_2019.csv};
+  \addplot[omDef, thick, no marks, sharp plot, forget plot] table[x=gdppc, y=fit]
+    {figdata/bachelor-1/03-comparative-statics/out/energy_fit_1990.csv};
+  \addplot[omThm, thick, no marks, sharp plot, forget plot] table[x=gdppc, y=fit]
+    {figdata/bachelor-1/03-comparative-statics/out/energy_fit_2019.csv};
+  \legend{1990, 2019}
+\end{loglogaxis}
+\end{tikzpicture}
+\end{omchart}
+
+\section{The envelope theorem}\label{sec:b1:comparative-statics:envelope}
+
+\omterm{def:b1:comparative-statics:comparative-statics}{Comparative statics} of an optimum can be asked of two objects: the choice,
+$x^*(\theta)$, and the best attainable value, $V(\theta)$. The second is
+easier than it looks.
+
+\begin{theorem}[Envelope theorem]\label{thm:b1:comparative-statics:envelope}
+\index{envelope theorem}
+\begin{enumerate}
+  \item Let $V(\theta) = \max_x f(x, \theta)$, attained at an interior
+    $x^*(\theta)$ that is differentiable in $\theta$, with $f$ smooth. Then
+    $V'(\theta) = f_\theta\bigl(x^*(\theta), \theta\bigr)$.
+  \item Let $V(\theta) = \max f(x, y, \theta)$ subject to
+    $g(x, y, \theta) = 0$, with solution $(x^*, y^*)$ and multiplier
+    $\lambda^*$ satisfying the \omterm{thm:b1:constrained-optimisation:lagrange}{Lagrange conditions} and differentiable in
+    $\theta$. Then
+    \[
+    V'(\theta) = \pd{\mathcal L}{\theta}\Big|_{(x^*, y^*, \lambda^*)}
+    = f_\theta - \lambda^* g_\theta .
+    \]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(1) By the chain rule $V'(\theta) = f_x \,\dd x^*/\dd\theta + f_\theta$, and
+$f_x = 0$ at an interior maximum. (2) The proof is in
+\cref{exo:b1:comparative-statics:envelope-proof}.
+\end{proof}
+
+The theorem says that when a parameter moves, the optimiser's own
+adjustment of $x$ has no first-order effect on the value: at the optimum,
+small changes in $x$ are worth nothing. Only the direct effect of $\theta$
+counts. \Cref{prop:b1:constrained-optimisation:shadow} is the case
+$g = g_0(x, y) - b$, $\theta = b$: $\partial\mathcal L/\partial b = \lambda^*$.
+
+The name comes from a picture. A firm whose cost of producing $q$ with a
+plant of size $K$ is $C(q, K) = q^2/K + K$ (invented) has, for each plant,
+a short-run cost curve. Choosing the best plant for each $q$ gives the
+long-run cost $C^{\mathrm{LR}}(q) = \min_K C(q, K)$: the condition
+$-q^2/K^2 + 1 = 0$ gives $K^* = q$, and $C^{\mathrm{LR}}(q) = 2q$. Each
+short-run curve touches the long-run line at the output its plant suits,
+and lies above it elsewhere: the long-run curve is their lower envelope.
+The theorem gives the slope of the envelope without the minimisation:
+$\dd C^{\mathrm{LR}}/\dd q = \partial C/\partial q$ at $K = K^*$, that is
+$2q/K^* = 2$.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Output $q$}, ylabel={Cost}, xmin=0, xmax=6,
+  ymin=0, ymax=14, width=0.62\linewidth, height=0.44\linewidth, samples=60,
+  legend pos=north west]
+  \addplot[curve, domain=0:4.2] {x^2/1 + 1};
+  \addplot[curve, domain=0:5.3] {x^2/2 + 2};
+  \addplot[curve, domain=0:6] {x^2/3 + 3};
+  \addplot[curve, domain=0:6] {x^2/4 + 4};
+  \addplot[supply, domain=0:6] {2*x};
+  \addplot[only marks, mark=*, black] coordinates {(1,2) (2,4) (3,6) (4,8)};
+\end{axis}
+\end{tikzpicture}
+
+{\small Short-run cost curves $q^2/K + K$ for plants $K = 1, 2, 3, 4$
+(black), and their lower envelope, the long-run cost $2q$ (red). Plant $K$
+touches the envelope at $q = K$.}
+\end{omfigure}
+
+The same theorem, applied to the consumer, the cost-minimising firm and the
+profit-maximising firm, gives three results used in the next part of the
+book: Roy's identity (\cref{ch:b1:consumer-choice}), Shephard's lemma
+(\cref{ch:b1:cost-minimisation}) and Hotelling's lemma
+(\cref{ch:b1:profit-maximisation}).
+
+\section{Sign predictions and their tests}\label{sec:b1:comparative-statics:signs}
+
+Many models do not pin down the size of a response, only its direction.
+
+\begin{definition}[Sign prediction]\label{def:b1:comparative-statics:sign-prediction}
+\index{sign prediction}
+A \emph{sign prediction} is a comparative-statics statement that a
+derivative is positive, negative or zero, derived from assumptions that
+restrict the signs of a model's derivatives without fixing their sizes.
+\end{definition}
+
+\Cref{prop:b1:comparative-statics:incidence} is a \omterm{def:b1:comparative-statics:sign-prediction}{sign prediction}: whatever
+the slopes, a tax raises the buyers' price by less than the tax and lowers
+the quantity. The second derivatives of an objective give another.
+
+\begin{proposition}[Monotone comparative statics]\label{prop:b1:comparative-statics:monotone}
+\index{comparative statics!monotone}
+Let $x^*(\theta)$ be an interior maximiser of $f(x, \theta)$ with
+$f_{xx} < 0$ at the optimum. Then $\dd x^*/\dd\theta$ has the sign of the
+cross derivative $f_{x\theta}$.
+\end{proposition}
+
+\begin{proof}
+The first-order condition is $F(x, \theta) = f_x(x, \theta) = 0$. By
+\cref{prop:b1:comparative-statics:implicit}, $\dd x^*/\dd\theta =
+-f_{x\theta}/f_{xx}$, and $-1/f_{xx} > 0$.
+\end{proof}
+
+A firm choosing output $q$ to maximise $pq - c(q)$ has $f_{qp} = 1 > 0$, so
+output rises with the price whatever the cost function, provided the
+second-order condition holds. A \omterm{def:b1:comparative-statics:sign-prediction}{sign prediction} is weaker than a number and
+easier to refute: one clean case of a tax that raises the price by more
+than the tax, in a market that fits the assumptions, contradicts
+\cref{prop:b1:comparative-statics:incidence}. That is how the evidence on
+pass-through is read.
+
+\begin{model}{A market with a per-unit tax}
+\assumes Many buyers and sellers who take the price as given; smooth demand
+$D(p)$ and supply $S(p - \tau)$, with $D' < 0 < S'$; buyers and sellers react
+to the tax as to any other change in price.
+\predicts The price paid by buyers rises by the fraction
+$\varepsilon_s/(\varepsilon_s - \varepsilon_d)$ of the tax, between 0 and 1;
+the quantity falls by more when demand is more elastic.
+\tested American state gasoline and diesel taxes are, on average, fully
+passed on to pump prices, which fits a supply to one state that is close to
+perfectly elastic; when refineries run above 95 per cent of capacity, only
+half of a diesel tax is passed on (Marion and Muehlegger 2011). % ledger: b1:marion2011-pass
+The short-run price elasticity of American gasoline demand was $-0.21$ to
+$-0.34$ in 1975--1980 and $-0.034$ to $-0.077$ in 2001--2006 (Hughes,
+Knittel and Sperling 2008). % ledger: b1:hughes2008-elast
+\breaks When sellers have market power, pass-through can exceed one
+(\cref{exo:b1:comparative-statics:monopoly}); when a tax is not shown in the
+posted price, buyers react to it less than to an equal rise in the price
+(the record box below).
+\end{model}
+
+\begin{record}[Salience]
+For three weeks, a grocery store posted prices that included the sales tax
+on 750 of its products, instead of adding the tax at the till (Chetty,
+Looney and Kroft 2009). % ledger: b1:chetty2009-salience
+The tax was the same; only its display changed. Demand for those products
+fell by about 8 per cent relative to comparable products and nearby stores. % ledger: b1:chetty2009-salience
+The same study found that rises in alcohol excise taxes, which are included
+in posted prices, reduced consumption more than rises in sales taxes, which
+are added at the till. The model's assumption that buyers treat a tax like
+any other part of the price fails when the tax is out of sight.
+\end{record}
+
+\section*{Exercises}\label{sec:b1:comparative-statics:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:comparative-statics:ce}
+Demand is $q = 50p^{-0.5}$.
+\begin{enumerate}
+  \item Compute its elasticity at any price.
+  \item At $p = 4$, compute $q$; predict the quantity after a $10\%$ rise in price, using the elasticity, and compare with the exact value.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:comparative-statics:read-slope}
+In the opening chart the slope of the line is 1.25. % figdata: energy_income_stats
+\begin{enumerate}
+  \item By what factor does the line say energy use per person differs between two countries, one twice as rich as the other?
+  \item India (\usd{7702}, 21.85 million Btu) and the United States (\usd{69121}, 292.7): compute the slope of the segment joining them on the chart. % figdata: energy_income_2019
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:comparative-statics:demand-shift}
+In the market model $q = a - bp + u^d$, $q = c + dp + u^s$
+(\cref{prop:b1:models-and-data:linear}), find the sign of
+$\dd q^*/\dd a$ and of $\dd p^*/\dd a$ with \cref{prop:b1:comparative-statics:implicit},
+writing the \omterm{def:b1:models-and-data:equilibrium}{equilibrium} as one equation in $p$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:comparative-statics:spending}
+Show that the elasticity of spending $pq$ with respect to the price is
+$1 + \varepsilon_d$. If $\varepsilon_d = -0.3$, by how much does spending change
+after a $10\%$ rise in price, to first order?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:comparative-statics:implicit-tax}
+With $D(p) = 100 - 2p$ and $S(p - \tau) = 3(p - \tau)$:
+\begin{enumerate}
+  \item write $F(p, \tau) = 0$ and compute $F_p$ and $F_\tau$;
+  \item compute $\dd p/\dd\tau$, $\dd(p - \tau)/\dd\tau$ and $\dd q/\dd\tau$;
+  \item check them against the explicit solution.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:comparative-statics:fuel}
+The short-run price elasticity of fuel demand is $-0.3$ and the elasticity
+of supply to one region is $1.2$.
+\begin{enumerate}
+  \item Compute the pass-through of a fuel tax.
+  \item Predict the rise in the pump price after a tax rise of ten cents a litre, and the share borne by sellers.
+  \item Predict how the answer changes if supply becomes far more elastic.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:comparative-statics:envelope-simple}
+Let $V(a) = \max_x (ax - x^2)$. Find $x^*(a)$ and $V(a)$, and check the
+envelope theorem: $V'(a) = \partial f/\partial a$ at $x^*$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:comparative-statics:two-years}
+On the 152 countries present in both 1990 and 2019, the slope of the line
+is 1.35 in 1990 and 1.25 in 2019. % figdata: energy_income_common
+\begin{enumerate}
+  \item What does a fall in the slope say about the cross-section of the world?
+  \item Why compare the slopes on the same countries?
+  \item Does the fall say that a country's energy use now responds less to its income growth? Say what would.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:comparative-statics:which-curve}
+Is the slope of the opening chart a demand elasticity, a supply
+elasticity, or neither? Name the variation the chart uses and two
+assumptions that would have to hold for the slope to measure how a given
+country's energy demand responds to its income.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:comparative-statics:envelope-proof}
+Prove part (2) of \cref{thm:b1:comparative-statics:envelope}: differentiate
+$V(\theta) = f(x^*(\theta), y^*(\theta), \theta)$ and the identity
+$g(x^*(\theta), y^*(\theta), \theta) = 0$, and use the \omterm{thm:b1:constrained-optimisation:lagrange}{Lagrange conditions}.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:comparative-statics:monopoly}
+A single seller faces demand $q = Ap^{-\varepsilon}$ with $\varepsilon > 1$ and
+has a constant marginal cost $c$.
+\begin{enumerate}
+  \item Show that its profit-maximising price is $p = c\,\varepsilon/(\varepsilon - 1)$.
+  \item A per-unit tax $\tau$ is levied on it. Show that the pass-through $\dd p/\dd\tau$ is $\varepsilon/(\varepsilon - 1) > 1$.
+  \item With $\varepsilon = 2$, $c = 10$ and $\tau = 1$, compute the prices before and after.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:comparative-statics:refute}
+\begin{enumerate}
+  \item Describe an observation that would refute ``the pass-through of a tax lies between 0 and 1'' in a competitive market, and one that would not refute it although it looks as if it does.
+  \item The salience study found that posting the tax lowered demand. Which assumption of the model of the tax does that contradict, and does it change the prediction of pass-through for a tax that is posted?
+\end{enumerate}
+\end{exercise}
+
+\section{Problem: A Levy on Cement}\label{sec:b1:comparative-statics:problem}
+
+\begin{problem}[{Weekend problem --- a carbon levy on Kestria's cement}]\label{pb:b1:comparative-statics:cement}
+Kestria (invented) produces and uses about a million tonnes of cement a
+year. Its government plans a carbon levy of $\tau$ kests a tonne, collected
+from producers. Buyers pay $p$ a tonne, producers keep $p - \tau$, and $Q$ is in
+thousands of tonnes. Demand and supply are
+\[
+D(p) = 1000\Bigl(\frac{p}{100}\Bigr)^{-0.5}, \qquad
+S(p - \tau) = 1000\Bigl(\frac{p - \tau}{100}\Bigr)^{1.2}.
+\]
+
+\medskip\noindent\textbf{Part I --- The equilibrium and its derivatives.}
+\begin{enumerate}
+  \item Show that with no levy the market clears at $p = 100$ kests and $Q = 1000$.
+  \item Write the \omterm{def:b1:models-and-data:equilibrium}{equilibrium} condition with the levy as $F(p, \tau) = 0$.
+  \item Compute $D'(100)$ and $S'(100)$, then $F_p$ and $F_\tau$ at $(100, 0)$.
+  \item Compute $\dd p/\dd\tau$ and $\dd Q/\dd\tau$ at $\tau = 0$, and give their units.
+  \item Compute $\dd(p - \tau)/\dd\tau$ and say what it measures.
+  \item Show that the straight lines $Q = 1500 - 5p$ and $Q = 12(p - \tau) - 200$ are tangent to $D$ and $S$ at $(100, 1000)$, and solve the linear model for $p$ as a function of $\tau$.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- Elasticities and pass-through.}
+\begin{enumerate}[resume]
+  \item Give the elasticities of demand and of supply, using \cref{def:b1:comparative-statics:constant-elasticity}.
+  \item Compute the pass-through with \cref{prop:b1:comparative-statics:pass-through}, to four decimals, and check it against question 4.
+  \item What share of the levy do producers bear, to first order?
+  \item Name two changes in the market that would push the pass-through towards one.
+  \item Compute the elasticity of buyers' spending $pD(p)$ with respect to $p$.
+  \item Predict, to first order, the percentage change in buyers' spending on cement after a levy of 10 kests.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- What producers lose.}
+The producers' total profit, as a function of the price they keep, is
+$\Pi(p_s) = \max_Q\, p_s Q - C(Q)$, where $C$ is the industry's cost and
+$C'(Q) = 100(Q/1000)^{1/1.2}$.
+\begin{enumerate}[resume]
+  \item Show that the profit-maximising $Q$ at the price $p_s$ is $S(p_s)$, and that $\Pi'(p_s) = S(p_s)$ by the envelope theorem.
+  \item Using question 5, give the first-order fall in the price producers keep after a levy of 10 kests, and the first-order loss of profit.
+  \item Compute the first-order loss of the buyers, $Q\,\Delta p$, and the sum of the two first-order losses. Compare it with the levy's revenue at $Q = 1000$.
+  \item Will the exact loss of profit be larger or smaller than the first-order one? Explain from the shape of $\Pi$.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- A levy of 10 kests a tonne.}
+\begin{enumerate}[resume]
+  \item Give the first-order predictions of $p$, $p - \tau$ and $Q$ (to one decimal), using Parts I and II.
+  \item The exact \omterm{def:b1:models-and-data:equilibrium}{equilibrium} has $p = 107.16$. Check that it clears the market to three significant figures, and compute $Q$ and $p - \tau$.
+  \item Compare the first-order predictions with the exact values. Which is larger, and by how much?
+  \item Compute the levy's revenue at the exact \omterm{def:b1:models-and-data:equilibrium}{equilibrium}.
+  \item Compute buyers' spending before and after, and its exact percentage change. Compare with question 12.
+  \item The exact loss of profit is $\int_{97.16}^{100} S(s)\,\dd s$. Compute it and compare with question 14.
+  \item Does the linear model of question 6 give the first-order prediction or the exact one? Why?
+  \item State the chapter's result for this levy: the pass-through, in kest cents per kest of levy, to first order and exactly.
+\end{enumerate}
+\end{problem}

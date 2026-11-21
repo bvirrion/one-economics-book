@@ -1,0 +1,433 @@
+\chapter{Money and Inflation}\label{ch:b1:money-and-inflation}
+
+In 1960 the United States' nominal GDP was $1.782$ times its stock of broad
+money; in 1980 it was $1.855$ times, in 1990 $1.85$. By 2020 the ratio had
+fallen to $1.182$. % figdata: velocity_us
+The quantity equation $MV = PY$ held in every one of those years, because it
+defines $V$. What failed is the idea that $V$ stays put, and with it the
+simplest rule of monetary policy. This chapter states what money demand
+predicts, scores the claims made for money growth against the record, and
+follows money to its extreme, the \omterm{def:b1:money-and-inflation:hyperinflation}{hyperinflation}.
+
+\begin{openingchart}{Velocity of broad money (nominal GDP divided by broad
+money), 1950--2020.}{Jord\`a--Schularick--Taylor Macrohistory Database,
+release 6}
+\begin{tikzpicture}
+\begin{axis}[omtime, xlabel={Year}, ylabel={Velocity}, xmin=1950, xmax=2020, ymin=0, ymax=3.6,
+  width=0.72\linewidth, height=0.4\linewidth, legend style={font=\footnotesize, at={(0.5,-0.24)}, anchor=north,
+  legend columns=4}]
+  \addplot+[thick, no marks] table[x=year, y=usa, col sep=comma] {figdata/bachelor-1/23-money-and-inflation/out/velocity.csv};
+  \addplot+[thick, no marks] table[x=year, y=gbr, col sep=comma] {figdata/bachelor-1/23-money-and-inflation/out/velocity.csv};
+  \addplot+[thick, no marks] table[x=year, y=deu, col sep=comma] {figdata/bachelor-1/23-money-and-inflation/out/velocity.csv};
+  \addplot+[thick, no marks] table[x=year, y=jpn, col sep=comma] {figdata/bachelor-1/23-money-and-inflation/out/velocity.csv};
+  \legend{United States, United Kingdom, Germany, Japan}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+\omterm{def:b1:money-and-inflation:velocity}{Velocity} fell almost everywhere, and in Japan most: households and firms
+hold more money per unit of income than they did. Only the American series
+was roughly flat for decades, which is why it served as the textbook
+example.
+
+\begin{recall}
+Money, its functions and its creation by banks were met at school, as were
+the quantity equation, real and nominal interest rates and the Fisher
+effect. \omterm{def:b1:money-and-inflation:velocity}{Velocity}, \omterm{def:b1:money-and-inflation:seigniorage}{seigniorage}, the \omterm{def:b1:money-and-inflation:seigniorage}{inflation tax} and \omterm{def:b1:money-and-inflation:hyperinflation}{hyperinflation} were
+met there in words; this chapter defines them.
+The \omterm{def:b1:long-run-model:neutrality}{neutrality of money} in the \omterm{def:b1:long-run-model:long-run}{long-run model} is
+\cref{def:b1:long-run-model:neutrality}.
+\end{recall}
+
+\section{Money demand}\label{sec:b1:money-and-inflation:demand}
+
+Money pays no interest, or less than bonds; holding it has an opportunity
+cost, the nominal interest rate $i$. It is held because it buys things: the
+more transactions, the more money.
+
+\begin{definition}[Money demand function]\label{def:b1:money-and-inflation:money-demand}
+\index{money demand function}\index{real money balances}
+The \emph{money \omterm{def:b1:consumer-choice:demand-function}{demand function}} gives the real money balances people wish
+to hold as a function of the nominal interest rate and real income,
+$M/P = L(i, Y)$, decreasing in $i$ and increasing in $Y$.
+\end{definition}
+
+\begin{definition}[Velocity of money]\label{def:b1:money-and-inflation:velocity}
+\index{velocity of money}
+The \emph{velocity} of money is nominal output divided by the money stock,
+$V = PY/M$: the number of times a unit of money is spent on final output in
+a year. The quantity equation $MV = PY$ holds by this definition.
+\end{definition}
+
+\begin{notation}[Symbols of this chapter]\label{not:b1:money-and-inflation:symbols}
+In this chapter $\beta$ is the semi-elasticity of money demand with respect to
+the interest rate and $\alpha$ that of real balances with respect to expected
+inflation (Cagan's money demand). Elsewhere in the series $\alpha$ is capital's
+share and $\beta$ a discount factor or a regression coefficient.
+\end{notation}
+
+A common form is log-linear, $\ln(M/P) = a + \eta \ln Y - \beta i$, with an income
+elasticity $\eta$ and a semi-elasticity $\beta$ with respect to the interest rate.
+\omterm{def:b1:money-and-inflation:velocity}{Velocity} is then $V = PY/M = Y/L(i, Y)$; with $\eta = 1$, $\ln V = -a + \beta i$: \omterm{def:b1:money-and-inflation:velocity}{velocity} rises
+with the interest rate, and is constant only if $i$ is.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Real money balances $M/P$}, ylabel={Interest rate $i$ (\%)},
+  xmin=0, xmax=10, ymin=0, ymax=10, width=0.5\linewidth, height=0.4\linewidth, samples=60]
+  \addplot[demand, domain=1:10] {40/x - 3};
+  \addplot[supply] coordinates {(5,0) (5,10)};
+  \addplot[shifted] coordinates {(4,0) (4,10)};
+  \addplot[guide] coordinates {(0,5) (5,5)};
+  \addplot[guide] coordinates {(0,7) (4,7)};
+  \node[font=\footnotesize, anchor=west] at (axis cs:8,1.2) {$L(i, Y)$};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:5,9) {$M/P$};
+\end{axis}
+\end{tikzpicture}
+
+{\small The money market: real money demand (blue) and the real money supply
+$M/P$ (red). A smaller real money supply (dashed) raises the interest rate that
+makes people content to hold it. In the long run the interest rate is set
+elsewhere and $P$ adjusts to bring $M/P$ to $L(i, Y)$.}
+\end{omfigure}
+
+\begin{measure}[Broad and narrow money]
+Narrow money is currency and deposits that can be spent at once; broad
+money adds savings and time deposits and similar claims. The Macrohistory
+Database gives both, in local currency, for 18 advanced economies annually
+since 1870 (release 6). % ledger: b1:jst-money-docs
+The \omterm{def:b1:money-and-inflation:velocity}{velocity} of the opening chart uses broad money; a country where people
+move savings into deposits sees its broad-money \omterm{def:b1:money-and-inflation:velocity}{velocity} fall although
+nothing has changed in how they pay.
+\end{measure}
+
+\section{The quantity theory}\label{sec:b1:money-and-inflation:quantity}
+
+The quantity equation $MV = PY$ becomes a theory when something is said
+about $V$.
+
+\begin{definition}[Quantity theory of money]\label{def:b1:money-and-inflation:quantity-theory}
+\index{quantity theory of money}
+The \emph{quantity theory of money} is the quantity equation together with
+the hypothesis that \omterm{def:b1:money-and-inflation:velocity}{velocity} is stable (or moves predictably) and that real
+output is set by real factors; then the price level is proportional to the
+money stock, and in growth rates $\pi = g_M + g_V - g_Y$, with $g_V$ near zero.
+\end{definition}
+
+\begin{omchart}{Average inflation against average growth of broad money, 18
+advanced economies, decades 1870--2019 (per cent a year), with the fitted
+line.}{Jord\`a--Schularick--Taylor Macrohistory Database, release 6}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xlabel={Money growth (\% a year)}, ylabel={Inflation (\% a year)}, xmin=-5, xmax=40,
+  ymin=-10, ymax=55, width=0.6\linewidth, height=0.45\linewidth]
+  \addplot[only marks, mark=*, mark size=1.3pt, omDef, fill opacity=0.6] table[x=gm, y=pi, col sep=comma] {figdata/bachelor-1/23-money-and-inflation/out/qt_decades.csv};
+  \addplot[omThm, thick, sharp plot, mark=none] table[x=gm, y=fit, col sep=comma] {figdata/bachelor-1/23-money-and-inflation/out/qt_fit.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+Over 228 country-decades the correlation between money growth and
+inflation is $0.848$, and inflation rises by $0.931$ points for each point of
+money growth; the intercept, $-3.24$, is roughly minus the growth of output.
+% figdata: qt_stats
+The slope leans on the high-inflation decades. Without the two wartime
+decades at the top right, Italy and Japan in the 1940s, it is $0.758$; over
+the 206 decades with money growth below $15\%$ a year it is $0.605$, and over
+the 123 decades since 1950, $0.559$. % figdata: qt_stats
+Over 110 countries and 30 years the same correlation is high for every
+definition of money (McCandless and Weber 1995). % ledger: b1:mccandless1995
+Over a decade, countries with fast money growth have high inflation. Within
+a decade, and at low inflation, the link is loose: \omterm{def:b1:money-and-inflation:velocity}{velocity} moves.
+
+\begin{model}{The quantity theory}
+\assumes \omterm{def:b1:money-and-inflation:velocity}{Velocity} stable or predictable; output set by real factors.
+\predicts Inflation equal to money growth minus output growth in the long
+run.
+\tested Across countries and decades, money growth and inflation are
+highly correlated (the chart; McCandless and Weber
+1995). % ledger: b1:mccandless1995
+The slope is near one only when high-inflation decades are included:
+$0.931$ with them, $0.6$ or less at moderate money growth. % figdata: qt_stats
+\breaks At low inflation \omterm{def:b1:money-and-inflation:velocity}{velocity} moves, as the opening chart shows, and
+policy aimed at money growth was given up in the 1980s.
+\end{model}
+
+\section{The money-growth propositions scored}\label{sec:b1:money-and-inflation:scored}
+
+Three claims were long made for money growth. Each can be scored.
+
+\emph{(i) Over the long run, money growth and inflation move one for one.}
+Holds for high inflation, not at low inflation: the decade slope is $0.758$
+to $0.931$, driven by the high-inflation decades, and well below one
+($0.605$) where money grew by less than $15\%$ a year. % figdata: qt_stats
+
+\emph{(ii) Money affects output and prices with long and variable delays.}
+Holds as a description: the effects of monetary policy on output come
+first and on prices later, as Part~VI and the second university year
+measure.
+
+\emph{(iii) A central bank can stabilise inflation by keeping money growth
+on a target.} Failed when \omterm{def:b1:money-and-inflation:velocity}{velocity} moved.
+
+\begin{record}[Velocity in the 1980s]
+On 6 October 1979 the Federal Reserve shifted its focus from the
+overnight interest rate to the volume of bank reserves, to gain firmer
+control over the growth of the money supply; its earlier procedure had
+become less reliable. The federal funds rate reached a record $20\%$ in late
+1980. In July 1982 the chairman told Congress that the Federal Reserve was
+backing off its previous tight targets. % ledger: b1:fed-targets
+In the American data, broad-money \omterm{def:b1:money-and-inflation:velocity}{velocity} was $1.855$ in 1980 and $1.85$ in
+1990, flat over the decade, but it rose to $2.14$ by 2000 and then fell to
+$1.182$ in 2020. % figdata: velocity_us
+A target for money growth is a target for inflation only if \omterm{def:b1:money-and-inflation:velocity}{velocity}
+cooperates.
+\end{record}
+
+\section{The inflation tax and hyperinflation}\label{sec:b1:money-and-inflation:tax}
+
+\begin{definition}[Seigniorage and the inflation tax]\label{def:b1:money-and-inflation:seigniorage}
+\index{seigniorage}\index{inflation tax}
+\emph{Seigniorage} is the real revenue a government obtains by issuing
+money, $\dot M/P$. The \emph{inflation tax} is the loss of real value that
+inflation inflicts on money holders, $\pi M/P$: a tax at the rate $\pi$ on the
+base $M/P$. With no \omterm{prop:b1:models-and-data:real-growth}{real growth}, in a \omterm{def:b1:solow-model:steady-state}{steady state} where money grows at the
+rate of inflation, the two are equal.
+\end{definition}
+
+In a \omterm{def:b1:solow-model:steady-state}{steady state} with real balances $m = M/(PY)$ (a share of output) and
+money growing at the rate $\pi$ (no \omterm{prop:b1:models-and-data:real-growth}{real growth}), \omterm{def:b1:money-and-inflation:seigniorage}{seigniorage} as a share of
+output is $\pi m$. But the base shrinks as the rate rises.
+
+\begin{definition}[Hyperinflation]\label{def:b1:money-and-inflation:hyperinflation}
+\index{hyperinflation}
+A \emph{hyperinflation} is an episode in which prices rise by more than
+$50\%$ a month (Cagan's threshold, about $13{,}000\%$ a
+year). % ledger: b1:cagan-def
+\end{definition}
+
+\begin{model}{Money demand in a hyperinflation}
+\assumes Real balances fall exponentially with expected inflation,
+$m = k e^{-\alpha\pi^e}$ (Cagan's money demand), and in a \omterm{def:b1:solow-model:steady-state}{steady state} $\pi^e = \pi$.
+\predicts \omterm{def:b1:money-and-inflation:seigniorage}{Seigniorage} $\pi k e^{-\alpha\pi}$, largest at $\pi = 1/\alpha$; a government that needs more
+cannot get it, and inflation explodes.
+\tested Consistent with it: real balances fell as inflation rose in Bolivia
+in 1984--85 (the chart below). A test would estimate $\alpha$ and compare the
+inflation rates governments chose with $1/\alpha$.
+\breaks When inflation accelerates, the \omterm{def:b1:solow-model:steady-state}{steady state} $\pi^e = \pi$ fails; and
+when holders can protect their money, as in Peru, where broad money barely
+fell through a \omterm{def:b1:money-and-inflation:hyperinflation}{hyperinflation} (the record below).
+\end{model}
+
+\begin{proposition}[Revenue-maximising inflation]\label{prop:b1:money-and-inflation:laffer}
+With $m = ke^{-\alpha\pi}$, steady-state \omterm{def:b1:money-and-inflation:seigniorage}{seigniorage} $S(\pi) = \pi k e^{-\alpha\pi}$ is maximal at $\pi^* = 1/\alpha$, where
+it equals $k/(\alpha e)$ of output. It does not depend on the level of output.
+\end{proposition}
+
+\begin{proof}
+$S'(\pi) = ke^{-\alpha\pi}(1 - \alpha\pi)$, positive below $1/\alpha$ and negative above. At $\pi^* = 1/\alpha$,
+$S = (1/\alpha)ke^{-1}$. Output enters $m$ only as the scale of $M/P$, and $S$ is a share of it.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Inflation $\pi$ (continuous rate)}, ylabel={Seigniorage (\% of GDP)},
+  xmin=0, xmax=2, ymin=0, ymax=4.5, width=0.56\linewidth, height=0.38\linewidth, samples=100]
+  \addplot[demand, domain=0:2] {100*x*0.25*exp(-2.5*x)};
+  \addplot[guide, domain=0:2] {2};
+  \addplot[guide] coordinates {(0.4,0) (0.4,3.679)};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:0.42,3.68) {$3.68\%$ at $\pi = 0.4$};
+  \node[font=\footnotesize, anchor=north west] at (axis cs:0.11,1.95) {$0.104$};
+  \node[font=\footnotesize, anchor=south] at (axis cs:1.0171,2.05) {$1.017$};
+\end{axis}
+\end{tikzpicture}
+
+{\small The Laffer curve of the \omterm{def:b1:money-and-inflation:seigniorage}{inflation tax} in the weekend problem,
+$m = 0.25e^{-2.5\pi}$. A deficit of $2\%$ of GDP (dashed) can be financed at a low
+inflation rate, $0.104$, or a high one, $1.017$; no rate finances more than $3.68\%$.}
+\end{omfigure}
+
+\begin{omchart}{Broad money (\% of GDP) against consumer-price inflation (\% a
+year, log scale), Bolivia and Peru, 1980--1996.}{World Bank, World Development
+Indicators (FM.LBL.BMNY.GD.ZS, FP.CPI.TOTL.ZG)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xmode=log, log ticks with fixed point, xmin=5, xmax=20000, ymin=0, ymax=55,
+  xlabel={Inflation (\% a year, log scale)}, ylabel={Broad money (\% of GDP)}, width=0.62\linewidth,
+  height=0.42\linewidth, legend style={font=\footnotesize, at={(0.97,0.97)}, anchor=north east}]
+  \addplot[omDef, thin, sharp plot, mark=*, mark size=1.4pt] table[x=infl, y=money, col sep=comma] {figdata/bachelor-1/23-money-and-inflation/out/hyper_bol.csv};
+  \addplot[omThm, thin, sharp plot, mark=square*, mark size=1.3pt] table[x=infl, y=money, col sep=comma] {figdata/bachelor-1/23-money-and-inflation/out/hyper_per.csv};
+  \legend{Bolivia, Peru}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\begin{record}[Bolivia 1985]
+Bolivia's inflation was $123.5\%$ in 1982, $1{,}281.3\%$ in 1984 and $11{,}749.6\%$ in
+1985; broad money fell from $27.1\%$ of GDP in 1982 to $12.1\%$ in 1985 and
+$10.7\%$ in 1986. After the stabilisation inflation was $14.6\%$ in 1987, and
+broad money climbed back to $46\%$ of GDP by 1994. % figdata: hyper_bol
+People held money again once it kept its value. Peru's broad money barely
+moved through its own \omterm{def:b1:money-and-inflation:hyperinflation}{hyperinflation}, $24.1\%$ of GDP in 1990 with inflation
+of $7{,}481.7\%$ --- a reminder that a broad aggregate can include deposits
+that are protected from inflation. % figdata: hyper_per
+\end{record}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omtime, grid=none, xlabel={Time (years)}, ylabel={Logarithm}, xmin=0, xmax=10, ymin=0, ymax=0.6,
+  width=0.52\linewidth, height=0.36\linewidth, legend style={font=\footnotesize, at={(0.03,0.97)}, anchor=north west}]
+  \addplot[demand, domain=0:10, samples=11] {x < 4 ? 0.05 + 0.02*x : 0.13 + 0.06*(x - 4)};
+  \addplot[supply, domain=0:3.999, samples=10] {0.02*x};
+  \addplot[supply, forget plot, domain=4:10, samples=10] {0.18 + 0.06*(x - 4)};
+  \addplot[guide] coordinates {(4,0) (4,0.6)};
+  \legend{$\ln M$, $\ln P$}
+\end{axis}
+\end{tikzpicture}
+
+{\small Money growth rises from $2\%$ to $6\%$ a year at year 4 (dashed line); $\ln M$
+is drawn with an arbitrary vertical offset. With
+$\beta = 2.5$, the expected rise of $4$ points in inflation lowers money demand by $0.1$ in
+logarithm (about $10\%$):
+the price level jumps by $0.1$ in logarithm at once, then grows at the new
+rate. Prices run ahead of money.}
+\end{omfigure}
+
+\section{The Fisher effect and the costs of inflation}\label{sec:b1:money-and-inflation:fisher}
+
+The nominal interest rate is $i = r + \pi^e$. If the real rate is set by real
+factors (\cref{ch:b1:long-run-model}), expected inflation passes one for one
+into nominal rates: the Fisher effect.
+
+Over decades since 1960 that is roughly what the data show: across the
+advanced economies, short-term interest rates rose by $0.871$ points for
+each point of decade inflation, with a correlation of $0.761$ over 105
+country-decades. Over all decades since 1870 the slope is only $0.223$.
+% figdata: qt_stats
+Under the gold standard, inflation was not expected to persist --- prices
+rose and fell --- and the interest rate did not follow it.
+
+Inflation has costs even when expected. People hold less money and spend
+time and resources economising on it (shoe-leather costs); prices must be
+reprinted (menu costs); a tax system written in nominal terms taxes
+nominal gains and nominal interest (tax distortions); and inflation that
+is high is also variable, which makes long contracts risky.
+
+\section*{Exercises}\label{sec:b1:money-and-inflation:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:money-and-inflation:qt}
+Money grows by $8\%$ a year, output by $3\%$, and \omterm{def:b1:money-and-inflation:velocity}{velocity} is constant. Find
+inflation.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:money-and-inflation:read}
+American broad-money \omterm{def:b1:money-and-inflation:velocity}{velocity} was $1.782$ in 1960, $2.14$ in 2000 and $1.182$ in
+2020. % figdata: velocity_us
+With \omterm{def:b1:money-and-inflation:velocity}{velocity} at its 1960 level, by what factor would nominal GDP in 2020
+have exceeded its actual value, for the same money stock?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:money-and-inflation:seign}
+Inflation is $20\%$ a year and real balances are $10\%$ of GDP. Compute the
+\omterm{def:b1:money-and-inflation:seigniorage}{inflation tax}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:money-and-inflation:fisher-ex}
+Expected inflation rises by 3 points and the real rate is unchanged. Predict
+the nominal rate.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:money-and-inflation:elast}
+With $\ln(M/P) = a + \ln Y - 4i$, find the elasticity of \omterm{def:b1:money-and-inflation:velocity}{velocity} with respect to $i$ at
+$i = 0.05$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:money-and-inflation:max}
+With $M/P = Ye^{-2\pi}$, find the revenue-maximising inflation rate and the
+maximum \omterm{def:b1:money-and-inflation:seigniorage}{seigniorage} as a share of $Y$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:money-and-inflation:bolivia}
+From the Bolivia record, broad money was $27.1\%$ of GDP at inflation of
+$123.5\%$ (1982) and $12.1\%$ at $11{,}749.6\%$ (1985). % figdata: hyper_bol
+Compute the ratio of real balances. What does it say about the base of the
+\omterm{def:b1:money-and-inflation:seigniorage}{inflation tax}?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:money-and-inflation:velfall}
+Money grows by $6\%$ a year, output by $2\%$, and \omterm{def:b1:money-and-inflation:velocity}{velocity} falls by $1\%$ a year.
+Predict inflation.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:money-and-inflation:fisher-slope}
+The slope of decade interest rates on decade inflation is $0.223$ over all
+decades since 1870 and $0.871$ since 1960. % figdata: qt_stats
+What does each say about the Fisher effect?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:money-and-inflation:derive}
+Prove \cref{prop:b1:money-and-inflation:laffer}, and show that with \omterm{prop:b1:models-and-data:real-growth}{real growth}
+at the rate $g$, \omterm{def:b1:money-and-inflation:seigniorage}{seigniorage} is $(\pi + g)m$; find the inflation rate that maximises it.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:money-and-inflation:rule}
+A central bank keeps money growth at $g_M$; output grows at $g_Y$; \omterm{def:b1:money-and-inflation:velocity}{velocity} growth
+is $\bar g_V + \varepsilon_t$ with $\varepsilon_t$ independent, of mean zero and variance $\sigma^2$. Find the mean and
+variance of inflation, and compare with a bank that observes $\varepsilon_t$ and offsets
+it.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:money-and-inflation:refute}
+What evidence would refute ``inflation is always caused by money growth'' at
+low inflation, and why does the cross-country, cross-decade link survive
+it?
+\end{exercise}
+
+\section{Problem: Kestria's Printing Press}\label{sec:b1:money-and-inflation:problem}
+
+\begin{problem}[{Weekend problem --- the inflation tax}]\label{pb:b1:money-and-inflation:kestria}
+Kestria (invented) has no \omterm{prop:b1:models-and-data:real-growth}{real growth}. Its \omterm{def:b1:money-and-inflation:money-demand}{real money balances}, as a share
+of GDP, are $m = 0.25e^{-2.5\pi}$, where $\pi$ is the continuously compounded inflation
+rate, expected correctly. In a \omterm{def:b1:solow-model:steady-state}{steady state} money grows at the rate $\pi$.
+
+\medskip\noindent\textbf{Part I --- Money demand and velocity.}
+\begin{enumerate}
+  \item Compute $m$ and \omterm{def:b1:money-and-inflation:velocity}{velocity} at $\pi = 0.05$.
+  \item Compute them at $\pi = 0.10$.
+  \item What is the semi-elasticity of money demand, and the elasticity at $\pi = 0.05$?
+  \item Compute \omterm{def:b1:money-and-inflation:seigniorage}{seigniorage} at $\pi = 0.05$.
+  \item Why does \omterm{def:b1:money-and-inflation:velocity}{velocity} rise with inflation?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- A deficit paid by printing.} The government
+must finance a deficit of $2\%$ of GDP by money creation.
+\begin{enumerate}[resume]
+  \item Write the condition for the steady-state inflation rate.
+  \item Find the two rates that satisfy it.
+  \item Compute real balances at each.
+  \item Which is the government likely to reach if it starts at low inflation?
+  \item What happens if people expect the high rate?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- The Laffer curve.}
+\begin{enumerate}[resume]
+  \item Find the revenue-maximising inflation rate.
+  \item Express it as an annual percentage increase in prices.
+  \item Compute the maximum \omterm{def:b1:money-and-inflation:seigniorage}{seigniorage}.
+  \item Compute \omterm{def:b1:money-and-inflation:seigniorage}{seigniorage} at $\pi = 0.6$ and at $\pi = 1.5$.
+  \item The deficit rises to $5\%$ of GDP. What happens?
+  \item Why does the maximum not depend on the size of Kestria's GDP?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- A stabilisation.} Kestria is at $\pi = 1.5$. A
+fiscal reform ends the deficit and a new currency is introduced; inflation
+falls at once to $\pi = 0.02$.
+\begin{enumerate}[resume]
+  \item Compute real balances before, and the annual price increase at $\pi = 1.5$.
+  \item Compute real balances after.
+  \item By what factor do real balances rise?
+  \item How much new money, as a share of GDP, can the central bank issue without raising prices?
+  \item Why must the fiscal reform come first?
+  \item Compare with Bolivia after 1985.
+  \item What would make people doubt the stabilisation, and what would that do to real balances?
+  \item State the result: what is the largest deficit Kestria can finance by printing?
+\end{enumerate}
+\end{problem}

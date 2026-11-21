@@ -1,0 +1,13 @@
+line-length = 88
+target-version = "py312"
+[lint]
+select = ["E", "F", "W", "B", "UP"]
+# zip(strict=) is noise in a school listing
+ignore = ["B905"]
+[lint.per-file-ignores]
+"**/tests/*.py" = ["E501"]
+# the shared tools are never printed
+"code/shared/**" = ["E501"]
+# Listings printed in the books may teach a pattern ruff would rewrite (a staged
+# bug, an older idiom shown to be replaced). Mark such a line with `# noqa: <code>`
+# and say why in the chapter, or list the file here with the rule and a reason.

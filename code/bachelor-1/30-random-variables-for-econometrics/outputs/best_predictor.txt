@@ -1,0 +1,4 @@
+$ python best_predictor.py
+overall mean      MSE   241.87 million
+a line            MSE   211.61 million
+conditional mean  MSE   208.73 million

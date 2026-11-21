@@ -1,0 +1,203 @@
+\section*{Chapter \ref{ch:b1:comparative-statics} --- Comparative Statics}
+% Numbers recomputed in code/bachelor-1/03-comparative-statics/exercises/solutions.py (tested).
+
+\begin{solution}{exo:b1:comparative-statics:ce}
+\begin{enumerate}
+  \item $\ln q = \ln 50 - 0.5\ln p$, so $\varepsilon = -0.5$ at every price.
+  \item $q = 50/\sqrt 4 = 25$. A $10\%$ rise predicts $-0.5 \times 10\% = -5\%$,
+    so $q \approx 23.75$. Exactly, $50/\sqrt{4.4} = 23.84$: the first-order
+    prediction is close for a $10\%$ change.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:comparative-statics:read-slope}
+\begin{enumerate}
+  \item $2^{1.25} = 2.38$: the richer country uses about 2.4 times as much energy per person.
+  \item $\ln(292.7/21.85)/\ln(69121/7702) = \ln 13.40/\ln 8.974 = 2.595/2.194 = 1.18$,
+    a little below the slope of the line through all 183 countries.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:comparative-statics:demand-shift}
+$F(p, a) = (a - bp + u^d) - (c + dp + u^s)$ has $F_p = -(b + d)$ and $F_a = 1$, so
+$\dd p^*/\dd a = 1/(b + d) > 0$. Then $q^* = c + dp^* + u^s$ gives
+$\dd q^*/\dd a = d/(b + d) > 0$: a rise in demand raises both, as in
+\cref{prop:b1:models-and-data:linear}.
+\end{solution}
+
+\begin{solution}{exo:b1:comparative-statics:spending}
+By \cref{prop:b1:comparative-statics:rules},
+$\varepsilon_{pq, p} = \varepsilon_{p,p} + \varepsilon_{q,p} = 1 + \varepsilon_d$.
+With $\varepsilon_d = -0.3$, a $10\%$ rise in price raises spending by about
+$0.7 \times 10\% = 7\%$.
+\end{solution}
+
+\begin{solution}{exo:b1:comparative-statics:implicit-tax}
+\begin{enumerate}
+  \item $F(p, \tau) = 100 - 2p - 3(p - \tau)$, with $F_p = -5$ and $F_\tau = 3$.
+  \item $\dd p/\dd\tau = 3/5 = 0.6$; $\dd(p - \tau)/\dd\tau = -0.4$;
+    $\dd q/\dd\tau = D' \times 0.6 = -2 \times 0.6 = -1.2$.
+  \item $5p = 100 + 3\tau$ gives $p = 20 + 0.6\tau$ and $q = 100 - 2p = 60 - 1.2\tau$.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:comparative-statics:fuel}
+\begin{enumerate}
+  \item $1.2/(1.2 + 0.3) = 0.8$.
+  \item The pump price rises by $0.8 \times 10 = 8$ cents; sellers bear the
+    other 2 cents, a fifth of the tax.
+  \item As $\varepsilon_s$ grows, $\varepsilon_s/(\varepsilon_s - \varepsilon_d)$ tends
+    to 1: buyers bear the whole tax.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:comparative-statics:envelope-simple}
+$f(x, a) = ax - x^2$ has $f_x = a - 2x = 0$ at $x^* = a/2$, and
+$V(a) = a^2/2 - a^2/4 = a^2/4$. So $V'(a) = a/2$, and
+$\partial f/\partial a = x$, which is $a/2$ at $x^*$: the theorem holds.
+\end{solution}
+
+\begin{solution}{exo:b1:comparative-statics:two-years}
+\begin{enumerate}
+  \item In both years energy use rises more than in proportion to income
+    across countries (slope above 1), but less so in 2019: a $1\%$ income gap
+    went with $1.25\%$ more energy use, against $1.35\%$ in 1990. The
+    cross-section flattened.
+  \item So that the change in slope is not caused by countries entering the
+    data (the 31 countries with 2019 data but none for 1990), only by the
+    same countries' changes.
+  \item No. It describes two cross-sections. The response of one country's
+    energy use to its own growth would need its own changes over time,
+    compared with other countries' changes, and a reason why those income
+    changes were not themselves caused by energy.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:comparative-statics:which-curve}
+Neither, as it stands. It uses differences between countries in one year.
+For it to measure a country's response of energy demand to income, it would
+need (i) no other difference between rich and poor countries that changes
+energy use --- climate, the price of energy, the share of heavy industry ---
+to be correlated with income, and (ii) income not to be caused by energy:
+countries rich because they sell oil and gas sit high on both axes for that
+reason.
+\end{solution}
+
+\begin{solution}{exo:b1:comparative-statics:envelope-proof}
+Differentiate $V(\theta) = f(x^*, y^*, \theta)$:
+$V' = f_x x^{*\prime} + f_y y^{*\prime} + f_\theta$. The constraint holds for
+every $\theta$, so $g_x x^{*\prime} + g_y y^{*\prime} + g_\theta = 0$. The \omterm{thm:b1:constrained-optimisation:lagrange}{Lagrange
+conditions} are $f_x = \lambda^* g_x$ and $f_y = \lambda^* g_y$, so
+$f_x x^{*\prime} + f_y y^{*\prime} = \lambda^*(g_x x^{*\prime} + g_y y^{*\prime})
+= -\lambda^* g_\theta$. Hence $V' = f_\theta - \lambda^* g_\theta$, which is
+$\partial\mathcal L/\partial\theta$ for $\mathcal L = f - \lambda g$.
+\end{solution}
+
+\begin{solution}{exo:b1:comparative-statics:monopoly}
+\begin{enumerate}
+  \item Profit is $(p - c)Ap^{-\varepsilon}$. Its derivative,
+    $Ap^{-\varepsilon} - \varepsilon(p - c)Ap^{-\varepsilon - 1}$, is zero when
+    $p = \varepsilon(p - c)$, that is $p = c\,\varepsilon/(\varepsilon - 1)$.
+  \item With the tax the seller's cost per unit is $c + \tau$, so
+    $p = (c + \tau)\varepsilon/(\varepsilon - 1)$ and
+    $\dd p/\dd\tau = \varepsilon/(\varepsilon - 1)$, which exceeds 1 for every
+    $\varepsilon > 1$.
+  \item The markup factor is $2/(2 - 1) = 2$: $p = 20$ before and $22$ after, a
+    rise of 2 for a tax of 1.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{exo:b1:comparative-statics:refute}
+\begin{enumerate}
+  \item A refutation: in a market with many sellers, with costs and demand
+    otherwise unchanged (other markets nearby, untaxed, as a comparison),
+    the price rises by more than the tax, or falls. Not a refutation: the
+    price rises by more than the tax in the same month as a rise in crude oil
+    prices, or in a market with one or two sellers, where the model's
+    assumptions do not hold.
+  \item It contradicts the assumption that buyers react to the tax as to any
+    part of the price. For a tax included in the posted price, buyers see it,
+    and the prediction of pass-through is unchanged; the finding warns that
+    the same tax, added at the till, would be passed on and reacted to
+    differently.
+\end{enumerate}
+\end{solution}
+
+\begin{solution}{pb:b1:comparative-statics:cement}
+\textbf{1.} $D(100) = 1000 \times 1^{-0.5} = 1000$ and $S(100) = 1000 \times 1^{1.2} = 1000$.
+
+\textbf{2.} $F(p, \tau) = 1000(p/100)^{-0.5} - 1000\bigl((p - \tau)/100\bigr)^{1.2} = 0$.
+
+\textbf{3.} $D'(p) = -0.5 \times 10 \times (p/100)^{-1.5}$, so $D'(100) = -5$;
+$S'(p_s) = 1.2 \times 10 \times (p_s/100)^{0.2}$, so $S'(100) = 12$. Then
+$F_p = D' - S' = -17$ and $F_\tau = S' = 12$.
+
+\textbf{4.} $\dd p/\dd\tau = -F_\tau/F_p = 12/17 = 0.7059$ kests of price per
+kest of levy; $\dd Q/\dd\tau = D' \times 0.7059 = -3.53$ thousand tonnes per
+kest.
+
+\textbf{5.} $0.7059 - 1 = -0.2941$: each kest of levy lowers the price
+producers keep by 0.29 kests.
+
+\textbf{6.} Both lines give 1000 at $p = 100$ and have the slopes $-5$ and
+$12$ of $D$ and $S$ there: they are the tangents. $1500 - 5p = 12p - 12\tau -
+200$ gives $17p = 1700 + 12\tau$, $p = 100 + (12/17)\tau$.
+
+\textbf{7.} $\varepsilon_d = -0.5$ and $\varepsilon_s = 1.2$, the exponents.
+
+\textbf{8.} $1.2/(1.2 + 0.5) = 1.2/1.7 = 0.7059$, as in question 4.
+
+\textbf{9.} $1 - 0.7059 = 0.2941$, about $29\%$.
+
+\textbf{10.} More elastic supply (imports of cement from Brenland, idle
+kilns) or less elastic demand.
+
+\textbf{11.} $1 + \varepsilon_d = 0.5$.
+
+\textbf{12.} The price rises by $0.7059 \times 10 = 7.06$ kests, $7.06\%$; spending
+rises by $0.5 \times 7.06 = 3.53\%$.
+
+\textbf{13.} The first-order condition $p_s = C'(Q) = 100(Q/1000)^{1/1.2}$ gives
+$Q = 1000(p_s/100)^{1.2} = S(p_s)$. By part (1) of
+\cref{thm:b1:comparative-statics:envelope}, $\Pi'(p_s) = \partial(p_sQ - C(Q))/\partial p_s = Q$
+at the optimum, that is $S(p_s)$.
+
+\textbf{14.} $\Delta p_s \approx -0.2941 \times 10 = -2.94$ kests; the loss of profit
+is about $1000 \times 2.94 = 2940$ thousand kests.
+
+\textbf{15.} Buyers: $1000 \times 7.06 = 7060$ thousand kests. The sum,
+$10000$, equals the levy on 1000 thousand tonnes at 10 kests: to first
+order the levy's burden is split between the two sides and equals its
+revenue.
+
+\textbf{16.} Smaller: $\Pi'' = S' > 0$, so $\Pi$ is convex; as $p_s$ falls,
+producers sell less, and each further kest of price is lost on fewer
+tonnes. The first-order loss counts every kest on the initial 1000.
+
+\textbf{17.} $p \approx 107.06$, $p - \tau \approx 97.06$, and
+$\Delta\ln Q \approx -0.5 \times 7.06\% = -3.53\%$, so $Q \approx 964.7$.
+
+\textbf{18.} $D(107.16) = 1000 \times 1.0716^{-0.5} = 966.0$ and
+$S(97.16) = 1000 \times 0.9716^{1.2} = 966.0$: the market clears. $Q = 966.0$
+and $p - \tau = 97.16$.
+
+\textbf{19.} The first-order price is $0.10$ kest too low and the first-order
+quantity $1.3$ thousand tonnes too low.
+
+\textbf{20.} $10 \times 966.0 = 9660$ thousand kests.
+
+\textbf{21.} Before, $100 \times 1000 = 100000$; after, $107.16 \times 966.0 =
+103517$, a rise of $3.52\%$, against $3.53\%$ predicted.
+
+\textbf{22.} $\int_{97.16}^{100} 1000(s/100)^{1.2}\,\dd s = \frac{1000 \times 100}{2.2}
+\bigl[1 - 0.9716^{2.2}\bigr] = 45454.5 \times 0.06142 = 2792$ thousand kests,
+$148$ less than the first-order 2940.
+
+\textbf{23.} The first-order prediction exactly: the tangent lines have the
+derivatives of $D$ and $S$ at $(100, 1000)$, so the linear model's response is
+the first-order response, $p = 100 + 0.7059 \times 10 = 107.06$.
+
+\textbf{24.} To first order, 71 kest cents of every kest of levy reach the
+price of cement ($0.7059$); exactly, for a levy of 10 kests, $7.16/10$, that is
+72 cents.
+\end{solution}

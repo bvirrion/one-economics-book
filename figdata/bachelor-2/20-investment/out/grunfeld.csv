@@ -1,0 +1,221 @@
+firm,year,i_rel,v_rel
+General Motors,1935,0.522,0.71
+General Motors,1936,0.644,1.076
+General Motors,1937,0.675,1.243
+General Motors,1938,0.424,0.644
+General Motors,1939,0.544,0.995
+General Motors,1940,0.759,1.072
+General Motors,1941,0.842,1.05
+General Motors,1942,0.737,0.749
+General Motors,1943,0.822,0.935
+General Motors,1944,0.9,1.01
+General Motors,1945,0.923,1.117
+General Motors,1946,1.132,1.131
+General Motors,1947,0.936,0.814
+General Motors,1948,0.87,0.751
+General Motors,1949,0.913,0.854
+General Motors,1950,1.057,0.867
+General Motors,1951,1.243,1.115
+General Motors,1952,1.466,1.136
+General Motors,1953,2.145,1.44
+General Motors,1954,2.445,1.291
+US Steel,1935,0.511,0.691
+US Steel,1936,0.866,0.916
+US Steel,1937,1.145,1.357
+US Steel,1938,0.639,0.914
+US Steel,1939,0.561,0.993
+US Steel,1940,0.881,1.117
+US Steel,1941,1.152,1.207
+US Steel,1942,1.086,1.1
+US Steel,1943,0.881,1.007
+US Steel,1944,0.702,0.92
+US Steel,1945,0.63,0.938
+US Steel,1946,1.024,1.049
+US Steel,1947,1.024,0.911
+US Steel,1948,1.205,0.825
+US Steel,1949,0.987,0.845
+US Steel,1950,1.02,0.851
+US Steel,1951,1.433,1.161
+US Steel,1952,1.573,1.095
+US Steel,1953,1.562,1.03
+US Steel,1954,1.119,1.073
+General Electric,1935,0.324,0.603
+General Electric,1936,0.44,1.038
+General Electric,1937,0.755,1.444
+General Electric,1938,0.436,1.051
+General Electric,1939,0.47,1.162
+General Electric,1940,0.727,1.098
+General Electric,1941,1.105,0.945
+General Electric,1942,0.898,0.818
+General Electric,1943,0.599,0.901
+General Electric,1944,0.555,0.869
+General Electric,1945,0.915,1.034
+General Electric,1946,1.563,1.138
+General Electric,1947,1.439,0.853
+General Electric,1948,1.43,0.826
+General Electric,1949,0.961,0.738
+General Electric,1950,0.914,0.83
+General Electric,1951,1.322,0.937
+General Electric,1952,1.538,1.071
+General Electric,1953,1.755,1.222
+General Electric,1954,1.854,1.422
+Chrysler,1935,0.468,0.602
+Chrysler,1936,0.845,1.209
+Chrysler,1937,0.769,1.275
+Chrysler,1938,0.599,0.632
+Chrysler,1939,0.609,0.981
+Chrysler,1940,0.806,1.05
+Chrysler,1941,0.794,0.928
+Chrysler,1942,0.543,0.593
+Chrysler,1943,0.55,0.849
+Chrysler,1944,0.692,1.007
+Chrysler,1945,1.031,1.221
+Chrysler,1946,0.861,1.289
+Chrysler,1947,0.728,0.835
+Chrysler,1948,1.038,1.002
+Chrysler,1949,0.917,0.852
+Chrysler,1950,1.169,1
+Chrysler,1951,1.865,1.167
+Chrysler,1952,1.684,1.049
+Chrysler,1953,2.031,1.445
+Chrysler,1954,2.003,1.014
+Atlantic Refining,1935,0.642,0.681
+Atlantic Refining,1936,0.821,0.725
+Atlantic Refining,1937,1.201,0.833
+Atlantic Refining,1938,0.866,0.677
+Atlantic Refining,1939,0.69,0.827
+Atlantic Refining,1940,0.752,0.801
+Atlantic Refining,1941,0.993,0.862
+Atlantic Refining,1942,0.642,0.819
+Atlantic Refining,1943,1.007,0.653
+Atlantic Refining,1944,0.847,0.811
+Atlantic Refining,1945,1.023,0.928
+Atlantic Refining,1946,0.961,1.006
+Atlantic Refining,1947,0.939,1.076
+Atlantic Refining,1948,1.138,0.97
+Atlantic Refining,1949,1.091,1.025
+Atlantic Refining,1950,0.902,1.037
+Atlantic Refining,1951,1.299,1.414
+Atlantic Refining,1952,1.382,1.553
+Atlantic Refining,1953,1.487,1.721
+Atlantic Refining,1954,1.318,1.58
+IBM,1935,0.367,0.469
+IBM,1936,0.469,0.501
+IBM,1937,0.468,0.531
+IBM,1938,0.497,0.516
+IBM,1939,0.444,0.682
+IBM,1940,0.515,0.71
+IBM,1941,0.783,0.659
+IBM,1942,0.773,0.649
+IBM,1943,0.502,0.685
+IBM,1944,0.588,0.787
+IBM,1945,0.704,0.773
+IBM,1946,0.905,0.957
+IBM,1947,0.936,0.97
+IBM,1948,1.156,0.975
+IBM,1949,1.23,1.148
+IBM,1950,1.396,1.605
+IBM,1951,1.72,1.612
+IBM,1952,1.795,1.672
+IBM,1953,2.301,1.89
+IBM,1954,2.449,2.209
+Union Oil,1935,0.513,0.921
+Union Oil,1936,0.488,1.336
+Union Oil,1937,0.689,1.403
+Union Oil,1938,0.684,1.076
+Union Oil,1939,0.56,1.08
+Union Oil,1940,0.708,0.969
+Union Oil,1941,0.914,0.738
+Union Oil,1942,0.724,0.655
+Union Oil,1943,0.93,0.726
+Union Oil,1944,1.488,0.789
+Union Oil,1945,0.927,0.845
+Union Oil,1946,1.029,1.046
+Union Oil,1947,1.019,0.797
+Union Oil,1948,1.051,0.862
+Union Oil,1949,1.063,0.9
+Union Oil,1950,0.894,0.94
+Union Oil,1951,1.361,1.195
+Union Oil,1952,1.527,1.189
+Union Oil,1953,1.552,1.247
+Union Oil,1954,1.881,1.286
+Westinghouse,1935,0.301,0.285
+Westinghouse,1936,0.604,0.769
+Westinghouse,1937,0.817,1.087
+Westinghouse,1938,0.534,0.835
+Westinghouse,1939,0.439,0.775
+Westinghouse,1940,0.666,0.937
+Westinghouse,1941,1.131,0.801
+Westinghouse,1942,1.01,0.836
+Westinghouse,1943,0.863,0.92
+Westinghouse,1944,0.882,0.934
+Westinghouse,1945,0.916,1.099
+Westinghouse,1946,1.246,1.134
+Westinghouse,1947,1.295,0.867
+Westinghouse,1948,1.155,0.987
+Westinghouse,1949,0.747,0.87
+Westinghouse,1950,0.752,0.947
+Westinghouse,1951,1.268,1.079
+Westinghouse,1952,1.674,1.288
+Westinghouse,1953,2.1,1.779
+Westinghouse,1954,1.599,1.772
+Goodyear,1935,0.636,0.871
+Goodyear,1936,0.558,0.872
+Goodyear,1937,0.732,1.004
+Goodyear,1938,0.499,0.737
+Goodyear,1939,0.687,1.068
+Goodyear,1940,0.643,0.869
+Goodyear,1941,0.766,0.804
+Goodyear,1942,0.769,0.639
+Goodyear,1943,0.852,1.044
+Goodyear,1944,1.491,1.122
+Goodyear,1945,1.249,1.16
+Goodyear,1946,1.36,1.041
+Goodyear,1947,1.297,0.875
+Goodyear,1948,0.968,0.891
+Goodyear,1949,0.777,0.83
+Goodyear,1950,1.038,0.823
+Goodyear,1951,1.349,1.019
+Goodyear,1952,1.575,1.423
+Goodyear,1953,1.578,1.487
+Goodyear,1954,1.178,1.422
+Diamond Match,1935,0.823,1
+Diamond Match,1936,0.648,1.24
+Diamond Match,1937,0.71,1.159
+Diamond Match,1938,0.645,0.828
+Diamond Match,1939,0.658,1.136
+Diamond Match,1940,0.587,1.219
+Diamond Match,1941,0.694,1.095
+Diamond Match,1942,0.603,0.876
+Diamond Match,1943,0.302,0.878
+Diamond Match,1944,0.383,0.872
+Diamond Match,1945,0.441,0.928
+Diamond Match,1946,0.726,0.981
+Diamond Match,1947,1.235,0.916
+Diamond Match,1948,1.835,0.959
+Diamond Match,1949,1.365,1.004
+Diamond Match,1950,1.109,0.974
+Diamond Match,1951,1.514,1.171
+Diamond Match,1952,1.945,1.049
+Diamond Match,1953,2.117,0.896
+Diamond Match,1954,1.66,0.82
+American Steel,1935,0.429,0.526
+American Steel,1936,0.824,0.763
+American Steel,1937,1.494,1.86
+American Steel,1938,0.591,1.187
+American Steel,1939,0.486,1.463
+American Steel,1940,0.683,1.202
+American Steel,1941,0.837,1.045
+American Steel,1942,1.769,0.857
+American Steel,1943,2.231,1.306
+American Steel,1944,1.354,1.078
+American Steel,1945,1.398,1.028
+American Steel,1946,0.578,1.189
+American Steel,1947,0.56,0.843
+American Steel,1948,0.872,0.704
+American Steel,1949,0.939,0.694
+American Steel,1950,0.697,0.634
+American Steel,1951,0.954,0.801
+American Steel,1952,1.07,1.001
+American Steel,1953,1.317,0.998
+American Steel,1954,0.917,0.82

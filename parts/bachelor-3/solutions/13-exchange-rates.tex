@@ -1,0 +1,160 @@
+\section*{Chapter \ref{ch:b3:exchange-rates} --- Exchange Rates}
+
+\begin{solution}{exo:b3:exchange-rates:1}
+Highest: Bermuda (117), then the Cayman Islands (113) and Switzerland (111); lowest:
+Egypt (18.6). Egypt, with an income of about 16{,}700 dollars a person, is as cheap
+as Afghanistan, whose income is an eighth of it; Barbados (110 at about 20{,}900
+dollars) is much dearer than its income predicts. Doubling income raises the
+price level by $2^{0.20} - 1 = 15~\%$. % figdata: pli, pli_stats
+\end{solution}
+
+\begin{solution}{exo:b3:exchange-rates:2}
+Approximately $6 - 2 = 4~\%$ a year of depreciation of the home currency; exactly
+$1.06/1.02 - 1 = 3.92~\%$.
+\end{solution}
+
+\begin{solution}{exo:b3:exchange-rates:3}
+$F = 1.10 \times 1.04/1.02 = 1.1216$ dalens per kest. A kest costs more forward than
+spot: the dalen is at a forward discount of about 2~\%, matching its higher
+interest rate.
+\end{solution}
+
+\begin{solution}{exo:b3:exchange-rates:4}
+A real exchange rate between two countries with similar productivity growth and
+no barriers to trade that drifts for many decades with no tendency to return: a
+unit root that cannot be rejected even in a century of data. Deviations explained
+by trends in relative productivity (Japan, Switzerland) contradict PPP in its
+simple form but not the Balassa--Samuelson amendment.
+\end{solution}
+
+\begin{solution}{exo:b3:exchange-rates:5}
+The tested solution is \code{ex05_half_lives.py}, in the chapter's
+\code{exercises/} folder. Medians 5.5 years (1870--2020) and 2.5 years (1974--2020); the
+longest over the long sample are Switzerland (29.2), Denmark (11.5) and Ireland
+(9.6). % output: ex05_half_lives
+Switzerland's real rate trends upward in value for a century, which an AR(1)
+around a constant mean reads as almost no reversion; trend appreciations of this
+kind are what the \omterm{def:b3:exchange-rates:balassa-samuelson}{Balassa--Samuelson effect} produces.
+\end{solution}
+
+\begin{solution}{exo:b3:exchange-rates:6}
+$2^{0.5} = 1.414$: home's price level is 41~\% higher. Its real exchange rate
+appreciates by $0.5 \times 3 = 1.5~\%$ a year.
+\end{solution}
+
+\begin{solution}{exo:b3:exchange-rates:7}
+$\lambda\theta = 0.5$: on impact $10 \times (1 + 2) = 30~\%$; after a year $10 + 20e^{-0.25} = 10 + 15.6 = 25.6~\%$;
+in the long run 10~\%. The interest rate falls by $10/\lambda = 5$ points on impact.
+\end{solution}
+
+\begin{solution}{exo:b3:exchange-rates:8}
+The tested solution is \code{ex08_uip_by_country.py}, in the chapter's
+\code{exercises/} folder. The slope is negative in 14 of 17 economies (mean $-0.45$);
+a slope of one is rejected at 5~\% in 11 of them. % output: ex08_uip_by_country
+\end{solution}
+
+\begin{solution}{exo:b3:exchange-rates:9}
+A model that uses only information available at the date of the forecast and
+beats the random walk out of sample, at horizons under a year, for several
+currencies, by a margin larger than chance, in a period not used to choose or
+estimate the model.
+\end{solution}
+
+\begin{solution}{exo:b3:exchange-rates:10}
+At any date after the shock, $m - p = -\lambda(i^* + \theta(\bar s - s))$; in the long run
+$m - \bar p = -\lambda i^*$. Subtracting, $\bar p - p = \lambda\theta(s - \bar s)$, so $s - \bar s = (\bar p - p)/(\lambda\theta)$. On
+impact $\bar p - p = dm$, and the overshoot $dm/(\lambda\theta)$ falls as $\theta$, the speed of price
+adjustment, rises; it vanishes as prices become fully flexible.
+\end{solution}
+
+\begin{solution}{exo:b3:exchange-rates:11}
+Try $s_t = f_t + c$: with $E_tf_{t+1} = f_t + \mu$, the equation $s_t = (f_t + \lambda E_ts_{t+1})/(1 + \lambda)$
+gives $f_t + c = (f_t + \lambda f_t + \lambda\mu + \lambda c)/(1 + \lambda) = f_t + \lambda(\mu + c)/(1 + \lambda)$, so $c(1 + \lambda) = \lambda\mu + \lambda c$
+and $c = \lambda\mu$. The announcement raises $\mu$ by 3 points: $s$ jumps by $4 \times 3 = 12~\%$, before
+any extra money is issued.
+\end{solution}
+
+\begin{solution}{exo:b3:exchange-rates:12}
+Return $\approx i^* - i - \Delta s$, with $\Delta s$ the fall of the Australian dollar against the yen:
+$5 - 0.5 - 3 = 1.5~\%$; in the crash $4.5 - 25 = -20.5~\%$. With a 2~\% rise otherwise
+(return $6.5~\%$), the expected return is zero when $-20.5p + 6.5(1 - p) = 0$: $p = 6.5/27 =
+0.24$, a crash about one year in four.
+\end{solution}
+
+\begin{solution}{pb:b3:exchange-rates:dalen}
+\textbf{1.} $(143.5/73.3)/(130.5/67.1) = 1.958/1.945 = 1.007$: a rise of 0.7~\%. $S$ went
+from 1.243 to 1.242, essentially unchanged. % figdata: dalen_points, dalen_stats, dalen, dalen_forecasts
+
+\textbf{2.} 2007, $Q = 113.3$: the dalen was 13.3~\% weaker in real terms than in 2015.
+
+\textbf{3.} $Q = 100 \times (1.242 \times 130.5/143.5)/(1.171 \times 100/100) = 100 \times 1.1295/1.171 = 96.5$.
+
+\textbf{4.} $\ln 0.5/\ln 0.948 = -0.693/-0.0534 = 13.0$ years.
+
+\textbf{5.} Far longer than both. With 26 annual observations and a half-life of
+years, the sample contains barely one swing of the real rate (up to 2007, down to
+2022): the estimate of $\rho$ has a large standard error, and least squares is biased
+toward low $\rho$ in short samples, so the true half-life could be longer still or
+much shorter.
+
+\textbf{6.} No: the data cannot reject a unit root, but cannot reject slow reversion
+either. A quarter-century is too short to tell.
+
+\textbf{7.} $F = 1.148 \times 1.0542/1.03 = 1.175$.
+
+\textbf{8.} About $5.42 - 3.0 = 2.42~\%$, to 1.176. $S$ rose to 1.183, a depreciation of 3.05~\%:
+in the predicted direction, a little more.
+
+\textbf{9.} One kest buys 1.148 dalens, which grow to $1.148 \times 1.0542 = 1.2102$ and convert
+back at 1.183 to 1.0230 kests; repaying 1.03 leaves $-0.70~\%$.
+
+\textbf{10.} An appreciation of the dalen of 0.3 to 0.8~\% a year (its rate 2.23 to 2.72~\%
+against 3.0~\%). $S$ fell from 1.171 in 2015 to 1.093 in 2020, by 6.7~\%:
+the predicted direction, more than predicted.
+
+\textbf{11.} In both episodes Brenland's currency moved the way uncovered parity
+says --- the opposite of the JST record, where high-interest currencies did not
+depreciate. Two episodes of invented data are no test.
+
+\textbf{12.} A risk premium that varies over time, so that high-interest currencies
+pay for bearing crash risk; and expectations that are rational but meet rare
+events, or are revised as investors learn about a new regime, which makes forecast
+errors look predictable in a short sample.
+
+\textbf{13.} The kest depreciates by 10~\% in the long run: $S$ falls by 10~\%.
+
+\textbf{14.} $\theta = \ln 2/2.5 = 0.277$.
+
+\textbf{15.} $10 \times (1 + 1/(4 \times 0.277)) = 10 \times 1.902 = 19.0~\%$ fall in $S$.
+
+\textbf{16.} By 9.0 points beyond its long-run 10~\%.
+
+\textbf{17.} $10 + 9.02e^{-0.277} = 10 + 6.83 = 16.8~\%$ below its pre-shock level.
+
+\textbf{18.} By $10/\lambda = 2.5$ points, from 3.0~\% to 0.5~\%; check $\theta \times 9.02 = 2.5$.
+
+\textbf{19.} $S$ falls by 10~\% at once, and Kestria's interest rate does not move.
+
+\textbf{20.} Uncovered parity won (1.73~\%); the PPP rule lost (2.64~\%).
+
+\textbf{21.} Random walk: 1.148, error $100\ln(1.148/1.183) = -3.00~\%$. Uncovered parity:
+$1.148 \times 1.0242 = 1.176$, error $-0.61~\%$.
+
+\textbf{22.} No: ten forecasts of invented data, half of them in one episode when
+Brenland's interest rate and its currency's depreciation rose together; Meese and
+Rogoff's result is about many currencies and horizons, and the differences here
+may well be chance.
+
+\textbf{23.} Brenland's inflation was 10.2~\% in 2022 against Kestria's 2.7~\%. Given that
+inflation, the rule forecast a depreciation of the dalen to 1.206, an error of
+$+5.0~\%$: the dalen fell only 2.5~\%. Prices moved faster than the exchange rate, as they
+do in the short run.
+
+\textbf{24.} A test that the mean difference in squared errors is zero, with its
+standard error: with ten forecasts, and errors correlated across years, the
+difference would have to be very large, and here it is not; more forecasts, more
+currencies and a period not used to design the rules.
+
+\textbf{25.} The dalen overshoots its long-run appreciation by 9.0 points (19.0~\% on
+impact against 10~\%), and a real deviation has an estimated half-life of 13.0 years.
+\end{solution}

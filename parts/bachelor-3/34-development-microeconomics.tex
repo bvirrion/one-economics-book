@@ -1,0 +1,409 @@
+\chapter{Development Microeconomics}\label{ch:b3:development-microeconomics}
+
+The chapters before this one asked why whole countries are poor. This one asks what
+changes the lives of poor households: credit, cash, schooling, health, secure title
+to a home. For each question there are now randomised experiments, often several,
+and the interest has moved from whether a programme works somewhere to how much it
+does, for whom, and whether the answer travels. The chapter starts with how poverty
+is measured, because what counts as success depends on it.
+
+\begin{openingchart}{The general effect of expanding access to microcredit on six
+household outcomes, pooled over seven randomised experiments (Bosnia, Ethiopia, India,
+Mexico, Mongolia, Morocco, the Philippines) by a Bayesian hierarchical model: posterior mean and central 95~\%
+interval, dollars at purchasing power parity per two weeks (2010).}{Meager (2016),
+arXiv:1506.06669v3, Appendix A (joint model)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.66\linewidth, height=0.42\linewidth, xmin=-10,
+  xmax=46, ymin=0.4, ymax=6.6, ytick={1,...,6},
+  yticklabels={Temptation goods, Consumer durables, Consumption, Expenditures, Revenues, Profit},
+  xlabel={Dollars PPP per two weeks},
+  extra x ticks={0}, extra x tick labels={}, extra x tick style={grid=major, grid style={black!60}}]
+  \addplot+[mark=*, mark size=2pt, error bars/.cd, x dir=both, x explicit]
+    table[x=tau, y=pos, x error minus=el, x error plus=eh] {figdata/bachelor-3/34-development-microeconomics/out/microcredit.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: microcredit
+% ledger: b3dm:meager.tab, b3dm:meager
+Every interval includes zero. The largest effect is on business revenues, 14.45 dollars per two weeks, and on profit it is
+6.81 --- 7~\% of the control group's mean of 94.81. On consumption it is 3.44, about 1~\% of the mean. The effect of
+\omterm{def:b3:development-microeconomics:microcredit}{microcredit} is likely positive and small, and a negative effect cannot be ruled out.
+Pooling all the data as if the seven sites were one gives ``significant'' results for 2 of the six
+outcomes. The six studies published together describe the same pattern: modestly positive, not
+transformative. % ledger: b3dm:bkz
+
+\begin{recall}
+The poverty line and the poverty rate are the grades 6--9 volume's; randomised trials
+and whether a result travels are the Year 2 volume's; \omterm{def:b3:instrumental-variables:instrument}{instrumental variables} and
+regression discontinuity are \cref{ch:b3:instrumental-variables,ch:b3:regression-discontinuity}'s;
+\omterm{def:b3:credible-empirical-work:meta-analysis}{meta-analysis} is \cref{ch:b3:credible-empirical-work}'s; \omterm{def:b3:human-capital:human-capital}{human capital} is
+\cref{ch:b3:human-capital}'s.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:development-microeconomics:symbols}
+$z$ is the poverty line; $y_i$ income or consumption of person $i$; $N$ the population; $P_\alpha$ the
+Foster--Greer--Thorbecke measure of order $\alpha$; $\kappa(\cdot)$ work capacity; $T$ a transfer.
+\end{notation}
+
+\section{Measuring poverty in depth}\label{sec:b3:development-microeconomics:measuring}
+
+The headcount --- the share of people below the line --- does not change when a
+poor person becomes poorer, or when one just below the line is helped while one far
+below it is not. Two refinements fix this.
+
+\begin{definition}[Poverty gap index; squared poverty gap]\label{def:b3:development-microeconomics:fgt}
+\index{poverty gap index}\index{squared poverty gap}
+For a line $z$, the Foster--Greer--Thorbecke measures are $P_\alpha = \frac1N\sum_{y_i < z}\left(\frac{z - y_i}{z}\right)^{\alpha}$. $P_0$ is the headcount; $P_1$, the
+\emph{poverty gap index}, is the average shortfall from the line as a share of it,
+counting the non-poor as zero; $P_2$, the \emph{squared poverty gap}, weights each
+shortfall by itself. % ledger: b3dm:fgt
+\end{definition}
+
+\begin{proposition}[What the measures respond to]\label{prop:b3:development-microeconomics:fgt}
+$P_1$ and $P_2$ rise when a poor person's income falls (monotonicity). $P_2$ also rises
+when a sum is transferred from a poor person to a less poor person who stays poor
+(transfer sensitivity); $P_1$ does not change.
+\end{proposition}
+
+\begin{proof}
+For $y_i < z$, $\partial P_\alpha/\partial y_i = -\frac{\alpha}{Nz}((z - y_i)/z)^{\alpha - 1} < 0$ for $\alpha \ge 1$: monotonicity. A transfer $t$ from $i$ to $j$, with $y_i < y_j$ and
+both poor before and after, changes $P_1$ by $\frac{1}{Nz}(t - t) = 0$. For $P_2$, the change is $\frac1N[g(y_i - t) - g(y_i) + g(y_j + t) - g(y_j)]$ with $g(y) = ((z - y)/z)^2$, convex and
+decreasing on $[0, z]$; since $y_i - t < y_i \le y_j < y_j + t$, the rise at $i$ exceeds the fall at $j$ by convexity.
+\end{proof}
+
+$N z P_1$ is the sum of all shortfalls: the cost of ending poverty with transfers aimed
+perfectly, which no real programme achieves.
+
+\begin{omchart}{Headcount ($P_0$), poverty gap ($P_1$) and squared poverty gap ($P_2$) at 3.00 dollars a day
+(2021 PPP), eight countries, 2022, in percent. Computed from the percentile groups of
+the World Bank's Poverty and Inequality Platform (each group at its mean, so the
+headcount moves in steps of one point; consumption, except income for Brazil).}{World
+Bank, Poverty and Inequality Platform, world\_100bin}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xbar, bar width=3pt, width=0.62\linewidth, height=0.5\linewidth,
+  xmin=0, xmax=85, ytick={1,...,8},
+  yticklabels={Brazil, India, Bangladesh, Indonesia, South Africa, Nigeria, Kenya, Mozambique},
+  xlabel={Percent}, legend pos=south east, enlarge y limits=0.08]
+  \addplot[fill=omDef!70, draw=omDef] table[x=p0, y=pos] {figdata/bachelor-3/34-development-microeconomics/out/fgt.csv};
+  \addplot[fill=omThm!60, draw=omThm] table[x=p1, y=pos] {figdata/bachelor-3/34-development-microeconomics/out/fgt.csv};
+  \addplot[fill=black!30, draw=black!60] table[x=p2, y=pos] {figdata/bachelor-3/34-development-microeconomics/out/fgt.csv};
+  \legend{$P_0$, $P_1$, $P_2$}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: fgt
+
+Kenya and Nigeria have almost the same headcount, 45 and 42~\%, and almost the same gap, 13.6 and
+13.0~\%. Mozambique's headcount is 81~\%, but its gap, 44.7~\%, is more than three times Kenya's: its poor are
+much further below the line. India, Bangladesh and Brazil have headcounts near 5--6~\%; Brazil's gap is
+twice India's, but Brazil's survey measures income and India's consumption, and
+income varies more, so part of the factor is the welfare measure.
+
+\begin{measure}[The FGT poverty measures]
+The measures need the whole distribution below the line, which comes from household
+surveys of consumption (most poor countries) or income (most of Latin America); the
+two are not the same, since income varies more than consumption. They also inherit
+the price index that converts the line into local currency.
+\end{measure}
+
+\section{Health, nutrition and the poverty trap}\label{sec:b3:development-microeconomics:health}
+
+\begin{definition}[Nutrition-based poverty trap]\label{def:b3:development-microeconomics:poverty-trap}
+\index{nutrition-based poverty trap}
+In a \emph{nutrition-based poverty trap}, a worker's capacity to work $\kappa$ depends on
+what she eats, and so on her income: $y_{t+1} = w\kappa(y_t)$. If capacity rises slowly at very low intake, then
+steeply, then slowly again, the poor stay poor because they are too weak to earn more.
+\end{definition}
+
+\begin{proposition}[A trap needs an S-shape]\label{prop:b3:development-microeconomics:trap}
+If $f(y) = w\kappa(y)$ is increasing, concave and bounded with $f(0) > 0$, there is exactly one fixed point, and it is
+stable: no trap. If $f$ is convex and then concave and crosses the 45-degree line three times, at $y_L < y_M < y_H$,
+then $y_L$ and $y_H$ are stable and $y_M$ unstable: households starting below $y_M$ converge to $y_L$, those
+above to $y_H$.
+\end{proposition}
+
+\begin{proof}
+With $f$ concave, $f(y) - y$ is concave, positive at 0 and, since $f$ is bounded, negative for large $y$, so it
+has one zero $y^*$, where $f$ crosses from above: $f'(y^*) < 1$, stable. With three crossings, $f(y) - y$ changes sign
+from positive to negative at $y_L$ and $y_H$ (slopes of $f$ below 1, stable) and from negative to positive at $y_M$
+(slope above 1, unstable); iterating $f$ from below $y_M$ moves $y$ towards $y_L$, from above towards $y_H$.
+\end{proof}
+
+\begin{model}{The poverty trap}
+\assumes Returns to income or assets that are increasing at low levels: a minimum
+scale of business, nutrition below working capacity, or lumpy assets.
+\predicts A one-time transfer that lifts a household above the unstable point puts
+it on a path to the high state; a smaller one is eaten up and the household returns
+to the low state.
+\tested In Bangladesh, over 21,000 households in 1,309 villages were randomised into a programme that gives
+the poorest women livestock and skills; they moved from casual wage labour into
+livestock rearing, accumulated assets and left poverty, with the gains sustained
+after four and seven years. % ledger: b3dm:bandiera
+\breaks A review of the mechanisms --- savings, coordination, nutrition, business
+size --- finds such traps rare and largely confined to remote or disadvantaged
+areas, with geography the most likely source. % ledger: b3dm:km
+\end{model}
+
+Household calorie needs are met at low incomes in most of the world, which is one
+reason the nutrition trap is rare: the poor spend extra income partly on better
+food, not on more calories.
+
+\begin{record}[Deworming]
+School-based deworming, randomly phased into Kenyan schools, cut absenteeism by a quarter
+and benefited untreated children in treated and neighbouring schools; it did not
+improve test scores. % ledger: b3dm:mk
+A pure \omterm{def:b3:credible-empirical-work:replication}{replication} with the original data reproduced most results, but after
+coding errors were corrected the effect on nearby schools largely disappeared, and
+the combined gain in attendance among treated children fell from 7.5~\% to 3.9~\%, no longer
+statistically significant. % ledger: b3dm:aiken
+The exchange is the lesson of \cref{ch:b3:credible-empirical-work}: replicate, and
+separate what the data say from the specification that produced it.
+\end{record}
+
+\section{Schooling and cash transfers}\label{sec:b3:development-microeconomics:cash}
+
+\begin{definition}[Conditional cash transfer; unconditional cash transfer]\label{def:b3:development-microeconomics:cash-transfer}
+\index{conditional cash transfer}\index{unconditional cash transfer}
+A \emph{conditional cash transfer} pays poor households on condition that they do
+something, typically keep their children in school or attend health checks. An
+\emph{unconditional cash transfer} pays them without conditions.
+\end{definition}
+
+\begin{record}[Progresa, 1997]
+Mexico's Progresa paid education grants to poor mothers in rural communities.
+Communities were randomly chosen for the first phase, and the evaluation compared
+children in them with children in control communities, checking the comparison
+before the programme and computing double differences by grade and sex; the
+short-run effects on enrolment were extrapolated to lifetime schooling and earnings
+to give a rate of return on the grants. % ledger: b3dm:progresa
+The design --- phasing a national programme in at random --- became the model for
+the evaluations that followed.
+\end{record}
+
+\begin{record}[GiveDirectly in Kenya]
+Unconditional transfers of 404 or 1{,}525 dollars (PPP) to poor rural households, randomised at the level of
+villages and households, raised monthly household consumption from 158 to 193 dollars nine months after the
+transfers began, and raised psychological well-being; monthly payments went more to
+food, lump sums more to durables. % ledger: b3dm:hs
+A later trial gave about 1{,}000 dollars each to over 10,500 households in 653 randomised villages, a shock of over 15~\%
+of local GDP; non-recipient households and firms gained too, prices barely rose, and the
+local multiplier was estimated at 2.4. % ledger: b3dm:egger
+\end{record}
+
+The second study answers an objection to the first: if transfers raised prices,
+part of the measured gain would be nominal, and non-recipients would lose. They did
+not, at least where local supply could expand.
+
+\section{Credit and microfinance}\label{sec:b3:development-microeconomics:credit}
+
+\begin{definition}[Microcredit; group liability]\label{def:b3:development-microeconomics:microcredit}
+\index{microcredit}\index{group liability}
+\emph{Microcredit} is lending of small sums, without collateral, to poor households,
+usually for a business. Under \emph{group liability} the members of a group of
+borrowers are each responsible for the others' loans, which gives them a reason to
+choose partners well and to watch one another.
+\end{definition}
+
+\omterm{def:b3:development-microeconomics:microcredit}{Group liability} raises the probability of repayment when partners can cover each
+other (exercise 7), so lenders can charge less. The opening chart is the result of
+seven experiments that expanded access to such loans: the general effect is small
+and uncertain. The disagreement across sites comes mostly from the 27~\% of households that already ran a
+business, which gain much more; about 60~\% of the variation across sites is pooled, so the sites are
+informative about one another. % ledger: b3dm:meager
+For a new site, the effect on profit has a 95~\% chance of lying between $-16$ and 40 dollars per two weeks, against an interval of
+$-2$ to 17 if the sites are pooled as one: ignoring the heterogeneity overstates the precision. % ledger: b3dm:meager
+
+\section{Property titles}\label{sec:b3:development-microeconomics:titles}
+
+\begin{definition}[Property titling]\label{def:b3:development-microeconomics:titling}
+\index{property titling}
+\emph{Property titling} gives the occupants of land or a dwelling a registered legal
+title to it.
+\end{definition}
+
+\begin{record}[Land titles in Buenos Aires]
+In 1981 squatters occupied land in a poor suburb of Buenos Aires; a law of 1984 expropriated the owners to
+give the occupants title. Some owners accepted compensation and others disputed it
+in slow courts, so some squatters received titles and their neighbours did not, for
+reasons unrelated to them. Surveys in 2003 and 2007 found that titled families invested more in their
+houses, had smaller households and educated their children more --- but not through
+more credit. % ledger: b3dm:gs
+\end{record}
+
+The result fits \cref{prop:b3:institutions:holdup} of the previous chapter better
+than the hope that titles unlock credit: security raised investment directly.
+
+\section{Aid and growth}\label{sec:b3:development-microeconomics:aid}
+
+\begin{omchart}{Net official development assistance received (\% of GNI) and growth of GDP
+per person, country averages 1990--2019, 134 countries with at least twenty years of both, with the least-squares line.}{World Bank, World Development Indicators,
+DT.ODA.ODAT.GN.ZS and NY.GDP.PCAP.KD.ZG}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.6\linewidth, height=0.4\linewidth,
+  xlabel={Aid, \% of GNI}, ylabel={Growth, \% a year}, xmin=0]
+  \addplot table[x=aid, y=growth] {figdata/bachelor-3/34-development-microeconomics/out/aid.csv};
+  \addplot[black!60, thick, no marks, sharp plot] table[x=aid, y=growth] {figdata/bachelor-3/34-development-microeconomics/out/aid_fit.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: aid_stats
+
+Across 134 countries the correlation between aid and growth is $-0.16$: each point of GNI received in aid goes
+with 0.04 points less growth. The correlation says little: aid goes to countries that are poor,
+in crisis or at war, which grow slowly for other reasons.
+
+\begin{debate}[Aid and growth]
+\textbf{Aid works where policy is good.} Aid raises growth in developing countries
+with good fiscal, monetary and trade policies and has little effect where policies
+are poor (\emph{Grade 3}). % ledger: b3dm:bd
+\emph{Weakness:} an interaction found in one dataset.
+
+\textbf{The interaction does not survive new data.} Extending the data from 1970--93 to 1970--97 and filling
+the gaps, the finding is no longer robust (\emph{Grade 3}). % ledger: b3dm:elr
+\emph{Weakness:} a failure to replicate is not a proof of no effect.
+
+\textbf{No robust effect.} After correcting for aid being drawn by poor or strong
+growth, there is little robust evidence of a positive or a negative effect, and none that
+aid works better with better policies or that some forms work better (\emph{Grade 3}). % ledger: b3dm:rs
+\emph{Weakness:} the instruments for aid in cross-country work are themselves
+debated.
+
+\textbf{A quasi-experiment.} Since 1987, eligibility for the World Bank's concessional
+lending has depended partly on an income threshold; aid falls by about 59~\% of its share of GNI after a
+country crosses it. For the 35 countries that crossed from below in 1987--2010, one more point of aid in GNI raises
+growth of income per person by about 0.35 points a year (\emph{Grade 2}). % ledger: b3dm:gkxz
+\emph{Weakness:} it estimates the effect for countries near the threshold, and
+crossing it may change more than aid.
+\end{debate}
+
+\section{Whether a result travels}\label{sec:b3:development-microeconomics:travels}
+
+A programme that works in one place may not work in another: the people, the
+markets, the prices and the implementer differ. Two tools from this volume help. A
+hierarchical model, as in the opening chart, estimates how much the effects differ
+across sites and gives an interval for a new site; and the general-equilibrium
+effects of a programme --- on prices, wages and non-participants --- must be
+measured at the scale at which it would run, as the second Kenyan trial did by
+randomising whole villages. A small trial that changes no price can hide a large
+programme that does.
+
+\section{Exercises}\label{sec:b3:development-microeconomics:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:development-microeconomics:1}
+From the opening chart, give the effect on profit as a share of the control mean, and
+say which outcome has the only negative point estimate.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:development-microeconomics:2}
+Five people have incomes 2, 4, 6, 10 and 12, and the line is 8. Find $P_0$, $P_1$ and $P_2$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:development-microeconomics:3}
+How much would perfectly targeted transfers to the people of exercise 2 cost to end
+poverty? Express it with $P_1$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:development-microeconomics:4}
+In an asset-transfer experiment with randomised transfer sizes, what result would
+contradict the poverty-trap model?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:development-microeconomics:5}
+Compute the three FGT measures for Kenya in 2022 at 3.00, 4.20 and 8.30 dollars a day.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:development-microeconomics:6}
+Three invented studies estimate 10 (standard error 4), 2 (2) and 6 (4). Find the inverse-variance pooled
+estimate and its standard error.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:development-microeconomics:7}
+Two borrowers each borrow 1 and must repay $r$; each project succeeds with probability 0.8, independently,
+and returns 3. Under \omterm{def:b3:development-microeconomics:microcredit}{group liability}, a successful borrower repays for a failed
+partner. Find the probability that the lender is repaid in full, with and without
+\omterm{def:b3:development-microeconomics:microcredit}{group liability}, and the $r$ at which a lender whose funds cost 1 breaks even.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:development-microeconomics:8}
+A conditional transfer pays 400 dollars a year for each enrolled child; enrolment rises from
+70 to 80~\%. Find the cost per extra child-year of schooling.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:development-microeconomics:9}
+What evidence would show that the measured rise in recipients' consumption after a
+transfer is a rise in prices, not in what they consume?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:development-microeconomics:10}
+Prove that $P_2$ is transfer-sensitive and that $P_0$ can fall when a transfer from a very poor to a
+nearly poor person makes the second non-poor.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:development-microeconomics:11}
+Seven invented studies of a training programme give effects 12, 3, 25, $-4$, 8, 15, 1 with standard errors 5, 4,
+9, 6, 3, 7, 4. Find the fixed-effect estimate, Cochran's $Q$, $\tau^2$ and the random-effects estimate.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:development-microeconomics:12}
+Local supply is $Q = P^{\varepsilon}$, and a transfer raises local spending $PQ$ by 15~\%. Find the rise in prices for $\varepsilon = 0$
+and $\varepsilon = 9$. Which fits the Kenyan evidence?
+\end{exercise}
+
+\section{Problem: A Cash Transfer for Brenland's Poorest}\label{sec:b3:development-microeconomics:problem}
+
+\begin{problem}[{Weekend problem --- A cash transfer for Brenland's poorest}]\label{pb:b3:development-microeconomics:cash}
+The 2025 household survey (\code{load("households")}) gives each household's size, disposable
+income and consumption. The poverty line is 60~\% of the median of disposable income per
+person, counted over people. An invented programme covers every household below the
+line: half, drawn at random, receive one transfer of 3{,}000, 6{,}000 or 9{,}000 dalens (also at random), the
+others are controls. Two years later the programme measures productive assets and
+consumption per person. % figdata: cash_stats
+
+\medskip\noindent\textbf{Part I --- poverty in Brenland.}
+\begin{enumerate}
+\item Find the median of disposable income per person and the line.
+\item Find $P_0$, $P_1$ and $P_2$ over people.
+\item Find the total yearly sum that perfectly targeted transfers would need.
+\item How many households fall below the line?
+\item Why is the survey's consumption a better welfare measure here than income?
+\item Why might the headcount be the wrong target for a programme?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- the randomised transfer.}
+\begin{enumerate}[resume]
+\item How many households are treated and how many are controls?
+\item Compare baseline consumption per person in the two groups. Why should it be close?
+\item Find mean consumption per person after two years in each group.
+\item Estimate the effect of the transfer and its standard error.
+\item Give the 95~\% interval.
+\item Find the share of each group above the line after two years.
+\item Why does the control group's share above the line rise at all?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- a threshold?}
+\begin{enumerate}[resume]
+\item Find mean assets after two years for controls and for each transfer size.
+\item For each transfer size, find the share of households whose assets plus transfer
+reach 7{,}000 dalens.
+\item What happens to the assets of the households with 3{,}000? With 9{,}000?
+\item Does the pattern support a poverty trap? What would a proportional effect look
+like?
+\item Why does randomising the size of the transfer matter for this test?
+\item Find the share above the line after two years for each transfer size.
+\item What does this imply for the choice between many small and fewer large
+transfers?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- cost-effectiveness.} Administration costs 10~\% of the transfers.
+A training programme costs 3{,}000 dalens a household and raises the share above the line by 8 points.
+\begin{enumerate}[resume]
+\item Find the total cost of the transfers.
+\item Find the number of extra households above the line due to the transfers.
+\item Find the cost per household lifted above the line.
+\item Find the training programme's cost per household lifted.
+\item Name two reasons the comparison could mislead.
+\item State the result: the effect of the transfer on consumption after two years, with
+its interval, and the cost per household lifted above the line.
+\end{enumerate}
+\end{problem}

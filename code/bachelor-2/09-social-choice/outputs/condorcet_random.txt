@@ -1,0 +1,4 @@
+$ python condorcet_random.py
+3 candidates, no winner: random 0.092, single-peaked 0.000
+4 candidates, no winner: random 0.178, single-peaked 0.000
+5 candidates, no winner: random 0.242, single-peaked 0.000

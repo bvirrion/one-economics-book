@@ -1,0 +1,128 @@
+\section*{Chapter \ref{ch:b2:dynamic-games} --- Dynamic Games}
+
+\begin{solution}{exo:b2:dynamic-games:1}
+% code: exercises/solutions.py backward_three
+After High, player 1 chooses $a$ (4 against 0), so High leads to $(4, 1)$. Player 2 compares Low, 3, with High, 1, and
+chooses Low. Player 1 compares Out, 2, with In, which leads to $(1, 3)$, and chooses Out. The outcome is $(2, 2)$.
+\end{solution}
+
+\begin{solution}{exo:b2:dynamic-games:2}
+% figdata: ultimatum_summary
+% ledger: b2:henrich2001-t1
+26 per cent (Machiguenga) and 58 per cent (Lamelara). Three groups offered less than 30 per cent on average:
+Machiguenga 26, Hadza (small camp) 27, Quichua 27. Three rejected no offer: Tsimane, Achuar and Ache.
+\end{solution}
+
+\begin{solution}{exo:b2:dynamic-games:3}
+% code: exercises/solutions.py rubinstein
+$x_1 = (1 - 0.9)/(1 - 0.81) = 0.1/0.19 = 0.5263$. With equal factors $x_1 = (1 - \beta)/(1 - \beta^2) = 1/(1 + \beta)$, which tends to one
+half as $\beta$ approaches 1.
+\end{solution}
+
+\begin{solution}{exo:b2:dynamic-games:4}
+Not by itself: the model assumes that each side knows the other's patience, and in its framework a delay
+cannot happen, so a six-week delay shows that some assumption fails, most likely complete information. A test of
+the model's predictions would compare agreements across negotiations whose sides differ in measurable costs of
+delay, and check that the side with the lower cost gets more.
+\end{solution}
+
+\begin{solution}{exo:b2:dynamic-games:5}
+% code: exercises/solutions.py entry_game
+Rows for the entrant, columns for the incumbent: (In, Accommodate) $(2, 4)$; (In, Fight) $(-1, 1)$; (Out,
+Accommodate) $(0, 9)$; (Out, Fight) $(0, 9)$. (In, Accommodate) is a \omterm{def:b2:static-games:nash-equilibrium}{Nash equilibrium}: 2 beats 0 and 4 beats 1. (Out,
+Fight) is one: 0 beats $-1$, and the incumbent gets 9 either way. (Out, Accommodate) is not, since the entrant would
+enter, nor (In, Fight), since the incumbent would accommodate. Only (In, Accommodate) is \omterm{def:b2:dynamic-games:subgame}{subgame} perfect.
+\end{solution}
+
+\begin{solution}{exo:b2:dynamic-games:6}
+% code: exercises/solutions.py ultimatum_coins
+In every \omterm{def:b2:dynamic-games:spe}{subgame-perfect equilibrium} the responder accepts every offer of 1 coin or more. At an offer of 0 she is
+indifferent. If she accepts it, the proposer offers 0: split $(10, 0)$. If she rejects it, the proposer offers 1:
+split $(9, 1)$. These are the two subgame-perfect equilibria.
+\end{solution}
+
+\begin{solution}{exo:b2:dynamic-games:7}
+% code: exercises/solutions.py finite
+In round 3 player 1 takes everything. In round 2 player 2 must offer her $0.9$ and keeps $0.1$. In round 1 player 1
+offers player 2 $0.9 \times 0.1 = 0.09$ and keeps $0.91$, against $0.5263$ without a deadline: the last proposer's advantage.
+\end{solution}
+
+\begin{solution}{exo:b2:dynamic-games:8}
+% code: exercises/solutions.py andersen
+% ledger: b2:aeghl2011-t2
+No rejection of any positive offer at any stakes. The rejection rates are 36.32, 42.74, 27.52 and 4.17 per cent: at
+the highest stakes they come close to the prediction, but not steadily, since the rate is higher at 200 rupees
+than at 20.
+\end{solution}
+
+\begin{solution}{exo:b2:dynamic-games:9}
+% code: exercises/solutions.py deterrence
+At $q_I = 8$ the entrant's best output would be $(12 - 8)/2 = 2$, earning $2 \times 2 - 4 = 0$, so it stays out. The
+incumbent then sells 8 at a price 4 above cost: profit 32, against 18 as a leader that accommodates. If the output
+could be cut after entry, the incumbent facing an entrant would cut it to its \omterm{def:b2:static-games:best-response}{best response}, and the entrant,
+foreseeing this, would enter: a threat to keep output high is credible only if it is already carried out.
+\end{solution}
+
+\begin{solution}{exo:b2:dynamic-games:10}
+In a \omterm{def:b2:dynamic-games:subgame}{subgame} where player 2 proposes she gets at most $M_2$, so player 2 rejects nothing worth more than $\beta_2 M_2$ to
+her today, and player 1 can secure $1 - \beta_2 M_2$ by offering a little more: $m_1 \ge 1 - \beta_2 M_2$. Player 2 rejects any
+offer worth less than $\beta_2 m_2$, so player 1 never gets more than $1 - \beta_2 m_2$: $M_1 \le 1 - \beta_2 m_2$. The same holds with the
+roles exchanged: $m_2 \ge 1 - \beta_1 M_1$ and $M_2 \le 1 - \beta_1 m_1$. Then $m_1 \ge 1 - \beta_2(1 - \beta_1 m_1)$, so $m_1 \ge (1 - \beta_2)/(1 -
+\beta_1\beta_2)$, and $M_1 \le 1 - \beta_2(1 - \beta_1 M_1)$, so $M_1 \le (1 - \beta_2)/(1 - \beta_1\beta_2)$. Since $m_1 \le M_1$, both equal $x_1$.
+\end{solution}
+
+\begin{solution}{exo:b2:dynamic-games:11}
+% code: exercises/solutions.py deterrence_threshold
+Deterrence needs $\big((12 - q_I)/2\big)^2 \le F$, so $q_I = 12 - 2s$ with $s = \sqrt F$, and it earns $2s(12 - 2s)$. Accommodating
+earns 18. They are equal when $4s^2 - 24s + 18 = 0$, whose smaller root is $s = 3 - \sqrt{4.5} = 0.879$, so $F = 0.772$; below it
+the incumbent accommodates. Entry is blockaded when the monopoly output 6 already deters, that is, when $F \ge
+(12 - 6)^2/4 = 9$.
+\end{solution}
+
+\begin{solution}{exo:b2:dynamic-games:12}
+% code: exercises/solutions.py chain_store
+In town 20, the last, the game is the one-town game: the incumbent accommodates and the entrant enters. Nothing
+done in town 19 can change that, so in town 19 too fighting has no future benefit, and the incumbent accommodates;
+and so on back to town 1. If entrants believed that the incumbent might be a type that likes fighting, a normal
+incumbent that fought early would keep that belief alive and deter later entrants, which can pay when many towns
+remain.
+\end{solution}
+
+\begin{solution}{pb:b2:dynamic-games:1}
+% code: exercises/solutions.py harbour, harbour_two_rounds, harbour_union_first
+\textbf{Part I.}
+1. 950 dalens.
+2. The employer: 0.98 is closer to 1.
+3. 20 dalens for the employer, 50 for the union.
+4. 950 dalens.
+5. The harbour earns nothing on a day it is shut, and that day's share of the premium is lost to both sides.
+6. A strike fund, or temporary work during the strike.
+\textbf{Part II.}
+7. It keeps the whole premium: 1{,}000 to the union, nothing to the employer.
+8. 950: the value today of 1{,}000 tomorrow.
+9. The employer offers 950 and keeps 50.
+10. No: the offer is accepted on day 1.
+11. On day 2 the union must offer the employer $0.98 \times 1{,}000 = 980$ and keeps 20; on day 1 the employer offers $0.95
+\times 20 = 19$ and keeps 981.
+12. The side that makes the last offer gets almost everything, so the split depends on a deadline that real
+talks usually do not have.
+\textbf{Part III.}
+13. $x_E = 1 - 0.95\,x_U$ and $x_U = 1 - 0.98\,x_E$.
+14. $x_E = 0.05/(1 - 0.931) = 0.7246$: the employer gets 724.6 dalens, the union 275.4.
+15. No: agreement on day 1.
+16. $x_U = 0.02/0.069 = 0.2899$: the union gets 289.9 and the employer 710.1; moving first is worth $289.9 - 275.4 = 14.5$
+dalens to the union.
+17. $x_E = 0.03/(1 - 0.9506) = 0.6073$: the employer gets 607.3, the union 392.7.
+18. $x_E = 0.10/(1 - 0.882) = 0.8475$: the employer gets 847.5, the union 152.5.
+\textbf{Part IV.}
+19. No: the union already gets 275.4 by bargaining, more than 200, so leaving is never its \omterm{def:b2:static-games:best-response}{best response} and the
+threat is not credible.
+20. The employer must offer 350 and keeps 650.
+21. Taking the option ends the talks; the union takes it only if it beats what bargaining gives, so a smaller
+option changes nothing.
+22. The strike fund: 392.7 against 350.
+23. $392.7 - 275.4 = 117.3$ dalens per worker per month.
+24. Agreement is immediate, with 724.6 dalens to the employer and 275.4 to the union; raising the union's daily
+\omterm{def:b2:intertemporal-choice:discount-factor}{discount factor} from 0.95 to 0.97, by making a strike day cheaper for it, moves 117.3 dalens to the union, and an
+outside option matters only when it is worth more than 275.4.
+\end{solution}

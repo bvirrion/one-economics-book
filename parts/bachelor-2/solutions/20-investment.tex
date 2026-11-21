@@ -1,0 +1,109 @@
+\section*{Chapter \ref{ch:b2:investment} --- Investment}
+
+\begin{solution}{exo:b2:investment:1}
+% figdata: grunfeld_summary
+That investment rises with $q$, here with market value relative to the firm's average: the fitted slope is 0.93 and the correlation
+0.57. The wide spread at a given value, and the two thirds of the variation the correlation leaves, are not explained:
+firm-specific shocks, the gap between average and marginal $q$, and perhaps finance.
+\end{solution}
+
+\begin{solution}{exo:b2:investment:2}
+% code: exercises/solutions.py user_cost
+$200 \times (0.04 + 0.06 - 0.01) = 200 \times 0.09 = 18$ a year.
+\end{solution}
+
+\begin{solution}{exo:b2:investment:3}
+% figdata: iy_summary
+In 1973, at 36.5 per cent. Before 1914 the averages are 16.9 (United States), 12.8 (Germany) and 15.5 per cent (Japan); since 1950, 20.3,
+23.4 and 27.7: all higher, Japan's most.
+\end{solution}
+
+\begin{solution}{exo:b2:investment:4}
+A variable known to the firm, such as cash flow or sales, with a clear effect on investment once $q$ is held fixed, in a
+large panel and with $q$ well measured. The debate box reports such a cash-flow effect, but disputes whether $q$ is well
+measured.
+\end{solution}
+
+\begin{solution}{exo:b2:investment:5}
+% code: exercises/solutions.py desired_capital
+The stock falls. The user cost becomes $0.07 + 0.10 = 0.17$, and $K^* = 0.3 \times 1{,}000/0.17 = 1{,}764.7$, about 12 per cent less.
+\end{solution}
+
+\begin{solution}{exo:b2:investment:6}
+% code: exercises/solutions.py q_investment
+$0.08 + 0.3/10 = 0.11$ and $0.08 - 0.1/10 = 0.07$. With $q < 1$ installed capital is worth less than its replacement cost: the firm invests less than
+it loses to depreciation, and its capital shrinks.
+\end{solution}
+
+\begin{solution}{exo:b2:investment:7}
+% code: exercises/solutions.py grunfeld
+Pooled: 0.115 on value and 0.228 on capital, $R^2 = 0.82$. With a constant for each firm: 0.110 (standard error 0.011) and 0.310 (0.017),
+$R^2 = 0.95$. The firm constants absorb permanent differences between firms, such as their size and the kind of capital they
+use, so the second regression uses only changes within each firm, the variation $q$ theory speaks about.
+\end{solution}
+
+\begin{solution}{exo:b2:investment:8}
+Today $q$ jumps up, by less than for an immediate rise, and investment starts at once. Until the rise takes effect, the
+old $\dot q = 0$ curve still governs: $q$ keeps rising and capital grows, and the path reaches the new saddle path exactly when the
+rise takes effect. Then $q$ and capital move along it to the new steady state, $q$ falling back to 1.
+\end{solution}
+
+\begin{solution}{exo:b2:investment:9}
+% code: exercises/solutions.py now, wait
+Now: $11 \times 10 - 100 = 10$. Waiting: in the good state profit is 12.5 and the project is worth $137.5 - 100 = 37.5$; in the bad state, 7.5 and $82.5 < 100$, so no
+investment. Waiting is worth $\tfrac12 \times 37.5/1.1 = 17.05 > 10$: wait. Consistently, 10 is below the trigger 11.48.
+\end{solution}
+
+\begin{solution}{exo:b2:investment:10}
+One more unit of investment costs $1 + \chi(I/K - \delta)$, the derivative of $I + \tfrac{\chi}{2}(I/K - \delta)^2K$ with respect to $I$, and adds one unit of installed capital, worth $q$. The firm
+invests until the two are equal: $1 + \chi(I/K - \delta) = q$, so $I/K = \delta + (q - 1)/\chi$.
+\end{solution}
+
+\begin{solution}{exo:b2:investment:11}
+% code: exercises/solutions.py trigger
+Building now is worth $Lx - C$; waiting is worth $(Lx(1 + u) - C)/k$, since only the good state builds, with probability one half, a year later. At the
+trigger $Lx - C = (Lx(1 + u) - C)/k$, so $Lx(1 - (1 + u)/k) = C(1 - 1/k)$, which gives the formula. As $u$ rises, $1 - (1 + u)/k$ falls (it stays positive while $u < 1 + 2r$), so $x^*$
+rises: with $C = 100$ and $r = 0.10$, 9.09, 11.48, 15.58 and 24.24 for $u = 0$, 0.25, 0.5, 0.75.
+\end{solution}
+
+\begin{solution}{exo:b2:investment:12}
+Investment follows marginal $q$. If measured $q$ is marginal $q$ plus noise, the regression's coefficient on measured $q$ is
+too small, and any variable correlated with true $q$ picks up part of its effect. Cash flow today that \omterm{def:b2:signalling-and-screening:signal}{signals} future
+profits is such a variable: it predicts investment given measured $q$, for a firm that could borrow all it wanted.
+\end{solution}
+
+\begin{solution}{pb:b2:investment:1}
+% code: exercises/solutions.py terminal
+\textbf{Part I.}
+1. $50 \times (0.06 + 0.08 - 0.02) = 6$ a year.
+2. $20 - K = 6$: 14 cranes.
+3. $50 \times (0.08 + 0.08 - 0.02) = 7$; $20 - K = 7$: 13 cranes.
+4. $50 \times (0.06 + 0.08) = 7$.
+5. $45 \times 0.12 = 5.4$; $K = 14.6$, so 14 whole cranes: the fifteenth earns 5, less than 5.4.
+6. A crane loses 8 per cent of its value each year: the terminal bears that loss whether or not it pays anything out.
+\textbf{Part II.}
+7. $900/(10 \times 50) = 1.8$.
+8. Constant returns to scale in production and in \omterm{def:b2:investment:adjustment-cost}{adjustment costs}, and prices the terminal takes as given.
+9. $0.08 + 0.8/10 = 0.16$: 1.6 cranes a year.
+10. $0.08$: 0.8 crane a year, replacing wear.
+11. $0.08 - 0.2/10 = 0.06$: 0.6 crane, less than wear.
+12. \omterm{def:b2:investment:adjustment-cost}{Adjustment costs} rise faster than the speed of investment: buying four at once costs far more than buying them over
+several years.
+\textbf{Part III.}
+13. $11 \times 12 - 100 = 32$.
+14. $\tfrac12 \times (11 \times 18 - 100)/1.1 = 98/2.2 = 44.55$; in the bad state $11 \times 6 = 66 < 100$, so no berth.
+15. $44.55 - 32 = 12.55$.
+16. Wait: waiting is worth more.
+17. Build now: if the bad state comes it sells the berth at its cost, so waiting protects against nothing.
+18. $\tfrac12 \times (11 \times 15 - 100)/1.1 = 65/2.2 = 29.55 < 32$: build now.
+\textbf{Part IV.}
+19. $100/11 = 9.09$.
+20. 15.58 (the listing).
+21. 24.24.
+22. Each raises its trigger, so fewer cross it, and those that do wait for a higher profit: investment falls and responds
+less to demand.
+23. Investment that does not fall, or whose response to demand does not shrink, when measured uncertainty rises, among
+firms whose investment is hard to reverse.
+24. At a profit of 12 and $u = 0.5$, the \omterm{def:b2:investment:option-value}{option value of waiting} is 12.55: more than a third of the net present value of 32. The terminal
+builds at once only when this year's profit reaches 15.58, 1.7 times the 9.09 at which the net present value turns positive.
+\end{solution}

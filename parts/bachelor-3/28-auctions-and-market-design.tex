@@ -1,0 +1,443 @@
+\chapter{Auctions and Market Design}\label{ch:b3:auctions-and-market-design}
+
+Some markets are designed: a government sells radio licences, a city assigns pupils
+to schools, surgeons match kidney donors to patients. The designer chooses the
+rules, and the rules decide who gets what and who pays how much. This chapter
+proves the central result of auction theory, shows when it fails, and follows it to
+the auctions that raised billions and those that raised almost nothing. It then
+turns to markets without prices --- matching pupils and schools, and patients and
+donors --- where the algorithms of this chapter are in daily use.
+
+\begin{openingchart}{Revenue of the European third-generation mobile-telephone
+licence auctions, 2000 and 2001, in euros per head of population.}{Klemperer (2002),
+European Economic Review 46, Table 1}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xbar, bar width=6pt, width=0.6\linewidth,
+  height=0.44\linewidth, xmin=0, xmax=720, ymin=-0.6, ymax=8.6,
+  ytick={0,...,8}, yticklabels from table={figdata/bachelor-3/28-auctions-and-market-design/out/spectrum.csv}{country},
+  y tick label style={font=\scriptsize}, xlabel={Euros per head},
+  nodes near coords, nodes near coords style={font=\scriptsize},
+  every node near coord/.append style={anchor=west}]
+  \addplot[fill=omDef!60, draw=omDef] table[x=euros, y=pos] {figdata/bachelor-3/28-auctions-and-market-design/out/spectrum.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% ledger: b3am:kl.t1
+% ledger: b3am:kl
+The licences sold were much alike, and analysts expected roughly equal values per
+head across Western Europe. The auctions of 2000 raised 650 euros a head in the U.K. and
+615 in Germany, but 170 in the Netherlands and 20 in Switzerland, where analysts had
+expected 400 to 600 a week before the auction began. The later auctions of 2001 raised
+less, as valuations had fallen everywhere. The differences in 2000 come from the
+rules: how many bidders entered, and whether they could coordinate.
+
+\begin{recall}
+Bayesian Nash equilibrium, the first- and second-price sealed-bid auctions, the
+statement of revenue equivalence and the winner's curse are the Year 2 volume's; the
+envelope theorem is the Year 1 volume's.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:auctions-and-market-design:symbols}
+$n$ bidders have values $v_i$ drawn independently from a distribution $F$ with density $f$
+on $[0, \bar v]$; $b(v)$ is a bid function, $r$ a \omterm{def:b3:auctions-and-market-design:reserve}{reserve price} and $v_0$ the seller's own value
+of the object.
+\end{notation}
+
+\section{Auction formats}\label{sec:b3:auctions-and-market-design:formats}
+
+\begin{definition}[English auction; Dutch auction]\label{def:b3:auctions-and-market-design:formats}
+\index{English auction}\index{Dutch auction}
+In an \emph{English auction} the price rises until one bidder remains, who pays the
+price at which the last rival dropped out. In a \emph{Dutch auction} the price falls
+until the first bidder accepts it, and that bidder pays it.
+\end{definition}
+
+The \omterm{def:b3:auctions-and-market-design:formats}{Dutch auction} is strategically the same as the first-price sealed-bid auction: a
+bidder's only decision is the price at which to accept, and she learns nothing
+useful before making it. With independent private values, the \omterm{def:b3:auctions-and-market-design:formats}{English auction} is
+equivalent to the second-price auction: staying in up to one's value is a dominant
+strategy, and the winner pays the second-highest value.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=5cm, y=5cm]
+  \draw[econ axes] (0,0) -- (1.08,0) node[right, font=\scriptsize] {$v$};
+  \draw[econ axes] (0,0) -- (0,1.05) node[above, font=\scriptsize] {bid};
+  \draw[guide] (0,0) -- (1,1) node[right, font=\scriptsize] {$b = v$ (second-price)};
+  \draw[curve, omThm] (0,0) -- (1,0.75) node[right, font=\scriptsize] {$n = 4$};
+  \draw[curve, omDef] (0,0) -- (1,0.5) node[right, font=\scriptsize] {$n = 2$};
+  \node[below, font=\scriptsize] at (1,0) {1};
+\end{tikzpicture}
+\par\smallskip{\small Equilibrium bids in a first-price auction with values uniform on
+$[0, 1]$: $b(v) = (n - 1)v/n$. Bidders shade their bids below their values, and shade less as rivals
+multiply.}
+\end{omfigure}
+
+\section{Revenue equivalence}\label{sec:b3:auctions-and-market-design:equivalence}
+
+\begin{proposition}[Revenue equivalence]\label{prop:b3:auctions-and-market-design:revenue-equivalence}
+Let $n$ risk-neutral bidders have independent private values from $F$ on $[0, \bar v]$. Any auction in
+which the bidder with the highest value wins, and a bidder with value 0 pays nothing in
+expectation, gives each bidder the same expected payment, and the seller the same
+expected revenue, $E[\text{second-highest value}]$.
+\end{proposition}
+
+\begin{proof}
+In equilibrium, let $Q(v) = F(v)^{n-1}$ be the probability that a bidder of value $v$ wins and $P(v)$ her
+expected payment, so her payoff is $U(v) = vQ(v) - P(v)$. She can act as if her value were any $w$, so
+$U(v) = \max_w\,[vQ(w) - P(w)]$, and by the envelope theorem $U'(v) = Q(v)$. With $U(0) = 0$, $U(v) = \int_0^v Q(x)\,dx$, and
+$P(v) = vQ(v) - \int_0^v Q(x)\,dx$, which depends only on $F$ and $n$, not on the format. Expected revenue is $n\,E[P(v)]$,
+the same in every such auction; in the second-price auction it is the expected
+second-highest value.
+\end{proof}
+
+\begin{model}{Independent private values}
+\assumes Each bidder knows her own value; values are independent draws from one
+distribution; bidders are risk neutral.
+\predicts All standard formats raise the same expected revenue; the Dutch and
+first-price auctions are equivalent, and so are the English and second-price
+auctions.
+\tested In field experiments selling collectible trading cards over the
+Internet, the English and second-price formats raised about the same revenue, but
+the \omterm{def:b3:auctions-and-market-design:formats}{Dutch auction} raised 30~\% more than the first-price auction, a violation of the
+prediction. % ledger: b3am:lr
+\breaks With risk-averse bidders the first-price auction raises more; with
+asymmetric bidders or common values the formats differ.
+\end{model}
+
+Risk aversion is the simplest break. In a second-price auction bidding one's value
+remains dominant. In a first-price auction, a risk-averse bidder shades less, trading
+some profit when she wins for a higher chance of winning, and revenue rises. Exercise 11
+measures the difference.
+
+\section{Reserve prices}\label{sec:b3:auctions-and-market-design:reserve}
+
+\begin{definition}[Optimal reserve price]\label{def:b3:auctions-and-market-design:reserve}
+\index{optimal reserve price}
+A \emph{reserve price} is the lowest price at which the seller will sell. The
+\emph{optimal reserve price} maximises the seller's expected revenue plus her own
+value of the object when it stays unsold.
+\end{definition}
+
+\begin{proposition}[The optimal reserve]\label{prop:b3:auctions-and-market-design:reserve}
+In a second-price auction with independent private values, if $v - (1 - F(v))/f(v)$ is increasing, the
+optimal reserve $r$ solves $r - (1 - F(r))/f(r) = v_0$; it does not depend on $n$. With values uniform on $[0, 1]$, $r = (1 + v_0)/2$.
+\end{proposition}
+
+\begin{proof}
+Let $\psi(v) = v - (1 - F(v))/f(v)$. Integrating the expected payment $P(v)$ of the proof of revenue equivalence by
+parts, a bidder pays $\int_r^{\bar v}\psi(v)Q(v)f(v)\,dv$ in expectation when only values above $r$ win, so the seller's payoff is
+\[
+n\int_r^{\bar v}\psi(v)F(v)^{n-1}f(v)\,dv + v_0 F(r)^n .
+\]
+Its derivative in $r$ is $-nF(r)^{n-1}f(r)(\psi(r) - v_0)$, zero where $\psi(r) = v_0$, positive below and negative above. For the uniform, $\psi(r) = 2r - 1$.
+\end{proof}
+
+\begin{omchart}{Expected revenue of a second-price auction against the reserve
+price, values uniform on $[0, 1]$, seller's own value zero.}{The formula of this section's
+proof}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.6\linewidth, height=0.36\linewidth, xmin=0, xmax=1,
+  xtick={0,0.25,0.5,0.75,1},
+  x tick label style={/pgf/number format/fixed, /pgf/number format/precision=2},
+  ymin=0, ymax=0.75, xlabel={Reserve price $r$}, ylabel={Expected revenue},
+  legend pos=south west, legend style={font=\footnotesize}]
+  \addplot[omDef, thick] table[x=r, y=n2] {figdata/bachelor-3/28-auctions-and-market-design/out/reserve.csv};
+  \addplot[omThm, thick] table[x=r, y=n5] {figdata/bachelor-3/28-auctions-and-market-design/out/reserve.csv};
+  \draw[guide] (axis cs:0.5,0) -- (axis cs:0.5,0.70);
+  \legend{2 bidders, 5 bidders}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: reserve
+
+With two bidders, a reserve of one half raises expected revenue from $1/3$ to $5/12$, a quarter more;
+with five, the gain is small, because the second-highest value rarely falls below the
+reserve. A reserve is most useful when competition is thin, which is also when it
+risks leaving the object unsold.
+
+\section{Common values and the winner's curse}\label{sec:b3:auctions-and-market-design:common}
+
+When the object has a common value that each bidder estimates with error --- the oil
+in a tract, the future profits of a licence --- winning tells the winner that her
+estimate was the most optimistic. A bidder who bids her unconditional estimate
+loses money on average: the winner's curse of the Year 2 volume. Bidders who
+understand it shade their bids by more as rivals multiply. When values are
+affiliated (one bidder's high signal makes high signals of others more likely), the
+\omterm{def:b3:auctions-and-market-design:formats}{English auction} lets each bidder learn from the prices at which others drop out;
+the \emph{linkage principle} states that releasing information linked to the value
+raises expected revenue, and in that environment the \omterm{def:b3:auctions-and-market-design:formats}{English auction} raises more
+than the second-price auction, which raises more than the first-price auction.
+
+\section{Multi-unit auctions and the record of spectrum sales}\label{sec:b3:auctions-and-market-design:spectrum}
+
+\begin{definition}[Simultaneous ascending auction; clock auction]\label{def:b3:auctions-and-market-design:multi-unit}
+\index{simultaneous ascending auction}\index{clock auction}
+In a \emph{simultaneous ascending auction} several licences are sold at once, in rounds;
+prices rise on each separately and none is sold until no one bids again on any. In a
+\emph{clock auction} the auctioneer announces prices and bidders state the quantities
+they demand, and prices rise where demand exceeds supply.
+\end{definition}
+
+When licences are complements, a bidder who wants a pair risks winning one at a
+price justified only by the pair: the exposure problem. When they are substitutes,
+bidders can divide them by signalling in early rounds.
+
+\begin{record}[Spectrum auctions: the U.K. and the Netherlands, 2000]
+The U.K. sold five licences in March and April 2000, with no bidder allowed more than
+one and one reserved for a new entrant. Nine new entrants bid against the four
+incumbents and the auction raised 39 billion euros. Four months later the
+Netherlands used nearly the same design with five incumbents and five licences. The
+strongest potential entrants joined incumbents instead of bidding; one weak entrant
+bid, and stopped after an incumbent threatened legal action. The auction raised less
+than 3 billion euros against almost 10 billion forecast. % ledger: b3am:kl
+\end{record}
+
+The same design produced opposite results because entry differed. An ascending
+auction lets a strong bidder top any bid, which deters weaker ones; a sealed-bid stage
+gives them a chance, and so brings them in.
+
+\begin{record}[The U.S. incentive auction, 2016--2017]
+The United States bought spectrum back from television stations and sold it to
+mobile operators in one design: a descending \omterm{def:b3:auctions-and-market-design:multi-unit}{clock auction} in which broadcasters
+offered to give up or move their channels, and an ascending \omterm{def:b3:auctions-and-market-design:multi-unit}{clock auction} for the
+licences. It began on 29 March 2016 and closed on 13 April 2017. Fifty winning bidders paid
+19.8 billion dollars for 70 MHz of licensed spectrum, with 14 MHz more for unlicensed use; more than 10
+billion dollars went to 175 broadcasters, of whom 133 relinquished their licences and 30 moved to a
+lower channel. % ledger: b3am:fcc
+\end{record}
+
+\section{Matching: schools and kidneys}\label{sec:b3:auctions-and-market-design:matching}
+
+\begin{definition}[Stable matching; deferred acceptance algorithm; strategy-proofness]\label{def:b3:auctions-and-market-design:matching}
+\index{stable matching}\index{deferred acceptance algorithm}\index{strategy-proofness}
+A matching of pupils to schools is \emph{stable} if no pupil prefers a school that
+either has a free seat or holds a pupil of lower priority there. In the \emph{deferred
+acceptance algorithm}, each unassigned pupil applies to her most preferred school
+that has not yet rejected her; each school holds its best applicants up to its
+capacity and rejects the rest; the algorithm stops when no pupil is rejected. A
+mechanism is \emph{strategy-proof} if reporting one's true preferences is a dominant
+strategy.
+\end{definition}
+
+\begin{proposition}[Deferred acceptance]\label{prop:b3:auctions-and-market-design:da}
+Deferred acceptance ends with a \omterm{def:b3:auctions-and-market-design:matching}{stable matching}, and each proposer weakly prefers it
+to every other \omterm{def:b3:auctions-and-market-design:matching}{stable matching}.
+\end{proposition}
+
+\begin{proof}
+It ends, since each pupil applies to each school at most once. Suppose pupil $i$ prefers
+school $s$ to her match. Then $i$ applied to $s$ earlier and was rejected, when $s$ held pupils
+of higher priority; a school's held set only improves, so at the end $s$ is full of
+pupils of higher priority than $i$: no blocking pair. For optimality, call a school
+\emph{possible} for $i$ if some \omterm{def:b3:auctions-and-market-design:matching}{stable matching} gives it to her, and suppose that some
+pupil is rejected by a possible school; take the first such rejection, of $i$ by $s$, and a
+\omterm{def:b3:auctions-and-market-design:matching}{stable matching} $M$ that gives $s$ to $i$. At that moment $s$ is full with pupils of higher priority
+than $i$, and at least one of them, $j$, is not at $s$ in $M$, since $i$ takes one of its seats there. Pupil $j$
+applied to $s$, so every school she ranks above $s$ has rejected her; none of them is
+possible for $j$, because no possible school has rejected anyone before. Her school in $M$ is
+possible for her, so she ranks it below $s$. Then $j$ prefers $s$ to her match in $M$ and has
+higher priority there than $i$: $(j, s)$ blocks $M$, a contradiction. No pupil is ever rejected by
+a possible school, so each ends at the best of them.
+\end{proof}
+
+\begin{proposition}[Incentives]\label{prop:b3:auctions-and-market-design:incentives}
+Deferred acceptance is strategy-proof for the proposing side.
+\end{proposition}
+\admitted
+
+\begin{record}[Boston's school choice, 2005]
+Boston assigned pupils by a priority mechanism that accepted each round's
+applications for good: a pupil who ranked a popular school first and missed it could
+find her second choice already full. Records of choices showed some parents
+strategising with care and others not; many pupils left unassigned could have had
+one of their stated choices with a different ranking. In July 2005 the city replaced
+the mechanism with deferred acceptance, under which ranking schools truthfully is
+safe; it chose deferred acceptance over \omterm{def:b3:auctions-and-market-design:ttc}{top trading cycles}, which is also
+strategy-proof. % ledger: b3am:aprs
+\end{record}
+
+\begin{definition}[Top trading cycles; kidney exchange]\label{def:b3:auctions-and-market-design:ttc}
+\index{top trading cycles}\index{kidney exchange}
+In \emph{top trading cycles} each agent owns an object and points to the owner of her
+most preferred remaining object; every cycle that forms trades along itself and
+leaves; the rest point again. A \emph{kidney exchange} matches patients who have a
+willing but incompatible donor, so that each donor gives to another pair's patient.
+\end{definition}
+
+\begin{proposition}[Top trading cycles]\label{prop:b3:auctions-and-market-design:ttc}
+\omterm{def:b3:auctions-and-market-design:ttc}{Top trading cycles} gives a Pareto-efficient allocation and is strategy-proof.
+\end{proposition}
+\admitted
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=1cm, y=1cm]
+  \node[draw, rounded corners, font=\scriptsize, align=center] (a) at (0,1.6) {pair 1\\patient A, donor $a$};
+  \node[draw, rounded corners, font=\scriptsize, align=center] (b) at (3.4,0) {pair 2\\patient B, donor $b$};
+  \node[draw, rounded corners, font=\scriptsize, align=center] (c) at (-3.4,0) {pair 3\\patient C, donor $c$};
+  \draw[->, thick, omThm] (a) -- node[above right, font=\scriptsize] {$a$ gives to B} (b);
+  \draw[->, thick, omThm] (b) -- node[below, font=\scriptsize] {$b$ gives to C} (c);
+  \draw[->, thick, omThm] (c) -- node[above left, font=\scriptsize] {$c$ gives to A} (a);
+\end{tikzpicture}
+\par\smallskip{\small A three-way \omterm{def:b3:auctions-and-market-design:ttc}{kidney exchange}. No donor can give to her own
+patient, but each can give to another's; the three operations take place at once, so
+that no donor withdraws after her patient is served.}
+\end{omfigure}
+
+% ledger: b3am:rsu
+\omterm{def:b3:auctions-and-market-design:ttc}{Kidney exchange} began with pairs of pairs and with exchanges in which a pair gives to
+someone on the waiting list in return for priority for its own patient. Run as a
+clearinghouse over many pairs, with the constraints that law and medicine impose,
+the design is efficient and gives no pair a reason to hide information; simulations
+suggest substantial gains, both in transplants and in the quality of the matches.
+
+\begin{record}[Kidney exchange in the United States]
+Agarwal and co-authors found the American market fragmented: most exchange
+transplants were arranged by single hospitals, not on the national platforms. A
+hospital that submits its pairs to a platform counts only part of the gain, which
+goes in part to other hospitals' patients, and the platforms rewarded hospitals for
+submitting patients and donors in ways that did not correct this.
+Many hospitals ran exchanges below the scale at which pools match well. Removing
+these failures could raise the number of exchange transplants by 30 to 63~\%.
+% ledger: b3am:aaafk.kidney
+The theory of the clearinghouse was right about what a thick pool achieves; it left
+out the incentives of the hospitals that decide which pairs enter it.
+\end{record}
+
+\begin{measure}[Measuring a matching market's stability]
+Stability can be checked from data: for each participant, list the partners she
+ranks above her match and ask whether any of them would have preferred her to its
+own match or had a free place. Each such pair is a blocking pair. A mechanism whose
+outputs often contain blocking pairs invites participants to arrange matches outside
+it. Roth's comparison of seven regional British markets for new doctors, which had
+adopted different centralised mechanisms, found that those producing unstable
+matches fared no better than the decentralised markets they had replaced:
+stability mattered even in those more complex markets. % ledger: b3am:roth91
+\end{measure}
+
+\section{Exercises}\label{sec:b3:auctions-and-market-design:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:auctions-and-market-design:1}
+In the opening chart, what is the ratio of the highest to the lowest revenue per head
+in 2000? And between the U.K. and the Netherlands?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:auctions-and-market-design:2}
+Three bidders have values uniform on $[0, 1]$. Find the expected revenue of a second-price
+auction.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:auctions-and-market-design:3}
+In a first-price auction with four bidders and values uniform on $[0, 1]$, what does a bidder of
+value 0.6 bid?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:auctions-and-market-design:4}
+What result of a laboratory or field experiment would contradict revenue
+equivalence? Name one such result from the chapter.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:auctions-and-market-design:5}
+Values are uniform on $[0, 1]$ and the seller values the object at 0.2. Find the optimal reserve.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:auctions-and-market-design:6}
+Four pupils and four schools, one seat each, have invented preferences and
+priorities. Run deferred acceptance with the pupils proposing and with the schools
+proposing, and compare.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:auctions-and-market-design:7}
+An incumbent's value of a licence is known to be higher than an entrant's. Why might
+the entrant not bid in an \omterm{def:b3:auctions-and-market-design:formats}{English auction}, and how does a final sealed-bid stage
+change that?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:auctions-and-market-design:8}
+A tract's value is $V$; each of two bidders sees $V$ plus an error of $+10$ or $-10$ with equal chance,
+independent of the other's. A bidder sees 100. What is her expected value of $V$, and what is it
+given that her signal is the higher of the two (ties broken at random)?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:auctions-and-market-design:9}
+What would applicants' strategies show if a mechanism were not strategy-proof?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:auctions-and-market-design:10}
+Prove revenue equivalence with the envelope argument, and compute the expected
+payment $P(v)$ for uniform values and $n$ bidders.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:auctions-and-market-design:11}
+Four bidders with values uniform on $[0, 1]$ have utility $x^{0.5}$ of their gain $x$. Simulate the expected
+revenue of the four formats, using the equilibrium first-price bid $(n - 1)v/(n - 1 + 0.5)$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:auctions-and-market-design:12}
+Four patient--donor pairs: donor $a$ is compatible with B and C, $b$ with A, $c$ with D, $d$ with A and C.
+Each patient prefers compatible donors in the order listed in her row: A prefers $b$ then $d$;
+B prefers $a$; C prefers $d$ then $a$; D prefers $c$. Run \omterm{def:b3:auctions-and-market-design:ttc}{top trading cycles}.
+\end{exercise}
+
+\section{Problem: Brenland Sells Its Radio Spectrum}\label{sec:b3:auctions-and-market-design:problem}
+
+\begin{problem}[{Weekend problem --- Brenland sells its radio spectrum}]\label{pb:b3:auctions-and-market-design:spectrum}
+Brenland sells one national mobile licence. Four operators bid; each one's value is
+uniform on $[0, 400]$ million dalens, independent of the others'. Brenmoor, meanwhile, assigns
+pupils to schools. % figdata: reserve, schools
+
+\medskip\noindent\textbf{Part I --- choosing the format.}
+\begin{enumerate}
+\item Find the expected revenue of an \omterm{def:b3:auctions-and-market-design:formats}{English auction}.
+\item Find the equilibrium bid in a first-price auction, and its expected revenue.
+\item Find the expected payoff of the winner.
+\item If the operators are risk averse, which format raises more?
+\item If one operator is an incumbent whose value is known to be high, which format
+would you fear in the other three's place, and why?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- the reserve.}
+\begin{enumerate}[resume]
+\item Find the revenue-maximising reserve when an unsold licence is worth nothing to
+the government.
+\item Find the expected revenue with that reserve.
+\item Find the probability that the licence goes unsold.
+\item Would the reserve change with eight operators?
+\item If an unsold licence can be used by a public operator worth 100 million, what is the
+optimal reserve?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- two licences.} Brenland now sells a northern and a
+southern licence. One operator values each alone at 50 million and the pair at 150.
+\begin{enumerate}[resume]
+\item Are the licences substitutes or complements for this operator?
+\item In separate \omterm{def:b3:auctions-and-market-design:multi-unit}{simultaneous ascending auctions}, prices reach 70 on each. Should it stay
+in?
+\item It stays in and wins the north at 70, but the south rises to 90 and it drops out. What is
+its payoff?
+\item Name this problem, and one design that removes it.
+\item With operators that value the licences as substitutes, what could they do in the
+early rounds?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- Brenmoor's schools.} Ana, Ben and Dee rank North
+first, Cai ranks South first. Ana: North, South, West. Ben: North, West, South. Cai: South,
+North, West. Dee: North, South, West. North has one seat and priorities Cai, Dee, Ana, Ben;
+South one seat, priorities Ana, Dee, Ben, Cai; West two seats, priorities Ben, Ana, Cai,
+Dee.
+\begin{enumerate}[resume]
+\item Run deferred acceptance with the pupils proposing, round by round.
+\item Check that the matching is stable.
+\item Run the old mechanism, in which each round's applications are accepted for
+good, with truthful rankings.
+\item Find a blocking pair in that outcome.
+\item Show that Ana gains under the old mechanism by ranking South first.
+\item In the deferred-acceptance matching, which two pupils would both gain by
+swapping schools? Why does the algorithm not let them?
+\item Which mechanism would make that swap, and at what cost?
+\item What evidence from Boston supports the change?
+\item Why might a city prefer stability to that swap?
+\item State the result: the revenue-maximising reserve and the expected revenue with
+it, and the matching that deferred acceptance produces.
+\end{enumerate}
+\end{problem}

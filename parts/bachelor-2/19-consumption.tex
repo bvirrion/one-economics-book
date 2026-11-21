@@ -1,0 +1,394 @@
+\chapter{Consumption}\label{ch:b2:consumption}
+
+Household consumption is about two thirds of GDP in the United States (see the second chart), and how it responds to income is one of the oldest
+questions of macroeconomics. The chart shows, quarter by quarter for fifty years, the growth of American households'
+real spending and of their real income after taxes.
+
+\begin{openingchart}{Quarterly growth of real personal consumption expenditure and of real disposable personal income,
+  United States, 1959Q2--2009Q3, per cent (log changes).}{statsmodels bundled data (public domain), macrodata; our
+  computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.86\linewidth, height=0.42\linewidth, xmin=1959, xmax=2010, ymin=-4, ymax=6,
+    xlabel={Year}, ylabel={Per cent a quarter}, xtick={1960,1970,1980,1990,2000,2010},
+    xticklabel style={/pgf/number format/1000 sep=}, legend style={at={(0.5,-0.3)}, anchor=north,
+    legend columns=2, /tikz/every even column/.append style={column sep=10pt}}]
+  \addplot[omThm!70, thin] table[x=t, y=dy] {figdata/bachelor-2/19-consumption/out/growth.csv};
+  \addplot[omDef, thick] table[x=t, y=dc] {figdata/bachelor-2/19-consumption/out/growth.csv};
+  \legend{Disposable income, Consumption}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: growth_summary (n 202, sd_dc 0.69, sd_dy 0.9, corr 0.44, mean_dc 0.84, mean_dy 0.83)
+Both grew by about 0.8 per cent a quarter on average. But income growth varied more, with a standard deviation of 0.90
+percentage points against 0.69 for consumption, and the two were only loosely related, with a correlation of 0.44.
+Households did not spend each quarter what they earned that quarter; they smoothed.
+
+The simplest consumption function, consumption as a fixed fraction of current income plus a constant, cannot produce
+this. This chapter builds the models that can, from the household's choice over time of \cref{ch:b2:intertemporal-choice},
+derives what they predict for the path of consumption, and tests them. Where they fail, the failure is informative: many
+households spend much of a one-off payment as soon as it arrives.
+
+\begin{recall}
+From the school volumes: the consumption function and the marginal propensity to consume. From
+\cref{ch:b2:intertemporal-choice}: the intertemporal budget constraint, the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} and \omterm{def:b2:intertemporal-choice:smoothing}{consumption smoothing}.
+From \cref{ch:b2:expected-utility}: expected utility and the convexity of marginal utility.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:consumption:symbols}
+$c_t$ is consumption and $y_t$ income in period $t$; $A_t$ financial wealth at the start of $t$; $r$ the real interest rate; $\beta$ the
+\omterm{def:b2:intertemporal-choice:discount-factor}{discount factor}; $y^P$ \omterm{def:b2:consumption:permanent-income}{permanent income}; $\lambda$ the share of income going to households that spend their current income.
+\end{notation}
+
+\section{The simple consumption function against the data}\label{sec:b2:consumption:keynesian}
+
+\begin{definition}[Average propensity to consume]\label{def:b2:consumption:apc}
+The \emph{average propensity to consume}\index{average propensity to consume} is the ratio of consumption to income,
+$c/y$.
+\end{definition}
+
+A consumption function $c = a + by$ with $a > 0$ and $0 < b < 1$ has an average propensity $a/y + b$ that falls as income rises toward $b$. As incomes
+grow, a country's consumption should then take a falling share of its income. The chart shows household consumption as a
+share of GDP in four countries over half a century in which real GDP per person rose 2.6 and 2.7 times in the United States
+and Japan and 18.7 times in Korea (Germany, shown from 1991 only, 1.4 times since then).
+
+\begin{omchart}{Household final consumption expenditure as a share of GDP, per cent, 1970 to the latest year; Germany from
+  1991, since earlier figures are not data for the Germany of the time.}{World Bank,
+  World Development Indicators (NE.CON.PRVT.ZS)}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.8\linewidth, height=0.42\linewidth, xmin=1970, xmax=2025, ymin=40, ymax=80,
+    xlabel={Year}, ylabel={Per cent of GDP}, xtick={1970,1980,1990,2000,2010,2020},
+    xticklabel style={/pgf/number format/1000 sep=}, legend style={at={(0.5,-0.3)}, anchor=north,
+    legend columns=4, /tikz/every even column/.append style={column sep=8pt}}]
+  \addplot[omDef, thick] table[x=year, y=USA] {figdata/bachelor-2/19-consumption/out/share.csv};
+  \addplot[omThm, thick, dashed] table[x=year, y=JPN] {figdata/bachelor-2/19-consumption/out/share.csv};
+  \addplot[omMeth, thick, dotted] table[x=year, y=KOR] {figdata/bachelor-2/19-consumption/out/share.csv};
+  \addplot[black!60, thick, dashdotted] table[x=year, y=DEU] {figdata/bachelor-2/19-consumption/out/share.csv};
+  \legend{United States, Japan, Korea, Germany}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: share_summary (USA 60.3 to 67.9, JPN 44.6 to 53.1, KOR 73.5 to 48, DEU 55.5 (1991) to 53.2; gdp_ratio 2.6, 2.7, 18.7, 1.4)
+In Korea the share fell from 73.5 to 48 per cent; in the United States it rose from
+60.3 to 67.9; in Germany, since 1991, it barely moved. The share is not a stable function of the level of income. What households spend
+depends on more than this year's income.
+
+\section{The life-cycle and permanent-income models}\label{sec:b2:consumption:pih}
+
+\begin{definition}[Life-cycle hypothesis]\label{def:b2:consumption:life-cycle}
+The \emph{life-cycle hypothesis}\index{life-cycle hypothesis} states that households plan consumption over their whole
+lives, saving while they earn and drawing on their savings in retirement, so that consumption follows lifetime
+resources rather than current income.
+\end{definition}
+
+\begin{definition}[Permanent income]\label{def:b2:consumption:permanent-income}
+A household's \emph{permanent income}\index{permanent income} is the constant income whose present value over its
+remaining life equals its wealth plus the present value of its expected income.
+\end{definition}
+
+\begin{definition}[Permanent-income hypothesis]\label{def:b2:consumption:pih}
+The \emph{permanent-income hypothesis}\index{permanent-income hypothesis} states that households consume their \omterm{def:b2:consumption:permanent-income}{permanent
+income}, so that consumption responds fully to changes in \omterm{def:b2:consumption:permanent-income}{permanent income} and little to changes in income that are
+expected to be temporary.
+\end{definition}
+
+Both follow from the household's problem of \cref{ch:b2:intertemporal-choice}. If $\beta(1 + r) = 1$, the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} $u'(c_t) =
+\beta(1 + r)u'(c_{t+1})$ gives $c_t = c_{t+1}$: consumption is flat, and the budget constraint fixes its level. With $r = 0$ for simplicity and
+$T$ years left, $c = (A_0 + \sum_t y_t)/T$.
+
+Take a worker who will earn 30 thousand dalens a year for 40 years and then live 20 years in retirement, with no wealth to
+start. She consumes $40 \times 30/60 = 20$ a year, saves 10 a year while working, accumulates 400 by retirement and runs it down to
+zero.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=62, ymin=0, ymax=36, width=0.62\linewidth,
+    height=0.4\linewidth, xlabel={Years from the start of working life}, ylabel={Thousands of dalens a year},
+    xtick={0,40,60}, ytick={20,30}, legend style={at={(1.03,0.5)}, anchor=west}]
+  \addplot[omThm, very thick, const plot] coordinates {(0,30) (40,0) (60,0)};
+  \addplot[omDef, very thick, dashed, domain=0:60, samples=2] {20};
+  \addplot[fill=omDef!12, draw=none, forget plot] coordinates {(0,20) (40,20) (40,30) (0,30)} -- cycle;
+  \addplot[fill=omThm!12, draw=none, forget plot] coordinates {(40,0) (60,0) (60,20) (40,20)} -- cycle;
+  \node[font=\footnotesize] at (axis cs:20,25) {saving};
+  \node[font=\footnotesize] at (axis cs:50,10) {dissaving};
+  \legend{Income, Consumption}
+\end{axis}
+\end{tikzpicture}
+
+{\small The life cycle. Income is 30 for forty years and zero in retirement; consumption is flat at 20. The household saves
+10 a year while working and draws down its savings, 400 at retirement, over the last twenty years.}
+\end{omfigure}
+
+The models imply that the marginal propensity to consume depends on how long a change in income lasts. A one-off payment
+of $W$ raises consumption by $W/T$ a year: with fifty years left, by 2 per cent of the payment. A raise that lasts the rest of the
+working life raises it by the share of remaining life spent working (half of it in the chart below, two thirds in the
+example above), and a raise for life by all of it.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, ybar, bar width=18pt, width=0.55\linewidth, height=0.4\linewidth, ymin=0, ymax=1.15,
+    xmin=0.4, xmax=3.6, xtick={1,2,3}, xticklabels={One-off, Working life, For life},
+    ylabel={Rise in consumption per dalen of income}, xmajorgrids=false, nodes near coords,
+    nodes near coords style={font=\footnotesize, /pgf/number format/fixed, /pgf/number format/precision=2}]
+  \addplot[fill=omDef!50, draw=omDef] coordinates {(1,0.02) (2,0.5) (3,1)};
+\end{axis}
+\end{tikzpicture}
+
+{\small The marginal propensity to consume out of a change in income, for a household with fifty years left of which
+twenty-five are working years, $r = 0$: a one-off payment, a raise for the rest of working life, and a raise for life
+(including the pension).}
+\end{omfigure}
+
+\begin{model}{Life-cycle and permanent income}
+\assumes Households that plan over their remaining lives, borrow and lend at one interest rate, and know the income they
+can expect.
+\predicts Consumption smoother than income; saving in working life and dissaving in retirement; a small response to
+temporary income and a full one to \omterm{def:b2:consumption:permanent-income}{permanent income}; no response when an anticipated payment arrives.
+\tested Consumption growth is smoother than income growth (the opening chart); lagged income does not predict consumption
+growth in postwar American data (Hall 1978).
+\breaks When one-off payments arrive: households spend a large share of tax rebates within months (Johnson, Parker and
+Souleles 2006).
+\end{model}
+
+\section{The Euler equation and the random walk}\label{sec:b2:consumption:random-walk}
+
+With uncertain income the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} holds in expectation: $u'(c_t) = \beta(1 + r)E_t u'(c_{t+1})$. If $\beta(1 + r) = 1$ and utility is quadratic, so
+that marginal utility is linear in consumption, $c_t = E_t c_{t+1}$.
+
+\begin{definition}[Random-walk hypothesis of consumption]\label{def:b2:consumption:random-walk-hypothesis}
+The \emph{random-walk hypothesis}\index{random-walk hypothesis} of consumption states that the best forecast of next
+period's consumption is this period's consumption, so that changes in consumption cannot be predicted from anything
+known today.
+\end{definition}
+
+\begin{proposition}[Consumption is a random walk]\label{prop:b2:consumption:random-walk}
+If utility is quadratic, $\beta(1 + r) = 1$ and the household can borrow and lend freely at $r$, then $c_{t+1} = c_t + \varepsilon_{t+1}$, where $\varepsilon_{t+1}$ has mean zero given
+all information at $t$. In particular, predictable changes in income do not predict changes in consumption.
+\end{proposition}
+
+\begin{proof}
+With $u(c) = c - \tfrac{a}{2}c^2$, $u'(c) = 1 - ac$, and the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} with $\beta(1 + r) = 1$ gives $1 - ac_t = 1 - aE_t c_{t+1}$, so $E_t c_{t+1} = c_t$. Let $\varepsilon_{t+1} = c_{t+1} - E_t c_{t+1}$;
+its expectation at $t$ is zero by construction, so it is uncorrelated with anything known at $t$, including the expected change in
+income. A predictable rise in income was already in the household's \omterm{def:b2:consumption:permanent-income}{permanent income}, and so already in $c_t$.
+\end{proof}
+
+\begin{definition}[Excess sensitivity]\label{def:b2:consumption:excess-sensitivity}
+\emph{Excess sensitivity}\index{excess sensitivity} of consumption is a response of consumption to changes in income
+that were predictable in advance, which the \omterm{def:b2:consumption:random-walk-hypothesis}{random-walk hypothesis} rules out.
+\end{definition}
+
+The test regresses consumption growth on the growth of income that was predictable: if some households spend their
+current income, a share $\lambda$ of income growth passes into consumption growth, $\Delta c_t = \mu + \lambda\Delta y_t + \varepsilon_t$. Because income growth is
+correlated with the news in $\varepsilon_t$, ordinary least squares is biased; the test uses only the part of income growth that could
+be predicted from variables known two or more quarters earlier, an instrumental-variable estimate. The listing runs it
+on the data of the opening chart.
+
+\omcode{code/bachelor-2/19-consumption/listings/lambda_iv.py}{1}{33}{Estimating the share of rule-of-thumb consumers
+by instrumental variables on quarterly United States data.}\label{lst:b2:consumption:lambda}
+
+\omoutput{code/bachelor-2/19-consumption/outputs/lambda_iv.txt}{The instrumented share is about 0.6, but the
+instruments predict income growth poorly: the first-stage $F$ is 2.5.}\label{out:b2:consumption:lambda}
+
+% code: listings/lambda_iv.py
+% ledger: b2:cm1989, b2:hall1978
+The estimate, 0.62 with a standard error of 0.20, rejects $\lambda = 0$, the random walk. But the six instruments explain only 7 per
+cent of income growth, with an $F$ statistic of 2.5, far below the level at which instrumental-variable estimates are
+reliable; such weak instruments pull the estimate toward the least-squares slope and make its standard error
+misleading. Campbell and Mankiw (1989) read the American evidence as about half
+of consumers spending their current income. Hall (1978) had found that lagged income did not predict consumption, but
+stock prices lagged by one quarter did.
+
+\section{Precautionary saving and borrowing limits}\label{sec:b2:consumption:precautionary}
+
+Quadratic utility is convenient but implies that uncertainty does not change saving. With marginal utility that is
+convex, as for any utility with \omterm{def:b2:expected-utility:crra}{constant relative risk aversion}, it does.
+
+\begin{definition}[Prudence]\label{def:b2:consumption:prudence}
+A household is \emph{prudent}\index{prudence} if its marginal utility is convex, $u''' > 0$, so that a spread in future
+consumption raises expected marginal utility.
+\end{definition}
+
+\begin{definition}[Precautionary saving]\label{def:b2:consumption:precautionary}
+\emph{Precautionary saving}\index{precautionary saving} is the extra saving caused by uncertainty about future income,
+over what a household would save if the same expected income were certain.
+\end{definition}
+
+Take two periods, $r = 0$, $\beta = 1$ and $u = \ln c$. Income is 100 now and 100 next period. With certainty the household saves nothing. If next period's income
+is 50 or 150, equally likely, the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} $1/(100 - s) = \tfrac12/(50 + s) + \tfrac12/(150 + s)$ reduces to $s^2 + 100s - 1{,}250 = 0$, so $s = 11.24$. The household saves
+11 per cent of its income though its expected future income has not changed, because a bad outcome raises marginal utility
+more than a good one lowers it: $\tfrac12(1/50 + 1/150) = 0.0133$, against $1/100 = 0.01$.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=30, xmax=170, ymin=0, ymax=0.026, width=0.6\linewidth,
+    height=0.4\linewidth, xlabel={Consumption}, ylabel={Marginal utility $1/c$}, xtick={50,100,150},
+    ytick={0.0067,0.01,0.0133,0.02}, yticklabels={0.0067,0.0100,0.0133,0.0200},
+    scaled y ticks=false]
+  \addplot[omDef, very thick, domain=40:170, samples=80] {1/x};
+  \draw[black!60] (axis cs:50,0.02) -- (axis cs:150,0.006667);
+  \node[eqpoint] at (axis cs:100,0.01) {};
+  \node[eqpoint] at (axis cs:100,0.013333) {};
+  \draw[guide] (axis cs:100,0) -- (axis cs:100,0.013333);
+  \node[anchor=west, font=\footnotesize] at (axis cs:102,0.0138) {expected marginal utility};
+  \node[anchor=north east, font=\footnotesize] at (axis cs:99,0.0098) {at the mean};
+\end{axis}
+\end{tikzpicture}
+
+{\small Why uncertainty raises saving. With convex marginal utility, the average of marginal utility at 50 and 150 (on the
+chord) is above marginal utility at their mean, 100. To restore the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation}, the household moves resources to the
+future: it saves.}
+\end{omfigure}
+
+A borrowing limit has a related effect. A household whose income will rise but who cannot borrow against it consumes its
+current income, and spends any extra cash as it arrives, until it reaches the consumption it would choose if it could
+borrow. Together, \omterm{def:b2:consumption:prudence}{prudence} and borrowing limits make households hold a small stock of savings as a buffer against bad
+times, and make those with little of it spend windfalls quickly.
+
+\section{Where it breaks: one-off payments}\label{sec:b2:consumption:rebates}
+
+\begin{definition}[Hand-to-mouth household]\label{def:b2:consumption:hand-to-mouth}
+A \emph{hand-to-mouth household}\index{hand-to-mouth household} is one that consumes all or nearly all of its current
+disposable income in each period, because it has little liquid wealth or cannot borrow.
+\end{definition}
+
+\begin{record}[The 2001 and 2008 tax rebates]
+% ledger: b2:jps2006, b2:psjm2013
+In 2001 and again in 2008 the United States government sent households one-off payments, and the date each household
+received its payment was set in a way unrelated to its circumstances, so that households paid earlier can be compared
+with households paid later. In 2001 households spent 20 to 40 per cent of their rebates on nondurable goods in the three
+months in which they arrived, and about two thirds over six months; responses were larger for households with little
+liquid wealth or low income (Johnson, Parker and Souleles 2006). In 2008 households spent 12 to 30 per cent of their payments on
+nondurable goods in the three months of receipt, and with durable goods, mostly vehicles, 50 to 90 per cent in all
+(Parker, Souleles, Johnson and McClelland 2013). Under the permanent-income model, a one-off payment should be spread over
+the rest of a household's life, so that a few per cent at most is spent in the first quarter.
+\end{record}
+
+If a share $h$ of households are hand-to-mouth and spend a one-off payment in full, and the rest follow the permanent-income
+model, the aggregate propensity to consume a payment within a quarter is $h + (1 - h)m$, where $m$ is the forward-looking households'
+quarterly propensity. With fifty years left and $r = 0$, $m = 1/200 = 0.005$; a response of 20 to 40 per cent then implies that 20 to 40 per cent of
+households live hand to mouth.
+
+\begin{measure}[The household saving rate]
+The household saving rate is disposable income minus consumption, divided by disposable income. Both terms are measured in
+the national accounts, which estimate them from surveys of spending, tax records and business data, so the saving rate is
+a small difference between two large estimates: an error of one per cent in consumption moves a saving rate of 5 per cent
+by almost one point. The accounts also count as consumption the purchase of durable goods, such as cars, that serve for
+years, though buying one is in part a way of carrying resources into the future.
+\end{measure}
+
+\section{Exercises}\label{sec:b2:consumption:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:consumption:1}
+Read the opening chart and its summary. Which series is smoother, and by how much? What would a consumption function
+$c = 0.9y$ predict for the two standard deviations and their correlation?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:consumption:2}
+A worker will earn 36 thousand dalens a year for 30 years and then live 15 years in retirement; she has wealth 90; $r = 0$. Find her
+consumption, her saving while working and her wealth at retirement.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:consumption:3}
+Read the record on rebates. Why was the date of receipt being unrelated to circumstances essential to the studies?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:consumption:4}
+Predict, then compute: if the quarterly response to a payment is 0.12 and forward-looking households have $m = 0.005$, what share of
+households are hand to mouth?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:consumption:5}
+In the precautionary example, let next period's income be 25 or 175. Find the saving and compare it with the example.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:consumption:6}
+A household lives two periods with incomes 20 and 40, $r = 0$, and cannot borrow. Find its consumption now, and its response to a
+one-off payment now of 6, of 10 and of 30.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:consumption:7}
+Explain why ordinary least squares overstates or understates $\lambda$ in the regression of consumption growth on income growth,
+and why weak instruments are a problem. What does the listing's first-stage $F$ say?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:consumption:8}
+Modify the listing to use only lagged income growth as instruments. Report $\lambda$ and the first-stage $F$, and explain the change.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:consumption:9}
+Read the chart of consumption shares. Give two reasons, other than the level of income, why the share might fall in one
+country and rise in another.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:consumption:10}
+With $r > 0$, $\beta(1 + r) = 1$ and an infinite horizon, show that consumption equals $rA_t/(1 + r)$ plus the annuity value of expected income, and
+that a one-off payment $W$ raises consumption by $rW/(1 + r)$ a year.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:consumption:11}
+Show that with $u = \ln c$, $r = 0$ and $\beta = 1$, the saving of the two-period example solves $s^2 + 100s - 1{,}250 = 0$ when income next period is 50 or 150, and that
+saving rises with the spread when income is $100 - \delta$ or $100 + \delta$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:consumption:12}
+Show that if a share $\lambda$ of income goes to households that consume their current income and the rest to households whose
+consumption is a random walk, then $\Delta c_t = \lambda\Delta y_t + (1 - \lambda)\varepsilon_t$, and that $\lambda$ is the coefficient on predictable income growth.
+\end{exercise}
+
+\section{Problem: A Brenland household gets a bonus}\label{sec:b2:consumption:problem}
+
+\begin{problem}[{Weekend problem --- a Brenland household receives a bonus: how much does it spend under the permanent-income
+model, with a borrowing limit, and across a population in which some households live hand to mouth}]
+\label{pb:b2:consumption:1}
+Amounts are in thousands of dalens; the interest rate is zero and the household does not discount.
+
+\medskip
+\noindent\textbf{Part I --- Permanent income.} A household has 50 years to live, of which 25 are working years at an income of 30
+a year; it has wealth 250.
+\begin{enumerate}
+  \item What are its lifetime resources?
+  \item What does it consume each year?
+  \item How much does it save each working year?
+  \item What is its wealth at retirement?
+  \item How does its wealth evolve in retirement?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Transitory and permanent changes.}
+\begin{enumerate}[resume]
+  \item It receives a one-off bonus of 10. By how much does consumption rise, and what is the propensity to consume?
+  \item Instead it receives a raise of 2 a year for its 25 working years. By how much does consumption rise?
+  \item Instead the raise also raises its retirement income by 2 a year. By how much does consumption rise?
+  \item The bonus of 10 is announced a year before it is paid. When does consumption rise?
+  \item What would \omterm{def:b2:consumption:excess-sensitivity}{excess sensitivity} look like here?
+  \item Why does the propensity in Question 6 overstate the response within a quarter?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- A borrowing limit.} A young household lives two periods with incomes 20 and 40 and cannot
+borrow.
+\begin{enumerate}[resume]
+  \item What would it consume each period if it could borrow?
+  \item What does it consume now?
+  \item How much does it spend of a bonus of 6 received now?
+  \item Of a bonus of 10?
+  \item Of a bonus of 30?
+  \item Why does its propensity to spend fall as the bonus grows?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- A population.} Brenland sends a one-off payment of 0.6 (600 dalens) to each of 2{,}000 households. Forward-looking
+households are like the household of Part I; a share $h$ live hand to mouth.
+\begin{enumerate}[resume]
+  \item What is the forward-looking households' propensity to spend the payment within a quarter?
+  \item If total spending in the quarter is 30 per cent of the payments, how much is spent?
+  \item What share $h$ does that imply?
+  \item What range of $h$ does a quarterly response of 20 to 40 per cent imply?
+  \item If $h$ were one half, what would the aggregate propensity be?
+  \item Why might households with large but illiquid wealth behave as hand to mouth?
+  \item Why does $h$ matter for a government deciding whether to send such payments in a recession?
+  \item State the result: the aggregate propensity to consume a one-off payment and the share of \omterm{def:b2:consumption:hand-to-mouth}{hand-to-mouth households} it
+    implies.
+\end{enumerate}
+\end{problem}

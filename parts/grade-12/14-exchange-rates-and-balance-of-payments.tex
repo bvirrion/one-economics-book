@@ -1,0 +1,378 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g12-14. The balance of payments; saving minus investment equals the
+% current account (proved); purchasing-power parity as a long-run anchor, the real exchange rate, interest parity (first look);
+% fixed and floating rates, the three aims that cannot all be met, a currency union and asymmetric shocks; currency crises
+% (1992, 1997). Real numbers: figdata/grade-12/14-exchange-rates-and-balance-of-payments/ (WDI current accounts and price
+% levels; Penn World Table price levels for the half-life; Eurostat unemployment; Brenland and Kestria invented, Kestria's
+% price index seeded). Ledger: Book 5's rows on Rogoff 1996, Meese-Rogoff, the carry trade, the trilemma and the euro's 21st
+% member are reused by id; Black Wednesday, the Asian crisis and the euro countries are new. No photograph.
+\chapter{Exchange Rates and the Balance of Payments}\label{ch:g12:exchange-rates-and-balance-of-payments}
+
+In 2024 the United States bought 1,199 billion dollars more from the rest of the world, in goods, services and income, than it sold to it. China, the same year, sold 462
+billion dollars more than it bought, and Japan 194 billion. A country that spends more than it earns must pay with something: it sells assets or borrows, and each year's
+gap adds to what it owes the rest of the world.
+% figdata: bop_key (usa2024 -1198.6, chn2024 462.3, jpn2024 193.7)
+
+This chapter shows where these gaps come from, what sets the price of one currency in another, and what a country gives up when it fixes that price.
+
+\begin{openingchart}{Current account balance, billions of dollars, six economies, 1980--2024; the lines join the years with data.}{World Bank, World Development Indicators
+(BN.CAB.XOKA.CD)}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.9\linewidth, height=6.2cm, xmin=1980, xmax=2024, ymin=-1300, ymax=500, ytick={-1200,-800,-400,0,400}, ylabel={billions of dollars},
+  unbounded coords=discard, xtick={1980,1990,...,2020}]
+\addplot[black, thin, domain=1980:2024, samples=2] {0};
+\addplot[omDef, thick] table[x=year, y=USA] {figdata/grade-12/14-exchange-rates-and-balance-of-payments/out/ca.csv};
+\addplot[omThm, thick] table[x=year, y=CHN] {figdata/grade-12/14-exchange-rates-and-balance-of-payments/out/ca.csv};
+\addplot[omProp, thick] table[x=year, y=JPN] {figdata/grade-12/14-exchange-rates-and-balance-of-payments/out/ca.csv};
+\addplot[omMeth, thick] table[x=year, y=DEU] {figdata/grade-12/14-exchange-rates-and-balance-of-payments/out/ca.csv};
+\addplot[gray, thick] table[x=year, y=IND] {figdata/grade-12/14-exchange-rates-and-balance-of-payments/out/ca.csv};
+\addplot[black, thick, dashed] table[x=year, y=GBR] {figdata/grade-12/14-exchange-rates-and-balance-of-payments/out/ca.csv};
+\node[font=\scriptsize, omDef, anchor=north] at (axis cs:2006,-830) {United States};
+\node[font=\scriptsize, omThm, anchor=east] at (axis cs:2004,330) {China};
+\node[font=\scriptsize, omMeth, anchor=south] at (axis cs:2017,300) {Germany};
+\node[font=\scriptsize, omProp, anchor=south] at (axis cs:1998,150) {Japan};
+\node[font=\scriptsize, anchor=north] at (axis cs:1990,-560) {United Kingdom (dashed), India (grey)};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: the exchange rate, a currency's appreciation and depreciation, the trade balance, and the purchasing-power conversion used to compare incomes.
+From \cref{ch:g12:saving-and-investment}: \omterm{def:g12:saving-and-investment:national-saving}{national saving} and investment. From \cref{ch:g12:monetary-policy}: the central bank's \omterm{def:g11:money-and-banking:policy-rate}{policy rate}. From
+\cref{ch:g12:fiscal-policy-and-debt}: the Greek crisis. In this book the exchange rate $e$ is the number of units of home currency per unit of foreign currency, so a rise of
+$e$ is a depreciation of the home currency.
+\end{recall}
+
+\section{The balance of payments}\label{sec:g12:exchange-rates-and-balance-of-payments:bop}
+
+\begin{definition}[Balance of payments]\label{def:g12:exchange-rates-and-balance-of-payments:bop}
+A country's \emph{balance of payments}\index{balance of payments} is the record of all its transactions with the rest of the world over a period.
+\end{definition}
+
+\begin{definition}[Current account]\label{def:g12:exchange-rates-and-balance-of-payments:current-account}
+The \emph{current account}\index{current account} is the trade balance in goods and services plus the net income received from abroad (interest, dividends, wages) and net
+transfers.
+\end{definition}
+
+\begin{definition}[Financial account]\label{def:g12:exchange-rates-and-balance-of-payments:financial-account}
+The \emph{financial account}\index{financial account} is the country's net purchases of foreign assets: the foreign assets its residents acquire minus the home assets that
+foreigners acquire, including loans.
+\end{definition}
+
+Every sale abroad is paid for with something. If a Brenland firm sells 100 dalens of machines to Kestria and the buyer pays into the firm's account in a Kestrian bank, the
+\omterm{def:g12:exchange-rates-and-balance-of-payments:current-account}{current account} gains 100 and Brenland's residents hold 100 more of foreign assets: the \omterm{def:g12:exchange-rates-and-balance-of-payments:financial-account}{financial account} gains 100 too. Leaving aside small capital transfers and errors of
+measurement, the two accounts are always equal, so the \omterm{def:g12:exchange-rates-and-balance-of-payments:bop}{balance of payments} sums to zero.
+
+\begin{omfigure}
+\small
+\begin{tabular}{@{}lr@{\qquad}lr@{}}
+\toprule
+\multicolumn{2}{@{}l}{\textbf{\omterm{def:g12:exchange-rates-and-balance-of-payments:current-account}{Current account}}} & \multicolumn{2}{l@{}}{\textbf{\omterm{def:g12:exchange-rates-and-balance-of-payments:financial-account}{Financial account}}} \\
+\midrule
+exports of goods and services & $+X$ & foreign assets bought & $+A$ \\
+imports of goods and services & $-M$ & home assets sold to foreigners & $-L$ \\
+income and transfers, net & $+R$ & & \\
+\midrule
+\omterm{def:g12:exchange-rates-and-balance-of-payments:current-account}{current account} & $CA$ & \omterm{def:g12:exchange-rates-and-balance-of-payments:financial-account}{financial account} & $A - L$ \\
+\bottomrule
+\end{tabular}
+
+\medskip
+{\small The two sides of the \omterm{def:g12:exchange-rates-and-balance-of-payments:bop}{balance of payments}: $CA = A - L$. A \omterm{def:g12:exchange-rates-and-balance-of-payments:current-account}{current account} deficit is paid for by selling home assets to foreigners or borrowing from them.}
+\end{omfigure}
+
+\begin{definition}[Net foreign assets]\label{def:g12:exchange-rates-and-balance-of-payments:nfa}
+A country's \emph{net foreign assets}\index{net foreign assets} are the foreign assets its residents own minus the home assets that foreigners own. A \omterm{def:g12:exchange-rates-and-balance-of-payments:current-account}{current account} surplus
+adds to them, a deficit takes from them.
+\end{definition}
+
+\section{Saving minus investment}\label{sec:g12:exchange-rates-and-balance-of-payments:s-minus-i}
+
+\begin{proposition}[Saving minus investment equals the current account]\label{prop:g12:exchange-rates-and-balance-of-payments:s-i}
+Let national income be $Y + R$, where $Y = C + I + G + X - M$ is output and $R$ net income and transfers from abroad, and let \omterm{def:g12:saving-and-investment:national-saving}{national saving} be $S = Y + R - C - G$. Then
+$S - I = CA$.
+\end{proposition}
+\begin{proof}
+$S - I = Y + R - C - G - I = (C + I + G + X - M) + R - C - G - I = X - M + R = CA$.
+\end{proof}
+
+The identity says nothing about causes, but it says where to look. A \omterm{def:g12:exchange-rates-and-balance-of-payments:current-account}{current account} deficit means the country invests more than it saves; it can fall only if saving rises
+or investment falls. A tariff that cuts imports but leaves saving and investment unchanged leaves the \omterm{def:g12:exchange-rates-and-balance-of-payments:current-account}{current account} unchanged too: exports or other imports must move. The
+United States' deficit of 2024 is the gap between what Americans saved and what they invested, and China's surplus is the reverse.
+
+\section{What sets the exchange rate}\label{sec:g12:exchange-rates-and-balance-of-payments:ppp}
+
+\begin{definition}[Real exchange rate]\label{def:g12:exchange-rates-and-balance-of-payments:real-exchange-rate}
+The \emph{real exchange rate}\index{real exchange rate} is the price of foreign goods in home goods: $\varepsilon_r = e P^*/P$, where $P$ is the home price level and $P^*$
+the foreign price level.
+\end{definition}
+
+\begin{definition}[Purchasing-power parity]\label{def:g12:exchange-rates-and-balance-of-payments:ppp}
+\emph{Purchasing-power parity}\index{purchasing-power parity} is the hypothesis that exchange rates move so that the same basket costs the same in every country: $e = P/P^*$,
+so that the \omterm{def:g12:exchange-rates-and-balance-of-payments:real-exchange-rate}{real exchange rate} is 1, or at least constant.
+\end{definition}
+
+The hypothesis is distinct from the purchasing-power conversion of the grades 6--9 volume, which measures what incomes can buy and assumes nothing about exchange rates. Its
+reason is the law of one price: if a basket were cheaper in Kestria, traders would buy it there and sell it in Brenland until the gap closed.
+
+\begin{model}{Purchasing-power parity}
+\assumes Traders can buy goods where they are cheap and sell them where they are dear.
+\predicts The \omterm{def:g12:exchange-rates-and-balance-of-payments:real-exchange-rate}{real exchange rate} returns to a constant; a country with higher inflation sees its currency depreciate by the difference.
+\tested In the long run, roughly: deviations from parity die out, but slowly, with a half-life of three to five years, while nominal exchange rates move far more than price
+  levels from month to month.
+\breaks In the short run, and for goods and services that cannot be traded: rents and haircuts are cheaper in poor countries, so price levels rise with income.
+\end{model}
+% ledger: b3xr:rog.halflife, b3xr:rog.volatility
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[width=0.66\linewidth, height=4.8cm, xmin=0, xmax=16, ymin=95, ymax=122, xlabel={years after the shock}, ylabel={real exchange rate}, xtick={0,4,8,12,16},
+  ytick={100,105,110,115,120}, grid=major, grid style={gray!20}]
+\addplot[omDef, thick, domain=0:16, samples=60] {100 + 20*0.5^(x/4)};
+\addplot[black, dashed, domain=0:16, samples=2] {100};
+\node[font=\scriptsize, anchor=south west] at (axis cs:4,110) {half the gap closed after 4 years};
+\node[font=\scriptsize, anchor=north] at (axis cs:12,100) {parity};
+\end{axis}
+\end{tikzpicture}
+
+{\small A \omterm{def:g12:exchange-rates-and-balance-of-payments:real-exchange-rate}{real exchange rate} pushed 20\,\% away from parity returns with a half-life of four years: 10\,\% away after four years, 5\,\% after eight, 2.5\,\% after twelve.}
+\end{omfigure}
+
+Prices of services set locally explain why richer countries look dear. In 2019, among 201 countries, a country ten times richer than another had prices about 1.8 times as
+high, when both are converted at market exchange rates.
+% figdata: pli_key (n 201, slope 0.245, corr 0.78); 10^0.245 = 1.76
+
+\begin{omchart}{Price level against GDP per person (logarithmic scale), 201 countries, 2019. The price level is the ratio of the purchasing-power conversion
+factor to the market exchange rate, United States = 100.}{World Bank, World Development Indicators (PA.NUS.PRVT.PLI, NY.GDP.PCAP.CD)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.8\linewidth, height=6.0cm, xmode=log, xmin=200, xmax=150000, ymin=0, ymax=170, log ticks with fixed point,
+  xtick={300,1000,3000,10000,30000,100000}, xticklabels={0.3, 1, 3, 10, 30, 100}, xlabel={GDP per person, thousands of dollars}, ylabel={price level, United States = 100}]
+\addplot+[omDef, mark=*, mark size=1.1pt, only marks] table[x=gdppc, y=pli] {figdata/grade-12/14-exchange-rates-and-balance-of-payments/out/pli.csv};
+\draw[gray] (axis cs:2041,27.5) -- (axis cs:1300,10) node[anchor=east, font=\scriptsize, black] {India};
+\draw[gray] (axis cs:10343,58.6) -- (axis cs:25000,15) node[anchor=west, font=\scriptsize, black] {China};
+\draw[gray] (axis cs:65228,100) -- (axis cs:20000,135) node[anchor=east, font=\scriptsize, black] {United States};
+\draw[gray] (axis cs:85873,131.4) -- (axis cs:40000,155) node[anchor=east, font=\scriptsize, black] {Switzerland};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\begin{definition}[Interest parity]\label{def:g12:exchange-rates-and-balance-of-payments:interest-parity}
+\emph{Interest parity}\index{interest parity} is the hypothesis that the interest rate at home equals the foreign interest rate plus the expected depreciation of the home
+currency: $i \approx i^* + \Delta e^{\mathrm e}/e$.
+\end{definition}
+
+\begin{model}{Interest parity (first look)}
+\assumes Investors care only about expected returns, and money moves freely between countries.
+\predicts A currency that pays a higher interest rate is expected to depreciate by the difference, so that holding it pays no more on average.
+\tested It fails at short horizons. Borrowing in low-interest currencies to lend in high-interest ones has paid large average returns, which parity says it should not; and over
+  one to twelve months, no model of exchange rates has forecast them better than the guess that they will not change.
+\breaks When investors demand a premium for risk, or when money cannot move freely.
+\end{model}
+% ledger: b3xr:bekr.carry, b3xr:mr.rw
+
+\section{Fixed and floating rates}\label{sec:g12:exchange-rates-and-balance-of-payments:regimes}
+
+\begin{definition}[Floating and fixed exchange rates]\label{def:g12:exchange-rates-and-balance-of-payments:floating}
+Under a \emph{floating exchange rate}\index{floating exchange rate} the rate is set by supply and demand on the currency market. Under a \emph{fixed exchange rate}\index{fixed
+exchange rate}\phantomsection\label{def:g12:exchange-rates-and-balance-of-payments:fixed} the central bank holds it at an announced level, buying its own currency with its
+reserves of foreign currency when the currency is sold, and selling it when it is bought.
+\end{definition}
+
+\begin{definition}[Impossible trinity]\label{def:g12:exchange-rates-and-balance-of-payments:trinity}
+The \emph{impossible trinity}\index{impossible trinity} is the proposition that a country cannot at once fix its exchange rate, let money move freely across its borders, and
+set its own interest rate: it can have at most two of the three.
+\end{definition}
+
+The reason is \omterm{def:g12:exchange-rates-and-balance-of-payments:interest-parity}{interest parity}. With a fixed rate the expected depreciation is zero, so with free movement of money the home rate must equal the foreign rate: the central bank
+has no rate of its own to set. Over more than 130 years, interest rates of countries with fixed rates and open borders have moved with those of the country they fixed to.
+% ledger: b3rg:ost.trilemma
+
+\begin{omfigure}
+\begin{tikzpicture}[font=\scriptsize]
+\coordinate (A) at (0,0); \coordinate (B) at (6,0); \coordinate (C) at (3,4.2);
+\draw[thick, omDef] (A) -- (B) -- (C) -- cycle;
+\node[anchor=north east, align=center] at (A) {fixed\\ exchange rate};
+\node[anchor=north west, align=center] at (B) {own\\ interest rate};
+\node[anchor=south, align=center] at (C) {money moves\\ freely};
+\node[anchor=north, align=center] at ($(A)!0.5!(B)$) {give up free movement:\\ controls on capital};
+\node[anchor=south east, align=center] at ($(A)!0.5!(C)$) {give up an own rate:\\ hard peg, currency union};
+\node[anchor=south west, align=center] at ($(B)!0.5!(C)$) {give up the fixed rate:\\ floating};
+\end{tikzpicture}
+
+{\small The \omterm{def:g12:exchange-rates-and-balance-of-payments:trinity}{impossible trinity}: each side joins two aims that can be had together, and names the aim given up.}
+\end{omfigure}
+
+\begin{definition}[Currency union]\label{def:g12:exchange-rates-and-balance-of-payments:currency-union}
+A \emph{currency union}\index{currency union} is a group of countries that share one currency and one central bank.
+\end{definition}
+
+\begin{definition}[Asymmetric shock]\label{def:g12:exchange-rates-and-balance-of-payments:asymmetric-shock}
+An \emph{asymmetric shock}\index{asymmetric shock} is a shock that hits some members of a \omterm{def:g12:exchange-rates-and-balance-of-payments:currency-union}{currency union} and not others, or in opposite directions.
+\end{definition}
+
+A \omterm{def:g12:exchange-rates-and-balance-of-payments:currency-union}{currency union} is the hardest fix: there is no currency left to devalue. When a member's demand falls, its central bank cannot cut the rate for it alone, and its exchange
+rate cannot fall; its prices and wages must fall relative to its partners', which happens slowly, or its workers must move, or other members must send it money.
+
+\begin{dated}{2026}
+% ledger: g12:euro21, b3rg:ecb.bulgaria
+Twenty-one countries of the European Union use the euro. The most recent, Bulgaria, adopted it on 1 January 2026.
+\end{dated}
+
+\begin{record}[One currency, several economies: the euro area 2009--13]
+% figdata: bop_key (u_DE 7.3 -> 5.0, u_ES 16.7 -> 26.2, u_EL 9.1 -> 27.9); Eurostat une_rt_q, seasonally adjusted, ages 15-74
+Between the first quarter of 2009 and the second of 2013 unemployment fell in Germany from 7.3 to 5.0\,\% of the labour force, while it rose in Spain from 16.7 to 26.2\,\%
+and in Greece from 9.1 to 27.9\,\%. All three had one \omterm{def:g11:money-and-banking:policy-rate}{policy rate}, set for the euro area as a whole. Spain and Greece could not depreciate; their wages and prices had to fall
+relative to Germany's, and the debt crisis of \cref{ch:g12:fiscal-policy-and-debt} came on top.
+\end{record}
+
+\section{Currency crises}\label{sec:g12:exchange-rates-and-balance-of-payments:crises}
+
+\begin{definition}[Currency crisis]\label{def:g12:exchange-rates-and-balance-of-payments:currency-crisis}
+A \emph{currency crisis}\index{currency crisis} is a sudden fall of a currency's value, or the forced end of a fixed rate, when holders of the currency sell it faster than the
+central bank can buy it back.
+\end{definition}
+
+A central bank defends a fixed rate with its reserves of foreign currency, and reserves run out. If holders expect the rate to give way, each sells before the others, and the
+selling itself drains the reserves: an expected fall can bring about the fall. Raising the interest rate makes the currency more attractive to hold, but it also hurts the
+economy at home, and holders know how far the central bank is willing to go.
+
+\begin{record}[Sterling leaves the exchange-rate mechanism, 16 September 1992]
+% ledger: g12:blackwed
+The United Kingdom held sterling within a band against the currencies of other European countries. On 16 September 1992, under heavy selling, the government raised its base
+rate from 10 to 12\,\%, and promised 15\,\% later the same day; the selling went on, sterling left the mechanism that evening, and the rise was reversed the next day. The
+Treasury later estimated the cost of the defence at about 3.3 billion pounds.
+\end{record}
+
+Five years later the crisis was Asian. Thailand let its currency float on 2 July 1997. From June 1997 to July 1998 the baht fell from 24.5 to 41 per dollar, the Korean won
+from 850 to 1,290, and the Indonesian rupiah from 2,380 to 14,150. Firms and banks that had borrowed in dollars saw their debts swell in their own currencies, and output fell
+sharply in 1998.
+% ledger: g12:asia1997
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g12:exchange-rates-and-balance-of-payments:1}
+A Brenland firm exports machines worth 100 million dalens; the buyer pays into the firm's account at a Kestrian bank. Record both entries.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:exchange-rates-and-balance-of-payments:2}
+A Brenland household imports a car worth 80 thousand dalens and pays with a loan from a Kestrian bank. Record both entries.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:exchange-rates-and-balance-of-payments:3}
+From the opening chart, give the American \omterm{def:g12:exchange-rates-and-balance-of-payments:current-account}{current account} in 2006 and 2024 (the values are $-803$ and $-1{,}199$ billion dollars). By how much did the deficit grow?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:exchange-rates-and-balance-of-payments:4}
+From the opening chart, which two economies had the largest surpluses in 2015? (Their values are China 293 and Germany 277 billion dollars.)
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:exchange-rates-and-balance-of-payments:5}
+The rate is 1.2 dalens per kest; Brenland's price level is 100 and Kestria's 110. Find the \omterm{def:g12:exchange-rates-and-balance-of-payments:real-exchange-rate}{real exchange rate}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:exchange-rates-and-balance-of-payments:6}
+Output is 1,000, consumption 600, \omterm{def:g10:national-accounts:investment}{government purchases} 200, investment 180, with no net income from abroad. Find \omterm{def:g12:saving-and-investment:national-saving}{national saving} and the \omterm{def:g12:exchange-rates-and-balance-of-payments:current-account}{current account}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:exchange-rates-and-balance-of-payments:7}
+In \cref{exo:g12:exchange-rates-and-balance-of-payments:6}, taxes are 250. Split \omterm{def:g12:saving-and-investment:national-saving}{national saving} into private and \omterm{def:g12:saving-and-investment:national-saving}{public saving}. If \omterm{def:g10:national-accounts:investment}{government purchases} rise to 250 with
+taxes, consumption and investment unchanged, what is the new \omterm{def:g12:exchange-rates-and-balance-of-payments:current-account}{current account}?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:exchange-rates-and-balance-of-payments:8}
+A Kestrian good costs 100 kests. The rate rises from 1.10 to 1.21 dalens per kest. Find its price in dalens before and after, and say whether the dalen appreciated or
+depreciated.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:exchange-rates-and-balance-of-payments:9}
+A basket costs 500 dalens in Brenland and 400 kests in Kestria. Find the \omterm{def:g12:exchange-rates-and-balance-of-payments:ppp}{purchasing-power parity} rate and compare it with a market rate of 1.242.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:exchange-rates-and-balance-of-payments:10}
+The one-year rate is 5\,\% in Brenland and 2\,\% in Kestria; the rate today is 1.242 dalens per kest. What does \omterm{def:g12:exchange-rates-and-balance-of-payments:interest-parity}{interest parity} predict for the rate in a year?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:exchange-rates-and-balance-of-payments:11}
+In the price-level chart, the line fitted to the points in logarithms, of the price level and of GDP per person, has a slope of 0.245 (it is not
+drawn). How much higher is the price level of a country ten times richer? A hundred times?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:exchange-rates-and-balance-of-payments:12}
+Give two pieces of evidence that \omterm{def:g12:exchange-rates-and-balance-of-payments:ppp}{purchasing-power parity} fails in the short run.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:exchange-rates-and-balance-of-payments:13}
+For each, say which two aims of the \omterm{def:g12:exchange-rates-and-balance-of-payments:trinity}{impossible trinity} it has chosen: a member of the euro area; the United States; a country that fixes its rate and limits the money that
+can leave it.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:exchange-rates-and-balance-of-payments:14}
+In a \omterm{def:g12:exchange-rates-and-balance-of-payments:currency-union}{currency union}, demand for one member's exports falls by 10\,\%, and its wages do not fall. Compare what happens with what would happen if it had its own floating
+currency.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:exchange-rates-and-balance-of-payments:15}
+A central bank holds 30 billion of reserves and loses 5 billion a week defending its fixed rate. Once its reserves fall below half, holders speed up and it loses 10 billion
+a week. How long does the peg last? Why might it end sooner?
+\end{exercise}
+
+\section{Problem: Brenland's Balance of Payments}
+
+\begin{problem}[{Weekend problem --- saving, the dalen and the kest}]
+\label{pb:g12:exchange-rates-and-balance-of-payments:1}
+The table gives Brenland's \omterm{def:g12:saving-and-investment:national-saving}{national saving} $S$, investment $I$ and \omterm{def:g12:exchange-rates-and-balance-of-payments:current-account}{current account} $CA$ (millions of dalens; Brenland has no net income from abroad), the exchange rate $e$
+(dalens per kest), and the two consumer price indices (2015 = 100). Brenland's GDP was 393,264 million dalens in 2025.
+
+\begin{center}
+\small
+\pgfplotstabletypeset[col sep=comma, columns={year,S,I,CA,rate,cpi_b,cpi_k},
+  columns/year/.style={column name={year}, int detect, 1000 sep={}, column type=l},
+  columns/S/.style={column name={$S$}, int detect},
+  columns/I/.style={column name={$I$}, int detect},
+  columns/CA/.style={column name={$CA$}, int detect},
+  columns/rate/.style={column name={$e$}, fixed, precision=3, zerofill},
+  columns/cpi_b/.style={column name={Brenland CPI}, fixed, precision=1, zerofill},
+  columns/cpi_k/.style={column name={Kestria CPI}, fixed, precision=1, zerofill},
+  every head row/.style={before row=\toprule, after row=\midrule}, every last row/.style={after row=\bottomrule}]
+  {figdata/grade-12/14-exchange-rates-and-balance-of-payments/out/brenland.csv}
+\end{center}
+
+\medskip
+\noindent\textbf{Part I --- Saving, investment and the current account.}
+\begin{enumerate}
+\item Check that $S - I = CA$ in 2018.
+\item In which year was the deficit largest?
+\item From 2019 to 2020, by how much did saving and investment fall? Check the change in the \omterm{def:g12:exchange-rates-and-balance-of-payments:current-account}{current account}.
+\item Add up the \omterm{def:g12:exchange-rates-and-balance-of-payments:current-account}{current account} over 2015--2025. What happened to Brenland's \omterm{def:g12:exchange-rates-and-balance-of-payments:nfa}{net foreign assets}, leaving aside changes in asset prices?
+\item Find the \omterm{def:g12:exchange-rates-and-balance-of-payments:current-account}{current account} in 2025 as a share of GDP.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The nominal rate.}
+\begin{enumerate}[resume]
+\item From 2015 to 2025, did the dalen appreciate or depreciate against the kest? By how much?
+\item Find the price in dalens of a good costing 100 kests in 2015 and in 2025.
+\item Find each country's inflation over 2015--2025.
+\item If the \omterm{def:g12:exchange-rates-and-balance-of-payments:real-exchange-rate}{real exchange rate} had stayed at its 2015 value, what rate would 2025 have had?
+\item Compare it with the actual rate of 1.242.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- The real rate.}
+\begin{enumerate}[resume]
+\item Find the \omterm{def:g12:exchange-rates-and-balance-of-payments:real-exchange-rate}{real exchange rate} $e P_K / P_B$ in 2015.
+\item Find it in 2025.
+\item Express the 2025 value as an index with 2015 = 100. Did the dalen depreciate or appreciate in real terms?
+\item Compute the index for 2023.
+\item In 2022, Brenland's prices rose by 10.2\,\% and Kestria's by 2.1\,\%, while the rate rose by 2.5\,\%. Find the change in the \omterm{def:g12:exchange-rates-and-balance-of-payments:real-exchange-rate}{real exchange rate}.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Reading it.}
+\begin{enumerate}[resume]
+\item The real rate fell to 94 in 2022--23, which made Kestrian goods cheaper. Did the \omterm{def:g12:exchange-rates-and-balance-of-payments:current-account}{current account} worsen? What does this suggest?
+\item Using \cref{prop:g12:exchange-rates-and-balance-of-payments:s-i}, what would have to change for Brenland's deficits to stop?
+\item If Brenland ran a deficit of 0.4\,\% of GDP every year while its \omterm{def:g10:national-accounts:nominal-gdp}{nominal GDP} grew by 4\,\% a year, at what ratio to GDP would its net foreign debt settle?
+\item With a half-life of four years, how long would a 6\,\% gap from parity take to fall to 1.5\,\%?
+\item State the result of the problem: the change of the dalen against the kest, nominal and real, over 2015--2025, and the \omterm{def:g12:exchange-rates-and-balance-of-payments:current-account}{current account} it went with.
+\end{enumerate}
+\end{problem}

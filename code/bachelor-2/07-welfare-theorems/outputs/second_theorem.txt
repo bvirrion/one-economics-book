@@ -1,0 +1,6 @@
+$ python second_theorem.py
+target for A       (4.000, 5.714)
+supporting price   1.4286
+transfer A -> B    2.000 units of good 2
+equilibrium after  p = 1.4286, A gets (4.000, 5.714)
+no transfer        p = 1.3571

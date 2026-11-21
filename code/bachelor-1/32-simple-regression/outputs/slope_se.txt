@@ -1,0 +1,4 @@
+$ python slope_se.py
+formula 0.004870; statsmodels 0.004870
+t for slope = 0: 18.2
+t for slope = 0.10: -2.36

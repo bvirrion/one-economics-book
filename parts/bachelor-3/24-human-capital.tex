@@ -1,0 +1,356 @@
+\chapter{Human Capital and the Returns to Schooling}\label{ch:b3:human-capital}
+
+People who stay longer in school earn more, in every country and every decade with
+data. Whether the extra schooling causes the extra earnings is another question:
+those who stay longer may be abler, better connected or more patient, and a diploma
+may signal ability as much as it builds skill. This chapter treats schooling as an
+investment, derives the earnings equation that measures its return, and follows
+the natural experiments --- school-leaving laws, distance to a college, identical
+twins --- that try to separate cause from selection.
+
+\begin{openingchart}{Estimated return to a year of schooling, by least squares (OLS)
+and by instrumental variables (IV) based on features of the school system, ten
+studies (percent; IV with 95~\% intervals; the first model of each study).}{Card
+(2000), NBER Working Paper 7769, Table 2}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.62\linewidth, height=0.5\linewidth, xmin=-2, xmax=28,
+  ymin=0.3, ymax=10.7, xlabel={Percent per year of schooling},
+  ytick={1,...,10}, yticklabels from table={figdata/bachelor-3/24-human-capital/out/estimates.csv}{study},
+  y tick label style={font=\scriptsize}, legend pos=south east,
+  legend style={font=\footnotesize}]
+  \addplot[only marks, mark=square*, omThm, error bars/.cd, x dir=both, x explicit]
+    table[x=iv, y=pos, x error expr=1.96*\thisrow{iv_se}] {figdata/bachelor-3/24-human-capital/out/estimates.csv};
+  \addplot[only marks, mark=*, omDef] table[x=ols, y=pos] {figdata/bachelor-3/24-human-capital/out/estimates.csv};
+  \legend{IV, OLS}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: estimates_stats
+In nine of the ten studies the IV estimate is above the OLS one; the median IV
+estimate is 10.6~\% per year, the median OLS estimate 7.2~\%. If the OLS estimates were
+inflated by ability, the IV estimates should be lower. They are not, and the
+intervals are wide. Reading this pattern is the work of the chapter.
+
+\begin{recall}
+The grades 10--12 volume introduced \omterm{def:b3:human-capital:human-capital}{human capital}; the Year 2 volume built the
+signalling model of diplomas, and multiple regression with omitted-variable bias.
+\omterm{def:b3:instrumental-variables:instrument}{Instrumental variables} and the \omterm{def:b3:instrumental-variables:late}{local average treatment effect} are chapter 1's,
+regression discontinuity chapter 4's.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:human-capital:symbols}
+$S$ is years of schooling; $Y(S)$ annual earnings with $S$ years; $\rho$ the Mincer coefficient;
+$A$ ability; $X$ years of experience.
+\end{notation}
+
+\section{The schooling decision}\label{sec:b3:human-capital:decision}
+
+\begin{definition}[Human capital (investment model)]\label{def:b3:human-capital:human-capital}
+\index{human capital}
+\emph{Human capital} is the stock of skills that raises a person's productivity,
+built by investment --- schooling, training --- whose cost is mostly the earnings
+given up while learning, and whose return is higher earnings later.
+\end{definition}
+
+\begin{definition}[Internal rate of return to schooling]\label{def:b3:human-capital:irr}
+\index{internal rate of return to schooling}
+The \emph{internal rate of return} to a year of schooling is the discount rate at
+which the present value of the extra earnings it brings equals the present value
+of its costs.
+\end{definition}
+
+\begin{proposition}[The stopping rule and the Mincer coefficient]\label{prop:b3:human-capital:stopping}
+Suppose schooling has no tuition, a person with $S$ years earns $Y(S)$ every year from $S$ for
+ever, and she discounts at rate $r$. She chooses $S$ where $Y'(S)/Y(S) = r$. If people who choose
+different $S$ are equally well off, then $\ln Y(S+1) - \ln Y(S) = r$: the coefficient $\rho$ of $\ln Y$ on $S$ is the
+internal rate of return.
+\end{proposition}
+
+\begin{proof}
+The present value is $\int_S^\infty Y(S)e^{-rt}\,dt = Y(S)e^{-rS}/r$. Its logarithm, $\ln Y(S) - rS - \ln r$, has derivative
+$Y'(S)/Y(S) - r$, zero at the optimum. If $S$ and $S + 1$ give the same present value, $Y(S+1)e^{-r(S+1)} =
+Y(S)e^{-rS}$, so $\ln Y(S+1) - \ln Y(S) = r$; the discount rate that equates the two streams --- the internal
+rate of return --- is the log earnings gain.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.5cm, y=0.5cm]
+  \draw[econ axes] (0,0) -- (13,0) node[right, font=\scriptsize] {age};
+  \draw[econ axes] (0,0) -- (0,7) node[above, font=\scriptsize] {earnings};
+  \draw[curve] (2,3) -- (12.5,3) node[right, font=\scriptsize] {$Y(S)$};
+  \draw[curve, omDef] (3,4.2) -- (12.5,4.2) node[right, font=\scriptsize] {$Y(S+1)$};
+  \fill[omThm!35] (2,0) rectangle (3,3);
+  \fill[omDef!15] (3,3) rectangle (12.5,4.2);
+  \node[font=\scriptsize, align=center] at (2.5,-0.9) {cost};
+  \node[font=\scriptsize] at (7.7,3.6) {gain every year};
+  \draw[guide] (2,0) -- (2,3); \draw[guide] (3,0) -- (3,4.2);
+\end{tikzpicture}
+\par\smallskip{\small A year more of school: earnings $Y(S)$ given up for a year (the
+cost), and $Y(S+1) - Y(S)$ gained every year after. The return is the rate that makes the
+two worth the same today.}
+\end{omfigure}
+
+\section{The earnings equation}\label{sec:b3:human-capital:mincer}
+
+\begin{definition}[Mincer earnings equation]\label{def:b3:human-capital:mincer}
+\index{Mincer earnings equation}
+The \emph{Mincer earnings equation} is the regression $\ln Y = a + \rho S + \beta_1X + \beta_2X^2 + u$ of log earnings on
+years of schooling and a quadratic in experience.
+\end{definition}
+
+\begin{omchart}{Mean log annual earnings by years of schooling, men in the U.S.
+Current Population Survey comparison sample, 1978, positive earnings: raw means
+(grey) and means adjusted to the sample's mean experience with the fitted experience
+terms (dots), which are comparable with the Mincer fit at mean experience (line).
+Earnings are top-coded at 25{,}565 dollars, which binds for 30~\% of
+the sample.}{Dehejia--Wahba / LaLonde data (cps\_controls); our regression}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.58\linewidth, height=0.38\linewidth, xmin=5.5,
+  xmax=18.5, ymin=9.1, ymax=10.1, xlabel={Years of schooling},
+  ylabel={Mean log earnings}]
+  \addplot[only marks, mark=o, black!45, mark size=1.6pt] table[x=education, y=lw] {figdata/bachelor-3/24-human-capital/out/mincer_means.csv};
+  \addplot[only marks, mark=*, omDef] table[x=education, y=adj] {figdata/bachelor-3/24-human-capital/out/mincer_means.csv};
+  \addplot[omThm, thick, mark=none] table[x=education, y=lw] {figdata/bachelor-3/24-human-capital/out/mincer_fit.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: mincer_stats
+In 13{,}820 men with positive earnings, a year of schooling goes with log earnings
+higher by 0.063 (s.e.\ 0.003) holding experience fixed, and earnings rise with experience
+at a falling rate, peaking after about 27 years. The raw means fall from 6 to 10 years
+of schooling (9.39 to 9.19) because the men with little schooling are older and more
+experienced; held at mean experience, they rise. Two features of the data stand out: a
+jump at 12 years, the high-school diploma, of 0.20 in the adjusted means against a
+median step of 0.01 elsewhere; and the top-coding, which flattens the dots at the top,
+below the straight line.
+
+\begin{model}{The Mincer earnings equation}
+\assumes Schooling is an investment with a constant return; earnings grow with
+experience as workers keep investing in skills, at a falling rate.
+\predicts Log earnings rise linearly in years of schooling and concavely in
+experience.
+\tested The linear form fails a direct test in the chart's sample: replacing the
+single schooling term by one dummy per year of schooling improves the fit by far more
+than chance ($F = 5.8$, $p < 0.001$), mostly through the jump at 12 years.
+% figdata: mincer_stats
+The size of the average return is well measured: across 1{,}120 estimates in 139
+countries it is about 9~\% and very stable over decades, higher for women and in
+low-income countries. % ledger: b3hc:pp
+\breaks The years that complete a diploma pay more than the others (a sheepskin
+effect, the Year 2 volume's signal); returns differ across people; and in many rich
+economies the return to higher education has risen, making the relation convex.
+\end{model}
+
+\section{Ability bias and natural experiments}\label{sec:b3:human-capital:ability}
+
+\begin{definition}[Ability bias]\label{def:b3:human-capital:ability-bias}
+\index{ability bias}
+\emph{Ability bias} is the omitted-variable bias in the OLS estimate of the return
+to schooling that arises because ability raises earnings and is correlated with
+schooling.
+\end{definition}
+
+\begin{proposition}[The sign of ability bias]\label{prop:b3:human-capital:bias}
+If $\ln Y = a + \rho S + \gamma A + u$ with $u$ uncorrelated with $S$ and $A$, the OLS slope of $\ln Y$ on $S$ alone converges
+to $\rho + \gamma\,\mathrm{cov}(S, A)/\mathrm{var}(S)$: upward if ability raises earnings ($\gamma > 0$) and the able study longer.
+\end{proposition}
+
+\begin{proof}
+The OLS slope is $\mathrm{cov}(S, \ln Y)/\mathrm{var}(S) = [\rho\,\mathrm{var}(S) + \gamma\,\mathrm{cov}(S, A)]/\mathrm{var}(S)$, since $u$ is uncorrelated
+with $S$.
+\end{proof}
+
+Two forces push the other way. Schooling is reported with error, which biases OLS
+toward zero. And an instrument moves the schooling of a particular group --- those
+who would have left at the minimum age, or who would not have gone to college had
+it been far --- and if their return is higher than average, IV estimates their
+\emph{local} return, the LATE of chapter 1.
+
+\begin{record}[Compulsory schooling laws]
+Britain raised its minimum school-leaving age in 1947 and 1973. Using both changes
+as instruments for men's schooling, an early study found an IV return of 15.3~\% against
+an OLS one of 6.1~\%. % ledger: b3hc:card.hw
+A later study of the 1947 change also found about 15~\%; reanalysing the same survey gives
+about 3~\% on average, none for women and 4--7~\% for men, and a panel with better
+earnings data gives zero for women and 3--4~\% for men. % ledger: b3hc:dh
+One law change, one survey and two teams gave answers five times apart.
+\end{record}
+
+\begin{measure}[Twins]
+Identical twins share their genes and their upbringing, so a difference in their
+schooling is not a difference in inherited ability. A survey of twins that asked
+each twin about both their own and their twin's schooling found no upward \omterm{def:b3:human-capital:ability-bias}{ability
+bias}, but a downward bias from reporting error; corrected for it, a year of
+schooling raised wages by 16~\%. % ledger: b3hc:ak
+Differencing removes the shared ability and doubles the weight of reporting
+error, which is why the correction matters.
+\end{measure}
+
+\section{Signal or skill}\label{sec:b3:human-capital:signal}
+
+The signalling model of the Year 2 volume predicts the same correlation between
+schooling and earnings as the investment model. It differs in what the extra
+earnings pay for: skill in one case, information about the worker in the other. Its
+sharper predictions are the jump at a diploma, which the CPS data show at 12 years,
+and returns that fall as employers learn workers' productivity on the job. For
+policy the distinction matters through the social return: a year of school that
+only sorts workers raises the private return without raising output.
+
+\section{School resources}\label{sec:b3:human-capital:resources}
+
+\begin{definition}[Education production function]\label{def:b3:human-capital:education-production}
+\index{education production function}
+An \emph{education production function} relates pupils' measured achievement to
+school inputs --- class size, teachers, spending --- and to the pupils' own and family
+characteristics.
+\end{definition}
+
+\begin{record}[Project STAR]
+In Tennessee, 11{,}600 pupils and their teachers were randomly assigned from 1985--86
+to small classes (13--17 pupils), regular classes (22--25) or regular classes with an
+aide. Test scores rose by about 4 percentile points in a pupil's first year in a small
+class and by about one point a year after; aides made little difference; the
+effect was larger for minority pupils and those on free lunches. About 10~\% of pupils
+moved between class types, and the analysis checks that this does not drive the
+result. % ledger: b3hc:star
+\end{record}
+
+\section{Training on the job}\label{sec:b3:human-capital:training}
+
+\begin{definition}[General and specific training]\label{def:b3:human-capital:training}
+\index{general training}\index{specific training}
+\emph{General training} raises a worker's productivity equally in many firms;
+\emph{specific training} raises it only in the firm that provides it.
+\end{definition}
+
+\begin{proposition}[Who pays for training]\label{prop:b3:human-capital:becker}
+In competitive labour markets, workers pay for \omterm{def:b3:human-capital:training}{general training}, through a lower
+wage while trained; firms can recover, and so share, the cost of \omterm{def:b3:human-capital:training}{specific training}.
+\end{proposition}
+
+\begin{proof}
+After \omterm{def:b3:human-capital:training}{general training} a worker's productivity rises by the same amount in every
+firm, and competition among firms raises her wage by that amount: the training firm
+gains nothing after training, so it provides training only if the wage during
+training falls by its cost. After \omterm{def:b3:human-capital:training}{specific training} other firms' offers are
+unchanged, so the training firm can pay less than the worker's new productivity
+and recover its outlay; if it paid for all of it, the worker could quit at no loss,
+so the two share the cost and the return.
+\end{proof}
+
+\section{Exercises}\label{sec:b3:human-capital:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:human-capital:1}
+In the opening chart, which study has the largest gap between IV and OLS, and which
+is the only one with IV below OLS?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:human-capital:2}
+A one-year course costs 20{,}000 dalens of lost earnings and raises earnings by 1{,}500 dalens a
+year for ever. Find its internal rate of return.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:human-capital:3}
+A Mincer coefficient is 0.11. Convert it into a percentage earnings premium per year.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:human-capital:4}
+What would twin data show if \omterm{def:b3:human-capital:ability-bias}{ability bias} inflated the OLS estimate?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:human-capital:5}
+Estimate the Mincer equation in the CPS comparison sample, then add indicators for
+black, Hispanic and married. How does the schooling coefficient change, and why?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:human-capital:6}
+Each twin reports schooling with an independent error. Explain why the bias toward
+zero is larger in the twin difference than in the OLS estimate across people.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:human-capital:7}
+Cohorts born just after a school-leaving reform have 0.3 more years of schooling and
+log earnings higher by 0.024 than those born just before. Find the Wald estimate.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:human-capital:8}
+Who pays for a forklift licence, and who for training in a firm's own software? Use
+the proposition.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:human-capital:9}
+Under pure \omterm{def:b3:human-capital:human-capital}{human capital}, what should a regression of earnings on years of
+schooling and a diploma indicator show?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:human-capital:10}
+Prove the Mincer proposition, and show that tuition $c$ per year changes the equal-value
+condition to $\ln Y(S+1) - \ln Y(S) \approx r(1 + c/Y(S))$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:human-capital:11}
+In the CPS comparison sample, fit log earnings on age and age squared for four
+schooling groups and find the peak age of each. Why might the top-coding move the
+peaks?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:human-capital:12}
+Explain, with the \omterm{def:b3:instrumental-variables:late}{local average treatment effect}, how IV estimates can exceed OLS
+estimates even when \omterm{def:b3:human-capital:ability-bias}{ability bias} is positive.
+\end{exercise}
+
+\section{Problem: The Last Year of School in Brenland}\label{sec:b3:human-capital:problem}
+
+\begin{problem}[{Weekend problem --- the last year of school in Brenland}]\label{pb:b3:human-capital:school}
+Brenland's survey (\code{load("households")}) records each head's years of schooling and
+gross income; use the heads who work. A reform raises the minimum schooling from 10 to
+11 years for later cohorts, and everyone who would have left earlier stays to 11; the
+reformed cohorts earn 2.9 log points more. Income tax is proportional; a quarter of
+the measured return is a signal; the public cost of a year of school is 30~\% of the
+earnings a pupil gives up. % figdata: brenland_stats
+
+\medskip\noindent\textbf{Part I --- the return by least squares.}
+\begin{enumerate}
+\item How many heads work, and what is their mean schooling?
+\item Regress log income on schooling. Report the slope.
+\item Add age and age squared. Report the slope and its standard error.
+\item Convert the slope into a percentage premium.
+\item In which direction would omitted \omterm{def:b3:human-capital:ability-bias}{ability bias} it?
+\item Why does the regression use income rather than hourly earnings, and what does
+that change?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- the reform as an instrument.}
+\begin{enumerate}[resume]
+\item What share of workers have 10 years of schooling or fewer?
+\item What is their mean schooling, and how many years does the reform add to each?
+\item Compute the \omterm{def:b3:instrumental-variables:tsls}{first stage}: the rise in mean schooling.
+\item Compute the Wald estimate of the return.
+\item Compare it with the least-squares estimate.
+\item State the \omterm{def:b3:instrumental-variables:instrument}{exclusion restriction} and one way it could fail.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- whose return?}
+\begin{enumerate}[resume]
+\item Who are the \omterm{def:b3:instrumental-variables:compliance}{compliers}?
+\item Why might their return differ from the average?
+\item What would a return above OLS suggest about them?
+\item Why can the reform say nothing about the return to a university degree?
+\item Name a design that could.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- private and social returns.}
+\begin{enumerate}[resume]
+\item With proportional tax and no tuition, show that the private return equals the
+Wald estimate.
+\item Remove the signal share: what return reflects higher output?
+\item Add the public cost to the cost of the year. Compute the social return.
+\item Why do taxes not enter the social return?
+\item Would a higher signal share make the reform less worthwhile?
+\item What else could make the social return higher than the private one?
+\item Compare the social return with a 3~\% discount rate.
+\item State the result: the private and the social return to the extra year, in percent.
+\end{enumerate}
+\end{problem}

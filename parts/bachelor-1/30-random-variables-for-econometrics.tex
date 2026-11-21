@@ -1,0 +1,365 @@
+\chapter{Random Variables for Econometrics}\label{ch:b1:random-variables-for-econometrics}
+
+Draw five men at random from the 2,490 of the PSID sample and average their
+1978 earnings; draw five more and average again. Repeated 10,000 times, the
+averages spread with a standard deviation of 6,979 dollars around the
+population mean of 21,554 (dollars of 1982, as everywhere in this chapter's
+earnings). % ledger: b1:nsw-1982dollars
+With thirty men the spread falls to 2,840; with two
+hundred, to 1,093. % figdata: means_stats
+% figdata: pop
+Each figure is close to the population's standard deviation divided by
+the square root of the sample size. This chapter gives the probability
+behind that rule --- \omterm{def:b1:random-variables-for-econometrics:conditional-expectation}{conditional expectations}, the distributions that
+tests use, the law of large numbers and the central limit theorem --- and
+the cases in which it fails.
+
+\begin{openingchart}{Sample means of 1978 earnings, 10,000 samples of 5 (light),
+30 (blue) and 200 (red) men drawn with replacement from the PSID sample,
+densities per 10,000 dollars; the population mean is dashed.}{National
+Supported Work comparison sample (PSID); simulation with a fixed seed}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xlabel={Sample mean of earnings (dollars of 1982)}, ylabel={Density}, xmin=0, xmax=50000, ymin=0,
+  ymax=3.8, xtick={0,10000,...,50000}, width=0.7\linewidth, height=0.38\linewidth, scaled x ticks=false]
+  \addplot[gray, thick, const plot mark mid] table[x=mid, y=n5, col sep=comma] {figdata/bachelor-1/30-random-variables-for-econometrics/out/means.csv};
+  \addplot[omDef, thick, const plot mark mid] table[x=mid, y=n30, col sep=comma] {figdata/bachelor-1/30-random-variables-for-econometrics/out/means.csv};
+  \addplot[omThm, thick, const plot mark mid] table[x=mid, y=n200, col sep=comma] {figdata/bachelor-1/30-random-variables-for-econometrics/out/means.csv};
+  \draw[black, dashed] (axis cs:21553.9,0) -- (axis cs:21553.9,3.8);
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+The earnings themselves are skewed to the right (\cref{ch:b1:describing-data}); the
+means of five are less skewed, and the means of two hundred look like a bell
+curve centred on the population mean.
+
+\begin{recall}
+Random variables, expectation, variance, independence, the binomial and
+normal laws and the law of large numbers were met in the mathematics
+series at school; the central limit theorem is proved in its third
+university volume. Describing data is \cref{ch:b1:describing-data}.
+\end{recall}
+
+\section{Expectation, variance, covariance}\label{sec:b1:random-variables-for-econometrics:moments}
+
+For random variables $X$, $Y$ and numbers $a$, $b$: $\E[aX + b] = a\E[X] + b$, $\E[X + Y] = \E[X] + \E[Y]$
+and $\Var(aX + b) = a^2\Var(X)$.
+
+\begin{notation}
+The covariance of two random variables is $\Cov(X, Y) = \E[(X - \E X)(Y - \E Y)]$, defined in
+the mathematics series (second university volume). Then
+$\Var(X + Y) = \Var(X) + \Var(Y) + 2\Cov(X, Y)$, and for independent $X_1, \dots, X_n$ with variance $\sigma^2$,
+$\Var(\bar X) = \sigma^2/n$.
+\end{notation}
+
+\section{Joint and conditional distributions}\label{sec:b1:random-variables-for-econometrics:joint}
+
+\begin{definition}[Joint and conditional distributions]\label{def:b1:random-variables-for-econometrics:joint}
+\index{joint distribution}\index{conditional distribution}
+The \emph{joint distribution} of two discrete random variables gives
+$P(X = x, Y = y)$ for every pair; the marginal distributions are its row and
+column sums. The \emph{conditional distribution} of $Y$ given $X = x$ is
+$P(Y = y \mid X = x) = P(X = x, Y = y)/P(X = x)$.
+\end{definition}
+
+\omcode{code/bachelor-1/30-random-variables-for-econometrics/listings/joint_table.py}{1}{14}{A \omterm{def:b1:random-variables-for-econometrics:joint}{joint
+distribution} from a sample, with its margins, and a \omterm{def:b1:random-variables-for-econometrics:joint}{conditional distribution}.}\label{lst:b1:random-variables-for-econometrics:joint}
+
+\omoutput{code/bachelor-1/30-random-variables-for-econometrics/outputs/joint_table.txt}{Of men with more
+than 12 years of schooling, $39.2\%$ earned over 30,000 dollars; of men with
+fewer than 12, $10.3\%$.}\label{out:b1:random-variables-for-econometrics:joint}
+
+\section{Conditional expectation}\label{sec:b1:random-variables-for-econometrics:cef}
+
+\begin{definition}[Conditional expectation]\label{def:b1:random-variables-for-econometrics:conditional-expectation}
+\index{conditional expectation}
+The \emph{conditional expectation} of $Y$ given $X = x$ is $\E[Y \mid X = x] = \sum_y y\,P(Y = y \mid X = x)$.
+As a function of $x$ it is the conditional expectation function; $\E[Y \mid X]$ is that function
+applied to $X$, a random variable.
+\end{definition}
+
+\begin{theorem}[Law of iterated expectations]\label{thm:b1:random-variables-for-econometrics:lie}
+\index{law of iterated expectations}
+$\E\big[\E[Y \mid X]\big] = \E[Y]$.
+\end{theorem}
+
+\begin{proof}
+In the discrete case,
+$\sum_x P(X = x)\sum_y y\,P(Y = y \mid X = x) = \sum_x\sum_y y\,P(X = x, Y = y) = \sum_y y\,P(Y = y) = \E[Y]$.
+\end{proof}
+
+\omcode{code/bachelor-1/30-random-variables-for-econometrics/listings/iterated.py}{1}{9}{The law
+checked on a sample: the mean of the \omterm{def:b1:describing-data:conditional-mean}{conditional means}, weighted by group
+shares.}\label{lst:b1:random-variables-for-econometrics:iterated}
+
+\omoutput{code/bachelor-1/30-random-variables-for-econometrics/outputs/iterated.txt}{Equal to the last
+printed digit.}\label{out:b1:random-variables-for-econometrics:iterated}
+
+\begin{proposition}[The best predictor]\label{prop:b1:random-variables-for-econometrics:best}
+Among all functions $g$, $\E[(Y - g(X))^2]$ is smallest for $g(X) = \E[Y \mid X]$.
+\end{proposition}
+
+\begin{proof}
+Write $m(X) = \E[Y \mid X]$. Then $\E[(Y - g)^2] = \E[(Y - m)^2] + \E[(m - g)^2] + 2\E[(Y - m)(m - g)]$. Conditionally on
+$X = x$, $m - g$ is a number and $\E[Y - m \mid X = x] = 0$, so the last term is zero by the law of
+iterated expectations. The middle term is at least zero, and zero for $g = m$.
+\end{proof}
+
+\omcode{code/bachelor-1/30-random-variables-for-econometrics/listings/best_predictor.py}{1}{14}{Three
+predictors of earnings from schooling.}\label{lst:b1:random-variables-for-econometrics:best}
+
+\omoutput{code/bachelor-1/30-random-variables-for-econometrics/outputs/best_predictor.txt}{The \omterm{def:b1:describing-data:conditional-mean}{conditional
+mean} predicts best in the sample; a line comes close.}\label{out:b1:random-variables-for-econometrics:best}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xlabel={Years of schooling}, ylabel={Mean earnings (dollars of 1982)}, xmin=7.5, xmax=17.5,
+  ymin=10000, ymax=35000, width=0.56\linewidth, height=0.36\linewidth, xtick={8,...,17},
+  scaled y ticks=false]
+  \addplot[only marks, mark=*, mark size=2pt, omDef] table[x=education, y=re78, col sep=comma] {figdata/bachelor-1/30-random-variables-for-econometrics/out/cef.csv};
+  \addplot[omThm, thick, sharp plot, mark=none] table[x=education, y=line, col sep=comma] {figdata/bachelor-1/30-random-variables-for-econometrics/out/cef.csv};
+\end{axis}
+\end{tikzpicture}
+
+{\small The \omterm{def:b1:describing-data:conditional-mean}{conditional means} of earnings by schooling (dots) and the
+least-squares line (red): the line approximates the \omterm{def:b1:random-variables-for-econometrics:conditional-expectation}{conditional
+expectation} function, with a mean squared error only $1.4\%$ larger.
+% computed: code/bachelor-1/30-random-variables-for-econometrics/outputs/best_predictor.txt
+}
+\end{omfigure}
+
+\begin{definition}[Mean independence]\label{def:b1:random-variables-for-econometrics:mean-independence}
+\index{mean independence}
+$Y$ is \emph{mean independent} of $X$ when $\E[Y \mid X = x]$ does not depend on $x$. Independence
+implies mean independence, which implies $\Cov(X, Y) = 0$; neither converse holds
+(\cref{exo:b1:random-variables-for-econometrics:mean-indep}).
+\end{definition}
+
+\section{The tools}\label{sec:b1:random-variables-for-econometrics:laws}
+
+\begin{definition}[Chi-square, Student's $t$ and $F$ distributions]\label{def:b1:random-variables-for-econometrics:laws}
+\index{chi-square distribution}\index{Student's t distribution}\index{F distribution}
+Let $Z, Z_1, \dots, Z_k$ be independent standard normal variables. $V = Z_1^2 + \dots + Z_k^2$ has
+the \emph{chi-square distribution} with $k$ degrees of freedom, $\chi^2_k$. If $V$ is independent
+of $Z$, $Z/\sqrt{V/k}$ has \emph{Student's $t$ distribution} with $k$ degrees of freedom. If
+$V_1 \sim \chi^2_k$ and $V_2 \sim \chi^2_m$ are independent, $(V_1/k)/(V_2/m)$ has the \emph{$F$ distribution} with $k$
+and $m$ degrees of freedom.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={$x$}, ylabel={Density}, xmin=-4, xmax=4, ymin=0, ymax=0.42,
+  width=0.6\linewidth, height=0.36\linewidth, samples=121, domain=-4:4,
+  legend style={font=\scriptsize, at={(0.98,0.98)}, anchor=north east}]
+  \addplot[black, thick] {exp(-x^2/2)/sqrt(2*pi)};
+  \addplot[omThm, thick, dashed] {1/(2*sqrt(2))*(1 + x^2/2)^(-1.5)};
+  \addplot[omDef, thick] {0.37960669*(1 + x^2/5)^(-3)};
+  \addplot[gray, thick, dotted] {0.39563218*(1 + x^2/30)^(-15.5)};
+  \legend{normal, $t_2$, $t_5$, $t_{30}$}
+\end{axis}
+\end{tikzpicture}
+
+{\small Student's $t$ against the normal: with 2 degrees of freedom the tails are
+much heavier; with 30 the two curves are hard to tell apart.}
+\end{omfigure}
+
+The constants are the exact normalising factors: $1/(2\sqrt2)$ for $t_2$, and
+$\Gamma(\frac{k+1}2)/(\sqrt{k\pi}\,\Gamma(\frac k2))$, which is $0.3796$ for $k = 5$ and $0.3956$ for $k = 30$.
+
+\omcode{code/bachelor-1/30-random-variables-for-econometrics/listings/distributions.py}{1}{16}{The
+critical values of the next two chapters.}\label{lst:b1:random-variables-for-econometrics:critical}
+
+\omoutput{code/bachelor-1/30-random-variables-for-econometrics/outputs/distributions.txt}{Upper-tail
+\omterm{def:b1:describing-data:quantile}{quantiles} at $5\%$ and $2.5\%$.}\label{out:b1:random-variables-for-econometrics:critical}
+
+\omcode{code/bachelor-1/30-random-variables-for-econometrics/listings/build_t.py}{1}{14}{Student's $t$ built
+from its definition.}\label{lst:b1:random-variables-for-econometrics:build-t}
+
+\omoutput{code/bachelor-1/30-random-variables-for-econometrics/outputs/build_t.txt}{The simulated
+\omterm{def:b1:describing-data:quantile}{quantiles} match the exact ones to within $0.03$.}\label{out:b1:random-variables-for-econometrics:build-t}
+
+\begin{measure}[Drawing a sample in a computer]
+A computer draws ``random'' numbers from a deterministic sequence that
+starts from a \emph{seed}. The same seed gives the same draws, so a
+simulation can be rerun and give the same digits, which is why every
+simulation in this book fixes its seed. A different seed gives different
+digits and, if the simulation is large enough, the same conclusions.
+\end{measure}
+
+\section{The law of large numbers and the central limit theorem}\label{sec:b1:random-variables-for-econometrics:clt}
+
+\begin{definition}[Sampling distribution]\label{def:b1:random-variables-for-econometrics:sampling-distribution}
+\index{sampling distribution}
+The \emph{sampling distribution} of a statistic is its distribution over
+repeated samples of the same size from the same population.
+\end{definition}
+
+By the law of large numbers, the mean of $n$ independent draws converges to
+the population mean as $n$ grows.
+
+\omcode{code/bachelor-1/30-random-variables-for-econometrics/listings/lln.py}{1}{12}{A running mean
+of random draws.}\label{lst:b1:random-variables-for-econometrics:lln}
+
+\omoutput{code/bachelor-1/30-random-variables-for-econometrics/outputs/lln.txt}{After 100,000 draws the
+mean is within about 30 dollars of the population's.}\label{out:b1:random-variables-for-econometrics:lln}
+
+\begin{theorem}[Central limit theorem]\label{thm:b1:random-variables-for-econometrics:clt}
+If $X_1, X_2, \dots$ are independent with the same distribution, mean $\mu$ and finite variance
+$\sigma^2$, then for every $z$, $P\big(\sqrt n(\bar X_n - \mu)/\sigma \le z\big) \to \Phi(z)$ as $n \to \infty$, where $\Phi$ is the standard
+normal distribution function.
+\end{theorem}
+
+\admitted{Proved in the mathematics series, third university volume.}
+
+\omcode{code/bachelor-1/30-random-variables-for-econometrics/listings/clt.py}{1}{17}{The opening chart's
+numbers: the spread and the \omterm{def:b1:describing-data:skewness}{skewness} of the sample means.}\label{lst:b1:random-variables-for-econometrics:clt}
+
+\omoutput{code/bachelor-1/30-random-variables-for-econometrics/outputs/clt.txt}{The spread follows
+$\sigma/\sqrt n$; the \omterm{def:b1:describing-data:skewness}{skewness} falls from $1.24$ to $0.12$.}\label{out:b1:random-variables-for-econometrics:clt}
+
+\begin{definition}[Random sample]\label{def:b1:random-variables-for-econometrics:random-sample}
+\index{random sampling}\index{random sample}
+A \emph{random sample} of size $n$ is a set of $n$ observations drawn
+independently from one population, each with the population's
+distribution; drawing one is \emph{random sampling}.
+\end{definition}
+
+\begin{model}{Random sampling}
+\assumes Observations drawn independently from one population with a
+finite variance.
+\predicts Sample means centred on the population mean, with standard
+deviation $\sigma/\sqrt n$, and approximately normal for large $n$.
+\tested Checked, not tested, by simulation from a real, skewed
+population (opening chart): the standard deviations of the means are
+within $1\%$ of $\sigma/\sqrt n$ for 5, 30 and 200 men, % figdata: means_stats
+but the draws are independent by construction. Whether a real survey's
+observations are independent is a property of how it was drawn; a test
+compares its estimates with a known total, or the spread of its estimates
+with the spread its design implies (\cref{ch:b1:sampling-and-inference}).
+\breaks Dependent draws --- months of one \omterm{def:b1:economic-data-python:shapes}{time series}, members of one
+family, pupils of one class --- make the spread larger than $\sigma/\sqrt n$ (the
+second university year treats them); populations so heavy-tailed that the
+variance does not exist make the means settle far more slowly.
+\end{model}
+
+\omcode{code/bachelor-1/30-random-variables-for-econometrics/listings/heavy_tails.py}{1}{10}{Twenty
+sample means of a population without a variance.}\label{lst:b1:random-variables-for-econometrics:heavy}
+
+\omoutput{code/bachelor-1/30-random-variables-for-econometrics/outputs/heavy_tails.txt}{Ten thousand
+times more data narrow the range of the means only by a factor of
+about 36.}\label{out:b1:random-variables-for-econometrics:heavy}
+
+With a finite variance, ten thousand times more data would narrow the
+range a hundredfold. Here, from samples of 100 to samples of a million, the
+range shrinks from $10.12$ to $0.28$, a factor of 36. % computed: code/bachelor-1/30-random-variables-for-econometrics/outputs/heavy_tails.txt
+
+\section*{Exercises}\label{sec:b1:random-variables-for-econometrics:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:random-variables-for-econometrics:linear}
+$\E[X] = 5$ and $\Var(X) = 2$. Find $\E[2X + 3]$ and $\Var(2X + 3)$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:random-variables-for-econometrics:cond}
+From the rounded joint table of \cref{out:b1:random-variables-for-econometrics:joint}, compute
+$P(\text{over } 30{,}000 \mid \text{more than 12 years})$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:random-variables-for-econometrics:read}
+From \cref{out:b1:random-variables-for-econometrics:clt}, give the standard deviation of the
+means for $n = 30$ and compare it with $\sigma/\sqrt{30}$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:random-variables-for-econometrics:predict}
+Predict the standard deviation of the means for $n = 120$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:random-variables-for-econometrics:two-groups}
+$40\%$ of a population is in group A, with mean earnings 10, and $60\%$ in group B,
+with mean 20. Find mean earnings.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:random-variables-for-econometrics:var-sum}
+$\Var(X) = 4$, $\Var(Y) = 9$, $\Cov(X, Y) = 1.5$. Find $\Var(X + Y)$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:random-variables-for-econometrics:interval}
+Using the central limit theorem and the population values of
+\cref{out:b1:random-variables-for-econometrics:clt}, give the interval that contains $95\%$ of
+the means of 200 men.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:random-variables-for-econometrics:chi2}
+Find the mean and the variance of $\chi^2_k$, using $\E[Z^2] = 1$ and $\E[Z^4] = 3$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:random-variables-for-econometrics:brothers}
+A survey of $n$ men samples $n/2$ pairs of brothers, whose earnings have a
+correlation $\rho > 0$ within each pair. Predict the variance of the mean.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:random-variables-for-econometrics:best}
+Prove \cref{prop:b1:random-variables-for-econometrics:best} by writing $\E[(Y - c)^2 \mid X = x]$ as a
+function of the number $c$, for each $x$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:random-variables-for-econometrics:mean-indep}
+Show that \omterm{def:b1:random-variables-for-econometrics:mean-independence}{mean independence} implies zero covariance, and give an example
+of zero covariance without \omterm{def:b1:random-variables-for-econometrics:mean-independence}{mean independence}.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:random-variables-for-econometrics:fail}
+What simulation result would show that the normal approximation fails for
+means of 30 draws from a given population?
+\end{exercise}
+
+\section{Problem: The Brenland Lottery of Surveys}\label{sec:b1:random-variables-for-econometrics:problem}
+
+\begin{problem}[{Weekend problem --- a population, and 10,000 surveys of it}]\label{pb:b1:random-variables-for-econometrics:lottery}
+Treat the 2,000 households of Brenland's survey (invented) as the whole
+population. Survey firms draw 100 households with replacement; a script
+simulates 10,000 such surveys with a fixed seed.
+
+\medskip\noindent\textbf{Part I --- A joint distribution.} Classify households by
+size (1 to 5) and by \omterm{def:b1:national-accounts-in-depth:gni}{disposable income} (under 20,000, 20,000 to 30,000, 30,000 or
+more dalens).
+\begin{enumerate}
+  \item Give the marginal distribution of size.
+  \item Give $P(\text{size } 1, \text{ income } 30{,}000 \text{ or more})$.
+  \item Give $P(\text{income } 30{,}000 \text{ or more} \mid \text{size } 1)$ and $\mid \text{size } 4$.
+  \item Are size and income independent?
+  \item Why might larger households have higher income?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- Conditional expectations.}
+\begin{enumerate}[resume]
+  \item Give mean income by household size.
+  \item Check the law of iterated expectations.
+  \item Is income mean independent of size?
+  \item Which predictor of income from size has the smallest mean squared error?
+  \item Would mean income per person behave the same way?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- The sampling distribution.}
+\begin{enumerate}[resume]
+  \item Give the population mean and standard deviation.
+  \item Predict the standard deviation of the survey means.
+  \item Give the simulated standard deviation.
+  \item Within what distance of the true mean do $95\%$ of survey means fall, by simulation?
+  \item And by the central limit theorem?
+  \item How would the distance change with 400 households?
+  \item Why draw with replacement?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- A $t$ statistic.} In each survey, compute
+$t = (\bar y - \mu)/(s/\sqrt{100})$ with $s$ the survey's standard deviation.
+\begin{enumerate}[resume]
+  \item What distribution would $t$ have if incomes were normal?
+  \item Give the $2.5\%$ upper \omterm{def:b1:describing-data:quantile}{quantile} of $t_{99}$.
+  \item What share of the surveys has $|t|$ above it?
+  \item Give the standard deviation of the 10,000 values of $t$.
+  \item Why is the share close to $5\%$ although incomes are skewed?
+  \item What would make it far from $5\%$?
+  \item What does a survey firm learn from one survey's $t$, when $\mu$ is unknown?
+  \item State the result: within what distance of the truth is the mean income of 100 households in $95\%$ of surveys?
+\end{enumerate}
+\end{problem}

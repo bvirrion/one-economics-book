@@ -1,0 +1,4 @@
+$ python covariance.py
+by hand:     cov 154,706,518  r 0.7315
+with pandas: cov 154,706,518  r 0.7315
+parabola:    r 0.0672

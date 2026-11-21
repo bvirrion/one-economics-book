@@ -1,0 +1,263 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g12-05. Accumulation as a recurrence; the steady state and convergence
+% to it; saving raises the level, not the long-run growth; absolute and conditional convergence; growth needs technology.
+% Real numbers: figdata/grade-12/05-solow-first-look/ (PWT 11.0 GDP per person 1960 and growth 1960-2019; Maddison GDP per
+% person DEU JPN USA 1938-1973; Brenland paths, invented, from chapter 4's capital stock). Ledger: Davis and Weinstein 2002,
+% Mankiw, Romer and Weil 1992 (abstracts). No photograph of a rebuilt city was added.
+\chapter{The Solow Model: A First Look}\label{ch:g12:solow-first-look}
+
+In 1946 output per person in Germany (East and West together) was less than half its 1938 level, and Japan's was a third lower. By 1960 Germany's was half as high again as before the war, and
+Japan's had passed its prewar level by half. Over the same years, output per person in the United States, which had not been fought over, rose by about a fifth.
+% figdata: recovery (DEU 1938 7960, 1946 3534, 1960 12282; JPN 1938 4257, 1946 2771, 1960 6354; USA 1946 14823, 1960 18057)
+
+The same tendency shows, less dramatically, among countries that were poorer than their neighbours. Twenty countries of Europe and North America started 1960 at
+very different incomes, and the poorer among them grew faster over the next sixty years. Across all the world's countries with the data, no such pattern appears. This
+chapter builds the model that explains both facts: the Solow model, in which capital is accumulated by saving and wears out, and its returns diminish.
+
+\begin{openingchart}{GDP per person in 1960 (thousands of 2021 dollars at purchasing power parity, logarithmic scale) against its average annual growth from 1960 to 2019, in
+per cent; 111 countries, of which 20 of western Europe, the United States, Canada and Turkey (dark).}{Penn World Table 11.0 (rgdpe, rgdpna, pop)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.8\linewidth, height=6.0cm, xmode=log, xmin=200, xmax=60000, ymin=-3, ymax=7, log ticks with fixed point,
+  xtick={300,1000,3000,10000,30000}, xticklabels={0.3, 1, 3, 10, 30}, xlabel={GDP per person in 1960, thousands of dollars},
+  ylabel={growth 1960--2019, per cent a year}]
+\addplot+[omThm!50, mark=*, mark size=1.1pt, only marks, restrict expr to domain={\thisrow{eur}}{0:0}]
+  table[x=y1960, y=g] {figdata/grade-12/05-solow-first-look/out/conv.csv};
+\addplot+[omDef, mark=square*, mark size=1.4pt, only marks, restrict expr to domain={\thisrow{eur}}{1:1}]
+  table[x=y1960, y=g] {figdata/grade-12/05-solow-first-look/out/conv.csv};
+\node[font=\scriptsize, anchor=west] at (axis cs:1363,5.77) {Korea};
+\node[font=\scriptsize, anchor=west] at (axis cs:3036,-1.75) {Congo, D.R.};
+\node[omDef, font=\scriptsize, anchor=west] at (axis cs:7658,3.84) {Ireland};
+\node[omDef, font=\scriptsize, anchor=north] at (axis cs:24231,1.34) {Switzerland};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+% figdata: conv_key (n 111, n_eur 20, corr_all -0.08, corr_eur -0.655); conv (KOR 1363 5.77; COD 3036 -1.75; IRL 7658 3.84; CHE 24231 1.34)
+
+\begin{recall}
+From \cref{ch:g12:growth-and-production-function}: the \omterm{def:g12:growth-and-production-function:apf}{aggregate production function}, $y = Ak^{\alpha}$, \omterm{def:g12:growth-and-production-function:crs}{diminishing returns to capital} and \omterm{def:g12:growth-and-production-function:tfp}{total factor productivity}.
+From \cref{ch:g10:national-accounts}: depreciation of capital. From the mathematics volumes: sequences defined by $u_{t+1} = f(u_t)$, increasing bounded sequences and their
+limits.
+\end{recall}
+
+\section{Saving and accumulation}\label{sec:g12:solow-first-look:accumulation}
+
+\begin{definition}[Saving rate]\label{def:g12:solow-first-look:saving-rate}
+The \emph{saving rate}\index{saving rate} $s$ is the share of output that is saved, and so invested in new capital, rather than consumed.
+\end{definition}
+
+\begin{definition}[Capital accumulation equation]\label{def:g12:solow-first-look:accumulation}
+With a constant workforce, \omterm{def:g12:solow-first-look:saving-rate}{saving rate} $s$, depreciation rate $\delta$ and output per worker $y = Ak^{\alpha}$, the \emph{capital accumulation equation}\index{capital
+accumulation equation} is
+\[ k_{t+1} = sAk_t^{\alpha} + (1 - \delta)k_t: \]
+next year's capital per worker is this year's, less what wears out, plus what is saved.
+\end{definition}
+
+Capital per worker grows when saving exceeds depreciation, $sAk^{\alpha} > \delta k$, and shrinks when it falls short. Because of diminishing returns, saving grows
+less than in proportion to $k$, while depreciation grows in proportion: at some point the two meet.
+
+\begin{definition}[Steady state]\label{def:g12:solow-first-look:steady-state}
+A \emph{steady state}\index{steady state} of the model is a level $k^* > 0$ of capital per worker at which saving just replaces depreciation, $sA(k^*)^{\alpha} = \delta k^*$,
+so that $k$ no longer changes.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[width=0.7\linewidth, height=5.4cm, xmin=0, xmax=600, ymin=0, ymax=30, xlabel={capital per worker $k$}, ylabel={per worker per year},
+  grid=major, grid style={gray!20}]
+\addplot[omDef, thick, domain=0:600, samples=150] {0.225*10.1655*x^0.35} node[pos=0.97, below, font=\scriptsize] {$sAk^{\alpha}$};
+\addplot[omDef, thick, dashed, domain=0:600, samples=150] {0.25*10.1655*x^0.35} node[pos=0.97, above, font=\scriptsize] {$s'Ak^{\alpha}$};
+\addplot[omThm, thick, domain=0:600, samples=2] {0.05*x} node[pos=0.3, below right, font=\scriptsize] {$\delta k$};
+\draw[gray, dashed] (axis cs:358.4,0) -- (axis cs:358.4,17.92) node[above left, font=\scriptsize, black] {$k^*$};
+\draw[gray, dashed] (axis cs:421.5,0) -- (axis cs:421.5,21.08) node[above right, font=\scriptsize, black] {$k^{*\prime}$};
+\end{axis}
+\end{tikzpicture}
+
+{\small The Solow diagram, with the parameters of the weekend problem. Saving per worker (solid curve) exceeds depreciation (straight line) to the left of $k^*$, so $k$ rises,
+and falls short to the right, so $k$ falls. A higher \omterm{def:g12:solow-first-look:saving-rate}{saving rate} $s'$ (dashed curve) moves the \omterm{def:g12:solow-first-look:steady-state}{steady state} to the right.}
+\end{omfigure}
+
+\section{The steady state}\label{sec:g12:solow-first-look:steady}
+
+\begin{proposition}[Steady state and convergence]\label{prop:g12:solow-first-look:steady}
+With $0 < \alpha < 1$, $0 < \delta < 1$, $s > 0$ and $A > 0$, the model has exactly one \omterm{def:g12:solow-first-look:steady-state}{steady state}, $k^* = (sA/\delta)^{1/(1 - \alpha)}$. From any $k_0$ with
+$0 < k_0 < k^*$, the sequence $(k_t)$ increases and converges to $k^*$; from any $k_0 > k^*$, it decreases and converges to $k^*$.
+\end{proposition}
+\begin{proof}
+Dividing $sAk^{\alpha} = \delta k$ by $k^{\alpha} > 0$ gives $k^{1 - \alpha} = sA/\delta$, which has the single positive solution stated. Let $f(k) = sAk^{\alpha} + (1 - \delta)k$,
+an increasing function, with $f(k^*) = k^*$. If $0 < k_t < k^*$, then $k_t^{1 - \alpha} < sA/\delta$, so $sAk_t^{\alpha} > \delta k_t$ and $k_{t+1} = f(k_t) > k_t$; also
+$k_{t+1} = f(k_t) < f(k^*) = k^*$. So the sequence is increasing and bounded by $k^*$, and has a limit $\ell \le k^*$, with $\ell \ge k_0 > 0$. Since $f$ is continuous,
+$\ell = f(\ell)$, so $\ell$ is a \omterm{def:g12:solow-first-look:steady-state}{steady state}, and $\ell = k^*$. The case $k_0 > k^*$ is the same with the inequalities reversed.
+\end{proof}
+
+\begin{omchart}{Capital per worker in Brenland under the model of the weekend problem, from two starting points ($k_0 = 100$ and 600) and after a rise in the saving rate from
+0.225 to 0.25 starting at the old steady state; thousands of 2015 dalens per worker, 100 years (invented).}{invented data}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.8\linewidth, height=5.2cm, xmin=0, xmax=100, ymin=0, ymax=650, xlabel={years}, ylabel={capital per worker}, xtick={0,20,...,100}]
+\addplot[omDef, thick] table[x=t, y=low] {figdata/grade-12/05-solow-first-look/out/paths.csv} node[pos=0.1, below right, font=\scriptsize] {from 100};
+\addplot[omThm, thick] table[x=t, y=high] {figdata/grade-12/05-solow-first-look/out/paths.csv} node[pos=0.1, above right, font=\scriptsize] {from 600};
+\addplot[black, thick, dashed] table[x=t, y=rise] {figdata/grade-12/05-solow-first-look/out/paths.csv} node[pos=0.7, above, font=\scriptsize] {saving rate 0.25};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+% figdata: paths (t 0: 100, 600, 358.4; t 10: 160.69, 527.56; t 100: 346.96, 366.47, 419.09); solow_key
+
+\begin{model}{The Solow model}
+\assumes A constant \omterm{def:g12:solow-first-look:saving-rate}{saving rate}; \omterm{def:g12:growth-and-production-function:crs}{diminishing returns to capital}; a constant depreciation rate; technology and the workforce given from outside the model.
+\predicts Capital and output per worker converge to a \omterm{def:g12:solow-first-look:steady-state}{steady state}; a country below its \omterm{def:g12:solow-first-look:steady-state}{steady state} grows faster the further below it is; a higher \omterm{def:g12:solow-first-look:saving-rate}{saving rate} raises the
+  steady-state level of output per worker, not its long-run growth.
+\tested Consistent with it: Germany and Japan, whose capital was destroyed in the war, grew fast after 1945 (the record below); among similar countries the
+  poorer grew faster from 1960 (the opening chart). A test: with \omterm{def:g11:labour-market:human-capital}{human capital} added, countries with the same saving and population growth converge at about the rate the model predicts (Mankiw, Romer and Weil
+  1992).
+\breaks The model does not say where technology comes from, and without it growth stops; differences in capital per worker explain only a small part of the gaps between
+  rich and poor countries.
+\end{model}
+% ledger: g12:mrw1992
+
+\begin{record}[Recovery after 1945]
+% ledger: g12:dw2002
+% figdata: recovery (DEU 1938 7960, 1946 3534, 1950 6186, 1960 12282; JPN 1938 4257, 1946 2771, 1950 3062, 1960 6354, 1973 18226)
+In the estimates of the Maddison Project, which covers Germany as a whole and does not separate East and West, German output per person fell from 7960 dollars in 1938 to 3534 in 1946, recovered to 6186 by 1950 and reached 12\,282 in 1960.
+Japan's fell from 4257 to 2771, and stood at 6354 in 1960 and 18\,226 in 1973. A study of Japanese cities bombed in the war found that they regained their former
+relative sizes: long-run city size is robust even to large temporary shocks. Lost capital is rebuilt quickly when the skills, the institutions and the technology that
+used it remain.
+\end{record}
+
+\section{Saving: level, not growth}\label{sec:g12:solow-first-look:saving}
+
+Since $k^* = (sA/\delta)^{1/(1 - \alpha)}$, steady-state output per worker is
+\[ y^* = A(k^*)^{\alpha} = A^{1/(1 - \alpha)}(s/\delta)^{\alpha/(1 - \alpha)}, \]
+which rises with the \omterm{def:g12:solow-first-look:saving-rate}{saving rate}. With
+$\alpha = 1/3$, the exponent $\alpha/(1 - \alpha)$ is $1/2$: doubling the \omterm{def:g12:solow-first-look:saving-rate}{saving rate} raises steady-state output per worker by $\sqrt{2} - 1 \approx 41\,\%$. During the
+transition output grows faster; once the new \omterm{def:g12:solow-first-look:steady-state}{steady state} is reached, growth is zero again. Saving buys a higher level, not lasting growth.
+
+\section{Convergence}\label{sec:g12:solow-first-look:convergence}
+
+\begin{definition}[Absolute and conditional convergence]\label{def:g12:solow-first-look:absolute-convergence}
+\emph{Absolute convergence}\index{absolute convergence} is the tendency of poorer countries to grow faster than richer ones, whatever their other characteristics.
+\emph{Conditional convergence}\index{conditional convergence}\phantomsection\label{def:g12:solow-first-look:conditional-convergence} is the tendency of each country to
+grow faster the further it is below its own \omterm{def:g12:solow-first-look:steady-state}{steady state}, which depends on its \omterm{def:g12:solow-first-look:saving-rate}{saving rate}, its technology and its population growth.
+\end{definition}
+
+The Solow model predicts \omterm{def:g12:solow-first-look:absolute-convergence}{conditional convergence}. The opening chart is consistent with it among countries that shared a great deal: across twenty countries chosen by where
+they stood in 1960, not by how they grew afterwards, the correlation between income in 1960 and growth after it is $-0.66$. Across all 111 countries it is $-0.08$: there is no \omterm{def:g12:solow-first-look:absolute-convergence}{absolute convergence}, because poor countries differ from rich ones in their saving,
+their schooling and above all their technology and institutions, and so in their \omterm{def:g12:solow-first-look:steady-state}{steady states}.
+
+\section{Growth needs technology}\label{sec:g12:solow-first-look:technology}
+
+At the \omterm{def:g12:solow-first-look:steady-state}{steady state}, output per worker is constant. Long-run growth in output per worker can come only from a rising $A$: with $A$ growing, the \omterm{def:g12:solow-first-look:steady-state}{steady state} itself moves up
+each year, and capital follows it. The model therefore points to its own limit: it explains why capital accumulation cannot sustain growth, but not where better technology
+comes from. The next chapter turns to that question.
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g12:solow-first-look:1}
+With $s = 0.2$, $A = 1$, $\alpha = 0.5$ and $\delta = 0.1$, start from $k_0 = 1$ and compute $k_1$ and $k_2$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:solow-first-look:2}
+With the same parameters, start from $k_0 = 9$ and compute $k_1$ and $k_2$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:solow-first-look:3}
+With the same parameters, find the steady-state $k^*$ and $y^*$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:solow-first-look:4}
+With $s = 0.3$, $A = 2$, $\alpha = 1/3$ and $\delta = 0.06$, find $k^*$ and $y^*$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g12:solow-first-look:5}
+From the opening chart, give Korea's income in 1960 and its growth, and Ireland's. Did the poorest countries in 1960 grow fastest?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:solow-first-look:6}
+With $\alpha = 1/3$, by what factors do $k^*$ and $y^*$ change when the \omterm{def:g12:solow-first-look:saving-rate}{saving rate} doubles?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:solow-first-look:7}
+With $\alpha = 0.5$, the \omterm{def:g12:solow-first-look:saving-rate}{saving rate} rises from 0.2 to 0.3. By what factors do $k^*$ and $y^*$ change?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:solow-first-look:8}
+With the parameters of \cref{exo:g12:solow-first-look:1}, the growth rate of $k$ is $sAk^{\alpha - 1} - \delta$. Compute it at $k = 1$, $k = 2$ and $k = 4$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:solow-first-look:9}
+With the parameters of \cref{exo:g12:solow-first-look:1}, start from $k_0 = 1$ and iterate (with a calculator or a short program) until half the gap to $k^*$ is closed.
+How many periods does it take?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:solow-first-look:10}
+From the chart of Brenland's paths, give capital per worker after 10 years on each path from the two starting points, and the \omterm{def:g12:solow-first-look:steady-state}{steady state}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g12:solow-first-look:11}
+With a workforce growing at rate $n$, the equation becomes $(1 + n)k_{t+1} = sAk_t^{\alpha} + (1 - \delta)k_t$. Show that the \omterm{def:g12:solow-first-look:steady-state}{steady state} solves $sAk^{\alpha} = (\delta + n)k$,
+and find it with the parameters of \cref{exo:g12:solow-first-look:1} and $n = 0.02$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:solow-first-look:12}
+What evidence contradicts \omterm{def:g12:solow-first-look:absolute-convergence}{absolute convergence}? Use the opening chart, and say why it does not contradict the Solow model.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:solow-first-look:13}
+Show that the growth rate of $k$, $sAk^{\alpha - 1} - \delta$, decreases as $k$ rises and is zero at $k^*$. Why can no constant \omterm{def:g12:solow-first-look:saving-rate}{saving rate} sustain growth of output per worker?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:solow-first-look:14}
+With the parameters of \cref{exo:g12:solow-first-look:1}, a war destroys half the capital of a country at its \omterm{def:g12:solow-first-look:steady-state}{steady state}. By what percentage does output per worker fall?
+Find the growth of $k$ in the first period after. Compare with Germany after 1946.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g12:solow-first-look:15}
+Two countries have the same $s$, $\delta$ and $\alpha = 1/3$; one has twice the other's $A$. Find the ratios of their steady-state $k^*$ and $y^*$. What does this say about
+explaining income gaps by capital?
+\end{exercise}
+
+\section{Problem: Brenland's Steady State}
+
+\begin{problem}[{Weekend problem --- how far Brenland is from its steady state}]
+\label{pb:g12:solow-first-look:1}
+In 2025 Brenland invested 88\,484 million dalens out of a GDP of 393\,264 million. Its output per worker was 66.97 and its capital per worker 218.42, in thousands of 2015
+dalens (from the growth accounts of \cref{ch:g12:growth-and-production-function}). Take $\alpha = 0.35$, $\delta = 0.05$, a constant workforce and constant technology.
+
+\medskip
+\noindent\textbf{Part I --- The parameters.}
+\begin{enumerate}
+\item Find the \omterm{def:g12:solow-first-look:saving-rate}{saving rate} $s$.
+\item Find $A$ from $y = Ak^{\alpha}$.
+\item Find the steady-state capital per worker.
+\item Find the steady-state output per worker.
+\item What fraction of its steady-state capital and output per worker does Brenland have in 2025?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The path.}
+\begin{enumerate}[resume]
+\item Find capital per worker in 2026.
+\item Find the growth of capital per worker in the first year.
+\item The model takes 23 years to close half the gap in capital per worker. Why is growth fastest at the start?
+\item Near the \omterm{def:g12:solow-first-look:steady-state}{steady state}, the gap shrinks by about $(1 - \alpha)\delta$ a year. Use this to estimate the half-life, and compare.
+\item Brenland's output per worker actually grew by 0.97\,\% a year from 2000 to 2025. Could the model explain growth like that forever?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- A higher saving rate.}
+\begin{enumerate}[resume]
+\item Starting from the \omterm{def:g12:solow-first-look:steady-state}{steady state}, the \omterm{def:g12:solow-first-look:saving-rate}{saving rate} rises to 0.25. Find the new steady-state capital and output per worker.
+\item By what percentage does steady-state output per worker rise? Check with the exponent $\alpha/(1 - \alpha)$.
+\item Compare steady-state consumption per worker, $(1 - s)y^*$, before and after.
+\item The chart of Brenland's paths shows the transition; the model takes 22 years to close half the gap. What is the growth of output per worker once the transition ends?
+\item Would a \omterm{def:g12:solow-first-look:saving-rate}{saving rate} of 100\,\% maximise consumption per worker? Explain.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Interpretation.}
+\begin{enumerate}[resume]
+\item The growth accounts of \cref{ch:g12:growth-and-production-function} found \omterm{def:g12:growth-and-production-function:tfp}{total factor productivity} growing by about 0.5\,\% a year. How does a rising $A$ change the
+  \omterm{def:g12:solow-first-look:steady-state}{steady state} over time?
+\item What does the recovery of Germany and Japan after 1945 suggest about the speed of convergence when capital alone is lost?
+\item Why would a country with a lower $A$ than Brenland have a lower \omterm{def:g12:solow-first-look:steady-state}{steady state} even with the same \omterm{def:g12:solow-first-look:saving-rate}{saving rate}?
+\item Name one thing the model leaves out that might make Brenland's \omterm{def:g12:solow-first-look:steady-state}{steady state} differ from this calculation.
+\item State the result of the problem: Brenland's steady-state output per worker, and the years needed to close half the gap after the saving rise.
+\end{enumerate}
+\end{problem}

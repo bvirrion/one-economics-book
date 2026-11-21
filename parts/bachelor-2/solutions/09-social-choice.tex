@@ -1,0 +1,135 @@
+\section*{Chapter \ref{ch:b2:social-choice} --- Social Choice}
+
+\begin{solution}{exo:b2:social-choice:1}
+% code: exercises/solutions.py pairwise condorcet_winner
+$A$ beats $B$ by 3 to 2 (the two $A \succ B \succ C$ voters and the $C \succ A \succ B$ voter); $B$ beats $C$ by 4 to 1; $C$
+beats $A$ by 3 to 2. The majority's preferences cycle, and there is no \omterm{def:b2:social-choice:condorcet-winner}{Condorcet winner}.
+\end{solution}
+
+\begin{solution}{exo:b2:social-choice:2}
+$y$ is a \omterm{def:b2:social-choice:pareto-improvement}{Pareto improvement} on $x$: the first person gains, the second is as well off. $z$ cannot be compared
+with $x$ or with $y$: the first person prefers $z$, the second prefers $x$ and $y$.
+\end{solution}
+
+\begin{solution}{exo:b2:social-choice:3}
+% ledger: b2:gsm2023-t7
+% code: listings/condorcet_random.py
+One election of 182, 0.55 per cent. With random rankings the listing finds no \omterm{def:b2:social-choice:condorcet-winner}{Condorcet winner} in 9.2 per cent of
+three-candidate elections and more with more candidates. Real voters' rankings are far from random: they
+share a structure, such as an ordering of candidates from one side to the other, that makes a \omterm{def:b2:social-choice:condorcet-winner}{Condorcet
+winner} likely.
+\end{solution}
+
+\begin{solution}{exo:b2:social-choice:4}
+A budget that beats the median voter's favourite in a one-to-one vote, or a winner far from the median
+favourite. Before concluding, check that preferences over the budget are \omterm{def:b2:social-choice:single-peaked}{single-peaked} (a voter who wants
+either no library or a large one is not), that the vote really was over one dimension, that turnout did not
+shift the median of those who voted, and how the median favourite was measured.
+\end{solution}
+
+\begin{solution}{exo:b2:social-choice:5}
+% code: exercises/solutions.py borda
+$A$ beats $B$ and $C$ by 3 to 2: it is the \omterm{def:b2:social-choice:condorcet-winner}{Condorcet winner}. Borda: $A$ has $3 \times 2 = 6$, $B$ has $3 \times 1 + 2
+\times 2 = 7$, $C$ has $2 \times 1 = 2$; $B$ wins. The Borda count fails to choose a \omterm{def:b2:social-choice:condorcet-winner}{Condorcet winner} when one exists,
+because it counts how far apart alternatives are on each ballot, which depends on where the third
+alternative is placed. A single profile cannot show a failure of \omterm{def:b2:social-choice:iia}{independence of irrelevant alternatives},
+which compares two profiles; exercise 12 supplies the second: when the three move $C$ above $B$, nobody's
+comparison of $A$ with $B$ changes, yet society's ranking of $A$ and $B$ reverses.
+\end{solution}
+
+\begin{solution}{exo:b2:social-choice:6}
+% code: exercises/solutions.py single_peaked
+$L \succ M \succ R$ and $M \succ R \succ L$ are \omterm{def:b2:social-choice:single-peaked}{single-peaked}; $R \succ L \succ M$ is not, since after its peak $R$ it jumps to
+$L$, past $M$. A \omterm{def:b2:social-choice:single-peaked}{single-peaked} voter's favourite is $L$, $M$ or $R$; if it is $L$ or $R$, $M$ is next to it and
+comes second; if it is $M$, $M$ is first. Either way $M$ is not last.
+\end{solution}
+
+\begin{solution}{exo:b2:social-choice:7}
+% code: exercises/solutions.py median_shift
+Adding two voters above the median should raise the outcome. The median moves from 30 to 40 (the fourth of seven
+favourites). Two new voters at 5 and 70, one on each side, leave the median at 30.
+\end{solution}
+
+\begin{solution}{exo:b2:social-choice:8}
+% code: exercises/solutions.py ex8
+$1.5 + 3 \times 3.5 = 12$ and $3 \times 3.5 + 1.5 = 12$: each state is on its policy's frontier. Policy $B$ allows $u_2 =
+3.5$ with $u_1 = (12 - 3.5)/3 = 2.83 > 1.5$, a \omterm{def:b2:social-choice:pareto-improvement}{Pareto improvement} on $A$: the move from $A$ to $B$ passes. Policy $A$ allows
+$u_1 = 3.5$ with $u_2 = (12 - 3.5)/3 = 2.83 > 1.5$, a \omterm{def:b2:social-choice:pareto-improvement}{Pareto improvement} on $B$: the move back passes too.
+\end{solution}
+
+\begin{solution}{exo:b2:social-choice:9}
+For each town, regress the approved spending per resident on the median resident's income and on her tax share
+(what one more dalen of spending costs her), and compare with the same regression using mean income. The
+model predicts that the median does better; spending that tracks mean income, or the preferences of
+those who set the agenda, rather than the median, counts against it. Towns with different turnout among
+income groups allow a further test: the median of those who vote should predict better than the median of
+residents.
+\end{solution}
+
+\begin{solution}{exo:b2:social-choice:10}
+(a) In every intermediate profile each voter places $b$ at the top or the bottom, so by step 1 society places it at
+the top or the bottom; it can only jump. (b) $n^*$ has $b$ at the top in II; moving $a$ just above $b$ changes only
+her $a$--$b$ comparison. The other voters keep $b$ at their top or bottom, so they can place $a$ and $c$ in either
+order without moving $b$ between them. (c) Step 4 needs a pair whose social ranking $n^*$ is known to change on
+her own; between I and II, only her ranking changed and $b$ moved from the bottom to the top socially, so the
+voter who decides the pair $(a, b)$ must be $n^*$.
+\end{solution}
+
+\begin{solution}{exo:b2:social-choice:11}
+Let $n$ be even and the middle favourites $x_{(n/2)} \le x_{(n/2+1)}$, and take $x$ in between. For $y < x$, the $n/2$
+voters with favourites at or above $x_{(n/2+1)}$ prefer $x$ to $y$: at least half, so $y$ does not win. For $y > x$, the
+$n/2$ voters with favourites at or below $x_{(n/2)}$ prefer $x$. So no alternative beats $x$; with exactly half on each
+side, a vote can tie.
+\end{solution}
+
+\begin{solution}{exo:b2:social-choice:12}
+% code: exercises/solutions.py borda
+If the three report $A \succ C \succ B$, the scores are $A$ 6, $C$ $3 + 2 = 5$, $B$ $2 \times 2 = 4$: $A$ wins. The two others
+could answer by reporting $C \succ B \succ A$, which gives $A$ 6, $B$ 2, $C$ $3 + 4 = 7$: $C$ wins, which they prefer to
+$A$. Each side's best report depends on the other's: the rule invites strategy, as the Gibbard--Satterthwaite
+theorem says every non-dictatorial rule with three or more alternatives must.
+\end{solution}
+
+\begin{solution}{pb:b2:social-choice:1}
+% code: exercises/solutions.py problem part4
+\textbf{Part I.}
+1. 250: $200 \succ 400 \succ 600 \succ 800$; 380: $400 \succ 200 \succ 600 \succ 800$; 450: $400 \succ 600 \succ 200 \succ 800$;
+520: $600 \succ 400 \succ 800 \succ 200$; 640 and 690: $600 \succ 800 \succ 400 \succ 200$; 900: $800 \succ 600 \succ 400 \succ 200$.
+2. First places: 200 one, 400 two, 600 three, 800 one. 600 wins.
+3. 200: $3 + 2 + 1 = 6$; 400: $2 + 3 + 3 + 2 + 1 + 1 + 1 = 13$; 600: $1 + 1 + 2 + 3 + 3 + 3 + 2 = 15$; 800: $1 + 2 + 2 + 3 = 8$.
+4. 600 beats 200 by 5 to 2, 400 by 4 to 3, 800 by 6 to 1.
+5. Yes, 600.
+6. Yes: plurality, Borda and pairwise majority all choose 600.
+\textbf{Part II.}
+7. Each ranking starts at the option nearest the favourite and then moves outward: for example 450 ranks 400,
+then 600, then 200, then 800, each step to an option next to those already ranked.
+8. No: after 200 it jumps to 800, past 400 and 600. It could come from a councillor who wants either a small
+garden or a full park with facilities, and sees a middle budget as buying neither.
+9. Moving away from the favourite in either direction increases the distance, so utility falls on each side
+of the peak.
+10. The \omterm{def:b2:social-choice:median-voter}{median voter theorem}: the median councillor's favourite option wins every pairwise vote.
+\textbf{Part III.}
+11. The fourth of the seven favourites: 520.
+12. 600, at distance 80 against 120 for 400.
+13. See question 4.
+14. The favourites become 380, 450, 520, 640, 690, 900, 950: the median is 640, whose nearest option is still 600; 600
+remains the \omterm{def:b2:social-choice:condorcet-winner}{Condorcet winner}.
+15. Scores: 200 7, 400 13, 600 12, 800 10: 400 wins. Alone, 380 lowers 600 to 14 and 400 still has 13; 450 alone lowers 600
+to 13, a tie with 400. Together they change the result.
+16. No. The outcome is the median's favourite option. A councillor below the median who reports a higher favourite
+either leaves the median unchanged or moves it up, away from her; one above it can only move it down, also away.
+\textbf{Part IV.}
+17. $X$ beats $Y$ by 5 to 2; $Y$ beats $Z$ by 5 to 2; $Z$ beats $X$ by 4 to 3.
+18. $X \succ Y$, $Y \succ Z$ and $Z \succ X$ for the majority: a cycle.
+19. $X$ beats $Y$, then $Z$ beats $X$: $Z$ is adopted.
+20. $Y$ against $Z$, then $X$: $Y$ wins, then $X$ wins. $X$ against $Z$, then $Y$: $Z$ wins, then $Y$ wins. Each proposal wins
+under some agenda.
+21. The rankings are not \omterm{def:b2:social-choice:single-peaked}{single-peaked} on any line through $X$, $Y$ and $Z$: two questions, budget and site, give no
+single order along which every councillor's preference falls on both sides of a peak, so the restriction that
+rescued Part III fails and the unrestricted domain returns.
+22. Yes: $Y$ would beat $X$ by 5 to 2, then $Y$ would beat $Z$ by 5 to 2. They get $Y$ instead of $Z$, which they prefer.
+23. Whoever sets the agenda can choose the outcome, as long as the others vote sincerely; councillors who
+anticipate the agenda can partly undo that power by voting strategically.
+24. The budget of 600 thousand dalens wins every pairwise vote. Once the site is added, the agendas ($X$ v $Y$, then
+$Z$), ($Y$ v $Z$, then $X$) and ($X$ v $Z$, then $Y$) adopt $Z$, $X$ and $Y$.
+\end{solution}

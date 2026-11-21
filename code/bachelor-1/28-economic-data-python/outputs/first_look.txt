@@ -1,0 +1,14 @@
+$ python first_look.py
+(18, 6)
+iso3           str
+country        str
+year         int64
+rgdpe      float64
+pop        float64
+emp        float64
+dtype: object
+     iso3  country  year      rgdpe      pop      emp
+3469  DEU  Germany  2015  4420290.0  82.0776  43.3498
+3470  DEU  Germany  2016  4579980.0  82.7601  43.9107
+3471  DEU  Germany  2017  4755890.0  83.1040  44.5363
+3472  DEU  Germany  2018  4840360.0  83.3685  45.1352

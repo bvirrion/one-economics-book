@@ -1,0 +1,4 @@
+$ python bias_variance.py
+population mean 21,554
+sample mean  bias      18  sd  4,917  root MSE  4,917
+0.8 x mean   bias  -4,297  sd  3,934  root MSE  5,825

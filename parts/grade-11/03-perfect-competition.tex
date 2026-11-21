@@ -1,0 +1,319 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g11-03. The price-taking firm, P = MC, the shutdown
+% price, firm and industry supply, free entry and zero economic profit, economic and accounting profit.
+% Real numbers: figdata/grade-11/03-perfect-competition/ (Eurostat bd_size, enterprise birth and death rates,
+% 2021). The brief's opening chart (world soybean price and Brazil's area) needs a commodity price series that
+% is not approved; replaced by entry and exit rates by industry, an approved table; Brazil's soya area is
+% recalled from g10-05. Brenland's egg farms are invented.
+\chapter{Perfect Competition}\label{ch:g11:perfect-competition}
+
+In 2021, in the median of 34 European countries, 10.9 new firms were born for every 100 active firms in the business economy, and 7.3 closed
+down. In computer programming the birth rate was 15.2 per 100 and the death rate 8.0; in legal and accounting services, 5.8 and 4.3. Every year,
+in every industry, firms come and go: new ones try their luck where they expect a profit, and others give up where they make a loss.
+% figdata: entry (B-S_X_O_S94 10.9/7.3; J62 15.2/8.0; M69 5.8/4.3; n 34)
+
+This flow of entry and exit is the engine of the model in this chapter. A firm in a market with many sellers of the same product has no say over
+the price. It can only choose how much to produce, and whether to produce at all. Firms deciding to enter or leave decide how many sellers the
+market holds. Together, the two decisions explain why a profit made in such a market does not last.
+
+\begin{openingchart}{Enterprises born and enterprises that closed during 2021, per 100 active enterprises, by industry: median over 34 European countries.}{Eurostat,
+business demography by size class (bd\_size): birth rate and death rate of enterprises}
+\begin{tikzpicture}
+\begin{axis}[omtime, xbar, width=0.62\linewidth, height=8.2cm, xmin=0, xmax=17, bar width=4pt, ytick=data,
+  yticklabels from table={figdata/grade-11/03-perfect-competition/out/entry.csv}{label}, y tick label style={font=\scriptsize},
+  xlabel={per 100 active enterprises}, enlarge y limits=0.06, legend pos=south east, legend style={font=\scriptsize},
+  xmajorgrids=true, ymajorgrids=false]
+\addplot[fill=omDef, draw=omDef] table[x=birth, y expr=\coordindex] {figdata/grade-11/03-perfect-competition/out/entry.csv};
+\addlegendentry{born}
+\addplot[fill=omThm, draw=omThm] table[x=death, y expr=\coordindex] {figdata/grade-11/03-perfect-competition/out/entry.csv};
+\addlegendentry{closed}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: profit draws new firms into a market and losses push firms out. From \cref{ch:g10:market-equilibrium}: a \emph{\omterm{def:g10:market-equilibrium:price-taker}{price
+taker}} buys or sells too small a share of the market to move its price. From \cref{ch:g11:marginal-reasoning}: \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal revenue}, \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} and the
+marginal rule. From \cref{ch:g11:production-and-costs}: average total and \omterm{def:g11:production-and-costs:atc}{average variable cost}, and \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} cutting both at their lowest points.
+\end{recall}
+
+\section{The price-taking firm}\label{sec:g11:perfect-competition:price-taker}
+
+\begin{definition}[Perfect competition]\label{def:g11:perfect-competition:perfect-competition}
+A market is in \emph{perfect competition}\index{perfect competition} when it has many buyers and many sellers, all \omterm{def:g10:market-equilibrium:price-taker}{price takers}; the sellers sell the same
+product; buyers and sellers know the price; and firms are free to enter and to leave.
+\end{definition}
+
+A price-taking firm sells every unit at the market price $p$, so its revenue is $R(q) = pq$ and its \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal revenue} is $R'(q) = p$: one more unit brings in
+exactly the price.
+
+\section{Price equals marginal cost}\label{sec:g11:perfect-competition:p-mc}
+
+\begin{proposition}[Output where price equals marginal cost]\label{prop:g11:perfect-competition:p-mc}
+A price-taking firm with a differentiable cost $C$, whose \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} rises through $p$ at $q^*$ ($C' < p$ below $q^*$ and $C' > p$ above), maximises its
+profit $pq - C(q)$ at $q^*$, where $p = C'(q^*)$, provided it produces at all.
+\end{proposition}
+\begin{proof}
+The profit $\pi(q) = pq - C(q)$ has derivative $\pi'(q) = p - C'(q)$, positive below $q^*$ and negative above. This is \cref{prop:g11:marginal-reasoning:rule}
+with benefit $pq$.
+\end{proof}
+
+Producing at all is a separate question. In the short run, the fixed cost has to be paid whatever the firm does: it is the loss the firm makes if it produces
+nothing.
+
+\begin{proposition}[When to shut down]\label{prop:g11:perfect-competition:shutdown}
+In the short run, a price-taking firm with fixed cost $F$ and variable cost $V$ does better producing $q > 0$ than producing nothing if and only if $p > V(q)/q$,
+that is, if the price is above its \omterm{def:g11:production-and-costs:atc}{average variable cost} at $q$. So it produces when the price is above the lowest \omterm{def:g11:production-and-costs:atc}{average variable cost}, and shuts down when it
+is below.
+\end{proposition}
+\begin{proof}
+Producing $q$ gives the profit $pq - V(q) - F$; producing nothing gives $-F$. The first is larger if and only if $pq > V(q)$, that is, $p > V(q)/q$. Such a $q$
+exists exactly when $p$ is above the lowest value of $V(q)/q$.
+\end{proof}
+
+\begin{definition}[Shutdown price and firm supply curve]\label{def:g11:perfect-competition:shutdown-price}
+The \emph{shutdown price}\index{shutdown price} is the lowest \omterm{def:g11:production-and-costs:atc}{average variable cost}. The \emph{firm supply curve}\index{firm supply curve}%
+\phantomsection\label{def:g11:perfect-competition:firm-supply} of a price-taking firm is the part of its \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} curve above the shutdown price: at each
+price it gives the quantity the firm produces.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=1.05cm, y=0.36cm]
+\draw[econ axes] (0,14) node[left, font=\small] {dalens} |- (5.6,0) node[below left=12pt and 0pt, font=\small] {$q$};
+\draw[supply, domain=0.3:5, samples=60] plot (\x, {4 - \x + \x*\x/3}) node[right, font=\scriptsize] {AVC};
+\draw[demand, domain=1.75:5, samples=60] plot (\x, {16/\x + 4 - \x + \x*\x/3}) node[right, font=\scriptsize] {ATC};
+\draw[omMeth, thin, domain=0.3:1.5, samples=30] plot (\x, {4 - 2*\x + \x*\x});
+\draw[omThm, line width=1.6pt, domain=1.5:4.1, samples=40] plot (\x, {4 - 2*\x + \x*\x}) node[right, font=\scriptsize] {MC (supply)};
+\node[eqpoint] at (1.5,3.25) {};
+\node[eqpoint] at (3.48,9.16) {};
+\draw[guide] (0,3.25) -- (1.5,3.25); \draw[guide] (0,9.16) -- (3.48,9.16);
+\draw (0,3.25) -- (-0.08,3.25) node[left, font=\footnotesize] {3.25};
+\draw (0,9.16) -- (-0.08,9.16) node[left, font=\footnotesize] {9.16};
+\node[font=\scriptsize, anchor=north west] at (1.55,3.1) {shutdown point};
+\node[font=\scriptsize, anchor=north west] at (3.6,8.8) {break-even point};
+\end{tikzpicture}
+
+{\small A firm with $C(q) = 16 + 4q - q^2 + q^3/3$. Its \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} cuts \omterm{def:g11:production-and-costs:atc}{average variable cost} at its lowest point, 3.25 dalens, and \omterm{def:g11:production-and-costs:atc}{average total cost} at its
+lowest point, about 9.16 dalens. Below 3.25 the firm shuts down; between 3.25 and 9.16 it produces at a loss smaller than its fixed cost; above 9.16 it makes a
+profit. The thick part of the \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost} curve is its supply curve.}
+\end{omfigure}
+
+\begin{definition}[Industry supply curve]\label{def:g11:perfect-competition:industry-supply}
+The \emph{industry supply curve}\index{industry supply curve} gives, at each price, the sum of the quantities supplied by the firms in the industry.
+\end{definition}
+
+With $n$ identical firms each supplying $s(p)$, the industry supplies $n\,s(p)$: the \omterm{def:g10:supply:market-supply}{market supply} of \cref{ch:g10:supply}, now built from the firms' costs.
+
+\section{Entry, exit and zero profit}\label{sec:g11:perfect-competition:entry}
+
+\begin{definition}[Economic and accounting profit]\label{def:g11:perfect-competition:economic-profit}
+\emph{Economic profit}\index{economic profit} is revenue minus all opportunity costs, including the earnings the owners give up by putting their own work and
+money into the firm. \emph{Accounting profit}\index{accounting profit}\phantomsection\label{def:g11:perfect-competition:accounting-profit} is revenue minus the
+costs actually paid out.
+\end{definition}
+
+\begin{measure}[Economic and accounting profit]
+A firm's accounts record what it paid: wages, materials, rent, interest, and \omterm{def:g10:national-accounts:depreciation}{depreciation (of capital)}. They do not record what its owner could have earned by
+working for someone else, nor the return her savings would have earned elsewhere. A shop with an \omterm{def:g11:perfect-competition:economic-profit}{accounting profit} of 30 thousand dalens a year, whose owner
+could earn 35 thousand as an employee, makes an economic loss of 5 thousand. When economists say that competition drives profit to zero, they mean \omterm{def:g11:perfect-competition:economic-profit}{economic
+profit}: the owners still earn what they could earn elsewhere, and no more.
+\end{measure}
+
+\begin{definition}[Free entry]\label{def:g11:perfect-competition:free-entry}
+A market has \emph{free entry}\index{free entry} when new firms can set up with the same costs as the firms already in it, and firms can leave without losing more
+than they would lose by staying.
+\end{definition}
+
+\begin{definition}[Long-run competitive equilibrium]\label{def:g11:perfect-competition:long-run-equilibrium}
+A \emph{long-run competitive equilibrium}\index{long-run competitive equilibrium} is a situation in which every firm produces where price equals \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost},
+quantity supplied equals quantity demanded, and no firm wants to enter or leave: every firm makes zero \omterm{def:g11:perfect-competition:economic-profit}{economic profit}.
+\end{definition}
+
+\begin{proposition}[The long-run price]\label{prop:g11:perfect-competition:long-run}
+If all firms, present and potential, have the same cost function, and the \omterm{def:g11:production-and-costs:atc}{average total cost} has its minimum $m$ at $q_m$, then in a \omterm{def:g11:perfect-competition:long-run-equilibrium}{long-run competitive
+equilibrium} the price is $m$ and each firm produces $q_m$.
+\end{proposition}
+\begin{proof}
+Zero profit means $p\,q = C(q)$, that is, $p = \mathit{ATC}(q)$. Profit maximisation means $p = C'(q)$. So $C'(q) = \mathit{ATC}(q)$, which, by
+\cref{prop:g11:production-and-costs:cuts}, happens at the minimum of $\mathit{ATC}$: $q = q_m$ and $p = m$. If $p$ were above $m$, a new firm producing $q_m$ would
+make a profit and enter; if it were below, every firm would make a loss and some would leave.
+\end{proof}
+
+The number of firms is whatever it takes to supply what buyers want at the price $m$. A rise in demand raises the price in the short run and gives the firms a
+profit; new firms enter, the \omterm{def:g11:perfect-competition:industry-supply}{industry supply curve} shifts right, and the price falls back to $m$ with more firms, each producing $q_m$.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.32cm, y=0.95cm]
+\begin{scope}
+\draw[econ axes] (0,5) node[left, font=\small] {dalens a dozen} |- (14.5,0) node[below left=12pt and 0pt, font=\small] {$q$};
+\draw[demand, domain=4:14, samples=50] plot (\x, {8/\x + 1 + 0.125*\x}) node[right, font=\scriptsize] {ATC};
+\draw[supply, domain=0:14] plot (\x, {1 + 0.25*\x}) node[right, font=\scriptsize] {MC};
+\fill[omProp!25] (0,3.05) rectangle (10,3.5);
+\draw[omThm, thick] (0,3.5) -- (13.5,3.5);
+\draw[guide] (0,3) -- (13.5,3);
+\node[eqpoint] at (8,3) {}; \node[eqpoint] at (10,3.5) {};
+\draw[guide] (8,3) -- (8,0); \draw[guide] (10,3.5) -- (10,0);
+\node[below, font=\footnotesize] at (8,0) {8}; \node[below, font=\footnotesize] at (10,0) {10};
+\foreach \y in {3,3.5} \draw (0,\y) -- (-0.3,\y) node[left, font=\footnotesize] {\y};
+\node[font=\scriptsize] at (4.5,4.4) {one farm};
+\end{scope}
+\begin{scope}[xshift=7.6cm, x=0.0068cm]
+\draw[econ axes] (0,5) |- (820,0) node[below left=12pt and 0pt, font=\small] {$Q$};
+\foreach \y in {3,3.5} \draw (0,\y) -- (-12,\y) node[left, font=\footnotesize] {\y};
+\draw[demand] (240,4) -- (560,0) node[above right, font=\scriptsize] {$D$};
+\draw[demand] (360,4) -- (680,0) node[above right, font=\scriptsize] {$D'$};
+\draw[supply] (0,1) -- (640,5) node[right, font=\scriptsize] {$S_{40}$};
+\draw[supply] (0,1) -- (800,4.636) node[right, font=\scriptsize] {$S_{55}$};
+\node[eqpoint] at (320,3) {}; \node[eqpoint] at (400,3.5) {}; \node[eqpoint] at (440,3) {};
+\draw[guide] (320,3) -- (320,0); \draw[guide] (400,3.5) -- (400,0); \draw[guide] (440,3) -- (440,0);
+\node[below, font=\footnotesize] at (320,0) {320}; \node[below, font=\footnotesize] at (400,0) {400}; \node[below, font=\footnotesize, yshift=-9pt] at (440,0) {440};
+\node[font=\scriptsize] at (300,4.6) {the industry};
+\end{scope}
+\end{tikzpicture}
+
+{\small Brenland's egg farms (the weekend problem; $q$ and $Q$ in hundreds of dozens a week). Left: one farm. At the price 3 it produces 8 and makes zero
+profit; at 3.5 it produces 10 and makes the shaded profit. Right: demand rises from $D$ to $D'$; with 40 farms the price rises to 3.5; new farms enter until
+55 farms supply 440 at the price 3 again.}
+\end{omfigure}
+
+\section{Tested, and where it breaks}\label{sec:g11:perfect-competition:tested}
+
+\begin{model}{Perfect competition}
+\assumes Many price-taking firms sell the same product; buyers and sellers know the price; firms enter and leave freely and have the same costs.
+\predicts Each firm produces where price equals \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost}; a rise in demand raises the price and profits in the short run, then draws in new firms until the
+  price is back at the lowest \omterm{def:g11:production-and-costs:atc}{average total cost}; in the long run \omterm{def:g11:perfect-competition:economic-profit}{economic profit} is zero.
+\tested In laboratory markets with many buyers and sellers given private values and costs, prices and quantities converge on the competitive equilibrium within
+  a few rounds (Smith 1962). Consistent with it: entry and exit are continual in every industry (opening chart); and as soya spread in Brazil,
+  farmers brought in new land over decades, so that the area grew fourfold from 1990 to 2024 (\cref{ch:g10:supply}).
+\breaks When a market has few sellers (\cref{ch:g11:monopoly}); when entry is blocked by law, licences or large sunk costs; when firms' products differ, so
+  that each has some say over its price; when some firms have lower costs that others cannot copy, and keep a profit even in the long run.
+\end{model}
+% ledger: g10:smith-1962; figdata: entry; figdata g10-05 soy_area (bra 11.49 -> 45.91)
+
+Most markets fail one assumption or another. The model remains the benchmark: it says what a market with \omterm{def:g11:perfect-competition:free-entry}{free entry} does to profits and prices, and the
+chapters that follow measure other markets against it.
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g11:perfect-competition:1}
+A firm sells 100 units at 5 dalens each, and its total cost is 420 dalens. Compute its profit.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:perfect-competition:2}
+A price-taking firm has $C(q) = 20 + q^2$ and the price is 10. Find the output that maximises profit, and the profit.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:perfect-competition:3}
+A firm's lowest \omterm{def:g11:production-and-costs:atc}{average variable cost} is 5 dalens and its fixed cost is 200 dalens a week. The price falls to 4. Should it keep producing this week? What does it
+lose if it stops?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:perfect-competition:4}
+Read the opening chart. In which industry were new firms born at the highest rate in 2021, and at the lowest? In which industries did 8 or more firms in 100
+close?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g11:perfect-competition:5}
+A shop takes in \dal{80000} a year and pays \dal{50000} in costs. Its owner could earn \dal{35000} a year working elsewhere. Compute its accounting and its \omterm{def:g11:perfect-competition:economic-profit}{economic
+profit}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:perfect-competition:6}
+A firm has $C(q) = 10 + 2q + q^2$. Find its \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost}, its \omterm{def:g11:production-and-costs:atc}{average variable cost}, its \omterm{def:g11:perfect-competition:shutdown-price}{shutdown price} and its supply curve.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:perfect-competition:7}
+For the firm of the shutdown figure, $C(q) = 16 + 4q - q^2 + q^3/3$, check that the \omterm{def:g11:perfect-competition:shutdown-price}{shutdown price} is 3.25, and write its supply curve: the quantity it produces
+as a function of the price.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:perfect-competition:8}
+An industry has 100 firms, each with the supply curve of \cref{exo:g11:perfect-competition:6}. Demand is $Q = 600 - 50p$. Find the \omterm{def:g11:perfect-competition:industry-supply}{industry supply curve}, the
+price, the quantity and each firm's output.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:perfect-competition:9}
+In a competitive industry each firm's \omterm{def:g11:production-and-costs:atc}{average total cost} is lowest, at 20 dalens, at an output of 50 units. Demand is $Q = 10000 - 200p$. How many firms are there
+in the long run? Demand rises to $Q = 12000 - 200p$: how many firms are there once entry is over?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:perfect-competition:10}
+All firms in a competitive industry have $C(q) = 18 + 2q^2$. Find the long-run price and each firm's output.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g11:perfect-competition:11}
+In the egg-farm figure, read the price and one farm's output before and after the rise in demand, and compute the farm's profit at the price 3.5.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:perfect-competition:12}
+What evidence would contradict the prediction that \omterm{def:g11:perfect-competition:economic-profit}{economic profit} is zero in the long run in an industry with \omterm{def:g11:perfect-competition:free-entry}{free entry}? Why are \omterm{def:g11:perfect-competition:economic-profit}{accounting profits} alone not
+enough to test it?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:perfect-competition:13}
+In some industries, as more firms enter, an input they all use (land, skilled workers) becomes dearer. Explain why the long-run price then rises with demand, unlike
+in \cref{prop:g11:perfect-competition:long-run}.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:perfect-competition:14}
+A city fixes the number of taxi licences at 1000 and lets them be sold. Demand for rides rises. Explain what happens to fares, to the number of taxis and to the price
+of a licence. Who gains from the rise in demand?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g11:perfect-competition:15}
+Setting up a firm costs a sum that cannot be recovered if it leaves. Explain why the price can then stay for a long time above the level at which firms already in
+the market break even, and also below it, without entry or exit.
+\end{exercise}
+
+\section{Problem: Brenland's Egg Farms}
+
+\begin{problem}[{Weekend problem --- short run and long run in a competitive industry}]
+\label{pb:g11:perfect-competition:1}
+Brenland's egg farms are identical. With $q$ in hundreds of dozens of eggs a week, each farm's cost, in hundreds of dalens a week, is
+\[
+C(q) = 8 + q + 0.125q^2,
+\]
+where 8 is the weekly cost of the barn and the farmer's own time, valued at what she could earn elsewhere. The price $p$ is in dalens a dozen, so a farm's revenue
+is $pq$ hundred dalens. At first there are 40 farms, and buyers want $Q = 560 - 80p$ hundred dozens a week.
+
+\medskip
+\noindent\textbf{Part I --- One farm.}
+\begin{enumerate}
+\item Write the farm's \omterm{def:g11:marginal-reasoning:marginal-benefit}{marginal cost}, \omterm{def:g11:production-and-costs:atc}{average variable cost} and \omterm{def:g11:production-and-costs:atc}{average total cost}.
+\item Find the output at which \omterm{def:g11:production-and-costs:atc}{average total cost} is lowest, and its value there.
+\item Find the \omterm{def:g11:perfect-competition:shutdown-price}{shutdown price}.
+\item Write the farm's supply curve.
+\item Compute the farm's output and profit at a price of 2.5. Should it produce?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The industry in the short run.}
+\begin{enumerate}[resume]
+\item Write the \omterm{def:g11:perfect-competition:industry-supply}{industry supply curve} with 40 farms.
+\item Find the equilibrium price, the quantity and each farm's output and profit.
+\item The farms make zero \omterm{def:g11:perfect-competition:economic-profit}{economic profit}. Does that mean the farmers earn nothing? Explain.
+\item Demand rises to $Q = 680 - 80p$. Find the new short-run price, quantity and output per farm.
+\item Compute each farm's profit, in dalens a week.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Entry.}
+\begin{enumerate}[resume]
+\item Why do new farms enter?
+\item What is the long-run price?
+\item What quantity do buyers want at that price?
+\item How many farms are there in the long run?
+\item Compare the long-run position with the first one: price, quantity, output per farm, number of farms.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Variations.}
+\begin{enumerate}[resume]
+\item Suppose instead that a law limits the number of egg farms to 40. What are the price and each farm's profit after the rise in demand? What would a farm's licence
+be worth a week?
+\item Without the law, feed becomes dearer, adding 0.5 dalens to the cost of every dozen. Find the new long-run price and number of farms with the demand $Q = 680
+- 80p$.
+\item A farmer's accounts do not count her own time, worth 300 dalens a week. In the first equilibrium, what is her \omterm{def:g11:perfect-competition:economic-profit}{accounting profit}?
+\item If the entry of new farms raised the rent of farmland, would the long-run price after the rise in demand be 3, more, or less? Explain.
+\item State the result of the problem: the long-run number of farms and the long-run price of a dozen eggs, after the rise in demand.
+\end{enumerate}
+\end{problem}

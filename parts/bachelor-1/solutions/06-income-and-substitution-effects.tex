@@ -1,0 +1,196 @@
+\section*{Chapter \ref{ch:b1:income-and-substitution-effects} --- Income and Substitution Effects}
+% Numbers recomputed in code/bachelor-1/06-income-and-substitution-effects/exercises/solutions.py (tested).
+
+\begin{solution}{exo:b1:income-and-substitution-effects:slutsky-cd}
+Before: $x_1 = 100/2 = 50$. Slutsky compensation: $100 + (2 - 1) \times 50 = 150$.
+At prices $(2, 1)$ with income 150: $x_1 = 150/(2 \times 2) = 37.5$. Without
+compensation: $x_1 = 100/4 = 25$. \omterm{def:b1:income-and-substitution-effects:effects}{Substitution effect} $37.5 - 50 = -12.5$;
+\omterm{def:b1:income-and-substitution-effects:effects}{income effect} $25 - 37.5 = -12.5$; total $-25$.
+\end{solution}
+
+\begin{solution}{exo:b1:income-and-substitution-effects:inferior}
+The \omterm{def:b1:income-and-substitution-effects:effects}{substitution effect} of a price rise is negative or zero for every good
+(\cref{prop:b1:income-and-substitution-effects:negative}). The price rise
+lowers what income can buy, and for an \omterm{def:b1:consumer-choice:normal-inferior}{inferior good} less real income means
+more of the good: the \omterm{def:b1:income-and-substitution-effects:effects}{income effect} is positive. The total is zero if the
+two effects cancel exactly, the boundary between an ordinary and a \omterm{def:b1:income-and-substitution-effects:giffen}{Giffen
+good}.
+\end{solution}
+
+\begin{solution}{exo:b1:income-and-substitution-effects:read}
+Sweden: $1.554/2.149 = 0.723$, a fall of $27.7\%$. The ten countries:
+$1.928/1.926 = 1.001$, a rise of $0.1\%$. The difference is not the effect
+of the tax: biofuels, fuel efficiency, the mix of cars and incomes changed
+differently in Sweden and in the other countries over thirty years, and the
+mean of ten countries was not built to track Sweden before 1991
+(\cref{exo:b1:income-and-substitution-effects:chart}).
+\end{solution}
+
+\begin{solution}{exo:b1:income-and-substitution-effects:expenditure-cd}
+Minimise $p_1x_1 + p_2x_2$ subject to $x_1x_2 = u$. The tangency
+$x_2/x_1 = p_1/p_2$ gives $x_2 = p_1x_1/p_2$, so $p_1x_1^2/p_2 = u$:
+$h_1 = \sqrt{u\,p_2/p_1}$ and $h_2 = \sqrt{u\,p_1/p_2}$. Then
+$e = p_1h_1 + p_2h_2 = 2\sqrt{u\,p_1p_2}$. With $v(p, m) = (m/2p_1)(m/2p_2) = m^2/(4p_1p_2)$,
+$e\bigl(p, v(p, m)\bigr) = 2\sqrt{m^2/4} = m$.
+\end{solution}
+
+\begin{solution}{exo:b1:income-and-substitution-effects:hicks}
+Utility before is $50 \times 50 = 2500$; at prices $(2, 1)$ it costs
+$e = 2\sqrt{2500 \times 2} = 141.42$. Then $x_1 = 141.42/4 = 35.36$. \omterm{def:b1:income-and-substitution-effects:effects}{Substitution
+effect} $35.36 - 50 = -14.64$; \omterm{def:b1:income-and-substitution-effects:effects}{income effect} $25 - 35.36 = -10.36$. The Slutsky
+compensation, 150, is larger than the Hicks one, 141.42, and good 1 is
+normal, so the Slutsky consumer buys more good 1 (37.5) and her
+\omterm{def:b1:income-and-substitution-effects:effects}{substitution effect} is smaller in size.
+\end{solution}
+
+\begin{solution}{exo:b1:income-and-substitution-effects:shephard}
+$\partial e/\partial p_2 = 2\sqrt{u\,p_1} \times \tfrac{1}{2\sqrt{p_2}} = \sqrt{u\,p_1/p_2} = h_2$.
+$\partial h_1/\partial p_2 = \tfrac12\sqrt{u/(p_1p_2)}$ and
+$\partial h_2/\partial p_1 = \tfrac12\sqrt{u/(p_1p_2)}$: equal, and positive, so the
+two goods are \omterm{def:b1:income-and-substitution-effects:net}{net substitutes}.
+\end{solution}
+
+\begin{solution}{exo:b1:income-and-substitution-effects:fuel}
+By the elasticity form of the \omterm{thm:b1:income-and-substitution-effects:slutsky}{Slutsky equation},
+$\varepsilon^c = \varepsilon + s\eta = -0.35 + 0.06 \times 0.8 = -0.35 + 0.048 = -0.302$.
+A compensated $20\%$ rise lowers fuel use by about $0.302 \times 20\% = 6.0\%$,
+against $0.35 \times 20\% = 7.0\%$ without the cheque.
+\end{solution}
+
+\begin{solution}{exo:b1:income-and-substitution-effects:cournot}
+$x_1 = am/p_1$ and $x_2 = (1 - a)m/p_2$: $\varepsilon_{11} = -1$, $\varepsilon_{21} = 0$,
+$\eta_1 = \eta_2 = 1$; the shares are $s_1 = a$, $s_2 = 1 - a$. Engel:
+$a \times 1 + (1 - a) \times 1 = 1$. Cournot for $j = 1$:
+$a \times (-1) + (1 - a) \times 0 = -a = -s_1$.
+\end{solution}
+
+\begin{solution}{exo:b1:income-and-substitution-effects:chart}
+Three reasons: road emissions per person also moved with fuel efficiency,
+biofuel blending and the mix of petrol and diesel cars; Sweden had a deep
+recession in the early 1990s that cut driving for reasons of income; the
+other countries had fuel taxes and policies of their own, and differ from
+Sweden in ways that change over time. A comparison must build a group, or a
+weighted mix of countries, whose emissions followed Sweden's closely
+\emph{before} the tax, so that after it the gap can be read as the effect
+--- the synthetic control of the record box --- and it must check that the
+gap is not produced by any one country or by chance.
+\end{solution}
+
+\begin{solution}{exo:b1:income-and-substitution-effects:elasticity}
+Multiply the \omterm{thm:b1:income-and-substitution-effects:slutsky}{Slutsky equation} by $p_j/x_i$, and use $h_i = x_i$ at the point:
+\[
+\frac{p_j}{x_i}\frac{\partial x_i}{\partial p_j} = \frac{p_j}{h_i}\frac{\partial h_i}{\partial p_j} - \frac{p_jx_j}{m}\cdot\frac{m}{x_i}\frac{\partial x_i}{\partial m},
+\]
+that is, $\varepsilon_{ij} = \varepsilon^{c}_{ij} - s_j\eta_i$.
+\end{solution}
+
+\begin{solution}{exo:b1:income-and-substitution-effects:giffen-share}
+A \omterm{def:b1:income-and-substitution-effects:giffen}{Giffen good} has $\varepsilon_{ii} > 0$, so
+$\varepsilon^{c}_{ii} - s_i\eta_i > 0$, that is $-s_i\eta_i > -\varepsilon^{c}_{ii} \ge 0$:
+$\eta_i < 0$ (inferior) and $s_i|\eta_i| > |\varepsilon^{c}_{ii}|$. \omterm{prop:b1:income-and-substitution-effects:aggregation}{Engel aggregation}
+then gives $\sum_{j \neq i} s_j\eta_j = 1 - s_i\eta_i = 1 + s_i|\eta_i| > 1$. With a
+small share $s_i$, the condition needs a very large $|\eta_i|$ or an almost
+zero \omterm{def:b1:income-and-substitution-effects:effects}{substitution effect}; staples that take most of a poor household's
+budget are where it can be met.
+\end{solution}
+
+\begin{solution}{exo:b1:income-and-substitution-effects:hunan}
+The vouchers lowered the price of rice. Giffen behaviour means that rice
+consumption falls when its price falls. A rise in rice consumption among
+voucher households, compared with households without vouchers (or no
+change), would have refuted it. Random assignment makes the two groups
+alike in everything except the price, so the difference in consumption is
+the effect of the price; households that chose to take up a subsidy might
+differ in poverty or tastes.
+\end{solution}
+
+\begin{solution}{pb:b1:income-and-substitution-effects:levy}
+\textbf{1.} $f = 0.10 \times 20000/2 = 1000$ litres; $o = 0.9 \times 20000 = 18000$
+dalens.
+
+\textbf{2.} $f = 0.10 \times 20000/2.5 = 800$ litres.
+
+\textbf{3.} $m^c = 20000 + 0.5 \times 1000 = 20500$; $f = 0.10 \times 20500/2.5 = 820$.
+
+\textbf{4.} \omterm{def:b1:income-and-substitution-effects:effects}{Substitution effect} $820 - 1000 = -180$; \omterm{def:b1:income-and-substitution-effects:effects}{income effect} $800 - 820 = -20$;
+together $-200 = 800 - 1000$.
+
+\textbf{5.} $v = m\,a^a(1 - a)^{1-a}p_f^{-a}$, so utility is unchanged when $m$ rises
+by the factor $(p_f'/p_f)^a = 1.25^{0.1}$. That gives
+$20000 \times 1.022565 = 20451.3$ and $f = 0.10 \times 20451.3/2.5 = 818.1$. Hicks
+\omterm{def:b1:income-and-substitution-effects:effects}{substitution effect} $818.1 - 1000 = -181.9$, \omterm{def:b1:income-and-substitution-effects:effects}{income effect} $800 - 818.1 = -18.1$.
+
+\textbf{6.} Fuel takes only $10\%$ of A's budget, so the price rise costs her
+little income and the \omterm{def:b1:income-and-substitution-effects:effects}{income effect} is small; the two compensations, 500
+and 451.3, differ only by a second-order term.
+
+\textbf{7.} From $v(p, m) = m\,a^a(1 - a)^{1-a}p_f^{-a}$, solving $v = u$ for $m$
+gives $e(p, u) = u\,p_f^{a}/\bigl(a^a(1 - a)^{1-a}\bigr)$, and substituting
+$u = v(p, m)$ returns $m$.
+
+\textbf{8.} The compensation is $e(p', u_0) - m = m(1.25^{a} - 1)$, since
+$e(p, u_0) = m$ and $e$ is proportional to $p_f^a$. A:
+$20000(1.25^{0.10} - 1) = 451.3$; B: $30000(1.25^{0.08} - 1) = 540.4$;
+C: $50000(1.25^{0.06} - 1) = 673.9$ dalens.
+
+\textbf{9.} $0.5 \times 1000 = 500$, $0.5 \times 1200 = 600$ and $0.5 \times 1500 = 750$ (B uses
+$0.08 \times 30000/2 = 1200$ litres and C $0.06 \times 50000/2 = 1500$). The
+first-order compensation pays for the old bundle at the new price; a
+household can reach its old utility more cheaply by buying less fuel, so
+the exact compensation is smaller ($e$ is concave in prices).
+
+\textbf{10.} $a\,e/p_f = 0.10 \times 20451.3/2.5 = 818.1$, A's compensated fuel use in
+question 5.
+
+\textbf{11.} After the levy A uses 800, B $0.08 \times 30000/2.5 = 960$ and C
+$0.06 \times 50000/2.5 = 1200$ litres: 2,960 litres and a revenue of
+$0.5 \times 2960 = 1480$ dalens. The exact compensations add up to
+$451.3 + 540.4 + 673.9 = 1665.6$.
+
+\textbf{12.} The levy costs the households $1665.6 - 1480 = 185.6$ dalens more,
+in money they would accept instead, than it raises: the deadweight loss of
+the levy, which comes from the litres no longer bought.
+
+\textbf{13.} Before: $1000 + 1200 + 1500 = 3700$ litres. After, without the cheque:
+2,960, a fall of $740/3700 = 20.0\%$.
+
+\textbf{14.} $f_h = a_h(m_h + c)/2.5$, so
+$F = (2000 + 2400 + 3000 + 0.24c)/2.5 = (7400 + 0.24c)/2.5$, with $3c = 0.5F$.
+
+\textbf{15.} $c = F/6$, so $2.5F = 7400 + 0.04F$ and $F = 7400/2.46 = 3008.13$ litres;
+$c = 3008.13/6 = 501.36$, about 501.4 dalens.
+
+\textbf{16.} $1 - 3008.13/3700 = 18.7\%$.
+
+\textbf{17.} A $818.1$, B $0.08 \times 30540.4/2.5 = 977.3$, C $0.06 \times 50673.9/2.5 = 1216.2$:
+3,011.6 litres, a fall of $1 - 3011.6/3700 = 18.6\%$, almost the same as with the
+cheque.
+
+\textbf{18.} The cheque removes the \omterm{def:b1:income-and-substitution-effects:effects}{income effect}, $-s_j\eta_i$ in elasticities,
+which is small because fuel takes $6$ to $10\%$ of each budget. The
+\omterm{def:b1:income-and-substitution-effects:effects}{substitution effect}, the larger part, stays: the fall goes only from
+$20.0\%$ to $18.7\%$.
+
+\textbf{19.} A: $501.4 - 451.3 = 50.1$ dalens better off. B: $501.4 - 540.4 = -39.0$,
+worse off. C: $501.4 - 673.9 = -172.5$, worse off.
+
+\textbf{20.} A uses the least fuel and has the highest share. Compare B and C:
+B has the higher share but C, which uses more litres, loses more. What
+decides is the fuel bought, since the cost of the levy is about the levy
+times the litres, while the cheque is the same for all.
+
+\textbf{21.} $50.1 - 39.0 - 172.5 = -161.4$: the three cheques, $3 \times 501.4 = 1504.2$,
+fall short of the exact compensations, 1665.6, by the deadweight loss of the
+levy when the money comes back.
+
+\textbf{22.} Only for households whose exact compensation is below the cheque,
+roughly those that buy less fuel than average: here only A.
+
+\textbf{23.} With $c_h = k\,m_h$ and $k \times 100000 = 0.5F$,
+$2.5F = 7400(1 + k) = 7400 + 0.037F$, so $F = 7400/2.463 = 3004.47$ and the fall is
+$18.8\%$. The cheque's form barely matters for fuel use, because \omterm{def:b1:income-and-substitution-effects:effects}{income effects}
+are small; it matters for who gains.
+
+\textbf{24.} With the cheque, fuel use still falls by $18.7\%$, against $20.0\%$
+without it.
+\end{solution}

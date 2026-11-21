@@ -1,0 +1,15 @@
+pos,label,lo,hi,mid,em,ep,method
+14,Blanchard--Perotti SVAR (US),0.6,0.8,0.7,0.1,0.1,ts
+13,military news (US; Ramey--Zubairy),0.5,0.8,0.65,0.15,0.15,ts
+12,news shocks (US; Ben Zeev--Pappa),1.1,2,1.55,0.45,0.45,ts
+11,defence spending (US; Hall; Barro--Redlick),0.6,0.7,0.65,0.05,0.05,ts
+10,sign restrictions (US; Mountford--Uhlig),0.65,0.65,0.65,0,0,ts
+9,high-income countries (Ilzetzki et al.),0.3,0.7,0.5,0.2,0.2,ts
+8,Corsetti--Meier--Mueller,0.7,0.7,0.7,0,0,ts
+7,spending cuts in 17 OECD countries,0.3,0.3,0.3,0,0,ts
+6,austerity plans in 16 OECD countries,0.3,0.3,0.3,0,0,ts
+5,Cogan et al.,0.6,0.7,0.65,0.05,0.05,dsge
+4,Coenen et al.,0.7,1,0.85,0.15,0.15,dsge
+3,Zubairy,0.7,1.05,0.875,0.175,0.175,dsge
+2,Leeper--Traum--Walker,0.7,1.36,1.03,0.33,0.33,dsge
+1,Sims--Wolff,1.07,1.07,1.07,0,0,dsge

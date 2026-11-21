@@ -1,0 +1,5 @@
+$ python selection_sim.py
+ATE 1.001, ATT 1.284
+difference in observed means -0.937
+ATT + selection bias 1.284 + (-2.221) = -0.937
+with random assignment: 1.051

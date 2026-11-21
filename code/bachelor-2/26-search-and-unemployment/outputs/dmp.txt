@@ -1,0 +1,7 @@
+$ python dmp.py
+p 1.00 z 0.4: tightness 0.529, job finding 0.509, unemployment 5.56%, wage 0.9647
+p 1.00 z 0.5: tightness 0.436, job finding 0.462, unemployment 6.10%, wage 0.9679
+p 1.01 z 0.4: tightness 0.539, job finding 0.514, unemployment 5.52%, wage 0.9744
+p 1.00 z 0.9: tightness 0.074, job finding 0.190, unemployment 13.64%, wage 0.9868
+z 0.4: a 1% rise in p raises tightness by 1.8%
+z 0.9: a 1% rise in p raises tightness by 11.6%

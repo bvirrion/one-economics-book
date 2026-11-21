@@ -1,0 +1,286 @@
+% Provenance (never printed): the market-structure strand of ../economics_series.md (grade 8: many sellers vs one;
+% competition pushes price toward cost; a single seller sells less at a higher price; sources of monopoly; the threat of
+% entry). Brief: sources/book1/BRIEFS.md, g8-08. Chart data: figdata/grade-8/08-competition-and-monopoly-first-look
+% (Eurostat prc_hicp_aind CP0830 / CP00; invented juice and ferry tables).
+% Ledger: g8:eu-telecom-1998, g8:generic-entry-price. Collusion and oligopoly are grade 11's.
+\chapter{Competition and Monopoly: A First Look}\label{ch:g8:competition-and-monopoly-first-look}
+
+\begin{openingchart}{The real price of telephone services in Germany, France and Italy, 1996--2025:
+their price index divided by the index of all consumer prices, 1996 = 100.}{Eurostat, harmonised
+index of consumer \omterm{def:g7:money:price}{prices} (prc\_hicp\_aind), telephone and telefax services and all items}
+\begin{tikzpicture}
+\begin{axis}[omtime, xmin=1996, xmax=2025, ymin=0, ymax=110, xlabel={Year},
+  ylabel={Real price, 1996 = 100}, xtick={1996,2000,2005,2010,2015,2020,2025},
+  extra x ticks={1998}, extra x tick labels={}, extra x tick style={grid style={black!60, dashed}},
+  legend pos=north east]
+\addplot table[x=year, y=de] {figdata/grade-8/08-competition-and-monopoly-first-look/out/telecom.csv};
+\addplot table[x=year, y=fr] {figdata/grade-8/08-competition-and-monopoly-first-look/out/telecom.csv};
+\addplot table[x=year, y=it] {figdata/grade-8/08-competition-and-monopoly-first-look/out/telecom.csv};
+\legend{Germany, France, Italy}
+\node[anchor=south west, font=\footnotesize] at (axis cs:1998.3,4) {1998: markets opened};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: facts (de_2025 31.1, fr_2025 29.1, it_2025 38.5; de 1998 93.0, 1999 81.8, 2000 70.5)
+Until 1998, the countries of the European Union were allowed to reserve telephone calls for a single
+company, often owned by the state. In 1998, other companies had to be let in. In Germany, the real \omterm{def:g7:money:price}{price}
+of telephone services fell by $11.2$ points in 1999 and by $11.3$ in 2000; by 2025 it was $31.1$
+(1996 = 100). In France and Italy it fell more slowly at first, then kept falling, to $29.1$ and
+$38.5$.
+
+What changes when a \omterm{def:g7:markets-and-prices:market}{market} has many sellers instead of one?
+
+\begin{recall}
+A \omterm{def:g7:firms:firm}{firm}'s \omterm{def:g7:firms:profit}{profit} is its \omterm{def:g7:firms:revenue}{revenue} minus its costs; \omterm{def:g7:firms:firm}{firms} enter a \omterm{def:g7:markets-and-prices:market}{market} when they expect a \omterm{def:g7:firms:profit}{profit} and
+leave it after losses (\cref{ch:g7:firms}). The \omterm{def:g7:markets-and-prices:market-price}{market price} is the \omterm{def:g7:money:price}{price} at which buyers and sellers
+trade (\cref{ch:g7:markets-and-prices}).
+\end{recall}
+
+\section{Many sellers, one seller}
+
+\begin{definition}[Competition]\label{def:g8:competition-and-monopoly-first-look:competition}
+There is \emph{competition}\index{competition} in a \omterm{def:g7:markets-and-prices:market}{market} when several sellers try to win the same
+buyers, who can choose between them.
+\end{definition}
+
+\begin{definition}[Monopoly]\label{def:g8:competition-and-monopoly-first-look:monopoly}
+A \emph{monopoly}\index{monopoly} is a \omterm{def:g7:markets-and-prices:market}{market} with a single seller of a good that has no close
+substitute.
+\end{definition}
+
+\begin{omfigure}
+\includegraphics[width=0.58\linewidth]{images/book1/ai/g8-competition-two-buses.jpg}
+
+{\small Two coach companies at the same stop: passengers can choose, so each company must offer a fare
+and a service at least as good as the other's.}
+\end{omfigure}
+
+\section{What competition does to the price}
+
+When a seller charges much more than its cost, a rival can take its buyers by charging a little
+less, and still make a \omterm{def:g7:firms:profit}{profit}. The first seller must then lower its \omterm{def:g7:money:price}{price} too, or lose its buyers.
+This goes on as long as a \omterm{def:g7:money:price}{price} cut still pays. \omterm{def:g8:competition-and-monopoly-first-look:competition}{Competition} therefore pushes the \omterm{def:g7:money:price}{price} toward the cost
+of producing the good, including a normal reward for the people who run the \omterm{def:g7:firms:firm}{firm} and lend it \omterm{def:g7:money:money}{money}.
+It also rewards a better product: a seller who offers better coffee, a faster train or a more reliable
+phone can win buyers without cutting its \omterm{def:g7:money:price}{price}.
+
+\begin{measure}[A real price]
+A \emph{real \omterm{def:g7:money:price}{price}} is a \omterm{def:g7:money:price}{price} divided by a \omterm{def:g8:inflation-and-price-indices:price-index}{price index} of all consumer goods: it says whether a good
+became cheaper or dearer compared with everything else. In the opening chart, the \omterm{def:g8:inflation-and-price-indices:price-index}{price index} of
+telephone services is divided by the index of all consumer \omterm{def:g7:money:price}{prices}, and the ratio is set to 100 in
+1996. A real \omterm{def:g7:money:price}{price} of 31 means that a call costs, compared with all other goods, less than a third of
+what it cost in 1996.
+\end{measure}
+
+\section{What a single seller does}
+
+A single seller has no rival to fear. It still cannot charge any \omterm{def:g7:money:price}{price} it likes: at a higher \omterm{def:g7:money:price}{price},
+buyers buy less. It chooses the \omterm{def:g7:money:price}{price} that brings it the largest \omterm{def:g7:firms:profit}{profit}.
+
+% figdata: juice (price, cups, revenue, profit: 4.00 200 800 600; 3.50 300 1050 750; 3.00 400 1200 800;
+% 2.50 500 1250 750; 2.00 600 1200 600; 1.50 700 1050 350; 1.00 800 800 0)
+In an invented park, buyers want $1\,000 - 200 \times p$ cups of juice a day at a \omterm{def:g7:money:price}{price} of $p$ dalens.
+A cup costs $1.00$ dalen to make. The only stall in the park compares its \omterm{def:g7:firms:profit}{profit} at each \omterm{def:g7:money:price}{price}:
+\begin{center}
+\begin{tabular}{lrrrrrrr}
+\toprule
+\omterm{def:g7:money:price}{Price} (dalens) & 4.00 & 3.50 & 3.00 & 2.50 & 2.00 & 1.50 & 1.00 \\
+Cups a day & 200 & 300 & 400 & 500 & 600 & 700 & 800 \\
+\omterm{def:g7:firms:profit}{Profit} (dalens) & 600 & 750 & 800 & 750 & 600 & 350 & 0 \\
+\bottomrule
+\end{tabular}
+\end{center}
+The single stall charges $3.00$ dalens and sells 400 cups. If many stalls compete, the \omterm{def:g7:money:price}{price} is pushed
+down toward the cost of $1.00$ dalen, and 800 cups are sold. The single seller sells half as many cups
+at three times the \omterm{def:g7:money:price}{price}.
+
+\begin{omchart}{The invented juice market: what buyers want at each price, the cost of a cup, and the
+price and quantity with a single seller (M) and with many sellers (C).}{Invented}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xmin=0, xmax=1000, ymin=0, ymax=5.2, height=0.45\linewidth,
+  xlabel={Cups a day}, ylabel={Price (dalens)}, xtick={0,200,400,600,800,1000},
+  scaled x ticks=false]
+\addplot[omDef, very thick] table[x=cups, y=price] {figdata/grade-8/08-competition-and-monopoly-first-look/out/juice_line.csv};
+\addplot[black!60, dashed, thick] table[x=cups, y=cost] {figdata/grade-8/08-competition-and-monopoly-first-look/out/juice_line.csv};
+\addplot[only marks, mark=*, mark size=2.5pt, black] table[x=cups, y=price] {figdata/grade-8/08-competition-and-monopoly-first-look/out/juice_points.csv};
+\node[anchor=south west] at (axis cs:405,3.05) {M: $3.00$ dalens, 400 cups};
+\node[anchor=south west] at (axis cs:805,1.05) {C};
+\node[anchor=south west, font=\footnotesize] at (axis cs:20,1.05) {cost of a cup};
+\node[anchor=south west, font=\footnotesize, text=omDef] at (axis cs:60,4.75) {what buyers want};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\section{Where a monopoly comes from}
+
+\begin{definition}[Barrier to entry]\label{def:g8:competition-and-monopoly-first-look:barrier}
+A \emph{barrier to entry}\index{barrier to entry} is anything that stops new sellers from entering a
+\omterm{def:g7:markets-and-prices:market}{market} where the existing sellers make a \omterm{def:g7:firms:profit}{profit}.
+\end{definition}
+
+\begin{definition}[Patent]\label{def:g8:competition-and-monopoly-first-look:patent}
+A \emph{patent}\index{patent} is a right given by law to the inventor of a new product or method:
+for a fixed number of years, nobody else may make or sell it without the inventor's permission.
+\end{definition}
+
+\begin{definition}[Network effect]\label{def:g8:competition-and-monopoly-first-look:network-effect}
+A good has a \emph{network effect}\index{network effect} when each user gains from more people using
+the same good, as with a telephone network or a messaging service.
+\end{definition}
+
+\begin{definition}[Natural monopoly]\label{def:g8:competition-and-monopoly-first-look:natural-monopoly}
+A \emph{natural monopoly}\index{natural monopoly} is a \omterm{def:g7:markets-and-prices:market}{market} in which one \omterm{def:g7:firms:firm}{firm} can supply all
+buyers at a lower cost per unit than two or more \omterm{def:g7:firms:firm}{firms} could, usually because the \omterm{def:g7:firms:fixed-cost}{fixed cost} is very
+large (water pipes, railway tracks, electricity lines).
+\end{definition}
+
+Monopolies come from barriers to entry. A law can reserve a \omterm{def:g7:markets-and-prices:market}{market} for one \omterm{def:g7:firms:firm}{firm}, as for telephone
+calls before 1998. A \omterm{def:g8:competition-and-monopoly-first-look:patent}{patent} gives a \omterm{def:g8:competition-and-monopoly-first-look:monopoly}{monopoly} for some years, which is the reward that pays for the
+cost of inventing. A \omterm{def:g8:competition-and-monopoly-first-look:network-effect}{network effect} can make buyers flock to the seller that already has the most
+users. A \omterm{def:g8:competition-and-monopoly-first-look:natural-monopoly}{natural monopoly} comes from cost: building two sets of water pipes to every house would cost
+almost twice as much as one.
+
+\section{The threat of entry}
+
+A single seller that charges a high \omterm{def:g7:money:price}{price} invites rivals in. When entry is easy, the threat alone can
+keep its \omterm{def:g7:money:price}{price} down: the seller prefers a lower \omterm{def:g7:firms:profit}{profit} for many years to a high \omterm{def:g7:firms:profit}{profit} that attracts a
+rival. Where entry is blocked, the threat disappears.
+
+\begin{model}{Competition and entry}
+\assumes Sellers can enter the \omterm{def:g7:markets-and-prices:market}{market} freely; buyers compare \omterm{def:g7:money:price}{prices}.
+\predicts When a \omterm{def:g7:markets-and-prices:market}{market} is opened to entry, the \omterm{def:g7:money:price}{price} falls toward the cost; a single seller sells less,
+at a higher \omterm{def:g7:money:price}{price}, than many sellers would.
+\tested Telephone services in Europe after the \omterm{def:g7:markets-and-prices:market}{markets} opened in 1998 (opening chart). Medicines in the
+United States first copied from 2015 to 2017, once their \omterm{def:g8:competition-and-monopoly-first-look:patent}{patents} ended: with one maker of the copy
+(a \emph{generic}), its \omterm{def:g7:money:price}{price} was 39\,\% below the brand's \omterm{def:g7:money:price}{price} before; with two makers, 54\,\%; with
+four, 79\,\%; with six or more, more than 95\,\% (Conrad and Lutter, 2019).
+\breaks Natural monopolies, where entry would raise costs; \omterm{def:g8:competition-and-monopoly-first-look:network-effect}{network effects}, where buyers stay with the
+largest seller; sellers who agree not to compete (grade 11).
+\end{model}
+% ledger: g8:generic-entry-price
+
+\begin{record}[Opening the telephone market]
+% ledger: g8:eu-telecom-1998
+Before 1998, the countries of the European Union could reserve telephone calls for one company. A 1996
+decision of the European Commission (Directive 96/19/EC) required the member states to open voice
+telephony and their telephone networks to \omterm{def:g8:competition-and-monopoly-first-look:competition}{competition} by 1 January 1998, with up to five more years
+for countries with less developed networks. The model predicted that \omterm{def:g7:money:price}{prices} would fall toward cost.
+The real \omterm{def:g7:money:price}{price} of telephone services fell in all three countries of the opening chart. Over the same
+years, the cost of carrying a call also fell, thanks to new \omterm{def:g8:production-and-productivity:technology}{technology}, so the chart alone does not
+say how much of the fall came from \omterm{def:g8:competition-and-monopoly-first-look:competition}{competition}.
+\end{record}
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g8:competition-and-monopoly-first-look:1}
+Use the opening chart. What was the real \omterm{def:g7:money:price}{price} of telephone services in Germany in 2025 (1996 = 100)?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g8:competition-and-monopoly-first-look:2}
+A seller charges $5.00$ dalens for a good that costs it $3.20$ dalens to make. What is its margin per
+unit?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g8:competition-and-monopoly-first-look:3}
+Use the opening chart. In which years did Germany's real \omterm{def:g7:money:price}{price} fall fastest?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g8:competition-and-monopoly-first-look:4}
+Use the juice table. Compute the single stall's \omterm{def:g7:firms:revenue}{revenue} at a \omterm{def:g7:money:price}{price} of $4.00$ dalens and at $2.00$
+dalens.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g8:competition-and-monopoly-first-look:5}
+A single seller faces this demand; each unit costs it $4$ dalens. Find its best \omterm{def:g7:money:price}{price}.
+\begin{center}
+\begin{tabular}{lrrrrr}
+\toprule
+\omterm{def:g7:money:price}{Price} (dalens) & 16 & 14 & 12 & 10 & 8 \\
+Units sold & 20 & 30 & 40 & 50 & 60 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g8:competition-and-monopoly-first-look:6}
+In the \omterm{def:g7:markets-and-prices:market}{market} of exercise 5, many sellers can enter, each with the same cost of $4$ dalens a unit. If
+the demand line continues (10 more units for each 2 dalens less), about what \omterm{def:g7:money:price}{price} and quantity does
+\omterm{def:g8:competition-and-monopoly-first-look:competition}{competition} lead to?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g8:competition-and-monopoly-first-look:7}
+A medicine sells for 100 dollars a box. Its \omterm{def:g8:competition-and-monopoly-first-look:patent}{patent} ends and copies appear. Using the figures of the
+model box, about what \omterm{def:g7:money:price}{price} does the copy sell for with one maker? With six or more?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g8:competition-and-monopoly-first-look:8}
+In France, the real \omterm{def:g7:money:price}{price} of telephone services fell from 100 in 1996 to $29.1$ in 2025. Compute the
+change in percent.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g8:competition-and-monopoly-first-look:9}
+A second bus company starts running on a route, but the fares do not change. Give two possible
+explanations, one of which does not fit the model ``\omterm{def:g8:competition-and-monopoly-first-look:competition}{Competition} and entry''.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g8:competition-and-monopoly-first-look:10}
+A town uses $2$ million cubic metres of water a year. A network of pipes costs $1$ million dalens a
+year; each cubic metre then costs $0.50$ dalen to deliver. (a) Compute the cost per cubic metre if one
+\omterm{def:g7:firms:firm}{firm} supplies the whole town. (b) If two \omterm{def:g7:firms:firm}{firms} each build their own network and each supplies half
+the town, compute the cost per cubic metre.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g8:competition-and-monopoly-first-look:11}
+A messaging service is free and has 90\,\% of the users in a country. A new service is just as good.
+Explain why it may still fail to win users.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g8:competition-and-monopoly-first-look:12}
+A telephone call in 2025 often comes with video, messages and data, which a call of 1996 did not.
+What does this mean for reading the opening chart?
+\end{exercise}
+
+\section{Problem: The Ferry to Kestria}
+
+\begin{problem}[{Weekend problem --- one ferry company, the threat of a rival, and two companies}]
+\label{pb:g8:competition-and-monopoly-first-look:1}
+% figdata: ferry (fare, passengers, profit_alone, profit_each_of_two: 40 100 2000 500; 35 150 2750 875;
+% 30 200 3000 1000; 25 250 2750 875; 20 300 2000 500; 15 350 750 -125)
+Everything in this problem is invented. A ferry crosses from Brenland to Kestria. At a fare of $f$
+dalens, $500 - 10 \times f$ passengers a day cross. Each passenger costs a company $10$ dalens, and
+each company running a ferry pays $1\,000$ dalens a day whatever the number of passengers.
+
+\medskip
+\noindent\textbf{Part I --- One company.}
+\begin{enumerate}
+  \item Compute the number of passengers and the \omterm{def:g7:firms:revenue}{revenue} at fares of $40$ and $30$ dalens.
+  \item Compute the company's \omterm{def:g7:firms:profit}{profit} at fares of $40$, $35$, $30$, $25$, $20$ and $15$ dalens.
+  \item Which fare gives the largest \omterm{def:g7:firms:profit}{profit}? How many passengers cross then?
+  \item Why does the company not lower its fare to $20$ dalens, which would carry more passengers?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The threat of a rival.} A second company could start a ferry. If it did,
+both would charge the same fare and share the passengers equally.
+\begin{enumerate}[resume]
+  \item If the fare stayed at $30$ dalens, what would each company's \omterm{def:g7:firms:profit}{profit} be? Would the rival enter?
+  \item At a fare of $15$ dalens, what would each company's \omterm{def:g7:firms:profit}{profit} be? Would a rival enter?
+  \item The first company charges $15$ dalens to keep the rival away. Compute its passengers and its
+        \omterm{def:g7:firms:profit}{profit}, alone.
+  \item Compare the fare, the passengers and the \omterm{def:g7:firms:profit}{profit} with Part I.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Two companies.} Instead, the second company enters while the fare is
+$30$ dalens.
+\begin{enumerate}[resume]
+  \item What is each company's \omterm{def:g7:firms:profit}{profit} at a fare of $30$ dalens?
+  \item One company cuts its fare to $25$ dalens and the other stays at $30$: all passengers take the
+        cheaper ferry. Compute the \omterm{def:g7:firms:profit}{profit} of the company that cut its fare.
+  \item The two companies keep cutting by $5$ dalens, each time matching each other. Compute each
+        company's \omterm{def:g7:firms:profit}{profit} when both charge $25$, $20$ and $15$ dalens.
+  \item They stop at the lowest of these fares at which neither loses \omterm{def:g7:money:money}{money}. What is the fare, and how
+        many passengers cross in all?
+\end{enumerate}
+\end{problem}

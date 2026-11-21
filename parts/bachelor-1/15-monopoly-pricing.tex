@@ -1,0 +1,461 @@
+\chapter{Monopoly and Pricing}\label{ch:b1:monopoly-pricing}
+
+An airline sells seats on the same flight at five prices. A cinema charges
+students less than other adults for the same film. A phone plan has a
+monthly fee and a price per gigabyte. None of this happens in the
+competitive markets of the last chapters, where every unit sells at one
+price equal to marginal cost. It happens when a seller faces a
+downward-sloping demand and can choose its price, and the way it chooses is
+the subject of this chapter.
+
+Market power is hard to see directly, because marginal cost is not
+published. One margin that is published is the gap between the rate banks
+charge on loans and the rate they pay on deposits.
+
+\begin{openingchart}{Banks' lending rate minus deposit rate against GDP per
+person at purchasing-power parity, 110 countries, 2019, with the fitted
+line.}{World Bank, World Development Indicators (FR.INR.LNDP,
+NY.GDP.PCAP.PP.KD)}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xmode=log, log ticks with fixed point, xtickten={3,4,5}, xmin=700, xmax=150000, ymin=0, ymax=40,
+  xlabel={GDP per person, PPP (international dollars, log scale)}, ylabel={Lending minus deposit rate (points)},
+  width=0.74\linewidth, height=0.44\linewidth]
+  \addplot[only marks, mark=*, mark size=1.3pt, omDef, fill opacity=0.6] table[x=gdp, y=spread, col sep=comma] {figdata/bachelor-1/15-monopoly-pricing/out/spreads_2019.csv};
+  \addplot[omThm, thick, sharp plot, mark=none] table[x=gdp, y=fit, col sep=comma] {figdata/bachelor-1/15-monopoly-pricing/out/spreads_fit.csv};
+  \addplot[only marks, mark=none, nodes near coords, point meta=explicit symbolic, nodes near coords style={font=\scriptsize, anchor=west}]
+    table[x=gdp, y=spread, meta=country, col sep=comma] {figdata/bachelor-1/15-monopoly-pricing/out/spreads_points.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+The median spread is $5.88$ points; a tenth of the countries have less than
+$2.29$ and a tenth more than $12.91$. Brazil's spread is $32.04$ points and
+Madagascar's $36$, against $2.98$ in Switzerland. % figdata: spreads_stats, spreads_points
+Spreads are narrower in richer countries: the median is $7.73$ points in the
+poorer half and $4.90$ in the richer half, and the fitted line falls by $5.61$
+points for each tenfold rise in income. % figdata: spreads_stats
+A spread is not a \omterm{def:b1:monopoly-pricing:markup}{markup}: it also pays for the risk that loans are not
+repaid, for reserves the bank must hold and for the cost of running
+branches. But part of it is the price of market power in banking, and the
+tools of this chapter say what part that could be.
+
+\begin{recall}
+A monopoly, marginal revenue, \omterm{def:b1:monopoly-pricing:natural-monopoly}{natural monopoly} and charging different buyers
+different prices were met at school. The price elasticity of demand is in
+\cref{ch:b1:comparative-statics}; surplus as an integral and the
+\omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss} in \cref{ch:b1:partial-equilibrium-welfare}.
+\end{recall}
+
+\section{Monopoly with calculus}\label{sec:b1:monopoly-pricing:monopoly}
+
+A single seller faces the inverse demand $p(q)$ and the cost $C(q)$. Its
+profit is $\pi(q) = p(q)\,q - C(q)$, and at a maximum
+\[
+MR(q) = p(q) + q\,p'(q) = C'(q) = MC(q).
+\]
+Write $\varepsilon = \frac{\dd q}{\dd p}\frac pq < 0$ for the elasticity of demand. Then $qp'(q) = p/\varepsilon$, and
+\[
+MR = p\left(1 + \frac1\varepsilon\right).
+\]
+
+\begin{definition}[Lerner index]\label{def:b1:monopoly-pricing:lerner}
+\index{Lerner index}
+The \emph{Lerner index} of a firm is $L = (p - MC)/p$, the share of its price
+above marginal cost.
+\end{definition}
+
+\begin{definition}[Markup]\label{def:b1:monopoly-pricing:markup}
+\index{markup}
+The \emph{markup} of a firm is the ratio of its price to its marginal cost,
+$\mu = p/MC$. A competitive firm has $\mu = 1$ and $L = 0$; and $L = 1 - 1/\mu$.
+\end{definition}
+
+\begin{proposition}[The inverse-elasticity rule]\label{prop:b1:monopoly-pricing:inverse-elasticity}
+At the profit-maximising price of a monopolist, $L = -1/\varepsilon$, so
+$\mu = \varepsilon/(1 + \varepsilon)$. A monopolist with positive marginal cost never sets a price at
+which demand is inelastic, $|\varepsilon| \le 1$.
+\end{proposition}
+
+\begin{proof}
+$MR = MC$ gives $p(1 + 1/\varepsilon) = MC$, so $(p - MC)/p = -1/\varepsilon$. Where
+$|\varepsilon| \le 1$, $MR = p(1 + 1/\varepsilon) \le 0 < MC$: cutting output raises revenue and lowers
+cost, so profit rises.
+\end{proof}
+
+The rule says that market power is limited by the buyers' ability to walk
+away. A seller facing an elasticity of $-2$ prices at twice marginal cost;
+one facing $-11$, at $1.1$ times. And it gives a \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss}: the units
+between the monopoly quantity and the competitive one, each worth more to
+some buyer than it costs to make, are not sold.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Quantity $q$}, ylabel={Price}, xmin=0, xmax=105, ymin=0, ymax=105,
+  width=0.52\linewidth, height=0.42\linewidth]
+  \fill[omProp!35] (axis cs:40,60) -- (axis cs:80,20) -- (axis cs:40,20) -- cycle;
+  \addplot[demand, domain=0:100] {100 - x};
+  \addplot[shifted, domain=0:50] {100 - 2*x};
+  \addplot[supply, domain=0:105] {20};
+  \addplot[guide] coordinates {(0,60) (40,60) (40,0)};
+  \node[font=\footnotesize, anchor=west] at (axis cs:86,24) {$MC$};
+  \node[font=\footnotesize, anchor=west] at (axis cs:44,14) {$MR$};
+  \node[font=\footnotesize, anchor=west] at (axis cs:70,38) {$D$};
+  \node[font=\footnotesize] at (axis cs:52,32) {DWL};
+\end{axis}
+\end{tikzpicture}
+
+{\small Demand $p = 100 - q$, marginal revenue $100 - 2q$ and marginal cost 20.
+The monopolist sells 40 at 60, against 80 at 20 in competition; the
+triangle, 800, is the \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss}.}
+\end{omfigure}
+
+\section{Price discrimination}\label{sec:b1:monopoly-pricing:discrimination}
+
+\begin{definition}[Price discrimination]\label{def:b1:monopoly-pricing:discrimination}
+\index{price discrimination}
+A seller \emph{price-discriminates} when it sells units of the same good at
+prices whose differences are not explained by differences in cost. It is
+of the \emph{first degree} when each unit sells at the most its buyer would
+pay; of the \emph{second degree} when all buyers face the same menu of
+prices that depend on the quantity or version bought, and choose from it;
+of the \emph{third degree} when the seller sets a different price for each
+observable group of buyers.
+\end{definition}
+
+Discrimination needs two things: the seller must be able to tell buyers
+apart, by group or by what they choose, and the buyers who pay less must
+not be able to resell to those who pay more. Services, which cannot be
+resold, lend themselves to it.
+
+\emph{First degree.} If the seller charges each buyer exactly his
+willingness to pay, it sells every unit worth more than its marginal cost:
+the quantity is the competitive one, there is no \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss}, and the
+whole surplus goes to the seller.
+
+\emph{Third degree.} With two groups and a common marginal cost, the seller
+chooses $q_1$ and $q_2$ to maximise $p_1(q_1)q_1 + p_2(q_2)q_2 - C(q_1 + q_2)$, and so
+$MR_1 = MR_2 = MC$.
+
+\begin{proposition}[The more elastic group pays less]\label{prop:b1:monopoly-pricing:third}
+Under third-degree discrimination, $p_1(1 + 1/\varepsilon_1) = p_2(1 + 1/\varepsilon_2)$, so the group whose
+demand is more elastic at its price pays the lower price.
+\end{proposition}
+
+\begin{proof}
+$MR_i = p_i(1 + 1/\varepsilon_i)$ and both equal $MC$. If $|\varepsilon_1| > |\varepsilon_2|$, then
+$1 + 1/\varepsilon_1 > 1 + 1/\varepsilon_2$, so $p_1 < p_2$.
+\end{proof}
+
+Students and pensioners get cheaper tickets because they are more price
+sensitive, not because they cost less to serve. The welfare effect is
+ambiguous. If discrimination opens a market the single price left unserved,
+it adds surplus. With linear demands and both groups served, total output
+is the same as under the single price but is allocated less well, and
+\omterm{def:b1:partial-equilibrium-welfare:surplus}{total surplus} falls (\cref{exo:b1:monopoly-pricing:welfare}).
+
+\emph{Second degree.} When the seller cannot tell buyers apart, it can let
+them sort themselves: a first-class and an economy seat, a quantity
+discount, a ticket that must be bought weeks ahead. How to design such a
+menu, so that each type of buyer picks the option meant for it, is the
+screening problem of Year~2.
+
+\begin{record}[Price discrimination in a Broadway theatre]
+A study of the ticket prices of one Broadway play estimated buyers'
+demands and computed what would happen under a single price. The
+observed discrimination --- different prices for different seats, and
+discounts for some buyers --- raised the producer's profit by about $5\%$
+relative to the best uniform price, while total consumer welfare was almost
+the same under both (Leslie 2004). % ledger: b1:leslie2004
+\end{record}
+
+\section{Two-part tariffs and bundling}\label{sec:b1:monopoly-pricing:tariffs}
+
+\begin{definition}[Two-part tariff]\label{def:b1:monopoly-pricing:two-part}
+\index{two-part tariff}
+A \emph{two-part tariff} charges a fixed fee for the right to buy plus a
+price per unit bought.
+\end{definition}
+
+\begin{proposition}[The optimal two-part tariff with identical buyers]\label{prop:b1:monopoly-pricing:two-part}
+If all buyers have the same demand and marginal cost is constant, the most
+profitable \omterm{def:b1:monopoly-pricing:two-part}{two-part tariff} sets the unit price equal to marginal cost and
+the fee equal to each buyer's \omterm{def:b1:consumer-welfare:consumer-surplus}{consumer surplus} at that price.
+\end{proposition}
+
+\begin{proof}
+At a unit price $p$, a buyer accepts any fee up to his \omterm{def:b1:consumer-welfare:consumer-surplus}{consumer surplus}
+$\mathrm{CS}(p)$, so the seller earns $\mathrm{CS}(p) + (p - c)q(p)$ per buyer: the buyer's
+surplus plus the profit on units, that is the \omterm{def:b1:partial-equilibrium-welfare:surplus}{total surplus} of the units
+traded. This is largest at $p = c$ (\cref{prop:b1:partial-equilibrium-welfare:efficiency}).
+\end{proof}
+
+With identical buyers the \omterm{def:b1:monopoly-pricing:two-part}{two-part tariff} achieves first-degree
+discrimination: no \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss}, and all the surplus to the seller.
+With different buyers, a single fee either excludes those with small
+demands or leaves surplus to those with large ones, and the best unit price
+is above marginal cost.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Trips a year}, ylabel={Dalens a trip}, xmin=0, xmax=42, ymin=0, ymax=42,
+  width=0.48\linewidth, height=0.4\linewidth]
+  \fill[omDef!22] (axis cs:0,10) -- (axis cs:0,40) -- (axis cs:30,10) -- cycle;
+  \addplot[demand, domain=0:40] {40 - x};
+  \addplot[supply, domain=0:42] {10};
+  \node[font=\footnotesize] at (axis cs:9,18) {fee $= 450$};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:31,10) {$MC = 10$};
+\end{axis}
+\end{tikzpicture}
+
+{\small A resident of Brenmoor wants $40 - p$ ferry trips a year (the weekend
+problem). Charged 10 a trip, he makes 30 and would pay up to 450 a year for
+the right to do so: the fee of the best \omterm{def:b1:monopoly-pricing:two-part}{two-part tariff}.}
+\end{omfigure}
+
+\begin{definition}[Bundling]\label{def:b1:monopoly-pricing:bundling}
+\index{bundling}
+\emph{Bundling} is selling two or more goods together as a package at one
+price, alone or alongside the goods sold separately.
+\end{definition}
+
+\omterm{def:b1:monopoly-pricing:bundling}{Bundling} pays when buyers' values for the goods are negatively correlated.
+If one buyer values a newspaper at 8 and its crossword app at 3, and another
+values them at 3 and 8, separate prices earn at most 16, but the bundle at 11
+sells to both and earns 22. The bundle evens out buyers' values, which
+makes demand for it less elastic, so it acts like \omterm{def:b1:monopoly-pricing:discrimination}{price discrimination}
+(\cref{exo:b1:monopoly-pricing:bundle}).
+
+\section{Natural monopoly}\label{sec:b1:monopoly-pricing:natural}
+
+\begin{definition}[Natural monopoly]\label{def:b1:monopoly-pricing:natural-monopoly}
+\index{natural monopoly}\index{subadditive cost}
+An industry is a \emph{natural monopoly} when its \omterm{def:b1:cost-minimisation:cost-function}{cost function} is
+\emph{subadditive} over the relevant outputs: one firm can produce any total
+output more cheaply than two or more firms sharing it,
+$C(q_1 + q_2) < C(q_1) + C(q_2)$.
+\end{definition}
+
+A large fixed cost and a constant marginal cost, $C = F + cq$, are the usual
+case: a water network, a railway track, an electricity grid. Two firms pay
+the fixed cost twice. Average cost $F/q + c$ falls with output and stays above
+marginal cost, so pricing at marginal cost --- the efficient price --- loses
+$F$. A regulator who will not pay a subsidy must let the price exceed
+marginal cost.
+
+\begin{definition}[Average-cost pricing and price-cap regulation]\label{def:b1:monopoly-pricing:regulation}
+\index{average-cost pricing}\index{price-cap regulation}\index{RPI$-X$}
+Under \emph{average-cost pricing} the regulator sets the price at which
+revenue just covers total cost. Under \emph{price-cap regulation} it sets a
+ceiling on the firm's prices that rises each year by the rate of inflation
+minus a number $X$ fixed in advance for several years (RPI$-X$, after the
+retail price index).
+\end{definition}
+
+The two differ in incentives. A firm whose price is reset to its average
+cost gains nothing by cutting cost, since the price follows the cost down.
+A firm under a cap keeps whatever it saves until the cap is next reset.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Trips (thousands a year)}, ylabel={Dalens a trip}, xmin=0, xmax=200, ymin=0, ymax=80,
+  width=0.56\linewidth, height=0.42\linewidth, samples=80]
+  \fill[omProp!30] (axis cs:0,10) rectangle (axis cs:190,17.89);
+  \addplot[demand, domain=40:200] {48 - x/5};
+  \addplot[demand, domain=0:40] {80 - x};
+  \addplot[supply, domain=0:200] {10};
+  \addplot[shifted, domain=31:200] {10 + 1500/x};
+  \addplot[guide] coordinates {(0,21.19) (134.05,21.19) (134.05,0)};
+  \addplot[guide] coordinates {(190,0) (190,17.89)};
+  \node[font=\footnotesize, anchor=west] at (axis cs:38,53) {$AC$};
+  \node[font=\footnotesize, anchor=south west] at (axis cs:2,10) {$MC$};
+  \node[font=\footnotesize, anchor=west] at (axis cs:12,70) {$D$};
+  \node[font=\footnotesize] at (axis cs:95,14) {loss at $p = MC$};
+\end{axis}
+\end{tikzpicture}
+
+{\small The ferry of the weekend problem: a fixed cost of 1,500 thousand
+dalens a year and a marginal cost of 10 a trip. \omterm{def:b1:consumer-choice:market-demand}{Market demand} is
+$240 - 5p$ for prices up to 40. At $p = 10$ the ferry carries 190 thousand trips
+and loses 1,500; the average-cost price, 21.19, covers its costs with 134
+thousand trips.}
+\end{omfigure}
+
+\begin{record}[Price caps for utilities]
+The price cap was proposed in a 1983 report on how to regulate British
+Telecom, then about to be privatised, and applied to it from 1984; the
+caps were reviewed every five years. It was then used for gas,
+electricity, water, railways and airports (Stern 2003). % ledger: b1:rpi-x
+The model's case for it was the incentive to cut costs between reviews.
+What happened is that the formulas grew complex --- water's included an
+extra term for investment --- and that each review reset $X$ with an eye on
+the firm's profits, so a firm that cut costs could expect part of its gain
+to be taken back at the next review: the incentive works only between
+reviews, and only as far as firms trust how the next one will be done
+(Stern 2003). % ledger: b1:rpi-x
+\end{record}
+
+\section{Measuring market power}\label{sec:b1:monopoly-pricing:measuring}
+
+The \omterm{def:b1:monopoly-pricing:lerner}{Lerner index} needs marginal cost, which accounts do not show. There are
+two ways round it. One estimates the elasticity of demand a firm faces and
+applies the inverse-elasticity rule; this needs a model of demand. The
+other uses production: a cost-minimising firm pays for a flexible input up
+to the point where its output elasticity equals its spending on the input
+divided by marginal cost times output; so the ratio of that elasticity to
+the input's share of \emph{revenue} is price over marginal cost, the
+\omterm{def:b1:monopoly-pricing:markup}{markup}. This needs an estimate of the \omterm{def:b1:technology:production-function}{production function} but no
+demand.
+
+\begin{model}{Monopoly pricing}
+\assumes One seller who knows its demand and its costs, and no entry.
+\predicts A price above marginal cost, with the inverse-elasticity \omterm{def:b1:monopoly-pricing:markup}{markup};
+higher prices to less elastic groups when they can be told apart; a
+\omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss} that discrimination may shrink or enlarge.
+\tested \omterm{def:b1:monopoly-pricing:discrimination}{Price discrimination} in a Broadway theatre raised profit by about
+$5\%$ (Leslie 2004); % ledger: b1:leslie2004
+\omterm{def:b1:monopoly-pricing:markup}{markups} measured from firms' accounts rose in the United States after 1980
+(De Loecker, Eeckhout and Unger 2020), a finding whose size is debated.
+% ledger: b1:deloecker2020
+\breaks With entry and new products (Year~3); with durable goods, where the
+monopolist competes with its own future sales; with regulated firms.
+\end{model}
+
+\begin{debate}[Have markups risen?]
+Applying the production approach to the accounts of listed US firms since
+1955, one study finds that the aggregate \omterm{def:b1:monopoly-pricing:markup}{markup} rose from $21\%$ above
+marginal cost in 1980 to $61\%$ by the time of writing, with the median firm's \omterm{def:b1:monopoly-pricing:markup}{markup} unchanged and the
+rise coming from the top of the distribution and from the growth of
+\omterm{def:b1:monopoly-pricing:markup}{high-markup} firms; the average profit rate rose from $1\%$ to $8\%$ (De Loecker,
+Eeckhout and Unger 2020). % ledger: b1:deloecker2020
+Its weakness: listed firms are not the whole economy, and if the costs
+treated as variable leave out overhead costs that have grown, a shift
+towards overhead looks like a rise in \omterm{def:b1:monopoly-pricing:markup}{markups}. A review of three ways of measuring \omterm{def:b1:monopoly-pricing:markup}{markups} finds
+that all rest on cost minimisation, that their answers differ widely, and
+that existing methods cannot tell whether \omterm{def:b1:monopoly-pricing:markup}{markups} have been stable or have
+risen modestly (Basu 2019). % ledger: b1:basu2019
+Its weakness: it does not settle the question either. What would settle it
+is direct evidence on marginal costs in many industries.
+\end{debate}
+
+\section*{Exercises}\label{sec:b1:monopoly-pricing:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:monopoly-pricing:basic}
+A monopolist faces $p = 100 - q$ with $MC = 20$. Find the price, the quantity,
+the profit and the \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:monopoly-pricing:lerner-ex}
+A firm faces an elasticity of $-4$ at its chosen price. Compute its \omterm{def:b1:monopoly-pricing:lerner}{Lerner
+index} and its \omterm{def:b1:monopoly-pricing:markup}{markup}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:monopoly-pricing:read}
+From the opening chart's table, the spread was $32.04$ points in Brazil and
+$2.98$ in Switzerland in 2019. % figdata: spreads_points
+List three reasons other than market power that could explain the gap.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:monopoly-pricing:predict}
+A museum can tell residents from tourists. Residents' demand is more
+elastic at any price. Predict which group pays more.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:monopoly-pricing:third-ex}
+A firm with $MC = 20$ sells in two markets with demands $q_1 = 100 - p_1$ and
+$q_2 = 60 - p_2$. Find the discriminating prices and the single price, with the
+quantities.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:monopoly-pricing:welfare}
+With the numbers of \cref{exo:b1:monopoly-pricing:third-ex}, compute \omterm{def:b1:partial-equilibrium-welfare:surplus}{total
+surplus} and the \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss} under discrimination and under the single
+price.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:monopoly-pricing:tpt}
+Each buyer demands $q = 10 - p$ and $MC = 2$. Find the best \omterm{def:b1:monopoly-pricing:two-part}{two-part tariff}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:monopoly-pricing:bundle}
+Two buyers value a newspaper and an app at $(8, 3)$ and $(3, 8)$; costs are
+zero. Compare the best separate prices with the best bundle price. What
+would happen with values $(8, 8)$ and $(3, 3)$?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:monopoly-pricing:cap}
+A regulator moves a water company from \omterm{def:b1:monopoly-pricing:regulation}{average-cost pricing} to a price cap
+with $X = 3\%$, when inflation is $2\%$. Predict the path of the price over the
+next five years and what the company does about its costs.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:monopoly-pricing:derive}
+Derive $MR = p(1 + 1/\varepsilon)$ and the inverse-elasticity rule, and show that a
+monopolist with positive marginal cost never prices where $|\varepsilon| < 1$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:monopoly-pricing:ramsey}
+A \omterm{def:b1:monopoly-pricing:natural-monopoly}{natural monopoly} has $C = 1200 + 20q$ and faces $q = 100 - p$. Find the lowest
+price at which it breaks even, and the \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss} there. Why is this
+the best a regulator can do without a subsidy if the firm sells one good?
+With several goods, which should bear the highest \omterm{def:b1:monopoly-pricing:markup}{markup}?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:monopoly-pricing:refute}
+What observation would refute the claim that the measured rise in \omterm{def:b1:monopoly-pricing:markup}{markups}
+since 1980 reflects a rise in market power rather than in fixed costs?
+\end{exercise}
+
+\section{Problem: The Ferry between Brenland and Kestria}\label{sec:b1:monopoly-pricing:problem}
+
+\begin{problem}[{Weekend problem --- what a season pass removes}]\label{pb:b1:monopoly-pricing:ferry}
+One operator runs the ferry between Brenmoor and Kestria (invented). A trip
+costs it 10 dalens at the margin. There are 4,000 residents, each wanting
+$40 - p$ trips a year, so residents' demand is $160 - 4p$ thousand trips;
+tourists' demand is $80 - p$ thousand trips. Money below is in thousands of
+dalens a year.
+
+\medskip\noindent\textbf{Part I --- A single price.}
+\begin{enumerate}
+  \item Write total demand for prices up to 40.
+  \item Find the profit-maximising price and quantity.
+  \item How many trips does each group make?
+  \item Compute the profit, and check that serving tourists alone at their best price would earn less.
+  \item Compute the \omterm{def:b1:monopoly-pricing:lerner}{Lerner index} and check it against the elasticity of total demand.
+  \item Compute each group's \omterm{def:b1:consumer-welfare:consumer-surplus}{consumer surplus}.
+  \item Compute the \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss}.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- Residents' and tourists' prices.}
+\begin{enumerate}[resume]
+  \item Find the residents' price and trips.
+  \item Find the tourists' price and trips.
+  \item Check $MR_1 = MR_2 = MC$, and compare the two elasticities.
+  \item Compute the profit.
+  \item Compute each group's \omterm{def:b1:consumer-welfare:consumer-surplus}{consumer surplus}.
+  \item Compute the \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss} and compare with Part I.
+  \item Explain why total trips do not change and why surplus falls.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- A season pass for residents.} Tourists
+still pay their price of Part II.
+\begin{enumerate}[resume]
+  \item What is a resident's \omterm{def:b1:consumer-welfare:consumer-surplus}{consumer surplus} at a price of 10 a trip?
+  \item Design the most profitable pass: fee and price per trip. How many trips do residents make?
+  \item Compute the profit from residents and in all.
+  \item Compute the \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss}.
+  \item Why can the operator not sell tourists a pass on the same terms?
+  \item What share of the single-price \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss} of Part I does the pass remove?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- The regulator.} Running the ferry costs
+1,500 a year whatever the number of trips; a single price is charged.
+\begin{enumerate}[resume]
+  \item Show that the ferry is a \omterm{def:b1:monopoly-pricing:natural-monopoly}{natural monopoly}.
+  \item What happens at a price equal to marginal cost?
+  \item Find the average-cost price and the trips.
+  \item Compute the \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss} at that price.
+  \item The regulator sets a cap at the average-cost price, rising by inflation ($2\%$) minus $X = 3\%$. What is next year's cap?
+  \item The operator cuts its marginal cost to 9. With both costs, 9 a trip and 1,500 a year, stated in next year's money, compute its profit next year under the cap, and under \omterm{def:b1:monopoly-pricing:regulation}{average-cost pricing}.
+  \item State the result: the share of the single-price \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss} that the residents' pass removes.
+\end{enumerate}
+\end{problem}

@@ -1,0 +1,424 @@
+\chapter{Partial Equilibrium and Welfare}\label{ch:b1:partial-equilibrium-welfare}
+
+On 1 July 2020 Germany cut its standard rate of value-added tax from $19\%$
+to $16\%$ and its reduced rate, which covers most food, from $7\%$ to $5\%$,
+for six months. % ledger: b1:de-vat-2020
+Consumer-price inflation, measured over twelve months, fell from $0.8\%$ in
+June to $0.0\%$ in July; food inflation fell from $4.1\%$ to $0.9\%$. When
+the rates went back up in January 2021, inflation jumped from $-0.7\%$ in
+December to $1.6\%$. % figdata: de_hicp_points
+A tax cut changed prices within a month, and by less than the cut itself.
+Who gets a tax cut, who pays a tax, and what does a tax cost beyond the
+revenue it raises? This chapter answers with the tools of the earlier
+chapters: demand from the consumer's choice, supply from the firm's, and
+surplus as an integral.
+
+\begin{openingchart}{Germany: consumer-price inflation over twelve months,
+month by month, January 2019 -- December 2022, all items and food; the
+months of the VAT cut shaded.}{Eurostat, Harmonised index of consumer prices,
+monthly annual rates of change (prc\_hicp\_manr)}
+\begin{tikzpicture}
+\begin{axis}[omtime, xlabel={Year}, ylabel={Inflation over 12 months (\%)}, xmin=2019, xmax=2023,
+  ymin=-2, ymax=22, width=0.74\linewidth, height=0.44\linewidth, legend pos=north west,
+  xtick={2019,2020,2021,2022,2023}]
+  \fill[omDef!14] (axis cs:2020.5,-2) rectangle (axis cs:2021,22);
+  \draw[gray, dotted] (axis cs:2019,0) -- (axis cs:2023,0);
+  \addplot[demand, mark=none] table[x=x, y=all, col sep=comma] {figdata/bachelor-1/13-partial-equilibrium-welfare/out/de_hicp.csv};
+  \addplot[supply, mark=none] table[x=x, y=food, col sep=comma] {figdata/bachelor-1/13-partial-equilibrium-welfare/out/de_hicp.csv};
+  \legend{All items, Food and non-alcoholic beverages}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+The chart shows the cut twice: as a fall in the twelve-month rate while it
+lasted, and as a rise in July--December 2021, when the months of the cut
+became the base of the comparison and prices were compared with the low
+prices of a year before. In July 2021 inflation was $3.1\%$, and food inflation
+$4.3\%$. % figdata: de_hicp_points
+Later the chart is dominated by the energy shock of 2022, which belongs to
+another chapter.
+
+\begin{recall}
+Consumer and \omterm{def:b1:partial-equilibrium-welfare:surplus}{producer surplus}, the \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss} of a tax and its
+incidence were met at school. The incidence of a per-unit tax with general
+supply and demand (\cref{prop:b1:comparative-statics:incidence}) and the
+consumer's surplus as an area under demand
+(\cref{prop:b1:consumer-welfare:areas}) are earlier in this book; the
+integral and its fundamental theorem are from the mathematics series.
+\end{recall}
+
+\section{Equilibrium of one market}\label{sec:b1:partial-equilibrium-welfare:equilibrium}
+
+\begin{definition}[Partial equilibrium]\label{def:b1:partial-equilibrium-welfare:partial}
+\index{partial equilibrium}
+A \emph{partial \omterm{def:b1:models-and-data:equilibrium}{equilibrium}} is a price of one good at which the quantity
+demanded equals the quantity supplied, with the prices of all other goods,
+and incomes, held fixed.
+\end{definition}
+
+Write $Z(p) = D(p) - S(p)$, the excess demand. If $D$ and $S$ are continuous, if
+$Z(p) > 0$ at some low price and $Z(p) < 0$ at some high price, then by the
+intermediate value theorem there is a price between them with $Z(p) = 0$: an
+\omterm{def:b1:models-and-data:equilibrium}{equilibrium} exists. If $D$ is decreasing and $S$ increasing, $Z$ is strictly
+decreasing and the \omterm{def:b1:models-and-data:equilibrium}{equilibrium} is unique.
+
+\omterm{def:b1:models-and-data:equilibrium}{Equilibrium} is a state, not a process. A simple account of how a market
+gets there is that the price rises when there is excess demand and falls
+when there is excess supply: $\dot p = k\,Z(p)$, with $k > 0$.
+
+\begin{definition}[Stable equilibrium]\label{def:b1:partial-equilibrium-welfare:stable}
+\index{stable equilibrium}\index{stability (of an equilibrium)}
+An \omterm{def:b1:models-and-data:equilibrium}{equilibrium} price $p^*$ is \emph{stable} under the price adjustment
+$\dot p = kZ(p)$ if the price returns to $p^*$ from any price close enough to
+it.
+\end{definition}
+
+\begin{proposition}[Stability]\label{prop:b1:partial-equilibrium-welfare:stability}
+If $D'(p^*) < S'(p^*)$, the \omterm{def:b1:models-and-data:equilibrium}{equilibrium} $p^*$ is \omterm{def:b1:partial-equilibrium-welfare:stable}{stable}; if $D'(p^*) > S'(p^*)$, it is
+unstable.
+\end{proposition}
+
+\begin{proof}
+Near $p^*$, $Z(p) \approx (D'(p^*) - S'(p^*))(p - p^*)$, so $x = p - p^*$ follows
+$\dot x = k(D' - S')x$, whose solution is $x(t) = x(0)e^{k(D' - S')t}$. It tends to zero
+if $D' - S' < 0$ and grows if $D' - S' > 0$.
+\end{proof}
+
+With downward-sloping demand and upward-sloping supply the condition
+always holds. It fails only when quantity demanded rises with the price
+faster than quantity supplied ($D' > S'$) --- with a \omterm{def:b1:income-and-substitution-effects:giffen}{Giffen good}, say --- or
+quantity supplied falls with the price faster than quantity demanded. In farm markets, where output is decided a season before it is
+sold, prices can overshoot instead: a high price this year brings a large
+crop and a low price next year, which brings a small crop and a high
+price, and so on, a cycle called the \emph{cobweb}, which dies out when
+supply responds less to price than demand does.
+
+\section{Surplus as an integral}\label{sec:b1:partial-equilibrium-welfare:surplus}
+
+\begin{definition}[Producer and total surplus]\label{def:b1:partial-equilibrium-welfare:surplus}
+\index{producer surplus}\index{total surplus}\index{surplus!producer}\index{surplus!total}
+At the price $p^*$, \emph{producer surplus} is the area between the price and
+the supply curve, $\mathrm{PS} = \int_0^{p^*}S(p)\,\dd p$: revenue minus the variable
+cost of the units sold. \emph{Total surplus} is \omterm{def:b1:consumer-welfare:consumer-surplus}{consumer surplus},
+$\mathrm{CS} = \int_{p^*}^{\bar p}D(p)\,\dd p$ (with $\bar p$ the price at which demand
+reaches zero), plus producer surplus, plus any tax revenue.
+\end{definition}
+
+In terms of quantity, with $P^d(Q)$ the inverse demand (the most a buyer will
+pay for the $Q$-th unit) and $P^s(Q)$ the inverse supply (the marginal cost of
+the $Q$-th unit), \omterm{def:b1:partial-equilibrium-welfare:surplus}{total surplus} from selling $Q$ units is
+$W(Q) = \int_0^Q\bigl(P^d(x) - P^s(x)\bigr)\,\dd x$.
+
+\begin{proposition}[Efficiency of competitive equilibrium]\label{prop:b1:partial-equilibrium-welfare:efficiency}
+If $P^d$ is decreasing and $P^s$ increasing, $W(Q)$ is largest at the
+competitive quantity, where $P^d(Q) = P^s(Q)$.
+\end{proposition}
+
+\begin{proof}
+By the fundamental theorem of calculus, $W'(Q) = P^d(Q) - P^s(Q)$, which is
+positive below the competitive quantity and negative above it.
+\end{proof}
+
+The proposition says that every unit worth more to some buyer than its
+cost to some seller is traded, and no other. It says nothing about who
+gets the surplus, and it assumes that the curves measure all the benefits
+and costs: no one else is affected by the trade.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Quantity $Q$}, ylabel={Price $p$}, xmin=0, xmax=50, ymin=0, ymax=7.5,
+  width=0.52\linewidth, height=0.4\linewidth, samples=100]
+  \addplot[cs area, draw=none, domain=0:32, forget plot] {sqrt(48 - x)} -- (axis cs:32,4) -- (axis cs:0,4) -- cycle;
+  \addplot[fill=omThm!20, draw=none, domain=0:32, forget plot] {sqrt(x/2)} -- (axis cs:32,4) -- (axis cs:0,4) -- cycle;
+  \addplot[demand, domain=0:48] {sqrt(48 - x)};
+  \addplot[supply, domain=0:50] {sqrt(x/2)};
+  \addplot[guide] coordinates {(0,4) (32,4) (32,0)};
+  \node[font=\footnotesize] at (axis cs:8,5.1) {CS};
+  \node[font=\footnotesize] at (axis cs:16,3.2) {PS};
+\end{axis}
+\end{tikzpicture}
+
+{\small Demand $D(p) = 48 - p^2$ (blue) and supply $S(p) = 2p^2$ (red) meet at $p = 4$,
+$Q = 32$. \omterm{def:b1:consumer-welfare:consumer-surplus}{Consumer surplus} is $\int_4^{\sqrt{48}}(48 - p^2)\,\dd p = 51.03$; \omterm{def:b1:partial-equilibrium-welfare:surplus}{producer surplus} is
+$\int_0^4 2p^2\,\dd p = 42.67$.}
+\end{omfigure}
+
+\section{Deadweight loss}\label{sec:b1:partial-equilibrium-welfare:dwl}
+
+A tax of $\tau$ per unit drives a wedge between the price buyers pay, $P$, and
+the price sellers keep, $p = P - \tau$. The quantity falls from $Q_0$ to $Q_\tau$,
+where $P^d(Q_\tau) - P^s(Q_\tau) = \tau$.
+
+\begin{definition}[Deadweight loss]\label{def:b1:partial-equilibrium-welfare:dwl}
+\index{deadweight loss}\index{Harberger triangle}
+The \emph{deadweight loss} of a tax is the fall in \omterm{def:b1:partial-equilibrium-welfare:surplus}{total surplus}, revenue
+included:
+\[
+\mathrm{DWL}(\tau) = \int_{Q_\tau}^{Q_0}\bigl(P^d(x) - P^s(x)\bigr)\,\dd x,
+\]
+the surplus of the units no longer traded. Drawn with straight lines it is
+a triangle, the \emph{Harberger triangle}.
+\end{definition}
+
+\begin{proposition}[The second-order formula]\label{prop:b1:partial-equilibrium-welfare:harberger}
+For a small tax,
+\[
+\mathrm{DWL} \approx \tfrac12\tau^2\left|\frac{\dd Q}{\dd\tau}\right| = \tfrac12\tau^2\,\frac Qp\,\frac{\varepsilon_s|\varepsilon_d|}{\varepsilon_s + |\varepsilon_d|},
+\]
+with the elasticities and $p$, $Q$ taken at the untaxed \omterm{def:b1:models-and-data:equilibrium}{equilibrium}. The loss
+grows with the square of the tax.
+\end{proposition}
+
+\begin{proof}
+The integrand rises from 0 at $Q_0$ to $\tau$ at $Q_\tau$; to first order in $\tau$ it is
+linear, so the integral is the triangle $\tfrac12\tau(Q_0 - Q_\tau)$, and
+$Q_0 - Q_\tau \approx \tau|\dd Q/\dd\tau|$. From
+\cref{prop:b1:comparative-statics:incidence},
+$\dd Q/\dd\tau = D'S'/(S' - D')$; multiply numerator and denominator by $p/Q$
+twice to get the elasticities.
+\end{proof}
+
+The square rule has a practical consequence: two taxes of 5 cost less than
+one of 10 (since $2 \times 25 < 100$), so a given revenue is raised more cheaply
+from a broad base at a low rate than from a narrow base at a high rate. The
+loss also grows with the elasticities: taxing goods with elastic demand or
+supply costs most.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 1, horizontal sep=18mm}, omrecord, grid=none,
+  width=0.45\linewidth, height=0.42\linewidth, samples=60]
+\nextgroupplot[xlabel={Sugar $Q$ (thousand tonnes)}, ylabel={Dalens a kilogram}, xmin=0, xmax=120, ymin=0, ymax=12,
+  title={\small A tax of 1.2}, width=0.45\linewidth]
+  \fill[omDef!20] (axis cs:0,5.4) rectangle (axis cs:54,6.6);
+  \fill[omProp!35] (axis cs:54,6.6) -- (axis cs:60,6) -- (axis cs:54,5.4) -- cycle;
+  \addplot[demand, domain=0:120] {12 - x/10};
+  \addplot[supply, domain=0:120] {x/10};
+  \addplot[guide] coordinates {(0,6.6) (54,6.6) (54,0)};
+  \addplot[guide] coordinates {(0,5.4) (54,5.4)};
+  \node[font=\footnotesize, anchor=west] at (axis cs:62,6) {DWL};
+  \node[font=\footnotesize] at (axis cs:27,6) {revenue};
+\nextgroupplot[xlabel={Tax $\tau$ (dalens a kilogram)}, ylabel={Millions of dalens a year}, xmin=0, xmax=12,
+  ymin=0, ymax=200, title={\small Revenue and loss}, width=0.45\linewidth, legend pos=north west,
+  legend style={fill=none, draw=none}]
+  \addplot[demand, domain=0:12] {x*(60 - 5*x)};
+  \addplot[supply, domain=0:8.5] {2.5*x^2};
+  \legend{Revenue, DWL}
+\end{groupplot}
+\end{tikzpicture}
+
+{\small Left: Brenland's sugar market (invented), demand $Q = 120 - 10P$ and supply
+$Q = 10p$, with a tax of 1.2 dalens a kilogram: buyers pay 6.6, sellers keep
+5.4, revenue is 64.8 and the \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss} 3.6 (millions of dalens a year).
+Right: as the tax rises, revenue $\tau(60 - 5\tau)$ peaks at $\tau = 6$ and then falls,
+while the loss $2.5\tau^2$ keeps rising.}
+\end{omfigure}
+
+\section{Incidence}\label{sec:b1:partial-equilibrium-welfare:incidence}
+
+\begin{definition}[Statutory and economic incidence]\label{def:b1:partial-equilibrium-welfare:incidence}
+\index{statutory incidence}\index{economic incidence}\index{tax incidence}
+The \emph{statutory incidence} of a tax says who must pay it to the
+government; the \emph{economic incidence} says whose surplus it reduces,
+through the changes in the prices they pay and receive.
+\end{definition}
+
+In a competitive market the two need not be related: whether sellers or
+buyers hand over the tax, the wedge between $P$ and $p$ is the same, and so is
+everyone's surplus. Buyers bear the share $\varepsilon_s/(\varepsilon_s + |\varepsilon_d|)$ of a small
+tax and sellers the rest (\cref{prop:b1:comparative-statics:incidence}):
+the side that can less easily walk away pays more.
+
+\begin{definition}[Pass-through rate]\label{def:b1:partial-equilibrium-welfare:pass-through}
+\index{pass-through rate}
+The \emph{pass-through rate} of a tax is the change in the price buyers pay
+per unit change in the tax, $\dd P/\dd\tau$; for a percentage tax, the
+percentage change in the buyers' price as a share of the percentage change
+in $1 + t$.
+\end{definition}
+
+A competitive market with a fixed number of firms has a \omterm{def:b1:partial-equilibrium-welfare:pass-through}{pass-through rate}
+between 0 and 1. A rate above one is possible with market power
+(\cref{ch:b1:monopoly-pricing}); in the long run of a \omterm{def:b1:competitive-industry:cost-industry}{constant-cost
+industry} it is exactly one (\cref{ch:b1:competitive-industry}).
+
+\begin{record}[A temporary VAT cut]
+The German cut of 2020 lowered the gross price of a good taxed at the
+standard rate by $1 - 1.16/1.19 = 2.5\%$ and of one at the reduced rate by
+$1 - 1.05/1.07 = 1.9\%$, if fully passed on. A study of daily prices of about
+130,000 supermarket products, compared with the same products in Austria,
+found that prices fell by about $1.3\%$: some $70\%$ of the cut was passed on
+to buyers, more where many competing products were sold. The return to the
+old rates raised prices by only about half as much as the cut had lowered
+them (Fuest, Neumeier and Stöhlker 2021). % ledger: b1:fuest2021
+The competitive model predicts the partial pass-through; it does not
+predict the asymmetry, which suggests that sellers set prices and adjust
+them at a cost.
+\end{record}
+
+\begin{measure}[Monthly inflation from the HICP]
+The harmonised index of consumer prices measures the price of a fixed
+basket in each month; the rate in the opening chart compares each month
+with the same month a year before. A one-off fall in the price level
+therefore lowers the twelve-month rate for twelve months and then drops out
+of it. A temporary cut that is reversed six months later, like the German
+one, lowers the rate while it lasts and raises it during the six months in
+which the low months serve as the base. Neither changes inflation for good.
+\end{measure}
+
+\section{When one market can be studied alone}\label{sec:b1:partial-equilibrium-welfare:alone}
+
+Everything above held other prices and incomes fixed. That is a good
+approximation when the good takes a small share of buyers' budgets (so
+\omterm{def:b1:income-and-substitution-effects:effects}{income effects} are small and the CV, EV and the \omterm{def:b1:consumer-welfare:consumer-surplus}{consumer surplus} agree,
+\cref{ch:b1:consumer-welfare}), when its market is small relative to the
+markets for its inputs, and when it has no close substitutes or
+complements whose prices would move. When a taxed good has a close
+substitute, demand for the substitute rises, its price rises if its supply
+slopes up, and surplus changes in that market too. If the substitute's
+market has no tax of its own, those changes are transfers between its
+buyers and sellers, and the loss is the triangle under a demand curve for
+the taxed good that lets the substitute's price adjust; the triangle drawn
+with the substitute's price held fixed overstates it
+(\cref{exo:b1:partial-equilibrium-welfare:substitute}). Taxes on large
+markets --- labour, housing --- move other prices and need the general
+\omterm{def:b1:models-and-data:equilibrium}{equilibrium} of Year~2.
+
+\begin{model}{Competitive partial equilibrium}
+\assumes One market, price-taking buyers and sellers, other prices and
+incomes fixed, no effects on third parties.
+\predicts Buyers bear the share $\varepsilon_s/(\varepsilon_s + |\varepsilon_d|)$ of a tax whoever pays it to
+the state; a \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss} that grows with the square of the tax.
+\tested About $70\%$ of Germany's 2020 VAT cut reached supermarket prices
+(Fuest, Neumeier and Stöhlker 2021); % ledger: b1:fuest2021
+cigarette taxes are less than fully passed through, and less where buyers
+can cross to a state with lower taxes (Harding, Leibtag and Lovenheim
+2012). % ledger: b1:harding2012
+\breaks With market power; with temporary changes, where the cut and the
+return were passed through unequally; for large markets whose prices move
+others.
+\end{model}
+
+\section*{Exercises}\label{sec:b1:partial-equilibrium-welfare:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:partial-equilibrium-welfare:cs-ps}
+Find the \omterm{def:b1:models-and-data:equilibrium}{equilibrium}, \omterm{def:b1:consumer-welfare:consumer-surplus}{consumer surplus} and \omterm{def:b1:partial-equilibrium-welfare:surplus}{producer surplus} for $D = 120 - 2p$
+and $S = p$.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:partial-equilibrium-welfare:read}
+From the opening chart's table, German inflation was $0.8\%$ in June 2020,
+$0.0\%$ in July, $-0.7\%$ in December and $1.6\%$ in January 2021; food inflation
+was $4.1\%$ in June and $0.9\%$ in July. % figdata: de_hicp_points
+Compute the changes in points at the start and at the end of the cut.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:partial-equilibrium-welfare:share}
+With $\varepsilon_d = -0.5$ and $\varepsilon_s = 1.5$, what share of a small tax do buyers bear?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:partial-equilibrium-welfare:cigarettes}
+Smokers' demand for cigarettes is inelastic and tobacco firms can sell in
+many markets. Predict which side bears more of a cigarette tax.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:partial-equilibrium-welfare:cs-integral}
+Compute the loss of \omterm{def:b1:consumer-welfare:consumer-surplus}{consumer surplus} when the price of a good with demand
+$D(p) = 100/p$ rises from 1 to 2.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:partial-equilibrium-welfare:exact}
+Demand is $D(p) = 100/p$ and supply $S(p) = p$. A tax of $10\%$ of the sellers'
+price is imposed. Compute the prices and the exact \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss}, and
+compare with the second-order formula evaluated with a tax of one dalen
+(the tax at the untaxed price) and with the actual wedge.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:partial-equilibrium-welfare:double}
+A tax is doubled. Predict, to second order, what happens to the \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight
+loss}, and why revenue less than doubles.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:partial-equilibrium-welfare:stability-ex}
+With $\dot p = 0.5\,(D(p) - S(p))$ and $S(p) = 2p$, study the stability of the
+\omterm{def:b1:models-and-data:equilibrium}{equilibrium} for $D(p) = 20 + p$ and for $D(p) = -20 + 3p$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:partial-equilibrium-welfare:vat}
+Compute the fall in gross prices that full pass-through of the 2020 cut
+predicts at the standard and the reduced rate. Compare with the fall in
+the twelve-month inflation rates of the opening chart's table: why is the
+comparison only rough?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:partial-equilibrium-welfare:max}
+Prove that \omterm{def:b1:partial-equilibrium-welfare:surplus}{total surplus} is largest at the competitive quantity when the
+inverse demand is decreasing and the inverse supply increasing, and show
+that a quantity above it also loses surplus.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:partial-equilibrium-welfare:substitute}
+Butter is taxed. Margarine, a close substitute, has an upward-sloping
+supply. Show that margarine's producers gain surplus and its buyers lose
+it, and explain why the \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss} measured in the butter market
+alone, with the margarine price held fixed, is not the whole loss.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:partial-equilibrium-welfare:refute}
+What pattern in the German prices of 2020--21 would refute competitive
+incidence as an account of the VAT cut? Name one comparison across
+products and one over time.
+\end{exercise}
+
+\section{Problem: A Sugar Tax in Brenland}\label{sec:b1:partial-equilibrium-welfare:problem}
+
+\begin{problem}[{Weekend problem --- the marginal deadweight loss of a tax}]\label{pb:b1:partial-equilibrium-welfare:sugar}
+Brenland's demand for sugar (invented) is $Q = 120 - 10P$ and its supply is
+$Q = 10p$, in thousands of tonnes a year, where $P$ is the price buyers pay and
+$p$ the price sellers keep, in dalens a kilogram. A price in dalens a
+kilogram times a quantity in thousands of tonnes is a sum in millions of
+dalens: all surpluses and revenues below are in millions of dalens a year.
+
+\medskip\noindent\textbf{Part I --- Equilibrium.}
+\begin{enumerate}
+  \item Find the untaxed \omterm{def:b1:models-and-data:equilibrium}{equilibrium}.
+  \item Compute the price elasticities of demand and supply there.
+  \item Write the price adjustment $\dot p = k(D - S)$ and show that the \omterm{def:b1:models-and-data:equilibrium}{equilibrium} is \omterm{def:b1:partial-equilibrium-welfare:stable}{stable}.
+  \item Compute \omterm{def:b1:consumer-welfare:consumer-surplus}{consumer surplus}.
+  \item Compute \omterm{def:b1:partial-equilibrium-welfare:surplus}{producer surplus}.
+  \item Show that \omterm{def:b1:partial-equilibrium-welfare:surplus}{total surplus} would be smaller at $Q = 50$ and at $Q = 70$.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- A tax.} A tax of 1.2 dalens a kilogram ($20\%$
+of the untaxed price) is collected from sellers.
+\begin{enumerate}[resume]
+  \item Find $P$, $p$ and the quantity.
+  \item Compute the buyers' share from the elasticities and compare.
+  \item Compute the revenue.
+  \item Would anything change if the buyers paid the tax?
+  \item What is the \omterm{def:b1:partial-equilibrium-welfare:pass-through}{pass-through rate}?
+  \item Instead, the government pays a subsidy of 1.2 a kilogram. Find the quantity and the cost of the subsidy.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- Surplus.}
+\begin{enumerate}[resume]
+  \item Compute \omterm{def:b1:consumer-welfare:consumer-surplus}{consumer surplus} with the tax.
+  \item Compute \omterm{def:b1:partial-equilibrium-welfare:surplus}{producer surplus} with the tax.
+  \item Compute the \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss} as the fall in \omterm{def:b1:partial-equilibrium-welfare:surplus}{total surplus}.
+  \item Compute it with the second-order formula.
+  \item Why do the two agree exactly here?
+  \item The tax doubles to 2.4. Compute revenue and \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss}.
+  \item Compute the \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss} per dalen of revenue at both rates.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- How much to tax.}
+\begin{enumerate}[resume]
+  \item Write revenue as a function of $\tau$.
+  \item Find the tax that raises the most revenue, and the revenue.
+  \item Compute the \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss} there, per dalen raised.
+  \item Show that the \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss} of the last dalen raised is $5\tau/(60 - 10\tau)$.
+  \item Evaluate it at $\tau = 1.2$ and at $\tau = 2.4$.
+  \item What happens to it as $\tau$ approaches 6?
+  \item State the result: the marginal \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss} of the last dalen raised at a $20\%$ rate.
+\end{enumerate}
+\end{problem}

@@ -1,0 +1,9 @@
+level,earnings,unemp,ledger
+lesshs,770,6.1,g11:bls-edpays-lesshs
+highschool,966,4.3,g11:bls-edpays-highschool
+somecollege,"1,062",3.8,g11:bls-edpays-somecollege
+associate,"1,135",3.0,g11:bls-edpays-associate
+bachelors,"1,578",2.8,g11:bls-edpays-bachelors
+masters,"1,876",2.6,g11:bls-edpays-masters
+professional,"2,294",1.9,g11:bls-edpays-professional
+doctoral,"2,307",1.8,g11:bls-edpays-doctoral

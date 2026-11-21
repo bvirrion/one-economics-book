@@ -1,0 +1,641 @@
+\chapter{Trade Policy}\label{ch:b3:trade-policy}
+
+A tariff is the oldest instrument of economic policy, and for half a century most
+countries cut theirs. This chapter asks what a tariff does when the country that
+levies it is large enough to move world prices, why that creates a temptation and
+a trap, how quotas and export restraints differ from tariffs, how to measure
+the protection an industry really gets, when a subsidy can shift profit to a home
+firm, why governments levy tariffs at all, and what the rules of the trading
+system do to the temptation. It ends with the evidence: who paid the
+tariffs of 2018--2019, what import competition did to the workers exposed to it,
+and whether protecting an infant industry ever made it grow up.
+
+\begin{openingchart}{Applied tariff rate, mean over all products weighted by
+imports, 1988--2022 (percent, times-ten scale). The United States value for 2019 (13.8~\%)
+is a break in the source series and is not plotted.}{World Bank, World
+Development Indicators (TM.TAX.MRCH.WM.AR.ZS)}
+\begin{tikzpicture}
+\begin{semilogyaxis}[omtimesten, width=0.7\linewidth, height=0.45\linewidth, xmin=1987, xmax=2023,
+  ymin=0.7, ymax=80, ylabel={Percent}, legend columns=3,
+  legend style={at={(0.5,1.03)}, anchor=south, font=\footnotesize}, unbounded coords=jump]
+  \addplot[omDef, thick, mark=none] table[x=year, y=USA] {figdata/bachelor-3/11-trade-policy/out/tariffs.csv};
+  \addplot[omThm, thick, mark=none] table[x=year, y=EUU] {figdata/bachelor-3/11-trade-policy/out/tariffs.csv};
+  \addplot[black, thick, mark=none] table[x=year, y=JPN] {figdata/bachelor-3/11-trade-policy/out/tariffs.csv};
+  \addplot[omDef, thick, dashed, mark=none] table[x=year, y=CHN] {figdata/bachelor-3/11-trade-policy/out/tariffs.csv};
+  \addplot[omThm, thick, dashed, mark=none] table[x=year, y=IND] {figdata/bachelor-3/11-trade-policy/out/tariffs.csv};
+  \addplot[black, thick, dashed, mark=none] table[x=year, y=BRA] {figdata/bachelor-3/11-trade-policy/out/tariffs.csv};
+  \legend{United States, European Union, Japan, China, India, Brazil}
+\end{semilogyaxis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: tariffs_points, tariffs_dropped
+India's average applied tariff fell from 56.4~\% in 1990 to 4.6~\% in 2022, China's
+from 32.2~\% in 1992 to 2.2~\%, Brazil's from 31.9~\% to 7.3~\%. The United States, the
+European Union and Japan started below 5~\% and ended below 2~\%. The tariff
+increases of 2018--2019, large on the goods they targeted, are hardly visible in an
+average over all imports.
+
+\begin{recall}
+The grades 10--12 volume analysed a tariff in a small country: its incidence,
+its revenue and its deadweight loss, and the Year 1 volume measured the rent
+created by a quota. Nash equilibrium, the prisoner's dilemma and repeated games
+are the Year 2 volume's. \Cref{ch:b3:credible-empirical-work} graded evidence.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:trade-policy:symbols}
+$t$ is an ad valorem tariff; $P^*$ is the world price received by foreign exporters
+and $P = (1 + t)P^*$ the domestic price. $M(P)$ is the home country's import demand
+and $X^*(P^*)$ the foreign export supply; $\varepsilon^* = X^{*\prime}P^*/X^*$ is its elasticity
+(here not the trade elasticity of \cref{ch:b3:gravity}).
+\end{notation}
+
+\section{A tariff in a large country}\label{sec:b3:trade-policy:large}
+
+A small country takes the world price as given: a tariff raises the domestic
+price by its full amount and costs the country its deadweight loss. A large
+country's imports are a large part of the world market. When it cuts its
+purchases, the world price falls, and part of the tariff is paid by foreign
+exporters.
+
+\begin{definition}[Terms-of-trade effect; optimal tariff]\label{def:b3:trade-policy:optimal-tariff}
+\index{terms-of-trade effect}\index{optimal tariff}
+The \emph{terms-of-trade effect} of a tariff is the gain to the importing country
+from the fall in the world price of its imports, $-M\,dP^*$. The \emph{optimal
+tariff} is the tariff that maximises the importing country's welfare, given the
+foreign export supply and no retaliation.
+\end{definition}
+
+\begin{proposition}[The welfare effect of a tariff]\label{prop:b3:trade-policy:welfare}
+With competitive markets, home welfare $W$ (consumer and producer surplus plus
+tariff revenue) changes with the tariff by
+\[
+  dW = -M\,dP^* + tP^*\,dM .
+\]
+The first term, the terms-of-trade gain, is positive; the second, the efficiency
+loss, is negative for $t > 0$ and zero at $t = 0$. A small tariff therefore raises
+the welfare of a country that faces an upward-sloping foreign export supply.
+\end{proposition}
+
+\begin{proof}
+Consumer plus producer surplus falls by $M\,dP$ when the domestic price rises by
+$dP$, and revenue is $tP^*M$. So $dW = -M\,dP + d(tP^*M) = -M\,dP + P^*M\,dt + tM\,dP^* +
+tP^*\,dM$. With $P = (1 + t)P^*$, $dP = P^*dt + (1 + t)dP^*$; substituting, the $P^*M\,dt$
+terms cancel and $-M(1 + t)dP^* + tM\,dP^* = -M\,dP^*$. A higher tariff lowers $P^*$, so
+$-M\,dP^* > 0$, and lowers $M$, so $tP^*dM \le 0$, with equality at $t = 0$.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.12cm, y=0.2cm]
+  \fill[omThm!25] (0,17.78) rectangle (31.11,20);
+  \fill[omDef!25] (31.11,22.22) -- (40,20) -- (31.11,17.78) -- cycle;
+  \draw[econ axes] (0,0) -- (62,0) node[right] {$M$};
+  \draw[econ axes] (0,0) -- (0,32) node[above] {$P$};
+  \draw[curve, omDef] (0,30) -- (60,15) node[right, font=\scriptsize] {$M(P)$};
+  \draw[curve, omThm] (0,10) -- (60,25) node[right, font=\scriptsize] {$X^*(P^*)$};
+  \draw[curve, omThm, dashed] (0,12.5) -- (56,30) node[right, font=\scriptsize] {$(1 + t)P^*$};
+  \draw[guide] (0,22.22) node[left, font=\scriptsize] {$P$} -- (31.11,22.22) -- (31.11,0) node[below, font=\scriptsize] {$M_t$};
+  \draw[guide] (0,20) node[left, font=\scriptsize] {$P_0$} -- (40,20) -- (40,0) node[below, font=\scriptsize] {$M_0$};
+  \draw[guide] (0,17.78) node[left, font=\scriptsize] {$P^*$} -- (31.11,17.78);
+\end{tikzpicture}
+\par\smallskip{\small A tariff in a large country, in the import market. The tariff
+drives a wedge between the domestic price $P$ and the world price $P^*$. The
+rectangle is the terms-of-trade gain, paid by foreign exporters; the triangle is
+the efficiency loss.}
+\end{omfigure}
+
+\begin{proposition}[The optimal tariff]\label{prop:b3:trade-policy:optimal}
+If the \omterm{def:b3:trade-policy:optimal-tariff}{optimal tariff} is interior, it equals the inverse of the elasticity of
+foreign export supply at the optimum: $t^{\mathrm{opt}} = 1/\varepsilon^*$.
+\end{proposition}
+
+\begin{proof}
+At the optimum $dW = 0$: $-M\,dP^* + tP^*\,dM = 0$. Market clearing, $M = X^*(P^*)$, gives
+$dM = X^{*\prime}dP^*$. Hence $-M + tP^*X^{*\prime} = 0$, so $t = M/(P^*X^{*\prime}) = X^*/(P^*X^{*\prime}) =
+1/\varepsilon^*$.
+\end{proof}
+
+A small country faces an infinitely elastic export supply: its \omterm{def:b3:trade-policy:optimal-tariff}{optimal tariff} is
+zero. A large one gains from a tariff only at the expense of its partners: the
+terms-of-trade gain is their loss, and the world as a whole loses the two
+efficiency triangles.
+
+\section{Retaliation: the tariff game}\label{sec:b3:trade-policy:game}
+
+If each country gains from its own tariff and loses from the other's, the choice
+of tariffs is a game. With payoffs measured from free trade, a typical case is
+the one below.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, font=\footnotesize]
+  \node[payoff] at (0.8,0.4) {0, 0};
+  \node[payoff] at (2.4,0.4) {$-6$, 4};
+  \node[payoff] at (0.8,-0.4) {4, $-6$};
+  \node[payoff] at (2.4,-0.4) {$-2$, $-2$};
+  \node[anchor=east] at (-0.05,0.4) {free trade};
+  \node[anchor=east] at (-0.05,-0.4) {tariff};
+  \node at (0.8,1.1) {free trade}; \node at (2.4,1.1) {tariff};
+  \node[font=\small\bfseries] at (1.6,1.7) {Foreign};
+  \node[font=\small\bfseries, rotate=90] at (-2.0,0) {Home};
+\end{tikzpicture}
+\par\smallskip{\small The tariff game. Each cell gives Home's payoff, then
+Foreign's. Whatever the other does, a tariff pays: the equilibrium is mutual
+tariffs, worse for both than free trade.}
+\end{omfigure}
+
+It is a prisoner's dilemma. In a single round, both impose tariffs; in a repeated
+game, the threat of retaliation can sustain free trade if the countries value
+the future enough (\cref{exo:b3:trade-policy:7}). Trade agreements can be read
+this way: commitments that make retaliation predictable, and the gain from
+deviating short-lived.
+
+\section{Quotas and export restraints}\label{sec:b3:trade-policy:quotas}
+
+\begin{definition}[Import quota; voluntary export restraint]\label{def:b3:trade-policy:quota}
+\index{import quota}\index{voluntary export restraint}
+An \emph{import quota} limits the quantity of a good that may be imported. A
+\emph{voluntary export restraint} (VER) is a quota administered by the exporting
+country, which allocates the right to export among its own firms.
+\end{definition}
+
+\begin{proposition}[Tariffs and quotas]\label{prop:b3:trade-policy:quota}
+Under perfect competition, a quota equal to the imports under a tariff produces
+the same domestic price, quantities and deadweight loss; only the owner of the
+gap between domestic and world price --- the government's revenue under the
+tariff, the quota rent under the quota --- differs. If the domestic industry is a
+monopoly, the two are not equivalent: the quota gives the monopolist market power
+that the tariff does not.
+\end{proposition}
+
+\begin{proof}
+Under competition, with imports fixed at $\bar M = M(P_t)$, the domestic market
+clears where $D(P) - S(P) = \bar M$, which is the price $P_t$ of the tariff, so every
+quantity is the same. With a domestic monopolist and a tariff, imports are
+available at $P_t$ in any amount: the monopolist cannot sell above $P_t$ and, as a
+price taker there, produces where marginal cost equals $P_t$. With a quota $\bar M$,
+the monopolist faces the residual demand $D(P) - \bar M$, sets its own marginal revenue
+equal to marginal cost, and chooses a higher price and lower output than under the
+tariff (\cref{exo:b3:trade-policy:11}).
+\end{proof}
+
+With a VER, the quota rent goes to the foreign exporters, who sell less at a higher
+price: the importing country loses the rent as well as the triangles. That is why
+exporting firms have accepted such restraints.
+
+\section{Effective protection}\label{sec:b3:trade-policy:erp}
+
+\begin{definition}[Effective rate of protection]\label{def:b3:trade-policy:erp}
+\index{effective rate of protection}
+The \emph{effective rate of protection} (ERP) of an industry is the proportional
+increase in its value added per unit, caused by the tariffs on its output and on
+its inputs, relative to value added at world prices.
+\end{definition}
+
+Let a good sell at the world price $P$ and use inputs worth $aP$ at world prices.
+Value added is $P(1 - a)$. With a tariff $t_f$ on the good and $t_i$ on the inputs, it
+becomes $P[(1 + t_f) - a(1 + t_i)]$, so
+\begin{equation}\label{eq:b3:tp:erp}
+  \mathrm{ERP} = \frac{t_f - a\,t_i}{1 - a} .
+\end{equation}
+
+\begin{measure}[Effective protection]
+The ERP exceeds the tariff on the good when inputs are taxed less, and becomes
+negative when inputs are taxed and the output is not. A tariff on steel is then a
+tax on carmakers and every other steel user: they pay more for an input and
+compete with foreign rivals who do not. Tariff schedules that rise with the stage
+of processing --- low on raw materials, high on finished goods --- give the final
+stage an effective protection several times its nominal tariff
+(\cref{exo:b3:trade-policy:3}).
+\end{measure}
+
+\section{Strategic trade policy}\label{sec:b3:trade-policy:strategic}
+
+The \omterm{def:b3:trade-policy:optimal-tariff}{optimal tariff} works through the world price. A second argument for
+intervention works through the profits of firms with market power. When a few
+firms share a world market, each earns a rent, and a government that can shift
+that rent towards its own firm may gain even though the world loses.
+
+\begin{definition}[Strategic trade policy]\label{def:b3:trade-policy:strategic}
+\index{strategic trade policy}
+\emph{Strategic trade policy} is a subsidy or a tax on a country's exports in a
+market served by a few firms, chosen to change the rivals' behaviour so that
+profit moves to the home firm.
+\end{definition}
+
+Take a Home firm and a Foreign firm that sell the same good only in a third
+market, with inverse demand $P = a - q_h - q_f$ and the same unit cost $c$. They
+choose quantities at the same time (Cournot). Home's government pays its firm $s$
+per unit sold; Home's welfare is the firm's profit minus the subsidy, $W = (P - c)q_h$.
+
+\begin{proposition}[Export subsidy under quantity competition]\label{prop:b3:trade-policy:bs}
+In the Cournot equilibrium $q_h = (a - c + 2s)/3$ and $q_f = (a - c - s)/3$. Home's
+welfare is maximised by the subsidy $s^* = (a - c)/4$, which raises it from
+$(a - c)^2/9$ to $(a - c)^2/8$; the Foreign firm's profit falls from $(a - c)^2/9$ to
+$(a - c)^2/16$.
+\end{proposition}
+
+\begin{proof}
+Home's firm maximises $(a - q_h - q_f - c + s)q_h$, so $q_h = (a - c + s - q_f)/2$; Foreign's
+gives $q_f = (a - c - q_h)/2$. Solving, $q_h = (a - c + 2s)/3$, $q_f = (a - c - s)/3$, and
+$P - c = (a - c - s)/3$. So $W(s) = (a - c - s)(a - c + 2s)/9$, and $W'(s) = [(a - c) - 4s]/9$
+vanishes at $s^* = (a - c)/4$. Then $q_h = (a - c)/2$, $q_f = (a - c)/4$, $P - c = (a - c)/4$,
+$W = (a - c)^2/8$ and Foreign's profit is $(a - c)^2/16$. At $s = 0$ both earn $(a - c)^2/9$.
+\end{proof}
+
+At $s^*$ the Home firm sells what it would sell if it could commit to its output
+before its rival moved: the subsidy buys a commitment the firm cannot make alone.
+The result turns on the form of competition. When firms set prices for
+differentiated goods, prices are strategic complements: a Home firm that raises
+its price leads its rival to raise its own. Home then gains from an export
+\emph{tax}, which commits its firm to a higher price, not from a subsidy. The listing
+computes both.
+
+\omcode{code/bachelor-3/11-trade-policy/listings/strategic_trade.py}{1}{33}{Home's best export subsidy when the firms compete in quantities and when they compete in prices.}\label{lst:b3:trade-policy:strategic}
+
+\omoutput{code/bachelor-3/11-trade-policy/outputs/strategic_trade.txt}{Welfare in units of the good's value.}\label{out:b3:trade-policy:strategic}
+
+With $a = 10$ and $c = 2$, the best subsidy is 2 and Home's welfare rises from 7.11
+to 8; under price competition the best policy is a tax of about 0.36, and Foreign's
+profit rises with it. % output: strategic_trade
+The sign of the right policy depends on a fact about conduct that a government
+rarely knows. If both governments subsidise, they play the tariff game again, and
+the rent goes to the buyers in the third market.
+
+\begin{model}{Strategic export subsidies}
+\assumes A few firms with market power share a world market; the government
+moves first and can commit; the form of competition is known.
+\predicts Under quantity competition, an export subsidy shifts profit to the home
+firm and raises national welfare; under price competition, an export tax does.
+\tested Not tested here: a test would need estimates of firms' conduct and of the
+rent shifted in a subsidised industry, with the rival government's response.
+\breaks When the form of competition is unknown, the sign of the policy is
+unknown; when rivals subsidise too, the gain goes to foreign buyers; when entry
+is free, the rent the subsidy shifts disappears.
+\end{model}
+
+\section{The political economy of protection}\label{sec:b3:trade-policy:political}
+
+If tariffs usually lower national welfare, why are they levied? The \omterm{def:b3:factor-endowments:specific-factors}{specific-factors
+model} of \cref{ch:b3:factor-endowments} gives one answer: the gains of protection
+are concentrated on the owners and workers of the protected industry, who know
+what is at stake and organise; the losses are spread thinly over every buyer. The
+tariff is then a transfer obtained through the political process --- a form of rent
+seeking, which \cref{ch:b3:interest-groups-and-regulation} studies with its own models.
+
+The protection-for-sale model of Grossman and Helpman makes this precise. Each
+organised industry offers the government contributions that depend on its tariff;
+the government maximises the contributions plus $a$ times aggregate welfare, where
+the weight $a$ measures how much it cares about voters at large. In equilibrium
+the tariff on good $i$ satisfies
+\begin{equation}\label{eq:b3:tp:pfs}
+  \frac{t_i}{1 + t_i} = \frac{I_i - \alpha_L}{a + \alpha_L}\, \frac{z_i}{e_i},
+\end{equation}
+where $I_i$ is 1 if the industry is organised and 0 if not, $\alpha_L$ is the share
+of the population that belongs to some lobby, $z_i$ is domestic output over imports
+and $e_i$ is the elasticity of import demand. Organised industries get protection,
+the more so when their output is large relative to imports and their import
+demand inelastic, because there the tariff's deadweight loss is small; unorganised
+ones get a small import subsidy.
+
+\begin{model}{Protection for sale}
+\assumes Organised industries bid for tariffs with contributions; the government
+weighs contributions against aggregate welfare, with weight $a$; small country.
+\predicts \Cref{eq:b3:tp:pfs}: tariffs rise with the ratio of output to imports in
+organised industries and fall with it in unorganised ones.
+\tested Goldberg and Maggi (1999) found the pattern of United States protection in
+1983 consistent with the model's predictions, and estimated that the government
+weighed welfare 50 to 88 times as much as contributions. % ledger: b3tp:gm.pfs
+Such a large weight means the model, fitted, predicts tariffs close to zero, and
+it does not explain why some industries organise and others do not.
+\breaks When the organised industries are not given but formed by the stakes; when
+tariffs are bound by agreements, as the next section shows.
+\end{model}
+
+\begin{record}[The tariff of 1930]
+In 1930 the United States raised the duties of its tariff schedule, and as world
+prices fell during the Depression, duties set in dollars per unit rose further
+as a percentage of prices. The volume of United States imports fell by over 40~\%.
+Irwin estimated that the tariff itself cut imports by 4--8~\%, and the interaction
+of specific duties with deflation by another 8--10~\%: together, nearly a quarter
+of the fall; the rest came from the collapse of income. % ledger: b3tp:irw.sh
+Other countries raised their own barriers in the following years, the tariff game
+of \cref{sec:b3:trade-policy:game} played for real.
+\end{record}
+
+\section{The rules of the trading system}\label{sec:b3:trade-policy:rules}
+
+The tariff game has a cooperative outcome that neither player reaches alone.
+Since 1947 most countries have bound themselves to rules, first in the General
+Agreement on Tariffs and Trade and since 1995 in the World Trade Organization,
+which turn the repeated game of \cref{exo:b3:trade-policy:7} into written
+commitments.
+
+\begin{definition}[Most-favoured-nation treatment; reciprocity; bound tariff]\label{def:b3:trade-policy:mfn}
+\index{most-favoured-nation treatment}\index{reciprocity}\index{bound tariff}\index{binding overhang}
+\emph{Most-favoured-nation} (MFN) treatment is the rule that a tariff applied to one
+member's goods must be applied to every member's: no member may be favoured,
+except within a free trade area or a customs union. \emph{Reciprocity} is the
+practice of exchanging tariff cuts of similar value in negotiation. A \emph{bound
+tariff} is the ceiling a member commits not to exceed; the \emph{binding overhang} is
+the bound rate minus the applied rate.
+\end{definition}
+
+\begin{definition}[Anti-dumping duty; safeguard]\label{def:b3:trade-policy:antidumping}
+\index{anti-dumping duty}\index{safeguard}
+An \emph{anti-dumping duty} is a tariff on a foreign firm's good found to be sold
+below its home price or its cost, and to injure the importing industry. A
+\emph{safeguard} is a temporary tariff or quota on all imports of a good whose
+surge injures the importing industry, without any finding of unfair pricing.
+\end{definition}
+
+The two rules have an economic reading. With MFN, a tariff cut offered to one
+partner reaches all, so each member's tariff moves the world price of its imports
+as one. \omterm{def:b3:trade-policy:mfn}{Reciprocity} then neutralises the \omterm{def:b3:trade-policy:optimal-tariff}{terms-of-trade effect}: when both sides cut
+together, the world prices of their imports change little, and only the efficiency
+gains remain. In this reading, a trade agreement exists to stop large countries
+setting their \omterm{def:b3:trade-policy:optimal-tariff}{optimal tariffs}. Countries outside the agreement should then set
+higher tariffs where their market power is larger.
+
+\begin{record}[Optimal tariffs outside the agreement]
+Broda, Limão and Weinstein estimated the elasticity of foreign export supply for
+thousands of goods and countries that were not members of the World Trade
+Organization. Those countries set tariffs about 9 percentage points higher on
+goods supplied inelastically than on goods supplied elastically, a gap as large
+as their average tariffs; and the United States' barriers not covered by the
+agreement were higher where its market power was larger. % ledger: b3tp:blw.optimal
+\end{record}
+
+Bound rates are a ceiling, often far above the applied rates.
+
+\begin{omchart}{Bound against applied tariff rates, simple means over all products,
+each country's latest year from 2017 to 2021 (percent; the 27 members of the
+European Union share one schedule and are one point). The line marks bound equal
+to applied.}{World Bank, World Development Indicators (TM.TAX.MRCH.BR.ZS,
+TM.TAX.MRCH.SM.AR.ZS); our computation}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.68\linewidth, height=0.48\linewidth, xmin=0, xmax=20,
+  ymin=0, ymax=170, xlabel={Applied tariff (\%)}, ylabel={Bound tariff (\%)}]
+  \addplot table[x=applied, y=bound] {figdata/bachelor-3/11-trade-policy/out/bound.csv};
+  \addplot[only marks, mark=*, mark size=1.6pt, omThm, nodes near coords,
+    point meta=explicit symbolic, every node near coord/.append style={font=\scriptsize, anchor=west}]
+    table[x=applied, y=bound, meta=shown] {figdata/bachelor-3/11-trade-policy/out/bound_labels.csv};
+  \addplot[omThm, thin, domain=0:20, samples=2] {x};
+  \node[font=\scriptsize, omThm, anchor=west] (rich) at (axis cs:7,3) {EU, Japan, United States};
+  \draw[omThm, thin] (rich.west) -- (axis cs:3.0,3.6);
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: bound_stats, bound_labels
+Across 131 schedules, the median bound rate is 29.7~\% and the median applied rate
+7.7~\%; in 72~\% of them the overhang exceeds 10 points. Bangladesh has bound its
+tariffs at 158.9~\% on average and applies 12.6~\%; the European Union, the United
+States and Japan apply rates within about 2 points of their bindings. A large
+overhang lets a government raise tariffs without breaking a commitment, so the
+bindings of poorer members constrain them less than the opening chart suggests
+(\cref{exo:b3:trade-policy:8}).
+
+Anti-dumping is the rules' main escape route. Its cases have spread from a few
+countries to many, with new users making up half of the world's total, and an
+\omterm{def:b3:trade-policy:antidumping}{anti-dumping duty} cuts the value of the targeted imports by 30--50~\% on average.
+% ledger: b3tp:prusa.ad
+Disputes go to panels, and since 1995 members have filed 646 requests for
+consultations, the first step of a dispute.
+% ledger: b3tp:wto.ds
+
+\begin{dated}{2026}
+The Appellate Body, which hears appeals against panel reports, cannot review
+appeals: the term of its last member expired on 30 November 2020, and its seats
+are vacant. A panel report under appeal therefore stays without effect.
+% ledger: b3tp:wto.ab
+\end{dated}
+
+\begin{debate}[Does membership raise trade?]
+If the agreement removes the terms-of-trade temptation, members should trade more.
+\begin{itemize}
+\item Rose (2004) estimated a \omterm{def:b3:gravity:gravity}{gravity equation} on a panel of 175 countries over
+fifty years and found little evidence that joining or belonging to the agreement
+changed a country's trade; the system of tariff preferences for developing
+countries was associated with about twice as much trade. % ledger: b3tp:rose.wto
+\emph{Grade 3}: a large panel with gravity controls, but membership is not as good as
+random, and the dummy treats very different commitments alike.
+\item Subramanian and Wei (2007) let the effect differ between members: membership
+raised the imports of industrial countries, which made deep cuts, by an amount
+estimated at about 44~\% of world trade, and did little for developing members
+that cut little, except those that joined after 1995. % ledger: b3tp:sw.wto
+\emph{Grade 3}: the same design, with the effect allowed to follow the commitments.
+\end{itemize}
+Membership in name has no effect; the tariff cuts that membership brought do.
+\end{debate}
+
+\section{Evidence}\label{sec:b3:trade-policy:evidence}
+
+\begin{definition}[Tariff pass-through]\label{def:b3:trade-policy:pass-through}
+\index{tariff pass-through}
+\emph{Tariff pass-through} is the share of a tariff that shows up in the price paid
+by the importer, tariff included: complete pass-through means foreign exporters'
+prices do not fall at all; zero means they absorb the whole tariff.
+\end{definition}
+
+\begin{record}[The U.S.--China tariffs of 2018--2019]
+In 2018 the United States raised tariffs on a wide range of imports, many of them
+from China, and its partners retaliated. Two studies of the import prices found
+complete pass-through: the prices that foreign exporters received did not fall,
+so the tariffs were paid by U.S. buyers. % ledger: b3tp:arw.passthrough, b3tp:fgkk.loss
+One estimated the loss to U.S. buyers of imports at \$51 billion, 0.27~\% of GDP,
+and the aggregate loss, after tariff revenue and gains to protected producers, at
+\$7.2 billion, 0.04~\% of GDP. % ledger: b3tp:fgkk.loss
+At the store, prices of affected goods rose less than at the border: retailers'
+margins absorbed part of the tariff. And U.S. exporters hit by foreign retaliation
+lowered their prices. % ledger: b3tp:cgnt.store
+\end{record}
+
+\begin{model}{The large-country tariff}
+\assumes Competitive markets; an upward-sloping foreign export supply; no
+retaliation.
+\predicts Foreign exporters absorb part of a tariff through a lower world price,
+and a small tariff raises the importing country's welfare; the \omterm{def:b3:trade-policy:optimal-tariff}{optimal tariff} is
+$1/\varepsilon^*$.
+\tested In 2018--2019, the world prices of the U.S. imports targeted by tariffs did not
+fall: pass-through was complete, as if foreign export supply were perfectly
+elastic, and no terms-of-trade gain appeared. U.S. exporters facing retaliation
+did lower their prices. % ledger: b3tp:arw.passthrough, b3tp:cgnt.store
+\breaks Retaliation, which turns the gain into a loss; exporters who can sell
+elsewhere at the same price; imperfect competition.
+\end{model}
+
+\begin{debate}[Trade and wages]
+How much did import competition lower wages and employment for the workers exposed
+to it, and did the gains elsewhere offset it?
+\begin{itemize}
+\item Autor, Dorn and Hanson measured each U.S. local labour market's exposure to
+Chinese imports from 1990 to 2007 by its initial mix of industries, instrumented
+with Chinese exports to other rich countries. Exposed areas had higher
+unemployment, lower participation and wages, and higher transfer payments; the
+shock explains at least a quarter of the fall in manufacturing employment.
+% ledger: b3tp:adh.china
+\emph{Grade 2}: a strong shift-share design, whose validity rests on either the
+industry shocks being as good as random or the initial shares being so --- the
+two readings developed by Borusyak, Hull and Jaravel and by Goldsmith-Pinkham,
+Sorkin and Swift. % ledger: b3tp:bhj.shiftshare, b3tp:gpss.bartik
+\item Dauth, Findeisen and Suedekum applied the same design to Germany, 1988--2008:
+regions specialised in import-competing industries lost jobs, but export-oriented
+regions gained more, some 442{,}000 jobs in all, almost all from trade with
+Eastern Europe rather than China. % ledger: b3tp:dfs.germany
+\emph{Grade 2}, with the same caveats; the two studies disagree in sign for the
+aggregate, because the two countries' export opportunities differed.
+\item Caliendo, Dvorkin and Parro built a model of 38 countries, 50 states and 22
+sectors: China's import competition cost about 1 million U.S. manufacturing jobs
+and raised aggregate U.S. welfare, with large losses in some labour markets.
+% ledger: b3tp:cdp.dynamics
+\emph{Grade 4}: a calibrated model, whose aggregate gain rests on its assumptions
+about mobility and trade.
+\end{itemize}
+\end{debate}
+
+\begin{record}[Infant industries: the evidence]
+The infant-industry argument holds that a young industry, protected for a time,
+learns to produce at world costs and can then stand alone. The claim is hard to
+test, because governments protect industries they expect to grow. Juhász found a
+natural experiment: during the Napoleonic Wars (1803--1815), the blockade against
+Britain cut some regions of the French Empire off from British trade more than
+others, for reasons of geography. The better protected regions built more
+mechanised cotton-spinning capacity, kept more of the industry in the long run,
+and had higher industrial value added per head until the second half of the
+nineteenth century, but not later. % ledger: b3tp:juh.blockade
+One episode, in one industry with a new technology: \emph{grade 2} for that
+setting, and silent on how to pick which industries to protect.
+\end{record}
+
+\section{Exercises}\label{sec:b3:trade-policy:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:trade-policy:1}
+In the opening chart, which economy cut its average tariff most in points, and
+which in percent? In which decade did China's fall most?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:trade-policy:2}
+A small country's demand is $Q = 80 - P$ and its supply $Q = P - 20$; the world price
+is 40. Find imports under free trade and with a specific tariff of 5, the tariff
+revenue and the deadweight loss.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:trade-policy:3}
+A car sells for 20{,}000 at world prices and uses inputs worth 12{,}000. Cars bear a
+10~\% tariff and inputs 5~\%. Find the \omterm{def:b3:trade-policy:erp}{effective rate of protection}. What is it if
+inputs bear 20~\%?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:trade-policy:4}
+What price data would show that foreign exporters absorbed a tariff in full? Which
+prices would you compare, and with what?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:trade-policy:5}
+A large country's import demand is $M = 100 - 2P$ and foreign export supply $X^* = 2P^*
+- 20$. It levies a specific tariff of 10. Find $P^*$, $P$ and $M$, the terms-of-trade
+gain, the deadweight loss and the net welfare change.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:trade-policy:6}
+Foreign export supply has a constant elasticity of 4. Find the \omterm{def:b3:trade-policy:optimal-tariff}{optimal tariff}.
+What happens to it as the elasticity grows?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:trade-policy:7}
+The tariff game of this chapter is played every year, with discount factor $\beta$.
+Each country plays free trade as long as the other has, and tariffs for ever after
+any tariff. For which $\beta$ is free trade an equilibrium?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:trade-policy:8}
+Using the World Bank's bound and applied tariff series, compute each country's
+\omterm{def:b3:trade-policy:mfn}{binding overhang} in its latest year from 2017 to 2021, counting the European Union
+once. In what share of countries could the government double its applied tariff
+without breaking its binding? Is the overhang larger in poorer countries?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:trade-policy:9}
+A government protects a young industry and twenty years later it exports. Does that
+prove that protection worked? What data would refute the claim?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:trade-policy:10}
+Prove the optimal-tariff formula for a specific tariff $s$, with $P = P^* + s$: show
+that at an interior optimum $s/P^* = 1/\varepsilon^*$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:trade-policy:11}
+Domestic demand is $P = 100 - Q$; the only domestic firm has marginal cost $20 + q$; the
+world price is 40. Compare a specific tariff of 10 with the quota that gives the
+same imports: domestic price, output and imports.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:trade-policy:12}
+Five regions have the 1990 employment shares and national import shocks of the
+chapter's exercise file. Compute each region's shift-share exposure and regress the
+change in its manufacturing employment share on it. What must be true of the
+shocks or the shares for the slope to be causal?
+\end{exercise}
+
+\section{Problem: Brenland's Steel Tariff}\label{sec:b3:trade-policy:problem}
+
+\begin{problem}[{Weekend problem --- Brenland's steel tariff}]\label{pb:b3:trade-policy:steel}
+In Brenland, steel demand is $100 - 2P$ and domestic supply $-20 + 2P$ (millions of
+tonnes; $P$ in dalens per tonne). Kestria's export supply of steel is $X^* = -40 + 4P^*$.
+Brenland exports grain to Kestria: Brenland's export supply of grain is $-20 + 2p$
+and Kestria's import demand $100 - 3p_K$. Welfare is measured in millions of
+dalens. Brenland considers a 25~\% tariff on steel.
+
+\medskip\noindent\textbf{Part I --- the small-country benchmark.}
+\begin{enumerate}
+\item Find Brenland's import demand for steel.
+\item Find the free-trade price and imports when Brenland and Kestria trade steel.
+\item Suppose instead Brenland were small and the world price stayed at 20. Find
+the domestic price, production, consumption and imports with the tariff.
+\item Find the changes in consumer and producer surplus and the tariff revenue.
+\item Find the deadweight loss and the net welfare change.
+\item Why is a tariff always costly for a small country?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- the large-country tariff.}
+\begin{enumerate}[resume]
+\item With $P = 1.25P^*$, find the world price, the Brenland price and imports.
+\item Who pays the tariff? Give the share of the price wedge borne by Kestrian
+exporters.
+\item Find the terms-of-trade gain and the efficiency loss.
+\item Find Brenland's net welfare change, and check it against the sum of the
+surplus changes and revenue.
+\item Find Kestria's loss in the steel market.
+\item Find the elasticity of Kestria's export supply at free trade and at the 25~\%
+tariff. Is 25~\% above or below the \omterm{def:b3:trade-policy:optimal-tariff}{optimal tariff}?
+\item Find the \omterm{def:b3:trade-policy:optimal-tariff}{optimal tariff} and Brenland's welfare gain at that tariff.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- retaliation.}
+\begin{enumerate}[resume]
+\item Find the free-trade grain price and Brenland's grain exports.
+\item Kestria retaliates with a 25~\% tariff on Brenland's grain. Find the price
+Brenland's farmers receive and the exports.
+\item Find Brenland's loss in the grain market.
+\item Find Kestria's gain in the grain market.
+\item Write the tariff game in normal form, with welfare changes from free trade.
+\item Find the Nash equilibrium. Is it efficient?
+\item What does the 2018--2019 record say about the assumption of Part II?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- steel users and jobs.}
+\begin{enumerate}[resume]
+\item Brenland's cars sell at world prices and are not protected; steel is 30~\% of
+the value of a car at free-trade prices. Find the \omterm{def:b3:trade-policy:erp}{effective rate of protection} of
+car making under the large-country tariff.
+\item Steel employs 1{,}000 workers per million tonnes. How many steel jobs does
+the tariff create?
+\item Car making employs 50{,}000 workers. If employment moves in proportion to
+value added, how many car jobs are lost?
+\item Why do jobs counted this way not measure the tariff's welfare effect?
+\item Which group in Brenland would lobby for the tariff, and which against it?
+\item State the result: the net welfare change of the tariff for Brenland, with and
+without retaliation.
+\end{enumerate}
+\end{problem}

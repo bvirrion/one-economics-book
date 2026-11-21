@@ -1,0 +1,489 @@
+\chapter{The Efficiency Cost of Taxation}\label{ch:b3:efficiency-cost-of-taxation}
+
+A government that spends a third of output must raise a third of output, and every
+way of raising it changes what people buy, how much they work and what they report.
+This chapter measures that cost: the \omterm{def:b3:efficiency-cost-of-taxation:harberger}{excess burden} of a tax and the formula that
+approximates it, the cost of the last dalen raised, the rule that spreads taxes so
+as to minimise the burden, who bears a tax in the end, and how much taxable income
+responds to the rate --- the number on which the rest depends.
+
+\begin{openingchart}{Central-government revenue as a share of GDP, six economies,
+1870--2020 (percent). Sweden's 1996 value, a one-year spike to 41.8~\% in the
+source between 22.2~\% and 31.7~\%, is replaced by the mean of its neighbours.}{Jordà, Schularick and Taylor, Macrohistory Database (revenue,
+gdp); our ratio}
+\begin{tikzpicture}
+\begin{axis}[omtimesten, width=0.72\linewidth, height=0.44\linewidth, xmin=1865,
+  xmax=2025, ymin=0, ymax=50, ylabel={Percent of GDP}, legend pos=north west,
+  legend style={font=\footnotesize, legend columns=2}]
+  \addplot[omDef, thick, mark=none] table[x=year, y=GBR] {figdata/bachelor-3/17-efficiency-cost-of-taxation/out/revenue.csv};
+  \addplot[black, thick, mark=none] table[x=year, y=USA] {figdata/bachelor-3/17-efficiency-cost-of-taxation/out/revenue.csv};
+  \addplot[omThm, thick, mark=none] table[x=year, y=FRA] {figdata/bachelor-3/17-efficiency-cost-of-taxation/out/revenue.csv};
+  \addplot[omProp, thick, mark=none] table[x=year, y=SWE] {figdata/bachelor-3/17-efficiency-cost-of-taxation/out/revenue.csv};
+  \addplot[omThm, thick, dashed, mark=none] table[x=year, y=ITA] {figdata/bachelor-3/17-efficiency-cost-of-taxation/out/revenue.csv};
+  \addplot[omDef, thick, dashed, mark=none] table[x=year, y=JPN] {figdata/bachelor-3/17-efficiency-cost-of-taxation/out/revenue.csv};
+  \legend{United Kingdom, United States, France, Sweden, Italy, Japan}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: revenue_points
+In 1913 central governments took between 2~\% of GDP (the United States) and 14~\%
+(Japan). By 1950 the British share was 38~\%, and by 2015 the Swedish one 30~\% and the
+Italian 28~\%. In Britain and the United States the rise came in steps, at the two
+world wars; in Sweden and Italy it rose in peacetime: the Swedish share from 15~\% in
+1950 to 29~\% in 1985, the Italian one by 13 points in the ten years to 1983. After
+1950, only Japan's share fell back below its 1913 level.
+Local governments and social-insurance funds, which the series leaves out, raise as
+much again in several of these economies.
+
+\begin{recall}
+The grades 10--12 volume showed that a tax drives a wedge between the price buyers
+pay and the price sellers receive, that its burden falls on the less elastic side
+whatever the statute says, and that it creates a deadweight loss. The Year 1 volume
+measured that loss with elasticities, and defined compensated demand, the
+equivalent and compensating variations, and Lagrange's method.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:efficiency-cost-of-taxation:symbols}
+$\tau$ is an ad valorem tax rate; $\varepsilon$ a compensated price elasticity, in absolute value;
+$e$ the \omterm{def:b3:efficiency-cost-of-taxation:eti}{elasticity of taxable income} with respect to the net-of-tax rate $1 - \tau$; $a$ the
+Pareto parameter of the top of the income distribution; $\lambda$ a Lagrange multiplier.
+\end{notation}
+
+\section{The excess burden of a tax}\label{sec:b3:efficiency-cost-of-taxation:burden}
+
+A tax costs taxpayers more than the revenue it raises: they lose the tax they pay
+and the trades it stops. The second part, the deadweight loss of earlier volumes, is
+the tax's \emph{\omterm{def:b3:efficiency-cost-of-taxation:harberger}{excess burden}}. It must be measured on compensated demand: the income
+effect of a tax is a transfer to the government, not a waste, and only the
+substitution away from the taxed good is lost.
+
+\begin{definition}[Harberger formula]\label{def:b3:efficiency-cost-of-taxation:harberger}
+\index{Harberger formula}\index{excess burden}
+The \emph{Harberger formula} approximates the excess burden of a small ad valorem tax
+$\tau$ on a good with expenditure $pq$, supplied at constant cost, by $\tfrac12\varepsilon\tau^2 pq$, with $\varepsilon$ the
+compensated elasticity of demand.
+\end{definition}
+
+\begin{proposition}[Harberger's approximation]\label{prop:b3:efficiency-cost-of-taxation:harberger}
+With constant marginal cost $p$ and compensated demand linear near $q$, the \omterm{def:b3:efficiency-cost-of-taxation:harberger}{excess
+burden} of a tax $\tau p$ per unit is $\tfrac12\varepsilon\tau^2 pq$: it rises with the square of the rate.
+\end{proposition}
+
+\begin{proof}
+The tax raises the price from $p$ to $(1 + \tau)p$. Compensated demand falls by $\Delta q = \varepsilon q
+\times \Delta p/p = \varepsilon\tau q$. The units no longer bought were worth to buyers between $p$ and
+$(1 + \tau)p$, and cost $p$ to produce: the loss is the triangle of base $\Delta q$ and height $\tau p$,
+$\tfrac12 \times \varepsilon\tau q \times \tau p = \tfrac12\varepsilon\tau^2 pq$.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.55cm, y=0.55cm]
+  \draw[econ axes] (0,0) -- (11,0) node[right, font=\scriptsize] {$q$};
+  \draw[econ axes] (0,0) -- (0,8) node[above, font=\scriptsize] {price};
+  \draw[curve, omDef] (1,7.5) -- (10,1) node[right, font=\scriptsize] {compensated demand};
+  \draw[curve] (0,3) -- (10.5,3) node[right, font=\scriptsize] {$p$};
+  \draw[curve, dashed] (0,4.8) -- (10.5,4.8) node[right, font=\scriptsize] {$(1 + \tau)p$};
+  \fill[omThm!35] (4.74,4.8) -- (7.23,3) -- (4.74,3) -- cycle;
+  \fill[omDef!15] (0,3) rectangle (4.74,4.8);
+  \node[font=\scriptsize] at (2.4,3.9) {revenue};
+  \node[font=\scriptsize, anchor=west] (eb) at (7.6,4.6) {excess burden};
+  \draw[->, thin] (eb.west) -- (5.55,3.6);
+  \draw[guide] (4.74,0) -- (4.74,3); \draw[guide] (7.23,0) -- (7.23,3);
+  \node[below, font=\scriptsize] at (4.74,0) {$q_\tau$};
+  \node[below, font=\scriptsize] at (7.23,0) {$q$};
+\end{tikzpicture}
+\par\smallskip{\small A tax $\tau p$ per unit: the rectangle is revenue, the triangle is
+the \omterm{def:b3:efficiency-cost-of-taxation:harberger}{excess burden}. Doubling the rate doubles the triangle's height and base, so the
+burden is four times larger.}
+\end{omfigure}
+
+The square matters. Raising the same revenue by two taxes at rate $\tau$ costs half as
+much as one tax at $2\tau$ on a base of the same size; a broad base at a low rate beats a
+narrow base at a high one.
+
+\section{The marginal cost of public funds}\label{sec:b3:efficiency-cost-of-taxation:mcpf}
+
+\begin{definition}[Marginal cost of public funds]\label{def:b3:efficiency-cost-of-taxation:mcpf}
+\index{marginal cost of public funds}\index{marginal excess burden}
+The \emph{marginal cost of public funds} is the cost to taxpayers of raising one more
+dalen of revenue by a given tax: one plus the \emph{marginal \omterm{def:b3:efficiency-cost-of-taxation:harberger}{excess burden}}, the
+increase in \omterm{def:b3:efficiency-cost-of-taxation:harberger}{excess burden} per dalen of extra revenue.
+\end{definition}
+
+\begin{proposition}[The marginal burden rises with the rate]\label{prop:b3:efficiency-cost-of-taxation:meb}
+With a single tax of the Harberger proposition, revenue is $R = \tau pq(1 - \varepsilon\tau)$, the \omterm{def:b3:efficiency-cost-of-taxation:mcpf}{marginal
+excess burden} is $\varepsilon\tau/(1 - 2\varepsilon\tau)$ and the \omterm{def:b3:efficiency-cost-of-taxation:mcpf}{marginal cost of public funds} is $(1 - \varepsilon\tau)/(1 - 2\varepsilon\tau)$,
+both rising in $\tau$.
+\end{proposition}
+
+\begin{proof}
+Taxed quantity is $q(1 - \varepsilon\tau)$, so $R = \tau pq(1 - \varepsilon\tau)$ and $dR/d\tau = pq(1 - 2\varepsilon\tau)$. The \omterm{def:b3:efficiency-cost-of-taxation:harberger}{excess burden}
+$\tfrac12\varepsilon\tau^2pq$ has derivative $\varepsilon\tau pq$, linear in $\tau$. The ratio is $\varepsilon\tau/(1 - 2\varepsilon\tau)$; adding one gives
+$(1 - \varepsilon\tau)/(1 - 2\varepsilon\tau)$. The numerator of the first rises and its denominator falls as $\tau$ rises.
+\end{proof}
+
+With $\varepsilon = 0.5$ and $\tau = 0.2$, the \omterm{def:b3:efficiency-cost-of-taxation:mcpf}{marginal excess burden} is $0.1/0.8 = 0.125$: the last dalen
+costs taxpayers 1.125 dalens. A public project is worth funding at the margin only
+if it returns more than the marginal cost of the funds that pay for it --- not more
+than one dalen per dalen spent.
+
+\section{The inverse-elasticity rule}\label{sec:b3:efficiency-cost-of-taxation:ramsey}
+
+\begin{definition}[Ramsey rule (taxation)]\label{def:b3:efficiency-cost-of-taxation:ramsey-rule}
+\index{Ramsey rule (taxation)}\index{inverse-elasticity rule}
+The \emph{Ramsey rule} of taxation sets the tax rates on goods with independent
+demands so as to raise a given revenue at the least \omterm{def:b3:efficiency-cost-of-taxation:harberger}{excess burden}; with
+independent demands it takes the form of the \emph{inverse-elasticity rule}: each
+rate is inversely proportional to the good's compensated elasticity.
+\end{definition}
+
+\begin{proposition}[Inverse elasticities]\label{prop:b3:efficiency-cost-of-taxation:ramsey}
+With goods $i$ of pre-tax spending $x_i$ and independent compensated demands of
+elasticity $\varepsilon_i$, minimising $\sum_i \tfrac12\varepsilon_i\tau_i^2x_i$ subject to revenue $\sum_i \tau_ix_i(1 - \varepsilon_i\tau_i) = R$ gives
+$\tau_i = \lambda/\big((1 + 2\lambda)\varepsilon_i\big)$: rates in inverse proportion to elasticities.
+\end{proposition}
+
+\begin{proof}
+The Lagrangian is $\sum_i \tfrac12\varepsilon_i\tau_i^2x_i - \lambda\big(\sum_i \tau_ix_i(1 - \varepsilon_i\tau_i) - R\big)$. Its derivative in $\tau_i$ is
+$\varepsilon_i\tau_ix_i - \lambda x_i(1 - 2\varepsilon_i\tau_i) = 0$, so $\varepsilon_i\tau_i(1 + 2\lambda) = \lambda$ and $\tau_i = \lambda/\big((1 + 2\lambda)\varepsilon_i\big)$. The
+factor $\lambda/(1 + 2\lambda)$ is the same for every good, so $\tau_i\varepsilon_i$ is equal across goods.
+\end{proof}
+
+The rule says to tax most what people cannot do without. Inelastic goods are often
+necessities, so the efficient tax system is regressive, and every actual system
+trades the rule off against the distribution of the burden. It also explains why
+uniform value-added taxes are defended despite the rule: elasticities are not known
+good by good, and every exemption invites lobbying for the next.
+
+\section{Who bears the tax}\label{sec:b3:efficiency-cost-of-taxation:incidence}
+
+\begin{definition}[Payroll tax]\label{def:b3:efficiency-cost-of-taxation:payroll-tax}
+\index{payroll tax}
+A \emph{payroll tax} is a tax levied on wages, paid by the employer, the employee or
+both, often to finance social insurance.
+\end{definition}
+
+\begin{proposition}[The statutory side does not matter]\label{prop:b3:efficiency-cost-of-taxation:payroll}
+In a competitive labour market with labour-supply elasticity $\eta_S$ and labour-demand
+elasticity $\eta_D$ (absolute value), a small \omterm{def:b3:efficiency-cost-of-taxation:payroll-tax}{payroll tax} lowers the net wage by the
+share $\eta_D/(\eta_S + \eta_D)$ of the tax and raises the employer's cost by $\eta_S/(\eta_S + \eta_D)$, whichever
+side the law makes pay.
+\end{proposition}
+
+\begin{proof}
+Let $w$ be the wage the worker receives and $w(1 + t)$ the employer's cost. Equilibrium
+requires $S(w) = D\big(w(1 + t)\big)$. Differentiating at $t = 0$ in log terms, $\eta_S\,d\ln w = -\eta_D(d\ln w + dt)$, so
+$d\ln w = -\eta_D\,dt/(\eta_S + \eta_D)$ and the employer's cost rises by $dt + d\ln w = \eta_S\,dt/(\eta_S + \eta_D)$. A tax
+levied on the worker instead enters as $S\big(w(1 - t)\big) = D(w)$ and gives the same net wage
+and cost to first order.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.55cm, y=0.55cm]
+  \draw[econ axes] (0,0) -- (11,0) node[right, font=\scriptsize] {employment};
+  \draw[econ axes] (0,0) -- (0,8) node[above, font=\scriptsize] {wage};
+  \draw[curve, omDef] (1,7.5) -- (10,1.5) node[right, font=\scriptsize] {labour demand};
+  \draw[curve, omThm] (1,2) -- (10,6.2) node[right, font=\scriptsize] {labour supply};
+  \draw[guide] (0,5.1) -- (4.6,5.1) node[pos=0, left, font=\scriptsize] {employer's cost};
+  \draw[guide] (0,3.7) -- (4.6,3.7) node[pos=0, left, font=\scriptsize] {net wage};
+  \draw[very thick] (4.6,3.7) -- (4.6,5.1);
+  \node[font=\scriptsize, anchor=east] at (4.5,4.4) {tax wedge};
+  \fill (5.85,4.27) circle (1.6pt);
+  \node[font=\scriptsize, anchor=north west] at (5.95,4.15) {no tax};
+\end{tikzpicture}
+\par\smallskip{\small A \omterm{def:b3:efficiency-cost-of-taxation:payroll-tax}{payroll tax} opens a wedge between the employer's cost and the
+net wage. The wedge sits where it fits between the curves, wherever the law places
+it; the steeper (less elastic) curve takes the larger share.}
+\end{omfigure}
+
+The same logic runs beyond one market. A value-added tax on all consumption falls on
+whatever people consume out of --- wages, profits, past savings --- and is a tax on
+the income spent; a tax on the profits of a firm whose capital can move abroad
+falls partly on the workers whose productivity that capital raised. What the law
+names is the collector, not the payer.
+
+\begin{omchart}{Central-government revenue by type, five economies, 1972 and 2024
+(percent of revenue).}{World Bank, World Development Indicators (GC.TAX.YPKG.RV.ZS,
+GC.TAX.GSRV.RV.ZS, GC.REV.SOCL.ZS, GC.TAX.INTT.RV.ZS); other is the remainder}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xbar stacked, bar width=7pt, width=0.66\linewidth,
+  height=0.5\linewidth, xmin=0, xmax=100, ymin=-0.7, ymax=9.7, ytick={0,...,9},
+  yticklabels={United States 1972, 2024, United Kingdom 1972, 2024, France 1972,
+    2024, Germany 1972, 2024, Korea 1972, 2024},
+  y dir=reverse, yticklabel style={font=\scriptsize}, xlabel={Percent of revenue},
+  grid=none, xmajorgrids, legend style={at={(0.5,-0.2)}, anchor=north,
+  legend columns=3, font=\footnotesize},
+  cycle list={{fill=omDef!80, draw=white}, {fill=omThm!70, draw=white},
+    {fill=omProp!70, draw=white}, {fill=omMeth!70, draw=white},
+    {fill=black!25, draw=white}}]
+\pgfplotsforeachungrouped \col in {income, goods, social, trade, other} {
+  \addplot+[] table[y=pos, x=\col]
+    {figdata/bachelor-3/17-efficiency-cost-of-taxation/out/composition.csv};
+}
+\legend{Income and profits, Goods and services, Social contributions, Trade, Other}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: composition
+The mix changes slowly and differs widely. Social contributions --- \omterm{def:b3:efficiency-cost-of-taxation:payroll-tax}{payroll taxes},
+mostly --- rose from 24 to 37~\% of United States federal revenue between 1972 and
+2024, and from 1 to 30~\% in Korea, where trade taxes fell from 10~\% to 1~\%. France
+and Germany draw more than a third of central revenue from social contributions;
+the United States draws more than half from income and profits.
+
+\section{The elasticity of taxable income}\label{sec:b3:efficiency-cost-of-taxation:eti}
+
+\begin{definition}[Elasticity of taxable income]\label{def:b3:efficiency-cost-of-taxation:eti}
+\index{elasticity of taxable income}
+The \emph{elasticity of taxable income} is the percentage change in the income
+people report to the tax authority for a one percent change in the net-of-tax rate
+$1 - \tau$.
+\end{definition}
+
+Taxable income responds through every margin at once: hours and effort, but also
+the timing of income, its form (wages, dividends, capital gains), deductions,
+avoidance and evasion. If the tax law is fixed, all of these are costs to the
+economy of raising the rate, and the \omterm{def:b3:efficiency-cost-of-taxation:eti}{elasticity of taxable income} measures them in
+one number.
+
+\begin{model}{The elasticity of taxable income}
+\assumes Reported income responds to the net-of-tax rate with a stable elasticity,
+and the income that disappears from the base is not taxed elsewhere.
+\predicts The \omterm{def:b3:efficiency-cost-of-taxation:harberger}{excess burden} of an income tax includes all responses, avoidance as
+well as work; revenue from the top bracket peaks at a finite rate.
+\tested Tax reforms set the reported incomes of the groups whose rates change
+against groups whose rates do not: the U.S. 1993 top-rate increase, a sequence of
+Danish reforms with population-wide data since 1980, the United Kingdom's 50~\% rate
+of 2010--2013. % ledger: b3ec:ssg.review, b3ec:ks.denmark
+\breaks The elasticity is not a constant of nature. It is large where the tax base
+has holes --- income that can be shifted into capital gains or into another year ---
+and small where the base is broad and enforcement strong; income that moves to
+another base is not a full loss.
+\end{model}
+
+\begin{measure}[How an elasticity of taxable income is estimated]
+Two designs dominate. A difference-in-differences compares the change in reported
+income of those whose rate changed with the change for a nearby group whose rate
+did not, and must deal with trends in inequality that differ between the groups and
+with mean reversion (a high income this year tends to fall next year anyway). At a
+kink of the schedule, where the marginal rate jumps, people who respond pile up just
+below the kink; the excess number of taxpayers there, against a smooth density,
+gives the elasticity. In United States tax returns, bunching shows up at the first
+kink of the earned-income credit, but only among the self-employed, and at the
+threshold where income tax starts, and not at the other kinks. % ledger: b3ec:saez.bunching
+\end{measure}
+
+\section{Revenue against the rate}\label{sec:b3:efficiency-cost-of-taxation:laffer}
+
+\begin{definition}[Revenue-maximising tax rate; Laffer curve]\label{def:b3:efficiency-cost-of-taxation:laffer}
+\index{revenue-maximising tax rate}\index{Laffer curve}
+The \emph{Laffer curve} is tax revenue as a function of the tax rate, zero at rates of
+0 and 100~\%. The \emph{revenue-maximising tax rate} is the rate at its peak.
+\end{definition}
+
+\begin{proposition}[The revenue-maximising top rate]\label{prop:b3:efficiency-cost-of-taxation:topRate}
+Let incomes above a threshold $\bar z$ have mean $z_m$, with $a = z_m/(z_m - \bar z)$ constant (a Pareto tail),
+and let $z_m$ respond to $1 - \tau$ with elasticity $e$. Revenue from a marginal rate $\tau$ on income
+above $\bar z$ is maximised at $\tau^* = 1/(1 + ae)$.
+\end{proposition}
+
+\begin{proof}
+Per taxpayer in the bracket, revenue is $\tau(z_m - \bar z)$. A small rise $d\tau$ raises it mechanically
+by $(z_m - \bar z)\,d\tau$ and lowers it by $\tau\,dz_m = -\tau ez_m\,d\tau/(1 - \tau)$. At the peak the two balance:
+$(1 - \tau)(z_m - \bar z) = \tau ez_m$, that is, $(1 - \tau)/a = \tau e$, and $\tau^* = 1/(1 + ae)$.
+\end{proof}
+
+\begin{omchart}{Revenue from a top bracket against its rate, for a Pareto tail with
+$a = 1.5$ and elasticities of taxable income of 0.25 and 0.5 (the peak with $e = 0.25$
+is 1).}{Our computation (\code{make\_laffer.py})}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.56\linewidth, height=0.36\linewidth, xmin=0, xmax=100,
+  ymin=0, ymax=1.1, xlabel={Top marginal rate (\%)}, ylabel={Revenue},
+  legend pos=north west, legend style={font=\footnotesize}]
+  \addplot[omDef, thick, mark=none] table[x=tau, y=e25] {figdata/bachelor-3/17-efficiency-cost-of-taxation/out/laffer.csv};
+  \addplot[omThm, thick, dashed, mark=none] table[x=tau, y=e50] {figdata/bachelor-3/17-efficiency-cost-of-taxation/out/laffer.csv};
+  \legend{$e = 0.25$, $e = 0.5$}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: laffer_peaks
+With $a = 1.5$, the revenue-maximising rate is 73~\% if the elasticity is 0.25 and 57~\%
+if it is 0.5. The formula needs two numbers: $a$ is measured from tax returns with
+little dispute; $e$ is the hard one, and the whole argument turns on it.
+
+\begin{record}[The United Kingdom's 50~\% rate, 2010--2013]
+A 50~\% rate on incomes above 150{,}000 pounds took effect in April 2010, announced
+in March 2009, and was cut to 45~\% from April 2013. Tax officials estimated that
+about 18 billion pounds of income had been brought forward into 2009--10, before
+the rate rose, and an underlying elasticity of 0.48; the official costing of the cut
+used 0.45, which put the extra revenue of the 50~\% rate over a 45~\% rate at 0.1
+billion pounds. Later work with fuller data found 0.31 for the first year and 0.83
+for the second, and between 0.1 and 0.2 for taxpayers just above the threshold.
+% ledger: b3ec:ifs.50p
+The episode shows what moves the elasticity: a rise announced a year ahead invites
+retiming, and the richest, whose income is most easily shifted, respond most.
+\end{record}
+
+\section{Taxes people do not notice}\label{sec:b3:efficiency-cost-of-taxation:salience}
+
+\begin{definition}[Tax salience]\label{def:b3:efficiency-cost-of-taxation:salience}
+\index{tax salience}
+\emph{Tax salience} is the visibility of a tax to the people who pay it at the moment
+they decide: a tax included in the posted price is salient; one added at the till
+is less so.
+\end{definition}
+
+\begin{record}[Posted and unposted sales taxes]
+In a grocery store experiment, posting price tags that included the sales tax cut
+demand for the tagged goods by 8~\%, though the price paid at the till was the same.
+Across states, increases in alcohol taxes that are included in posted prices
+reduced consumption more than increases in taxes added at the register.
+% ledger: b3ec:clk.salience
+\end{record}
+
+Salience breaks two results of this chapter. The statutory side matters: a tax that
+buyers do not see when they choose falls more on them than the elasticities
+predict. And a tax that changes nothing people do can still cost them, because they
+spend as if their income were larger than it is and end up with the wrong bundle;
+the \omterm{def:b3:efficiency-cost-of-taxation:harberger}{excess burden} is no longer the triangle under a demand curve that ignores the
+tax.
+
+\section{Exercises}\label{sec:b3:efficiency-cost-of-taxation:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:efficiency-cost-of-taxation:1}
+In the opening chart, when did central-government revenue rise most in each
+economy? Did it ever fall back to its pre-1913 level?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:efficiency-cost-of-taxation:2}
+A tax of 20~\% falls on a good with compensated elasticity 0.5 and spending of 100
+million dalens. Compute the \omterm{def:b3:efficiency-cost-of-taxation:harberger}{excess burden}, the revenue and their ratio.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:efficiency-cost-of-taxation:3}
+With the numbers of exercise 2, compute the \omterm{def:b3:efficiency-cost-of-taxation:mcpf}{marginal excess burden} and the \omterm{def:b3:efficiency-cost-of-taxation:mcpf}{marginal
+cost of public funds}. A project returns 1.1 dalens per dalen spent: should it be
+funded by raising this tax?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:efficiency-cost-of-taxation:4}
+What evidence would contradict the claim that a value-added tax is passed on in
+full to consumer prices?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:efficiency-cost-of-taxation:5}
+Two goods with independent demands have compensated elasticities 0.2 and 0.8 and
+equal spending. The government must raise 10~\% of that spending. Find the
+Ramsey rates, using the \omterm{def:b3:efficiency-cost-of-taxation:ramsey-rule}{inverse-elasticity rule} and the revenue constraint
+(solve numerically), and compare the \omterm{def:b3:efficiency-cost-of-taxation:harberger}{excess burden} with a uniform tax raising the
+same revenue.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:efficiency-cost-of-taxation:6}
+Find the revenue-maximising top rate with $a = 1.5$ and $e = 0.25$; then with $a = 2$. Why
+does a thinner tail lower the rate?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:efficiency-cost-of-taxation:7}
+Labour supply has elasticity 0.2 and labour demand 0.6. A \omterm{def:b3:efficiency-cost-of-taxation:payroll-tax}{payroll tax} of 10~\% of
+the wage is levied on employers. By how much does the net wage fall, and the
+employer's cost rise? What changes if the tax is levied on workers?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:efficiency-cost-of-taxation:8}
+With the WDI data, compute for the five economies of the composition chart the
+change between 1990 and 2024 in the share of each type of revenue. Which type gained
+most, and where?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:efficiency-cost-of-taxation:9}
+What evidence would show that bunching at a kink reflects changes in what people
+earn, not only in what they report?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:efficiency-cost-of-taxation:10}
+Prove the \omterm{def:b3:efficiency-cost-of-taxation:ramsey-rule}{inverse-elasticity rule} for $n$ goods with independent demands, and show
+that with dependent demands (substitutes) the rule must change. In which direction
+for a good that substitutes for leisure?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:efficiency-cost-of-taxation:11}
+At a kink, the marginal rate rises from 20~\% to 35~\% at an income of 40{,}000. The
+density of taxpayers just around the kink is 50 per 1{,}000 dalens, and 120 more
+taxpayers are found within the bunching window than a smooth density would put
+there. Find the income response of the marginal buncher, and the elasticity it
+implies.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:efficiency-cost-of-taxation:12}
+A sales tax of 10~\% is added at the till. Buyers react to it as if it were 4~\%.
+Supply is perfectly elastic; the compensated elasticity of demand is 1 and spending
+is 100. Who bears the tax, and what is the \omterm{def:b3:efficiency-cost-of-taxation:harberger}{excess burden}?
+What changes if the tax is included in posted prices?
+\end{exercise}
+
+\section{Problem: Brenland's Tax Reform}\label{sec:b3:efficiency-cost-of-taxation:problem}
+
+\begin{problem}[{Weekend problem --- Brenland's tax reform}]\label{pb:b3:efficiency-cost-of-taxation:brenland}
+Brenland's income tax of 2025 is zero up to 12{,}000 dalens, 20~\% from 12{,}000 to 40{,}000,
+35~\% from 40{,}000 to 100{,}000 and 45~\% above. The household survey of 2{,}000 households
+(\code{load("households")}) records gross income and tax. The upper bands are the
+income above 40{,}000. Take an \omterm{def:b3:efficiency-cost-of-taxation:eti}{elasticity of taxable income} of 0.25.
+% figdata: brenland_stats
+
+\medskip\noindent\textbf{Part I --- the schedule.}
+\begin{enumerate}
+\item Compute the tax and the average rate of a household earning 25{,}000, and of one
+earning 60{,}000.
+\item What are their marginal rates?
+\item How many of the 2{,}000 households have income above 40{,}000, and what is their mean
+income?
+\item What do the upper bands raise from them (the tax on income above 40{,}000), and
+what share of the total income tax is it?
+\item Compute the Pareto parameter $a = z_m/(z_m - 40{,}000)$ of these households.
+\item Brenland's top band has four households. Why is the analysis done on the upper
+bands together?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- the burden of the upper bands.}
+\begin{enumerate}[resume]
+\item Every upper rate rises by one point. Compute the mechanical revenue gain.
+\item Compute the behavioural loss, $e\sum\tau_iz_i/(1 - \tau_i)$ per point, over the households
+above 40{,}000.
+\item Compute the \omterm{def:b3:efficiency-cost-of-taxation:mcpf}{marginal cost of public funds} of the upper bands.
+\item Compare with the formula $1/\big(1 - \tau ea/(1 - \tau)\big)$ at $\tau = 0.35$.
+\item Compute the revenue-maximising rate for these bands.
+\item Redo question 9 with $e = 0.5$. What does the result mean?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- a reform.} Brenland cuts every upper rate by two
+points and raises its value-added tax of 18~\% on household consumption to replace
+the lost revenue. Treat consumption as fixed, and take the \omterm{def:b3:efficiency-cost-of-taxation:mcpf}{marginal cost of public
+funds} of the value-added tax as 1.25.
+\begin{enumerate}[resume]
+\item Compute the static revenue loss of the cut.
+\item Compute the revenue regained by the behavioural response (first order).
+\item Compute the net loss to be replaced.
+\item By how many points must the value-added tax rate rise?
+\item Compute, to first order, the gain to Brenland's taxpayers from the swap.
+\item Who gains and who loses from the reform?
+\item Why might the value-added tax's \omterm{def:b3:efficiency-cost-of-taxation:mcpf}{marginal cost of public funds} be smaller than
+the upper bands'?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- a project at the margin.} A public project
+returns 1.5 dalens of benefits per dalen spent.
+\begin{enumerate}[resume]
+\item Should it be funded by raising the upper rates?
+\item Should it be funded by raising the value-added tax?
+\item What \omterm{def:b3:efficiency-cost-of-taxation:eti}{elasticity of taxable income} would make the upper bands' \omterm{def:b3:efficiency-cost-of-taxation:mcpf}{marginal cost
+of public funds} equal to 1.5?
+\item What evidence on Brenland's taxpayers would you want before using $e = 0.25$?
+\item How do the United Kingdom's estimates for the 50~\% rate bear on that choice?
+\item Why does the answer depend on the tax base as well as on the rate?
+\item State the result: the \omterm{def:b3:efficiency-cost-of-taxation:mcpf}{marginal cost of public funds} of Brenland's upper bands.
+\end{enumerate}
+\end{problem}

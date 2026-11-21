@@ -1,0 +1,324 @@
+\chapter{Specification}\label{ch:b2:specification}
+
+A regression answers the question its specification asks. Which variables enter, in what form, measured how, and how
+many specifications were tried before one was reported: each choice changes the answer, sometimes predictably. This
+chapter goes through the common choices. The chart shows the most predictable of the effects: a regressor measured with
+noise gives a slope that shrinks toward zero by a factor the noise determines.
+
+\begin{openingchart}{Estimated slope against the variance of the measurement error in the regressor, one simulated sample
+  of 1,000 per point; true slope 2, variance of the true regressor 1. Curve: the limit $2/(1 + \sigma_e^2)$.}{Simulated
+  (seeded); our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.62\linewidth, height=0.4\linewidth, xmin=0, xmax=3, ymin=0, ymax=2.2,
+    xlabel={Variance of the measurement error, $\sigma_e^2$}, ylabel={Estimated slope},
+    legend style={at={(1.03,0.5)}, anchor=west, font=\scriptsize}]
+  \addplot[omDef, only marks, mark=*, mark size=1.3pt] table[x=s2, y=slope]
+    {figdata/bachelor-2/32-specification/out/attenuation.csv};
+  \addlegendentry{estimate}
+  \addplot[omThm, thick, domain=0:3, samples=100] {2/(1 + x)};
+  \addlegendentry{$\lambda\beta$}
+  \addplot[black!50, dashed, domain=0:3, samples=2] {2};
+  \addlegendentry{true slope}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: attenuation (s2 = 0: 1.994; 1: 0.990; 3: 0.507)
+With no measurement error the estimate is 1.99; with an error as variable as the regressor itself it is 0.99, half the
+true slope; with three times as much, 0.51. More data would not help: the points sit on the curve, not around the true
+value.
+
+\begin{recall}
+From the Year 1 volume: logarithms and percentage changes, elasticities, $R^2$, tests and $p$-values. From
+\cref{ch:b2:multiple-regression}: the \omterm{def:b2:multiple-regression:ovb}{omitted-variable bias} formula and \omterm{def:b2:multiple-regression:collinearity}{perfect collinearity}. From
+\cref{ch:b2:regression-inference}: robust standard errors.
+\end{recall}
+
+\section{Logarithms and elasticities}\label{sec:b2:specification:logs}
+
+\begin{definition}[Constant-elasticity regression]\label{def:b2:specification:log-log}
+A \emph{constant-elasticity regression}\index{constant-elasticity regression} (log-log model) regresses $\ln y$ on $\ln
+x$; its slope is the elasticity of $y$ with respect to $x$, the same at every value of $x$.
+\end{definition}
+
+\begin{definition}[Semi-elasticity]\label{def:b2:specification:semi-elasticity}
+In a regression of $\ln y$ on $x$, the slope $\beta$ is a \emph{semi-elasticity}\index{semi-elasticity}: a unit change in
+$x$ changes $y$ by approximately $100\beta$ per cent, exactly by $100(e^\beta - 1)$ per cent.
+\end{definition}
+
+The listing fits an Engel curve, food spending against income, to 235 household budgets in three ways.
+
+\omcode{code/bachelor-2/32-specification/listings/engel.py}{1}{24}{An Engel curve for food in levels, in logs and as a
+budget share.}\label{lst:b2:specification:engel}
+
+\omoutput{code/bachelor-2/32-specification/outputs/engel.txt}{The log-log elasticity, the elasticity implied by the
+linear fit at the means, and the slope of the budget share.}\label{out:b2:specification:engel}
+
+% code: listings/engel.py; ledger: b2:engel-source
+In logs, a 1 per cent rise in income goes with 0.856 per cent more food spending: food is a necessity, with an income
+elasticity below one. The linear fit gives 0.485 francs of food per extra franc, an elasticity of 0.764 at the means: the
+two forms answer the same question differently because the linear one forces the elasticity to change along the curve.
+The budget share, 0.656 on average, falls by 0.086 for each unit of log income. Which form is right is an empirical
+question (Exercise 7 lets the elasticity vary).
+
+\section{Dummy variables and interactions}\label{sec:b2:specification:dummies}
+
+\begin{definition}[Dummy variable]\label{def:b2:specification:dummy}
+A \emph{dummy variable}\index{dummy variable} takes the value 1 if an observation belongs to a category and 0 otherwise;
+its coefficient is the difference in the mean outcome between the category and the omitted one, other regressors fixed.
+\end{definition}
+
+\begin{definition}[Dummy-variable trap]\label{def:b2:specification:dummy-trap}
+The \emph{dummy-variable trap}\index{dummy-variable trap} is the \omterm{def:b2:multiple-regression:collinearity}{perfect collinearity} created by including a constant and
+a dummy for every category of a variable; one category must be left out (or the constant dropped).
+\end{definition}
+
+\begin{definition}[Interaction term]\label{def:b2:specification:interaction}
+An \emph{interaction term}\index{interaction term} is the product of two regressors; with it the effect of one regressor
+depends on the value of the other.
+\end{definition}
+
+With $\ln\mathit{food} = \beta_0 + \beta_1\ln\mathit{inc} + \beta_2\mathit{owner} + \beta_3\,\mathit{owner}\times\ln\mathit{inc} + u$,
+the income elasticity is $\beta_1$ for tenants and $\beta_1 + \beta_3$ for owners. The listing applies it to Brenland's
+household survey, with a dummy for each household size but the first.
+
+\omcode{code/bachelor-2/32-specification/listings/dummies.py}{1}{23}{Size dummies, an owner dummy and an interaction in
+Brenland's food regression.}\label{lst:b2:specification:dummies}
+
+\omoutput{code/bachelor-2/32-specification/outputs/dummies.txt}{Household size absorbs a third of the raw elasticity;
+owners' elasticity is slightly higher.}\label{out:b2:specification:dummies}
+
+% code: listings/dummies.py
+Without controls the elasticity is 0.288; with size dummies it is 0.196, because larger households have both more income
+and more mouths to feed. A household of five spends 0.738 log points, $e^{0.738} - 1 = 109$ per cent, more on food than a
+single person with the same income. Being an owner shifts nothing on its own, but owners' elasticity is 0.024 higher than
+tenants'.
+
+\section{Measurement error}\label{sec:b2:specification:me}
+
+\begin{definition}[Classical measurement error]\label{def:b2:specification:classical-me}
+A regressor has \emph{classical measurement error}\index{classical measurement error} if it is observed as $x = x^* + e$,
+where the error $e$ has mean zero and is independent of the true value $x^*$ and of the regression error.
+\end{definition}
+
+\begin{definition}[Reliability ratio]\label{def:b2:specification:reliability}
+The \emph{reliability ratio}\index{reliability ratio} of a measured variable is the share of its variance due to the true
+value: $\lambda = \operatorname{Var}(x^*)/(\operatorname{Var}(x^*) + \operatorname{Var}(e))$.
+\end{definition}
+
+\begin{proposition}[Attenuation]\label{prop:b2:specification:attenuation}
+If $y = \beta_0 + \beta x^* + u$ and $x = x^* + e$ with classical error, the least-squares slope of $y$ on $x$ converges in
+probability to $\lambda\beta$.
+\end{proposition}
+
+\begin{proof}
+The slope is $\widehat{\operatorname{Cov}}(x, y)/\widehat{\operatorname{Var}}(x)$, which converges to $\operatorname{Cov}(x^* + e, \beta x^* + u)/\operatorname{Var}(x^* + e)$. By independence the
+numerator is $\beta\operatorname{Var}(x^*)$ and the denominator $\operatorname{Var}(x^*) + \operatorname{Var}(e)$.
+\end{proof}
+
+\begin{definition}[Attenuation bias]\label{def:b2:specification:attenuation}
+\emph{Attenuation bias}\index{attenuation bias} is the shrinking of a coefficient toward zero caused by \omterm{def:b2:specification:classical-me}{classical
+measurement error} in its regressor.
+\end{definition}
+
+Error in the outcome is different: it adds to $u$, so it raises the standard errors but leaves the slope unbiased.
+
+\omcode{code/bachelor-2/32-specification/listings/attenuation.py}{1}{21}{The same noise added to the regressor, then to
+the outcome.}\label{lst:b2:specification:attenuation}
+
+\omoutput{code/bachelor-2/32-specification/outputs/attenuation.txt}{Noise in $x$ shrinks the slope to $\lambda\beta$; noise
+in $y$ leaves it at 2.}\label{out:b2:specification:attenuation}
+
+With several regressors the attenuation is stronger: what matters is the reliability of the part of $x$ not predicted by
+the other regressors, and controls remove true variation while leaving the noise. Errors that are not classical (people
+who under-report high incomes, for instance) can bias in either direction.
+
+\section{Proxies and bad controls}\label{sec:b2:specification:controls}
+
+\begin{definition}[Proxy variable]\label{def:b2:specification:proxy}
+A \emph{proxy variable}\index{proxy variable} is an observed variable included in place of an unobserved one, because it
+is correlated with it.
+\end{definition}
+
+A test score stands in for ability in a wage regression. If the score were a perfect measure, controlling for it would
+remove the \omterm{def:b2:multiple-regression:ovb}{omitted-variable bias}; a noisy score removes part of it. The listing simulates it.
+
+\omcode{code/bachelor-2/32-specification/listings/proxy.py}{1}{22}{Ability, a noisy test score, and the return to
+schooling.}\label{lst:b2:specification:proxy}
+
+\omoutput{code/bachelor-2/32-specification/outputs/proxy.txt}{The proxy removes more than half the bias, not all of
+it.}\label{out:b2:specification:proxy}
+
+% code: listings/proxy.py
+The true return is 0.080; leaving ability out gives 0.105; the score brings it to 0.091. A proxy is a good control: it
+is determined before the regressor of interest and is not changed by it. A control that the regressor itself changes is
+not.
+
+\begin{definition}[Bad control]\label{def:b2:specification:bad-control}
+A \emph{bad control}\index{bad control} is a variable that is itself an outcome of the regressor of interest; holding it
+fixed removes part of the effect being measured, and can create bias where there was none.
+\end{definition}
+
+Occupation in a regression of wages on schooling is the standard example: schooling changes occupation, so comparing
+people with different schooling in the same occupation compares a clerk who studied long, and so is unusual among clerks,
+perhaps unlucky or less able, with a clerk who did not. The 1975 earnings of \cref{ch:b2:multiple-regression} were a \omterm{def:b2:specification:bad-control}{bad control} of the same kind.
+
+\section{Searching over specifications}\label{sec:b2:specification:search}
+
+\begin{definition}[Specification search]\label{def:b2:specification:spec-search}
+A \emph{specification search}\index{specification search} is the practice of estimating many specifications (other
+regressors, forms, samples) and reporting those whose results look best; the reported tests then no longer have their
+stated size.
+\end{definition}
+
+A 5 per cent test rejects a true null once in twenty. Try twenty unrelated regressors and keep the best, and the chance
+that at least one is ``significant'' is $1 - 0.95^{20} = 0.642$.
+
+\omcode{code/bachelor-2/32-specification/listings/search.py}{1}{20}{The best of twenty unrelated regressors, 5,000 times.}\label{lst:b2:specification:search}
+
+\omoutput{code/bachelor-2/32-specification/outputs/search.txt}{The best of twenty is significant 64 per cent of the time;
+the Bonferroni threshold brings it below 5 per cent.}\label{out:b2:specification:search}
+
+% code: listings/search.py
+The simulation gives 0.640. The Bonferroni correction divides the significance level by the number of tests, here
+$0.05/20 = 0.0025$, a $|t|$ above about 3.1 with the listing's 98 degrees of freedom (3.02 in large samples); by the union bound the chance that any of the twenty passes is then at most
+5 per cent (0.045 in the simulation). The correction works only if every test tried is counted, which a reader cannot
+check; writing down the specification before seeing the data is the remedy that can be checked.
+
+\section{Functional form and outliers}\label{sec:b2:specification:form}
+
+A regression that is linear in the wrong variables misses curvature. One check adds the squares and cubes of the fitted
+values to the regression and tests them jointly with an $F$ statistic: if they help predict $y$, the form is wrong
+somewhere (this is the RESET test). It says that something is missing, not what. Outliers are another matter: an
+observation far from the others in its regressors has high leverage and can move the fitted line on its own. Dropping it
+because it is inconvenient is a \omterm{def:b2:specification:spec-search}{specification search}; the honest course is to report the result with and without it, and
+to check that it is not a recording error.
+
+\begin{model}{Classical measurement error}
+\assumes The observed regressor is the true value plus an error with mean zero, independent of the true value and of the
+regression error.
+\predicts The slope converges to $\lambda\beta$, shrunk toward zero by the \omterm{def:b2:specification:reliability}{reliability ratio}; error in the outcome leaves
+the slope unbiased.
+\tested Where a variable is measured twice, by survey and by a record, the two can be compared: the \omterm{def:b2:specification:reliability}{reliability ratio}
+of reported schooling or earnings can be estimated, and corrected slopes compared with uncorrected ones.
+\breaks Errors are often not classical: people who earn more may under-report more, so the error is negatively
+correlated with the true value; binary variables cannot have classical error at all, since a misreported 0 or 1 is
+always wrong in a direction that depends on the true value.
+\end{model}
+
+\section{Exercises}\label{sec:b2:specification:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:specification:1}
+Read the opening chart. What is the estimated slope when the error variance equals the variance of the true regressor?
+What is the \omterm{def:b2:specification:reliability}{reliability ratio} then?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:specification:2}
+Interpret the Engel elasticity of 0.856. If income rises by 10 per cent, by how much does food spending rise, and what
+happens to the budget share?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:specification:3}
+Why does the Brenland regression have four size dummies for five sizes? By how much, in per cent, does a household of
+three spend more on food than a single person with the same income?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:specification:4}
+A study reports that one of twenty diet variables significantly predicts a disease at the 5 per cent level, and says
+nothing of the other nineteen. What should a reader conclude?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:specification:5}
+In a regression of log wages on a dummy for union membership, the coefficient is 0.15. Give the approximate and the exact
+percentage difference.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:specification:6}
+Predict, then compute: what error variance makes the attenuated slope in the listing equal to 1.6? To 1?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:specification:7}
+\textbf{(D)} With the Engel data, regress log food spending on centred log income and its square. Does the elasticity
+change with income? Give it at the 10th and 90th percentiles of income.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:specification:8}
+Change the proxy listing so that the test score has noise 0.3 instead of 0.7. Predict, then compute, the coefficient on
+schooling.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:specification:9}
+To evaluate a training programme on wages, a researcher controls for the worker's occupation after the programme. Why is
+that a \omterm{def:b2:specification:bad-control}{bad control}? Which controls would be good?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:specification:10}
+With $y = \beta_0 + \beta_1x_1^* + \beta_2x_2 + u$ and $x_1 = x_1^* + e$ classical, show using the \omterm{def:b2:multiple-regression:fwl}{Frisch--Waugh--Lovell
+theorem} that the slope on $x_1$ converges to $\lambda_1\beta_1$, where $\lambda_1$ is the reliability of $x_1$ after
+partialling out $x_2$, and that $\lambda_1 \leq \lambda$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:specification:11}
+Show that classical error in the outcome leaves the slope consistent, and give its effect on the variance of the slope.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:specification:12}
+Show that if $k$ tests each have size $\alpha$, the probability that at least one rejects is at most $k\alpha$, and equals
+$1 - (1 - \alpha)^k$ if they are independent. Compute both for $k = 20$, $\alpha = 0.05$ and for $\alpha = 0.0025$.
+\end{exercise}
+
+\section{Problem: Brenland's food survey}\label{sec:b2:specification:problem}
+
+\begin{problem}[{Weekend problem --- Brenland's food survey: logs, dummies and interactions, reported income with a known
+reliability, and a specification search}]
+\label{pb:b2:specification:1}
+Brenland's household survey records each household's food spending, disposable income, size and whether it owns its
+home. A validation study, which compared reported incomes with tax records, found that the \omterm{def:b2:specification:reliability}{reliability ratio} of reported
+log disposable income, after partialling out household size, is 0.8.
+
+\medskip
+\noindent\textbf{Part I --- Logs.}
+\begin{enumerate}
+  \item Regress log food on log disposable income. Give the elasticity and $R^2$.
+  \item Is food a necessity or a luxury in Brenland?
+  \item If income rises 10 per cent, by how much does food spending rise?
+  \item What does the budget share of food do as income rises?
+  \item Why use logs rather than levels here?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Dummies and interactions.}
+\begin{enumerate}[resume]
+  \item Add a dummy for each household size from 2 to 5 and an owner dummy. Give the elasticity and $R^2$.
+  \item Why did the elasticity fall?
+  \item Give the size coefficients and the percentage difference for a household of five.
+  \item Why is there no dummy for size 1?
+  \item Interpret the owner coefficient.
+  \item Add the interaction of owner and log income. Give the elasticities of owners and tenants.
+  \item Is the difference significant at 5 per cent?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Reported income with a known reliability.}
+\begin{enumerate}[resume]
+  \item If reported income has classical error, which way is the elasticity of Part II biased?
+  \item Correct it with the \omterm{def:b2:specification:reliability}{reliability ratio}.
+  \item Why is the reliability after partialling out size the right one?
+  \item Would the correction be the same without the size dummies?
+  \item Would error in reported food spending call for a correction?
+  \item What if high earners under-report most?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- A specification search and an honest threshold.}
+\begin{enumerate}[resume]
+  \item An analyst tries twenty other household characteristics, one at a time, as extra regressors. If none matters, what
+  is the chance that at least one is significant at 5 per cent?
+  \item Give the Bonferroni threshold for the $p$-value and the matching $|t|$.
+  \item Would the interaction of Part II pass it?
+  \item What should the analyst write down before looking at the data?
+  \item Why is household size not part of the search?
+  \item Could the analyst choose the twenty characteristics after seeing which look promising?
+  \item State the result: the corrected food--income elasticity and the Bonferroni threshold for twenty tries.
+\end{enumerate}
+\end{problem}

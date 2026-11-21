@@ -1,0 +1,3 @@
+$ python size_sim.py
+classical rejection rate 0.254
+robust    rejection rate 0.057

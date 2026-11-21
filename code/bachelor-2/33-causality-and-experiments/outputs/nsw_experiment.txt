@@ -1,0 +1,5 @@
+$ python nsw_experiment.py
+treated   6349.1 (n = 185), control   4554.8 (n = 260)
+difference 1794.3, s.e. 671.0
+95 % interval 479.2 to 3109.5
+regression on treat: 1794.3 (robust s.e. 670.8)

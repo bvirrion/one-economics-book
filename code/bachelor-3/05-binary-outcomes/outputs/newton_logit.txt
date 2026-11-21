@@ -1,0 +1,11 @@
+$ python newton_logit.py
+step 0: log-likelihood  -11084.8097   coefficient on earn75 0.000000
+step 1: log-likelihood   -5722.0545   coefficient on earn75 0.063927
+step 2: log-likelihood   -5208.8965   coefficient on earn75 0.111530
+step 3: log-likelihood   -5149.5424   coefficient on earn75 0.135446
+step 4: log-likelihood   -5147.8443   coefficient on earn75 0.140320
+step 5: log-likelihood   -5147.8422   coefficient on earn75 0.140498
+step 6: log-likelihood   -5147.8422   coefficient on earn75 0.140498
+step 7: log-likelihood   -5147.8422   coefficient on earn75 0.140498
+statsmodels:         -5147.8422   coefficient on earn75 0.140498
+standard error on earn75: by hand 0.003362, statsmodels 0.003362

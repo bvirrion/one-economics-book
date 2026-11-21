@@ -1,0 +1,8 @@
+$ python puzzle.py
+years                     71
+equity premium            0.0764
+sd of equity return       0.1629
+sd of consumption growth  0.0187
+correlation               0.080
+gamma needed              312.1
+gamma if corr = 1         25.1

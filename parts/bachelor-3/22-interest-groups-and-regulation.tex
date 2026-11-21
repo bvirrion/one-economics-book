@@ -1,0 +1,430 @@
+\chapter{Interest Groups, Bureaucracy and Regulation}\label{ch:b3:interest-groups-and-regulation}
+
+Voters choose governments rarely and know little about most of what they do. Between
+elections, policy is shaped by those who have much at stake in it and organise to
+say so, and it is carried out by agencies whose staff have aims of their own. This
+chapter builds the models of that process --- collective action, \omterm{def:b3:interest-groups-and-regulation:rent-seeking}{rent seeking},
+regulation as a market for support, the bureau --- and tests them where the record
+allows: occupational licences, trucking, \omterm{def:b3:interest-groups-and-regulation:privatisation}{privatisation} and \omterm{def:b3:interest-groups-and-regulation:privatisation}{contracting out}.
+
+\begin{openingchart}{Share of U.S. workers who need a licence to do their job, by three
+measures (percent): occupations licensed by State laws (early 1950s, drawn at the
+upper bound of 5~\%, and 2008); a commissioned survey counting licences from every
+level of government (2008); and the Current Population Survey's licence question,
+asked since 2015. The measures differ; the break is drawn as a gap.}{Treasury, Council
+of Economic Advisers and Department of Labor (2015), from Kleiner and Krueger; U.S.
+Bureau of Labor Statistics, Current Population Survey, Table 49}
+\begin{tikzpicture}
+\begin{axis}[omtimesten, width=0.7\linewidth, height=0.4\linewidth, xmin=1945,
+  xmax=2030, ymin=0, ymax=35, ylabel={Percent of workers}, legend pos=north west,
+  legend style={font=\footnotesize}]
+  \addplot[only marks, mark=*, omDef] table[x=year, y=share] {figdata/bachelor-3/22-interest-groups-and-regulation/out/lic_state.csv};
+  \addplot[only marks, mark=square*, omThm] table[x=year, y=share] {figdata/bachelor-3/22-interest-groups-and-regulation/out/lic_survey.csv};
+  \addplot[black, thick, mark=triangle*] table[x=year, y=share] {figdata/bachelor-3/22-interest-groups-and-regulation/out/lic_cps.csv};
+  \legend{State licensing laws, Survey (all levels), Current Population Survey}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% ledger: b3ig:wh
+% ledger: b3ig:bls15
+% ledger: b3ig:bls25
+Fewer than one American worker in twenty needed a State licence in the early 1950s; by
+2008 one in four did, and 29~\% counting local and Federal licences. The official survey,
+which asks the question since 2015, puts the share between 21.6 and 22.4~\%, a different
+measure on a flat path. Most of the growth came from new occupations being licensed
+rather than from workers moving into old ones: changes in the mix of jobs explain
+only a little more than a third of the rise from the 1960s to 2008. Each new licence was voted by a
+legislature; this chapter asks who asked for them.
+
+\begin{recall}
+The grades 10--12 volume named \omterm{def:b3:interest-groups-and-regulation:rent-seeking}{rent seeking} and \omterm{def:b3:interest-groups-and-regulation:capture}{regulatory capture}; they are
+re-founded here as models. The public-good contribution game is the Year 2
+volume's, the deadweight loss of monopoly the Year 1 volume's, and the median voter
+\cref{ch:b3:public-choice-voting}'s.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:interest-groups-and-regulation:symbols}
+$V$ is a rent at stake; $x_i$ a player's spending to win it; $n$ the number of players or
+members; $B(Q)$ and $C(Q)$ a bureau's total benefit and total cost.
+\end{notation}
+
+\section{The logic of collective action}\label{sec:b3:interest-groups-and-regulation:olson}
+
+\begin{definition}[Collective action problem]\label{def:b3:interest-groups-and-regulation:collective-action}
+\index{collective action problem}\index{concentrated benefits}\index{diffuse costs}
+A \emph{collective action problem} is the under-provision of an effort that benefits
+a whole group because each member bears the full cost of her own effort and gets
+only a share of its benefit. A policy with \emph{concentrated benefits and diffuse
+costs} gives a large gain to each member of a small group and a small loss to each
+member of a large one.
+\end{definition}
+
+\begin{proposition}[Group effort falls with group size]\label{prop:b3:interest-groups-and-regulation:olson}
+A group of $n$ identical members shares equally a benefit $v(G)$ of its total effort $G = \sum_i g_i$,
+with $v$ increasing and strictly concave, and each member bears her own effort. In the
+Nash equilibrium, $v'(G) = n$; so $G$ falls as $n$ rises, while the efficient effort solves
+$v'(G) = 1$ whatever $n$.
+\end{proposition}
+
+\begin{proof}
+Member $i$ chooses $g_i$ to maximise $v(G)/n - g_i$; the first-order condition is $v'(G)/n = 1$. Since
+$v'$ is decreasing, the $G$ that solves $v'(G) = n$ is smaller the larger $n$. The group's total
+payoff $v(G) - G$ is maximised at $v'(G) = 1$, which is above the equilibrium $G$ for every
+$n > 1$.
+\end{proof}
+
+A few producers each with much to gain outspend millions of consumers each with
+little to lose, even when the consumers' total loss is larger. Licensing fits: the
+members of a trade are few and know each other, and their customers are many and
+scattered.
+
+\section{Rent seeking and its cost}\label{sec:b3:interest-groups-and-regulation:rent-seeking}
+
+\begin{definition}[Rent seeking; rent dissipation]\label{def:b3:interest-groups-and-regulation:rent-seeking}
+\index{rent seeking}\index{rent dissipation}\index{Tullock contest}
+\emph{Rent seeking} is the spending of resources to obtain a transfer created by
+policy --- a licence, a tariff, a monopoly --- rather than to produce. \emph{Rent
+dissipation} is the share of the rent consumed by that spending; in a \emph{Tullock
+contest} each player wins the rent with a probability equal to her share of total
+spending.
+\end{definition}
+
+\begin{proposition}[Dissipation in a symmetric contest]\label{prop:b3:interest-groups-and-regulation:tullock}
+With $n$ risk-neutral players competing for a rent $V$, each spends $(n - 1)V/n^2$, and total
+spending is $(n - 1)V/n$.
+\end{proposition}
+
+\begin{proof}
+Player $i$'s expected payoff is $Vx_i/X - x_i$ with $X = \sum_j x_j$. The first-order condition is
+$V(X - x_i)/X^2 = 1$. In a symmetric equilibrium $x_i = x$ and $X = nx$, so $V(n - 1)x/(n^2x^2) = 1$, or $x = (n - 1)V/n^2$; the
+payoff is concave in $x_i$, so this is a maximum. Total spending is $nx = (n - 1)V/n$.
+\end{proof}
+
+\begin{omchart}{Share of the rent dissipated in a symmetric Tullock contest, by number
+of players (percent).}{Analytic: \cref{prop:b3:interest-groups-and-regulation:tullock}}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.56\linewidth, height=0.34\linewidth, xmin=0, xmax=21,
+  ymin=0, ymax=100, xlabel={Number of players $n$}, ylabel={Percent of the rent}]
+  \addplot[omDef, thick, mark=*, mark size=1.2pt] table[x=n, y=share] {figdata/bachelor-3/22-interest-groups-and-regulation/out/tullock.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+Two contestants burn half the rent; ten burn 90~\%. The cost of a monopoly created by
+policy is then not only the deadweight triangle but much of the rectangle of
+profit as well, spent on lobbying, lawyers and campaigns that produce nothing.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.55cm, y=0.55cm]
+  \draw[econ axes] (0,0) -- (11,0) node[right, font=\scriptsize] {$Q$};
+  \draw[econ axes] (0,0) -- (0,8) node[above, font=\scriptsize] {price};
+  \draw[curve, omDef] (0,7.5) -- (9.5,0.85) node[above right, font=\scriptsize] {demand};
+  \draw[curve] (0,2.5) -- (10.5,2.5) node[right, font=\scriptsize] {marginal cost};
+  \fill[omDef!15] (0,2.5) rectangle (3.57,5);
+  \fill[omThm!35] (3.57,5) -- (7.14,2.5) -- (3.57,2.5) -- cycle;
+  \node[font=\scriptsize, align=center] at (1.8,3.75) {Tullock\\rectangle};
+  \node[font=\scriptsize, anchor=west] at (7.3,3.6) {Harberger triangle};
+  \draw[guide] (0,5) -- (3.57,5); \node[left, font=\scriptsize] at (0,5) {$p^m$};
+  \draw[guide] (3.57,0) -- (3.57,2.5); \draw[guide] (7.14,0) -- (7.14,2.5);
+  \node[below, font=\scriptsize] at (3.57,0) {$Q^m$};
+  \node[below, font=\scriptsize] at (7.14,0) {$Q^c$};
+\end{tikzpicture}
+\par\smallskip{\small A monopoly created by policy. The triangle is the deadweight
+loss of the restricted output; the rectangle, the monopoly profit, is a transfer if
+nobody competes for it and a social cost to the extent that contestants spend it
+away.}
+\end{omfigure}
+
+\section{Regulation as a market for support}\label{sec:b3:interest-groups-and-regulation:capture}
+
+\begin{definition}[Regulatory capture; Peltzman model]\label{def:b3:interest-groups-and-regulation:capture}
+\index{regulatory capture}\index{Peltzman model}
+\emph{Regulatory capture} is the use of regulation for the benefit of the regulated
+industry rather than its customers. The \emph{Peltzman model} is the model in which a
+regulator sets a price to maximise political support $M(\pi, S)$, increasing in the
+industry's profit $\pi$ and in consumers' surplus $S$.
+\end{definition}
+
+\begin{proposition}[The regulated price lies between]\label{prop:b3:interest-groups-and-regulation:peltzman}
+Let profit $\pi(p)$ rise from zero at the competitive price $p^c$ to its maximum at the monopoly
+price $p^m$, let consumers' surplus $S(p)$ fall in $p$, and let $M$ be differentiable with
+$M_\pi > -M_S S'(p^c)/\pi'(p^c)$ at $p^c$ (support from the first dalen of profit outweighs the consumers'
+loss). Then the support-maximising price lies strictly between $p^c$ and $p^m$.
+\end{proposition}
+
+\begin{proof}
+Support along prices is $m(p) = M(\pi(p), S(p))$, with $m'(p) = M_\pi\pi'(p) + M_SS'(p)$. At $p^c$, the
+assumption gives $m'(p^c) > 0$, so a slightly higher price raises support. At $p^m$, $\pi'(p^m) = 0$ and
+$S'(p^m) < 0$, so $m'(p^m) = M_SS'(p^m) < 0$: a slightly lower price raises support. A maximum of
+$m$ on $[p^c, p^m]$ therefore lies inside the interval.
+\end{proof}
+
+\begin{model}{The capture model of regulation}
+\assumes Regulators trade the favours of regulation for political support, and
+small organised groups supply support more cheaply than large ones.
+\predicts Regulation raises the prices and incomes of concentrated producers above
+competitive levels, and less so where consumers are organised.
+\tested Licensed workers earn about 14~\% more than similar unlicensed ones, while
+governmental \omterm{def:b3:interest-groups-and-regulation:licensing}{certification}, which does not bar the uncertified, adds much less; % ledger: b3ig:kk
+across U.S. states, stricter dental licensing raised prices without improving the
+dental health of recruits. % ledger: b3ig:kku
+When trucking was deregulated, the union wage premium fell from 50~\% to under 30~\%:
+union workers had captured more than two-thirds of the industry's regulatory
+rents. % ledger: b3ig:rose
+\breaks Some regulation serves large, diffuse groups against concentrated ones ---
+rules on pollution are the standard case --- and some licences may protect buyers
+who cannot judge quality before they buy.
+\end{model}
+
+\begin{definition}[Occupational licensing]\label{def:b3:interest-groups-and-regulation:licensing}
+\index{occupational licensing}\index{certification}
+\emph{Occupational licensing} is a law that allows only holders of a government
+licence to be paid for work in an occupation; \emph{certification} lets anyone work
+but reserves a title to those who pass a test.
+\end{definition}
+
+\begin{measure}[The welfare cost of licensing]
+Comparing occupations that some U.S. states license and others do not, an
+equilibrium model in which licensing restricts supply but may raise demand through
+quality finds that licensing raises wages and hours and lowers employment. The
+average welfare loss is 12~\% of the surplus of the occupation; workers bear 70~\% of it
+and consumers 30~\%. Buyers' higher willingness to pay offsets 80~\% of the higher
+prices, and higher wages repay workers for 60~\% of the training the licence
+requires. % ledger: b3ig:ks
+The estimate is silent on doctors and lawyers, who are licensed everywhere.
+\end{measure}
+
+\section{The budget-maximising bureau}\label{sec:b3:interest-groups-and-regulation:bureau}
+
+\begin{definition}[Budget-maximising bureau (Niskanen model)]\label{def:b3:interest-groups-and-regulation:bureau}
+\index{budget-maximising bureau}\index{Niskanen model}
+A \emph{budget-maximising bureau} is an agency that supplies a service to a sponsor
+--- a legislature --- in exchange for a budget, knows the cost of the service better
+than the sponsor does, and chooses the output that maximises its budget subject to
+the sponsor's accepting it (the \emph{Niskanen model}).
+\end{definition}
+
+\begin{proposition}[The bureau doubles output]\label{prop:b3:interest-groups-and-regulation:niskanen}
+Let the sponsor's marginal benefit be $a - bQ$ and the marginal cost a constant $c$, with $c < a \le 2c$. The
+efficient output is $Q^* = (a - c)/b$; a bureau that offers output $Q$ for a budget equal to the
+total benefit $B(Q)$, subject to $B(Q) \ge C(Q)$, chooses $Q = 2Q^*$.
+\end{proposition}
+
+\begin{proof}
+$B(Q) = aQ - \tfrac b2Q^2$ is the largest budget the sponsor accepts for $Q$; it rises with $Q$ up to
+$a/b$. The bureau wants the largest $B(Q)$ it can cover, so it pushes $Q$ up until the
+budget no longer covers cost: $aQ - \tfrac b2Q^2 = cQ$, or $Q = 2(a - c)/b = 2Q^*$, provided $2Q^* \le a/b$, that is
+$a \le 2c$, so that marginal benefit is still positive there (otherwise it stops at $a/b$). At $2Q^*$, all the surplus is spent: the extra output
+from $Q^*$ to $2Q^*$ costs more than it is worth by exactly the surplus earned up to $Q^*$.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.55cm, y=0.55cm]
+  \draw[econ axes] (0,0) -- (11,0) node[right, font=\scriptsize] {$Q$};
+  \draw[econ axes] (0,0) -- (0,8) node[above, font=\scriptsize] {dalens per unit};
+  \draw[curve, omDef] (0,7) -- (10,2) node[right, font=\scriptsize] {marginal benefit};
+  \draw[curve] (0,4.5) -- (10.5,4.5) node[right, font=\scriptsize] {marginal cost};
+  \fill[omDef!15] (0,4.5) -- (0,7) -- (5,4.5) -- cycle;
+  \fill[omThm!35] (5,4.5) -- (10,4.5) -- (10,2) -- cycle;
+  \draw[guide] (5,0) -- (5,4.5); \draw[guide] (10,0) -- (10,2);
+  \node[below, font=\scriptsize] at (5,0) {$Q^*$};
+  \node[below, font=\scriptsize] at (10,0) {$2Q^*$};
+  \node[font=\scriptsize] at (1.6,5.3) {surplus};
+  \node[font=\scriptsize] at (8.2,3.9) {loss};
+\end{tikzpicture}
+\par\smallskip{\small The Niskanen bureau. Output beyond $Q^*$ costs more than it is
+worth; at $2Q^*$ the loss equals the surplus, and the sponsor is just willing to pay.}
+\end{omfigure}
+
+\begin{model}{The budget-maximising bureau}
+\assumes The bureau alone knows its costs, the sponsor knows its own demand, and
+the bureau's staff gain from a larger budget.
+\predicts Public agencies produce too much, or at too high a cost; competition
+from other suppliers lowers the cost of the same service.
+\tested Weakly. International studies of \omterm{def:b3:interest-groups-and-regulation:privatisation}{contracting out} --- putting public services
+out to competitive tender --- report savings in the order of 20~\% with no loss of
+quality; % ledger: b3ig:dj
+the savings fit the model, with a caveat: the services put out to tender may be
+those whose quality is easiest to specify.
+\breaks Sponsors monitor, compare agencies and cut budgets; staff may care about
+the mission more than the budget; and contracting fails for services whose quality
+is hard to write into a contract.
+\end{model}
+
+\section{Privatisation and deregulation}\label{sec:b3:interest-groups-and-regulation:privatisation}
+
+\begin{definition}[Privatisation]\label{def:b3:interest-groups-and-regulation:privatisation}
+\index{privatisation}\index{contracting out}
+\emph{Privatisation} is the sale of a state-owned enterprise, or of a controlling
+stake in it, to private owners; \emph{contracting out} keeps the service public and
+buys it from private suppliers.
+\end{definition}
+
+\begin{record}[Privatisation in the record]
+A survey of the empirical studies of \omterm{def:b3:interest-groups-and-regulation:privatisation}{privatisation}, in countries in transition from
+central planning and elsewhere, finds that in most settings \omterm{def:b3:interest-groups-and-regulation:privatisation}{privatisation} works:
+the firms become more efficient, more profitable and financially healthier, and
+investors in the sales do well. % ledger: b3ig:mn
+\emph{Grade 3}: a survey of studies that mostly compare firms before and after sale,
+with the firms chosen for sale not at random.
+Ownership is not the whole story, and the theory says why: a private monopoly sold without competition
+or regulation keeps a monopoly's incentive to restrict output.
+The best-measured comparison of the transition shows how much the setting matters.
+Following every initially state-owned manufacturing firm in four countries, Brown,
+Earle and Telegdy estimated that \omterm{def:b3:interest-groups-and-regulation:privatisation}{privatisation} raised productivity by 15~\% in
+Romania, 8~\% in Hungary and 2~\% in Ukraine, and lowered it by 3~\% in Russia, where
+gains from domestic owners appeared only five years after the sale; sales to
+foreign owners raised it by 18--35~\% everywhere. % ledger: b3ig:bet.priv
+\emph{Grade 2}: firm panels with controls for which firms were sold, to which the
+estimates are sensitive.
+\end{record}
+
+\begin{definition}[Regulatory impact assessment]\label{def:b3:interest-groups-and-regulation:ria}
+\index{regulatory impact assessment}
+A \emph{regulatory impact assessment} is the cost-benefit analysis of a proposed
+regulation, carried out by the government before it adopts the rule, with the
+methods of \cref{ch:b3:cost-benefit-analysis}.
+\end{definition}
+
+The public-choice models suggest why such assessments exist and why they are hard:
+the costs of a rule on an organised industry are counted by those who bear them,
+the benefits to diffuse beneficiaries by nobody in particular. A required
+assessment puts both on the same page before the vote.
+
+\begin{record}[Regulatory cost estimates against outcomes]
+Harrington, Morgenstern and Nelson compared the costs that \omterm{def:b3:interest-groups-and-regulation:ria}{regulatory impact
+assessments} had forecast for 28 United States rules with the costs measured after
+the rules took effect. The total cost had been overestimated for 14 rules and
+underestimated for 3. The cost per unit of pollution abated was often right; the
+errors came mostly from the quantity of abatement, which suggests that benefits were
+overstated too, and rules that used prices or tradable permits were the ones whose
+unit costs were overestimated most consistently. % ledger: b3ig:hmn.ria
+Unlike the project forecasts of \cref{ch:b3:cost-benefit-analysis}, these errors lean towards overstating costs, through
+baselines that were hard to measure, incomplete compliance and innovations nobody
+foresaw.
+\end{record}
+
+\section{Exercises}\label{sec:b3:interest-groups-and-regulation:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:interest-groups-and-regulation:1}
+From the opening chart, by how many points did the share of workers covered by
+State licences rise from the early 1950s to 2008? Why can the 2015 survey value not be
+compared with the 2008 survey value?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:interest-groups-and-regulation:2}
+Four players compete in a symmetric \omterm{def:b3:interest-groups-and-regulation:rent-seeking}{Tullock contest} for a rent of 10 million dalens. How
+much does each spend, and how much of the rent is dissipated?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:interest-groups-and-regulation:3}
+Demand is $p = 20 - Q$ and marginal cost 4. A licence creates a monopoly. Find the Harberger
+triangle and the Tullock rectangle.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:interest-groups-and-regulation:4}
+What evidence would contradict the capture model in a licensed profession?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:interest-groups-and-regulation:5}
+A sponsor's marginal benefit from a bureau's output is $100 - 2Q$ and marginal cost is 60. Find
+the efficient output, the bureau's output and the deadweight loss.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:interest-groups-and-regulation:6}
+A tariff gives 50 million dalens to 10 firms and costs 60 million to 2 million households.
+With the collective-action proposition, explain which group lobbies harder. What
+would change if the firms were 10{,}000 farms?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:interest-groups-and-regulation:7}
+An invented regression of log hourly wages on a licence indicator and controls
+gives a coefficient of 0.13 (s.e.\ 0.02). Translate it into a percentage, and say what
+omitted variable could bias it.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:interest-groups-and-regulation:8}
+In the \omterm{def:b3:interest-groups-and-regulation:capture}{Peltzman model}, demand for the industry's product rises. Using the
+proposition, explain why the regulated price may rise while the regulator still
+leaves the industry short of the monopoly profit.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:interest-groups-and-regulation:9}
+What quality data would support licensing as consumer protection?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:interest-groups-and-regulation:10}
+Two players with stakes $V_1$ and $V_2$ compete in a \omterm{def:b3:interest-groups-and-regulation:rent-seeking}{Tullock contest}. Find the equilibrium
+spending of each and the total, and show that the total is less than either stake.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:interest-groups-and-regulation:11}
+A natural monopoly with fixed cost 16, marginal cost 2 and demand $p = 12 - Q$ is
+privatised under a price cap. Find the price that just covers cost and compare it
+with the unregulated monopoly price. Why do regulators set caps from forecasts of
+cost rather than from the firm's realised costs?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:interest-groups-and-regulation:12}
+In invented data on 40 states, 2012--2023, fifteen states loosen a trade's licence in 2018.
+Estimate the effect on the log price of the service by difference in differences
+with state and year fixed effects, and compare it with the before--after change in
+the reforming states.
+\end{exercise}
+
+\section{Problem: Brenland Licenses Its Electricians}\label{sec:b3:interest-groups-and-regulation:problem}
+
+\begin{problem}[{Weekend problem --- Brenland licenses its electricians}]\label{pb:b3:interest-groups-and-regulation:electricians}
+In Brenland, inverse demand for electricians' hours is $P = 100 - 0.05Q$ and supply is
+$P = 20 + 0.03Q$, with $Q$ in thousands of hours a year and $P$ in dalens an hour. A proposed
+licence would cap hours at 800 thousand a year. % figdata: electricians_stats
+
+\medskip\noindent\textbf{Part I --- the market without a licence.}
+\begin{enumerate}
+\item Find the competitive quantity and price.
+\item Compute consumers' surplus.
+\item Compute producers' surplus.
+\item Why is the market a candidate for licensing in the first place?
+\item What would a licence have to achieve to raise total surplus?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- the licence.}
+\begin{enumerate}[resume]
+\item With the cap, find the price.
+\item Find the supply price of the 800th thousand hours.
+\item Compute the rent per hour and in total.
+\item By how much does the price exceed the competitive price, in percent?
+\item Compute the Harberger triangle.
+\item Compute the consumers' loss.
+\item Compute the producers' gain, and check that the consumers' loss equals it plus
+the triangle.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- the contest.} The electricians' trade association
+lobbies for the licence and a consumer group against it, in a \omterm{def:b3:interest-groups-and-regulation:rent-seeking}{Tullock contest}
+fought each year, in which each side's stake is its gain or loss that year.
+\begin{enumerate}[resume]
+\item State each side's stake.
+\item Find each side's spending.
+\item Find the probability that the licence passes.
+\item Compute total rent-seeking spending.
+\item Which side spends more, and why does the side with the smaller stake win less
+often?
+\item Why would an unorganised consumer side spend far less than this?
+\item What happens to the probability of passage if consumers do not organise at all?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- the repeal.} Years later, four of Brenland's eight
+regions repeal the licence. Mean prices (dalens an hour) were 60 before and 53 after in
+the repealing regions, and 58 and 57 in the others.
+\begin{enumerate}[resume]
+\item Compute the before--after change in the repealing regions.
+\item Compute the difference-in-differences estimate.
+\item What assumption makes it the effect of the repeal?
+\item Compare it with the model's prediction for a full repeal.
+\item Give one reason the estimate might be smaller than predicted.
+\item State the result: the total social cost of the licence, Harberger plus Tullock,
+in millions of dalens.
+\end{enumerate}
+\end{problem}

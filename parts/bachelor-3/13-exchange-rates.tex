@@ -1,0 +1,481 @@
+\chapter{Exchange Rates}\label{ch:b3:exchange-rates}
+
+An exchange rate is the price of one money in terms of another, and it is set in the
+largest and most liquid market in the world. Its theory rests on two arbitrage
+conditions --- one in goods, one in assets --- and the evidence finds one of them
+holding slowly and the other not at all. This chapter tests \omterm{def:b3:exchange-rates:ppp}{purchasing-power parity}
+over a century and a half, explains why rich countries are dear, shows that
+\omterm{def:b3:exchange-rates:interest-parity}{covered interest parity} holds while uncovered parity fails, derives the
+exchange rate in the monetary model and its \omterm{def:b3:exchange-rates:overshooting}{overshooting}, and ends with the
+result that a random walk forecasts exchange rates better than the models.
+
+\begin{openingchart}{Price level index (GDP; United States = 100) against GDP per
+person (constant 2021 PPP dollars, log scale), 197 countries, 2023, with the fitted
+line of log price level on log income.}{World Bank, World Development Indicators
+(PA.NUS.GDP.PLI, NY.GDP.PCAP.PP.KD); our computation}
+\begin{tikzpicture}
+\begin{axis}[omscatter, xmode=log, log ticks with fixed point, width=0.66\linewidth,
+  height=0.44\linewidth, xmin=800, xmax=150000, ymin=0, ymax=130,
+  xlabel={GDP per person}, ylabel={Price level (United States = 100)}]
+  \addplot table[x=y, y=pli] {figdata/bachelor-3/13-exchange-rates/out/pli.csv};
+  \addplot[omThm, thick, no marks, smooth] table[x=y, y=pli] {figdata/bachelor-3/13-exchange-rates/out/pli_fit.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: pli_stats
+At market exchange rates, the same basket of final goods cost 111 in Switzerland
+when it cost 100 in the United States, 51 in China, 25 in India and 19 in Egypt.
+Across countries, a country twice as rich has a price level about 15~\% higher
+(the slope is 0.20, $2^{0.20} = 1.15$), and income alone accounts for a third of the
+variation. The law of one price does not make price levels equal.
+
+\begin{recall}
+The Year 1 volume defined the nominal exchange rate $S$ (here, home currency per
+unit of foreign currency, so that a rise of $S$ is a depreciation of the home
+currency) and the real exchange rate $Q = SP^*/P$. The Year 2 volume proved the law of
+one price for assets and modelled expectations.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:exchange-rates:symbols}
+Lower-case letters are logarithms: $s = \ln S$, $p = \ln P$, $q = s + p^* - p$, $m$ money.
+$F$ is the one-year forward rate, $i$ and $i^*$ the home and foreign one-year interest
+rates, $\lambda$ the interest semi-elasticity of money demand and $\theta$ the speed at
+which a deviation closes. A star marks the foreign country.
+\end{notation}
+
+\section{Purchasing-power parity}\label{sec:b3:exchange-rates:ppp}
+
+\begin{definition}[Absolute and relative purchasing-power parity]\label{def:b3:exchange-rates:ppp}
+\index{purchasing-power parity}
+\emph{Absolute purchasing-power parity} holds when a common basket costs the same in
+two countries once converted at the exchange rate: $S = P/P^*$, a real exchange rate
+of one. \emph{Relative purchasing-power parity} holds when the exchange rate moves
+with the inflation differential: $\Delta s = \pi - \pi^*$, so that the real exchange rate is
+constant.
+\end{definition}
+
+Absolute parity implies relative parity (take log differences of $S = P/P^*$), but
+not conversely: a constant real exchange rate different from one satisfies the
+second only. Neither holds year by year. The question is whether deviations die
+out.
+
+\begin{definition}[Half-life of a deviation]\label{def:b3:exchange-rates:half-life}
+\index{half-life of a deviation}
+If the real exchange rate follows $q_t - \bar q = \rho(q_{t-1} - \bar q) + \varepsilon_t$ with $0 < \rho < 1$, the
+\emph{half-life} of a deviation is the time it takes for half of it to disappear,
+$\ln 0.5/\ln \rho$ periods.
+\end{definition}
+
+\begin{omchart}{Real exchange rates against the dollar, 1870--2020 (log deviation
+from each country's 1870--2020 mean, percent; a rise is a real depreciation against
+the dollar). The war years 1914--1919 and 1939--1949, of controlled official rates
+and wartime inflation, are left out.}{Jordà, Schularick and Taylor, Macrohistory Database (xrusd, cpi); our
+computation}
+\begin{tikzpicture}
+\begin{axis}[omtime, width=0.8\linewidth, height=0.46\linewidth, xmin=1865, xmax=2025,
+  ymin=-130, ymax=100, ylabel={Percent}, unbounded coords=jump, legend columns=5,
+  legend style={at={(0.5,1.03)}, anchor=south, font=\footnotesize}]
+  \addplot[omDef, thick, mark=none] table[x=year, y=GBR] {figdata/bachelor-3/13-exchange-rates/out/real_rates.csv};
+  \addplot[omThm, thick, mark=none] table[x=year, y=JPN] {figdata/bachelor-3/13-exchange-rates/out/real_rates.csv};
+  \addplot[black, thick, mark=none] table[x=year, y=CHE] {figdata/bachelor-3/13-exchange-rates/out/real_rates.csv};
+  \addplot[omDef, thick, dashed, mark=none] table[x=year, y=CAN] {figdata/bachelor-3/13-exchange-rates/out/real_rates.csv};
+  \addplot[gray, thick, dotted, mark=none] table[x=year, y=AUS] {figdata/bachelor-3/13-exchange-rates/out/real_rates.csv};
+  \legend{United Kingdom, Japan, Switzerland, Canada, Australia}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: half_life_stats
+The British, Canadian and Australian real rates wander around a stable level.
+The Japanese and Swiss ones do not: both currencies appreciated in real terms by
+more than 100 log points over the period. Estimating $\rho$ for each of the 17
+economies of the database gives a median half-life of 5.5 years over 1870--2020 and
+2.5 years over 1974--2020 (5.4 years over 1870--2020 without the war years), against a consensus of three to five years in the
+studies surveyed in 1996 --- too slow to be explained by sticky prices alone.
+% ledger: b3xr:rog.halflife
+The short sample's shorter half-life should not be read as faster convergence:
+least squares underestimates $\rho$ in short samples, and the bias shortens the
+half-life.
+
+\begin{model}{Purchasing-power parity}
+\assumes Arbitrage in goods: a basket cheaper in one country is bought there and
+sold in the other until prices are equal in a common currency.
+\predicts Real exchange rates that revert to a constant level; nominal rates that
+follow inflation differentials in the long run.
+\tested Deviations die out, with half-lives of three to five years in long samples
+(5.5 years for the median economy here); they are large in the short run, and
+some real rates trend for a century. % ledger: b3xr:rog.halflife
+\breaks \omterm{def:b3:ricardian-trade:iceberg}{Non-traded goods}, whose prices differ across countries; trade costs; the
+short run, when nominal rates move far more than prices; trends in productivity.
+\end{model}
+
+\section{Productivity and price levels}\label{sec:b3:exchange-rates:balassa-samuelson}
+
+\begin{definition}[Balassa--Samuelson effect]\label{def:b3:exchange-rates:balassa-samuelson}
+\index{Balassa--Samuelson effect}
+The \emph{Balassa--Samuelson effect} is the rise of a country's price level, relative
+to others, that comes from faster productivity growth in its traded-goods sector
+than in its non-traded sector.
+\end{definition}
+
+\begin{proposition}[Balassa--Samuelson]\label{prop:b3:exchange-rates:balassa-samuelson}
+Let each country produce a traded good and a \omterm{def:b3:ricardian-trade:iceberg}{non-traded good} with labour alone,
+$y_T = a_TL_T$ and $y_N = a_NL_N$; let labour move freely between sectors, the law of one
+price hold for the traded good, and the price level be $P = P_T^{1-\gamma}P_N^\gamma$. Then
+\[
+\frac{P}{SP^*} = \left(\frac{a_T/a_N}{a_T^*/a_N^*}\right)^{\gamma}.
+\]
+\end{proposition}
+
+\begin{proof}
+With competitive firms, each sector pays labour its marginal product in value:
+$W = P_Ta_T = P_Na_N$, so $P_N/P_T = a_T/a_N$. Then $P = P_T(P_N/P_T)^\gamma = P_T(a_T/a_N)^\gamma$, and the
+same holds abroad. Dividing, with $P_T = SP_T^*$, gives the result.
+\end{proof}
+
+Productivity grows faster in manufacturing than in haircuts. A country whose
+traded sector catches up raises the wage in both sectors, and the price of the
+\omterm{def:b3:ricardian-trade:iceberg}{non-traded good} rises with it. Japan, the major economy whose income grew fastest
+after the Second World War, is the canonical case of a sustained real appreciation
+(the chart of real rates); the opening chart's slope is the cross-section.
+% ledger: b3xr:rog.japan
+
+\begin{measure}[How a price level index is made]
+The price level index divides a country's purchasing-power-parity conversion
+factor --- the number of local currency units that buy what one dollar buys in the
+United States, estimated from the prices of comparable goods and services collected
+in the International Comparison Program --- by its market exchange rate. An index
+of 25 says that a dollar converted at the market rate buys four times as much there
+as at home. The comparisons require that baskets be comparable, which is hardest
+for services whose quality differs: a doctor's visit, a year of schooling.
+\end{measure}
+
+\section{Interest parity}\label{sec:b3:exchange-rates:interest-parity}
+
+\begin{definition}[Covered and uncovered interest parity]\label{def:b3:exchange-rates:interest-parity}
+\index{covered interest parity}\index{uncovered interest parity}
+\emph{Covered interest parity} holds when $F/S = (1 + i)/(1 + i^*)$: a deposit at home earns
+the same as a foreign deposit converted at the spot rate and converted back at a
+forward rate agreed today. \emph{Uncovered interest parity} holds when the expected
+depreciation equals the interest differential: $E_t s_{t+1} - s_t = i - i^*$.
+\end{definition}
+
+\begin{proposition}[Covered interest parity by arbitrage]\label{prop:b3:exchange-rates:cip}
+If funds can be borrowed and lent at $i$ at home and $i^*$ abroad and forward
+contracts traded without cost or default, then $F = S(1 + i)/(1 + i^*)$.
+\end{proposition}
+
+\begin{proof}
+Borrow one unit of home currency at $i$, convert it to $1/S$ units of foreign
+currency, lend them at $i^*$, and sell forward the $(1 + i^*)/S$ units due in a year at
+$F$. Every price is known today; the strategy needs no capital, and at the end
+yields $F(1 + i^*)/S - (1 + i)$ for certain. If this were positive, everyone would do it;
+if negative, the reverse. No arbitrage requires it to be zero.
+\end{proof}
+
+Covered parity is the textbook arbitrage, yet in major currencies deviations from
+it have been large, persistent and systematic, not explained by credit risk or
+transaction costs, and strongest at quarter-ends, when banks' balance sheets are
+reported: arbitrage needs balance sheet, and bank regulation made it costly.
+% ledger: b3xr:dtv.cip
+Uncovered parity is not an arbitrage: the investor who does not cover bears the
+exchange risk. It is a prediction about expectations, and it can be tested. If
+investors are risk-neutral and expectations rational, the regression of the
+realised depreciation on the interest differential has a slope of one.
+
+\begin{omchart}{Depreciation against the dollar over the next year (percent) against
+the short-term interest differential with the United States (points), 17
+economies, 1974--2019, with the fitted line and the uncovered-parity
+line.}{Jordà, Schularick and Taylor, Macrohistory Database (xrusd, stir); our
+computation}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.6\linewidth, height=0.44\linewidth, xmin=-14, xmax=14,
+  ymin=-30, ymax=40, xlabel={Interest differential (points)},
+  ylabel={Depreciation next year (\%)}, legend pos=north west,
+  legend style={font=\footnotesize}]
+  \addplot+[mark size=0.8pt] table[x=diff, y=dep] {figdata/bachelor-3/13-exchange-rates/out/uip.csv};
+  \addplot[omThm, thick, no marks, sharp plot] table[x=diff, y=dep] {figdata/bachelor-3/13-exchange-rates/out/uip_fit.csv};
+  \addplot[black, thick, dashed, no marks, sharp plot] table[x=diff, y=uip] {figdata/bachelor-3/13-exchange-rates/out/uip_fit.csv};
+  \legend{Country-year, Fitted, Uncovered parity}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: uip_stats
+The pooled slope is $-0.10$ (standard error 0.13), over 782 country-years: if
+anything, high-interest currencies appreciated. The interest differential
+explains essentially none of the variation in exchange rates (an $R^2$ under 0.001).
+
+\begin{definition}[Forward premium puzzle; carry trade]\label{def:b3:exchange-rates:forward-premium}
+\index{forward premium puzzle}\index{carry trade}
+The \emph{forward premium puzzle} is the finding that the slope of the
+uncovered-parity regression is below one and often negative. A \emph{carry trade}
+borrows in low-interest currencies and lends in high-interest ones, uncovered.
+\end{definition}
+
+\begin{record}[The carry trade]
+Under uncovered parity the \omterm{def:b3:exchange-rates:forward-premium}{carry trade} earns nothing on average: the
+high-interest currency depreciates by the differential. In the data it has earned
+large average payoffs, largely unrelated to standard measures of risk. One
+explanation is a rare event: losses, or simply bad times, that come in states of
+the world when investors value money most, and that a short sample may barely
+contain.
+% ledger: b3xr:bekr.carry
+\end{record}
+
+\section{The monetary model}\label{sec:b3:exchange-rates:monetary}
+
+\begin{definition}[Monetary model of the exchange rate]\label{def:b3:exchange-rates:monetary-model}
+\index{monetary model of the exchange rate}
+The \emph{monetary model of the exchange rate} combines money-market equilibrium in
+each country, $m - p = \phi y - \lambda i$, with \omterm{def:b3:exchange-rates:ppp}{purchasing-power parity} and \omterm{def:b3:exchange-rates:interest-parity}{uncovered interest
+parity}.
+\end{definition}
+
+\begin{proposition}[The exchange rate as an asset price]\label{prop:b3:exchange-rates:monetary}
+In the monetary model, with fundamentals $f_t = (m_t - m_t^*) - \phi(y_t - y_t^*)$ and no bubble,
+\[
+s_t = \frac{1}{1 + \lambda}\sum_{k=0}^{\infty}\left(\frac{\lambda}{1 + \lambda}\right)^{k}E_tf_{t+k}.
+\]
+\end{proposition}
+
+\begin{proof}
+Subtracting the foreign money market from the home one, $p - p^* = f + \lambda(i - i^*)$.
+Parity in goods gives $s = p - p^*$, and in assets $i - i^* = E_ts_{t+1} - s_t$, so $s_t = f_t +
+\lambda(E_ts_{t+1} - s_t)$, or $s_t = (f_t + \lambda E_ts_{t+1})/(1 + \lambda)$. Substituting the same equation
+for $E_ts_{t+1}$, and so on $K$ times (a recurrence of the kind solved in the grades
+10--12 volume), gives the sum up to $K$ plus $(\lambda/(1 + \lambda))^{K+1}E_ts_{t+K+1}$, which
+vanishes when there is no bubble.
+\end{proof}
+
+The exchange rate is an asset price: it moves today with news about future
+money and output. A rise in expected money growth depreciates the currency now,
+before any money is printed (\cref{exo:b3:exchange-rates:11}).
+
+\section{Overshooting}\label{sec:b3:exchange-rates:overshooting}
+
+\begin{definition}[Overshooting]\label{def:b3:exchange-rates:overshooting}
+\index{overshooting}\index{Dornbusch model}
+A currency \emph{overshoots} when its response on impact to a permanent shock
+exceeds its long-run response. In the \emph{Dornbusch model}, prices adjust slowly
+while the exchange rate jumps, and a monetary expansion makes the currency
+overshoot.
+\end{definition}
+
+\begin{proposition}[Overshooting]\label{prop:b3:exchange-rates:dornbusch}
+Take the home money market $m - p = -\lambda i$ (output fixed), \omterm{def:b3:exchange-rates:interest-parity}{uncovered interest parity}
+$i = i^* + E\dot s$, and prices that adjust slowly, so that the exchange rate is expected
+to close its gap with the long-run rate $\bar s$ at speed $\theta$: $E\dot s = \theta(\bar s - s)$. After a
+permanent rise $dm$ in money, $d\bar s = dm$, and on impact $ds = dm(1 + 1/(\lambda\theta))$.
+\end{proposition}
+
+\begin{proof}
+In the long run $i = i^*$ and $p$ rises with $m$, so with parity in goods $\bar s$ rises by
+$dm$. On impact $p$ has not moved, so the money market requires $i$ to fall by
+$dm/\lambda$. Uncovered parity then requires an expected appreciation of $dm/\lambda$: $\theta(s -
+\bar s) = dm/\lambda$, so $s - \bar s = dm/(\lambda\theta)$ and $ds = d\bar s + dm/(\lambda\theta)$.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.62cm, y=0.12cm]
+  \draw[econ axes] (-2,0) -- (12.5,0) node[right] {years};
+  \draw[econ axes] (0,0) -- (0,23) node[above] {\% change};
+  \draw[guide] (-2,10) node[above right, font=\scriptsize] {long run} -- (12,10);
+  \draw[curve, omDef] (-2,0) -- (0,0) -- (0,20);
+  \draw[curve, omDef, domain=0:12, samples=60] plot (\x, {10 + 10*exp(-0.35*\x)});
+  \node[omDef, font=\scriptsize, anchor=south west] at (2.2,14.8) {exchange rate $s$};
+  \draw[curve, omThm, domain=0:12, samples=60] plot (\x, {10 - 10*exp(-0.35*\x)});
+  \node[omThm, font=\scriptsize, anchor=north west] at (2.4,5.2) {price level $p$};
+  \draw[curve, omThm] (-2,0) -- (0,0);
+  \foreach \t in {0,2,...,12} \draw (\t,0) -- (\t,-0.8) node[below, font=\scriptsize] {\t};
+  \foreach \v in {10,20} \draw (0,\v) -- (-0.15,\v) node[left, font=\scriptsize] {\v};
+\end{tikzpicture}
+\par\smallskip{\small A permanent 10~\% rise in money at year 0, with $\lambda\theta = 1$ and $\theta = 0.35$:
+the currency depreciates by 20~\% at once, then appreciates toward its long-run
+depreciation of 10~\% as prices rise.}
+\end{omfigure}
+
+\begin{model}{The Dornbusch overshooting model}
+\assumes Sticky goods prices, flexible asset prices, \omterm{def:b3:exchange-rates:interest-parity}{uncovered interest parity},
+a stable demand for money.
+\predicts A monetary expansion depreciates the currency at once by more than in the
+long run, and the currency then appreciates while prices rise; exchange rates more
+volatile than prices.
+\tested Floating exchange rates are an order of magnitude more volatile than
+relative prices, as predicted. % ledger: b3xr:rog.volatility
+But after
+identified U.S. monetary expansions, the dollar depreciates persistently, and
+its largest fall comes with a delay, not on impact. % ledger: b3xr:ee.delayed
+\breaks Uncovered parity, on which the jump depends, fails in the data (the chart
+above); money demand is unstable.
+\end{model}
+
+\section{Forecasting}\label{sec:b3:exchange-rates:forecasting}
+
+\begin{record}[Meese and Rogoff, 1983]
+The exchange-rate models of the 1970s were tested out of sample on the first years
+of floating. For the dollar against the pound, the mark and the yen, and for the
+trade-weighted dollar, a random walk --- tomorrow's rate equals today's ---
+forecast as well as any estimated model at horizons of one to twelve months. The
+structural models did poorly even when given the actual future values of their
+explanatory variables. % ledger: b3xr:mr.rw
+Short-term movements of nominal exchange rates remained, in the words of a later
+survey, notoriously difficult to explain even after the fact.
+% ledger: b3xr:rog.volatility
+\end{record}
+
+The two halves of this chapter fit. If the exchange rate is an asset price that
+moves with news about the future, its changes are mostly unpredictable, as asset
+prices' are; and if deviations from parity die out with a half-life of years, a
+model that knows where the rate is going has little to say about next month.
+
+\section{Exercises}\label{sec:b3:exchange-rates:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:exchange-rates:1}
+In the opening chart, which country has the highest price level, and which the
+lowest? Which country is much cheaper than its income predicts? By how much does
+the fitted line say the price level rises when income doubles?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:exchange-rates:2}
+Home inflation is 6~\% a year and foreign inflation 2~\%. What does relative PPP
+predict for the exchange rate, approximately and exactly?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:exchange-rates:3}
+The spot rate is 1.10 dalens per kest, the one-year dalen rate 4~\% and the kest rate
+2~\%. Find the one-year forward rate. Is the dalen at a forward premium or discount?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:exchange-rates:4}
+What evidence would contradict \omterm{def:b3:exchange-rates:ppp}{purchasing-power parity} in the long run?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:exchange-rates:5}
+Estimate the half-life of each JST economy's real exchange rate against the dollar,
+over 1870--2020 and over 1974--2020. Which economies have the longest half-lives over
+the long sample, and why?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:exchange-rates:6}
+In the Balassa--Samuelson model with $\gamma = 0.5$, home's ratio $a_T/a_N$ is twice
+the foreign one. How much higher is home's price level? If home's traded
+productivity then grows by 3~\% a year faster than abroad, with $a_N$ unchanged
+everywhere, how fast does its real exchange rate appreciate?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:exchange-rates:7}
+In the \omterm{def:b3:exchange-rates:overshooting}{Dornbusch model} with $\lambda = 2$ and $\theta = 0.25$, money rises by 10~\%. Find the
+depreciation on impact, after one year and in the long run, and the change in the
+home interest rate on impact.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:exchange-rates:8}
+Estimate the uncovered-parity regression country by country on the JST data,
+1974--2019. In how many economies is the slope negative? In how many can a slope of
+one be rejected at 5~\%?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:exchange-rates:9}
+What forecasting record would contradict the Meese--Rogoff result?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:exchange-rates:10}
+In the \omterm{def:b3:exchange-rates:overshooting}{Dornbusch model} of the chapter, show that the gap $s - \bar s$ after the shock
+and the price gap $\bar p - p$ satisfy $s - \bar s = (\bar p - p)/(\lambda\theta)$ at every date, and that the
+overshoot shrinks as prices become more flexible.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:exchange-rates:11}
+In the monetary model with $\lambda = 4$, relative output constant and relative money
+growing at 2~\% a year, show that $s_t = f_t + \lambda\mu$, where $\mu$ is money growth. The central
+bank announces that money growth will be 5~\% a year from now on. By how much does
+the currency depreciate on the announcement?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:exchange-rates:12}
+An investor borrows yen at 0.5~\% and lends Australian dollars at 5~\% for a year,
+uncovered. Write the return as the interest differential minus the depreciation.
+Find it if the Australian dollar falls by 3~\%, and if it falls by 25~\%. What
+probability of the crash makes the expected return zero, if the other outcome is a
+2~\% rise?
+\end{exercise}
+
+\section{Problem: The Dalen Against the Kest}\label{sec:b3:exchange-rates:problem}
+
+\begin{problem}[{Weekend problem --- The dalen against the kest}]\label{pb:b3:exchange-rates:dalen}
+The rate $S$ (dalens per kest) and Brenland's CPI and policy rate come from its
+accounts. Assume that Kestrian prices rise by 2.7~\% a year and that Kestria's
+interest rate is 3.0~\%. The real rate $Q = SP_K/P_B$ is indexed to 2015 = 100:
+% figdata: dalen_points
+\begin{center}\small
+\pgfplotstabletypeset[col sep=comma, columns={year,rate,cpi,cpi_k,real,policy_rate},
+  columns/year/.style={column name={Year}, int detect, column type=l},
+  columns/rate/.style={column name={$S$}, fixed, fixed zerofill, precision=3},
+  columns/cpi/.style={column name={$P_B$}, fixed, fixed zerofill, precision=1},
+  columns/cpi_k/.style={column name={$P_K$}, fixed, fixed zerofill, precision=1},
+  columns/real/.style={column name={$Q$}, fixed, fixed zerofill, precision=1},
+  columns/policy_rate/.style={column name={$i_B$ (\%)}, fixed, fixed zerofill, precision=2},
+  every head row/.style={after row=\hline}, every last row/.style={after row=\hline}]
+  {figdata/bachelor-3/13-exchange-rates/out/dalen_points.csv}
+\end{center}
+An AR(1) of $\ln Q$ on 2000--2025 gives $\rho = 0.948$. In 2021, $S = 1.120$, $P_B = 115.9$ and
+$P_K = 117.3$; in 2022, $S = 1.148$, $P_B = 127.7$, $P_K = 120.5$ and $i_B = 5.42~\%$; in
+2023, $S = 1.183$. Over 2016--2020 Brenland's policy rate ranged from 2.23~\% to
+2.72~\%. Kestria's has been 3.0~\% throughout. % figdata: dalen_stats, dalen
+
+\medskip\noindent\textbf{Part I --- parity in goods.}
+\begin{enumerate}
+\item What change in $S$ from 2000 to 2025 does relative PPP predict? What happened?
+\item In which listed year was the dalen weakest in real terms? By how much was it
+weaker than in 2015?
+\item Show that the table's $Q$ for 2025 follows from $S$, $P_K$ and $P_B$.
+\item Find the half-life of a real deviation implied by $\rho$.
+\item Compare it with the JST medians of 5.5 and 2.5 years. Why is an estimate from
+26 years imprecise?
+\item Does the estimate show that PPP fails between Brenland and Kestria?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- parity in assets.}
+\begin{enumerate}[resume]
+\item Find the one-year forward rate in 2022 by covered parity.
+\item What depreciation of the dalen did uncovered parity predict for 2022--2023?
+What happened?
+\item A Kestrian investor borrowed kests at 3.0~\% in 2022 and lent dalens at 5.42~\% for
+a year, uncovered. Find the return in percent of the sum borrowed.
+\item Over 2016--2020 Brenland's rate was below Kestria's. What did uncovered parity
+predict, and what did the dalen do?
+\item Compare the Brenland record with the JST regression slope of $-0.10$.
+\item Name two reasons why uncovered parity can fail with rational investors.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- a Kestrian monetary expansion.} Kestria's money
+supply rises permanently by 10~\%. In Kestria's money market $\lambda = 4$, and prices
+close a deviation with a half-life of 2.5 years.
+\begin{enumerate}[resume]
+\item What happens to $S$ in the long run?
+\item Find $\theta$, with $e^{-\theta \times 2.5} = 0.5$.
+\item Find the change in $S$ on impact.
+\item By how many points does the dalen overshoot?
+\item Find the change in $S$ one year after the shock.
+\item By how much does Kestria's interest rate fall on impact?
+\item What would happen with fully flexible prices?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- a forecast contest.} One-year-ahead forecasts of
+$S$ for 2016--2025: a random walk; uncovered parity, $S_t(1 + i_B - i_K)$; and a PPP
+rule that closes the real gap at the speed estimated with data up to the forecast
+date and, like the models Meese and Rogoff tested, is given the actual inflation of
+the year it forecasts. The root mean squared errors are 2.32~\%, 1.73~\% and 2.64~\%.
+\begin{enumerate}[resume]
+\item Which forecast won? Which lost?
+\item Find the random walk's and the uncovered-parity forecasts for 2023 and their
+errors.
+\item Does the result contradict Meese and Rogoff?
+\item Why did the PPP rule do badly in 2022?
+\item What would you need to say that one forecast is better than another?
+\item State the result: the overshoot of the dalen, in points, and the half-life of
+its real deviation.
+\end{enumerate}
+\end{problem}

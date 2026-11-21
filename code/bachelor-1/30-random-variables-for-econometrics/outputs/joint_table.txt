@@ -1,0 +1,14 @@
+$ python joint_table.py
+joint distribution, with marginals:
+re78        <10k  10-30k   >30k    All
+education                             
+<12        0.112   0.161  0.031  0.304
+12         0.058   0.223  0.062  0.343
+>12        0.055   0.159  0.138  0.353
+All        0.226   0.543  0.231  1.000
+earnings bracket given schooling:
+re78        <10k  10-30k   >30k
+education                      
+<12        0.367   0.530  0.103
+12         0.170   0.651  0.179
+>12        0.157   0.450  0.392

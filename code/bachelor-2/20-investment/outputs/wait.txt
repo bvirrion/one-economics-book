@@ -1,0 +1,7 @@
+$ python wait.py
+break-even profit (net present value zero): 9.09
+u = 0.00: invest at once if profit is at least 9.09
+u = 0.25: invest at once if profit is at least 11.48
+u = 0.50: invest at once if profit is at least 15.58
+u = 0.75: invest at once if profit is at least 24.24
+at x0 = 12, u = 0.5: now 32.00, wait 44.55

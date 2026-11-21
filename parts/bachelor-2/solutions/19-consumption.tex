@@ -1,0 +1,106 @@
+\section*{Chapter \ref{ch:b2:consumption} --- Consumption}
+
+\begin{solution}{exo:b2:consumption:1}
+% figdata: growth_summary
+Consumption: its growth has a standard deviation of 0.69 points against 0.90 for income, about a quarter less. With $c = 0.9y$,
+consumption growth would equal income growth every quarter: both standard deviations 0.90 and a correlation of 1, against
+0.44 in the data.
+\end{solution}
+
+\begin{solution}{exo:b2:consumption:2}
+% code: exercises/solutions.py life_cycle
+$(90 + 30 \times 36)/45 = 1{,}170/45 = 26$ a year; saving $36 - 26 = 10$ a year; wealth at retirement $90 + 30 \times 10 = 390$, which pays $15 \times 26 = 390$ in retirement.
+\end{solution}
+
+\begin{solution}{exo:b2:consumption:3}
+Households paid earlier and later are then alike on average, so the difference in their spending in a given quarter is
+caused by the payment, not by whatever might make some households both receive money early and spend more.
+\end{solution}
+
+\begin{solution}{exo:b2:consumption:4}
+% code: exercises/solutions.py hand_to_mouth
+$0.12 = h + (1 - h) \times 0.005$, so $h = 0.115/0.995 = 0.116$.
+\end{solution}
+
+\begin{solution}{exo:b2:consumption:5}
+% code: exercises/solutions.py precautionary
+$1/(100 - s) = \tfrac12/(25 + s) + \tfrac12/(175 + s) = (100 + s)/((25 + s)(175 + s))$, so $(25 + s)(175 + s) = 10{,}000 - s^2$, $s^2 + 100s - 2{,}812.5 = 0$ and $s = (-100 + \sqrt{21{,}250})/2 = 22.89$:
+twice the spread, about twice the saving.
+\end{solution}
+
+\begin{solution}{exo:b2:consumption:6}
+% code: exercises/solutions.py constrained
+It would like $(20 + 40)/2 = 30$ each period but can consume only 20 now. With 6 it consumes 26: all of it. With 10, 30: all of it, and
+it now reaches its unconstrained plan. With 30, total resources are 90 and it consumes 45: 25 of the 30.
+\end{solution}
+
+\begin{solution}{exo:b2:consumption:7}
+Income growth contains news that also moves consumption (a surprise raise raises both), so the error in the regression
+is correlated with income growth and least squares is biased; here it gives 0.34, against 0.62 when instrumented. Instruments
+fix this only if they predict income growth well; weak instruments leave the estimate biased toward least squares and
+its standard error unreliable. An $F$ of 2.5 is weak.
+\end{solution}
+
+\begin{solution}{exo:b2:consumption:8}
+% code: exercises/solutions.py lambda_iv
+With only lagged income growth, $\lambda = 1.05$ with a standard error of 0.51, the first-stage $R^2$ is 0.019 and $F = 1.27$. Lagged income
+growth barely predicts income growth; lagged consumption growth carried most of the predictive power. The estimate is
+uninformative.
+\end{solution}
+
+\begin{solution}{exo:b2:consumption:9}
+The share of GDP that goes to investment, government or net exports can change: a country that comes to invest a larger share has a smaller share left for household consumption. Demography matters too: a population with more retired
+people dissaves. And the share of national income paid to households, rather than kept by firms, can change.
+\end{solution}
+
+\begin{solution}{exo:b2:consumption:10}
+With $\beta(1 + r) = 1$ consumption is constant at $c$. The budget constraint says that the present value of consumption equals wealth plus the
+present value of income: $c\sum_{k \ge 0}(1 + r)^{-k} = c(1 + r)/r = A_t + \sum_k (1 + r)^{-k}E_t y_{t+k}$, so $c = rA_t/(1 + r) + \frac{r}{1 + r}\sum_k(1 + r)^{-k}E_t y_{t+k}$, the second term
+being the annuity value of income. A payment $W$ raises $A_t$ by $W$ and consumption by $rW/(1 + r)$.
+\end{solution}
+
+\begin{solution}{exo:b2:consumption:11}
+The \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} is $1/(100 - s) = \tfrac12/(100 - \delta + s) + \tfrac12/(100 + \delta + s) = (100 + s)/((100 + s)^2 - \delta^2)$. So $(100 + s)^2 - \delta^2 = (100 + s)(100 - s)$, that is $2s^2 + 200s - \delta^2 = 0$, and
+$s = (-100 + \sqrt{10{,}000 + 2\delta^2})/2$, which rises with $\delta$. With $\delta = 50$: $s^2 + 100s - 1{,}250 = 0$.
+\end{solution}
+
+\begin{solution}{exo:b2:consumption:12}
+Group 1 receives $\lambda y_t$ and consumes it: its consumption changes by $\lambda\Delta y_t$. Group 2 receives the rest and its consumption follows a random
+walk: it changes by an unpredictable $(1 - \lambda)\varepsilon_t$, scaling its share. Adding, $\Delta c_t = \lambda\Delta y_t + (1 - \lambda)\varepsilon_t$. Since $\varepsilon_t$ is uncorrelated with anything
+known at $t - 1$, regressing $\Delta c_t$ on the part of $\Delta y_t$ predictable at $t - 1$ recovers $\lambda$.
+\end{solution}
+
+\begin{solution}{pb:b2:consumption:1}
+% code: exercises/solutions.py household, constrained, population
+\textbf{Part I.}
+1. $250 + 25 \times 30 = 1{,}000$.
+2. $1{,}000/50 = 20$.
+3. $30 - 20 = 10$.
+4. $250 + 25 \times 10 = 500$.
+5. It falls by 20 a year, from 500 to zero over 25 years.
+\textbf{Part II.}
+6. $10/50 = 0.2$ a year; propensity 0.02.
+7. Resources rise by $2 \times 25 = 50$; consumption by $50/50 = 1$ a year.
+8. Resources rise by $2 \times 50 = 100$; consumption by 2.
+9. Now, when it is announced, by 0.2 a year; nothing changes when it is paid.
+10. Consumption that rises when the bonus is paid rather than when it is announced.
+11. It is a yearly figure: within one quarter the household spends a quarter of 0.2, so its quarterly propensity is $1/200 = 0.005$.
+\textbf{Part III.}
+12. 30 and 30.
+13. 20, its income.
+14. All 6: it consumes 26.
+15. All 10: it consumes 30, its unconstrained plan.
+16. 25 of the 30: it consumes $(20 + 40 + 30)/2 = 45$.
+17. Once the bonus lifts it to the consumption it would choose if it could borrow, the rest is spread over both periods.
+\textbf{Part IV.}
+18. 0.005.
+19. $0.3 \times 2{,}000 \times 0.6 = 360$ thousand dalens.
+20. $h = (0.30 - 0.005)/0.995 = 0.296$.
+21. From $0.195/0.995 = 0.196$ to $0.395/0.995 = 0.397$.
+22. $0.5 + 0.5 \times 0.005 = 0.5025$.
+23. Wealth in a house or a pension cannot be spent quickly or cheaply; a household rich in such wealth but short of cash
+behaves like a household without wealth when a payment arrives.
+24. The larger $h$, the more of the payment is spent at once, and the more it raises demand in the quarter it is paid.
+25. If 30 per cent of a one-off payment is spent in the quarter of receipt, while forward-looking households would spend
+0.5 per cent of it, about 30 per cent of households (0.296) live hand to mouth.
+\end{solution}

@@ -1,0 +1,390 @@
+\chapter{Minimum Wages and Monopsony}\label{ch:b3:minimum-wage}
+
+Few questions in economics have been studied as often, by as many designs, as the
+effect of a minimum wage on employment. The competitive model gives a clear answer:
+a binding floor raises the wage of those who keep their jobs and costs others their
+jobs. A model in which each employer faces an upward-sloping supply of workers
+gives another: a moderate floor can raise both wages and employment. This chapter
+sets out both, then follows thirty years of evidence --- case studies, state panels,
+border pairs, \omterm{def:b3:minimum-wage:bunching}{bunching estimators}, large single increases --- and states what is
+agreed and what is not.
+
+\begin{openingchart}{Five published estimates of the elasticity of employment with
+respect to the minimum wage, each as stated by its authors.}{Neumark and Wascher
+(1995, NBER WP 5224), for the New Jersey estimates; Dube, Lester and Reich (2010);
+Neumark, Salas and Wascher (2013, NBER WP 18681)}
+\begin{tikzpicture}
+\begin{axis}[omrecord, xbar, bar width=9pt, width=0.62\linewidth,
+  height=0.36\linewidth, xmin=-0.5, xmax=1.1, ymin=0.4, ymax=5.6,
+  ytick={1,...,5}, yticklabels from table={figdata/bachelor-3/26-minimum-wage/out/elasticities.csv}{label},
+  y tick label style={font=\scriptsize}, xlabel={Elasticity of employment},
+  extra x ticks={0}, extra x tick labels={}, extra x tick style={grid=major}]
+  \addplot[fill=omDef!60, draw=omDef] table[x=elasticity, y=pos] {figdata/bachelor-3/26-minimum-wage/out/elasticities.csv};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% ledger: b3mw:nw
+% ledger: b3mw:dlr
+% ledger: b3mw:nsw
+The same New Jersey increase of 1992 gives an elasticity of 0.93 with a telephone survey of
+restaurants and $-0.24$ with their payroll records. Across all U.S. states, a panel with
+state and year effects gives $-0.176$ or more in magnitude; comparing only neighbouring
+counties across state borders gives 0.016. Letting the data choose the comparison
+states gives about $-0.3$ for teenagers. The selection is not a sample of the literature:
+it is every estimate in the studies this chapter cites that its authors state as an
+elasticity with respect to the minimum wage. The spread comes from data and from the
+choice of comparison, which is what the chapter is about.
+
+\begin{recall}
+The Year 1 volume built the single-buyer (monopsony) model of the labour market and
+showed that a floor between the monopsony and the competitive wage raises
+employment. Search and matching are the Year 2 volume's; difference in differences
+is chapter 3's, regression discontinuity chapter 4's, and \omterm{def:b3:credible-empirical-work:meta-analysis}{meta-analysis} chapter 6's.
+\Cref{ch:b3:labour-supply-and-demand} measured the elasticity of labour demand.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:minimum-wage:symbols}
+$\bar w$ is the minimum wage; $w(L)$ the supply of labour to a firm; $\varepsilon$ its elasticity;
+$\mathit{MRP}$ the marginal revenue product of labour.
+\end{notation}
+
+\section{The competitive prediction}\label{sec:b3:minimum-wage:competitive}
+
+\begin{definition}[Own-wage elasticity of employment]\label{def:b3:minimum-wage:own-wage}
+\index{own-wage elasticity of employment}
+The \emph{own-wage elasticity of employment} of a minimum wage is the percentage
+change in the employment of affected workers divided by the percentage change in
+their average wage; the elasticity \emph{with respect to the minimum wage} divides
+by the percentage change in the minimum itself.
+\end{definition}
+
+\begin{model}{The competitive labour market with a wage floor}
+\assumes Employers take the wage as given; the floor binds for some workers.
+\predicts Employment of affected workers falls by the labour-demand elasticity
+times their wage rise; total pay of the group rises if demand is inelastic.
+\tested U.S. studies of teenagers and the less educated find a preponderance of
+negative estimates, more one-sided for directly affected workers than for low-wage
+industries; % ledger: b3mw:ns
+binding federal increases in the late 2000s, which raised the average effective
+minimum by 30~\%, lowered the national employment-to-population ratio by an estimated
+0.7 percentage point; % ledger: b3mw:cw
+other studies find slower job growth over several years rather than an immediate
+fall. % ledger: b3mw:mw
+\breaks When employers set wages, a floor need not reduce employment at all.
+\end{model}
+
+\section{Monopsony and search}\label{sec:b3:minimum-wage:monopsony}
+
+\begin{definition}[Labour supply elasticity to the firm; monopsonistic competition]\label{def:b3:minimum-wage:monopsonistic}
+\index{labour supply elasticity to the firm}\index{monopsonistic competition}\index{dynamic monopsony}
+The \emph{labour supply elasticity to the firm} is the percentage change in a firm's
+employment when it alone raises its wage by 1~\%. In \emph{monopsonistic competition}
+in the labour market, many firms each face an upward-sloping supply because
+workers search, differ in tastes for jobs and quit slowly (\emph{dynamic
+monopsony}).
+\end{definition}
+
+\begin{proposition}[The markdown]\label{prop:b3:minimum-wage:markdown}
+A firm facing labour supply $w(L)$ with elasticity $\varepsilon$ that maximises profit pays $w = \mathit{MRP} \cdot \varepsilon/(1 + \varepsilon)$:
+the wage falls short of the marginal revenue product by the share $1/(1 + \varepsilon)$. A floor between
+this wage and the competitive wage raises employment.
+\end{proposition}
+
+\begin{proof}
+Profit is $R(L) - w(L)L$; its derivative is $\mathit{MRP} - w - w'(L)L = \mathit{MRP} - w(1 + 1/\varepsilon)$, zero at $w = \mathit{MRP}\cdot\varepsilon/(1 + \varepsilon)$,
+and $(\mathit{MRP} - w)/\mathit{MRP} = 1/(1 + \varepsilon)$. With a floor $\bar w$ above this wage, the marginal cost of a worker is
+$\bar w$ up to the employment that supply provides at $\bar w$; the firm hires up to the smaller of that
+supply and its demand at $\bar w$. Below the competitive wage, the supply at $\bar w$ is the smaller and
+it exceeds the monopsony employment, since supply rises with the wage.
+\end{proof}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.5cm, y=0.36cm]
+  \draw[econ axes] (0,0) -- (12,0) node[right, font=\scriptsize] {$L$};
+  \draw[econ axes] (0,0) -- (0,13) node[above, font=\scriptsize] {wage};
+  \draw[curve] (0,3) -- (10,8) node[right, font=\scriptsize] {supply $w(L)$};
+  \draw[curve, dashed] (0,3) -- (8.2,11.2) node[above, font=\scriptsize] {marginal cost};
+  \draw[curve, omDef] (0,11) -- (11,2.2) node[right, font=\scriptsize] {MRP};
+  \draw[guide] (4.44,0) -- (4.44,7.44);
+  \draw[guide] (0,5.22) -- (4.44,5.22);
+  \draw[curve, omThm] (0,5.8) -- (5.6,5.8);
+  \node[above, font=\scriptsize] at (1.4,5.8) {floor $\bar w$};
+  \draw[guide] (5.6,0) -- (5.6,5.8);
+  \node[below, font=\scriptsize] at (4.44,0) {$L^m$};
+  \node[below, font=\scriptsize] at (5.8,0) {$L^{\bar w}$};
+  \node[left, font=\scriptsize] at (0,5.22) {$w^m$};
+\end{tikzpicture}
+\par\smallskip{\small The single buyer hires where marginal cost meets the marginal
+revenue product, $L^m$, and pays $w^m$ on the supply curve. A floor $\bar w$ makes the marginal cost
+flat at $\bar w$ up to the supply curve: employment rises to $L^{\bar w}$.}
+\end{omfigure}
+
+With many firms, the search model of the Year 2 volume gives the same upward slope:
+when workers find jobs one at a time and quit to better offers, a firm that pays
+more fills vacancies faster and loses fewer workers. In the Burdett--Mortensen model
+each firm faces an upward-sloping supply even though it is one of many; the result
+is stated here without proof.
+
+\begin{model}{Monopsony in the labour market}
+\assumes Each employer faces an upward-sloping supply of workers.
+\predicts Wages are marked down below the marginal product; a moderate floor raises
+wages without lowering employment, and can raise it.
+\tested On an online task platform, observational and experimental estimates of
+the supply elasticity to an employer are around 0.1, a large markdown; % ledger: b3mw:djns
+across 8{,}000 U.S. occupation-by-area labour markets, moving from the 25th to the 75th percentile
+of employer concentration goes with posted wages 17~\% lower. % ledger: b3mw:ams
+\breaks A floor above the competitive wage reduces employment in this model too;
+how far a given floor is from that point is the empirical question.
+\end{model}
+
+\begin{definition}[Kaitz index]\label{def:b3:minimum-wage:kaitz}
+\index{Kaitz index}
+The \emph{Kaitz index} is the ratio of the minimum wage to the median wage.
+\end{definition}
+
+\begin{dated}{2026}
+The United Kingdom sets its adult minimum by a \omterm{def:b3:minimum-wage:kaitz}{Kaitz index}: the rate is not to fall below
+two-thirds of median hourly earnings. The April 2024 rate of 11.44 pounds an hour fell
+short --- 11.76 would have been needed --- so its index was $11.44/(1.5 \times 11.76) = 0.65$; the Low
+Pay Commission recommended 12.21 pounds for April 2025, and 1.75 million jobs were paid
+at the minimum in 2024. % ledger: b3mw:lpc.bite
+The United States federal minimum has been 7.25 dollars an hour since 24 July 2009,
+the latest change in the Labor Department's record, so its index falls whenever the
+median wage rises; the New Jersey episode below was a state raising its own floor
+above the federal one. % ledger: b3mw:dol.fed
+\end{dated}
+
+\section{The first natural experiment and the replies}\label{sec:b3:minimum-wage:nj}
+
+\begin{record}[New Jersey and Pennsylvania, 1992]
+On 1 April 1992 New Jersey raised its minimum from 4.25 to 5.05 dollars an hour; Pennsylvania's
+stayed at 4.25. A survey of 410 fast-food restaurants before and after found employment
+in New Jersey up 13~\% relative to Pennsylvania, with high-wage New Jersey stores, which
+the law did not touch, growing like those in Pennsylvania. % ledger: b3mw:ck
+Payroll records from 230 restaurants of four chains gave the opposite sign: the
+standard deviation of employment changes in the telephone survey was three times that in the
+payroll data, and the payroll estimate was a fall of 4.6~\%. % ledger: b3mw:nw
+A reply using the government's employment records for all restaurants found
+similar or slightly faster growth in New Jersey, and no relative loss in Pennsylvania
+when the federal minimum later rose there; the payroll sample's difference was traced
+to the restaurants of a single franchisee. % ledger: b3mw:ck2
+\end{record}
+
+\section{Border pairs and bunching}\label{sec:b3:minimum-wage:designs}
+
+\begin{definition}[Border-pair design]\label{def:b3:minimum-wage:border-pair}
+\index{border-pair design}
+A \emph{border-pair design} compares neighbouring counties on opposite sides of a
+state border with different minimum wages, using each pair's common shocks as the
+control.
+\end{definition}
+
+\begin{definition}[Bunching estimator; spillover effect]\label{def:b3:minimum-wage:bunching}
+\index{bunching estimator}\index{spillover effect}
+A \emph{bunching estimator} measures the employment effect of a minimum wage as the
+number of excess jobs paying at or just above the new minimum less the number of
+jobs missing below it. A \emph{spillover effect} is a rise in wages just above the
+minimum caused by the minimum.
+\end{definition}
+
+\begin{proposition}[Missing and excess jobs]\label{prop:b3:minimum-wage:bunching}
+If a minimum wage affects only jobs below some wage $\bar w + k$, the change in employment
+equals the change in the number of jobs below $\bar w$ plus the change in the number between
+$\bar w$ and $\bar w + k$, each measured against a control.
+\end{proposition}
+
+\begin{proof}
+Employment is the sum of the jobs in every wage bin. Jobs above $\bar w + k$ are unaffected,
+so their change equals the control's; the effect on total employment is the effect
+on the bins below $\bar w + k$, which is the sum over the two ranges. The jobs below $\bar w$
+either vanish or move up; the excess in the window counts those that moved, plus any
+spillover from bins in the window.
+\end{proof}
+
+\begin{omchart}{Brenland's working heads by hourly wage (one-dalen bins), before a
+floor of 12 dalens and after it under the problem's assumption that a tenth of the jobs
+below 12 disappear and the rest are paid 12--13.}{Invented data: Brenland's household
+survey; the weekend problem's assumption}
+\begin{tikzpicture}
+\begin{axis}[omrecord, ybar, bar width=3pt, width=0.66\linewidth,
+  height=0.36\linewidth, xmin=2, xmax=31, ymin=0, ymax=380,
+  xlabel={Hourly wage (dalens)}, ylabel={Heads}, legend pos=north east,
+  legend style={font=\footnotesize}]
+  \addplot[fill=omDef!50, draw=omDef, area legend] table[x=bin, y=before] {figdata/bachelor-3/26-minimum-wage/out/brenland_hist.csv};
+  \addplot[fill=omThm!60, draw=omThm, area legend] table[x=bin, y=after] {figdata/bachelor-3/26-minimum-wage/out/brenland_hist.csv};
+  \legend{Before, After}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: brenland_hist
+Applied to 138 state minimum-wage increases in the United States from 1979 to 2016,
+the method finds that the number of low-wage jobs was essentially unchanged over the
+five years after each increase, with modest spillovers above the new minimum and
+some job loss in sectors whose goods are traded across states. % ledger: b3mw:cdlz
+Border pairs give the same answer for restaurants: an elasticity of 0.016, ruling out
+values below $-0.147$ at the 90~\% level. % ledger: b3mw:dlr
+
+\section{Other margins}\label{sec:b3:minimum-wage:margins}
+
+Employment is not the only margin. Firms can cut hours, raise prices, replace
+workers with machines, or close. Hungary's large and lasting increase gives
+evidence on all of them: four years on, employment elasticities were negative but
+small; consumers paid about 75~\% of the cost through higher prices and owners 25~\%; firms
+substituted capital for labour; and job losses were larger where prices were harder
+to raise. % ledger: b3mw:hl
+In Seattle, an increase to 13 dollars in 2016 cut hours in low-wage jobs by 6--7~\% while
+their hourly wages rose 3~\%, so that pay per job fell by 74 dollars a month; employment
+in restaurants at all wage levels showed no effect. % ledger: b3mw:seattle
+
+\begin{record}[Germany's national minimum wage, 2015]
+Germany introduced a national minimum wage that affected 15~\% of employees. Wages rose
+and employment did not fall. Low-wage workers moved from smaller, lower-paying and
+less productive establishments to larger, better-paying and more productive ones,
+and this upgrading accounts for up to 17~\% of the wage increase. % ledger: b3mw:dust
+\end{record}
+
+\section{Small and large increases}\label{sec:b3:minimum-wage:size}
+
+\begin{debate}[The employment effect of a minimum wage]
+\emph{The question.} How much employment do minimum wages cost, at the levels
+actually chosen?
+\emph{State panels with fixed effects} find negative effects for teenagers, near $-0.3$
+with data-chosen controls (\emph{Grade 2}; weakness: the choice of control states and
+trends drives the sign). % ledger: b3mw:nsw
+\emph{Border pairs} find about zero for restaurants (\emph{Grade 2}; weakness: spillovers
+across the border, and neighbours that differ in trends). % ledger: b3mw:dlr
+\emph{\omterm{def:b3:minimum-wage:bunching}{Bunching estimators}} find the count of low-wage jobs unchanged (\emph{Grade 2};
+weakness: the window above the minimum is chosen by the researcher). % ledger: b3mw:cdlz
+\emph{Large single increases}: Seattle cut hours (\emph{Grade 2}; weakness: one city
+and a short window); % ledger: b3mw:seattle
+Hungary's increase lowered employment a little and raised prices (\emph{Grade 2}); % ledger: b3mw:hl
+Germany's raised wages without lowering employment (\emph{Grade 2}). % ledger: b3mw:dust
+\emph{What is agreed}: moderate increases have small effects on the employment of
+the groups studied, and much of the cost is passed on in prices. \emph{What is
+open}: the effect of increases that take the minimum high relative to the median
+wage, where the competitive and the monopsony models both predict losses and
+differ on where they start.
+\end{debate}
+
+\section{Exercises}\label{sec:b3:minimum-wage:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:minimum-wage:1}
+In the opening chart, how many estimates are negative? What separates the two New
+Jersey estimates?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:minimum-wage:2}
+With an elasticity of employment with respect to the minimum of $-0.2$, what does a 10~\% rise
+in the minimum do to employment of the affected group?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:minimum-wage:3}
+A firm's labour supply is $w = 4 + 0.2L$ and its marginal revenue product $24 - 0.2L$. Find the
+monopsony employment and wage, and the competitive ones.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:minimum-wage:4}
+What observation would contradict monopsony power for a given employer?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:minimum-wage:5}
+A firm's supply elasticity is 4. By what share of the marginal revenue product is the
+wage marked down?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:minimum-wage:6}
+In exercise 3, find employment with a floor of 12, of 14 and of 16.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:minimum-wage:7}
+An invented histogram of jobs by wage bin is given before and after a minimum rises
+from 8 to 10, in treated and control states. Compute the missing jobs, the excess jobs
+from 10 to 13 and the employment change.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:minimum-wage:8}
+Labour is 30~\% of a restaurant's costs; a minimum wage raises its wage bill by 10~\%. With
+full pass-through, by how much do its prices rise?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:minimum-wage:9}
+Chapter 6 defined the \omterm{def:b3:credible-empirical-work:meta-analysis}{funnel plot}. If the minimum-wage elasticities of the
+literature were plotted against their precision, what asymmetry would suggest
+selective publication? Why could the five estimates of the opening chart not be
+used to draw one?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:minimum-wage:10}
+Prove the markdown formula, and show that the markdown vanishes as the firm's supply
+becomes perfectly elastic.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:minimum-wage:11}
+Five hundred invented firms face the supply $L = 10w^4$ and differ in productivity. Estimate
+the supply elasticity by regressing log employment on log wage, and the implied
+markdown.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:minimum-wage:12}
+A region raises its minimum by 40~\%, to a \omterm{def:b3:minimum-wage:kaitz}{Kaitz index} of 0.8. Which model applies, and which
+evidence of the chapter is most relevant?
+\end{exercise}
+
+\section{Problem: A Minimum Wage for Brenland}\label{sec:b3:minimum-wage:problem}
+
+\begin{problem}[{Weekend problem --- a minimum wage for Brenland}]\label{pb:b3:minimum-wage:brenland}
+Brenland considers a floor of 12 dalens an hour. Use the hourly wages (gross income over
+hours) of the working heads in the survey (\code{load("households")}). A typical
+Brenland firm faces labour supply $w = 6 + 0.1L$ and has a marginal revenue product of
+$20 - 0.1L$, with $L$ workers. % figdata: brenland_stats, brenland_hist
+
+\medskip\noindent\textbf{Part I --- the competitive prediction.}
+\begin{enumerate}
+\item Find the median hourly wage and the \omterm{def:b3:minimum-wage:kaitz}{Kaitz index} of the floor.
+\item What share of working heads earn less than 12?
+\item By how much, on average, does the floor raise their wages?
+\item With a labour-demand elasticity of 1.0, predict the employment loss among them.
+\item Why is a prediction from one elasticity unreliable for wage rises this large?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- the firm with market power.}
+\begin{enumerate}[resume]
+\item Find the firm's monopsony employment and wage.
+\item Find its marginal revenue product there, and the share of it the wage falls
+short by.
+\item Compute the supply elasticity at that point, and check the markdown formula.
+\item Find the competitive employment and wage.
+\item Find employment with floors of 12, 15 and 17.
+\item What floor maximises employment?
+\item Above what floor does employment fall below the monopsony level?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- bunching.} After the floor, a tenth of the jobs
+below 12 disappear and the rest are paid 12--13.
+\begin{enumerate}[resume]
+\item Count the missing jobs in the survey.
+\item Count the excess jobs at 12--13.
+\item Compute the bunching estimate of the employment change, in heads and as a share
+of working heads.
+\item What would spillovers to the 13--14 bin change in the estimate?
+\item How would you check the assumption that jobs above 13 are unaffected?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- a border comparison.} Kestria has no floor. In the
+regions along the border, employment goes from 100 to 99.0 on Brenland's side and from 100
+to 100.5 on Kestria's.
+\begin{enumerate}[resume]
+\item Compute the difference-in-differences estimate.
+\item By how much does the floor raise the average wage of all working heads?
+\item Compute the implied \omterm{def:b3:minimum-wage:own-wage}{own-wage elasticity of employment}.
+\item Compare it with the competitive prediction of Part I.
+\item Name two threats to the border comparison.
+\item How could workers crossing the border bias the estimate?
+\item What would the result suggest about Brenland's employers?
+\item How would you design a better test before choosing a higher floor?
+\item State the result: the employment-maximising minimum wage in dalens an hour, and the
+measured employment effect of the actual floor.
+\end{enumerate}
+\end{problem}

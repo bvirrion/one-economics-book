@@ -1,0 +1,370 @@
+\chapter{The Ramsey Model}\label{ch:b2:ramsey-model}
+
+In the Solow model of the Year 1 volume the saving rate is a fixed number. In the data it moves, and sometimes a great
+deal. The chart shows gross domestic saving as a share of GDP in three Asian economies over six decades.
+
+\begin{openingchart}{Gross domestic saving as a share of GDP, per cent: Korea and China 1960--2024, Japan
+  1970--2024.}{World Bank, World Development Indicators (NY.GDS.TOTL.ZS)}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.84\linewidth, height=0.42\linewidth, xmin=1960, xmax=2024, ymin=0, ymax=55,
+    xlabel={Year}, ylabel={Per cent of GDP}, xtick={1960,1970,1980,1990,2000,2010,2020},
+    xticklabel style={/pgf/number format/1000 sep=}, unbounded coords=jump, legend style={at={(0.5,-0.3)},
+    anchor=north, legend columns=3, /tikz/every even column/.append style={column sep=10pt}}]
+  \addplot[omDef, thick] table[x=year, y=KOR] {figdata/bachelor-2/23-ramsey-model/out/saving.csv};
+  \addplot[omThm, thick, dashed] table[x=year, y=JPN] {figdata/bachelor-2/23-ramsey-model/out/saving.csv};
+  \addplot[omMeth, thick, dotted] table[x=year, y=CHN] {figdata/bachelor-2/23-ramsey-model/out/saving.csv};
+  \legend{Korea, Japan, China}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: saving_summary (KOR 1.0 in 1960, peak 41.7 in 1988, 34.0 in 2024; JPN 44.6 in 1970, 26.8 in 2024; CHN 37.0 in 1960, peak 50.6 in 2010, 43.3 in 2024)
+Korea saved 1.0 per cent of its output in 1960 and 41.7 per cent in 1988; China's saving rate peaked at 50.6 per cent in 2010; Japan's fell from 44.6 per cent in 1970 to 26.8 in 2024.
+A model in which households choose how much to save, looking ahead without limit, can produce saving rates that rise or
+fall as an economy grows. It is the \omterm{def:b2:ramsey-model:ramsey}{Ramsey model}. Like the other models of this part, it is a toy: one household stands
+for all, it lives for ever, and it knows the future. It is worth building because it makes saving a choice, gives the
+benchmark against which the market's outcome can be judged, and shows how a dynamic economy responds to policy.
+
+\begin{recall}
+From the Year 1 volume: the Solow model, the steady state and the golden rule. From \cref{ch:b2:intertemporal-choice}: the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} and
+the \omterm{def:b2:intertemporal-choice:eis}{elasticity of intertemporal substitution}. From the mathematics volumes: linear differential equations and the
+eigenvalues of a $2 \times 2$ matrix.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:ramsey-model:symbols}
+Time is continuous; $\dot x$ is the derivative of $x$ with respect to time. $k$ is capital per person, $c$ consumption per person, $f(k) = k^\alpha$ output per person;
+$\rho$ the \omterm{def:b2:intertemporal-choice:time-preference}{rate of time preference}; $\theta$ the curvature of utility, $u(c) = c^{1-\theta}/(1 - \theta)$; $n$ population growth; $\delta$ depreciation; $r$ the real interest rate.
+\end{notation}
+
+\section{The household with an infinite horizon}\label{sec:b2:ramsey-model:household}
+
+\begin{definition}[Representative household]\label{def:b2:ramsey-model:representative-household}
+A \emph{representative household}\index{representative household} is a single household whose choices stand for the
+total choices of all households in a model, as if all households were identical.
+\end{definition}
+
+\begin{definition}[Ramsey model]\label{def:b2:ramsey-model:ramsey}
+The \emph{Ramsey model}\index{Ramsey model} (Ramsey--Cass--Koopmans) is a model of growth in which a \omterm{def:b2:ramsey-model:representative-household}{representative
+household} with an infinite horizon chooses consumption and saving to maximise $\int_0^\infty e^{-(\rho - n)t}u(c(t))\,dt$, given the economy's production
+function and capital accumulation.
+\end{definition}
+
+The household's \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} of \cref{ch:b2:intertemporal-choice}, over a period of length $\Delta$ with \omterm{def:b2:intertemporal-choice:discount-factor}{discount factor} $e^{-\rho\Delta}$ and gross return $e^{r\Delta}$, reads $c(t)^{-\theta} = e^{-\rho\Delta}e^{r\Delta}c(t + \Delta)^{-\theta}$, so
+$c(t + \Delta)/c(t) = e^{(r - \rho)\Delta/\theta}$. Taking logarithms, dividing by $\Delta$ and letting $\Delta \to 0$ gives the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} in continuous time:
+\begin{equation}\label{eq:b2:ramsey-model:euler}
+\frac{\dot c}{c} = \frac{r - \rho}{\theta}.
+\end{equation}
+Consumption grows when the interest rate exceeds the \omterm{def:b2:intertemporal-choice:time-preference}{rate of time preference}, and the more so the less curved utility is:
+$1/\theta$ is the \omterm{def:b2:intertemporal-choice:eis}{elasticity of intertemporal substitution}. With $r = 0.05$, $\rho = 0.03$ and $\theta = 2$, consumption grows 1 per cent a year.
+
+\begin{definition}[Transversality condition]\label{def:b2:ramsey-model:transversality}
+The \emph{transversality condition}\index{transversality condition} requires that the present value of the household's
+wealth tends to zero as time goes to infinity: an optimising household neither dies with unspent wealth in present value
+nor runs up debt it never repays.
+\end{definition}
+
+The \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} says how consumption changes; the budget constraint and the \omterm{def:b2:ramsey-model:transversality}{transversality condition} fix its level.
+Without the condition, any starting consumption would satisfy the \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation}, and the household could save without
+end or borrow without end.
+
+\section{Capital accumulation}\label{sec:b2:ramsey-model:capital}
+
+With firms that pay each factor its marginal product, the interest rate is $r = f'(k) - \delta$. Output not consumed is invested, and capital per
+person grows by investment less depreciation and the dilution of population growth:
+\begin{equation}\label{eq:b2:ramsey-model:k}
+\dot k = f(k) - c - (n + \delta)k, \qquad \frac{\dot c}{c} = \frac{f'(k) - \delta - \rho}{\theta}.
+\end{equation}
+These two equations, one for capital and one for consumption, make up the model; we assume $\rho > n$.
+
+\section{The phase diagram and the saddle path}\label{sec:b2:ramsey-model:phase}
+
+\begin{definition}[Phase diagram]\label{def:b2:ramsey-model:phase-diagram}
+A \emph{phase diagram}\index{phase diagram} of a system of two differential equations plots, in the plane of its two
+variables, the curves on which each variable is constant and the direction in which the system moves in each region.
+\end{definition}
+
+The $\dot c = 0$ locus is the vertical line $f'(k^*) = \rho + \delta$; to its left the return is high and consumption rises. The $\dot k = 0$ locus is the curve $c = f(k) - (n + \delta)k$, highest at the
+golden-rule capital stock; above it capital falls. Take $\alpha = 1/3$, $\delta = 0.05$, $\rho = 0.03$, $n = 0.01$ and $\theta = 2$. Then $k^* = (\alpha/(\rho + \delta))^{1/(1-\alpha)} = (0.333/0.08)^{1.5} = 8.505$, $c^* = 8.505^{1/3} - 0.06 \times 8.505 = 1.531$, and the saving rate is
+$(n + \delta)k^*/f(k^*) = 0.25$.
+
+\begin{definition}[Saddle path]\label{def:b2:ramsey-model:saddle-path}
+The \emph{saddle path}\index{saddle path} of a system with a saddle-point steady state is the unique curve of initial
+positions from which the system converges to the steady state; from every other position it diverges.
+\end{definition}
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=20, ymin=0, ymax=2.6, width=0.7\linewidth, height=0.5\linewidth,
+    xlabel={Capital per person, $k$}, ylabel={Consumption per person, $c$}, xtick={8.505,13.09},
+    xticklabels={$k^*$,$k_{\mathrm{gold}}$}]
+  \addplot[omThm, thick, domain=0.01:20, samples=100] {x^(1/3) - 0.06*x};
+  \addplot[omDef, thick] coordinates {(8.505,0) (8.505,2.6)};
+  \addplot[omMeth, very thick] table[x=k, y=c] {figdata/bachelor-2/23-ramsey-model/out/saddle.csv};
+  \node[eqpoint] at (axis cs:8.505,1.531) {};
+  \node[font=\footnotesize, anchor=west, omThm] at (axis cs:15.5,1.33) {$\dot k = 0$};
+  \node[font=\footnotesize, anchor=west, omDef] at (axis cs:8.7,2.45) {$\dot c = 0$};
+  \node[font=\footnotesize, anchor=west, omMeth] at (axis cs:15.5,2.2) {saddle path};
+  \draw[->, thick] (axis cs:3,1.9) -- (axis cs:3,2.15);
+  \draw[->, thick] (axis cs:3,1.9) -- (axis cs:2.2,1.9);
+  \draw[->, thick] (axis cs:4,0.6) -- (axis cs:4,0.85);
+  \draw[->, thick] (axis cs:4,0.6) -- (axis cs:4.8,0.6);
+  \draw[->, thick] (axis cs:13,2.3) -- (axis cs:13,2.05);
+  \draw[->, thick] (axis cs:13,2.3) -- (axis cs:12.2,2.3);
+  \draw[->, thick] (axis cs:15,0.6) -- (axis cs:15,0.35);
+  \draw[->, thick] (axis cs:15,0.6) -- (axis cs:15.8,0.6);
+\end{axis}
+\end{tikzpicture}
+
+{\small The Ramsey \omterm{def:b2:ramsey-model:phase-diagram}{phase diagram} for the chapter's parameters ($\alpha = 1/3$, $\delta = 0.05$, $\rho = 0.03$, $n = 0.01$, $\theta = 2$). Above the $\dot k = 0$ curve capital falls; to the left of $\dot c = 0$ consumption rises. The \omterm{def:b2:ramsey-model:saddle-path}{saddle
+path}, computed numerically, is the only route to the steady state; it lies to the left of the golden-rule stock
+$k_{\mathrm{gold}} = 13.09$.}
+\end{omfigure}
+
+\begin{proposition}[The steady state is a saddle point]\label{prop:b2:ramsey-model:saddle}
+Linearised around $(k^*, c^*)$, the system \eqref{eq:b2:ramsey-model:k} has one positive and one negative eigenvalue.
+\end{proposition}
+
+\begin{proof}
+The Jacobian at the steady state has entries $\partial\dot k/\partial k = f'(k^*) - (n + \delta) = \rho - n$, $\partial\dot k/\partial c = -1$, $\partial\dot c/\partial k = c^*f''(k^*)/\theta$ and $\partial\dot c/\partial c = (f'(k^*) - \delta - \rho)/\theta = 0$. Its determinant is
+$0 - (-1)c^*f''(k^*)/\theta = c^*f''(k^*)/\theta < 0$, since $f'' < 0$. The determinant is the product of the eigenvalues, so they are real and of opposite signs.
+\end{proof}
+
+With the chapter's numbers the Jacobian is $\begin{pmatrix} 0.02 & -1 \\ -0.0048 & 0 \end{pmatrix}$, with eigenvalues 0.08 and $-0.06$. Near the steady state the economy closes 6 per cent of its gap a year, so
+half the gap in $\ln 2/0.06 = 11.6$ years. Capital cannot jump; consumption can. Given $k(0)$, the household picks the one $c(0)$ on the \omterm{def:b2:ramsey-model:saddle-path}{saddle path}; any other choice
+leads either to capital running out or to capital piling up beyond the golden rule, which violates the \omterm{def:b2:ramsey-model:transversality}{transversality
+condition}.
+
+\omcode{code/bachelor-2/23-ramsey-model/listings/ramsey.py}{1}{37}{Shooting for the \omterm{def:b2:ramsey-model:saddle-path}{saddle path} from a quarter of the
+steady-state capital, for two curvatures of utility.}\label{lst:b2:ramsey-model:shooting}
+
+\omoutput{code/bachelor-2/23-ramsey-model/outputs/ramsey.txt}{With $\theta = 2$ the saving rate falls along the way; with $\theta = 6$ it rises; the
+convergence is slower with the larger curvature.}\label{out:b2:ramsey-model:shooting}
+
+% code: listings/ramsey.py
+The listing finds the \omterm{def:b2:ramsey-model:saddle-path}{saddle path} by trying initial consumption levels and keeping the one that neither exhausts capital
+nor overshoots. The model makes the saving rate along the path depend on the curvature of utility: with $\theta = 2$ a poor economy saves 34 per cent at first and less
+as it grows, since households that substitute easily over time take advantage of the high return; with $\theta = 6$, households
+reluctant to accept low consumption today start at 21 per cent and save more as they grow richer.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, name=kpath, width=0.46\linewidth, height=0.4\linewidth, xmin=0, xmax=60, ymin=0, ymax=1.05,
+    xlabel={Years}, ylabel={$k/k^*$}, legend style={at={(0.95,0.05)}, anchor=south east, font=\footnotesize}]
+  \addplot[omDef, thick] table[x=t, y=k2] {figdata/bachelor-2/23-ramsey-model/out/paths.csv};
+  \addplot[omThm, thick, dashed] table[x=t, y=k6] {figdata/bachelor-2/23-ramsey-model/out/paths.csv};
+  \legend{$\theta = 2$, $\theta = 6$}
+\end{axis}
+\begin{axis}[omrecord, at={(kpath.east)}, anchor=west, xshift=1.6cm, width=0.46\linewidth, height=0.4\linewidth,
+    xmin=0, xmax=60, ymin=0.15, ymax=0.4, xlabel={Years}, ylabel={Saving rate},
+    yticklabel style={/pgf/number format/fixed, /pgf/number format/precision=2}]
+  \addplot[omDef, thick] table[x=t, y=s2] {figdata/bachelor-2/23-ramsey-model/out/paths.csv};
+  \addplot[omThm, thick, dashed] table[x=t, y=s6] {figdata/bachelor-2/23-ramsey-model/out/paths.csv};
+\end{axis}
+\end{tikzpicture}
+
+{\small Model simulation, the chapter's parameters, starting from a quarter of the steady-state capital: capital relative to
+its steady state (left) and the saving rate (right), for $\theta = 2$ and $\theta = 6$. Invented parameters, not data.}
+\end{omfigure}
+
+\begin{model}{The Ramsey model}
+\assumes A \omterm{def:b2:ramsey-model:representative-household}{representative household} with an infinite horizon and perfect foresight, competitive firms with diminishing
+returns to capital, and no frictions in adjusting capital.
+\predicts Convergence along the \omterm{def:b2:ramsey-model:saddle-path}{saddle path} to a steady state set by the \omterm{def:b2:ramsey-model:modified-golden-rule}{modified golden rule}; a saving rate that falls or
+rises along the way depending on the curvature of utility; no response of steady-state capital to permanent government
+purchases.
+\tested Poor economies with access to the same technology grow faster; but the convergence the model implies, about 6
+per cent of the gap a year here, is faster than the data on American states show, which can be matched only if
+diminishing returns set in very slowly (Barro and Sala-i-Martin 1992).
+\breaks One household cannot represent households that differ in wealth and age; without \omterm{def:b2:investment:adjustment-cost}{adjustment costs} or slow
+diffusion of technology, convergence is too fast; the large swings in saving rates of the opening chart need more than
+the model's curvature of utility.
+\end{model}
+
+\section{The modified golden rule}\label{sec:b2:ramsey-model:golden}
+
+\begin{definition}[Modified golden rule]\label{def:b2:ramsey-model:modified-golden-rule}
+The \emph{modified golden rule}\index{modified golden rule} is the condition $f'(k^*) = \rho + \delta$ that fixes steady-state capital in the \omterm{def:b2:ramsey-model:ramsey}{Ramsey model}: the
+marginal product of capital, net of depreciation, equals the \omterm{def:b2:intertemporal-choice:time-preference}{rate of time preference}.
+\end{definition}
+
+The golden rule of the Solow model, $f'(k) = n + \delta$, maximises steady-state consumption. Because $\rho > n$, the \omterm{def:b2:ramsey-model:modified-golden-rule}{modified golden rule} stops short of it: here $k^* = 8.505$ against $k_{\mathrm{gold}} = 13.09$. Reaching the golden rule
+would require consumption to fall today to build capital whose payoff comes later, and an impatient household does not
+think the trade worth it. The economy is therefore never \omterm{def:b2:overlapping-generations:dynamic-inefficiency}{dynamically inefficient}, unlike the overlapping-generations
+economy of \cref{ch:b2:overlapping-generations}: an infinitely lived household would never hold capital that earns less than the growth rate.
+
+\section{The market equals the planner}\label{sec:b2:ramsey-model:planner}
+
+\begin{proposition}[The competitive path is the planner's path]\label{prop:b2:ramsey-model:planner}
+A planner who maximises the \omterm{def:b2:ramsey-model:representative-household}{representative household}'s utility subject only to $\dot k = f(k) - c - (n + \delta)k$ chooses the same path of $k$ and $c$ as households
+and firms in competitive markets.
+\end{proposition}
+
+\begin{proof}
+The planner's optimal consumption satisfies an \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} in which the return on saving is the net marginal product
+of capital: $\dot c/c = (f'(k) - \delta - \rho)/\theta$. In the market, the household's \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} is $\dot c/c = (r - \rho)/\theta$ and firms set $r = f'(k) - \delta$, which gives the same equation. The
+household's budget, wage plus interest income less consumption, is $\dot k = w + rk - c - nk$, and with $w = f(k) - kf'(k)$ and $r = f'(k) - \delta$ it becomes $\dot k = f(k) - c - (n + \delta)k$, the planner's constraint. Both
+paths satisfy the same two equations and the same \omterm{def:b2:ramsey-model:transversality}{transversality condition}, from the same $k(0)$, so they coincide.
+\end{proof}
+
+The proposition is the first welfare theorem of \cref{ch:b2:welfare-theorems} in a dynamic economy. It holds because the model has no
+\omterm{def:b2:externalities-and-public-goods-theory:externality}{externality}, no market power and one household; each of these, removed, gives a reason the market's path can differ from
+the planner's.
+
+\section{A change in government purchases}\label{sec:b2:ramsey-model:government}
+
+Let the government buy $G$ per person, financed by lump-sum taxes: $\dot k = f(k) - c - G - (n + \delta)k$. The $\dot k = 0$ curve shifts down by $G$; the $\dot c = 0$ line does not move, since the \omterm{def:b2:ramsey-model:modified-golden-rule}{modified golden rule}
+does not involve $G$.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0, xmax=20, ymin=0, ymax=2.6, width=0.62\linewidth, height=0.46\linewidth,
+    xlabel={$k$}, ylabel={$c$}, xtick={8.505}, xticklabels={$k^*$}]
+  \addplot[omThm, thick, domain=0.01:20, samples=100] {x^(1/3) - 0.06*x};
+  \addplot[omThm, thick, dashed, domain=0.3:20, samples=100] {x^(1/3) - 0.06*x - 0.3};
+  \addplot[omDef, thick] coordinates {(8.505,0) (8.505,2.6)};
+  \node[eqpoint] at (axis cs:8.505,1.531) {};
+  \node[eqpoint] at (axis cs:8.505,1.231) {};
+  \node[font=\footnotesize, anchor=west] at (axis cs:8.7,1.62) {$E_0$};
+  \node[font=\footnotesize, anchor=west] at (axis cs:8.7,1.14) {$E_1$};
+  \draw[->, thick, black!70] (axis cs:8.2,1.5) -- (axis cs:8.2,1.27);
+  \node[font=\footnotesize, anchor=west, omThm] at (axis cs:15.5,1.36) {$G = 0$};
+  \node[font=\footnotesize, anchor=west, omThm] at (axis cs:15.5,0.92) {$G > 0$};
+\end{axis}
+\end{tikzpicture}
+
+{\small A permanent rise in government purchases. The $\dot k = 0$ curve shifts down by $G$; consumption drops at once by $G$, from $E_0$ to $E_1$, and capital does not move:
+the household pays for the purchases entirely out of consumption.}
+\end{omfigure}
+
+A permanent rise in $G$ lowers consumption one for one at once, and nothing else changes: the economy jumps from one steady state
+to the other. A temporary rise is different: households, knowing it will end, cut consumption by less than $G$ and let capital fall
+for a while, then rebuild it; the interest rate rises during the episode. That is the model's version of crowding out.
+
+\begin{record}[Korea's saving and capital deepening]
+% figdata: ky_summary (1980 3.09, min 2.98 in 1988, 2023 5.11); initial_share (1960 0.847, 1970 0.410, 1980 0.104); saving_summary
+Korea's saving rate rose from 1 per cent of GDP in 1960 to 41.7 per cent in 1988 and has stayed above 30 per cent since. Its capital
+stock was 3.09 times a year's output in 1980 and, after a flat decade, rose faster than output, to 5.11 times in 2023: the capital deepening that the transition of the \omterm{def:b2:ramsey-model:ramsey}{Ramsey model} describes, though over a much longer
+time than the model's half-life of twelve years.
+\end{record}
+
+\begin{omchart}{Capital stock relative to GDP, Korea, 1980--2023, constant national prices. The series starts from a
+  capital stock assumed for 1953, which was still 85 per cent of the 1960 stock and 41 per cent of the 1970 one, so the
+  earlier years show that guess wearing out rather than data; by 1980 it is a tenth of the stock.}{Penn World Table
+  (rnna, rgdpna, delta); our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.72\linewidth, height=0.4\linewidth, xmin=1980, xmax=2023, ymin=0, ymax=6,
+    xlabel={Year}, ylabel={Capital / GDP}, xtick={1980,1990,2000,2010,2020},
+    xticklabel style={/pgf/number format/1000 sep=}]
+  \addplot[omDef, thick] table[x=year, y=ky] {figdata/bachelor-2/23-ramsey-model/out/ky.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\section{Exercises}\label{sec:b2:ramsey-model:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:ramsey-model:1}
+Read the opening chart. Describe Korea's saving rate from 1960 to 2024, and compare it with Japan's.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:ramsey-model:2}
+With $\alpha = 1/3$, $\delta = 0.05$, $\rho = 0.03$ and $n = 0.01$, compute $k^*$, $y^*$, $c^*$ and the saving rate.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:ramsey-model:3}
+Read the chart of Korea's capital--output ratio. When was it lowest, and what has happened since? Why does the chart
+not start in 1960?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:ramsey-model:4}
+What evidence on the growth of poor and rich regions would contradict the model's prediction of fast convergence?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:ramsey-model:5}
+Compute the golden-rule capital stock for the parameters of Exercise 2 and compare it with $k^*$. Why is the steady state below
+it?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:ramsey-model:6}
+Compute the Jacobian at the steady state, its eigenvalues and the half-life of the gap, for $\theta = 2$ and for $\theta = 6$.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:ramsey-model:7}
+Predict, then compute: households become more impatient, $\rho = 0.04$. What happens to $k^*$, $c^*$, the saving rate, and to consumption at the moment
+of the change?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:ramsey-model:8}
+Use the \omterm{def:b2:ramsey-model:phase-diagram}{phase diagram} to describe the response to a rise in $G$ that is announced today and takes effect, permanently, in five
+years.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:ramsey-model:9}
+With $r = 0.05$, $\rho = 0.03$ and $\theta = 2$, at what rate does consumption grow? And with $\theta = 1$?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:ramsey-model:10}
+Derive \eqref{eq:b2:ramsey-model:euler} from the discrete \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation} $u'(c_t) = \beta(1 + r)u'(c_{t+1})$ with $u(c) = c^{1-\theta}/(1 - \theta)$, taking periods of length $\Delta$ and letting $\Delta \to 0$.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:ramsey-model:11}
+Show that the eigenvalues of $\begin{pmatrix} a & -1 \\ b & 0 \end{pmatrix}$ are $\tfrac12(a \pm \sqrt{a^2 - 4b})$, and that with $b < 0$ the speed of convergence rises with $|b|$. What lowers $|b|$?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:ramsey-model:12}
+Suppose capital income is taxed at rate $\tau$, the revenue returned lump-sum. Show that the steady state satisfies $(1 - \tau)(f'(k) - \delta) = \rho$, and that $k^*$ falls with $\tau$.
+\end{exercise}
+
+\section{Problem: Kestria's catch-up}\label{sec:b2:ramsey-model:problem}
+
+\begin{problem}[{Weekend problem --- Kestria's catch-up: the household, the steady state, the speed of convergence, and a
+permanent rise in government purchases}]
+\label{pb:b2:ramsey-model:1}
+Kestria's economy is a Ramsey economy with $f(k) = k^{0.3}$, $\delta = 0.06$, $\rho = 0.04$, $n = 0$ and $\theta = 2$; output and consumption are in thousands of kests per person a
+year.
+
+\medskip
+\noindent\textbf{Part I --- The household.}
+\begin{enumerate}
+  \item Write the household's \omterm{def:b2:intertemporal-choice:euler-equation}{Euler equation}.
+  \item If the interest rate is 6 per cent, how fast does consumption grow?
+  \item What is the \omterm{def:b2:intertemporal-choice:eis}{elasticity of intertemporal substitution}?
+  \item Why does the household need the \omterm{def:b2:ramsey-model:transversality}{transversality condition}?
+  \item Write the law of motion of capital.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The steady state.}
+\begin{enumerate}[resume]
+  \item What interest rate holds in the steady state?
+  \item Find $k^*$.
+  \item Find output, consumption and the wage.
+  \item Find the saving rate.
+  \item Find the golden-rule capital stock and compare.
+  \item Is Kestria saving too little?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- Convergence.}
+\begin{enumerate}[resume]
+  \item Write the Jacobian at the steady state.
+  \item Find its eigenvalues.
+  \item What is the half-life of a gap in capital?
+  \item With $\theta = 4$, what is the half-life?
+  \item Why does a larger $\theta$ slow convergence?
+  \item Kestria starts with a quarter of $k^*$. Does its saving rate start above or below 0.18 when $\theta = 2$?
+  \item Compare the model's half-life with the evidence of the model box.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- Government purchases.} Kestria's government permanently raises purchases by 0.1 per person,
+financed by lump-sum taxes.
+\begin{enumerate}[resume]
+  \item What happens to $k^*$?
+  \item What happens to consumption, and when?
+  \item What happens to the interest rate?
+  \item If the rise were for five years only, would consumption fall by more or by less?
+  \item If the purchases were financed by a tax on capital income, would $k^*$ change?
+  \item What does the model leave out that could make government purchases raise output in the short run?
+  \item State the result: steady-state capital, the saving rate, and the half-life of convergence.
+\end{enumerate}
+\end{problem}

@@ -1,0 +1,390 @@
+% Provenance (never printed): sources/book2/BRIEFS.md, g10-04. Market demand, the law of demand,
+% what moves the curve. Real numbers: figdata/grade-10/04-demand/ (BLS average prices and CPI,
+% EIA, WDI population); the Pink Sheet fallback of the sync (S2): US gasoline price from BLS.
+% Jensen and Miller (2008): ledger g10:jensen-miller-2008. Brenland numbers are invented.
+\chapter{Demand}\label{ch:g10:demand}
+
+In 1978 a gallon of regular gasoline cost an American driver \usd{3.22} in today's money. Three years
+later it cost \usd{4.75}, almost half as much again, after two shocks to the world supply of oil. Americans
+did not stop driving to work, heating their homes or flying. But they bought smaller cars, drove a little
+less, insulated their houses, and switched power stations from oil to coal. By 1983, the United States
+consumed \qty{23.8}{barrels} of oil products per person a year, against \qty{30.9}{barrels} in 1978: almost a
+quarter less. Thirty years later the same thing happened again, more slowly: after the price rises of 2005--2012,
+oil use per person fell by a sixth.
+% figdata: oil_us (1978 3.22, 30.91; 1981 4.75; 1983 23.78; 2005 25.69; 2012 4.98, 21.46)
+
+When a price rises, people buy less of the good. This is the most robust finding in economics, and it is
+the subject of this chapter. But the opening chart also shows how hard it is to read off a single number:
+over the same years, incomes grew, cars changed and the country's population aged. A demand curve is a
+statement about one cause at a time, and the record mixes them all.
+
+\begin{openingchart}{The price of regular gasoline in the United States, in 2024 dollars per gallon (top), and
+the consumption of refined oil products per person, in barrels per year (bottom), 1976--2024. One barrel is
+about 159 litres.}{US Bureau of Labor Statistics, average retail prices and CPI-U all items; US Energy
+Information Administration, international energy statistics; World Bank, World Development Indicators
+(population)}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=1 by 2, vertical sep=0.9cm, x descriptions at=edge bottom},
+  omtime, width=0.88\linewidth, height=4.6cm, xmin=1975, xmax=2025, xtick={1980,1985,...,2020}]
+\nextgroupplot[ymin=1.5, ymax=5.5, ylabel={dollars per gallon}]
+\addplot[omThm, thick, mark=*, mark size=0.8pt] table[x=year, y=price] {figdata/grade-10/04-demand/out/oil_us.csv};
+\nextgroupplot[ymin=18, ymax=32, ylabel={barrels per person}]
+\addplot[omDef, thick, mark=*, mark size=0.8pt] table[x=year, y=bpp] {figdata/grade-10/04-demand/out/oil_us.csv};
+\end{groupplot}
+\end{tikzpicture}
+\end{openingchart}
+
+\begin{recall}
+From the grades 6--9 volume: the \emph{quantity demanded} of a good is the amount buyers want to buy at a given
+price; a \emph{demand table} lists it for several prices, and the \emph{demand curve} draws it, with the price on
+the vertical axis. A demand curve can be a straight line, $Q^d = a - b\,p$. When something other than the price
+changes, the whole curve moves: a \emph{shift} of the curve. From \cref{ch:g10:economic-models}: a prediction
+about the price holds \emph{\omterm{def:g10:economic-models:other-things-equal}{other things equal}}.
+\end{recall}
+
+\section{From one buyer to the market}\label{sec:g10:demand:market}
+
+Demand starts with each buyer. Ana and Ben take the bus in a town in Brenland, where the money is the dalen.
+At a fare of $p$ dalens, Ana takes $q_A = 10 - 2p$ rides a week, as long as this is positive, and none if $p \ge 5$;
+Ben takes $q_B = 12 - p$ rides, and none if $p \ge 12$. Ben lives further from his work and has fewer other ways to
+get there.
+
+\begin{definition}[Market demand]\label{def:g10:demand:market-demand}
+The \emph{market demand}\index{market demand} for a good gives, at each price, the total quantity that all the buyers
+in the market want to buy: the sum of the individual quantities demanded at that price.
+\end{definition}
+
+The \omterm{def:g10:demand:market-demand}{market demand} is found by adding quantities at the same price, not prices at the same quantity: on the graph,
+the individual curves are added \emph{horizontally}. At a fare of 2 dalens, Ana takes 6 rides and Ben 10, so the market
+takes 16. At a fare of 7, Ana takes none and Ben 5. Written out:
+\[
+  Q^d(p) = \begin{cases} (10 - 2p) + (12 - p) = 22 - 3p & \text{if } 0 \le p \le 5, \\
+  12 - p & \text{if } 5 < p \le 12, \\ 0 & \text{if } p > 12. \end{cases}
+\]
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.38cm, y=0.42cm]
+\draw[econ axes] (0,13.5) node[left, font=\small] {fare $p$} |- (24,0) node[below left=12pt and 0pt, font=\small] {rides a week};
+\draw[demand, omDef!50] (0,5) -- (10,0);
+\draw[demand, omDef!50] (0,12) -- (12,0);
+\draw[curve] (0,12) -- (7,5) -- (22,0);
+\draw[guide] (0,5) -- (7,5) -- (7,0);
+\node[eqpoint] at (7,5) {};
+\foreach \y in {5,12} \draw (0,\y) -- (-0.3,\y) node[left, font=\footnotesize] {\y};
+\foreach \x in {7,10,12,22} \draw (\x,0) -- (\x,-0.3) node[below, font=\footnotesize] {\x};
+\node[font=\footnotesize, text=omDef!70!black, anchor=south west] at (2.6,3.6) {Ana};
+\node[font=\footnotesize, text=omDef!70!black, anchor=west] at (2.4,9.4) {Ben};
+\node[font=\footnotesize, anchor=west] at (13,3.5) {market, $22 - 3p$};
+\node[font=\footnotesize, anchor=south west] at (8.6,5.6) {kink: Ana stops riding};
+\end{tikzpicture}
+
+{\small Ana's and Ben's demands (light) and the \omterm{def:g10:demand:market-demand}{market demand} (black), added horizontally. Above a fare of 5 dalens
+only Ben rides, and the market line is his; below it both ride, and the market line is flatter. The kink is at
+$(7, 5)$.}
+\end{omfigure}
+
+\begin{proposition}[Adding straight demand lines]\label{prop:g10:demand:sum}
+If every buyer's demand is a straight line down to zero, the \omterm{def:g10:demand:market-demand}{market demand} is made of straight pieces. On each piece
+the slope, in quantity per dalen, is the sum of the slopes of the buyers who still buy at those prices. A kink appears
+at each price at which a buyer stops buying.
+\end{proposition}
+\begin{proof}
+At a price $p$, the market quantity is the sum of $a_i - b_i\,p$ over the buyers with $p < a_i/b_i$ (those who still
+buy); the others contribute zero. Between two consecutive stopping prices the set of buyers does not change, so the sum
+is $\sum a_i - \big(\sum b_i\big)\,p$, a straight line whose slope is the sum of their slopes. When $p$ crosses a stopping
+price $a_j/b_j$, buyer $j$ drops out and the slope changes: a kink.
+\end{proof}
+
+With thousands of buyers, each stopping at a different price, the kinks are so close that the market curve looks smooth.
+This is why a straight or gently curved \omterm{def:g10:demand:market-demand}{market demand} is a good description even though no single buyer is ``average''.
+
+\section{The law of demand}\label{sec:g10:demand:law}
+
+\begin{definition}[Law of demand]\label{def:g10:demand:law}
+The \emph{law of demand}\index{law of demand} states that, \omterm{def:g10:economic-models:other-things-equal}{other things equal}, the quantity demanded of a good falls when
+its price rises: the demand curve slopes downward.
+\end{definition}
+
+Two reasons work in the same direction. When gasoline becomes dearer \emph{relative to other things}, it pays to replace
+some of it: a smaller car, a train, a bicycle, a house nearer work. And when a good that takes a large part of the budget
+becomes dearer, the household is poorer, and buys less of every \omterm{def:g10:demand:normal}{normal good}, usually including that one. The law also holds for the
+market even when some buyers do not respond at all: as long as some buyers stop buying, or buy less, when the price
+rises, the market quantity falls.
+
+\begin{model}{The law of demand}
+\assumes \omterm{def:g10:economic-models:other-things-equal}{Other things equal}: the incomes of buyers, the prices of other goods, tastes, expectations and the number of
+  buyers do not change while the price changes.
+\predicts When the price of a good rises, the quantity bought falls; when it falls, the quantity bought rises.
+\tested A randomised test: in an American health insurance experiment, families assigned at random to pay 95\,\% of
+  their medical bills spent 845 dollars a year less on care than families whose care was free (grade 11). Consistent with it:
+  after the real price of gasoline rose by about half between 1978 and 1981, oil use per person in the United States fell
+  by almost a quarter by 1983, though a recession and new fuel-economy rules came at the same time.
+\breaks Very poor households spending most of their budget on one staple food may buy more of it when its price rises
+  (rice in Hunan, below).
+% ledger: g11:hie-95
+\end{model}
+% figdata: oil_us (1978 3.22 -> 1981 4.75: +47.5 %; bpp 30.91 -> 1983 23.78: -23.1 %)
+
+\begin{record}[Rice in Hunan: when a price fall cut purchases]
+% ledger: g10:jensen-miller-2008
+Among very poor households in Hunan, China, rice provided most of the calories. A study gave some of these households a
+subsidy that lowered the price of rice. The \omterm{def:g10:demand:law}{law of demand} predicts that they would buy more rice. Many bought
+\emph{less}: richer, thanks to the subsidy, they replaced part of their rice with meat and other foods they had been
+unable to afford, while still getting enough calories. The demand curve of these households sloped upward over that
+range, the behaviour economists call \emph{Giffen behaviour}. The same study found it more weakly for wheat in Gansu (Jensen and Miller 2008). It is the clearest case on record of an
+exception to the \omterm{def:g10:demand:law}{law of demand}, and it needs exactly the conditions the model predicts: a staple that takes most of the
+budget, and households too poor to buy enough of anything else.
+\end{record}
+
+The second chart puts the opening chart's numbers to a sterner test: year by year, does oil use fall when the price
+rises? Out of 48 yearly changes, the two moved in opposite directions only 25 times. In 2009 and in 2020 both the
+price and the quantity fell sharply. These were the years of a deep recession and of the first year of the pandemic:
+incomes fell, travel stopped, and demand itself moved. The chart is not a demand curve; it is a cloud of points, each of
+which mixes a move along the curve with a move of the curve.
+% figdata: oil_summary (n 48, opposite 25); oil_changes (2009 -27.7, -4.6; 2020 -18.3, -11.8)
+
+\begin{omchart}{Year-to-year changes in the real price of gasoline and in oil use per person, United States, 1977--2024,
+in per cent. Each point is one year; the two labelled points are recession years in which both fell.}{US Bureau of Labor
+Statistics; US Energy Information Administration; World Bank, World Development Indicators}
+\begin{tikzpicture}
+\begin{axis}[omscatter, width=0.78\linewidth, height=6.6cm, xmin=-32, xmax=38, ymin=-14, ymax=12,
+  xlabel={change in the real price (\%)}, ylabel={change in oil use per person (\%)},
+  extra x ticks={0}, extra y ticks={0}, extra tick style={grid style={black!60, thin}}]
+\addplot[omDef, only marks, mark=*, mark size=1.5pt] table[x=dprice, y=dbpp] {figdata/grade-10/04-demand/out/oil_changes.csv};
+\node[font=\footnotesize, anchor=south west] at (axis cs:-27.7,-4.6) {2009};
+\node[font=\footnotesize, anchor=west] at (axis cs:-17.5,-11.8) {2020};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\section{What moves the curve}\label{sec:g10:demand:shifts}
+
+The demand curve is drawn for given values of everything except the good's own price. When one of those other things
+changes, the quantity demanded at \emph{every} price changes: the curve shifts. Five kinds of change matter.
+
+\paragraph{Income.} For most goods, buyers buy more at every price when their income rises. Not for all: as incomes rise,
+people take fewer long-distance buses and more flights, buy less of the cheapest bread and more of the dearer kinds.
+
+\begin{definition}[Normal and inferior goods]\label{def:g10:demand:normal}
+A good is \emph{normal}\index{normal good} when a rise in buyers' income, \omterm{def:g10:economic-models:other-things-equal}{other things equal}, raises the quantity demanded
+at every price (the demand curve shifts right). It is \emph{inferior}\index{inferior good} when a rise in income lowers the
+quantity demanded at every price.
+\end{definition}
+\phantomsection\label{def:g10:demand:inferior}
+
+Whether a good is \omterm{def:g10:demand:normal}{normal} or \omterm{def:g10:demand:normal}{inferior} is a fact about buyers, not about the good: the same intercity bus can be \omterm{def:g10:demand:normal}{inferior}
+for a well-paid office worker and \omterm{def:g10:demand:normal}{normal} for a student whose income has just risen.
+
+\paragraph{Prices of related goods.} A rise in the price of train tickets raises the demand for bus rides; a rise in the
+price of petrol lowers the demand for large cars.
+
+\begin{definition}[Substitutes and complements]\label{def:g10:demand:substitutes}
+Two goods are \emph{substitutes}\index{substitutes} when a rise in the price of one, \omterm{def:g10:economic-models:other-things-equal}{other things equal}, raises the demand
+for the other: they can be used in each other's place. They are \emph{complements}\index{complements} when a rise in the
+price of one lowers the demand for the other: they are used together.
+\end{definition}
+\phantomsection\label{def:g10:demand:complements}
+
+\paragraph{Tastes and information.} A medical study linking a food to an illness shifts its demand left; a fashion shifts
+the demand for what it favours right.
+
+\paragraph{Expectations.} If buyers expect a price to rise next month, they buy more now: the demand curve of this month
+shifts right. Queues at petrol stations before an announced tax rise are an example.
+
+\paragraph{The number of buyers.} A town that grows, or a market that opens to foreign buyers, has more demand at every
+price: the \omterm{def:g10:demand:market-demand}{market demand}, the horizontal sum of the individual ones, has more terms in its sum.
+
+\begin{example}[A new rail line]\label{ex:g10:demand:rail}
+A train line opens beside Ben's bus route, and Ben, at every fare, now takes 4 fewer bus rides a week: $q_B = 8 - p$. Ana's
+demand does not change. The \omterm{def:g10:demand:market-demand}{market demand} becomes $18 - 3p$ for $p \le 5$ and $8 - p$ for $5 < p \le 8$. At a fare of 2 dalens,
+rides fall from 16 to 12 without any change in the fare: the train is a substitute for the bus, and the demand for bus rides
+has shifted left.
+\end{example}
+
+\section{Moving along the curve, and moving the curve}\label{sec:g10:demand:along}
+
+The words matter. A change in the good's own price moves buyers \emph{along} the demand curve: the quantity demanded
+changes, but demand --- the whole curve --- does not. A change in anything else moves the curve itself: demand changes.
+``The price rose, so demand fell'' is a confusion; ``the price rose, so the quantity demanded fell'' is the \omterm{def:g10:demand:law}{law of demand}.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ, x=0.55cm, y=0.5cm]
+\begin{scope}
+\draw[econ axes] (0,8.5) node[left, font=\small] {$p$} |- (9.5,0) node[below, font=\small] {$Q$};
+\draw[demand] (0.5,7.5) -- (8.5,0.5);
+\node[eqpoint] (a) at (2.5,5.75) {}; \node[eqpoint] (b) at (5.5,3.125) {};
+\draw[phase arrow] (2.75,5.3) -- (5.2,3.2);
+\node[font=\footnotesize, anchor=south west] at (2.6,5.8) {$p$ high};
+\node[font=\footnotesize, anchor=south west] at (5.6,3.2) {$p$ low};
+\node[font=\small\bfseries] at (4.7,-1.3) {a move along the curve};
+\end{scope}
+\begin{scope}[xshift=7.4cm]
+\draw[econ axes] (0,8.5) node[left, font=\small] {$p$} |- (9.5,0) node[below, font=\small] {$Q$};
+\draw[demand] (0.5,7.5) -- (6.5,0.5);
+\draw[demand, shifted] (2.5,7.5) -- (8.5,0.5);
+\draw[phase arrow] (2.3,4) -- (4.0,4);
+\draw[guide] (0,4) -- (5.5,4);
+\node[font=\footnotesize, anchor=west] at (6.0,6.5) {income rises};
+\node[font=\small\bfseries] at (4.7,-1.3) {a shift of the curve};
+\end{scope}
+\end{tikzpicture}
+
+{\small Left: a fall in the good's own price raises the quantity demanded along the same curve. Right: a rise in income
+(for a \omterm{def:g10:demand:normal}{normal good}) shifts the whole curve to the right: at the same price, more is bought.}
+\end{omfigure}
+
+Now read the opening chart again. Between 1978 and 1983 the price rose and oil use fell, as the \omterm{def:g10:demand:law}{law of demand} predicts. But
+other things did not stay equal: the recession of the early 1980s lowered incomes; cars were being built to new
+fuel-economy rules; homes were heated with gas instead of oil. Part of the fall in oil use was a move along the curve, part
+a shift of the curve. Between 1986 and 1998 the price was low, and oil use per person hardly rose: incomes grew, which
+shifts demand right, while cars kept getting more efficient, which shifts it left. The record alone cannot separate the
+two. How economists do it is a subject of the university volumes; the idea, already met in \cref{ch:g10:economic-models}, is
+to find changes in the price that come from something that cannot have moved demand at the same time.
+
+\begin{remark}[Two curves and one point]\label{rem:g10:demand:identification}
+Each year's point on the opening chart is where that year's demand met that year's supply. If only supply moves, the points
+trace out the demand curve. If only demand moves, they trace out the supply curve. When both move, the points are a cloud
+that is neither. The next two chapters build the supply side and put the two together.
+\end{remark}
+
+\section{Exercises}
+
+\begin{exercise}[$\star$]\label{exo:g10:demand:1}
+A baker sells 120 loaves a day at 3 dalens, 100 at 4 dalens and 70 at 5 dalens. Is this consistent with the \omterm{def:g10:demand:law}{law of demand}?
+By how many loaves does the quantity demanded fall for each dalen of price between 3 and 5?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:demand:2}
+Say whether each pair is more likely to be \omterm{def:g10:demand:substitutes}{substitutes} or \omterm{def:g10:demand:substitutes}{complements} for most buyers: (a) tea and coffee; (b) printers and
+ink cartridges; (c) bus rides and bicycles; (d) games consoles and games; (e) butter and margarine.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:demand:3}
+A survey finds that households with higher incomes buy fewer kilograms of the cheapest rice and more of the dearer kinds,
+at the same prices. What does this suggest about each kind of rice?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:demand:4}
+Read the opening chart. In which year was the real price of gasoline highest? In which year was oil use per person lowest?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:g10:demand:5}
+Correct each sentence so that it uses ``demand'' and ``quantity demanded'' properly: (a) ``The price of cinema tickets fell,
+so demand for cinema tickets rose.'' (b) ``Incomes rose, so the quantity demanded of restaurant meals rose, at the same
+prices.''
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:demand:6}
+Two buyers have demands $q_1 = 20 - 4p$ (for $p \le 5$) and $q_2 = 15 - p$ (for $p \le 15$). Write the \omterm{def:g10:demand:market-demand}{market demand}, with its
+pieces, and find the kink.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:demand:7}
+Three identical buyers each have the demand $q = 6 - 2p$ (for $p \le 3$). Write the \omterm{def:g10:demand:market-demand}{market demand}. Compare its slope with one
+buyer's, and explain the result with \cref{prop:g10:demand:sum}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:demand:8}
+For the demand for bus rides in a town, predict the direction of the shift (left, right, or none: a move along the curve)
+for each event: (a) the bus fare rises; (b) the price of petrol rises; (c) a new car-sharing service starts; (d) the town's
+population grows; (e) the bus company announces that fares will double next month (the demand for this month's monthly
+passes).
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:demand:9}
+The \omterm{def:g10:demand:market-demand}{market demand} for rides is $Q = 22 - 3p$ for $p \le 5$ (Ana and Ben). A rise in Ana's income adds 2 rides a week to her
+demand at every fare at which she rides. Write the new \omterm{def:g10:demand:market-demand}{market demand} for low fares, and the number of rides at a fare of 3
+dalens before and after.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:demand:10}
+In a town, the price of a cinema ticket was 8 dalens in 2024 and 9 dalens in 2025, and the number of tickets sold rose from
+\num{50000} to \num{54000}. A new shopping centre with a large car park opened next to the cinema in 2025. Does this
+contradict the \omterm{def:g10:demand:law}{law of demand}? Explain with the words ``along'' and ``shift''.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:g10:demand:11}
+% figdata: oil_changes (1980: 21.5, -8.7; 2021: 33.7, 9.2)
+Read the second chart. In 1980 the real price of gasoline rose by 21.5\,\% and oil use per person fell by 8.7\,\%. In 2021
+the price rose by 33.7\,\% and oil use rose by 9.2\,\%. Which year looks like a move along a demand curve? What, in 2021,
+moved the demand curve, and in which direction?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:demand:12}
+Describe an observation in a market that would contradict the \omterm{def:g10:demand:law}{law of demand}. Say what you would need to check before
+concluding that the law had failed.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:demand:13}
+Explain why the line joining the points of the opening chart, from 1978 to 1983, would not be the demand curve for oil
+products in the United States. Would the true demand curve be steeper or flatter than that line, if incomes had fallen at
+the same time? Explain.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:demand:14}
+Explain, in words, why the households of the record box bought less rice when its price fell. What two conditions made this
+possible, and why would one expect the same households to obey the \omterm{def:g10:demand:law}{law of demand} for meat?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:g10:demand:15}
+A market has two kinds of buyers of bread: \num{1000} poor households, for whom cheap bread is an \omterm{def:g10:demand:normal}{inferior good}, and \num{3000}
+richer households, for whom it is \omterm{def:g10:demand:normal}{normal}. When all incomes rise by 10\,\%, each poor household buys 2 fewer loaves a month at
+the old price and each richer household 1 more. What happens to the \omterm{def:g10:demand:market-demand}{market demand} at the old price? Is bread, for the market as
+a whole, \omterm{def:g10:demand:normal}{normal} or \omterm{def:g10:demand:normal}{inferior}? What would change the answer?
+\end{exercise}
+
+\section{Problem: The Town's Bus Passes}
+
+\begin{problem}[{Weekend problem --- three groups of riders, a fare rise and a new tram line}]
+\label{pb:g10:demand:1}
+In a town of Brenland, the bus company sells monthly passes. Its riders fall into three groups. At a price of $p$ dalens a
+pass, the numbers of passes demanded a month are (each formula holds while it is positive, and the group buys none
+otherwise):
+\[
+  \text{students: } q_S = 400 - 10p, \qquad \text{workers: } q_W = 900 - 15p, \qquad \text{retirees: } q_R = 300 - 10p .
+\]
+The price of a pass is 20 dalens.
+
+\medskip
+\noindent\textbf{Part I --- The groups.}
+\begin{enumerate}
+\item At what price does each group stop buying passes?
+\item How many passes does each group buy at 20 dalens? What is the total?
+\item Which group's demand falls by the most passes for each extra dalen?
+\item The town's retirees receive a rise in their pensions, and their demand becomes $q_R = 360 - 10p$. Is a bus pass a \omterm{def:g10:demand:normal}{normal}
+  or an \omterm{def:g10:demand:normal}{inferior good} for them? Before answering the next questions, cancel this change: the pensions do not rise.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- The market.}
+\begin{enumerate}[resume]
+\item Write the \omterm{def:g10:demand:market-demand}{market demand} for $0 \le p \le 30$.
+\item Write it for $30 < p \le 40$ and for $40 < p \le 60$.
+\item Where are the kinks of the \omterm{def:g10:demand:market-demand}{market demand}? Explain each one in words.
+\item Draw the \omterm{def:g10:demand:market-demand}{market demand}.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- A fare rise.}
+\begin{enumerate}[resume]
+\item The company raises the price of a pass to 32 dalens. How many passes are sold now?
+\item By how many passes, and by what percentage, does the number sold fall?
+\item How many passes does each group buy at 32 dalens? Which group has left the market?
+\item Compare the company's monthly takings at 20 and at 32 dalens.
+\item Is the fall in passes sold a move along the demand curve or a shift of it?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- A tram line.}
+\begin{enumerate}[resume]
+\item A tram line opens past the university, and the students' demand for bus passes halves at every price: $q_S = 200 - 5p$.
+  Are trams and buses \omterm{def:g10:demand:substitutes}{substitutes} or \omterm{def:g10:demand:substitutes}{complements} for the students?
+\item Write the new \omterm{def:g10:demand:market-demand}{market demand} for $0 \le p \le 30$ and for $30 < p \le 40$.
+\item With the tram line, how many passes are sold at 20 dalens, and how many at 32?
+\item By how many passes, and by what percentage, does the fare rise reduce the number sold with the tram line?
+\item Why does the same fare rise lose fewer passes with the tram line than without it?
+\item By how many passes does the tram line alone reduce sales at 20 dalens? Is this a move along the curve or a shift?
+\item State the result of the problem: the fall in passes sold after the fare rise from 20 to 32 dalens, without and with the
+  tram line.
+\end{enumerate}
+\end{problem}

@@ -1,0 +1,474 @@
+\chapter{Price Theory at Work}\label{ch:b1:price-theory-at-work}
+
+In 2020 a flat in France cost about forty years of its rent; in 1950 it had
+cost under fifteen. In the United States the number was about twenty-four
+at both dates. % figdata: rent_points
+Why does a dwelling cost a given number of years of rent, and why did that
+number move so much in some countries and not at all in others? The answer
+is an \omterm{def:b1:price-theory-at-work:arbitrage}{arbitrage}: buying and renting are two ways of getting the same thing,
+and their prices cannot drift apart for long. This chapter puts the price
+theory of the last four chapters to work on such questions: what a price
+does when the law stops it moving, how a quota differs from a tariff, why
+a stored crop gets dearer month by month, and what fixes the price of a
+house.
+
+\begin{openingchart}{Housing rental yield and the real long-term interest
+rate, France, United Kingdom and United States, 1950--2020; the real rate is
+the long-term government bond rate minus consumer-price inflation averaged
+over three years.}{Jordà--Schularick--Taylor Macrohistory Database, release 6}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 1, horizontal sep=16mm}, omtime, xmin=1950, xmax=2020,
+  width=0.46\linewidth, height=0.4\linewidth, xtick={1950,1970,1990,2010}]
+\nextgroupplot[ylabel={Rental yield (\%)}, ymin=0, ymax=8, title={\small Rent as a share of price}, xlabel={Year},
+  width=0.46\linewidth, legend style={font=\footnotesize, at={(1.1,-0.28)}, anchor=north, legend columns=3}]
+  \addplot+[no marks, thick] table[x=year, y=yield_fra, col sep=comma] {figdata/bachelor-1/14-price-theory-at-work/out/rent_yield.csv};
+  \addplot+[no marks, thick] table[x=year, y=yield_gbr, col sep=comma] {figdata/bachelor-1/14-price-theory-at-work/out/rent_yield.csv};
+  \addplot+[no marks, thick] table[x=year, y=yield_usa, col sep=comma] {figdata/bachelor-1/14-price-theory-at-work/out/rent_yield.csv};
+  \legend{France, United Kingdom, United States}
+\nextgroupplot[ylabel={Real long rate (\%)}, ymin=-8, ymax=8, title={\small Real interest rate}, xlabel={Year},
+  width=0.46\linewidth, restrict y to domain=-8:8, unbounded coords=jump]
+  \draw[gray, dotted] (axis cs:1950,0) -- (axis cs:2020,0);
+  \addplot+[no marks, thick] table[x=year, y=real_fra, col sep=comma] {figdata/bachelor-1/14-price-theory-at-work/out/rent_yield.csv};
+  \addplot+[no marks, thick] table[x=year, y=real_gbr, col sep=comma] {figdata/bachelor-1/14-price-theory-at-work/out/rent_yield.csv};
+  \addplot+[no marks, thick] table[x=year, y=real_usa, col sep=comma] {figdata/bachelor-1/14-price-theory-at-work/out/rent_yield.csv};
+\end{groupplot}
+\end{tikzpicture}
+\end{openingchart}
+
+The French yield fell from $6.79\%$ in 1950 to $2.49\%$ in 2020, the British
+from $3.68\%$ to $2.22\%$, while the American one ended where it began, at
+$4.23\%$. In 2000 the three real rates were between $3.69\%$ and $4.44\%$; in 2020
+all three were below zero. % figdata: rent_points
+France's real rate was far below the chart in 1950, at $-19.26\%$, after the
+inflation of the war years. % figdata: rent_points
+The chart is a test of the \omterm{def:b1:price-theory-at-work:arbitrage}{arbitrage} of \cref{sec:b1:price-theory-at-work:buy-rent}:
+yields should follow the real rate, and they did so only in part.
+
+\begin{recall}
+Price ceilings and floors, and \omterm{def:b1:price-theory-at-work:arbitrage}{arbitrage} and storage as what prices do,
+were met at school; present value at school too. The \omterm{def:b1:competitive-industry:capitalisation}{capitalisation} of a
+rent into an asset price is \cref{def:b1:competitive-industry:capitalisation};
+surplus and the \omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss} are in \cref{ch:b1:partial-equilibrium-welfare}.
+\end{recall}
+
+\section{The full price}\label{sec:b1:price-theory-at-work:full-price}
+
+What a buyer gives up for a good is rarely only money.
+
+\begin{definition}[Full price]\label{def:b1:price-theory-at-work:full-price}
+\index{full price}
+The \emph{full price} of a good is its money price plus the money value of
+everything else the buyer must give up to get it: time spent queuing or
+travelling, at the buyer's value of time, and any loss of quality.
+\end{definition}
+
+Demand responds to the \omterm{def:b1:price-theory-at-work:full-price}{full price}. A museum with free admission and a queue of
+two hours is not free to someone whose time is worth 15 dalens an hour: it
+costs 30 dalens. A free road that is congested costs its users time, and a
+toll road beside it fills until the toll plus its shorter journey costs
+about as much as the free road's longer one. When the law holds the money
+price down, something else --- the queue, the quality, a side payment ---
+rises until the \omterm{def:b1:price-theory-at-work:full-price}{full price} clears the market.
+
+\section{Around a controlled price}\label{sec:b1:price-theory-at-work:controls}
+
+A ceiling below the \omterm{def:b1:models-and-data:equilibrium}{equilibrium} price makes the quantity demanded exceed the
+quantity supplied. Sellers supply only $S(\bar p)$, and the units are rationed
+by something other than the money price.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Quantity}, ylabel={Price}, xmin=0, xmax=80, ymin=0, ymax=80,
+  width=0.52\linewidth, height=0.42\linewidth]
+  \fill[omProp!35] (axis cs:20,60) -- (axis cs:40,40) -- (axis cs:20,20) -- cycle;
+  \fill[omDef!18] (axis cs:0,20) rectangle (axis cs:20,60);
+  \addplot[demand, domain=0:80] {80 - x};
+  \addplot[supply, domain=0:80] {x};
+  \addplot[guide] coordinates {(0,20) (60,20)};
+  \addplot[guide] coordinates {(20,0) (20,60) (0,60)};
+  \node[font=\footnotesize, anchor=west] at (axis cs:61,20) {ceiling};
+  \node[font=\footnotesize] at (axis cs:10,40) {queue};
+  \node[font=\footnotesize, anchor=west] at (axis cs:33,52) {DWL};
+  \node[font=\footnotesize, anchor=south] at (axis cs:40,20) {shortage};
+\end{axis}
+\end{tikzpicture}
+
+{\small A ceiling of 20 with demand $Q = 80 - p$ (blue) and supply $Q = p$ (red).
+Sellers offer 20 units and buyers want 60. The last buyer served values a
+unit at 60, so queues grow until a unit costs 60 in money and time: the
+blue rectangle, worth 800, is time wasted in the queue, on top of the
+triangle of lost trades, 400.}
+\end{omfigure}
+
+Who gains? Buyers who get the good at the ceiling without queuing; who
+they are depends on the rationing: first come, by lottery, by connections.
+Sellers lose. If rationing is by queuing the rectangle of
+\cref{exo:b1:price-theory-at-work:ceiling} is lost too, and if units go to
+buyers at random rather than to those who value them most, the loss is
+larger still (\cref{exo:b1:price-theory-at-work:random}).
+
+\begin{definition}[Parallel market]\label{def:b1:price-theory-at-work:parallel-market}
+\index{parallel market}\index{black market|see{parallel market}}
+A \emph{parallel market} is an unrecorded market in which a good under a
+price ceiling is sold above the ceiling.
+\end{definition}
+
+Over time, sellers respond to a ceiling on more margins than quantity. A
+landlord whose rent is capped spends less on upkeep, so the quality of the
+dwelling falls towards what the rent pays for. In the long run, when supply
+is more elastic, the shortage grows: owners can sell flats to owner
+occupiers, convert them, or build none.
+
+\begin{record}[Rent control in San Francisco]
+In 1994 San Francisco extended rent control to small multi-family buildings
+built before 1980, giving economists a comparison of similar buildings on
+either side of the line. Rent control cut tenants' moves by about $20\%$ ---
+the protection it was meant to give. But landlords whose buildings came
+under control reduced the supply of rental housing on them by $15\%$, by
+selling to owner occupiers and by redeveloping (Diamond, McQuade and Qian
+2019). % ledger: b1:diamond2019
+The model's long-run prediction, a fall in supply, was found; the margin by
+which it happened was conversion rather than neglect.
+\end{record}
+
+A price floor --- a minimum price for a farm product, say --- has the
+mirror effects: a surplus that someone must buy or destroy, and effort
+spent by sellers competing for the buyers there are.
+
+\begin{model}{A price ceiling}
+\assumes A competitive market and a binding ceiling enforced on the money
+price.
+\predicts A shortage; rationing by queues, connections or side payments;
+lower quality; a \omterm{def:b1:price-theory-at-work:parallel-market}{parallel market}; and a larger fall in supply in the long
+run than in the short.
+\tested Extending rent control in San Francisco cut the supply of rental
+housing in the buildings concerned by $15\%$ (Diamond, McQuade and Qian
+2019). % ledger: b1:diamond2019
+\breaks Where owners cannot exit, convert or let quality slip, the
+short-run supply response is small; where the ceiling is above the market
+price, nothing happens at all.
+\end{model}
+
+\section{Quota against tariff}\label{sec:b1:price-theory-at-work:quota}
+
+A country can limit imports of a good with a tariff, a tax on each unit
+imported, or with a quota, a cap on the number. For any tariff there is a
+quota that gives the same imports, the same domestic price and the same
+quantities: the one equal to the imports under the tariff. The two differ
+in who gets the gap between the world price and the domestic price.
+
+\begin{definition}[Quota rent]\label{def:b1:price-theory-at-work:quota-rent}
+\index{quota rent}
+The \emph{quota rent} is the difference between the domestic and the
+world price, times the quantity imported under a quota: the income of
+whoever holds the right to import.
+\end{definition}
+
+Under a tariff the same rectangle is revenue to the state. Under a quota
+it goes to the licence holders: domestic importers if the licences are
+given to them, the state if it auctions them, or foreign exporters if the
+exporting country runs the quota.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Quantity}, ylabel={Price}, xmin=0, xmax=80, ymin=0, ymax=24,
+  width=0.52\linewidth, height=0.42\linewidth]
+  \fill[omDef!22] (axis cs:24,10) rectangle (axis cs:60,12);
+  \addplot[demand, domain=0:80] {(120 - x)/5};
+  \addplot[supply, domain=0:48] {x/2};
+  \addplot[guide] coordinates {(0,10) (70,10)};
+  \addplot[guide] coordinates {(0,12) (60,12)};
+  \addplot[guide] coordinates {(24,0) (24,12)};
+  \addplot[guide] coordinates {(60,0) (60,12)};
+  \node[font=\footnotesize, anchor=north west] at (axis cs:1,9.8) {world price};
+  \node[font=\footnotesize, anchor=north] at (axis cs:42,9.6) {revenue or quota rent};
+\end{axis}
+\end{tikzpicture}
+
+{\small Demand $Q = 120 - 5p$ (blue), domestic supply $Q = 2p$ (red), world price 10.
+A tariff of 2 or a quota of 36 units gives the same price, 12, and the same
+imports, 36; the rectangle, 72, is tariff revenue in one case and \omterm{def:b1:price-theory-at-work:quota-rent}{quota
+rent} in the other.}
+\end{omfigure}
+
+\begin{record}[A voluntary export restraint]
+From 1981 Japanese carmakers limited their exports to the United States
+under an agreement with the US government, a quota run by the exporting
+country. A study of its effects from 1981 to 1990 measured the cost to
+American buyers, the profits of the firms, and the tariff revenue the
+United States gave up by choosing a quota over a tariff (Berry,
+Levinsohn and Pakes 1999). % ledger: b1:berry1999
+Under such a restraint the \omterm{def:b1:price-theory-at-work:quota-rent}{quota rent} goes to the exporting firms: they
+can sell the limited number of cars at the high domestic price.
+\end{record}
+
+\section{Arbitrage over space and over time}\label{sec:b1:price-theory-at-work:arbitrage}
+
+\begin{definition}[Arbitrage condition]\label{def:b1:price-theory-at-work:arbitrage}
+\index{arbitrage condition}\index{arbitrage}
+A trader who can buy a good in market $A$ and sell it in market $B$ at a
+cost $c$ a unit earns a profit whenever $p_B > p_A + c$. The \emph{arbitrage
+condition} is $p_B \le p_A + c$, with equality whenever the good actually flows
+from $A$ to $B$. Over time, with $B$ a later date, $c$ is the cost of storing
+the good and the interest on its value.
+\end{definition}
+
+Two regions linked by trade thus have prices that differ by the transport
+cost, or less if no good flows. If Brenland's demand for imports is
+$2(220 - p_B)$ and Kestria's export supply is $2(p_K - 160)$, a transport cost
+of 10 dalens gives $p_K = 185$, $p_B = 195$ and a trade of 50 units; at a cost of
+60 or more, nothing moves (\cref{pb:b1:price-theory-at-work:store}).
+
+\begin{definition}[Cost of carry and convenience yield]\label{def:b1:price-theory-at-work:carry}
+\index{cost of carry}\index{convenience yield}
+The \emph{cost of carry} of a storable good from one date to the next is the
+interest on its value plus the cost of storing it. The \emph{convenience
+yield} is the benefit of holding a stock on hand --- not running out, being
+able to sell at once --- measured as the amount by which the price rises
+less than the cost of carry while stocks are held.
+\end{definition}
+
+With storage, a crop harvested once a year becomes dearer month by month:
+if stocks are carried from September to July, the price must rise each
+month by the \omterm{def:b1:price-theory-at-work:carry}{cost of carry}, net of the \omterm{def:b1:price-theory-at-work:carry}{convenience yield}, or no one would
+hold them. At the next harvest the price falls back. The price of a futures
+contract for delivery at a later date obeys the same condition; the
+quantitative finance series studies it.
+
+\begin{omfigure}
+\begin{tikzpicture}
+\begin{axis}[omrecord, grid=none, xlabel={Months from the first harvest}, ylabel={Dalens a tonne}, xmin=0, xmax=36,
+  ymin=190, ymax=240, width=0.62\linewidth, height=0.36\linewidth, xtick={0,12,24,36}]
+  \addplot[demand, samples=12, domain=0:11] {200*1.005^x + 2*(1.005^x - 1)/0.005};
+  \addplot[demand, samples=12, domain=12:23] {200*1.005^(x-12) + 2*(1.005^(x-12) - 1)/0.005};
+  \addplot[demand, samples=12, domain=24:35] {200*1.005^(x-24) + 2*(1.005^(x-24) - 1)/0.005};
+  \addplot[guide] coordinates {(11,233.84) (12,200)};
+  \addplot[guide] coordinates {(23,233.84) (24,200)};
+\end{axis}
+\end{tikzpicture}
+
+{\small The price of a stored grain under the \omterm{def:b1:price-theory-at-work:arbitrage}{arbitrage condition} (the grain
+store of \cref{pb:b1:price-theory-at-work:store}): 200 dalens a tonne at
+harvest, then a rise each month by interest at $0.5\%$ and storage at 2 dalens,
+to 233.84 eleven months later; the harvest brings it back to 200.}
+\end{omfigure}
+
+Retail prices show the pattern, and its absence where storage is
+impossible.
+
+\begin{omchart}{Seasonal pattern of three retail food prices, United States,
+2000--2019: average deviation of each month's price from its year's mean
+(log points).}{US Bureau of Labor Statistics, Average Price Data (series
+AP), US city average}
+\begin{tikzpicture}
+\begin{axis}[omtime, xlabel={Month}, ylabel={Deviation from the year's mean (\%)}, xmin=1, xmax=12,
+  ymin=-25, ymax=40, width=0.7\linewidth, height=0.4\linewidth, xtick={1,...,12}, legend pos=north west,
+  legend style={font=\footnotesize}]
+  \draw[gray, dotted] (axis cs:1,0) -- (axis cs:12,0);
+  \addplot+[thick] table[x=month, y=strawberries, col sep=comma] {figdata/bachelor-1/14-price-theory-at-work/out/seasonal.csv};
+  \addplot+[thick] table[x=month, y=potatoes, col sep=comma] {figdata/bachelor-1/14-price-theory-at-work/out/seasonal.csv};
+  \addplot+[thick] table[x=month, y=rice, col sep=comma] {figdata/bachelor-1/14-price-theory-at-work/out/seasonal.csv};
+  \legend{Strawberries, White potatoes, Long-grain rice}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+Strawberries cannot be stored: their price follows the season of supply,
+lowest in June and highest in December, a range of 53 points. Potatoes are
+stored through the year: their price rises from a low in February to a
+high in August, just before the main harvest, a range of 8.4 points.
+Rice is stored for years and its price barely has a season: 3.6 points.
+% figdata: seasonal_range
+The potato path is not the saw-tooth of the figure above: the price keeps
+falling for some months after the autumn harvest, as the year's crop
+arrives in shops. But from February to August it rises by about $1.4$ points
+a month, $8.4$ points over six months, the order of a \omterm{def:b1:price-theory-at-work:carry}{cost of carry}.
+% figdata: seasonal_range
+
+\section{Buying against renting}\label{sec:b1:price-theory-at-work:buy-rent}
+
+A dwelling can be rented for $R$ a year or bought for $P$. Owning for a year
+costs the interest given up on $P$, at the real rate $r$, plus depreciation
+and upkeep $\delta P$, minus the expected real rise in the price, $gP$.
+
+\begin{definition}[Rental yield and the rent--price arbitrage condition]\label{def:b1:price-theory-at-work:rental-yield}
+\index{rental yield}\index{rent--price arbitrage condition}
+The \emph{rental yield} of a dwelling is its yearly rent divided by its
+price, $R/P$. The \emph{rent--price \omterm{def:b1:price-theory-at-work:arbitrage}{arbitrage condition}} says that renting and
+owning cost the same:
+\[
+R = P\,(r + \delta - g), \qquad \frac RP = r + \delta - g.
+\]
+\end{definition}
+
+If owning were cheaper, renters would buy and the price would rise; if
+renting were cheaper, owners would sell and rent. The condition is the
+\omterm{def:b1:competitive-industry:capitalisation}{capitalisation} of \cref{def:b1:competitive-industry:capitalisation} with
+depreciation and expected growth added. It predicts that the price is
+$R/(r + \delta - g)$ years of rent, and so that a fall in the real rate raises
+the price of a given rent: with $\delta = 2\%$ and $g = 0$, a fall in $r$ from $4\%$ to
+$2\%$ takes the price from 16.67 to 25 years of rent, a rise of $50\%$.
+% computed: code/bachelor-1/14-price-theory-at-work (exercise rate-fall)
+
+\begin{measure}[A rental yield]
+The yields of the opening chart come from a dataset of total returns on
+housing, equities, bonds and bills in 16 advanced economies since 1870
+(Jordà et al. 2019). % ledger: b1:jorda2019
+A yield there is a rent net of costs divided by the price of the
+dwelling; long series are built by linking the ratio in a year when it is
+well measured to indices of rents and of house prices. Errors in either
+index accumulate along the series, so the level of a yield decades away
+from its benchmark is less certain than its movements.
+\end{measure}
+
+The opening chart tests the condition. Over 1950--2020 the correlation of
+the yield with the real rate is $0.63$ in the United States, $0.12$ in the
+United Kingdom and $-0.15$ in France. % figdata: rent_corr
+In the United States yields rose and fell with the real rate; in France and
+Britain the yield fell through decades when the real rate did not, perhaps
+because expected growth $g$ rose with years of rising prices, a term the
+chart cannot see, or because the long yield series drift (see the measure
+box).
+
+\begin{model}{Arbitrage}
+\assumes Traders who can buy, store, ship or rent at known costs, and who
+act on any price gap larger than those costs.
+\predicts Price gaps between places equal to transport costs where goods
+flow; prices of stored goods rising through the crop year by the \omterm{def:b1:price-theory-at-work:carry}{cost of
+carry}; \omterm{def:b1:price-theory-at-work:rental-yield}{rental yields} equal to the real rate plus depreciation, less
+expected growth.
+\tested Stored foods have small seasonal price swings and perishable ones
+large swings (the chart above); \omterm{def:b1:price-theory-at-work:rental-yield}{rental yields} followed the real rate in
+the United States from 1950 to 2020 but not in France or Britain (opening
+chart). Price gaps across countries and distance are studied with the
+gravity model of Year~3.
+\breaks When shorting or storage is impossible --- a perishable crop, a
+house that cannot be sold short --- and when expectations of price growth
+swing, as in housing in the 1980s and 2000s.
+\end{model}
+
+\section*{Exercises}\label{sec:b1:price-theory-at-work:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b1:price-theory-at-work:full}
+A concert ticket costs 4 dalens but requires two hours in a queue. What is
+its \omterm{def:b1:price-theory-at-work:full-price}{full price} to someone whose time is worth 15 dalens an hour?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:price-theory-at-work:read}
+From the opening chart's table: France's yield was $3.93\%$ in 1980 and
+$2.49\%$ in 2020; its real rate was $1.97\%$ and $-1.29\%$. % figdata: rent_points
+Compute the price in years of rent at both dates and the change in the
+real rate.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:price-theory-at-work:quota-rent}
+A quota allows 40 units at a world price of 10; the domestic price is 14.
+Compute the \omterm{def:b1:price-theory-at-work:quota-rent}{quota rent}.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b1:price-theory-at-work:distance}
+Shipping grain costs 0.05 dalens a tonne a kilometre. Predict the largest
+price gap between two markets 300 km apart, and the gap if grain flows
+between them.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:price-theory-at-work:ceiling}
+For demand $Q = 80 - p$ and supply $Q = p$, compute the shortage and the
+\omterm{def:b1:partial-equilibrium-welfare:dwl}{deadweight loss} of a ceiling of 20, first with costless rationing to the
+buyers who value the good most, then with rationing by queues.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:price-theory-at-work:tariff}
+Demand is $Q = 120 - 5p$, domestic supply $Q = 2p$, the world price 10. Compute
+imports with free trade and with a tariff of 2, and show that a quota of 36
+gives the same price. Compare the surpluses under the two.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:price-theory-at-work:path}
+Storage costs $1\%$ of the value a month and the interest rate is $0.5\%$ a
+month. A grain costs 100 at harvest. Compute its price over the next six
+months under the \omterm{def:b1:price-theory-at-work:arbitrage}{arbitrage condition}.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:price-theory-at-work:rate-fall}
+With depreciation at $2\%$ and no expected growth, the real rate falls from
+$4\%$ to $2\%$. Predict the price-to-rent ratio before and after, and the change
+in the price of a dwelling whose rent does not change.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b1:price-theory-at-work:corr}
+The correlation of the yield with the real rate over 1950--2020 is $0.63$ in
+the United States, $0.12$ in the United Kingdom and $-0.15$ in France.
+% figdata: rent_corr
+What do the numbers say about the rent--price condition, and which term of
+it could account for the difference?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:price-theory-at-work:derive}
+Derive the rent--price condition from the absence of a profit in buying a
+dwelling, renting it out for a year and selling it at the end of the year.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:price-theory-at-work:random}
+In \cref{exo:b1:price-theory-at-work:ceiling}, the 20 units go to buyers
+drawn at random from the 60 who want one at the ceiling. Compute the value
+of the units to their buyers and show that the loss exceeds the triangle.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b1:price-theory-at-work:refute}
+What observation in the opening chart, or in data like it, would refute
+the claim that rents equal the cost of owning?
+\end{exercise}
+
+\section{Problem: The Grain Store of Brenmoor}\label{sec:b1:price-theory-at-work:problem}
+
+\begin{problem}[{Weekend problem --- the lean-month premium}]\label{pb:b1:price-theory-at-work:store}
+Brenmoor's grain is harvested in September (invented). At harvest the
+price is 200 dalens a tonne. The interest rate is $0.5\%$ a month and storing a
+tonne costs 2 dalens a month. In July, demand for grain in Brenmoor is
+$Q = 400 - P$, in thousands of tonnes.
+
+\medskip\noindent\textbf{Part I --- Storage.}
+\begin{enumerate}
+  \item Under the \omterm{def:b1:price-theory-at-work:arbitrage}{arbitrage condition}, what is the price in October?
+  \item Compute the price month by month up to July.
+  \item By what percentage does the July price exceed the harvest price?
+  \item Explain why the price can rise neither faster nor slower while stocks are held.
+  \item If storage cost $1\%$ of the value a month instead of 2 dalens, what would the July premium be?
+  \item In fact the October price is 202. What \omterm{def:b1:price-theory-at-work:carry}{convenience yield} does this reveal, per tonne for the month?
+  \item What happens to the price at the next harvest, and to stocks just before it?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- Trade with Kestria.} Brenland's import
+demand for grain is $2(220 - p_B)$ and Kestria's export supply is
+$2(p_K - 160)$, in thousands of tonnes; prices in dalens a tonne.
+\begin{enumerate}[resume]
+  \item What are the two prices without trade?
+  \item With a transport cost of 10 a tonne, find both prices and the quantity traded.
+  \item Check the \omterm{def:b1:price-theory-at-work:arbitrage}{arbitrage condition}.
+  \item Repeat with a transport cost of 30.
+  \item At what transport cost does trade stop?
+  \item Who in Kestria gains from the trade, and who loses?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- A ceiling in July.}
+\begin{enumerate}[resume]
+  \item What quantity is sold in July at the market price of Part I?
+  \item The government caps the July price at 210. With the same stock, find the shortage.
+  \item What queuing cost per tonne clears the market, and what is the \omterm{def:b1:price-theory-at-work:full-price}{full price}?
+  \item Buyers value their time at 10 dalens an hour, and each tonne needs its own wait. How long is the wait per tonne?
+  \item How much do the holders of stocks lose in July, compared with no ceiling?
+  \item Predict the effect of the ceiling on storage if it is expected every year.
+\end{enumerate}
+
+\medskip\noindent\textbf{Part IV --- The store's value.} The store holds
+10,000 tonnes and is rented out at 0.8 dalens a tonne a month.
+\begin{enumerate}[resume]
+  \item Compute the yearly rent.
+  \item At a real interest rate of $5\%$, with no depreciation and no growth, what is the store worth?
+  \item What would it be worth at $4\%$ and at $6\%$?
+  \item What is its \omterm{def:b1:price-theory-at-work:rental-yield}{rental yield} at $5\%$?
+  \item If the July ceiling of Part III were expected every year, what would happen to the store's rent and value?
+  \item State the result: the lean-month price premium the store earns.
+\end{enumerate}
+\end{problem}

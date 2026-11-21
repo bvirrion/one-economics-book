@@ -1,0 +1,409 @@
+\chapter{Cost--Benefit Analysis}\label{ch:b3:cost-benefit-analysis}
+
+A government deciding whether to build a bridge, regulate a chemical or fund a
+programme needs a common unit for what it costs and what it gives. \omterm{def:b3:cost-benefit-analysis:cba}{Cost--benefit
+analysis} supplies one: money, measured by what people would be willing to pay.
+This chapter states the method, measures the two numbers on which most analyses
+turn --- the discount rate and the \omterm{def:b3:cost-benefit-analysis:vsl}{value of a statistical life} --- and sets the
+forecasts of large projects against their outcomes.
+
+\begin{openingchart}{Average cost overrun of 258 transport projects, actual against
+estimated construction cost at fixed prices, by type of project and region
+(percent; no data for fixed links and roads outside Europe and North
+America).}{Flyvbjerg, Holm and Buhl (2002), Tables 1 and 2}
+\begin{tikzpicture}
+\begin{axis}[omrecord, ybar, bar width=7pt, width=0.66\linewidth, height=0.4\linewidth,
+  xmin=-0.6, xmax=3.6, ymin=0, ymax=70, xtick={0,...,3},
+  xticklabels={Rail, Fixed links, Roads, All projects}, ylabel={Overrun (\%)},
+  grid=none, ymajorgrids, area legend, legend style={at={(0.5,-0.18)},
+  anchor=north, legend columns=4, font=\footnotesize}]
+  \addplot[fill=omDef!80, draw=white] table[x=pos, y=mean] {figdata/bachelor-3/20-cost-benefit-analysis/out/overruns_europe.csv};
+  \addplot[fill=omThm!70, draw=white] table[x=pos, y=mean] {figdata/bachelor-3/20-cost-benefit-analysis/out/overruns_namerica.csv};
+  \addplot[fill=omProp!70, draw=white] table[x=pos, y=mean] {figdata/bachelor-3/20-cost-benefit-analysis/out/overruns_other.csv};
+  \addplot[fill=black!35, draw=white] table[x=pos, y=mean] {figdata/bachelor-3/20-cost-benefit-analysis/out/overruns_all.csv};
+  \legend{Europe, North America, Other, All regions}
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: overruns_all
+Across 258 projects, actual construction costs exceeded the estimates on which the
+decision to build was made by 27.6~\% on average: 44.7~\% for rail, 33.8~\% for bridges and
+tunnels, 20.4~\% for roads. Costs were underestimated in almost nine projects out of
+ten. % ledger: b3cba:fhb.t1
+Errors with no systematic cause would scatter around zero; these lean one way,
+whether from optimism or from strategic misstatement.
+
+\begin{recall}
+The grades 10--12 volume defined present value and discounting. The Year 1 volume
+defined the compensating and equivalent variations, and the Year 2 volume the
+compensation tests and expected utility. Chapter 5 of this volume estimated the
+value of travel time from commuters' choices, and chapter 17 defined the \omterm{def:b3:efficiency-cost-of-taxation:mcpf}{marginal
+cost of public funds}.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b3:cost-benefit-analysis:symbols}
+$B_t$ and $C_t$ are benefits and costs in year $t$; $\rho$ a discount rate; $p$ a risk of death;
+$\mathrm{NPV}$ the net present value.
+\end{notation}
+
+\section{Willingness to pay and accounting prices}\label{sec:b3:cost-benefit-analysis:wtp}
+
+\begin{definition}[Cost--benefit analysis; accounting price]\label{def:b3:cost-benefit-analysis:cba}
+\index{cost--benefit analysis}\index{accounting price}
+\emph{Cost--benefit analysis} values all the effects of a project in money, as the
+sum over the people affected of what they would pay for the gains or accept for the
+losses, discounts them to the present, and accepts the project if the net present
+value is positive. An \emph{accounting price} is the value of a resource used in such an
+appraisal when its market price does not measure its cost to society.
+\end{definition}
+
+\begin{proposition}[The net-present-value rule and compensation]\label{prop:b3:cost-benefit-analysis:kaldor}
+If each person's gain is measured by the compensating variation and money can be
+transferred between people at no cost, a positive net present value means the
+gainers could compensate the losers and remain better off.
+\end{proposition}
+
+\begin{proof}
+The compensating variation of each gainer is the most she would pay, and of each
+loser the least he would accept, for the project. A positive sum means the gainers'
+total willingness to pay exceeds the losers' total compensation: paying each loser
+his compensation leaves every gainer at least as well off as without the project,
+and some strictly better.
+\end{proof}
+
+The rule does not say the compensation is paid; it applies the Year 2 volume's
+compensation test, and inherits its limits. Where transfers are costly, a dalen
+raised to pay for a project costs society the \omterm{def:b3:efficiency-cost-of-taxation:mcpf}{marginal cost of public funds} of
+chapter 17, and the benefits must clear that bar.
+
+\omterm{def:b3:cost-benefit-analysis:cba}{Accounting prices} correct market prices that do not measure costs. A worker hired
+from unemployment costs the economy less than her wage: the output she would
+otherwise have produced, plus the value of the leisure she gives up. Imported
+steel bought under a tariff costs the economy its world price, not the price paid
+inside the tariff wall; the tariff is a transfer to the government.
+
+\begin{definition}[Marginal value of public funds]\label{def:b3:cost-benefit-analysis:mvpf}
+\index{marginal value of public funds}
+The \emph{marginal value of public funds} of a programme is its beneficiaries'
+willingness to pay for it divided by its net cost to the government, counting the
+taxes its behavioural effects raise or lose.
+\end{definition}
+
+The ratio compares programmes of any kind on one scale: a programme whose effects
+raise future tax revenue enough to pay for itself has a net cost of zero or less, and
+an infinite value.
+
+\begin{record}[The marginal value of public funds of 133 policies]
+Hendren and Sprung-Keyser computed the ratio for 133 changes in United States
+policy over half a century --- \omterm{def:b3:social-insurance:social-insurance}{social insurance}, education and training, taxes and
+cash transfers, transfers in kind --- from the published estimates of each policy's
+effects. Direct spending on the health and education of low-income children had the
+highest values, above 5 on average. Policies aimed at adults were
+generally between 0.5 and 2. % ledger: b3cba:hsk.mvpf
+Each value rests on the studies it is built from, and inherits their grades.
+\end{record}
+
+\section{Discounting}\label{sec:b3:cost-benefit-analysis:discounting}
+
+\begin{definition}[Social discount rate]\label{def:b3:cost-benefit-analysis:discount-rate}
+\index{social discount rate}
+The \emph{social discount rate} is the rate used to convert future benefits and costs
+into present values in a public appraisal: $\mathrm{NPV} = \sum_t (B_t - C_t)/(1 + \rho)^t$.
+\end{definition}
+
+\begin{omchart}{Present value of 1 dalen received in year $t$, at discount rates of
+1.4~\%, 3~\% and 7~\% a year.}{Our computation (\code{make\_pv.py})}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.58\linewidth, height=0.36\linewidth, xmin=0, xmax=100,
+  ymin=0, ymax=1.05, xlabel={Year}, ylabel={Present value}, legend pos=north east,
+  legend style={font=\footnotesize}]
+  \addplot[omDef, thick, mark=none] table[x=t, y=r14] {figdata/bachelor-3/20-cost-benefit-analysis/out/pv.csv};
+  \addplot[black, thick, mark=none] table[x=t, y=r3] {figdata/bachelor-3/20-cost-benefit-analysis/out/pv.csv};
+  \addplot[omThm, thick, dashed, mark=none] table[x=t, y=r7] {figdata/bachelor-3/20-cost-benefit-analysis/out/pv.csv};
+  \legend{1.4~\%, 3~\%, 7~\%}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: pv_points
+A dalen in 100 years is worth 0.25 today at 1.4~\%, 0.05 at 3~\% and 0.001 at 7~\%. For a
+project whose benefits come in a decade, the choice among these rates matters
+little; for one whose benefits come in a century --- a climate policy, a nuclear
+waste store --- it decides the answer. The rate has two candidate sources: the return
+that capital earns at the margin, which is what the funds would yield elsewhere,
+and the rate at which society is willing to trade consumption now for consumption
+later. They differ by the taxes and risk premiums between them, and choosing
+between them is a choice the evidence does not make.
+
+\begin{dated}{2026}
+HM Treasury's appraisal guidance for the United Kingdom discounts at 3.00~\% a year
+in real terms for years 1 to 30, 2.50~\% for years 31 to 75 and 2.25~\% from year 76
+(Green Book, revised 28 October 2026). % ledger: b3cba:hmt.stpr
+The United States Environmental Protection Agency values a statistical life at 7.4
+million dollars of 2006, updated to the prices of each analysis. % ledger: b3cba:epa.vsl
+The chart's 1.4~\%, 3~\% and 7~\% span the rates in use and in debate.
+\end{dated}
+
+\begin{proposition}[Declining certainty-equivalent rates]\label{prop:b3:cost-benefit-analysis:weitzman}
+If the discount rate is $\rho_1$ or $\rho_2 > \rho_1$ for ever, each with probability one half, the
+certainty-equivalent rate $R(t)$, defined by $e^{-R(t)t} = \tfrac12(e^{-\rho_1t} + e^{-\rho_2t})$, falls with the horizon
+$t$ and tends to $\rho_1$.
+\end{proposition}
+
+\begin{proof}
+Write the right side as $\tfrac12e^{-\rho_1t}\big(1 + e^{-(\rho_2 - \rho_1)t}\big)$. Then $R(t) = \rho_1 + \big(\ln 2 - \ln(1 + e^{-(\rho_2 - \rho_1)t})\big)/t$. At $t \to 0$ the
+expected discount factor's slope gives $R = (\rho_1 + \rho_2)/2$; as $t$ grows, $e^{-(\rho_2 - \rho_1)t} \to 0$ and the second
+term is $\ln 2/t \to 0$. In between, $R(t)$ falls because the state with the low rate carries a
+growing share of the expected discount factor.
+\end{proof}
+
+Uncertainty about the rate thus argues for lower rates at long horizons, because
+it is the expected discount factor, not the expected rate, that weighs a future
+dalen.
+
+\section{The value of a statistical life}\label{sec:b3:cost-benefit-analysis:vsl}
+
+\begin{definition}[Value of a statistical life]\label{def:b3:cost-benefit-analysis:vsl}
+\index{value of a statistical life}
+The \emph{value of a statistical life} is the willingness to pay for a small reduction
+in the risk of death divided by that reduction: what a group would pay, in total,
+for measures that prevent one death among them, none of whom knows who it will be.
+\end{definition}
+
+\begin{proposition}[The value of a statistical life from expected utility]\label{prop:b3:cost-benefit-analysis:vsl}
+A person with wealth $w$, risk of death $p$ and utility $u(w)$ if alive (zero if dead)
+will pay $dw$ for a reduction $dp$ in the risk with $dw/dp = u(w)/\big((1 - p)u'(w)\big)$: the \omterm{def:b3:cost-benefit-analysis:vsl}{value of a
+statistical life}.
+\end{proposition}
+
+\begin{proof}
+Expected utility is $(1 - p)u(w)$. Holding it constant, $-u(w)\,dp + (1 - p)u'(w)\,dw = 0$, so a fall in $p$ of
+$dp$ is worth $dw = u(w)\,dp/\big((1 - p)u'(w)\big)$.
+\end{proof}
+
+The value rises with wealth (through $u(w)/u'(w)$), so richer people pay more for the
+same safety: one reason agencies use one value for everyone rather than one per
+income.
+
+\begin{model}{Hedonic wages and the value of a statistical life}
+\assumes Workers know the fatal risks of jobs and choose among them in competitive
+labour markets; employers pay more for riskier jobs to attract workers.
+\predicts Wages rise with fatal risk, other job attributes held constant; the
+premium per unit of risk is the marginal worker's \omterm{def:b3:cost-benefit-analysis:vsl}{value of a statistical life}.
+\tested A review of more than 60 studies of mortality risk premiums in ten
+countries finds the premium, and finds that the \omterm{def:b3:cost-benefit-analysis:vsl}{value of a statistical life} rises
+with income with an elasticity of about 0.5 to 0.6. % ledger: b3cba:va
+\breaks Workers misperceive small risks; people who mind risk least sort into
+dangerous jobs, so the premium measures their value, not the population's; and
+risky jobs differ from safe ones in attributes no data record, which bias the
+premium either way.
+\end{model}
+
+\begin{measure}[The value of a statistical life in practice]
+A wage premium of 1{,}000 dalens a year for an extra fatal risk of 1 in 10{,}000 a year
+implies a value of 10 million dalens. Agencies publish one value for their
+appraisals and update it with prices and incomes, as the dated box above shows for
+one of them; the value of a project's safety benefits is the deaths it avoids times
+that value.
+\end{measure}
+
+\section{Risk and revealed or stated preferences}\label{sec:b3:cost-benefit-analysis:preferences}
+
+\begin{definition}[Hedonic wage method; travel-cost method; contingent valuation]\label{def:b3:cost-benefit-analysis:valuation}
+\index{hedonic wage method}\index{travel-cost method}\index{contingent valuation}
+The \emph{hedonic wage method} infers the value of a job attribute, such as safety,
+from the wage differences it commands. The \emph{travel-cost method} infers the value
+of a site from what visitors spend in money and time to reach it. \emph{Contingent
+valuation} asks people in a survey what they would pay for a good that is not sold.
+\end{definition}
+
+Risky outcomes are valued at their expected values when the risks are spread
+over many people or many projects, as most public risks are; a project whose
+failure would hit the whole economy at once carries a cost of risk on top.
+
+\begin{debate}[Can a survey value what is not sold?]
+Some goods --- a wilderness nobody visits, a species --- have no market and leave no
+trace in behaviour, so only a survey can value them.
+\begin{itemize}
+\item One survey of the evidence finds three standing problems: answers to
+hypothetical questions overstate what people pay when the payment is real; what
+people would pay to gain a good differs widely from what they would accept to lose
+it; and values do not grow with the scope of the good (saving one lake is valued
+like saving ten). % ledger: b3cba:cv.debate
+\emph{Grade 2}: experiments comparing hypothetical with real payments, but for
+goods unlike those the method is used for.
+\item Another holds that well-designed surveys give usable values where nothing
+else does, as for the damage of the 1989 Exxon Valdez oil spill, and that leaving
+such goods out of an appraisal values them at zero, a worse error.
+\emph{Grade 4}: an argument about the alternative, without a test of the values.
+\end{itemize}
+\end{debate}
+
+\section{Forecasts against outcomes}\label{sec:b3:cost-benefit-analysis:forecasts}
+
+\begin{definition}[Optimism bias; reference-class forecasting]\label{def:b3:cost-benefit-analysis:optimism-bias}
+\index{optimism bias}\index{reference-class forecasting}
+\emph{Optimism bias} is the systematic tendency of project forecasts to understate
+costs and overstate benefits. \emph{Reference-class forecasting} corrects a forecast
+by the distribution of outcomes against forecasts in a class of past projects of
+the same kind.
+\end{definition}
+
+% figdata: overruns_europe, overruns_namerica, overruns_other
+The overruns of the opening chart differ by region: 34.2~\% for rail in Europe, 40.8~\%
+in North America and 64.6~\% elsewhere; for roads, 22.4~\% in Europe and 8.4~\% in North
+America. % ledger: b3cba:fhb.t2
+A reference-class correction raises a rail estimate by the class's average overrun
+--- or, to be safe with a given probability, by a high percentile of the class's
+distribution --- before the appraisal. It does not explain why the forecasts were
+low; it removes the bias whatever its cause.
+
+\begin{record}[Forecasts of demand]
+Benefits are forecast too, and the same authors audited the traffic forecasts of
+210 transport projects in 14 countries. In nine rail projects out of ten, passenger
+numbers had been overestimated, by 106~\% on average: the forecast was about twice
+what came. For half of the road projects, traffic differed from its forecast by
+more than 20~\% either way, with no lean. Neither kind of forecast had become more
+accurate over thirty years. % ledger: b3cba:fsb.demand
+Rail projects thus combined costs a half above their estimates with half the
+forecast passengers: if benefits scale with passengers, an appraisal built on
+both forecasts overstated the benefit--cost ratio about threefold
+($1.447 \times 2.06 = 2.98$).
+\end{record}
+
+\section{Exercises}\label{sec:b3:cost-benefit-analysis:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b3:cost-benefit-analysis:1}
+In the opening chart, which type of project overruns most, and where? What share
+of projects overran?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:cost-benefit-analysis:2}
+A bridge costs 100 million dalens today and yields 6 million a year for 30 years,
+from next year. Find its net present value at 3~\% and 7~\%.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:cost-benefit-analysis:3}
+Workers accept a fatal risk higher by 1 in 10{,}000 a year for 1{,}000 dalens more pay a
+year. Find the \omterm{def:b3:cost-benefit-analysis:vsl}{value of a statistical life}. What is it if the premium is 800?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b3:cost-benefit-analysis:4}
+What data on forecasts would distinguish random errors from \omterm{def:b3:cost-benefit-analysis:optimism-bias}{optimism bias}?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:cost-benefit-analysis:5}
+A project hires 100 workers at 30{,}000 dalens a year. Sixty would otherwise be
+unemployed, valuing their leisure at 8{,}000 a year; forty would leave other jobs where
+they produced 30{,}000. Find the accounting cost of the labour.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:cost-benefit-analysis:6}
+The discount rate is 1~\% or 5~\%, with equal probability, for ever. Compute the
+certainty-equivalent rate at 10, 50 and 200 years.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:cost-benefit-analysis:7}
+A climate-type project costs 10 today and yields 100 in year 100. For which discount
+rates is it worth doing?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:cost-benefit-analysis:8}
+A rail project is forecast to cost 2 billion dalens. Correct the forecast with the
+rail averages of the opening chart for Europe and for all regions, and say what a
+correction to the 80th percentile would need.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b3:cost-benefit-analysis:9}
+What evidence would show that stated willingness to pay is biased?
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:cost-benefit-analysis:10}
+Prove the declining-rate proposition, and show that $R(t)$ is strictly decreasing.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:cost-benefit-analysis:11}
+Simulate 5{,}000 workers whose log wage depends on schooling, experience and a job's
+fatal risk, with a premium of 0.02 log points per extra death in 10{,}000, at a mean
+wage of 30{,}000 dalens. Estimate the hedonic wage regression and the \omterm{def:b3:cost-benefit-analysis:vsl}{value of a
+statistical life}, then add an unrecorded job attribute correlated with risk and
+show the bias.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b3:cost-benefit-analysis:12}
+Programme A costs 100, raises 20 in later taxes, and its beneficiaries would pay 120
+for it. Programme B costs 100, loses 10 in taxes through lower work, and its
+beneficiaries would pay 90. Find each one's \omterm{def:b3:cost-benefit-analysis:mvpf}{marginal value of public funds} and rank
+them.
+\end{exercise}
+
+\section{Problem: A New Bridge for Brenmoor}\label{sec:b3:cost-benefit-analysis:problem}
+
+\begin{problem}[{Weekend problem --- A new bridge for Brenmoor}]\label{pb:b3:cost-benefit-analysis:bridge}
+Brenmoor, Brenland's capital, plans a bridge forecast to cost 120, 160 and 120
+million dalens in years 0, 1 and 2. It opens in year 3 and is appraised over 40 years
+of use, with maintenance of 4 million a year. It will carry 30{,}000 vehicle trips a
+day, each saving 10 minutes for 1.2 occupants, valued at 13.1 dalens an hour (the
+value of travel time of chapter 5). It is expected to avoid one road death a year,
+valued at 3 million dalens. % figdata: bridge_stats, bridge_npv
+
+\medskip\noindent\textbf{Part I --- the benefits.}
+\begin{enumerate}
+\item Compute the hours saved in a year.
+\item Value them.
+\item Why use commuters' own value of time rather than their wage?
+\item Compute the safety benefit.
+\item Compute the net annual benefit after maintenance.
+\item Which effects of a bridge does this list leave out?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part II --- safety.}
+\begin{enumerate}[resume]
+\item How would a hedonic-wage study produce the 3 million?
+\item What would the safety benefit be with a value of 6 million?
+\item Why should every death avoided carry the same value, whoever travels?
+\item Workers in risky jobs may mind risk least. Which way does that bias the value?
+\end{enumerate}
+
+\medskip\noindent\textbf{Part III --- discounting.}
+\begin{enumerate}[resume]
+\item Write the net present value as a sum over years.
+\item Compute it at 2~\%, 3.5~\% and 7~\%.
+\item Find the discount rate at which it is zero.
+\item Explain why the NPV falls with the rate for this project.
+\item Which rate would you use, and why does the choice matter here?
+\item The net-present-value chart below plots both cases of Part IV. Read off where
+each crosses zero.
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.55\linewidth, height=0.34\linewidth, xmin=0, xmax=10,
+  ymin=-400, ymax=800, xlabel={Discount rate (\%)},
+  ylabel={NPV (million dalens)}, legend pos=north east,
+  legend style={font=\footnotesize}]
+  \addplot[omDef, thick, mark=none] table[x=rate, y=npv] {figdata/bachelor-3/20-cost-benefit-analysis/out/bridge_npv.csv};
+  \addplot[omThm, thick, dashed, mark=none] table[x=rate, y=npv_c] {figdata/bachelor-3/20-cost-benefit-analysis/out/bridge_npv.csv};
+  \draw[guide] (axis cs:0,0) -- (axis cs:10,0);
+  \legend{forecast cost, corrected cost}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\medskip\noindent\textbf{Part IV --- a reference-class correction.} Bridges and tunnels
+overran their estimates by 33.8~\% on average.
+\begin{enumerate}[resume]
+\item Correct the construction cost.
+\item Recompute the net present value at 2~\%, 3.5~\% and 7~\%.
+\item Find the new rate at which it is zero.
+\item Should traffic forecasts be corrected too? What would that do?
+\item The money is raised by taxes with a \omterm{def:b3:efficiency-cost-of-taxation:mcpf}{marginal cost of public funds} of 1.3. How
+does that change the test?
+\item Why might the forecasters' estimate be low in the first place?
+\item What would make the correction itself wrong for this bridge?
+\item Who gains from the bridge, and who pays?
+\item State the result: the bridge's net present value after the correction, at
+3.5~\%, and the discount rate at which it turns negative.
+\end{enumerate}
+\end{problem}

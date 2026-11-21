@@ -1,0 +1,426 @@
+\chapter{Expectations and the Lucas Critique}\label{ch:b2:expectations-and-lucas-critique}
+
+How people form expectations decides what policy can do. This chapter takes expectations seriously: it asks what
+happens to the relations economists estimate when people understand the policy that is being run, and why a central bank
+that can always choose its policy afresh may end up with more inflation than it wants. The chart sets average inflation in
+fifteen rich countries beside a measure of how independent their central banks were by law.
+
+\begin{openingchart}{Average annual inflation 1955--1988 against an index of the legal independence of the central bank
+  (1 least, 4 most independent), fifteen countries; the line is the least-squares fit.}{Jord\`a--Schularick--Taylor
+  Macrohistory Database (cpi); United States: Bureau of Labor Statistics, CPI-U; Alesina and Summers
+  (1993), Table A1; our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.62\linewidth, height=0.44\linewidth, xmin=1, xmax=4.25, ymin=2, ymax=11,
+    xlabel={Index of central-bank independence}, ylabel={Average inflation, per cent},
+    nodes near coords, point meta=explicit symbolic,
+    nodes near coords style={font=\scriptsize, anchor=west, xshift=1pt}]
+  \addplot[only marks, mark=*, omDef, mark size=1.6pt, nodes near coords={}] table[x=index, y=infl]
+    {figdata/bachelor-2/25-expectations-and-lucas-critique/out/cbi.csv};
+  \addplot[only marks, mark=none] table[x=index, y=infl, meta=iso3]
+    {figdata/bachelor-2/25-expectations-and-lucas-critique/out/cbi_lab.csv};
+  \node[font=\scriptsize, anchor=east, omDef, align=right] at (axis cs:1.96,5.8) {AUS, FRA, GBR,\\NOR, SWE};
+  \node[font=\scriptsize, anchor=east, omDef] at (axis cs:2.46,4.98) {CAN, JPN};
+  \node[font=\scriptsize, anchor=north east, omDef] at (axis cs:4.1,3.05) {CHE, DEU};
+  \addplot[omThm, thick, dashed, domain=1:4.25, samples=2, nodes near coords={}] {10.29 - 1.83*x};
+\end{axis}
+\end{tikzpicture}
+\end{openingchart}
+
+% figdata: cbi (ESP 9.95, DEU 3.19, CHE 3.42), cbi_fit (slope -1.83, intercept 10.29, corr -0.80, n 15)
+Spain, with the least independent central bank of the group, averaged 9.95 per cent inflation over the period; Germany and
+Switzerland, with the most independent, 3.19 and 3.42 per cent. Each point of the index goes with 1.83 points less inflation,
+and the correlation is $-0.80$. Several countries share an index value, six of them at 2, and their labels are grouped. A model of
+why independence might lower inflation is in \cref{sec:b2:expectations-and-lucas-critique:time}; whether it does is the
+debate of \cref{sec:b2:expectations-and-lucas-critique:credibility}.
+
+\begin{recall}
+From the Year 1 volume: adaptive expectations, the expectations-augmented Phillips curve, policy rules and discretion.
+From the school volumes: the Phillips curve and stagflation. From \cref{ch:b2:ramsey-model}: households that look ahead.
+\end{recall}
+
+\begin{notation}[Symbols of this chapter]\label{not:b2:expectations-and-lucas-critique:symbols}
+$\pi$ is inflation and $\pi^e$ expected inflation, set before $\pi$ is known; $u$ is unemployment and $u^*$ its natural rate; $a > 0$ is the effect of an inflation
+surprise on unemployment; $e$ is a supply shock with mean zero and variance $\sigma^2$; $\pi^{\mathrm T}$ is the inflation target; $k > 0$ is how far below $u^*$ policy would like
+unemployment to be; $\lambda$ is society's weight on unemployment, $w$ the central bank's. $E_{t-1}x$ is the expectation of $x$ formed with the
+information available at $t - 1$.
+\end{notation}
+
+\section{Adaptive and rational expectations}\label{sec:b2:expectations-and-lucas-critique:rational}
+
+Under adaptive expectations, $\pi^e_t = \pi_{t-1}$ or a weighted average of past inflation. People who form expectations this way make
+mistakes that are predictable: when inflation rises steadily, they underpredict it year after year, and a policy that
+raises inflation steadily keeps unemployment below its natural rate for as long as it lasts.
+
+\begin{definition}[Rational expectations]\label{def:b2:expectations-and-lucas-critique:rational-expectations}
+Expectations are \emph{rational}\index{rational expectations} when they equal the mathematical expectation of the
+variable implied by the model itself, given the information available: $\pi^e_t = E_{t-1}\pi_t$.
+\end{definition}
+
+The forecast error $\pi_t - E_{t-1}\pi_t$ then has mean zero and is uncorrelated with anything known at $t - 1$: if it were correlated with something
+known, the forecast could be improved by using it. \omterm{def:b2:expectations-and-lucas-critique:rational-expectations}{Rational expectations} do not mean that people know the future; they mean
+that people do not keep making the same mistake. In particular, people understand the policy rule being followed, and its
+systematic part is built into their expectations.
+
+\section{The Lucas critique}\label{sec:b2:expectations-and-lucas-critique:critique}
+
+\begin{definition}[Lucas critique]\label{def:b2:expectations-and-lucas-critique:lucas-critique}
+The \emph{Lucas critique}\index{Lucas critique} is the argument that the parameters of an estimated relation between
+economic variables can change when policy changes, because they depend on the expectations people form about that policy,
+so the relation cannot be used to predict the effects of a new policy.
+\end{definition}
+
+Take the Phillips curve $u_t = u^* - a(\pi_t - \pi^e_t)$, and suppose the central bank keeps inflation at a target $\pi^{\mathrm T}$ plus a random policy surprise $\varepsilon_t$ that no one can forecast.
+With \omterm{def:b2:expectations-and-lucas-critique:rational-expectations}{rational expectations} $\pi^e_t = \pi^{\mathrm T}$, so $u_t = u^* - a(\pi_t - \pi^{\mathrm T}) = (u^* + a\pi^{\mathrm T}) - a\pi_t$. An economist who regresses unemployment on inflation in this regime finds a stable
+negative relation with intercept $u^* + a\pi^{\mathrm T}$ and slope $-a$. But the intercept contains the policy: if the bank raises the target, the curve shifts
+up by $a$ times the rise and unemployment, on average, stays at $u^*$. The listing estimates the curve under a 2 per cent target and
+then raises the target to 4.
+
+\omcode{code/bachelor-2/25-expectations-and-lucas-critique/listings/lucas.py}{1}{29}{An estimated Phillips curve used to
+predict a change of policy.}\label{lst:b2:expectations-and-lucas-critique:lucas}
+
+\omoutput{code/bachelor-2/25-expectations-and-lucas-critique/outputs/lucas.txt}{The estimated curve promises
+unemployment of about 1 per cent at 4 per cent inflation; the economy delivers its natural rate, and the curve moves.}\label{out:b2:expectations-and-lucas-critique:lucas}
+
+% code: listings/lucas.py
+The regression on the first forty years is excellent: slope $-1.91$, close to the true $-2$. Read as a menu, it says that 4 per cent
+inflation would bring unemployment to 1.27 per cent. Under the new target inflation averages 3.81 per cent and unemployment 5.38 per cent,
+the natural rate of 5 plus noise; the re-estimated curve has much the same slope and an intercept higher by about 4.3, close to
+$a \times 2 = 4$. Nothing in the first regime's data could have revealed this, because the target never changed in it.
+
+\begin{omchart}{United States, inflation against unemployment, annual averages of quarterly data, 1960--2008, by decade.}{statsmodels
+  macrodata (US national accounts and labour data, quarterly 1959--2009); our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.62\linewidth, height=0.44\linewidth, xmin=3, xmax=10, ymin=-1, ymax=12,
+    xlabel={Unemployment rate, per cent}, ylabel={Inflation, per cent},
+    legend style={at={(1.03,0.5)}, anchor=west, font=\scriptsize}]
+  \addplot[only marks, mark=*, omDef, mark size=1.6pt] table[x=unemp, y=infl, restrict expr to domain={\thisrow{decade}}{1960:1960}]
+    {figdata/bachelor-2/25-expectations-and-lucas-critique/out/phillips.csv};
+  \addlegendentry{1960s}
+  \addplot[only marks, mark=square*, omThm, mark size=1.6pt] table[x=unemp, y=infl, restrict expr to domain={\thisrow{decade}}{1970:1970}]
+    {figdata/bachelor-2/25-expectations-and-lucas-critique/out/phillips.csv};
+  \addlegendentry{1970s}
+  \addplot[only marks, mark=triangle*, omMeth, mark size=2pt] table[x=unemp, y=infl, restrict expr to domain={\thisrow{decade}}{1980:1980}]
+    {figdata/bachelor-2/25-expectations-and-lucas-critique/out/phillips.csv};
+  \addlegendentry{1980s}
+  \addplot[only marks, mark=o, black!70, mark size=1.6pt] table[x=unemp, y=infl, restrict expr to domain={\thisrow{decade}}{1990:2000}]
+    {figdata/bachelor-2/25-expectations-and-lucas-critique/out/phillips.csv};
+  \addlegendentry{1990--2008}
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+\begin{record}[The shifting Phillips curve, 1960--1989]
+% figdata: phillips_dec (1960s 2.55 / 4.78; 1970s 7.22 / 6.22; 1980s 4.91 / 7.28)
+In the 1960s American inflation and unemployment traced a downward-sloping curve: inflation averaged 2.55 per cent and
+unemployment 4.78 per cent. In the 1970s both were higher on average, 7.22 and 6.22 per cent; in the 1980s inflation fell back
+to 4.91 per cent while unemployment averaged 7.28. In the 1960s and the 1970s the points within the decade slope downward; in the 1980s they barely slope. Across decades the curve
+moved up and then back, as expected inflation rose and then fell. A curve estimated on the 1960s promised low unemployment
+in exchange for inflation; the 1970s delivered the inflation without the low unemployment.
+\end{record}
+
+\section{Policy ineffectiveness and its limits}\label{sec:b2:expectations-and-lucas-critique:pip}
+
+In the Lucas supply model, output and unemployment depart from their natural levels only through surprises:
+$u_t = u^* - a(\pi_t - E_{t-1}\pi_t)$. Suppose the bank sets inflation by a rule that responds to last year's unemployment, $\pi_t = \pi^{\mathrm T} - b(u_{t-1} - u^*) + \varepsilon_t$. Then $E_{t-1}\pi_t = \pi^{\mathrm T} - b(u_{t-1} - u^*)$,
+the surprise is $\varepsilon_t$, and $u_t = u^* - a\varepsilon_t$ whatever the value of $b$.
+
+\begin{definition}[Policy-ineffectiveness proposition]\label{def:b2:expectations-and-lucas-critique:pip}
+The \emph{policy-ineffectiveness proposition}\index{policy-ineffectiveness proposition} states that, with \omterm{def:b2:expectations-and-lucas-critique:rational-expectations}{rational
+expectations} and fully flexible prices, a systematic monetary policy rule cannot affect the behaviour of output or
+unemployment; only unanticipated policy can.
+\end{definition}
+
+\begin{model}{Lucas supply model}
+\assumes \omterm{def:b2:expectations-and-lucas-critique:rational-expectations}{Rational expectations}; prices and wages that are set each period with all the information available; output that
+departs from its natural level only through price surprises.
+\predicts Anticipated changes in money or inflation leave output unchanged; only surprises move it; the Phillips curve
+shifts when the policy regime changes.
+\tested Against the 1970s, when inflation rose without a lasting fall in unemployment: the shifting curve of the record.
+\breaks Wages and prices are often set for a year or more in advance. A contract signed before a shock cannot respond to it,
+so even a fully anticipated policy response, made after the contract, changes real outcomes: with sticky prices, systematic
+policy matters.
+\end{model}
+
+The limit is the timing. If wages for year $t$ are fixed at $t - 2$, a rule that responds to the shock at $t - 1$ moves inflation after the
+wage is fixed and before it can change; the response is anticipated by everyone, but too late for the contract. Models with
+staggered contracts and sticky prices keep the \omterm{def:b2:expectations-and-lucas-critique:rational-expectations}{rational expectations} and drop the flexible prices.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+  \draw[->, thick] (0,0) -- (12.6,0) node[right] {time};
+  \foreach \x/\a/\b in {1/{Expectations formed,}/{contracts signed}, 4.4/{Shock}/{occurs}, 7.8/{Policy}/{responds}, 11.2/{Inflation and}/{unemployment}} {
+    \draw[thick] (\x,-0.15) -- (\x,0.15);
+    \node[align=center, font=\small, above] at (\x,0.25) {\a\\\b};
+  }
+  \node[font=\small, below] at (1,-0.2) {$\pi^e_t = E_{t-1}\pi_t$};
+  \node[font=\small, below] at (4.4,-0.2) {$e_t$};
+  \node[font=\small, below] at (7.8,-0.2) {$\pi_t$};
+  \node[font=\small, below] at (11.2,-0.2) {$u_t$};
+\end{tikzpicture}
+
+{\small The order of events in every model of this chapter. Because expectations are formed before the shock, policy can
+respond to the shock even though everyone knows the rule; it cannot surprise anyone systematically.}
+\end{omfigure}
+
+\section{Time inconsistency}\label{sec:b2:expectations-and-lucas-critique:time}
+
+\begin{definition}[Central-bank loss function]\label{def:b2:expectations-and-lucas-critique:loss}
+A \emph{central-bank loss function}\index{central-bank loss function} is a function that measures how bad an outcome is
+for the central bank, here $L = \tfrac12(\pi - \pi^{\mathrm T})^2 + \tfrac12 w(u - u^* + k)^2$; the bank chooses policy to make the expected loss as small as
+possible.
+\end{definition}
+
+The term $k > 0$ says that the bank would like unemployment below its natural rate, for instance because taxes or market
+power make the natural rate too high. Society's own loss has the same form, with weight $\lambda$; for now $w = \lambda$.
+
+\begin{definition}[Time inconsistency]\label{def:b2:expectations-and-lucas-critique:time-inconsistency}
+A policy plan is \emph{time inconsistent}\index{time inconsistency} when the policy maker, free to choose again at a later
+date, would choose differently from the plan even though nothing unforeseen has happened.
+\end{definition}
+
+Without shocks, $u = u^* - a(\pi - \pi^e)$. Under discretion the bank takes $\pi^e$ as given, since expectations are already set, and chooses $\pi$. The first-order
+condition is $(\pi - \pi^{\mathrm T}) - wa(u - u^* + k) = 0$, that is
+\begin{equation}\label{eq:b2:expectations-and-lucas-critique:reaction}
+\pi = \frac{\pi^{\mathrm T} + wa^2\pi^e + wak}{1 + wa^2}.
+\end{equation}
+People know this. With \omterm{def:b2:expectations-and-lucas-critique:rational-expectations}{rational expectations} $\pi^e = \pi$, which gives $\pi - \pi^{\mathrm T} = wak$, and then $u = u^*$.
+
+\begin{definition}[Inflation bias]\label{def:b2:expectations-and-lucas-critique:inflation-bias}
+The \emph{inflation bias}\index{inflation bias} of discretionary policy is the excess of average inflation over the
+target that results when the policy maker cannot commit, here $wak$.
+\end{definition}
+
+If the bank could commit to $\pi = \pi^{\mathrm T}$, expectations would be $\pi^{\mathrm T}$ and unemployment $u^*$, the same as under discretion, with less inflation. The commitment is \omterm{def:b2:expectations-and-lucas-critique:time-inconsistency}{time inconsistent}:
+once expectations equal $\pi^{\mathrm T}$, the bank gains by a surprise, so an announcement of $\pi^{\mathrm T}$ is not believed. With $\pi^{\mathrm T} = 2$, $a = 0.5$, $k = 2$ and $w = 1$, discretion gives 3 per
+cent inflation and a loss of $\tfrac12 \times 1 + \tfrac12 \times 4 = 2.5$; commitment gives 2 per cent and a loss of 2.
+
+\begin{omfigure}
+\begin{tikzpicture}[econ]
+\begin{axis}[omrecord, grid=none, xmin=0.5, xmax=8.6, ymin=-0.5, ymax=5.5, axis equal image, width=0.7\linewidth,
+    xlabel={Unemployment, $u$}, ylabel={Inflation, $\pi$}, xtick={3,5}, xticklabels={$u^* - k$, $u^*$},
+    ytick={2,3}, yticklabels={$\pi^{\mathrm T}$, $\pi^{\mathrm T} + wak$}]
+  \draw[black!40] (axis cs:5,-0.5) -- (axis cs:5,5.5);
+  \addplot[omDef, thick, domain=3.8:6.3, samples=2] {3 - 2*(x - 5)};
+  \addplot[omDef, thick, dashed, domain=3.3:5.8, samples=2] {2 - 2*(x - 5)};
+  \addplot[omThm, thick, domain=0:360, samples=90, variable=\t] ({3 + sqrt(5)*cos(t)}, {2 + sqrt(5)*sin(t)});
+  \addplot[omThm, thick, dashed, domain=0:360, samples=90, variable=\t] ({3 + 2*cos(t)}, {2 + 2*sin(t)});
+  \node[eqpoint, label={[font=\small]right:D}] at (axis cs:5,3) {};
+  \node[eqpoint, label={[font=\small]below left:C}] at (axis cs:5,2) {};
+  \node[font=\scriptsize] at (axis cs:3,2) {$+$};
+  \node[font=\small, anchor=west] at (axis cs:6.3,0.4) {$\pi^e = \pi^{\mathrm T} + wak$};
+  \node[font=\small, anchor=east] at (axis cs:3.3,5.4) {$\pi^e = \pi^{\mathrm T}$};
+\end{axis}
+\end{tikzpicture}
+
+{\small The \omterm{def:b2:expectations-and-lucas-critique:inflation-bias}{inflation bias} with $w = 1$, $a = 0.5$, $k = 2$. Each Phillips line holds for one level of expected inflation; the circles are loss contours around the bank's ideal point (cross).
+Under discretion the bank chooses the point of tangency on the line it faces; only at D does that point also confirm the
+expectations. Commitment C has the same unemployment, less inflation and a smaller loss contour, but on the dashed line the
+bank would rather move along it to the north-west.}
+\end{omfigure}
+
+\begin{model}{The inflation-bias model}
+\assumes \omterm{def:b2:expectations-and-lucas-critique:rational-expectations}{Rational expectations}; a Phillips curve with surprises; a policy maker who wants unemployment below its natural
+rate and chooses inflation after expectations are set.
+\predicts Average inflation above target by $wak$, with no gain in unemployment; lower inflation where the policy maker can commit or
+cares less about unemployment.
+\tested Across rich countries, more legally independent central banks went with lower average inflation, 1955--1988 (the
+opening chart; Alesina and Summers 1993).
+\breaks Some central banks with little legal independence kept inflation low, and fundamentals such as openness explain
+much of the cross-country variation in inflation (Campillo and Miron 1997); a correlation leaves open whether
+independence lowers inflation or whether countries averse to inflation choose independent banks.
+\end{model}
+
+\section{Credibility, independence and inflation targets}\label{sec:b2:expectations-and-lucas-critique:credibility}
+
+\begin{definition}[Credibility]\label{def:b2:expectations-and-lucas-critique:credibility}
+A policy is \emph{credible}\index{credibility (of policy)} when the public expects it to be carried out, because the
+policy maker will want to carry it out when the time comes or cannot do otherwise.
+\end{definition}
+
+Three ways out of the \omterm{def:b2:expectations-and-lucas-critique:inflation-bias}{inflation bias} have been tried. The first is a \omterm{def:b2:repeated-games:reputation}{reputation}: a bank that faces the same public every
+year may find that the gain from a surprise today is less than the cost of higher expected inflation for years after. The
+second is delegation.
+
+\begin{definition}[Central-bank independence]\label{def:b2:expectations-and-lucas-critique:cbi}
+\emph{Central-bank independence}\index{central-bank independence} is the extent to which a central bank sets monetary
+policy free of instructions from the government, by law and in practice.
+\end{definition}
+
+Delegating policy to a bank that weighs unemployment less than society does, $w < \lambda$, shrinks the bias $wak$. It has a price when there
+are supply shocks. With $u = u^* - a(\pi - \pi^e) + e$, the discretionary solution becomes $\pi = \pi^{\mathrm T} + wak + \dfrac{wa}{1 + wa^2}e$ and $u = u^* + \dfrac{1}{1 + wa^2}e$: a bank with a small $w$ lets unemployment absorb almost
+all of a shock. The best $w$ trades the bias against stabilisation, and lies strictly between zero and $\lambda$ (the weekend problem).
+
+\begin{definition}[Inflation targeting]\label{def:b2:expectations-and-lucas-critique:inflation-targeting}
+\emph{Inflation targeting}\index{inflation targeting} is a monetary-policy framework in which the central bank announces
+a numerical target for inflation, is held accountable for meeting it, and explains its decisions in terms of the
+forecast of inflation.
+\end{definition}
+
+The third way is a public target with accountability, which makes the cost of a surprise visible.
+% ledger: b2:boe2012-count, b2:it-adopt-nzl
+Twenty-seven countries ran a fully fledged inflation-targeting regime at the start of 2009, nine industrialised and eighteen
+emerging and developing; New Zealand was first, in December 1989.
+
+\begin{omchart}{Median CPI inflation in the 27 inflation-targeting countries, from five years before to ten years after the
+  year of adoption (year 0), per cent.}{World Bank, World Development Indicators (FP.CPI.TOTL.ZG); adoption years from the
+  Bank of England (2012), State of the art of \omterm{def:b2:expectations-and-lucas-critique:inflation-targeting}{inflation targeting}; our computation}
+\begin{tikzpicture}
+\begin{axis}[omrecord, width=0.6\linewidth, height=0.4\linewidth, xmin=-5.5, xmax=10.5, ymin=0, ymax=11,
+    xlabel={Years from adoption}, ylabel={Median inflation, per cent}, xtick={-5,0,5,10}]
+  \draw[black!40] (axis cs:0,0) -- (axis cs:0,11);
+  \addplot[omDef, thick, mark=*, mark size=1.4pt] table[x=k, y=median]
+    {figdata/bachelor-2/25-expectations-and-lucas-critique/out/it_event.csv};
+\end{axis}
+\end{tikzpicture}
+\end{omchart}
+
+% figdata: it_summary (k=-5 8.56, k=-1 6.06, k=0 6.37, k=+5 3.51, k=+10 3.03)
+Median inflation in these countries was 8.56 per cent five years before adoption, 6.37 per cent in the year of adoption,
+3.51 per cent five years after and 3.03 per cent ten years after. Most of the fall came after the target was set, but
+inflation was already falling before, and the 1990s and 2000s were years of falling inflation in many countries that did
+not adopt targets. The chart shows what happened in the targeters, not what would have happened without targets.
+
+\begin{debate}[Does central-bank independence lower inflation?]
+% ledger: b2:as1993-cbi-esp, b2:as1993-cbi-deu, b2:as1993-cbi-che, b2:as1993-abstract, b2:campillo1997
+Alesina and Summers (1993), for 16 rich countries over 1955--1988, found that more independent central banks went with lower
+and less variable inflation and with no measurable difference in real growth or unemployment: Germany and Switzerland,
+at the top of their index, averaged 3.0 and 3.2 per cent inflation, Spain and New Zealand, at the bottom, 8.5 and 7.6.
+Our averages in the opening chart, from annual consumer prices, are a little higher than the authors' (Spain 9.95 against
+8.5, Germany 3.19 against 3.0), and New Zealand is not in our database, so the chart has 15 countries.
+Campillo and Miron (1997), with a wider set of countries and controls, found that institutional arrangements such as
+independence are relatively unimportant determinants of inflation, and economic fundamentals such as openness relatively
+important. Two difficulties remain open. A legal index may differ from practice, and a country whose voters dislike
+inflation may both choose an independent bank and keep inflation low for other reasons. How much of the correlation in the
+opening chart is the effect of independence is not settled.
+\end{debate}
+
+\section{Survey measures of expectations}\label{sec:b2:expectations-and-lucas-critique:surveys}
+
+\begin{measure}[How expectations are surveyed]
+% ledger: b2:spf
+Expectations cannot be observed in prices alone, so they are asked for. The oldest quarterly survey of macroeconomic
+forecasts in the United States, the Survey of Professional Forecasters, began in 1968 and has been run by the Federal
+Reserve Bank of Philadelphia since 1990; each quarter a panel of professional forecasters, identified only by number, give
+their forecasts of output, unemployment and prices, and of inflation over the next year and the next ten years. Surveys of
+households ask a sample of people how much they expect prices to rise. A survey measure records what respondents say;
+whether expectations are rational is then a testable question: are the survey's forecast errors centred on zero, and
+unrelated to what was known when the forecast was made?
+\end{measure}
+
+Surveys also measure credibility. When long-horizon expected inflation stays close to the target while current inflation
+moves, people expect the bank to bring inflation back: the target is \omterm{def:b2:expectations-and-lucas-critique:credibility}{credible}. When long-horizon expectations follow
+current inflation, it is not.
+
+\section{Exercises}\label{sec:b2:expectations-and-lucas-critique:exercises}
+
+\begin{exercise}[$\star$]\label{exo:b2:expectations-and-lucas-critique:1}
+Read the opening chart. Which country had the highest average inflation, and which the lowest? State the slope of the
+fitted line in words.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:expectations-and-lucas-critique:2}
+Read the chart of American inflation and unemployment. Compare the 1960s, the 1970s and the 1980s.
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:expectations-and-lucas-critique:3}
+Read the inflation-targeting chart: median inflation five years before, at, and ten years after adoption. Why does the
+chart not show the effect of targeting?
+\end{exercise}
+
+\begin{exercise}[$\star$]\label{exo:b2:expectations-and-lucas-critique:4}
+Inflation has risen by one point a year for five years. Under adaptive expectations $\pi^e_t = \pi_{t-1}$, what is the forecast error each year? What
+would \omterm{def:b2:expectations-and-lucas-critique:rational-expectations}{rational expectations} require of these errors?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:expectations-and-lucas-critique:5}
+With $\pi^{\mathrm T} = 2$, $a = 0.5$, $k = 2$, $w = 1$ and no shocks, compute inflation, unemployment and the loss under discretion and under commitment. Find the bias if
+$k$ falls to 1.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:expectations-and-lucas-critique:6}
+Predict, then compute: in the listing's model, the target rises from 2 to 4 per cent. By how much does the intercept of the
+re-estimated Phillips curve rise in theory? Compare with the listing's estimate.
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:expectations-and-lucas-critique:7}
+In the Lucas supply model, the bank uses the rule $\pi_t = 2 - 0.5(u_{t-1} - 5) + \varepsilon_t$ with $a = 2$. Last year unemployment was 7. What is expected inflation this year? If $\varepsilon_t = 1$, what are
+inflation and unemployment?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:expectations-and-lucas-critique:8}
+Modify the listing so that people expect last year's inflation instead of the target. What does the estimate now predict,
+and is it right?
+\end{exercise}
+
+\begin{exercise}[$\star\star$]\label{exo:b2:expectations-and-lucas-critique:9}
+\textbf{(D)}
+With \texttt{econdata.jst}, compute average annual CPI inflation by decade, 1950--2019, for each of the eighteen countries. Report the
+median across countries for each decade, the highest country average in the 1970s and 1980s, and which country it was.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:expectations-and-lucas-critique:10}
+Derive \eqref{eq:b2:expectations-and-lucas-critique:reaction} and the discretionary equilibrium. Show that the bias is larger when surprises are more effective ($a$ larger).
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:expectations-and-lucas-critique:11}
+With the supply shock $e$, derive the discretionary inflation and unemployment given in
+\cref{sec:b2:expectations-and-lucas-critique:credibility}.
+\end{exercise}
+
+\begin{exercise}[$\star\star\star$]\label{exo:b2:expectations-and-lucas-critique:12}
+A government can commit to a state-contingent rule $\pi = \pi^{\mathrm T} + ce$. Find the $c$ that minimises society's expected loss, and show that this rule does
+better than discretion with $w = \lambda$ by exactly the loss from the bias.
+\end{exercise}
+
+\section{Problem: Brenland's central-bank law}\label{sec:b2:expectations-and-lucas-critique:problem}
+
+\begin{problem}[{Weekend problem --- Brenland's central-bank law: the loss function, discretion, a conservative central
+banker, and the stabilisation trade-off}]
+\label{pb:b2:expectations-and-lucas-critique:1}
+Brenland's unemployment is $u = 5 - 0.5(\pi - \pi^e) + e$, with $e$ of mean zero and variance $\sigma^2 = 4$. Society's loss is $\tfrac12(\pi - 2)^2 + \tfrac12(u - 3)^2$. Parliament is drafting a law that will
+give monetary policy to a bank with loss $\tfrac12(\pi - 2)^2 + \tfrac12w(u - 3)^2$.
+
+\medskip
+\noindent\textbf{Part I --- The loss function.}
+\begin{enumerate}
+  \item Identify $u^*$, $a$, $\pi^{\mathrm T}$, $k$ and $\lambda$.
+  \item What does $k > 0$ say about Brenland's labour market?
+  \item Why is the loss quadratic rather than linear?
+  \item Without shocks, what is society's loss at $\pi = 2$ and $u = 5$?
+  \item Can any policy do better than this on average, with \omterm{def:b2:expectations-and-lucas-critique:rational-expectations}{rational expectations} and no shocks? Why?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part II --- Discretion.} Set $w = 1$ and, for now, $e = 0$.
+\begin{enumerate}[resume]
+  \item Write the bank's choice of $\pi$ as a function of $\pi^e$.
+  \item Find inflation in the equilibrium with \omterm{def:b2:expectations-and-lucas-critique:rational-expectations}{rational expectations}.
+  \item Find unemployment.
+  \item Compute society's loss.
+  \item Compute the loss under commitment to 2 per cent.
+  \item Why would an announcement of 2 per cent not be believed?
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part III --- A conservative central banker.} Shocks now occur.
+\begin{enumerate}[resume]
+  \item Find the \omterm{def:b2:expectations-and-lucas-critique:inflation-bias}{inflation bias} as a function of $w$, and its value for $w = 0.5$.
+  \item Find the responses of inflation and unemployment to a shock $e$ for $w = 1$ and for $w = 0$.
+  \item Compute society's expected loss under discretion with $w = 1$.
+  \item Compute it under the best commitment, with no bias and the responses of $w = 1$.
+  \item Compute it with $w = 0$, a bank that cares only about inflation. Compare with $w = 1$.
+  \item Compute it with $w = 0.5$.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Part IV --- The stabilisation trade-off.}
+\begin{enumerate}[resume]
+  \item Write society's expected loss as a function of $w$.
+  \item Find, numerically, the $w$ that minimises it.
+  \item What is the expected loss at that $w$, and how far is it from the best commitment?
+  \item What are the bias and the responses to a shock at that $w$?
+  \item Why does the best $w$ lie strictly between 0 and 1?
+  \item How does the best $w$ change if shocks are four times as variable? If $k$ doubles instead?
+  \item State the result: the \omterm{def:b2:expectations-and-lucas-critique:inflation-bias}{inflation bias} under discretion and the weight that minimises expected social loss.
+\end{enumerate}
+\end{problem}

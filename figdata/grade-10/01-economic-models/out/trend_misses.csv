@@ -1,0 +1,22 @@
+pos,name,iso3,rate,pct
+1,Argentina,ARG,1.64,56
+2,Canada,CAN,2.01,87
+3,Chile,CHL,1.71,88
+4,United States,USA,1.53,117
+5,Switzerland,CHE,1.81,122
+6,Sweden,SWE,1.82,153
+7,Denmark,DNK,1.58,156
+8,France,FRA,1.26,193
+9,New Zealand,NZL,0.84,199
+10,United Kingdom,GBR,0.68,238
+11,Belgium,BEL,0.86,255
+12,Netherlands,NLD,1.01,257
+13,Germany,DEU,1.13,277
+14,Finland,FIN,1.33,323
+15,Italy,ITA,0.93,345
+16,Uruguay,URY,0.32,347
+17,Australia,AUS,0.59,361
+18,Norway,NOR,1.51,431
+19,Spain,ESP,0.86,435
+20,Portugal,PRT,0.74,630
+21,Brazil,BRA,0.27,987
